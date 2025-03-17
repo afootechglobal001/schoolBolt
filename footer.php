@@ -3,7 +3,7 @@
     <div class="footer-div-in"> 
         <div class="segment-back-div">
             <div class="segment-div" data-aos="fade-up" data-aos-duration="900">
-                <div class="logo-div"><img src="<?php echo $website_url?>/all-images/images/logo.png" alt="<?php $thename?> Logo"></div>
+                <div class="logo-div"><img src="<?php echo $websiteUrl?>/all-images/images/logo.png" alt="<?php $appName?> Logo"></div>
                 <p><strong>“SchoolBolt”</strong> is web application software, which aims at providing school management services to basic/secondary schools, selecting the legitimate staff by the school administrator.</p>
                
                 <div class="icon-div">
@@ -18,17 +18,17 @@
             <div class="segment-div" data-aos="fade-up" data-aos-duration="1000">
                 <h3>Quick Link</h3>
                 <ul>
-                    <a href="<?php echo $website_url?>/sub-systems" title="SchoolBolt Sub-systems">
+                    <a href="<?php echo $websiteUrl?>/sub-systems" title="SchoolBolt Sub-systems">
                     <li><i class="bi-arrow-right-short"></i> SchoolBolt Sub-systems</li></a>
-                    <a href="<?php echo $website_url?>/features" title="SchoolBolt Features">
+                    <a href="<?php echo $websiteUrl?>/features" title="SchoolBolt Features">
                     <li><i class="bi-arrow-right-short"></i> SchoolBolt Features</li></a>
-                    <a href="<?php echo $website_url?>" title="Agency">
+                    <a href="<?php echo $websiteUrl?>" title="Agency">
                     <li><i class="bi-arrow-right-short"></i> Agency</li></a>
-                    <a href="<?php echo $website_url?>/contact-us" title="Contact Us">
+                    <a href="<?php echo $websiteUrl?>/contact-us" title="Contact Us">
                     <li><i class="bi-arrow-right-short"></i> Contact Us</li></a>
-                    <a href="<?php echo $website_url?>/blog/" title="Blog & Articles">
+                    <a href="<?php echo $websiteUrl?>/blog/" title="Blog & Articles">
                     <li><i class="bi-arrow-right-short"></i> Blog & Articles</li></a>
-                    <a href="<?php echo $website_url?>/faq" title="Frequently Asked Questions">
+                    <a href="<?php echo $websiteUrl?>/faq" title="Frequently Asked Questions">
                     <li><i class="bi-arrow-right-short"></i> Frequently Asked Questions</li></a>                   
                 </ul>
             </div>
@@ -36,17 +36,17 @@
             <div class="segment-div services" data-aos="fade-up" data-aos-duration="1200">
                 <h3>Our Features</h3>
                 <ul>
-                    <a href="<?php echo $website_url?>" title="Digital entrance examination">
+                    <a href="<?php echo $websiteUrl?>" title="Digital entrance examination">
                     <li><i class="bi-arrow-right-short"></i> Digital entrance examination</li></a>
-                    <a href="<?php echo $website_url?>" title="Automated admission process">
+                    <a href="<?php echo $websiteUrl?>" title="Automated admission process">
                     <li><i class="bi-arrow-right-short"></i> Automated admission process</li></a>                           
-                    <a href="<?php echo $website_url?>" title="The academic report of each staff">
+                    <a href="<?php echo $websiteUrl?>" title="The academic report of each staff">
                     <li><i class="bi-arrow-right-short"></i> The academic report of each staff</li></a>                 
-                    <a href="<?php echo $website_url?>" title="Theoretical CBT examination system">
+                    <a href="<?php echo $websiteUrl?>" title="Theoretical CBT examination system">
                     <li><i class="bi-arrow-right-short"></i> Theoretical CBT examination system</li></a>  
-                    <a href="<?php echo $website_url?>" title="The data of all the staff in the school">
+                    <a href="<?php echo $websiteUrl?>" title="The data of all the staff in the school">
                     <li><i class="bi-arrow-right-short"></i> The data of all the staff in the school</li></a> 
-                    <a href="<?php echo $website_url?>" title="The academic report of each student">
+                    <a href="<?php echo $websiteUrl?>" title="The academic report of each student">
                     <li><i class="bi-arrow-right-short"></i> The academic report of each student</li></a>                             
                 </ul>
             </div>
@@ -86,7 +86,7 @@
     
     <div class="main-bottom-div">
         <div class="div-in">
-            <p>&copy; 2022 - <?php echo date("Y") ?> <span><?php echo $thename?></span>. All Rights Reserved.</p>
+            <p>&copy; 2022 - <?php echo date("Y") ?> <span><?php echo $appName?></span>. All Rights Reserved.</p>
             <p>Powered By: <a href="http://afootech.com" target="_blank"><span class="text"> Afootech Global IT Solution</span></a></p>
         </div>
     </div>

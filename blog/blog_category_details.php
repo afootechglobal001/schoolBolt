@@ -4,17 +4,17 @@
 <html id="other-page-header" lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <?php include '../../meta.php'?>
-    <title><?php echo $thename?> - <?php echo $page_title?></title>
+    <title><?php echo $appName?> - <?php echo $page_title?></title>
     <meta name="description" content="<?php echo $seo_description?>"/>
     <meta name="keywords" content="<?php echo $seo_keywords?>"/>
 
-    <meta property="og:title" content="<?php echo $thename?> - <?php echo $page_title?>" />
-    <meta property="og:image" content="<?php echo $website_url?>/<?php echo $page_seo_pix?>"/>
+    <meta property="og:title" content="<?php echo $appName?> - <?php echo $page_title?>" />
+    <meta property="og:image" content="<?php echo $websiteUrl?>/<?php echo $page_seo_pix?>"/>
     <meta property="og:description" content="<?php echo $seo_description?>"/>
 
-    <meta name="twitter:title" content=" <?php echo $thename?> - <?php echo $page_title?>"/>
-    <meta name="twitter:card" content="<?php echo $thename?>"/>
-    <meta name="twitter:image"  content="<?php echo $website_url?>/<?php echo $page_seo_pix?>"/>
+    <meta name="twitter:title" content=" <?php echo $appName?> - <?php echo $page_title?>"/>
+    <meta name="twitter:card" content="<?php echo $appName?>"/>
+    <meta name="twitter:image"  content="<?php echo $websiteUrl?>/<?php echo $page_seo_pix?>"/>
     <meta name="twitter:description" content="<?php echo $seo_description?>"/>
 </head>
 
@@ -25,9 +25,9 @@
             <div class="top-title">
                 <div class="div-in">
                     <ul>
-                        <a href="<?php echo $website_url?>"><li title="Home">Home <i class="bi-caret-right-fill"></i></li></a>
-                        <a href="<?php echo $website_url?>/blog"><li title="Blog & Article">Blog & Article <i class="bi-caret-right-fill"></i></li></a>	
-                        <a href="<?php echo $website_url?>/blog/transforming-school-management-in-nigeria-with-schoolbolt"><li title="Transforming School Management in Nigeria with SchoolBolt">Transforming School Management in Nigeria with SchoolBolt</li></a>				
+                        <a href="<?php echo $websiteUrl?>"><li title="Home">Home <i class="bi-caret-right-fill"></i></li></a>
+                        <a href="<?php echo $websiteUrl?>/blog"><li title="Blog & Article">Blog & Article <i class="bi-caret-right-fill"></i></li></a>	
+                        <a href="<?php echo $websiteUrl?>/blog/transforming-school-management-in-nigeria-with-schoolbolt"><li title="Transforming School Management in Nigeria with SchoolBolt">Transforming School Management in Nigeria with SchoolBolt</li></a>				
                     </ul>
                 </div>			
             </div>
@@ -50,17 +50,17 @@
                         <div class="page-list-back-div">
                             <div class="main-picture-back-div">	
                                 <div class="main-picture-div" id="blog_preview">
-                                    <img src="<?php echo $website_url?>/all-images/blog/blog_1.png" alt="Blog"/> 
+                                    <img src="<?php echo $websiteUrl?>/all-images/blog/blog_1.png" alt="Blog"/> 
                                 </div>   
 
                                 <div class="bottom-img-div">
                                     <div class="inner-img-container"> 
                                         <div class="inner-img-div">
                                             <div class="each-img-div" title="Click to Preview" id="img1" onclick="_view_preview_img('img1')">
-                                                <img src="<?php echo $website_url?>/all-images/blog/blog_1.png" alt="Blog"/> 
+                                                <img src="<?php echo $websiteUrl?>/all-images/blog/blog_1.png" alt="Blog"/> 
                                             </div> 
                                             <div class="each-img-div" title="Click to Preview" id="img2" onclick="_view_preview_img('img2')">
-                                                <img src="<?php echo $website_url?>/all-images/blog/blog_2.webp" alt="Blog"/> 
+                                                <img src="<?php echo $websiteUrl?>/all-images/blog/blog_2.webp" alt="Blog"/> 
                                             </div> 
                                         </div>
                                     </div>
@@ -94,10 +94,10 @@
                             <h3>RECENT BLOG</h3>
                             
                             <div class="related-post-back-div">
-                                <a href="<?php echo $website_url?>/blog/transforming-school-management-in-nigeria-with-schoolbolt" title="Transforming School Management in Nigeria with SchoolBolt">
+                                <a href="<?php echo $websiteUrl?>/blog/transforming-school-management-in-nigeria-with-schoolbolt" title="Transforming School Management in Nigeria with SchoolBolt">
                                 <div class="related-post">
                                     <div class="image-div">
-                                        <img src="<?php echo $website_url?>/all-images/blog/blog_1.png" alt="Blog"/> 
+                                        <img src="<?php echo $websiteUrl?>/all-images/blog/blog_1.png" alt="Blog"/> 
                                     </div>
 
                                     <div class="cont-div">
@@ -108,10 +108,10 @@
                             </div>
 
                             <div class="related-post-back-div">
-                                <a href="<?php echo $website_url?>/blog/">
+                                <a href="<?php echo $websiteUrl?>/blog/">
                                 <div class="related-post">
                                     <div class="image-div">
-                                        <img src="<?php echo $website_url?>/all-images/blog/blog_2.webp" alt="Blog"/> 
+                                        <img src="<?php echo $websiteUrl?>/all-images/blog/blog_2.webp" alt="Blog"/> 
                                     </div>
 
                                     <div class="cont-div">

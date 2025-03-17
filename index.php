@@ -3,17 +3,17 @@
 <?php include 'config/constants.php'; ?>
 <head>
     <?php include 'meta.php' ?>
-    <title><?php echo $thename ?> | School Database Management System in Nigeria</title>
-    <meta name="keywords" content="<?php echo $thename ?>, School Management Software in Nigeria, School Database System, School Administration Software, Basic and Secondary School Management, School Staff Management, Web Application for Schools, School Performance Tracking, Student Information System, Academic Record Management, School Scheduling Software, Nigerian School Software, SchoolBolt Features, Education Management System in Nigeria" />
+    <title><?php echo $appName ?> | School Database Management System in Nigeria</title>
+    <meta name="keywords" content="<?php echo $appName ?>, School Management Software in Nigeria, School Database System, School Administration Software, Basic and Secondary School Management, School Staff Management, Web Application for Schools, School Performance Tracking, Student Information System, Academic Record Management, School Scheduling Software, Nigerian School Software, SchoolBolt Features, Education Management System in Nigeria" />
     <meta name="description" content="SchoolBolt is a reliable school database management system designed to streamline operations in basic and secondary schools across Nigeria. Manage staff, track academic performance, and simplify school administration efficiently." />
 
-    <meta property="og:title" content="<?php echo $thename ?> | School Database Management System in Nigeria" />
-    <meta property="og:image" content="<?php echo $website_url ?>/all-images/plugin-pix/schoolbolt.jpg" />
+    <meta property="og:title" content="<?php echo $appName ?> | School Database Management System in Nigeria" />
+    <meta property="og:image" content="<?php echo $websiteUrl ?>/all-images/plugin-pix/schoolbolt.jpg" />
     <meta property="og:description" content="SchoolBolt is a reliable school database management system designed to streamline operations in basic and secondary schools across Nigeria. Manage staff, track academic performance, and simplify school administration efficiently." />
 
-    <meta name="twitter:title" content="<?php echo $thename ?> | School Database Management System in Nigeria" />
-    <meta name="twitter:card" content="<?php echo $thename ?>" />
-    <meta name="twitter:image" content="<?php echo $website_url ?>/all-images/plugin-pix/schoolbolt.jpg" />
+    <meta name="twitter:title" content="<?php echo $appName ?> | School Database Management System in Nigeria" />
+    <meta name="twitter:card" content="<?php echo $appName ?>" />
+    <meta name="twitter:image" content="<?php echo $websiteUrl ?>/all-images/plugin-pix/schoolbolt.jpg" />
     <meta name="twitter:description" content="SchoolBolt is a reliable school database management system designed to streamline operations in basic and secondary schools across Nigeria. Manage staff, track academic performance, and simplify school administration efficiently." />
 </head>
 
@@ -25,7 +25,7 @@
             <div class="second-bg"></div>
             <div class="content-back-div">
                 <div class="image-content-div animated fadeInLeft">
-                    <img src="<?php echo $website_url ?>/all-images/body-pix/slider_img_1.png" alt="SchoolBolt" />
+                    <img src="<?php echo $websiteUrl ?>/all-images/body-pix/slider_img_1.png" alt="SchoolBolt" />
                 </div>
 
                 <div class="text-content-div animated fadeIn">
@@ -33,9 +33,9 @@
                     <p><strong>“SchoolBolt”</strong> is web application software, which aims at providing school management services to basic/secondary schools, selecting the legitimate staff by the school administrator.</p>
 
                     <div class="btn-div">
-                        <a href="<?php echo $website_url?>">
+                        <a href="<?php echo $websiteUrl?>">
                             <button class="btn" title="Request For A Demo">Request For A Demo <i class="bi-chevron-right"></i></button></a>
-                        <a href="<?php echo $website_url?>">
+                        <a href="<?php echo $websiteUrl?>">
                             <button class="btn right-btn" title="Recomend Us And Earn"><strong>Recomend Us  <span>And Earn</span></strong> <i class="bi-chevron-right"></i></button></a>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                         <div class="content-div welcome-back-div" data-aos="fade-in" data-aos-duration="1500">
                             <div class="welcome-div">
                                 <div class="div-in">
-                                    <div class="icon-div"><img src="<?php echo $website_url ?>/all-images/images/icon1.png" alt="Awesome Teachers" /></div>
+                                    <div class="icon-div"><img src="<?php echo $websiteUrl ?>/all-images/images/icon1.png" alt="Awesome Teachers" /></div>
 
                                     <div class="text-div">
                                         <h3>Awesome Teachers</h3>
@@ -62,7 +62,7 @@
 
                             <div class="welcome-div">
                                 <div class="div-in">
-                                    <div class="icon-div"><img src="<?php echo $website_url ?>/all-images/images/icon2.png" alt="Global Certificate" /></div>
+                                    <div class="icon-div"><img src="<?php echo $websiteUrl ?>/all-images/images/icon2.png" alt="Global Certificate" /></div>
 
                                     <div class="text-div">
                                         <h3>Global Certificate</h3>
@@ -73,7 +73,7 @@
 
                             <div class="welcome-div">
                                 <div class="div-in">
-                                    <div class="icon-div"><img src="<?php echo $website_url ?>/all-images/images/icon3.png" alt="Best Programme" /></div>
+                                    <div class="icon-div"><img src="<?php echo $websiteUrl ?>/all-images/images/icon3.png" alt="Best Programme" /></div>
 
                                     <div class="text-div">
                                         <h3>Best Programme</h3>
@@ -84,7 +84,7 @@
 
                             <div class="welcome-div">
                                 <div class="div-in">
-                                    <div class="icon-div"><img src="<?php echo $website_url ?>/all-images/images/icon4.png" alt="Student Support Service" /></div>
+                                    <div class="icon-div"><img src="<?php echo $websiteUrl ?>/all-images/images/icon4.png" alt="Student Support Service" /></div>
 
                                     <div class="text-div">
                                         <h3>Support Service</h3>
@@ -100,16 +100,16 @@
                             <p><strong>“SchoolBolt”</strong> is web application software, which aims at providing school management services to fulfils the requirements of any basic/secondary school to manage the school modules such as staff, students, financial transactions, Continuous Assessment, examination records, Broad Sheets, Score Sheets, BECE Requirements, Student Transcripts, Physical/Online Class etc.</p>
 
                             <div class="btn-div">
-                                <a href="<?php echo $website_url ?>">
+                                <a href="<?php echo $websiteUrl ?>">
                                     <button class="btn" title="Read More About SchoolBolt">Read More <i class="bi-chevron-right"></i></button></a>
-                                <a href="<?php echo $website_url ?>">
+                                <a href="<?php echo $websiteUrl ?>">
                                     <button class="btn right-btn" title="Recomend Us And Earn"><strong>Recomend Us And Earn</strong> <i class="bi-chevron-right"></i></button></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="large-img-div">
-                        <img src="<?php echo $website_url ?>/all-images/body-pix/welcome_img2.jpg" alt="Text" />
+                        <img src="<?php echo $websiteUrl ?>/all-images/body-pix/welcome_img2.jpg" alt="Text" />
                     </div>
                 </div>
             </div>
@@ -124,7 +124,7 @@
                             <p><strong>“SchoolBolt”</strong> offers a range of innovative features designed to simplify and enhance the educational experience for students, parents, and teachers.</p>
                         </div>
 
-                        <a href="<?php echo $website_url ?>" title="See How its works">
+                        <a href="<?php echo $websiteUrl ?>" title="See How its works">
                             <button class="btn" title="See More Features">See More Features <i class="bi-chevron-right"></i></button></a>
                     </div>
 
@@ -132,7 +132,7 @@
                         <div class="features-div">
                             <div class="inner-div">
                                 <div class="icon-div">
-                                    <img src="<?php echo $website_url ?>/all-images/images/project-development.png" alt="Software project development" />
+                                    <img src="<?php echo $websiteUrl ?>/all-images/images/project-development.png" alt="Software project development" />
                                 </div>
 
                                 <div class="features-text-div">
@@ -144,7 +144,7 @@
                         <div class="features-div features-div-1">
                             <div class="inner-div">
                                 <div class="icon-div">
-                                    <img src="<?php echo $website_url ?>/all-images/images/application-development.png" alt="Web application development" />
+                                    <img src="<?php echo $websiteUrl ?>/all-images/images/application-development.png" alt="Web application development" />
                                 </div>
 
                                 <div class="features-text-div">
@@ -156,7 +156,7 @@
                         <div class="features-div features-div-2">
                             <div class="inner-div">
                                 <div class="icon-div">
-                                    <img src="<?php echo $website_url ?>/all-images/images/app-development.png" alt="Mobile application development" />
+                                    <img src="<?php echo $websiteUrl ?>/all-images/images/app-development.png" alt="Mobile application development" />
                                 </div>
 
                                 <div class="features-text-div">
@@ -168,7 +168,7 @@
                         <div class="features-div features-div-3">
                             <div class="inner-div">
                                 <div class="icon-div">
-                                    <img src="<?php echo $website_url ?>/all-images/images/security-system.png" alt="Networking and security" />
+                                    <img src="<?php echo $websiteUrl ?>/all-images/images/security-system.png" alt="Networking and security" />
                                 </div>
 
                                 <div class="features-text-div">
@@ -180,7 +180,7 @@
                         <div class="features-div features-div-4">
                             <div class="inner-div">
                                 <div class="icon-div">
-                                    <img src="<?php echo $website_url ?>/all-images/images/seo.png" alt="Website Search Engine Optimization (SEO)" />
+                                    <img src="<?php echo $websiteUrl ?>/all-images/images/seo.png" alt="Website Search Engine Optimization (SEO)" />
                                 </div>
 
                                 <div class="features-text-div">
@@ -192,7 +192,7 @@
                         <div class="features-div features-div-5">
                             <div class="inner-div">
                                 <div class="icon-div">
-                                    <img src="<?php echo $website_url ?>/all-images/images/uiu-design.png" alt="UIUX/graphics design training" />
+                                    <img src="<?php echo $websiteUrl ?>/all-images/images/uiu-design.png" alt="UIUX/graphics design training" />
                                 </div>
 
                                 <div class="features-text-div">
@@ -204,7 +204,7 @@
                         <div class="features-div features-div-2">
                             <div class="inner-div">
                                 <div class="icon-div">
-                                    <img src="<?php echo $website_url ?>/all-images/images/app-development.png" alt="UIUX/graphics design training" />
+                                    <img src="<?php echo $websiteUrl ?>/all-images/images/app-development.png" alt="UIUX/graphics design training" />
                                 </div>
 
                                 <div class="features-text-div">
@@ -216,7 +216,7 @@
                         <div class="features-div features-div-5">
                             <div class="inner-div">
                                 <div class="icon-div">
-                                    <img src="<?php echo $website_url ?>/all-images/images/uiu-design.png" alt="UIUX/graphics design training" />
+                                    <img src="<?php echo $websiteUrl ?>/all-images/images/uiu-design.png" alt="UIUX/graphics design training" />
                                 </div>
 
                                 <div class="features-text-div">
@@ -228,7 +228,7 @@
                         <div class="features-div">
                             <div class="inner-div">
                                 <div class="icon-div">
-                                    <img src="<?php echo $website_url ?>/all-images/images/project-development.png" alt="UIUX/graphics design training" />
+                                    <img src="<?php echo $websiteUrl ?>/all-images/images/project-development.png" alt="UIUX/graphics design training" />
                                 </div>
 
                                 <div class="features-text-div">
@@ -254,7 +254,7 @@
                             <p><strong>“SchoolBolt”</strong> proudly collaborates with a diverse range of clients and partners, including schools, educational institutions, and technology providers.</p>
                         </div>
 
-                        <a href="<?php echo $website_url ?>" title="See More Clients & Partners">
+                        <a href="<?php echo $websiteUrl ?>" title="See More Clients & Partners">
                             <button class="btn" title="See More Clients & Partners">See More Clients & Partners <i class="bi-chevron-right"></i></button></a>
                     </div>
 
@@ -265,7 +265,7 @@
                                 <div class="cg-carousel__slide js-carousel__slide" data-aos="fade-left" data-aos-duration="1200">
                                     <div class="potfolio-div">
                                         <div class="image-div">
-                                            <img src="<?php echo $website_url ?>/all-images/projects/leaderstutors-website.png" alt="leaders Tutors Website" />
+                                            <img src="<?php echo $websiteUrl ?>/all-images/projects/leaderstutors-website.png" alt="leaders Tutors Website" />
                                         </div>
 
                                         <div class="content-div">
@@ -282,7 +282,7 @@
                                 <div class="cg-carousel__slide js-carousel__slide" data-aos="fade-left" data-aos-duration="1200">
                                     <div class="potfolio-div">
                                         <div class="image-div">
-                                            <img src="<?php echo $website_url ?>/all-images/projects/advanced-breed-school-website.png" alt="Advanced Breed School Website" />
+                                            <img src="<?php echo $websiteUrl ?>/all-images/projects/advanced-breed-school-website.png" alt="Advanced Breed School Website" />
                                         </div>
 
                                         <div class="content-div">
@@ -402,15 +402,15 @@
                         <p>Become an agent on <strong>“SchoolBolt”</strong> and unlock exciting opportunities to connect with schools, grow your network, and make a meaningful impact in the education sector.</p>
 
                         <div>
-                            <a href="<?php echo $website_url ?>">
+                            <a href="<?php echo $websiteUrl ?>">
                                 <button class="btn" title="Apply Now">Apply Now <i class="bi-chevron-right"></i></button></a>
                         </div>
                     </div>
 
                     <div class="right-container">
                         <div class="image-div">
-                            <img src="<?php echo $website_url ?>/all-images/body-pix/agent.png"
-                                alt="<?php echo $thename ?> Company" />
+                            <img src="<?php echo $websiteUrl ?>/all-images/body-pix/agent.png"
+                                alt="<?php echo $appName ?> Company" />
                         </div>
                     </div>
                 </div>
@@ -436,7 +436,7 @@
                                             <div class="main-testimonial">
                                                 <div class="img-back-div">
                                                     <div class="img-div">
-                                                        <img src="<?php echo $website_url ?>/all-images/images/avatar.png"
+                                                        <img src="<?php echo $websiteUrl ?>/all-images/images/avatar.png"
                                                             alt="testimonial" />
                                                     </div>
 
@@ -466,7 +466,7 @@
                                             <div class="main-testimonial">
                                                 <div class="img-back-div">
                                                     <div class="img-div">
-                                                        <img src="<?php echo $website_url ?>/all-images/images/avatar.png"
+                                                        <img src="<?php echo $websiteUrl ?>/all-images/images/avatar.png"
                                                             alt="testimonial" />
                                                     </div>
 
@@ -497,7 +497,7 @@
                                             <div class="main-testimonial">
                                                 <div class="img-back-div">
                                                     <div class="img-div">
-                                                        <img src="<?php echo $website_url ?>/all-images/images/avatar.png"
+                                                        <img src="<?php echo $websiteUrl ?>/all-images/images/avatar.png"
                                                             alt="testimonial" />
                                                     </div>
 
@@ -527,7 +527,7 @@
                                             <div class="main-testimonial">
                                                 <div class="img-back-div">
                                                     <div class="img-div">
-                                                        <img src="<?php echo $website_url ?>/all-images/images/avatar.png"
+                                                        <img src="<?php echo $websiteUrl ?>/all-images/images/avatar.png"
                                                             alt="testimonial" />
                                                     </div>
 
@@ -594,7 +594,7 @@
                             <p>Meet with our dedicated teachers to discuss your child’s progress, ask questions, and explore how we can support their educational journey.</p>
                         </div>
 
-                        <a href="<?php echo $website_url?>/blog/" title="See More Blogs">
+                        <a href="<?php echo $websiteUrl?>/blog/" title="See More Blogs">
                             <button class="btn" title="See More Blogs">See More Blogs <i class="bi-chevron-right"></i></button></a>
                     </div>
 
@@ -602,14 +602,14 @@
                         <div class="blog-div" data-aos="fade-in" data-aos-duration="1000">
                             <div class="blog-inner-div">
                                 <div class="image-div">
-                                    <img src="<?php echo $website_url ?>/all-images/blog/blog_1.png" alt="Blog" />
+                                    <img src="<?php echo $websiteUrl ?>/all-images/blog/blog_1.png" alt="Blog" />
                                 </div>
 
                                 <div class="text-div">
                                     <div class="count"><i class="bi-calendar3"></i> 15 Jan, 2025 <span>|</span> <i class="bi-eye-fill"></i> 250 VIEWS</div>
                                     <h3>Transforming School Management in Nigeria with SchoolBolt</h3>
 
-                                    <a href="<?php echo $website_url?>/blog/transforming-school-management-in-nigeria-with-schoolbolt" title="Read More">
+                                    <a href="<?php echo $websiteUrl?>/blog/transforming-school-management-in-nigeria-with-schoolbolt" title="Read More">
                                         <button class="btn" title="Read More">Read More <i class="bi-chevron-right"></i></button></a>
                                 </div>
                             </div>
@@ -618,14 +618,14 @@
                         <div class="blog-div" data-aos="fade-in" data-aos-duration="1000">
                             <div class="blog-inner-div">
                                 <div class="image-div">
-                                    <img src="<?php echo $website_url ?>/all-images/blog/blog_2.webp" alt="Blog" />
+                                    <img src="<?php echo $websiteUrl ?>/all-images/blog/blog_2.webp" alt="Blog" />
                                 </div>
 
                                 <div class="text-div">
                                     <div class="count"><i class="bi-calendar3"></i> 15 Jan, 2025 <span>|</span> <i class="bi-eye-fill"></i> 50 VIEWS</div>
                                     <h3>How SchoolBolt Simplifies Fee Payment Tracking</h3>
 
-                                    <a href="<?php echo $website_url ?>" title="Read More">
+                                    <a href="<?php echo $websiteUrl ?>" title="Read More">
                                         <button class="btn" title="Read More">Read More <i class="bi-chevron-right"></i></button></a>
                                 </div>
                             </div>
@@ -634,14 +634,14 @@
                         <div class="blog-div" data-aos="fade-in" data-aos-duration="1000">
                             <div class="blog-inner-div">
                                 <div class="image-div">
-                                    <img src="<?php echo $website_url ?>/all-images/blog/blog_3.png" alt="Blog" />
+                                    <img src="<?php echo $websiteUrl ?>/all-images/blog/blog_3.png" alt="Blog" />
                                 </div>
 
                                 <div class="text-div">
                                     <div class="count"><i class="bi-calendar3"></i> 15 Jan, 2025 <span>|</span> <i class="bi-eye-fill"></i> 200 VIEWS</div>
                                     <h3>Top 5 Benefits of Using SchoolBolt for Your School</h3>
 
-                                    <a href="<?php echo $website_url ?>" title="Read More">
+                                    <a href="<?php echo $websiteUrl ?>" title="Read More">
                                         <button class="btn" title="Read More">Read More <i class="bi-chevron-right"></i></button></a>
                                 </div>
                             </div>

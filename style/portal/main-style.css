@@ -1,0 +1,218 @@
+@charset "utf-8";
+/* CSS Document */
+
+.login-session{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    background: #fff;
+}
+
+.login-session .graphics-div{
+    position:absolute;
+    width:35%;
+	height:100%;
+    right: 0px;
+    background: url(../../all-images/images/login2.jpg) right no-repeat;
+    background-size: cover;
+}
+
+.login-session .login-div {
+    position: absolute;
+    width:65%;
+    height: 100%;
+    left: 0px;
+    background: var(--bg-white);
+}
+
+.login-session .login-div header {
+    display: flex;
+	align-items: center;
+	justify-content: center;
+    position: absolute;
+    min-height: 70px;
+    width: 100%;
+    z-index: 300;
+}
+
+.login-session .login-div header .header-div-in {
+	width: 85%;
+	min-height: 70px;
+	max-width: 1200px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+    border-bottom: rgba(215, 215, 215, .3) 1px solid;
+}
+
+.login-session .login-div header .header-div-in .logo-div {
+    width:170px;
+	cursor:pointer;
+}
+
+.login-session .login-div header .header-div-in .logo-div img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.login-session .login-div .form-back-div {
+    position: absolute;
+    top: 70px;
+    left: 0%;
+    width:100%;
+    height: calc(100% - 70px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: auto;
+    z-index: 200;
+}
+
+.login-session .login-div .form-back-div .form-div{
+    width: 85%;
+	max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px 0px;
+}
+
+.login-session .login-div .form-back-div .form-div h1{
+    color: #444;
+    font-size: 22px;
+    line-height: 30px;  
+    width: 450px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.portal-list-back-div{
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px 1.5%;
+}
+
+.portal-list-back-div .portal-list-div{
+	width:32%;
+	display: flex;
+    justify-content: space-between;
+	flex-direction: column;
+	min-height: 100px;
+	background: var(--white-color);
+	border: 1px solid #ecf0f1;
+	border-radius: 10px;
+	cursor: pointer;
+	-moz-transition:all 0.2s ease-in 02s;
+	transition:all 0.2s ease-in 0.2s;
+	-webkit-transition:all 0.2s ease-in 0.2s;
+	-ms-transition:all 0.2s ease-in 0.2s;
+	-o-transition:all 0.2s ease-in 0.2s;
+}
+
+.portal-list-back-div .portal-list-div .div-in{
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	gap:15px;
+}
+
+.portal-list-back-div .portal-list-div .div-in .icon-div{
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 18px;
+	border-radius: 100%;
+	color: #e68836ec;
+	background-color: #f8f8f8;
+	border: 1px solid #ecf0f1;
+} 
+
+.portal-list-back-div .portal-list-div .div-in .text-div{
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+} 
+
+.portal-list-back-div .portal-list-div .div-in .text-div h4{  
+	padding: 0px;
+	margin: 0px;
+	font-family: sub-title-font;
+	font-size: 13px;
+	color: var(--sub-body-color);
+}
+
+.portal-list-back-div .portal-list-div .div-in .text-div p{
+	font-size: 11px;
+	padding: 0px;
+	margin: 0px;
+	color: var(--text-color);
+}
+
+.portal-list-back-div .portal-list-div .bottom-div{
+	width: calc(100% - 30px);
+	border-top: 1px solid #ecf0f1;
+	padding: 15px;
+}
+
+.portal-list-back-div .portal-list-div .bottom-div .count-div{
+	font-size: 11px;
+	display: flex;
+	align-items: center;
+	gap: 3px;
+	color: var(--text-color);
+	font-family: sub-title-font;
+}
+
+.portal-list-back-div .portal-list-div .bottom-div .count-div span{
+	color: var(--sub-body-color);
+	font-family: body-font;
+}
+
+.portal-list-back-div .portal-list-div .bottom-div .count-div i{
+	color: var(--secondary-color);
+}
+
+.portal-list-back-div .portal-list-div:hover{
+	-moz-transform:scale(1.02) translate(1px,0px);
+	-webkit-transform:scale(1.02) translate(1px,0px);
+}
+
+
+@media all and (max-width: 1080px) {
+    .portal-list-back-div .portal-list-div{
+        width:48%;
+    }
+} 
+
+
+@media all and (max-width:780px) {
+	.login-session .graphics-div{
+        display: none;
+    }
+    .login-session .login-div {
+        width:100%;
+    }
+    .login-session .login-div header .header-div-in {
+        width: 92%;
+    }
+	.login-session .login-div .form-back-div .form-div{
+		width: 92%;
+	}
+} 
+
+@media all and (max-width:400px) {
+	.login-session .login-div .form-back-div .form-div h1{
+        width:100%;
+        font-size: 18px;
+		line-height: 25px;
+    }
+	.portal-list-back-div{
+		gap: 20px 2%;
+	}
+} 
