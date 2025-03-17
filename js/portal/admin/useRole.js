@@ -125,7 +125,7 @@ function _createUpdateRole() {
 }
 
 function _fetchRoles() {
-    $('#fetchAllRoles').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/all-images/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/all-images/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
 	try {
 		$.ajax({
 			type: "GET",
@@ -151,7 +151,7 @@ function _fetchRoles() {
 							const roleDescription = capitalizeFirstLetterOfEachWord(fetch[i].roleDescription);
 							
 							text +=`
-								<div class="role-list-div" id="role_${roleId}" onclick="_fetchEachRoles('${roleId}')">
+								<div class="role-list-div" id="role_${roleId}" onclick="_fetchEachRoles('${roleId}');">
 									<div class="div-in">
 										<div class="icon-div"><i class="bi-shield-fill-check"></i></div>
 										<div class="text-div">
@@ -166,7 +166,7 @@ function _fetchRoles() {
 							`;  
 						}
 					}
-					$('#fetchAllRoles').html(text);
+					$('#pageContent').html(text);
 				} else {
 					const response = info.response;
 					if (response < 100) {
@@ -176,12 +176,12 @@ function _fetchRoles() {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				$('#fetchAllRoles').html('<div class="false-notification-div"><p>An error occurred while fetching data. Please try again.</p></div>');
+				$('#pageContent').html('<div class="false-notification-div"><p>An error occurred while fetching data. Please try again.</p></div>');
 			}
 		});
 	} catch (error) {
 		console.error("Error: ", error);
-		$('#fetchAllRoles').html('<div class="false-notification-div"><p>An unexpected error occurred. Please try again.</p></div>');
+		$('#pageContent').html('<div class="false-notification-div"><p>An unexpected error occurred. Please try again.</p></div>');
 	}
 }
 

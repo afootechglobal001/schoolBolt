@@ -8,7 +8,7 @@
         <div class="other-pages-filter-div">
             <div class="text-field-wrapper">
                 <div class="text_field_container search_field_container">
-                    <input class="text_field dash_text_field" type="text" id="searchRoles" onkeyup="filters('Roles')" placeholder="" title="Type here to serach role..." />
+                    <input class="text_field dash_text_field" type="text" id="searchContent" onkeyup="filters('Content')" placeholder="" title="Type here to serach role..." />
                     <div class="placeholder dash_placeholder"><i class="bi-search"></i> Type here to search role...</div>
                 </div>
             </div>
@@ -22,12 +22,11 @@
     </div>
     
     <div class="pages-back-div" data-aos="fade-in" data-aos-duration="1500">
-        <div class="role-list-back-div" id="fetchAllRoles">
+        <div class="role-list-back-div" id="pageContent">
             <script>_fetchRoles();</script>
         </div>
     </div>
 <?php }?>
-
 
 <?php if ($page=='role_reg'){ ?>
     <script> 
@@ -130,8 +129,6 @@
     </div>
 <?php } ?>
 
-
-
 <?php if ($page=='update_role'){ ?>	
     <script>  getEachRoleDetails = JSON.parse(sessionStorage.getItem("getEachRoleDetails")); </script>	
 
@@ -220,31 +217,6 @@
                     </div>
                 </div>
 
-                <div class="user-form-details" id="user-form-details">
-                    <div>
-                        <div class="alert alert-success form-alert">Kindly fill the form below and toggle permissions to<span> ADD NEW USER ROLE</span></div>
-                    </div>
-
-                    <div class="text_field_container" id="roleName_container">
-                        <script>
-                            textField({
-                                id: 'roleName',
-                                title: 'Role Name'
-                            });
-                        </script>
-                    </div>
-
-                    <div class="text_area_container" id="roleDescription_container">
-                        <script>
-                            textField({
-                                id: 'roleDescription',
-                                title: 'Description',
-                                type: 'textarea'
-                            });
-                        </script>
-                    </div>
-                </div>
-                
                 <div class="btn-container"></div>
                     <script>
                         $(document).ready(function () {

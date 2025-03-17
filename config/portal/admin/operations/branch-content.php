@@ -11,7 +11,7 @@
         <div class="other-pages-filter-div">
             <div class="text-field-wrapper">
                 <div class="text_field_container search_field_container">
-                    <input class="text_field dash_text_field" type="text" id="searchBranches" onkeyup="filters('Branches')" placeholder="" title="Type here to serach role..." />
+                    <input class="text_field dash_text_field" type="text" id="searchContent" onkeyup="filters('Content')" placeholder="" title="Type here to serach role..." />
                     <div class="placeholder dash_placeholder"><i class="bi-search"></i> Type here to search branch...</div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
 
     <div class="pages-back-div" data-aos="fade-in" data-aos-duration="1500">
         <div class="table-div animated fadeIn">
-            <table class="table" cellspacing="0" style="width:100%" id="fetchAllBranches">
+            <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                 <script>
                     _fetchBranches();
                 </script>
