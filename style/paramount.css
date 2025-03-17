@@ -733,6 +733,32 @@ a {
 	color: var(--primary-color);
 }
 
+.false-notification-div .btn{
+	border: none;
+	min-width: 100%;
+	height: 45px;
+	font-family: sub-title-font;
+	font-size: 12px;
+	padding: 0px 15px;
+	border-radius: 5px;
+	background:var(--sub-body-color);
+	color: var(--white-color);
+	cursor: pointer;
+	transition: all 0.2s ease-in 0.2s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+}
+
+.false-notification-div .btn i{
+	font-size: 12px;
+}
+
+.false-notification-div .btn:hover{
+	background: var(--secondary-color);
+}
+
 .false-notification-div p{
 	padding:0px;
 	margin: 0px;

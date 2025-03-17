@@ -1117,6 +1117,15 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	font-size: 11px;
 	color: var(--text-color);
     border-bottom: 1px solid #ecf0f1;
+	-moz-transition:all 0.2s ease-in 02s;
+	transition:all 0.2s ease-in 0.2s;
+	-webkit-transition:all 0.2s ease-in 0.2s;
+	-ms-transition:all 0.2s ease-in 0.2s;
+	-o-transition:all 0.2s ease-in 0.2s;
+}
+
+.table-div .table .tb-row:hover {
+	background: #fcfcfc;
 }
 
 .table-div .table .other-tb-row {

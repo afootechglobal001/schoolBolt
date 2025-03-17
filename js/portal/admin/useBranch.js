@@ -309,40 +309,51 @@ function _fetchBranches() {
                 </thead>`;
 
 				if (info.success) {
-					if (!fetch) {
-						_actionAlert(info.message, false);
-					} else {
-						for (let i = 0; i < fetch.length; i++) {
-							no++;
-							const branchId = fetch[i].branchId;
-							const name = fetch[i].name;
-							const smtpUsername = fetch[i].smtpUsername;
-							const mobileNumber = fetch[i].mobileNumber;
-							const address = fetch[i].address;
-							const managerName = fetch[i].managerName;
-							const staffId = fetch[i].managerId;
-							const totalNumberOfStaff = fetch[i].totalNumberOfStaff;
-							const createdTime = fetch[i].createdTime;
-							const statusName = fetch[i].statusName;
+					for (let i = 0; i < fetch.length; i++) {
+						no++;
+						const branchId = fetch[i].branchId;
+						const name = fetch[i].name;
+						const smtpUsername = fetch[i].smtpUsername;
+						const mobileNumber = fetch[i].mobileNumber;
+						const address = fetch[i].address;
+						const managerName = fetch[i].managerName;
+						const staffId = fetch[i].managerId;
+						const totalNumberOfStaff = fetch[i].totalNumberOfStaff;
+						const createdTime = fetch[i].createdTime;
+						const statusName = fetch[i].statusName;
 
-							text +=`
-							<tbody>
-								<tr class="tb-row">
-									<td>${no}</td>
-									<td class="clickable-td" title="Click to view branch profile" onclick="_fetchEachBranches('${branchId}');">${name}</td>
-									<td>${smtpUsername}i</td>
-									<td>${mobileNumber}</td>
-									<td>${address}</td>
-									<td class="clickable-td" onclick="_fetchEachSaff('${staffId}');">${managerName}</td>
-									<td>${totalNumberOfStaff}</td>
-									<td>${createdTime}</td>
-									<td><div class="status-div ${statusName}">${statusName}</div></td>
-								</tr>
-							</tbody>`;
-						}
+						text +=`
+						<tbody>
+							<tr class="tb-row">
+								<td>${no}</td>
+								<td class="clickable-td" title="Click to view branch profile" onclick="_fetchEachBranches('${branchId}');">${name}</td>
+								<td>${smtpUsername}i</td>
+								<td>${mobileNumber}</td>
+								<td>${address}</td>
+								<td class="clickable-td" onclick="_fetchEachSaff('${staffId}');">${managerName}</td>
+								<td>${totalNumberOfStaff}</td>
+								<td>${createdTime}</td>
+								<td><div class="status-div ${statusName}">${statusName}</div></td>
+							</tr>
+						</tbody>`;
 					}
 					$('#fetchAllBranches').html(text);
 				} else {
+					_actionAlert(info.message, false);
+
+					text +=`
+						<tbody>
+							<tr class="tb-row">
+								<div class="false-notification-div">
+									<p>${info.message}</p>
+									<div>
+										<button class="btn" onclick="_getForm({page: 'branch_reg', url: adminPortalLocalUrl});"><i class="bi-plus-square"></i> ADD NEW BRANCH</button>
+									</div>
+								</div>
+							</tr>
+						</tbody>`;
+
+						$('#fetchAllBranches').html(text);
 					const response = info.response;
 					if (response < 100) {
 						_logOut();
