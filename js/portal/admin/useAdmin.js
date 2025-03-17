@@ -98,7 +98,7 @@ function _prevPage(next_id) {
 }
 function filters(selectBoxId) {
 	var valThis = $('#search'+selectBoxId).val();
-		$('#fetchAll'+selectBoxId+' > tbody .tb-row, .grid-div, .faq-back-div, .role-list-div, .product-cat-div').each(function() {
+		$('#page'+selectBoxId+' > tbody .tb-row, .grid-div, .faq-back-div, .role-list-div').each(function() {
 		var text = $(this).text();
 		(text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show(): $(this).hide();
 	});
@@ -112,7 +112,7 @@ let permissionElements = {
     <div class="nav-div" title="Branches" onclick="_getActivePage({page:'branches', divid:'branches'});" id="side-branches">
         <div class="icon"><i class="bi-diagram-3"></i> Branches</div> 
         <div class="hidden" id="_branches"><i class="bi-diagram-3"></i> Branches</div>
-    </div>
+    </div
     `,
 
     10: `

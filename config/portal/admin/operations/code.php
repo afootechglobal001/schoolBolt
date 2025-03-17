@@ -14,10 +14,10 @@ switch ($action){
 		require_once('settings-content.php');
 		require_once('role-content.php');
 		require_once('customer-content.php');
-		require_once('product-category-content.php');
-		require_once('product-content.php');
 		require_once('blog-content.php');
 		require_once('faq-content.php');
+		require_once('department-content.php');
+		require_once('class-content.php');
 	break;
 
 	case 'get_form':
@@ -29,10 +29,10 @@ switch ($action){
 		require_once('settings-content.php');
 		require_once('role-content.php');
 		require_once('customer-content.php');
-		require_once('product-category-content.php');
-		require_once('product-content.php');
 		require_once('blog-content.php');
 		require_once('faq-content.php');
+		require_once('department-content.php');
+		require_once('class-content.php');
 	break;
 
 	case 'upload_product_cat_pix':

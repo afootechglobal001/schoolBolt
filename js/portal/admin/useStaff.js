@@ -103,7 +103,7 @@ function _getSelectRole(fieldId){
 
 
 function _fetchStaffs() {
-    $('#fetchAllStaffs').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/all-images/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/all-images/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
 	try {
 		$.ajax({
 			type: "GET",
@@ -173,7 +173,7 @@ function _fetchStaffs() {
 							</tr>
 						</tbody>`;
 					}
-					$('#fetchAllStaffs').html(text);
+					$('#pageContent').html(text);
 				} else {
 					_actionAlert(info.message, false);
 
@@ -185,7 +185,7 @@ function _fetchStaffs() {
 							</div>
 						</div>`;
 
-						$('#fetchAllStaffs').html(text);
+						$('#pageContent').html(text);
 					const response = info.response;
 					if (response < 100) {
 						_logOut();

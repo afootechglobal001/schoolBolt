@@ -32,5 +32,5 @@
 <script src="<?php echo $websiteUrl?>/js/portal/admin/useBranch.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/portal/admin/useStaff.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/portal/admin/useRole.js?v=<?php echo $codeVersion?>"></script>
-
-
+<script src="<?php echo $websiteUrl?>/js/portal/admin/useDepartment.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/portal/admin/useClass.js?v=<?php echo $codeVersion?>"></script>

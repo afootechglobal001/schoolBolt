@@ -11,7 +11,7 @@
         <div class="other-pages-filter-div">
             <div class="text-field-wrapper">
                 <div class="text_field_container search_field_container">
-                    <input class="text_field dash_text_field" type="text" id="searchStaffs" onkeyup="filters('Staffs')" placeholder="" title="Type here to serach staff..." />
+                    <input class="text_field dash_text_field" type="text" id="searchContent" onkeyup="filters('Content')" placeholder="" title="Type here to serach staff..." />
                     <div class="placeholder dash_placeholder"><i class="bi-search"></i> Type here to search staff...</div>
                 </div>
             </div>
@@ -27,10 +27,8 @@
 
     <div class="pages-back-div" data-aos="fade-in" data-aos-duration="1500">
         <div class="table-div animated fadeIn">
-            <table class="table" cellspacing="0" style="width:100%" id="fetchAllStaffs">
-                <script>
-                    _fetchStaffs();
-                </script>
+            <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+                <script>_fetchStaffs();</script>
             </table>
         </div>
     </div>

@@ -9,12 +9,68 @@
     
     <div class="pages-back-div">
         <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
+            <div class="user-managment-list" onclick="_getPage('master-count-config', 'master-count-config', '');">
+                <div class="inner-div">
+                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/all-images/images/calculate.png" alt="Master Count Configurations"/></div>
+                    <div class="text-div">
+                        <h3>Master Count Configurations</h3>
+                        <p>Master count configurations manage data totals, ensuring accurate tracking and control.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-managment-list" onclick="_getForm({page: 'global-configuration', url: adminPortalLocalUrl});">
+                <div class="inner-div">
+                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/all-images/images/settings.png" alt="Global Configurations"/></div>
+                    <div class="text-div">
+                        <h3>Global Configurations</h3>
+                        <p>Global configurations set system-wide settings, ensuring consistency and control.</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="user-managment-list" onclick="_getPage({page: 'user-role-configuration', url: adminPortalLocalUrl});">
                 <div class="inner-div">
-                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/all-images/images/authorization.png" alt="User Role Configurations"/></div>
+                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/all-images/images/authorization.png" alt="User Role Management"/></div>
                     <div class="text-div">
-                        <h3>User Role Configurations</h3>
+                        <h3>User Role Management</h3>
                         <p>User role configurations manage permissions, ensuring secure and efficient access to features.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-managment-list" onclick="_getPage({page: 'department_config', url: adminPortalLocalUrl});">
+                <div class="inner-div">
+                    <div class="icon-div">
+                        <img src="<?php echo $websiteUrl?>/all-images/images/department.png" alt="Department Configuration"/>
+                    </div>
+                    <div class="text-div">
+                        <h3>Departments</h3>
+                        <p>Manage, add, and update school departments efficiently.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-managment-list" onclick="_getPage({page: 'class_config', url: adminPortalLocalUrl});">
+                <div class="inner-div">
+                    <div class="icon-div">
+                        <img src="<?php echo $websiteUrl?>/all-images/images/class.png" alt="Class Configuration"/>
+                    </div>
+                    <div class="text-div">
+                        <h3>Classess</h3>
+                        <p>Create, organize, and manage classes for different levels and departments.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-managment-list" onclick="_getPage({page: 'subject_config', url: adminPortalLocalUrl});">
+                <div class="inner-div">
+                    <div class="icon-div">
+                        <img src="<?php echo $websiteUrl?>/all-images/images/subject.png" alt="Subject Configuration"/>
+                    </div>
+                    <div class="text-div">
+                        <h3>Subjects</h3>
+                        <p>Define and manage subjects offered across various classes and departments.</p>
                     </div>
                 </div>
             </div>
@@ -35,26 +91,6 @@
                     <div class="text-div">
                         <h3>FAQ Category Configurations</h3>
                         <p>FAQ category configurations organize questions, ensuring easy access and management.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="user-managment-list" onclick="_getPage('master-count-config', 'master-count-config', '');">
-                <div class="inner-div">
-                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/all-images/images/calculate.png" alt="Master Count Configurations"/></div>
-                    <div class="text-div">
-                        <h3>Master Count Configurations</h3>
-                        <p>Master count configurations manage data totals, ensuring accurate tracking and control.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="user-managment-list" onclick="_getForm({page: 'global-configuration', url: adminPortalLocalUrl});">
-                <div class="inner-div">
-                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/all-images/images/settings.png" alt="Global Configurations"/></div>
-                    <div class="text-div">
-                        <h3>Global Configurations</h3>
-                        <p>Global configurations set system-wide settings, ensuring consistency and control.</p>
                     </div>
                 </div>
             </div>

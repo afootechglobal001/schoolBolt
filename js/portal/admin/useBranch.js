@@ -279,7 +279,7 @@ function _createBranch() {
 
 
 function _fetchBranches() {
-    $('#fetchAllBranches').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/all-images/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/all-images/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
 	try {
 		$.ajax({
 			type: "GET",
@@ -337,7 +337,7 @@ function _fetchBranches() {
 							</tr>
 						</tbody>`;
 					}
-					$('#fetchAllBranches').html(text);
+					$('#pageContent').html(text);
 				} else {
 					_actionAlert(info.message, false);
 
@@ -353,7 +353,7 @@ function _fetchBranches() {
 							</tr>
 						</tbody>`;
 
-						$('#fetchAllBranches').html(text);
+						$('#pageContent').html(text);
 					const response = info.response;
 					if (response < 100) {
 						_logOut();
