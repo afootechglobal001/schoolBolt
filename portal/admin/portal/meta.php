@@ -34,3 +34,4 @@
 <script src="<?php echo $websiteUrl?>/js/portal/admin/useRole.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/portal/admin/useDepartment.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/portal/admin/useClass.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/portal/admin/useSubject.js?v=<?php echo $codeVersion?>"></script>

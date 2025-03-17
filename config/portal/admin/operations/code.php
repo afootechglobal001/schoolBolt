@@ -18,6 +18,7 @@ switch ($action){
 		require_once('faq-content.php');
 		require_once('department-content.php');
 		require_once('class-content.php');
+		require_once('subject-content.php');
 	break;
 
 	case 'get_form':
@@ -33,6 +34,7 @@ switch ($action){
 		require_once('faq-content.php');
 		require_once('department-content.php');
 		require_once('class-content.php');
+		require_once('subject-content.php');
 	break;
 
 	case 'upload_product_cat_pix':
