@@ -6,7 +6,7 @@
                 <div class="contact dsp-none"><i class="bi-clock"></i> <span>Mon - Fri (8am - 4pm)</span></div>
                 <div class="contact dsp-none2" title="Mail Us"><i class="bi-envelope"></i> <span>info@schoolbolt.com</span></div>
                 <div class="contact no-border2" title="Call Us"><i class="bi-telephone"></i> <span>(+234) 812 700 0262</span></div>
-                <a href="<?php echo $website_url?>/faq" title="Frequently Asked Questions">
+                <a href="<?php echo $websiteUrl?>/faq" title="Frequently Asked Questions">
                 <div class="contact no-border" title="Frequently Asked Questions"><i class="bi-patch-question"></i> <span>FAQ</span></div></a> 
             </div>
 
@@ -29,18 +29,18 @@
     <div class="header-div-in">
         <div class="inner-div">
             <div class="logo-div">
-                <a href="<?php echo $website_url ?>"><img src="<?php echo $website_url?>/all-images/images/logo.png" alt="<?php echo $thename?> Logo"  class="animated zoomIn"/></a>   
+                <a href="<?php echo $websiteUrl ?>"><img src="<?php echo $websiteUrl?>/all-images/images/logo.png" alt="<?php echo $appName?> Logo"  class="animated zoomIn"/></a>   
             </div>
             
             <nav>
                 <ul>                          
-                    <a href="<?php echo $website_url ?>" title="Home Page"><li <?php if (($website_auto_url=="$website_url/index")||($website_auto_url=="$website_url/")||($website_auto_url=="$website_url")) {?> class="active" <?php }?>> Home</li></a>
+                    <a href="<?php echo $websiteUrl ?>" title="Home Page"><li <?php if (($websiteAutoUrl=="$websiteUrl/index")||($websiteAutoUrl=="$websiteUrl/")||($websiteAutoUrl=="$websiteUrl")) {?> class="active" <?php }?>> Home</li></a>
                 
-                    <li id="expand-li" class="<?php if (strstr($website_auto_url, "$website_url/schoolbolt")) {?> active <?php }?>">
+                    <li id="expand-li" class="<?php if (strstr($websiteAutoUrl, "$websiteUrl/schoolbolt")) {?> active <?php }?>">
                         SchoolBolt <i class="bi-plus"></i>
                         <ul class="animated fadeIn">
                             <div class="sub-nav-div">
-                                <a class="nav-div" href="<?php echo $website_url?>/about" title="About SchoolBolt">                             
+                                <a class="nav-div" href="<?php echo $websiteUrl?>/about" title="About SchoolBolt">                             
                                     <div class="icon-div"><i class="bi-mortarboard"></i></div>
                                     <div class="text-div">
                                         <li>About SchoolBolt</li>  
@@ -48,7 +48,7 @@
                                     </div>
                                 </a> 
 
-                                <a class="nav-div" href="<?php echo $website_url?>/features" title="SchoolBolt Features">                             
+                                <a class="nav-div" href="<?php echo $websiteUrl?>/features" title="SchoolBolt Features">                             
                                     <div class="icon-div"><i class="bi-gear-wide-connected"></i></div>
                                     <div class="text-div">
                                         <li>SchoolBolt Features</li>  
@@ -56,7 +56,7 @@
                                     </div>
                                 </a> 
 
-                                <a class="nav-div" href="<?php echo $website_url?>/modules" title="SchoolBolt Modules">                             
+                                <a class="nav-div" href="<?php echo $websiteUrl?>/modules" title="SchoolBolt Modules">                             
                                     <div class="icon-div"><i class="bi-diagram-2"></i></div>
                                     <div class="text-div">
                                         <li>SchoolBolt Modules</li>  
@@ -64,7 +64,7 @@
                                     </div>
                                 </a> 
 
-                                <a class="nav-div" href="<?php echo $website_url?>/sub-systems" title="SchoolBolt Subsystem">                             
+                                <a class="nav-div" href="<?php echo $websiteUrl?>/sub-systems" title="SchoolBolt Subsystem">                             
                                     <div class="icon-div"><i class="bi-diagram-3"></i></div>
                                     <div class="text-div">
                                         <li>SchoolBolt Subsystems</li>  
@@ -75,32 +75,32 @@
                         </ul>                  
                     </li> 
 
-                    <a href="<?php echo $website_url?>/partners" title="Partners">
-                        <li class="<?php if (strstr($website_auto_url, "$website_url/partners")) {?> active <?php }?>">
+                    <a href="<?php echo $websiteUrl?>/partners" title="Partners">
+                        <li class="<?php if (strstr($websiteAutoUrl, "$websiteUrl/partners")) {?> active <?php }?>">
                             Partners
                         </li>
                     </a>
 
-                    <a href="<?php echo $website_url?>" title="Agency">
-                        <li class="<?php if (strstr($website_auto_url, "$website_url/agency/")) {?> active <?php }?>">
+                    <a href="<?php echo $websiteUrl?>" title="Agency">
+                        <li class="<?php if (strstr($websiteAutoUrl, "$websiteUrl/agency/")) {?> active <?php }?>">
                             Agency
                         </li>
                     </a> 
 
-                    <a href="<?php echo $website_url?>/blog/" title="Blog">
-                        <li class="<?php if (strstr($website_auto_url, "$website_url/blog/")) {?> active <?php }?>">
+                    <a href="<?php echo $websiteUrl?>/blog/" title="Blog">
+                        <li class="<?php if (strstr($websiteAutoUrl, "$websiteUrl/blog/")) {?> active <?php }?>">
                             Blog
                         </li>
                     </a> 
 
-                    <a href="<?php echo $website_url?>/contact-us" title="Contact Us">
-                        <li class="<?php if (strstr($website_auto_url, "$website_url/contact-us")) {?> active <?php }?>">
+                    <a href="<?php echo $websiteUrl?>/contact-us" title="Contact Us">
+                        <li class="<?php if (strstr($websiteAutoUrl, "$websiteUrl/contact-us")) {?> active <?php }?>">
                             Contact Us
                         </li>
                     </a>
                 </ul>
         
-                <a href="<?php echo $website_url?>" title="REQUEST FOR A DEMO">
+                <a href="<?php echo $websiteUrl?>" title="REQUEST FOR A DEMO">
                 <button class="btn" title="REQUEST FOR A DEMO"> REQUEST FOR A DEMO</button></a>
                 <button class="mobile-btn" onclick="_open_menu()"><i class="bi-text-right"></i></button>
             </nav>

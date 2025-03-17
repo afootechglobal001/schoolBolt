@@ -4,17 +4,17 @@
 <html id="other-page-header" lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <?php include 'meta.php' ?>
-    <title><?php echo $thename ?> | Frequently Asked Question</title>
-    <meta name="keywords" content="<?php echo $thename ?>, School Management Software in Nigeria, School Database System, School Administration Software, Basic and Secondary School Management, School Staff Management, Web Application for Schools, School Performance Tracking, Student Information System, Academic Record Management, School Scheduling Software, Nigerian School Software, SchoolBolt Features, Education Management System in Nigeria" />
+    <title><?php echo $appName ?> | Frequently Asked Question</title>
+    <meta name="keywords" content="<?php echo $appName ?>, School Management Software in Nigeria, School Database System, School Administration Software, Basic and Secondary School Management, School Staff Management, Web Application for Schools, School Performance Tracking, Student Information System, Academic Record Management, School Scheduling Software, Nigerian School Software, SchoolBolt Features, Education Management System in Nigeria" />
     <meta name="description" content="SchoolBolt is a reliable school database management system designed to streamline operations in basic and secondary schools across Nigeria. Manage staff, track academic performance, and simplify school administration efficiently." />
 
-    <meta property="og:title" content="<?php echo $thename ?> | School Database Management System in Nigeria" />
-    <meta property="og:image" content="<?php echo $website_url ?>/all-images/plugin-pix/schoolbolt.jpg" />
+    <meta property="og:title" content="<?php echo $appName ?> | School Database Management System in Nigeria" />
+    <meta property="og:image" content="<?php echo $websiteUrl ?>/all-images/plugin-pix/schoolbolt.jpg" />
     <meta property="og:description" content="SchoolBolt is a reliable school database management system designed to streamline operations in basic and secondary schools across Nigeria. Manage staff, track academic performance, and simplify school administration efficiently." />
 
-    <meta name="twitter:title" content="<?php echo $thename ?> | School Database Management System in Nigeria" />
-    <meta name="twitter:card" content="<?php echo $thename ?>" />
-    <meta name="twitter:image" content="<?php echo $website_url ?>/all-images/plugin-pix/schoolbolt.jpg" />
+    <meta name="twitter:title" content="<?php echo $appName ?> | School Database Management System in Nigeria" />
+    <meta name="twitter:card" content="<?php echo $appName ?>" />
+    <meta name="twitter:image" content="<?php echo $websiteUrl ?>/all-images/plugin-pix/schoolbolt.jpg" />
     <meta name="twitter:description" content="SchoolBolt is a reliable school database management system designed to streamline operations in basic and secondary schools across Nigeria. Manage staff, track academic performance, and simplify school administration efficiently." />
 </head>
 
@@ -26,8 +26,8 @@
             <div class="top-title">
                 <div class="div-in">
                     <ul>
-                        <a href="<?php echo $website_url?>"><li title="Home">Home <i class="bi-caret-right-fill"></i></li></a>
-                        <a href="<?php echo $website_url?>/faq"><li title="Frequently Asked Question">Frequently Asked Question</li></a>					
+                        <a href="<?php echo $websiteUrl?>"><li title="Home">Home <i class="bi-caret-right-fill"></i></li></a>
+                        <a href="<?php echo $websiteUrl?>/faq"><li title="Frequently Asked Question">Frequently Asked Question</li></a>					
                     </ul>
                 </div>			
             </div>
@@ -37,11 +37,11 @@
                     <h1 data-aos="fade-in" data-aos-duration="800"><span>Frequently Asked Question</span></h1>
                     <p>Find answers to common questions about SchoolBolt, the ultimate school management system for basic and secondary schools in Nigeria.</p>                
                   
-                    <?php $callclass->_pagesButtons($website_url);?>           
+                    <?php $callclass->_pagesButtons($websiteUrl);?>           
                 </div>
 
                 <div class="image-div">
-                    <img src="<?php echo $website_url ?>/all-images/body-pix/faq.png" alt="<?php echo $thename ?> Company" />
+                    <img src="<?php echo $websiteUrl ?>/all-images/body-pix/faq.png" alt="<?php echo $appName ?> Company" />
                 </div>
             </div>
         </div>

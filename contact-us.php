@@ -5,17 +5,17 @@
 
 <head>
     <?php include 'meta.php' ?>
-    <title><?php echo $thename ?> | Contact Us | 24/7 Online and Offline Support</title>
-    <meta name="keywords" content="<?php echo $thename ?>, School Management Software in Nigeria, School Database System, School Administration Software, Basic and Secondary School Management, School Staff Management, Web Application for Schools, School Performance Tracking, Student Information System, Academic Record Management, School Scheduling Software, Nigerian School Software, SchoolBolt Features, Education Management System in Nigeria" />
+    <title><?php echo $appName ?> | Contact Us | 24/7 Online and Offline Support</title>
+    <meta name="keywords" content="<?php echo $appName ?>, School Management Software in Nigeria, School Database System, School Administration Software, Basic and Secondary School Management, School Staff Management, Web Application for Schools, School Performance Tracking, Student Information System, Academic Record Management, School Scheduling Software, Nigerian School Software, SchoolBolt Features, Education Management System in Nigeria" />
     <meta name="description" content="SchoolBolt is a reliable school database management system designed to streamline operations in basic and secondary schools across Nigeria. Manage staff, track academic performance, and simplify school administration efficiently." />
 
-    <meta property="og:title" content="<?php echo $thename ?> | School Database Management System in Nigeria" />
-    <meta property="og:image" content="<?php echo $website_url ?>/all-images/plugin-pix/schoolbolt.jpg" />
+    <meta property="og:title" content="<?php echo $appName ?> | School Database Management System in Nigeria" />
+    <meta property="og:image" content="<?php echo $websiteUrl ?>/all-images/plugin-pix/schoolbolt.jpg" />
     <meta property="og:description" content="SchoolBolt is a reliable school database management system designed to streamline operations in basic and secondary schools across Nigeria. Manage staff, track academic performance, and simplify school administration efficiently." />
 
-    <meta name="twitter:title" content="<?php echo $thename ?> | School Database Management System in Nigeria" />
-    <meta name="twitter:card" content="<?php echo $thename ?>" />
-    <meta name="twitter:image" content="<?php echo $website_url ?>/all-images/plugin-pix/schoolbolt.jpg" />
+    <meta name="twitter:title" content="<?php echo $appName ?> | School Database Management System in Nigeria" />
+    <meta name="twitter:card" content="<?php echo $appName ?>" />
+    <meta name="twitter:image" content="<?php echo $websiteUrl ?>/all-images/plugin-pix/schoolbolt.jpg" />
     <meta name="twitter:description" content="SchoolBolt is a reliable school database management system designed to streamline operations in basic and secondary schools across Nigeria. Manage staff, track academic performance, and simplify school administration efficiently." />
 </head>
 
@@ -27,10 +27,10 @@
             <div class="top-title">
                 <div class="div-in">
                     <ul>
-                        <a href="<?php echo $website_url ?>">
+                        <a href="<?php echo $websiteUrl ?>">
                             <li title="Home">Home <i class="bi-caret-right-fill"></i></li>
                         </a>
-                        <a href="<?php echo $website_url ?>/contact-us">
+                        <a href="<?php echo $websiteUrl ?>/contact-us">
                             <li title="Contact Us">Contact Us</li>
                         </a>
                     </ul>
@@ -42,11 +42,11 @@
                     <h1 data-aos="fade-in" data-aos-duration="800"><span>Contact Us</span></h1>
                     <p>Have questions or need assistance? Our support team is here to help!, We’re just a click or call away. Reach out anytime!</p>
 
-                    <?php $callclass->_pagesButtons($website_url); ?>
+                    <?php $callclass->_pagesButtons($websiteUrl); ?>
                 </div>
 
                 <div class="image-div">
-                    <img src="<?php echo $website_url ?>/all-images/body-pix/blog.png" alt="<?php echo $thename ?> Company" />
+                    <img src="<?php echo $websiteUrl ?>/all-images/body-pix/blog.png" alt="<?php echo $appName ?> Company" />
                 </div>
             </div>
         </div>
@@ -78,7 +78,7 @@
                 <div class="bottom-body-div">
                     <div class="contact-div animated zoomIn">
                         <div class="div-in inner-contact">
-                            <div class="icon img-div"><img src="all-images/images/email.png" alt="<?php echo $thename ?> Email Address" /></div>
+                            <div class="icon img-div"><img src="all-images/images/email.png" alt="<?php echo $appName ?> Email Address" /></div>
 
                             <div class="text">
                                 <h2>MAIL US</h2>
@@ -89,7 +89,7 @@
 
                     <div class="contact-div animated zoomIn">
                         <div class="div-in inner-contact">
-                            <div class="icon img-div"><img src="all-images/images/phone.png" alt="<?php echo $thename ?> Phone Number" /></div>
+                            <div class="icon img-div"><img src="all-images/images/phone.png" alt="<?php echo $appName ?> Phone Number" /></div>
 
                             <div class="text">
                                 <h2>CALL US</h2>
@@ -100,7 +100,7 @@
 
                     <div class="contact-div animated zoomIn">
                         <div class="div-in inner-contact">
-                            <div class="icon img-div"><img src="all-images/images/location.png" alt="<?php echo $thename ?> Office Address" /></div>
+                            <div class="icon img-div"><img src="all-images/images/location.png" alt="<?php echo $appName ?> Office Address" /></div>
 
                             <div class="text">
                                 <h2>LOCATION</h2>
@@ -123,7 +123,7 @@
                 <div class="bottom-body-div">
                     <div class="contact-div animated zoomIn">
                         <div class="div-in inner-contact">
-                            <div class="icon img-div"><img src="all-images/images/email.png" alt="<?php echo $thename ?> Email Address" /></div>
+                            <div class="icon img-div"><img src="all-images/images/email.png" alt="<?php echo $appName ?> Email Address" /></div>
 
                             <div class="text">
                                 <h2>MAIL US</h2>
@@ -134,7 +134,7 @@
 
                     <div class="contact-div animated zoomIn">
                         <div class="div-in inner-contact">
-                            <div class="icon img-div"><img src="all-images/images/phone.png" alt="<?php echo $thename ?> Phone Number" /></div>
+                            <div class="icon img-div"><img src="all-images/images/phone.png" alt="<?php echo $appName ?> Phone Number" /></div>
 
                             <div class="text">
                                 <h2>CALL US</h2>
@@ -145,7 +145,7 @@
 
                     <div class="contact-div animated zoomIn">
                         <div class="div-in inner-contact">
-                            <div class="icon img-div"><img src="all-images/images/location.png" alt="<?php echo $thename ?> Office Address" /></div>
+                            <div class="icon img-div"><img src="all-images/images/location.png" alt="<?php echo $appName ?> Office Address" /></div>
 
                             <div class="text">
                                 <h2>LOCATION</h2>
@@ -168,7 +168,7 @@
                 <div class="bottom-body-div">
                     <div class="contact-div animated zoomIn">
                         <div class="div-in inner-contact">
-                            <div class="icon img-div"><img src="all-images/images/email.png" alt="<?php echo $thename ?> Email Address" /></div>
+                            <div class="icon img-div"><img src="all-images/images/email.png" alt="<?php echo $appName ?> Email Address" /></div>
 
                             <div class="text">
                                 <h2>MAIL US</h2>
@@ -179,7 +179,7 @@
 
                     <div class="contact-div animated zoomIn">
                         <div class="div-in inner-contact">
-                            <div class="icon img-div"><img src="all-images/images/phone.png" alt="<?php echo $thename ?> Phone Number" /></div>
+                            <div class="icon img-div"><img src="all-images/images/phone.png" alt="<?php echo $appName ?> Phone Number" /></div>
 
                             <div class="text">
                                 <h2>CALL US</h2>
@@ -190,7 +190,7 @@
 
                     <div class="contact-div animated zoomIn">
                         <div class="div-in inner-contact">
-                            <div class="icon img-div"><img src="all-images/images/location.png" alt="<?php echo $thename ?> Office Address" /></div>
+                            <div class="icon img-div"><img src="all-images/images/location.png" alt="<?php echo $appName ?> Office Address" /></div>
 
                             <div class="text">
                                 <h2>LOCATION</h2>

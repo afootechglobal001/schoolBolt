@@ -4,17 +4,17 @@
 <html id="other-page-header" lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <?php include '../meta.php' ?>
-    <title><?php echo $thename ?> | Blogs & Articles</title>
-    <meta name="keywords" content="<?php echo $thename ?>, School Management Software in Nigeria, School Database System, School Administration Software, Basic and Secondary School Management, School Staff Management, Web Application for Schools, School Performance Tracking, Student Information System, Academic Record Management, School Scheduling Software, Nigerian School Software, SchoolBolt Features, Education Management System in Nigeria" />
+    <title><?php echo $appName ?> | Blogs & Articles</title>
+    <meta name="keywords" content="<?php echo $appName ?>, School Management Software in Nigeria, School Database System, School Administration Software, Basic and Secondary School Management, School Staff Management, Web Application for Schools, School Performance Tracking, Student Information System, Academic Record Management, School Scheduling Software, Nigerian School Software, SchoolBolt Features, Education Management System in Nigeria" />
     <meta name="description" content="SchoolBolt is a reliable school database management system designed to streamline operations in basic and secondary schools across Nigeria. Manage staff, track academic performance, and simplify school administration efficiently." />
 
-    <meta property="og:title" content="<?php echo $thename ?> | School Database Management System in Nigeria" />
-    <meta property="og:image" content="<?php echo $website_url ?>/all-images/plugin-pix/schoolbolt.jpg" />
+    <meta property="og:title" content="<?php echo $appName ?> | School Database Management System in Nigeria" />
+    <meta property="og:image" content="<?php echo $websiteUrl ?>/all-images/plugin-pix/schoolbolt.jpg" />
     <meta property="og:description" content="SchoolBolt is a reliable school database management system designed to streamline operations in basic and secondary schools across Nigeria. Manage staff, track academic performance, and simplify school administration efficiently." />
 
-    <meta name="twitter:title" content="<?php echo $thename ?> | School Database Management System in Nigeria" />
-    <meta name="twitter:card" content="<?php echo $thename ?>" />
-    <meta name="twitter:image" content="<?php echo $website_url ?>/all-images/plugin-pix/schoolbolt.jpg" />
+    <meta name="twitter:title" content="<?php echo $appName ?> | School Database Management System in Nigeria" />
+    <meta name="twitter:card" content="<?php echo $appName ?>" />
+    <meta name="twitter:image" content="<?php echo $websiteUrl ?>/all-images/plugin-pix/schoolbolt.jpg" />
     <meta name="twitter:description" content="SchoolBolt is a reliable school database management system designed to streamline operations in basic and secondary schools across Nigeria. Manage staff, track academic performance, and simplify school administration efficiently." />
 </head>
 
@@ -26,8 +26,8 @@
             <div class="top-title">
                 <div class="div-in">
                     <ul>
-                        <a href="<?php echo $website_url?>"><li title="Home">Home <i class="bi-caret-right-fill"></i></li></a>
-                        <a href="<?php echo $website_url?>/blog"><li title="Blog & Article">Blog & Article</li></a>					
+                        <a href="<?php echo $websiteUrl?>"><li title="Home">Home <i class="bi-caret-right-fill"></i></li></a>
+                        <a href="<?php echo $websiteUrl?>/blog"><li title="Blog & Article">Blog & Article</li></a>					
                     </ul>
                 </div>			
             </div>
@@ -37,11 +37,11 @@
                     <h1 data-aos="fade-in" data-aos-duration="800"><span>Latest Insight</span></h1>
                     <p>Explore insightful blogs and articles on <strong>"SchoolBolt",</strong> featuring tips, updates, and best practices for efficient school management.</p>                
                   
-                    <?php $callclass->_pagesButtons($website_url);?>            
+                    <?php $callclass->_pagesButtons($websiteUrl);?>            
                 </div>
 
                 <div class="image-div">
-                    <img src="<?php echo $website_url ?>/all-images/body-pix/blog.png" alt="<?php echo $thename ?> Company" />
+                    <img src="<?php echo $websiteUrl ?>/all-images/body-pix/blog.png" alt="<?php echo $appName ?> Company" />
                 </div>
             </div>
         </div>
@@ -75,11 +75,11 @@
 
                     <div class="left-div">
                         <div class="page-list-back-div">
-                            <a href="<?php echo $website_url?>/blog/transforming-school-management-in-nigeria-with-schoolbolt" title="Transforming School Management in Nigeria with SchoolBolt">
+                            <a href="<?php echo $websiteUrl?>/blog/transforming-school-management-in-nigeria-with-schoolbolt" title="Transforming School Management in Nigeria with SchoolBolt">
                             <div class="main-blog-div">
                                 <div class="top-text">SchoolBolt</div>
                                 <div class="image-div">
-                                    <img src="<?php echo $website_url?>/all-images/blog/blog_1.png" alt="Blog"/>
+                                    <img src="<?php echo $websiteUrl?>/all-images/blog/blog_1.png" alt="Blog"/>
                                 </div>
                                 
                                 <div class="text-content-div">
@@ -93,11 +93,11 @@
                                 </div>
                             </div></a>
 
-                            <a href="<?php echo $website_url?>" title="Top 5 Benefits of Using SchoolBolt for Your School">
+                            <a href="<?php echo $websiteUrl?>" title="Top 5 Benefits of Using SchoolBolt for Your School">
                             <div class="main-blog-div">
                                 <div class="top-text">SchoolBolt</div>
                                 <div class="image-div">
-                                    <img src="<?php echo $website_url?>/all-images/blog/blog_3.png" alt="Blog"/>
+                                    <img src="<?php echo $websiteUrl?>/all-images/blog/blog_3.png" alt="Blog"/>
                                 </div>
                                 
                                 <div class="text-content-div">
@@ -111,11 +111,11 @@
                                 </div>
                             </div></a>
 
-                            <a href="<?php echo $website_url?>" title="How SchoolBolt Simplifies Fee Payment Tracking">
+                            <a href="<?php echo $websiteUrl?>" title="How SchoolBolt Simplifies Fee Payment Tracking">
                             <div class="main-blog-div">
                                 <div class="top-text">SchoolBolt</div>
                                 <div class="image-div">
-                                    <img src="<?php echo $website_url?>/all-images/blog/blog_2.webp" alt="Blog"/>
+                                    <img src="<?php echo $websiteUrl?>/all-images/blog/blog_2.webp" alt="Blog"/>
                                 </div>
                                 
                                 <div class="text-content-div">
@@ -147,14 +147,14 @@
                         <div class="blog-div" data-aos="fade-in" data-aos-duration="1000">
                             <div class="blog-inner-div">
                                 <div class="image-div">
-                                    <img src="<?php echo $website_url ?>/all-images/blog/blog_1.png" alt="Blog" />
+                                    <img src="<?php echo $websiteUrl ?>/all-images/blog/blog_1.png" alt="Blog" />
                                 </div>
 
                                 <div class="text-div">
                                     <div class="count"><i class="bi-calendar3"></i> 15 Jan, 2025 <span>|</span> <i class="bi-eye-fill"></i> 250 VIEWS</div>
                                     <h3>Transforming School Management in Nigeria with SchoolBolt</h3>
 
-                                    <a href="<?php echo $website_url?>/blog/transforming-school-management-in-nigeria-with-schoolbolt" title="Read More">
+                                    <a href="<?php echo $websiteUrl?>/blog/transforming-school-management-in-nigeria-with-schoolbolt" title="Read More">
                                         <button class="btn" title="Read More">Read More <i class="bi-chevron-right"></i></button></a>
                                 </div>
                             </div>
@@ -163,14 +163,14 @@
                         <div class="blog-div" data-aos="fade-in" data-aos-duration="1000">
                             <div class="blog-inner-div">
                                 <div class="image-div">
-                                    <img src="<?php echo $website_url ?>/all-images/blog/blog_2.webp" alt="Blog" />
+                                    <img src="<?php echo $websiteUrl ?>/all-images/blog/blog_2.webp" alt="Blog" />
                                 </div>
 
                                 <div class="text-div">
                                     <div class="count"><i class="bi-calendar3"></i> 15 Jan, 2025 <span>|</span> <i class="bi-eye-fill"></i> 50 VIEWS</div>
                                     <h3>How SchoolBolt Simplifies Fee Payment Tracking</h3>
 
-                                    <a href="<?php echo $website_url ?>" title="Read More">
+                                    <a href="<?php echo $websiteUrl ?>" title="Read More">
                                         <button class="btn" title="Read More">Read More <i class="bi-chevron-right"></i></button></a>
                                 </div>
                             </div>
@@ -179,14 +179,14 @@
                         <div class="blog-div" data-aos="fade-in" data-aos-duration="1000">
                             <div class="blog-inner-div">
                                 <div class="image-div">
-                                    <img src="<?php echo $website_url ?>/all-images/blog/blog_3.png" alt="Blog" />
+                                    <img src="<?php echo $websiteUrl ?>/all-images/blog/blog_3.png" alt="Blog" />
                                 </div>
 
                                 <div class="text-div">
                                     <div class="count"><i class="bi-calendar3"></i> 15 Jan, 2025 <span>|</span> <i class="bi-eye-fill"></i> 200 VIEWS</div>
                                     <h3>Top 5 Benefits of Using SchoolBolt for Your School</h3>
 
-                                    <a href="<?php echo $website_url ?>" title="Read More">
+                                    <a href="<?php echo $websiteUrl ?>" title="Read More">
                                         <button class="btn" title="Read More">Read More <i class="bi-chevron-right"></i></button></a>
                                 </div>
                             </div>

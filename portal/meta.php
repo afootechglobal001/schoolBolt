@@ -9,16 +9,7 @@
 <link href="<?php echo $websiteUrl?>/style/animate.css" type="text/css" rel="stylesheet" media="all">
 <link href="<?php echo $websiteUrl?>/style/aos.css" type="text/css" rel="stylesheet" />
 <link href="<?php echo $websiteUrl?>/style/paramount.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
-<link href="<?php echo $websiteUrl?>/style/main-style.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
+<link href="<?php echo $websiteUrl?>/style/portal/main-style.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
 
 <script src="<?php echo $websiteUrl?>/js/jquery-v3.6.1.min.js"></script>
-<script src="<?php echo $websiteUrl?>/js/scripts.js?v=<?php echo $codeVersion?>"></script>
-<script src="<?php echo $websiteUrl?>/js/textfield-selectfield.js?v=<?php echo $codeVersion?>"></script>
-<script src="<?php echo $websiteUrl?>/js/aos.js"></script>
-
-<link href="<?php echo $websiteUrl?>/slide-property/product-carousel/carousel.css" rel="stylesheet" type="text/css" />
-<script src="<?php echo $websiteUrl?>/slide-property/product-carousel/carousel.js" type="text/javascript"></script>
-
-<meta property="og:type" content="Website" />
-<meta property="og:site_name" content="<?php echo $appName?>">
-<meta property="og:url" content="<?php echo $websiteAutoUrl?>" />
+<script src="<?php echo $websiteUrl?>/js/paramount.js?v=<?php echo $codeVersion?>"></script>
