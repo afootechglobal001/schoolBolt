@@ -161,13 +161,27 @@
                     </div>
                 </div>
 
-                <div class="text_field_container" id="session_container">
-                    <script>
-                        textField({
-                            id: 'session',
-                            title: 'SESSION'
-                        });
-                    </script>
+                <div class="alert alert-success form-alert"><span>TERMINAL CONFIGURATIONS</span>
+                    <div class="text_field_back_container">
+                        <div class="text_field_container" id="session_container">
+                            <script>
+                                textField({
+                                    id: 'session',
+                                    title: 'SESSION'
+                                });
+                            </script>
+                        </div>
+
+                        <div class="text_field_container" id="termId_container">
+                            <script>
+                                selectField({
+                                    id: 'termId',
+                                    title: 'Select Term'
+                                });
+                                _getSelectTermId('termId');
+                            </script>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="text_field_container" id="staffId_container">
@@ -177,16 +191,6 @@
                             title: 'Select Branch Manager'
                         });
                         _getSelectBranchManagerId('staffId');
-                    </script>
-                </div>
-
-                <div class="text_field_container" id="termId_container">
-                    <script>
-                        selectField({
-                            id: 'termId',
-                            title: 'Select Term'
-                        });
-                        _getSelectTermId('termId');
                     </script>
                 </div>
 
