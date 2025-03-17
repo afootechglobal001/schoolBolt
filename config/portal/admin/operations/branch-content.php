@@ -161,6 +161,15 @@
                     </div>
                 </div>
 
+                <div class="text_field_container" id="session_container">
+                    <script>
+                        textField({
+                            id: 'session',
+                            title: 'SESSION'
+                        });
+                    </script>
+                </div>
+
                 <div class="text_field_container" id="staffId_container">
                     <script>
                         selectField({
@@ -168,6 +177,16 @@
                             title: 'Select Branch Manager'
                         });
                         _getSelectBranchManagerId('staffId');
+                    </script>
+                </div>
+
+                <div class="text_field_container" id="termId_container">
+                    <script>
+                        selectField({
+                            id: 'termId',
+                            title: 'Select Term'
+                        });
+                        _getSelectTermId('termId');
                     </script>
                 </div>
 
@@ -1249,6 +1268,34 @@
                         title: 'PAYMENT KEY',
                         value: getEachBranchDetailsSession?.paymentKey ?? ''
                     });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="user-in branch-user-in">
+        <div class="title">BRANCH SESSION INFORMATION</div>
+
+        <div class="profile-segment-div">
+            <div class="text_field_container col-1" id="updateSession_container">
+                <script>
+                    textField({
+                        id: 'updateSession',
+                        title: 'SESSION',
+                        value: getEachBranchDetailsSession?.session ?? '',
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-1" id="updateTermId_container">
+                <script>
+                    selectField({
+                        id: 'updateTermId',
+                        title: 'Select Term',
+                        fieldValue: getEachBranchDetailsSession?.termData[0].termId?? '',
+                        fieldLabel: getEachBranchDetailsSession?.termData[0].termName?? ''
+                    });
+                    _getSelectTermId('updateTermId');
                 </script>
             </div>
         </div>
