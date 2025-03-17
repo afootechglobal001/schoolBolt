@@ -127,10 +127,12 @@ function _createBranch() {
 		const smtpPort = $('#smtpPort').val();
 		const supportEmail = $('#supportEmail').val();
 		const paymentKey = $('#paymentKey').val();
+		const session = $('#session').val();
 		const managerId = $('#staffId').val();
+		const termId = $('#termId').val();
 		const statusId = $('#statusId').val();
 
-		$('#name, #mobileNumber, #branchStateId, #branchLgaId, #address, #smtpHost, #smtpUsername, #smtpPassword, #smtpPort, #supportEmail, #paymentKey, #staffId, #statusId').removeClass('issue');
+		$('#name, #mobileNumber, #branchStateId, #branchLgaId, #address, #smtpHost, #smtpUsername, #smtpPassword, #smtpPort, #supportEmail, #paymentKey, #session, #staffId, #termId, #statusId').removeClass('issue');
 
 		if (!name) {
 			$('#name').addClass('issue');
@@ -198,9 +200,21 @@ function _createBranch() {
 			return;
 		}
 
+		if (!session) {
+			$('#session').addClass("issue");
+			_actionAlert('Provide session to continue', false);
+			return;
+		}
+
 		if (!managerId) {
 			$('#staffId').addClass("issue");
 			_actionAlert('Select branch manager to continue', false);
+			return;
+		}
+
+		if (!termId) {
+			$('#termId').addClass("issue");
+			_actionAlert('Select term to continue', false);
 			return;
 		}
 
@@ -227,7 +241,9 @@ function _createBranch() {
 				"smtpPort": smtpPort,
 				"supportEmail": supportEmail,
 				"paymentKey": paymentKey,
+				"session": session,
 				"managerId": managerId,
+				"termId": termId,
 				"statusId": statusId
 			};
 
@@ -391,10 +407,12 @@ function _updateBranch() {
 		const smtpPort = $('#updateSmtpPort').val();
 		const supportEmail = $('#updateSupportEmail').val();
 		const paymentKey = $('#updatePaymentKey').val();
+		const session = $('#updateSession').val();
 		const managerId = $('#updateStaffId').val();
+		const termId = $('#updateTermId').val();
 		const statusId = $('#updateStatusId').val();
 
-		$('#updateName, #updateMobileNumber, #branchStateId, #branchLgaId, #updateAddress, #updateSmtpHost, #updateSmtpUsername, #updateSmtpPassword, #updateSmtpPort, #updateSupportEmail, #updatePaymentKey, #updateStaffId, #updateStatusId').removeClass('issue');
+		$('#updateName, #updateMobileNumber, #branchStateId, #branchLgaId, #updateAddress, #updateSmtpHost, #updateSmtpUsername, #updateSmtpPassword, #updateSmtpPort, #updateSupportEmail, #updatePaymentKey, #updateSession, #updateStaffId, #updateTermId, #updateStatusId').removeClass('issue');
 
 		if (!name) {
 			$('#updateName').addClass('issue');
@@ -462,9 +480,21 @@ function _updateBranch() {
 			return;
 		}
 
+		if (!session) {
+			$('#updateSession').addClass("issue");
+			_actionAlert('Provide session to continue', false);
+			return;
+		}
+
 		if (!managerId) {
 			$('#updateStaffId').addClass("issue");
 			_actionAlert('Select branch manager to continue', false);
+			return;
+		}
+
+		if (!termId) {
+			$('#updateTermId').addClass("issue");
+			_actionAlert('Select term to continue', false);
 			return;
 		}
 
@@ -491,7 +521,9 @@ function _updateBranch() {
 				"smtpPort": smtpPort,
 				"supportEmail": supportEmail,
 				"paymentKey": paymentKey,
+				"session": session,
 				"managerId": managerId,
+				"termId": termId,
 				"statusId": statusId
 			};
 
