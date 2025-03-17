@@ -58,7 +58,7 @@ if(!$checkSession){
             }
             
             mysqli_query($conn,"UPDATE `DEPARTMENTS_TAB` SET 
-            departmentName='$departmentName', updatedBy='$loginStaffId'
+            departmentName='$departmentName',  statusId='$statusId', updatedBy='$loginStaffId'
             WHERE departmentId = '$departmentId'")or die (mysqli_error($conn));
 
             $response['response']=200; 

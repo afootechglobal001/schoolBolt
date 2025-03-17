@@ -14,7 +14,7 @@ if(!$checkSession){
     $classId = $_GET['classId'];
 	//////////////////declaration of variables//////////////////////////////////////
 	$className=trim(strtoupper($data['className']));
-    $statusId=trim(strtoupper($data['statusId']));
+    $statusId=trim(($data['statusId']));
     
 	////////////////////////////////////////////////////////////////////////////////
 
@@ -58,7 +58,7 @@ if(!$checkSession){
             }
             
             mysqli_query($conn,"UPDATE `CLASSES_TAB` SET 
-            className='$className', updatedBy='$loginStaffId'
+            className='$className', statusId='$statusId', updatedBy='$loginStaffId'
             WHERE classId = '$classId'")or die (mysqli_error($conn));
 
             $response['response']=200; 
