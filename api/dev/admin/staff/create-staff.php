@@ -158,10 +158,11 @@ if(!$checkSession){
             }
 
             ///////////////////////geting sequence//////////////////////////
-            $sequence=$callclass->_get_sequence_count($conn, 'GFSS');
+            $countId='STAFF';
+            $sequence=$callclass->_get_sequence_count($conn, $countId);
             $array = json_decode($sequence, true);
             $no= $array[0]['no'];
-            $staffId='GFSS'.$no.date("Ymdhis");
+            $staffId=$countId.$no.date("Ymdhis");
             $password=md5($staffId);
 
             

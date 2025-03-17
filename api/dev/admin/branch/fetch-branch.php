@@ -23,7 +23,7 @@ if(!$checkSession){
     }
     // Securely escape $q
     $q = mysqli_real_escape_string($conn, $q);
-    $select = "SELECT * FROM BRANCH_VIEW WHERE (name LIKE '%$q%' OR address LIKE '%$q%') $branchIds  $statusIds";
+    $select = "SELECT * FROM BRANCH_VIEW WHERE (name LIKE '%$q%' OR address LIKE '%$q%') $branchIds  $statusIds ORDER BY name ASC";
 
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($query);
