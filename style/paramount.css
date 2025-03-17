@@ -90,6 +90,7 @@ a {
 }
 
 .text_field_container .text_field {
+	min-width: 100%;
 	width: calc(100% - 60px);
 	height: 60px;
 	border: #e2e2e2 1px solid;

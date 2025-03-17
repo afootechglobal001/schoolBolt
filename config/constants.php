@@ -46,5 +46,7 @@ $userDeviceId=getBrowserId();
 	var userIpAddress = "<?php echo $userIpAddress;?>"; /// For User IP Address //
 	var userDeviceId = "<?php echo $userDeviceId;?>"; /// For User Device Id //
 
+	var adminLocalUrl=websiteUrl+'/config/portal/admin/code';
+	var adminPortalLocalUrl=websiteUrl+'/config/portal/admin/operations/code'; 
 </script>
 
