@@ -2294,7 +2294,7 @@ header .header-div-in .inner-div nav .mobile-btn:hover{
 }
 
 .harsh-bg{
-	background: #fcfcfc;
+	background: rgba(215, 215, 215, .6);
 }
 
 .page-back-div{
@@ -2316,7 +2316,7 @@ header .header-div-in .inner-div nav .mobile-btn:hover{
 }
 
 .text_field_container .blog_text_field {
-	background: #fcfcfc;
+	background: rgba(215, 215, 215, .6);
 }
 
 .page-back-div .left-div .page-list-back-div .main-blog-div{
@@ -2472,7 +2472,7 @@ header .header-div-in .inner-div nav .mobile-btn:hover{
 	cursor: pointer;
 	font-family: body-font;
 	border-radius: 4px;
-	background: #fcfcfc;
+	background: rgba(215, 215, 215, .6);
 	border: #eceaea 1px solid;
 	transition: all 0.2s ease-in 0.2s;
 	-moz-transition: all 0.2s ease-in 0.2s;
