@@ -42,7 +42,7 @@ function _confirmLogin() {
 
 		$.ajax({
 			type: "POST",
-			url: endPoint + '/admin/auth/login',
+			url: endPoint+'/admin/auth/login',
 			data: JSON.stringify(formData),
 			dataType: "json", 
 			cache: false,
