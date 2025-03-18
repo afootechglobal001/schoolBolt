@@ -24,7 +24,6 @@ function _fetchArms() {
 							<th>Status</th>
 						</tr>
 					</thead>`;
-
 				if (info.success) {
 					for (let i = 0; i < fetch.length; i++) {
 						no++;
