@@ -277,13 +277,13 @@
                             <div class="expand-div animated fadeIn">
                                 <ul class="ul-expand">
                                     <li class="active" id="reg_students" title="Register Students"
-                                        onclick="_getActiveBranchPage({divid:'reg_students', page: 'reg_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Register Student</li>
+                                       onclick="_getForm({page: 'branch_student_reg', layer:2, url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Register Student</li>
 
                                     <li id="my_students" title="View Students"
                                         onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>View Student</li>
                                     
-                                        <li id="my_students" title="Search Students"
-                                    onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Search Student</li>
+                                    <li id="my_students" title="Search Students"
+                                        onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Search Student</li>
                                 </ul>
                             </div>
                         </li>

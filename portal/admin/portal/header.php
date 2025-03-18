@@ -1,4 +1,4 @@
-<?php  include '../alert.php'?>
+<?php  include 'alert.php'?>
 <header class="fadeInDown animated">
     <div class="header-div-in"> 
         <div class="logo-div"><img src="<?php echo $websiteUrl?>/all-images/images/logo.png" alt="<?php echo $appName?> logo" /></div>

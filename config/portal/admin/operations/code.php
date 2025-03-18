@@ -20,6 +20,7 @@ switch ($action){
 		require_once('class-content.php');
 		require_once('arm-content.php');
 		require_once('subject-content.php');
+		require_once('branch-operation/student-content.php');
 	break;
 
 	case 'get_form':
@@ -38,6 +39,7 @@ switch ($action){
 		require_once('class-content.php');
 		require_once('arm-content.php');
 		require_once('subject-content.php');
+		require_once('branch-operation/student-content.php');
 	break;
 
 	case 'upload_product_cat_pix':

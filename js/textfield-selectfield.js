@@ -5,6 +5,7 @@ function textField(options) {
         type = 'text',
         value = '',
         onKeyPressFunction = null,
+		onKeyUpFunction = null,
 		readonly = false
     } = options;
 
@@ -15,7 +16,9 @@ function textField(options) {
         `
         : `
           <input class="text_field" type="${type}" id="${id}" placeholder="" value="${value}"
-              ${onKeyPressFunction ? `onkeypress="${onKeyPressFunction}"` : ''} ${readonly ? 'readonly' : ''}/>
+              ${onKeyPressFunction ? `onkeypress="${onKeyPressFunction}"` : ''} 
+			  ${onKeyUpFunction ? `onkeyup="${onKeyUpFunction}"` : ''}
+			  ${readonly ? 'readonly' : ''}/>
           <div class="placeholder">${title}:</div>
         `;
     $('#' + id + '_container').html(template);
@@ -209,6 +212,173 @@ function _getSelectStatusId(fieldId, statusIds){
 	}
 }
 
+function _getSelectGender(fieldId){
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+"/preset-data/fetch-gender",
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].genderId;
+						const value = data[i].genderName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+function _getSelectMaritalStatus(fieldId){
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+"/preset-data/fetch-marital-status",
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].maritalStatusId;
+						const value = data[i].maritalStatusName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+
+function _getSelectNationlaity(fieldId){
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+'/preset-data/fetch-country',
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].countryId;
+						const value = data[i].countryName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+function _getSelectAccomodation(fieldId){
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+'/preset-data/fetch-accommodation',
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].accommodationId;
+						const value = data[i].accommodationName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+
+function _getSelectTitle(fieldId){
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+'/preset-data/fetch-title',
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].titleId;
+						const value = data[i].titleName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+function _getSelectBirthDay(fieldId) {
+	for (let i = 1; i <= 31; i++) {
+		const id = i;
+		const value = i;
+		$('#searchList_' + fieldId).append(
+			'<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">' + value + '</li>'
+		);
+	}
+}
+
+function _getSelectBirthMonth(fieldId) {
+	for (let i = 1; i <= 12; i++) {
+		const id = i;
+		const value = i;
+		$('#searchList_' + fieldId).append(
+			'<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">' + value + '</li>'
+		);
+	}
+}
+
 function _getSelectBlogCategory(fieldId){
 	const data=[
 		{
@@ -231,3 +401,5 @@ function _getSelectBlogCategory(fieldId){
 		$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
 	}	
 }
+
+
