@@ -184,6 +184,8 @@ function _getSelectStatusId(fieldId, statusIds){
 				'userOsBrowser': userOsBrowser,
 				'userIpAddress': userIpAddress,
 				'userDeviceId': userDeviceId,
+				'clientId': clientId,
+				'clientAddress': clientAddress,
 				'Authorization': 'Bearer ' + loginAccessKey
 			},
 			success: function(info) {

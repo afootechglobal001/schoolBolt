@@ -101,7 +101,6 @@ function _getSelectRole(fieldId){
 	}
 }
 
-
 function _fetchStaffs() {
     $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/all-images/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
 	try {
