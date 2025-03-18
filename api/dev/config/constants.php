@@ -22,7 +22,7 @@ if ($frontEndApiKey!=$backEndApiKey){/// start if 1
     $checkBasicSecurity=false;
 }
 
-$query=mysqli_query($connAdmin,"SELECT * FROM CLIENTS_TAB WHERE $clientIds AND hashId='$clientId'") or die (mysqli_error($connAdmin));
+$query=mysqli_query($connAdmin,"SELECT * FROM CLIENTS_TAB WHERE hashId='$clientId'") or die (mysqli_error($connAdmin));
 	$countClient=mysqli_num_rows($query);
 	if ($countClient==0){ /// start if 4
 		$response['response']=90; 

@@ -2,7 +2,7 @@
 class allClass{
 /////////////////////////////////////////
 function _staff_accesskey_validation($conn, $accessKey) {
-    $query = mysqli_query($conn, "SELECT * FROM STAFF_VIEW WHERE $clientIds AND accessKey='$accessKey' AND statusId=1 AND accessKey!=''") or die(mysqli_error($conn));
+    $query = mysqli_query($conn, "SELECT * FROM STAFF_VIEW WHERE accessKey='$accessKey' AND statusId=1 AND accessKey!=''") or die(mysqli_error($conn));
     $count = mysqli_num_rows($query);
     $response = ["checkSession" => false];
     if ($count > 0) {

@@ -67,8 +67,8 @@ if(!$checkSession){
 
 
             mysqli_query($conn,"INSERT INTO `ROLE_TAB`
-            (`roleId`, `roleName`, `roleDescription`, `rolePermissionIds`, `createdBy`, `createdTime`) VALUES 
-            ('$roleId','$roleName', '$roleDescription', '$rolePermissionIds', '$loginStaffId', NOW() )")or die (mysqli_error($conn));
+            (`clientId`, `roleId`, `roleName`, `roleDescription`, `rolePermissionIds`, `createdBy`, `createdTime`) VALUES 
+            ('$clientId', '$roleId','$roleName', '$roleDescription', '$rolePermissionIds', '$loginStaffId', NOW() )")or die (mysqli_error($conn));
 
             $response['response']=200; 
             $response['success']=true;

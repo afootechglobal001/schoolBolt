@@ -56,8 +56,8 @@ if(!$checkSession){
 
 
             mysqli_query($conn,"INSERT INTO `ARMS_TAB`
-            (`armId`, `armName`,  `createdBy`, `statusId`, `createdTime`) VALUES 
-            ('$armId','$armName', '$loginStaffId', '$statusId', NOW() )")or die (mysqli_error($conn));
+            (`clientId`, `armId`, `armName`,  `createdBy`, `statusId`, `createdTime`) VALUES 
+            ('$clientId', '$armId','$armName', '$loginStaffId', '$statusId', NOW() )")or die (mysqli_error($conn));
 
             $response['response']=200; 
             $response['success']=true;

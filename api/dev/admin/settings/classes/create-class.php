@@ -56,8 +56,8 @@ if(!$checkSession){
 
 
             mysqli_query($conn,"INSERT INTO `CLASSES_TAB`
-            (`classId`, `className`,  `createdBy`, `statusId`, `createdTime`) VALUES 
-            ('$classId','$className', '$loginStaffId', '$statusId', NOW() )")or die (mysqli_error($conn));
+            (`clientId`, `classId`, `className`,  `createdBy`, `statusId`, `createdTime`) VALUES 
+            ('$clientId', '$classId','$className', '$loginStaffId', '$statusId', NOW() )")or die (mysqli_error($conn));
 
             $response['response']=200; 
             $response['success']=true;

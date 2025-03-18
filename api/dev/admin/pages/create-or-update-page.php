@@ -102,8 +102,8 @@ if(!$checkSession){
                 $response['message']="PAGE UPDATED SUCCESFFULY!";
             }else{
                 mysqli_query($conn,"INSERT INTO `PAGES_TAB`
-                (`publishId`, `pageCategory`, `pageUrl`, `pageTitle`, `seoKeywords`, `seoDescription`, `pageContent`, `updatedTime`) VALUES
-                ('$publishId', '$pageCategory', '$pageUrl', '$pageTitle', '$seoKeywords',  '$seoDescription', '$pageContent', NOW())")or die (mysqli_error($conn));
+                (`clientId`, `publishId`, `pageCategory`, `pageUrl`, `pageTitle`, `seoKeywords`, `seoDescription`, `pageContent`, `updatedTime`) VALUES
+                ('$clientId', '$publishId', '$pageCategory', '$pageUrl', '$pageTitle', '$seoKeywords',  '$seoDescription', '$pageContent', NOW())")or die (mysqli_error($conn));
                 
                 $response['message']="PAGE CREATED SUCCESFFULY!";
             }

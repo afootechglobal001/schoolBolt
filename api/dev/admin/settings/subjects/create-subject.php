@@ -56,8 +56,8 @@ if(!$checkSession){
 
 
             mysqli_query($conn,"INSERT INTO `SUBJECTS_TAB`
-            (`subjectId`, `subjectName`,  `createdBy`, `statusId`, `createdTime`) VALUES 
-            ('$subjectId','$subjectName', '$loginStaffId', '$statusId', NOW() )")or die (mysqli_error($conn));
+            (`clientId`, `subjectId`, `subjectName`,  `createdBy`, `statusId`, `createdTime`) VALUES 
+            ('$clientId', '$subjectId','$subjectName', '$loginStaffId', '$statusId', NOW() )")or die (mysqli_error($conn));
 
             $response['response']=200; 
             $response['success']=true;
