@@ -28,7 +28,7 @@ function _getForm(options) {
 		url=''
     } = options;
 $(layer===1 ? '#get-form-more-div':'#get-more-div-secondary').css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
-	const dataString = "action=" + action + "&page=" + page + "&id=" + id;
+const dataString = "action=" + action + "&page=" + page + "&id=" + id + "&modalLayer=" + layer;
 	$.ajax({
 		type: "POST",
 		url: url,

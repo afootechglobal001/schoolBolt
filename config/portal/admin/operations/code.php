@@ -24,6 +24,7 @@ switch ($action){
 	case 'get_form':
 		$page=$_POST['page'];
 		$id=$_POST['id'];
+		$modalLayer=$_POST['modalLayer'];
 		require_once('dashboard-content.php');
 		require_once('branch-content.php');
 		require_once('staff-content.php');

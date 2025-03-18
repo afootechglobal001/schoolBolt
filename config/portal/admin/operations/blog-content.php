@@ -102,7 +102,7 @@
         <div class="title-panel-div">
             <div class="inner-top">
                 <span id="panel-title"><i class="bi-plus-square"></i> ADD A NEW BLOG</span>
-                <div class="close" title="Close" onclick="_alertClose();">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
             </div>
         </div>
 
@@ -181,7 +181,7 @@
                     <li class="active-li" title="Page Content" id="page_content" onclick="_getActiveBlogPage({divid:'page_content', page: 'page_content', url: adminPortalLocalUrl});">Page Content </li>
                     <li title="Upload Picture" id="picture_page" onclick="_getActiveBlogPage({divid:'picture_page', page: 'picture_page', url: adminPortalLocalUrl});">Upload Picture</li>
                 </ul>
-                <button class="close-btn" onclick="_alertClose()" title="Close"><i class="bi-x-lg"></i></button> 
+                <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer?>)" title="Close"><i class="bi-x-lg"></i></button> 
             </div>
             
             <div class="pages-back-div">

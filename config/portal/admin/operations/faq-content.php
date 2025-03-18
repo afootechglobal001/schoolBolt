@@ -59,7 +59,7 @@
         <div class="title-panel-div">
             <div class="inner-top">
                 <span id="panel-title"><i class="bi-plus-square"></i> ADD A NEW FAQ</span>
-                <div class="close" title="Close" onclick="_alertClose();">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
             </div>
         </div>
 

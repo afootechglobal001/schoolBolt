@@ -281,7 +281,7 @@
             Please, confirm your log-out action.
             <div class="btn-div">
                 <button class="btn" onclick="_logOut();">YES</button>
-                <button class="btn no-btn" onclick="_alertClose();">NO</button>
+                <button class="btn no-btn" onclick="_alertClose(<?php echo $modalLayer?>);">NO</button>
             </div>
         </div>
     </div>

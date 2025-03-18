@@ -39,7 +39,7 @@
         <div class="title-panel-div">
             <div class="inner-top">
                 <span id="pageTitle"><i class="bi-plus-square"></i> ADD A NEW CLASS</span>
-                <div class="close" title="Close" onclick="_alertClose();">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
             </div>
         </div>
 
@@ -91,7 +91,7 @@
                         <h3 id="roleName"><script> $("#roleName").html(getEachClassSession.className);</script></h3>
                     </div>
                 </div>
-                <div class="close" title="Close" onclick="_alertClose();">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
             </div>
         </div>
 
