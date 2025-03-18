@@ -149,3 +149,108 @@
         </div>  
     </div>
 <?php } ?>
+
+<?php if ($page =='add_classes') { ?>
+    
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="pageTitle"><i class="bi-plus-square"></i> ADD CLASS TO DEPARTMENT</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert">Kindly check the following classes to <span id="pageTitle2"> ADD CLASS TO DEPARTMENT</span></div>
+                </div>
+
+                <div class="title">Check Class:</div>
+                <div class="check-container">
+                    <div class="div-in" id="pageContent">
+                        <script>_fetchCheckBoxClasses();</script>
+                        <!-- <div class="radio-in-div">
+                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
+                            <span>KG 1</span>
+                        </div>
+
+                        <div class="radio-in-div">
+                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
+                            <span>KG 2</span>
+                        </div>
+
+                        <div class="radio-in-div">
+                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
+                            <span>NURSERY 1</span>
+                        </div>
+
+                        <div class="radio-in-div">
+                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
+                            <span>NURSERY 2</span>
+                        </div>
+
+                        <div class="radio-in-div">
+                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
+                            <span>BASIC 1</span>
+                        </div>
+
+                        <div class="radio-in-div">
+                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
+                            <span>BASIC 2</span>
+                        </div>
+
+                        <div class="radio-in-div">
+                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
+                            <span>BASIC 3</span>
+                        </div>
+
+                        <div class="radio-in-div">
+                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
+                            <span>BASIC 4</span>
+                        </div>
+
+                        <div class="radio-in-div">
+                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
+                            <span>BASIC 5</span>
+                        </div>
+
+                        <div class="radio-in-div">
+                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
+                            <span>JSS 1</span>
+                        </div>
+
+                        <div class="radio-in-div">
+                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
+                            <span>JSS 2</span>
+                        </div>
+
+                        <div class="radio-in-div">
+                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
+                            <span>JSS 3</span>
+                        </div>
+
+                        <div class="radio-in-div">
+                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
+                            <span>SS 1</span>
+                        </div>
+
+                        <div class="radio-in-div">
+                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
+                            <span>SS 2</span>
+                        </div>
+
+                        <div class="radio-in-div">
+                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
+                            <span>SS 3</span>
+                        </div> -->
+                    </div>                  
+                </div>
+
+                <div>
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick="_createUpdateDepartment();"> <i class="bi-check"></i> SUBMIT </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
