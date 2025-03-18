@@ -12,9 +12,13 @@ if(!$checkSession){
 }
     //////////////////declaration of variables//////////////////////////////////////
     $q = $_GET['q'];
+    $branchId = $_GET['branchId'];
     $staffId = $_GET['staffId'];
     $statusId = $_GET['statusId'];
 
+    if (!empty($branchId)) {
+        $branchIds = "AND branchId ='$branchId'";
+    }
     if (!empty($staffId)) {
         $staffIds = "AND staffId ='$staffId'";
     }
@@ -23,7 +27,7 @@ if(!$checkSession){
     }
     // Securely escape $q
     $q = mysqli_real_escape_string($conn, $q);
-    $select = "SELECT * FROM STAFF_VIEW WHERE (firstName LIKE '%$q%' OR middleName LIKE '%$q%' OR lastName LIKE '%$q%' OR mobileNumber LIKE '%$q%' OR address LIKE '%$q%') $staffIds  $statusIds ORDER BY firstName ASC";
+    $select = "SELECT * FROM STAFF_VIEW WHERE (firstName LIKE '%$q%' OR middleName LIKE '%$q%' OR lastName LIKE '%$q%' OR mobileNumber LIKE '%$q%' OR address LIKE '%$q%') $staffIds  $statusIds $branchIds ORDER BY firstName ASC";
 
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($query);
