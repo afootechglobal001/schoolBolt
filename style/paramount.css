@@ -866,3 +866,53 @@ a {
 		font-size: 15px;
 	}
 }
+
+
+.webcam-div{
+	width:100%;
+	height:100%;
+	position:fixed;
+	background: rgba(0,0,0,.3);
+	z-index:2000;
+	display: none;
+}
+
+.webcam-div .div-in{
+	width:100%;
+	height:100%;
+	position:absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+
+.webcam-div .webcam-div-in{
+	width:270px;
+	min-height:270px;
+	background:#FFF;
+	padding:10px;
+	border-radius:10px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	gap: 15px;
+}
+
+.webcam-div .webcam-div-in .btn{
+	border: none;
+	height: 45px;
+	min-width: 150px;
+	padding: 0px 20px;
+	font-family: sub-title-font;
+	background: var(--primary-color);
+	color: var(--white-color);
+	cursor: pointer;
+	transition: all 0.2s ease-in 0.2s;
+	border-radius: 5px;
+}
+
+.webcam-div .webcam-div-in .btn:hover{
+	background: var(--secondary-color);
+}

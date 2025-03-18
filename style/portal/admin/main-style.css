@@ -1291,13 +1291,21 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	border: none;
 	color: var(--white-color);
     background: var(--primary-color);
-	font-size: 9px;
+	font-size: 11px;
 	font-family: sub-title-font;
-	padding: 4px 7px;
+	padding: 5px 10px;
 	border-radius: 3px;
 	cursor: pointer;
+	-moz-transition:all 0.2s ease-in 02s;
+	transition:all 0.2s ease-in 0.2s;
+	-webkit-transition:all 0.2s ease-in 0.2s;
+	-ms-transition:all 0.2s ease-in 0.2s;
+	-o-transition:all 0.2s ease-in 0.2s;
 }
 
+.table-div .table .tb-row .btn:hover{
+	background: var(--secondary-color);
+}
 
 
 
@@ -1677,6 +1685,83 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 .slide-form-div .container-back-div .inner-container .setting_detail{
 	display: none;
 }
+
+
+
+
+
+.slide-form-div .container-back-div .inner-container .check-container{
+	min-height: 240px;
+	width: 100%;
+	background-color: #f9f9f9;
+	border-radius: 8px;
+}
+
+.slide-form-div .container-back-div .inner-container .check-container .div-in{
+	padding: 20px 25px;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 15px 18px;
+}
+
+.slide-form-div .container-back-div .inner-container .check-container .div-in .radio-in-div{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+	cursor: pointer;
+}
+
+.slide-form-div .container-back-div .inner-container .check-container .div-in .radio-in-div span{
+	font-size: 16px;
+	font-family: body-font;
+}
+
+.slide-form-div .container-back-div .inner-container .check-container .div-in .radio-in-div .radio {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    border: var(--primary-color) 4px solid;
+    cursor: pointer;
+}
+
+
+.slide-form-div .container-back-div .inner-container .check-container .div-in .radio-in-div .radio input {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    opacity: 0;
+	cursor: pointer;
+}
+
+.slide-form-div .container-back-div .inner-container .check-container .div-in .radio-in-div .radio .border {
+    width: 10px;
+    height: 10px;
+    border-radius: 6px;
+    margin-top: -16px;
+    margin-left: -2px;
+    border: #FFF 2px solid;
+    background: #FFF;
+    -moz-transition: all 0.2s ease-in 02s;
+    transition: all 0.2s ease-in 0.2s;
+    -webkit-transition: all 0.2s ease-in 0.2s;
+    -ms-transition: all 0.2s ease-in 0.2s;
+    -o-transition: all 0.2s ease-in 0.2s;
+}
+
+.slide-form-div .container-back-div .inner-container .check-container .div-in .radio-in-div .radio:hover .border {
+	background: var(--primary-color);
+}
+
+.slide-form-div .container-back-div .inner-container .check-container .div-in .radio-in-div .radio input:checked+.border {
+    background: var(--primary-color);
+}
+
+
+
+
+
 
 
 
@@ -3240,7 +3325,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 }
 
 .other-pages-ajax-loader {
-	top: 30%;
+	top: 45%;
 }
 
 
@@ -4009,51 +4094,3 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 
 
 
-.webcam-div{
-	width:100%;
-	height:100%;
-	position:fixed;
-	background: rgba(0,0,0,.3);
-	z-index:2000;
-	display: none;
-}
-
-.webcam-div .div-in{
-	width:100%;
-	height:100%;
-	position:absolute;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-
-.webcam-div .webcam-div-in{
-	width:270px;
-	min-height:270px;
-	background:#FFF;
-	padding:10px;
-	border-radius:10px;
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	justify-content: center;
-	gap: 15px;
-}
-
-.webcam-div .webcam-div-in .btn{
-	border: none;
-	height: 45px;
-	min-width: 150px;
-	padding: 0px 20px;
-	font-family: sub-title-font;
-	background: var(--primary-color);
-	color: var(--white-color);
-	cursor: pointer;
-	transition: all 0.2s ease-in 0.2s;
-	border-radius: 5px;
-}
-
-.webcam-div .webcam-div-in .btn:hover{
-	background: var(--secondary-color);
-}

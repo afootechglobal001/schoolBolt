@@ -22,6 +22,7 @@ function _fetchDepartments() {
 							<th>Created By</th>
 							<th>Updated By</th>
 							<th>Date</th>
+							<th>Class</th>
 							<th>Status</th>
 						</tr>
 					</thead>`;
@@ -45,6 +46,7 @@ function _fetchDepartments() {
 									<td>${createdBy}</td>
 									<td>${updatedBy ? updatedBy : "NULL"}</td>
 									<td>${createdTime}</td>
+									<td><button class="btn" title="Add Classes to department" onclick="_getForm({page: 'add_classes', url: adminPortalLocalUrl});">5</button></td>
 									<td><div class="status-div ${statusName}">${statusName}</div></td>
 								</tr>
 							</tbody>`;
@@ -169,5 +171,58 @@ function _createUpdateDepartment() {
 	} catch (error) {
 		_actionAlert('An unexpected error occurred! Please Try Again', false);
 		$("#submitBtn").prop("disabled", false);
+	}
+}
+
+
+function _fetchCheckBoxClasses() {
+    $('#pageContent').html('<div class="ajax-loader other-pages-ajax-loader"><img src="' + websiteUrl + '/all-images/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint + '/admin/settings/classes/fetch-class',
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const fetch = info.data;
+
+				let text = '';
+
+				if (info.success) {
+					for (let i = 0; i < fetch.length; i++) {
+						const classId = fetch[i].classId;
+						const className = fetch[i].className;
+						
+						text +=`
+						 	<div class="radio-in-div">
+								<div class="radio"><input type="checkbox" class="child" name="${classId}[]" data-value="${className}"><div class="border"></div></div>
+								<span>${className}</span>
+                        	</div>`;
+					}
+					$('#pageContent').html(text);
+				} else {
+					_actionAlert(info.message, false);
+
+					text +=`
+						<div class="false-notification-div">
+							<p>${info.message}</p>
+						</div>`;
+
+						$('#pageContent').html(text);
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
 }
