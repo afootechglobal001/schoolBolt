@@ -1368,14 +1368,16 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 .slide-form-div .container-back-div{
 	position: absolute;
     width: 100%;
-	height: calc(100% - 50px);
+	height: calc(100% - 90px);
+	top: 50px;
+	padding-bottom: 40px;
     display: flex;
+	overflow: auto;
 }
 
 .slide-form-div .container-back-div .inner-container{
 	width: 100%;
     padding: 20px 30px 30px 30px;
-	overflow: auto;
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
@@ -1386,6 +1388,15 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	flex-direction: column;
 	gap: 20px;
 	margin: 8px 0px;
+}
+
+.slide-form-div .container-back-div .text_field_back_container .col-back-div{
+	display: flex;
+	gap: 8px;
+}
+
+.slide-form-div .container-back-div .text_field_back_container .col-back-div .col-1{
+	width: 49%;
 }
 
 .slide-form-div .container-back-div .inner-container .pix-div{
@@ -1403,6 +1414,27 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	border-radius: 5px;
 	cursor: pointer;
 }
+
+.slide-form-div .container-back-div .inner-container .cam-pix{
+	width: 200px;
+	height: 200px;
+	padding: 5px;
+	border: #CCC 1px solid;
+	border-radius: 5px;
+	cursor: pointer;
+	flex-shrink: 0;
+	margin: auto;
+}
+
+.slide-form-div .container-back-div .inner-container .cam-pix img{
+	width:100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+
+
+
 
 .slide-form-div .container-back-div .inner-container .title{
 	font-size:14px;
@@ -3974,4 +4006,55 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 
 .product-pages-back-div .top-header ul .no-border{
 	border-radius: 0px;
+}
+
+
+
+.webcam-div{
+	width:100%;
+	height:100%;
+	position:fixed;
+	background: rgba(0,0,0,.3);
+	z-index:2000;
+	display: none;
+}
+
+.webcam-div .div-in{
+	width:100%;
+	height:100%;
+	position:absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+
+.webcam-div .webcam-div-in{
+	width:270px;
+	min-height:270px;
+	background:#FFF;
+	padding:10px;
+	border-radius:10px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	gap: 15px;
+}
+
+.webcam-div .webcam-div-in .btn{
+	border: none;
+	height: 45px;
+	min-width: 150px;
+	padding: 0px 20px;
+	font-family: sub-title-font;
+	background: var(--primary-color);
+	color: var(--white-color);
+	cursor: pointer;
+	transition: all 0.2s ease-in 0.2s;
+	border-radius: 5px;
+}
+
+.webcam-div .webcam-div-in .btn:hover{
+	background: var(--secondary-color);
 }

@@ -14,35 +14,6 @@ function _getStaffPagesActiveLink(divid){
 	$("#"+divid).addClass('active');
 }
 
-function _getSelectGender(fieldId){
-	try {
-		$.ajax({
-			type: "GET",
-			url: endPoint+"/preset-data/fetch-gender",
-			dataType: "json",
-			cache: false,
-			headers: getAuthHeaders(),
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-				
-				if (success === true) {
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].genderId;
-						const value = data[i].genderName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
-}
-
 function _getSelectBranch(fieldId){
 	try {
 		$.ajax({
