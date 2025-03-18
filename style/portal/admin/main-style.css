@@ -3008,15 +3008,6 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	color: var(--white-color);
 }
 
-
-/* .user-profile-div .profile-content-div .bg-img .mini-profile .text-back-div .inner-text .text-div .ACTIVE{ 
-    color: var(--primary-color);
-}
-
-.user-profile-div .profile-content-div .bg-img .mini-profile .text-back-div .inner-text .text-div .SUSPEND{ 
-    color: var(--secondary-color);
-} */
-
 .user-profile-div .profile-content-div .bg-img .mini-profile .text-back-div .inner-text .text-div .name{ 
     overflow: hidden;
     color:  var(--sub-body-color);
@@ -3130,7 +3121,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	position: absolute;
 	display: none;
 	background: var(--white-color);
-	min-width: 120px;
+	min-width: 150px;
 	border-radius: 10px;
 	margin-top: 10px;
 	box-shadow: 0px 0px 5px 2px #f0efef;	
@@ -3139,6 +3130,10 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	-ms-transition:all 0.2s ease-in 0.2s;
 	-o-transition:all 0.2s ease-in 0.2s;
 	z-index: 200;
+}
+
+#dotted .expanded{
+	min-width: 250px;
 }
 
 #dotted .expand-div .ul-expand{
