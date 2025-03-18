@@ -25,6 +25,7 @@ if(!$checkSession){
     if (!empty($statusId)) {
         $statusIds = "AND statusId IN ($statusId)";
     }
+    
     // Securely escape $q
     $q = mysqli_real_escape_string($conn, $q);
     $select = "SELECT * FROM STAFF_VIEW WHERE (firstName LIKE '%$q%' OR middleName LIKE '%$q%' OR lastName LIKE '%$q%' OR mobileNumber LIKE '%$q%' OR address LIKE '%$q%') $staffIds  $statusIds $branchIds ORDER BY firstName ASC";
