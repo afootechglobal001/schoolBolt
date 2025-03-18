@@ -62,6 +62,18 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="user-managment-list" onclick="_getPage({page: 'arm_config', url: adminPortalLocalUrl});">
+                <div class="inner-div">
+                    <div class="icon-div">
+                        <img src="<?php echo $websiteUrl?>/all-images/images/arms.png" alt="Arms Configuration"/>
+                    </div>
+                    <div class="text-div">
+                        <h3>Arms</h3>
+                        <p>Create, organize, and manage Arms for different Classes.</p>
+                    </div>
+                </div>
+            </div>
 
             <div class="user-managment-list" onclick="_getPage({page: 'subject_config', url: adminPortalLocalUrl});">
                 <div class="inner-div">
