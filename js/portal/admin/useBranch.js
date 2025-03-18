@@ -573,11 +573,12 @@ function _updateBranch() {
 
 
 function _fetchBranchStaffs() {
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
     $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/all-images/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
 	try {
 		$.ajax({
 			type: "GET",
-			url: endPoint + '/admin/staff/fetch-staff',
+			url: `${endPoint}/admin/staff/fetch-staff?branchId=${getEachBranchDetailsSession.branchId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(true),
