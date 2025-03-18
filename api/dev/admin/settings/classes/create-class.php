@@ -52,7 +52,7 @@ if(!$checkSession){
             $sequence=$callclass->_get_sequence_count($conn, $countId);
             $array = json_decode($sequence, true);
             $no= $array[0]['no'];
-            $classId=$countId.$no;
+            $classId=$countId.$no.date("Ymdhis");
 
 
             mysqli_query($conn,"INSERT INTO `CLASSES_TAB`
