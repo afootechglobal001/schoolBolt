@@ -151,25 +151,23 @@
                 <div class="alert alert-success form-alert">
                     <span>FATHER's INFORMATIONS</span>
                     <div class="text_field_back_container">
-                        <div class="col-back-div">
-                            <div class="text_field_container col-1" id="titleId_container">
-                                <script>
-                                    selectField({
-                                        id: 'titleId',
-                                        title: 'Select Title'
-                                    });
-                                    _getSelectTitle('titleId');
-                                </script>
-                            </div>
+                        <div class="text_field_container" id="titleId_container">
+                            <script>
+                                selectField({
+                                    id: 'titleId',
+                                    title: 'Select Title'
+                                });
+                                _getSelectTitle('titleId');
+                            </script>
+                        </div>
 
-                            <div class="text_field_container col-1" id="fsurname_container">
-                                <script>
-                                    textField({
-                                        id: 'fsurname',
-                                        title: 'SURNAME'
-                                    });
-                                </script>
-                            </div>
+                        <div class="text_field_container" id="fsurname_container">
+                            <script>
+                                textField({
+                                    id: 'fsurname',
+                                    title: 'SURNAME'
+                                });
+                            </script>
                         </div>
 
                         <div class="text_field_container" id="ffirstName_container">
@@ -248,25 +246,23 @@
                 <div class="alert alert-success form-alert">
                     <span>MOTHER's INFORMATIONS</span>
                     <div class="text_field_back_container">
-                        <div class="col-back-div">
-                            <div class="text_field_container col-1" id="mTitleId_container">
-                                <script>
-                                    selectField({
-                                        id: 'mTitleId',
-                                        title: 'Select Title'
-                                    });
-                                    _getSelectTitle('mTitleId');
-                                </script>
-                            </div>
+                        <div class="text_field_container" id="mTitleId_container">
+                            <script>
+                                selectField({
+                                    id: 'mTitleId',
+                                    title: 'Select Title'
+                                });
+                                _getSelectTitle('mTitleId');
+                            </script>
+                        </div>
 
-                            <div class="text_field_container col-1" id="msurname_container">
-                                <script>
-                                    textField({
-                                        id: 'msurname',
-                                        title: 'SURNAME'
-                                    });
-                                </script>
-                            </div>
+                        <div class="text_field_container" id="msurname_container">
+                            <script>
+                                textField({
+                                    id: 'msurname',
+                                    title: 'SURNAME'
+                                });
+                            </script>
                         </div>
 
                         <div class="text_field_container" id="mfirstName_container">
@@ -371,7 +367,7 @@
                                     id: 'armId',
                                     title: 'Select Arm'
                                 });
-                                _getSelectClass('armId');
+                                _getSelectArm('armId');
                             </script>
                         </div>
                     </div>
@@ -386,6 +382,7 @@
                         _getSelectStatusId('statusId', '1,2');
                     </script>
                 </div>
+                
                 <div>
                     <button class="btn" title="SUBMIT" id="submitBtn" onclick="_createStaff();"> <i class="bi-check"></i> SUBMIT </button>
                 </div>

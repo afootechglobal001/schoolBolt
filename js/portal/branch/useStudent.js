@@ -60,3 +60,90 @@ function _getSelectTitle(fieldId){
 		_actionAlert('An unexpected error occurred. Please try again.', false);
 	}
 }
+
+function _getSelectDepartment(fieldId){
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+'/admin/settings/departments/fetch-department',
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].departmentId;
+						const value = data[i].departmentName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+function _getSelectClass(fieldId){
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+'/admin/settings/classes/fetch-class',
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].classId;
+						const value = data[i].className;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+function _getSelectArm(fieldId){
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+'/admin/settings/arms/fetch-arm',
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].armId;
+						const value = data[i].armName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
