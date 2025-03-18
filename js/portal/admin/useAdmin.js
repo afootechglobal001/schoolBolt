@@ -70,6 +70,8 @@ function getAuthHeaders(includeAuth = false) {
         'userOsBrowser': userOsBrowser,
         'userIpAddress': userIpAddress,
         'userDeviceId': userDeviceId,
+		'clientId': clientId,
+		'clientAddress': clientAddress,
         'Authorization': includeAuth ? ('Bearer ' + (loginAccessKey ?? '')) : undefined
     };
 }

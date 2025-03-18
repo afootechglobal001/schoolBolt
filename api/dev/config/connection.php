@@ -1,11 +1,19 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_WARNING);
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Authorization, Origin, X-Requested-With, Content-Type, Accept, apiKey, userOsBrowser, userIpAddress, userDeviceId");
+header("Access-Control-Allow-Headers: Authorization, Origin, X-Requested-With, Content-Type, Accept, apiKey, userOsBrowser, userIpAddress, userDeviceId, clientId, clientAddress");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header('Content-Type: application/json; charset=UTF-8');
 
 ////////////for live connect  
+$_HOST_NAME_ADMIN = "145.239.185.59";  
+$_DB_USERNAME_ADMIN ="schoolbolt_admin";
+$_DB_PASSWORD_ADMIN ="Password@2024"; // ThisIsThePassword
+
+$connAdmin = mysqli_connect($_HOST_NAME_ADMIN, $_DB_USERNAME_ADMIN, $_DB_PASSWORD_ADMIN)or die("Unable to connect to MySQL1");
+mysqli_select_db($connAdmin,"schoolbolt_administrative_db");
+/////////////////////////////////////////////////////////////////
+
 $_HOST_NAME = "145.239.185.59";  
 $_DB_USERNAME ="schoolbolt_admin";
 $_DB_PASSWORD ="Password@2024"; // ThisIsThePassword

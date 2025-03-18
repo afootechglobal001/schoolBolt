@@ -50,7 +50,9 @@ function _confirmLogin() {
 				'apiKey': apiKey,
 				'userOsBrowser': userOsBrowser,
 				'userIpAddress': userIpAddress,
-				'userDeviceId': userDeviceId
+				'userDeviceId': userDeviceId,
+				'clientId': clientId,
+				'clientAddress': clientAddress
 			},
 			success: function (data) {
 				if (data.success) {
