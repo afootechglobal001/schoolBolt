@@ -18,6 +18,7 @@ switch ($action){
 		require_once('faq-content.php');
 		require_once('department-content.php');
 		require_once('class-content.php');
+		require_once('arm-content.php');
 		require_once('subject-content.php');
 		require_once('branch-operation/student-content.php');
 	break;
@@ -36,6 +37,7 @@ switch ($action){
 		require_once('faq-content.php');
 		require_once('department-content.php');
 		require_once('class-content.php');
+		require_once('arm-content.php');
 		require_once('subject-content.php');
 		require_once('branch-operation/student-content.php');
 	break;
