@@ -344,24 +344,24 @@
         <div class="left-dashbaord-container">
             <div class="statistics-chart-back-div box-shadow">
                 <div class="statistics-back-div">
-                    <div class="statistics-div left-border font-size" title="Unpaid Order" onclick="_getBranchModal('branch_unpaid_orders','branch_unpaid_orders','');">
+                    <div class="statistics-div left-border font-size" title="Staff" onclick="">
                         <h2>5</h2>
-                        <span><i class="bi-basket"></i> Unpaid Order</span>
+                        <span><i class="bi-person-workspace"></i> Staff</span>
                     </div>
 
-                    <div class="statistics-div left-border border-radius font-size" title="Unprocessed Order" onclick="_getBranchModal('branch_pending_orders','branch_pending_orders','');">
+                    <div class="statistics-div left-border border-radius font-size" title="Class" onclick="">
                         <h2>8</h2>
-                        <span><i class="bi-basket"></i> Unprocessed Order</span>
+                        <span><i class="bi-people-fill"></i> Class</span>
                     </div>
 
-                    <div class="statistics-div font-size" title="Ready Order" onclick="_getBranchModal('branch_ready_orders','branch_ready_orders','');">
+                    <div class="statistics-div font-size" title="Student" onclick="">
                         <h2>10</h2>
-                        <span><i class="bi-basket font-size"></i> Ready Order </span>
+                        <span><i class="bi-mortarboard font-size"></i> Student </span>
                     </div>
 
-                    <div class="statistics-div right-border font-size" title="Delivered Order" onclick="_getBranchModal('branch_delivered_orders','branch_delivered_orders','');">
+                    <div class="statistics-div right-border font-size" title="Subject" onclick="">
                         <h2>100</h2>
-                        <span><i class="bi-basket"></i> Delivered Order</span>
+                        <span><i class="bi-journals"></i> Subject</span>
                     </div>
                 </div>
 
