@@ -72,7 +72,7 @@ if(!$checkSession){
                 $updatedBy=$fetchQuery['updatedBy'];
 
                 /////////////////// for  $createdBy
-                $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM $clientIds AND STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
+                $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
                 $createdByData=array();
                 while ($getCreatedByfetch = mysqli_fetch_assoc($getCreatedByQuery)) {
                     $createdByData[] = $getCreatedByfetch;
