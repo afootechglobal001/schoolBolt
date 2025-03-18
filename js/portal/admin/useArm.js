@@ -12,7 +12,6 @@ function _fetchArms() {
 
 				let text = '';
 				let no=0;
-
 				text =`
 					<thead>
 						<tr class="tb-col">
