@@ -59,6 +59,7 @@ if(!$checkSession){
             (`clientId`, `armId`, `armName`,  `createdBy`, `statusId`, `createdTime`) VALUES 
             ('$clientId', '$armId','$armName', '$loginStaffId', '$statusId', NOW() )")or die (mysqli_error($conn));
 
+
             $response['response']=200; 
             $response['success']=true;
             $response['message']="ARM CREATED SUCCESFFULY!"; 
