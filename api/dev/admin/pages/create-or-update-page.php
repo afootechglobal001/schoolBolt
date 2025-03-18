@@ -81,7 +81,7 @@ if(!$checkSession){
         goto end;
 	}
    
-			$query=mysqli_query($conn,"SELECT * FROM PAGES_TAB WHERE pageCategory='$pageCategory' AND  pageUrl='$pageUrl' AND publishId!='$publishId'") or die (mysqli_error($conn));
+			$query=mysqli_query($conn,"SELECT * FROM PAGES_TAB WHERE $clientIds AND pageCategory='$pageCategory' AND  pageUrl='$pageUrl' AND publishId!='$publishId'") or die (mysqli_error($conn));
 			$count=mysqli_num_rows($query);
             if ($count>0){ /// start if 4
                 $response = [
@@ -92,12 +92,12 @@ if(!$checkSession){
                 goto end;
             }
 
-            $query=mysqli_query($conn,"SELECT * FROM PAGES_TAB WHERE publishId='$publishId'") or die (mysqli_error($conn));
+            $query=mysqli_query($conn,"SELECT * FROM PAGES_TAB WHERE $clientIds AND publishId='$publishId'") or die (mysqli_error($conn));
 			$pageCount=mysqli_num_rows($query);
             if ($pageCount>0){ /// start if 4
                 mysqli_query($conn,"UPDATE `PAGES_TAB` SET
                 `pageUrl`='$pageUrl', `pageTitle`='$pageTitle', `seoKeywords`='$seoKeywords', `seoDescription`='$seoDescription', 
-                `pageContent`='$pageContent', `updatedTime`=NOW() WHERE publishId='$publishId'")or die (mysqli_error($conn));
+                `pageContent`='$pageContent', `updatedTime`=NOW() WHERE $clientIds AND publishId='$publishId'")or die (mysqli_error($conn));
 
                 $response['message']="PAGE UPDATED SUCCESFFULY!";
             }else{
@@ -114,14 +114,14 @@ if(!$checkSession){
                 $imageName = $_FILES["seoFlyer"]["name"][$i];					   
                 $imageExtension = end(explode('.', $imageName));
                 $newImageName = $publishId."_".$i.uniqid().".".$imageExtension; /////generate new image name
-                mysqli_query($conn,"UPDATE `PAGES_TAB` SET `seoFlyer`='$newImageName' WHERE publishId='$publishId'")or die (mysqli_error($conn));
+                mysqli_query($conn,"UPDATE `PAGES_TAB` SET `seoFlyer`='$newImageName' WHERE $clientIds AND publishId='$publishId'")or die (mysqli_error($conn));
             }
            
             $response['response']=200; 
             $response['success']=true;
             $response['data'] = array(); // Initialize the data array
 
-            $select="SELECT * FROM PAGES_TAB WHERE publishId = '$publishId'";
+            $select="SELECT * FROM PAGES_TAB WHERE $clientIds AND publishId = '$publishId'";
             $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
             while ($fetchQuery = mysqli_fetch_assoc($query)) {
                 $response['data'][] = $fetchQuery;

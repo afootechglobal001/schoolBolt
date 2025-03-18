@@ -177,7 +177,7 @@ if(!$checkSession){
             goto end;
         }
    
-			$query=mysqli_query($conn,"SELECT * FROM BRANCHES_TAB WHERE name='$name' AND branchId!='$branchId'") or die (mysqli_error($conn));
+			$query=mysqli_query($conn,"SELECT * FROM BRANCHES_TAB WHERE $clientIds AND name='$name' AND branchId!='$branchId'") or die (mysqli_error($conn));
 			$count=mysqli_num_rows($query);
 
             if ($count>0){ /// start if 4
@@ -188,7 +188,7 @@ if(!$checkSession){
                 ];
                 goto end;
             }
-            $query=mysqli_query($conn,"SELECT * FROM BRANCHES_TAB WHERE smtpUsername='$smtpUsername' AND branchId!='$branchId'") or die (mysqli_error($conn));
+            $query=mysqli_query($conn,"SELECT * FROM BRANCHES_TAB WHERE $clientIds AND smtpUsername='$smtpUsername' AND branchId!='$branchId'") or die (mysqli_error($conn));
 			$count=mysqli_num_rows($query);
 
             if ($count>0){ /// start if 4
@@ -203,14 +203,14 @@ if(!$checkSession){
             mysqli_query($conn,"UPDATE `BRANCHES_TAB` SET
             `name`='$name', `mobileNumber`='$mobileNumber', `stateId`='$stateId', `lgaId`='$lgaId', `address`='$address', `smtpHost`='$smtpHost', `smtpUsername`='$smtpUsername', 
             `smtpPassword`='$smtpPassword', `smtpPort`='$smtpPort', `supportEmail`='$supportEmail', `paymentKey`='$paymentKey', `managerId`='$staffId', `session`='$session', `termId`='$termId', `statusId`='$statusId', 
-            `updatedBy`='$loginStaffId', `updatedTime`=NOW() WHERE branchId='$branchId'")or die (mysqli_error($conn));
+            `updatedBy`='$loginStaffId', `updatedTime`=NOW() WHERE $clientIds AND branchId='$branchId'")or die (mysqli_error($conn));
 
             $response['response']=200; 
             $response['success']=true;
             $response['message']="BRANCH UPDATE SUCCESFFULY!"; 
             $response['data'] = array(); // Initialize the data array
 
-            $select="SELECT * FROM BRANCH_VIEW WHERE branchId = '$branchId'";
+            $select="SELECT * FROM BRANCH_VIEW WHERE $clientIds AND branchId = '$branchId'";
             $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
             while ($fetchQuery = mysqli_fetch_assoc($query)) {
                 $termId=$fetchQuery['termId'];
@@ -226,7 +226,7 @@ if(!$checkSession){
                 $fetchQuery['termData']= $termData;
 
                 /////////////////// for  $createdBy
-                $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE staffId='$createdBy'");
+                $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
                 $createdByData=array();
                 while ($getCreatedByfetch = mysqli_fetch_assoc($getCreatedByQuery)) {
                     $createdByData[] = $getCreatedByfetch;
@@ -234,7 +234,7 @@ if(!$checkSession){
                 $fetchQuery['createdBy']= $createdByData;
 
                 /////////////////// for  $updatedBy
-                $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE staffId='$updatedBy'");
+                $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
                 $updatedByData=array();
                 while ($getUpdatedByfetch = mysqli_fetch_assoc($getUpdatedByQuery)) {
                     $updatedByData[] = $getUpdatedByfetch;

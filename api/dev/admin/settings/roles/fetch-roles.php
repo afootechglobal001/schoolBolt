@@ -25,7 +25,7 @@ if(!$checkSession){
     }
     // Securely escape $q
     $q = mysqli_real_escape_string($conn, $q);
-    $select = "SELECT * FROM ROLE_TAB WHERE (roleName LIKE '%$q%' OR roleDescription LIKE '%$q%') $roleIds";
+    $select = "SELECT * FROM ROLE_TAB WHERE $clientIds AND (roleName LIKE '%$q%' OR roleDescription LIKE '%$q%') $roleIds";
 
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($query);
@@ -50,7 +50,7 @@ if(!$checkSession){
 
         /////////////////// for  $createdBy
         $createdByData=array();
-        $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE staffId='$createdBy'");
+        $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
         while ($getCreatedByfetch = mysqli_fetch_assoc($getCreatedByQuery)) {
             $createdByData[] = $getCreatedByfetch;
         }
@@ -58,7 +58,7 @@ if(!$checkSession){
 
         /////////////////// for  $updatedBy
         $updatedByData=array();
-        $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE staffId='$updatedBy'");
+        $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
         while ($getUpdatedByfetch = mysqli_fetch_assoc($getUpdatedByQuery)) {
             $updatedByData[] = $getUpdatedByfetch;
         }
@@ -73,7 +73,7 @@ if(!$checkSession){
         $fetchQuery['rolePermissions']= $rolePermissionIdsData;
 
         //// get number of users
-        $userCountQuery = mysqli_query($conn, "SELECT COUNT(*) AS count FROM STAFF_TAB WHERE roleId='$roleId'");
+        $userCountQuery = mysqli_query($conn, "SELECT COUNT(*) AS count FROM STAFF_TAB WHERE $clientIds AND roleId='$roleId'");
         $userCountFetch = mysqli_fetch_assoc($userCountQuery);
         $fetchQuery['userCount'] = $userCountFetch['count']; // Assign the actual count value
 

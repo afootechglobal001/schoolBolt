@@ -28,7 +28,7 @@ if(!$checkSession){
     
     // Securely escape $q
     $q = mysqli_real_escape_string($conn, $q);
-    $select = "SELECT * FROM STAFF_VIEW WHERE (firstName LIKE '%$q%' OR middleName LIKE '%$q%' OR lastName LIKE '%$q%' OR mobileNumber LIKE '%$q%' OR address LIKE '%$q%') $staffIds  $statusIds $branchIds ORDER BY firstName ASC";
+    $select = "SELECT * FROM STAFF_VIEW WHERE $clientIds AND (firstName LIKE '%$q%' OR middleName LIKE '%$q%' OR lastName LIKE '%$q%' OR mobileNumber LIKE '%$q%' OR address LIKE '%$q%') $staffIds  $statusIds $branchIds ORDER BY firstName ASC";
 
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($query);
@@ -55,7 +55,7 @@ if(!$checkSession){
 
         /////////////////// for  $createdBy
         $createdByData=array();
-        $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE staffId='$createdBy'");
+        $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
         while ($getCreatedByfetch = mysqli_fetch_assoc($getCreatedByQuery)) {
             $createdByData[] = $getCreatedByfetch;
         }
@@ -63,7 +63,7 @@ if(!$checkSession){
 
         /////////////////// for  $updatedBy
         $updatedByData=array();
-        $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE staffId='$updatedBy'");
+        $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
         while ($getUpdatedByfetch = mysqli_fetch_assoc($getUpdatedByQuery)) {
             $updatedByData[] = $getUpdatedByfetch;
         }

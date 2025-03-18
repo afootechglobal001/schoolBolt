@@ -36,7 +36,7 @@ if (!$checkBasicSecurity){/// start if 1
         goto end;
 	}
 
-			$query=mysqli_query($conn,"SELECT * FROM STAFF_VIEW WHERE emailAddress='$userName' AND `password`='$password'") or die (mysqli_error($conn));
+			$query=mysqli_query($conn,"SELECT * FROM STAFF_VIEW WHERE $clientIds AND emailAddress='$userName' AND `password`='$password'") or die (mysqli_error($conn));
 			$countUser=mysqli_num_rows($query);
 
             if ($countUser==0){ /// start if 4
@@ -65,14 +65,14 @@ if (!$checkBasicSecurity){/// start if 1
                     /// Generate login access key
                     $accessKey=trim(md5($staffId.date("Ymdhis")));
                     /// update user on staff_tab
-                    mysqli_query($conn,"UPDATE STAFF_TAB SET accessKey='$accessKey', lastLoginTime=NOW() WHERE staffId='$staffId'")or die (mysqli_error($conn));
+                    mysqli_query($conn,"UPDATE STAFF_TAB SET accessKey='$accessKey', lastLoginTime=NOW() WHERE $clientIds AND staffId='$staffId'")or die (mysqli_error($conn));
 
                     $response['response']=200; 
                     $response['success']=true;
                     $response['message']="LOGIN SUCCESSFUL!"; 
                     $response['data'] = array(); // Initialize the data array
 
-                    $select="SELECT * FROM STAFF_VIEW WHERE staffId = '$staffId'";
+                    $select="SELECT * FROM STAFF_VIEW WHERE $clientIds AND staffId = '$staffId'";
 
                     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
                     while ($fetchQuery = mysqli_fetch_assoc($query)) {

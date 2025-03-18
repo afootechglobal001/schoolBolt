@@ -23,7 +23,7 @@ if(!$checkSession){
     }
     // Securely escape $q
     $q = mysqli_real_escape_string($conn, $q);
-    $select = "SELECT * FROM BRANCH_VIEW WHERE (name LIKE '%$q%' OR address LIKE '%$q%') $branchIds  $statusIds ORDER BY name ASC";
+    $select = "SELECT * FROM BRANCH_VIEW WHERE $clientIds AND (name LIKE '%$q%' OR address LIKE '%$q%') $branchIds  $statusIds ORDER BY name ASC";
 
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($query);
@@ -57,7 +57,7 @@ if(!$checkSession){
 
         /////////////////// for  $createdBy
         $createdByData=array();
-        $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE staffId='$createdBy'");
+        $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
         while ($getCreatedByfetch = mysqli_fetch_assoc($getCreatedByQuery)) {
             $createdByData[] = $getCreatedByfetch;
         }
@@ -65,7 +65,7 @@ if(!$checkSession){
 
         /////////////////// for  $updatedBy
         $updatedByData=array();
-        $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE staffId='$updatedBy'");
+        $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND $clientIds AND staffId='$updatedBy'");
         while ($getUpdatedByfetch = mysqli_fetch_assoc($getUpdatedByQuery)) {
             $updatedByData[] = $getUpdatedByfetch;
         }
@@ -73,7 +73,7 @@ if(!$checkSession){
 
       
         //// get number of staf
-        $userCountQuery = mysqli_query($conn, "SELECT COUNT(*) AS count FROM STAFF_TAB WHERE branchId='$branchId'");
+        $userCountQuery = mysqli_query($conn, "SELECT COUNT(*) AS count FROM STAFF_TAB WHERE $clientIds AND branchId='$branchId'");
         $userCountFetch = mysqli_fetch_assoc($userCountQuery);
         $fetchQuery['totalNumberOfStaff'] = $userCountFetch['count']; // Assign the actual count value
 

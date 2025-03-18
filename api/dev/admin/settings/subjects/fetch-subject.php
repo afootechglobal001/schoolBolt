@@ -18,7 +18,7 @@ if(!$checkSession){
     }
     // Securely escape $q
     $q = mysqli_real_escape_string($conn, $q);
-    $select = "SELECT * FROM SUBJECTS_TAB WHERE (subjectName LIKE '%$q%') $subjectIds";
+    $select = "SELECT * FROM SUBJECTS_TAB WHERE $clientIds AND (subjectName LIKE '%$q%') $subjectIds";
 
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($query);
@@ -41,7 +41,7 @@ if(!$checkSession){
         $updatedBy=$fetchQuery['updatedBy'];
 
         /////////////////// for  $createdBy
-        $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE staffId='$createdBy'");
+        $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
         $createdByData=array();
         while ($getCreatedByfetch = mysqli_fetch_assoc($getCreatedByQuery)) {
             $createdByData[] = $getCreatedByfetch;
@@ -49,7 +49,7 @@ if(!$checkSession){
         $fetchQuery['createdBy']= $createdByData;
 
         /////////////////// for  $updatedBy
-        $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE staffId='$updatedBy'");
+        $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
         $updatedByData=array();
         while ($getUpdatedByfetch = mysqli_fetch_assoc($getUpdatedByQuery)) {
             $updatedByData[] = $getUpdatedByfetch;

@@ -23,7 +23,7 @@ if(!$checkSession){
         goto end;
 	}
         //// get number of users
-        $userCountQuery = mysqli_query($conn, "SELECT * FROM STAFF_TAB WHERE roleId='$roleId'");
+        $userCountQuery = mysqli_query($conn, "SELECT * FROM STAFF_TAB WHERE $clientIds AND roleId='$roleId'");
         $userCount = mysqli_num_rows($userCountQuery);
         if($userCount>0){
             $response = [
@@ -34,7 +34,7 @@ if(!$checkSession){
             goto end;
         }
    
-			$query=mysqli_query($conn,"DELETE FROM ROLE_TAB WHERE roleId='$roleId'") or die (mysqli_error($conn));
+			$query=mysqli_query($conn,"DELETE FROM ROLE_TAB WHERE $clientIds AND roleId='$roleId'") or die (mysqli_error($conn));
 
             $response['response']=200; 
             $response['success']=true;

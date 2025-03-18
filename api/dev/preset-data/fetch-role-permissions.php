@@ -13,7 +13,7 @@ if(!$checkSession){
      //////////////////declaration of variables//////////////////////////////////////
     $roleId = $_GET['roleId'];
     if($roleId){
-    $select = "SELECT rolePermissionIds FROM ROLE_TAB WHERE roleId= '$roleId'";
+    $select = "SELECT rolePermissionIds FROM ROLE_TAB WHERE $clientIds AND roleId= '$roleId'";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $fetchQuery = mysqli_fetch_assoc($query);
     $rolePermissionIds=$fetchQuery['rolePermissionIds'];

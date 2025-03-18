@@ -53,7 +53,7 @@ if(!$checkSession){
 	}
 
    
-			$query=mysqli_query($conn,"SELECT * FROM ROLE_TAB WHERE roleName='$roleName' AND roleId!='$roleId'") or die (mysqli_error($conn));
+			$query=mysqli_query($conn,"SELECT * FROM ROLE_TAB WHERE $clientIds AND roleName='$roleName' AND roleId!='$roleId'") or die (mysqli_error($conn));
 			$count=mysqli_num_rows($query);
 
             if ($count>0){ /// start if 4
@@ -71,21 +71,21 @@ if(!$checkSession){
 
             mysqli_query($conn,"UPDATE `ROLE_TAB` SET 
             roleName='$roleName', roleDescription='$roleDescription', rolePermissionIds='$rolePermissionIds', updatedBy='$loginStaffId'
-            WHERE roleId = '$roleId'")or die (mysqli_error($conn));
+            WHERE $clientIds AND roleId = '$roleId'")or die (mysqli_error($conn));
 
             $response['response']=200; 
             $response['success']=true;
             $response['message']="ROLE UPDATED SUCCESFFULY!"; 
             $response['data'] = array(); // Initialize the data array
 
-            $select="SELECT * FROM ROLE_TAB WHERE roleId = '$roleId'";
+            $select="SELECT * FROM ROLE_TAB WHERE $clientIds AND roleId = '$roleId'";
             $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
             while ($fetchQuery = mysqli_fetch_assoc($query)) {
                 $createdBy=$fetchQuery['createdBy'];
                 $updatedBy=$fetchQuery['updatedBy'];
                 $rolePermissionIds=$fetchQuery['rolePermissionIds'];
                 /////////////////// for  $createdBy
-                $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE staffId='$createdBy'");
+                $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
                 $createdByData=array();
                 while ($getCreatedByfetch = mysqli_fetch_assoc($getCreatedByQuery)) {
                     $createdByData[] = $getCreatedByfetch;
@@ -93,7 +93,7 @@ if(!$checkSession){
                 $fetchQuery['createdBy']= $createdByData;
 
                 /////////////////// for  $updatedBy
-                $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE staffId='$updatedBy'");
+                $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
                 $updatedByData=array();
                 while ($getUpdatedByfetch = mysqli_fetch_assoc($getUpdatedByQuery)) {
                     $updatedByData[] = $getUpdatedByfetch;

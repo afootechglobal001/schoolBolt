@@ -27,7 +27,7 @@ if(!$checkSession){
             $response['message']="PAGE CREATED SUCCESFFULY!";
             $response['data'] = array(); // Initialize the data array
 
-            $select="SELECT * FROM PAGES_TAB WHERE publishId = '$publishId'";
+            $select="SELECT * FROM PAGES_TAB WHERE $clientIds AND publishId = '$publishId'";
             $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
             while ($fetchQuery = mysqli_fetch_assoc($query)) {
                 $response['data'][] = $fetchQuery;
