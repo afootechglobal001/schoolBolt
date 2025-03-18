@@ -13,7 +13,6 @@ $frontEndApiKey = isset($_SERVER['HTTP_APIKEY']) ? $_SERVER['HTTP_APIKEY'] : nul
 $backEndApiKey='a7c37b6289b9dd879b2c005118d3ef14'; //schoolBoltApiKey@2025
 ////////////////////////////////////////////////////////////////////////
 
-
 $checkBasicSecurity=true;
 ///// check for API security
 if ($frontEndApiKey!=$backEndApiKey){/// start if 1
