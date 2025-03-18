@@ -200,7 +200,7 @@ if(!$checkSession){
 
 
             mysqli_query($conn,"INSERT INTO `BRANCHES_TAB`
-            (`clientId`,`branchId`, `name`, `mobileNumber`, `stateId`, `lgaId`, `address`, `smtpHost`, `smtpUsername`, `smtpPassword`, `smtpPort`, `supportEmail`, `paymentKey`, `managerId`, `session`, `termId`, `statusId`, `createdBy`, `createdTime`) VALUES 
+            (`clientId`, `branchId`, `name`, `mobileNumber`, `stateId`, `lgaId`, `address`, `smtpHost`, `smtpUsername`, `smtpPassword`, `smtpPort`, `supportEmail`, `paymentKey`, `managerId`, `session`, `termId`, `statusId`, `createdBy`, `createdTime`) VALUES 
             ('$clientId','$branchId','$name', '$mobileNumber', '$stateId', '$lgaId', '$address', '$smtpHost', '$smtpUsername', '$smtpPassword', '$smtpPort', '$supportEmail', '$paymentKey', '$staffId', '$session', '$termId', '$statusId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
 
             $response['response']=200; 
