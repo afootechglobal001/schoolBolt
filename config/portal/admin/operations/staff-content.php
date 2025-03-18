@@ -250,6 +250,20 @@
                 <div class="div-in">
                     <ul>
                         <li class="active" title="My Profile" id="staff_profile_details" onclick="_getActiveStaffPage({divid:'staff_profile_details', page: 'staff_profile_details', url: adminPortalLocalUrl});"><i class="bi-person-bounding-box"></i> Staff Profile</li>
+                        <li title="My Students" id="staff_students" onclick="_getActiveStaffPage({divid:'staff_students', page: 'staff_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> My Students</li>
+                   
+                        <li id="dotted" title="Branch Record"><i class="bi-file-spreadsheet"></i> Record
+                            <div class="expand-div expanded animated fadeIn">
+                                <ul class="ul-expand">
+                                    <li title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
+                                    <li title="Compute Score"><i class="bi-file-spreadsheet"></i>Compute Score</li>
+                                    <li title="Cumulative Mark's Score"><i class="bi-file-spreadsheet"></i>Cumulative Mark's Score</li>
+                                    <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Student Attendance</li>
+                                    <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Class Teacher's  Commemt</li>
+                                </ul>
+                            </div>
+                        </li>
+
                         <li title="Staff Activities" id="staff_activities" onclick="_getActiveStaffPage({divid:'staff_activities', page: 'staff_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> Staff Activities</li>
                     </ul>
                 </div>
