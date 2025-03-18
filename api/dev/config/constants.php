@@ -31,7 +31,7 @@ $query=mysqli_query($connAdmin,"SELECT * FROM CLIENTS_TAB WHERE hashId='$clientI
 		$checkBasicSecurity=false;
 	}else{
 		$fetchQuery=mysqli_fetch_array($query);
-		$dbClientAddress=$fetchQuery['clientAddress']; 
+		$dbClientAddress=$fetchQuery['clientWebsite']; 
 		$statusId=$fetchQuery['statusId'];
 
 		if($statusId!=1){
