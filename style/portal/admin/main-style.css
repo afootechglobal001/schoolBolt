@@ -1368,15 +1368,14 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 .slide-form-div .container-back-div{
 	position: absolute;
     width: 100%;
-	height: calc(100% - 90px);
+	height: calc(100% - 65px);
 	top: 50px;
-	padding-bottom: 40px;
-    display: flex;
+	padding-bottom: 15px;
 	overflow: auto;
 }
 
 .slide-form-div .container-back-div .inner-container{
-	width: 100%;
+	width: calc(100% - 60px);
     padding: 20px 30px 30px 30px;
 	display: flex;
 	flex-direction: column;

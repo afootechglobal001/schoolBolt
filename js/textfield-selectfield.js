@@ -369,15 +369,66 @@ function _getSelectBirthDay(fieldId) {
 	}
 }
 
-function _getSelectBirthMonth(fieldId) {
-	for (let i = 1; i <= 12; i++) {
-		const id = i;
-		const value = i;
-		$('#searchList_' + fieldId).append(
-			'<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">' + value + '</li>'
-		);
-	}
+
+function _getSelectBirthMonth(fieldId){
+	const data = [
+		{
+			'birthMonthId': 1,
+			'birthMonthName': 'Jan',
+		},
+		{
+			'birthMonthId': 2,
+			'birthMonthName': 'Feb',
+		},
+		{
+			'birthMonthId': 3,
+			'birthMonthName': 'Mar',
+		},
+		{
+			'birthMonthId': 4,
+			'birthMonthName': 'Apr',
+		},
+		{
+			'birthMonthId': 5,
+			'birthMonthName': 'May',
+		},
+		{
+			'birthMonthId': 6,
+			'birthMonthName': 'Jun',
+		},
+		{
+			'birthMonthId': 7,
+			'birthMonthName': 'Jul',
+		},
+		{
+			'birthMonthId': 8,
+			'birthMonthName': 'Aug',
+		},
+		{
+			'birthMonthId': 9,
+			'birthMonthName': 'Sep',
+		},
+		{
+			'birthMonthId': 10,
+			'birthMonthName': 'Oct',
+		},
+		{
+			'birthMonthId': 11,
+			'birthMonthName': 'Nov',
+		},
+		{
+			'birthMonthId': 12,
+			'birthMonthName': 'Dec',
+		}
+	];
+
+	for (let i = 0; i < data.length; i++) {
+		const id = data[i].birthMonthId;
+		const value = data[i].birthMonthName;
+		$('#searchList_' + fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">' + value + '</li>');
+	}	
 }
+
 
 function _getSelectBlogCategory(fieldId){
 	const data=[
