@@ -686,7 +686,7 @@ function _fetchEachBranchSaff(staffId) {
 			success: function(info) {
 				if (info.success && info.data.length > 0) {
 					sessionStorage.setItem("getEachStaffDetailsSession", JSON.stringify(info.data[0]));
-					_getForm({page: 'staff_profile', url: adminPortalLocalUrl});
+					_getForm({page: 'staff_profile', layer: 2,  url: adminPortalLocalUrl});
 				} else {
 					const response = info.response;
 					if (response < 100) {

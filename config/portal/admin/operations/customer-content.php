@@ -121,7 +121,7 @@
         <div class="top-panel-div">
             <div class="inner-top">
                 <span><i class="bi-person-check-fill"></i> USER PROFILE</span>
-                <div class="close" title="Close" onclick="_alertClose();">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
             </div>
         </div>
 

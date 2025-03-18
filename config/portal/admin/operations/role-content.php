@@ -38,7 +38,7 @@
         <div class="title-panel-div">
             <div class="inner-top">
                 <span id="panel-title"><i class="bi-plus-square"></i> <span id="pageTitle">ADD NEW USER ROLE</span></span>
-                <div class="close" title="Close" onclick="_alertClose();">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
             </div>
         </div>
         
@@ -141,7 +141,7 @@
                         <h3 id="roleName"><script> $("#roleName").html(getEachRoleDetails.roleName);</script></h3>
                     </div>
                 </div>
-                <div class="close" title="Close" onclick="_alertClose();">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
             </div>
         </div>
 

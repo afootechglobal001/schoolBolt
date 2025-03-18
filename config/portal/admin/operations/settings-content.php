@@ -115,7 +115,7 @@
             <div class="inner-top">
                 <span id="back_icon" style="display:none; cursor:pointer;" ><i class="bi-arrow-left" style="cursor:pointer;" onclick="_prevPage('account_settings_id');" ></i> &nbsp;&nbsp;</span>
                 <span id="panel-title"><span id="header_icon"> <i class="bi-gear"></i> </span id="app_text"> APP SETTINGS</span>
-                <div class="close" title="Close" onclick="_alertClose();">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
             </div>
         </div>
 
@@ -234,7 +234,7 @@
         <div class="title-panel-div">
             <div class="inner-top">
                 <span id="panel-title"><i class="bi-shield-lock"></i> CHANGE PASSWORD</span>
-                <div class="close" title="Close" onclick="_alertClose();">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
             </div>
         </div>
 
