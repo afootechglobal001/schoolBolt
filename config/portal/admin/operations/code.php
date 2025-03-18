@@ -36,6 +36,7 @@ switch ($action){
 		require_once('department-content.php');
 		require_once('class-content.php');
 		require_once('subject-content.php');
+		require_once('student-content.php');
 	break;
 
 	case 'upload_product_cat_pix':
