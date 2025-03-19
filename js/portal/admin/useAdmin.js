@@ -106,7 +106,18 @@ function filters(selectBoxId) {
 	});
 };
 
+function _toggleCheck(){
+	$('.switch input').on('change', function () {
+		const label = $(this).next().next(); // Grab the toggle-label span
+		label.text($(this).prop('checked') ? 'Yes' : 'No');
+	});
+}
 
+function _getFormDetails(nextId) {
+	$('#user_form_details').hide();
+	$("#" + nextId).fadeIn(1000);
+	$('#user_details, #edit_btn').fadeOut(500);
+}
 
 
 let permissionElements = {

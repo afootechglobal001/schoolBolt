@@ -150,105 +150,63 @@
     </div>
 <?php } ?>
 
-<?php if ($page =='add_classes') { ?>
-    
+<?php if ($page=='add_classes') { ?>
+    <script>getEachDepartmentSession = JSON.parse(sessionStorage.getItem("getEachDepartmentSession"));</script>	
+
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
-                <span id="pageTitle"><i class="bi-plus-square"></i> ADD CLASS TO DEPARTMENT</span>
+                <span id="pageTitle"><i class="bi-plus-square"></i> ADD CLASS TO DEPARTMENT </span>
                 <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
             </div>
         </div>
 
         <div class="container-back-div">
             <div class="inner-container">
-                <div>
-                    <div class="alert alert-success form-alert">Kindly check the following classes to <span id="pageTitle2"> ADD CLASS TO DEPARTMENT</span></div>
+                <div id="user_details">
+                    <div>
+                        <div class="alert alert-success form-alert">Kindly click the <span>Add Class</span> button to <span> ADD CLASS TO <span id="departmentName"></span> DEPARTMENT</span></div>
+                        <script>
+                            $(document).ready(function () {
+                                $("#departmentName, #departmentName2").html(getEachDepartmentSession.departmentName);
+                            });
+                        </script>
+                    </div>
+
+                    <div class="permission-form-back-div">
+                        <div class="title-div">
+                            <h4>No Class Available</h4>
+                            <p>There are currently no registered classes. To assign classes to this department, please click the "Add Class" button below.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn" title="ADD CLASS" id="submitBtn" onclick="_getFormDetails('user_form_details');"> <i class="bi-check"></i> ADD CLASS </button>
+                    </div>
                 </div>
 
-                <div class="title">Check Class:</div>
-                <div class="check-container">
-                    <div class="div-in" id="pageContent">
-                        <script>_fetchCheckBoxClasses();</script>
-                        <!-- <div class="radio-in-div">
-                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
-                            <span>KG 1</span>
+                <div id="user_form_details">
+                    <div>
+                        <div class="alert alert-success form-alert">Kindly toggle the following classes to <span> ADD CLASS TO <span id="departmentName2"></span> DEPARTMENT</span></div>
+                    </div>
+
+                    <div class="permission-form-back-div">
+                        <div class="title-div">
+                            <h4>Classes</h4>
+                            <p>Use the toggles below to assign registered classes to their respective departments. Switching to "Yes" activates the class for departmental use.</p>
                         </div>
 
-                        <div class="radio-in-div">
-                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
-                            <span>KG 2</span>
+                        <div class="permission-toggle-div">
+                            <div class="toggle-title">Registered Classes</div>
+                            <div class="fetch-toggle" id="pageContent"></div>
                         </div>
 
-                        <div class="radio-in-div">
-                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
-                            <span>NURSERY 1</span>
-                        </div>
+                        <script>_fetchClassesToggle();</script>
+                    </div>
 
-                        <div class="radio-in-div">
-                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
-                            <span>NURSERY 2</span>
-                        </div>
-
-                        <div class="radio-in-div">
-                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
-                            <span>BASIC 1</span>
-                        </div>
-
-                        <div class="radio-in-div">
-                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
-                            <span>BASIC 2</span>
-                        </div>
-
-                        <div class="radio-in-div">
-                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
-                            <span>BASIC 3</span>
-                        </div>
-
-                        <div class="radio-in-div">
-                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
-                            <span>BASIC 4</span>
-                        </div>
-
-                        <div class="radio-in-div">
-                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
-                            <span>BASIC 5</span>
-                        </div>
-
-                        <div class="radio-in-div">
-                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
-                            <span>JSS 1</span>
-                        </div>
-
-                        <div class="radio-in-div">
-                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
-                            <span>JSS 2</span>
-                        </div>
-
-                        <div class="radio-in-div">
-                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
-                            <span>JSS 3</span>
-                        </div>
-
-                        <div class="radio-in-div">
-                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
-                            <span>SS 1</span>
-                        </div>
-
-                        <div class="radio-in-div">
-                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
-                            <span>SS 2</span>
-                        </div>
-
-                        <div class="radio-in-div">
-                            <div class="radio"><input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY"><div class="border"></div></div>
-                            <span>SS 3</span>
-                        </div> -->
-                    </div>                  
-                </div>
-
-                <div>
-                    <button class="btn" title="SUBMIT" id="submitBtn" onclick="_createUpdateDepartment();"> <i class="bi-check"></i> SUBMIT </button>
+                    <div>
+                        <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
+                    </div>
                 </div>
             </div>
         </div>

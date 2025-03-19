@@ -28,7 +28,6 @@
     </div>
 <?php }?>
 
-
 <?php if ($page == 'class_reg') { ?>
     <script> 
         getEachClassSession = JSON.parse(sessionStorage.getItem("getEachClassSession"));
@@ -148,5 +147,131 @@
                 </div>
             </div>
         </div>  
+    </div>
+<?php } ?>
+
+<?php if ($page=='add_subjects') { ?>
+    <script>getEachClassSession = JSON.parse(sessionStorage.getItem("getEachClassSession"));</script>	
+
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="pageTitle"><i class="bi-plus-square"></i> ADD SUBJECT TO CLASS </span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div id="user_details">
+                    <div>
+                        <div class="alert alert-success form-alert">Kindly click the <span>Add Subject</span> button to <span> ADD SUBJECT TO <span id="className"></span> CLASS</span></div>
+                        <script>
+                            $(document).ready(function () {
+                                $("#className, #className2").html(getEachClassSession.className);
+                            });
+                        </script>
+                    </div>
+
+                    <div class="permission-form-back-div">
+                        <div class="title-div">
+                            <h4>No Subject Available</h4>
+                            <p>There are currently no registered subjects. To assign subject to this department, please click the "Add Subject" button below.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn" title="ADD SUBJECT" id="submitBtn" onclick="_getFormDetails('user_form_details');"> <i class="bi-check"></i> ADD SUBJECT </button>
+                    </div>
+                </div>
+
+                <div id="user_form_details">
+                    <div>
+                        <div class="alert alert-success form-alert">Kindly toggle the following subject to <span> ADD SUBJECT TO <span id="className2"></span> CLASS</span></div>
+                    </div>
+
+                    <div class="permission-form-back-div">
+                        <div class="title-div">
+                            <h4>Classes</h4>
+                            <p>Use the toggles below to assign registered subjects to their respective classes. Switching to "Yes" activates the subject for class use.</p>
+                        </div>
+
+                        <div class="permission-toggle-div">
+                            <div class="toggle-title">Registered Subjects</div>
+                            <div class="fetch-toggle" id="pageContent"></div>
+                        </div>
+
+                        <script>_fetchSubjectToggle();</script>
+                    </div>
+
+                    <div>
+                        <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page=='add_arms') { ?>
+    <script>getEachClassSession = JSON.parse(sessionStorage.getItem("getEachClassSession"));</script>	
+
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="pageTitle"><i class="bi-plus-square"></i> ADD ARM TO CLASS </span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div id="user_details">
+                    <div>
+                        <div class="alert alert-success form-alert">Kindly click the <span>Add Arm</span> button to <span> ADD ARM TO <span id="className"></span> CLASS</span></div>
+                        <script>
+                            $(document).ready(function () {
+                                $("#className, #className2").html(getEachClassSession.className);
+                            });
+                        </script>
+                    </div>
+
+                    <div class="permission-form-back-div">
+                        <div class="title-div">
+                            <h4>No Arm Available</h4>
+                            <p>There are currently no registered subjects. To assign subject to this department, please click the "Add Arm" button below.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn" title="ADD ARM" id="submitBtn" onclick="_getFormDetails('user_form_details');"> <i class="bi-check"></i> ADD ARM </button>
+                    </div>
+                </div>
+
+                <div id="user_form_details">
+                    <div>
+                        <div class="alert alert-success form-alert">Kindly toggle the following arm to <span> ADD ARM TO <span id="className2"></span> CLASS</span></div>
+                    </div>
+
+                    <div class="permission-form-back-div">
+                        <div class="title-div">
+                            <h4>Classes</h4>
+                            <p>Use the toggles below to assign registered arm to their respective classes. Switching to "Yes" activates the subject for class use.</p>
+                        </div>
+
+                        <div class="permission-toggle-div">
+                            <div class="toggle-title">Registered Arms</div>
+                            <div class="fetch-toggle" id="pageContent"></div>
+                        </div>
+
+                        <script>_fetchArmToggle();</script>
+                    </div>
+
+                    <div>
+                        <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 <?php } ?>

@@ -1540,11 +1540,11 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	color: var(--sub-body-color);
 }
 
-#user-form-details{
+#user_form_details{
 	display: none;
 }
 
-.slide-form-div .container-back-div .inner-container .user-form-details .text_field_container{
+.slide-form-div .container-back-div .inner-container .user_form_details .text_field_container{
 	margin: 20px 0px;
 }
 
@@ -1685,82 +1685,6 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 .slide-form-div .container-back-div .inner-container .setting_detail{
 	display: none;
 }
-
-
-
-
-
-.slide-form-div .container-back-div .inner-container .check-container{
-	min-height: 240px;
-	width: 100%;
-	background-color: #f9f9f9;
-	border-radius: 8px;
-}
-
-.slide-form-div .container-back-div .inner-container .check-container .div-in{
-	padding: 20px 25px;
-	display: flex;
-	align-items: center;
-	flex-wrap: wrap;
-	gap: 15px 18px;
-}
-
-.slide-form-div .container-back-div .inner-container .check-container .div-in .radio-in-div{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 5px;
-	cursor: pointer;
-}
-
-.slide-form-div .container-back-div .inner-container .check-container .div-in .radio-in-div span{
-	font-size: 16px;
-	font-family: body-font;
-}
-
-.slide-form-div .container-back-div .inner-container .check-container .div-in .radio-in-div .radio {
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    border: var(--primary-color) 4px solid;
-    cursor: pointer;
-}
-
-
-.slide-form-div .container-back-div .inner-container .check-container .div-in .radio-in-div .radio input {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-    opacity: 0;
-	cursor: pointer;
-}
-
-.slide-form-div .container-back-div .inner-container .check-container .div-in .radio-in-div .radio .border {
-    width: 10px;
-    height: 10px;
-    border-radius: 6px;
-    margin-top: -16px;
-    margin-left: -2px;
-    border: #FFF 2px solid;
-    background: #FFF;
-    -moz-transition: all 0.2s ease-in 02s;
-    transition: all 0.2s ease-in 0.2s;
-    -webkit-transition: all 0.2s ease-in 0.2s;
-    -ms-transition: all 0.2s ease-in 0.2s;
-    -o-transition: all 0.2s ease-in 0.2s;
-}
-
-.slide-form-div .container-back-div .inner-container .check-container .div-in .radio-in-div .radio:hover .border {
-	background: var(--primary-color);
-}
-
-.slide-form-div .container-back-div .inner-container .check-container .div-in .radio-in-div .radio input:checked+.border {
-    background: var(--primary-color);
-}
-
-
-
-
 
 
 

@@ -41,12 +41,12 @@ function _fetchDepartments() {
 						 	<tbody>
 								<tr class="tb-row">
 									<td>${no}</td>
-									<td class="clickable-td" title="Click to view department profile" onclick="_fetchEachDepartment('${departmentId}');">${departmentId}</td>
+									<td class="clickable-td" title="Click to view department profile" onclick="_fetchEachDepartment('${departmentId}', 'edit');">${departmentId}</td>
 									<td class="clickable-td">${departmentName}</td>
 									<td>${createdBy}</td>
 									<td>${updatedBy ? updatedBy : "NULL"}</td>
 									<td>${createdTime}</td>
-									<td><button class="btn" title="Add Classes to department" onclick="_getForm({page: 'add_classes', url: adminPortalLocalUrl});">5</button></td>
+									<td><button class="btn" title="Add Classes to department" onclick="_fetchEachDepartment('${departmentId}', 'addCLass');">5</button></td>
 									<td><div class="status-div ${statusName}">${statusName}</div></td>
 								</tr>
 							</tbody>`;
@@ -81,7 +81,7 @@ function _fetchDepartments() {
 	}
 }
 
-function _fetchEachDepartment(departmentId) {
+function _fetchEachDepartment(departmentId, action) {
 	$("#get-form-more-div").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
 	try {
 		$.ajax({
@@ -93,7 +93,7 @@ function _fetchEachDepartment(departmentId) {
 			success: function(info) {
 				if (info.success && info.data.length > 0) {
 					sessionStorage.setItem("getEachDepartmentSession", JSON.stringify(info.data[0]));
-					_getForm({page: 'update_department', url: adminPortalLocalUrl});
+					_getForm({page: action==='edit' ? 'update_department': 'add_classes', url: adminPortalLocalUrl});
 				} else {
 					const response = info.response;
 					if (response < 100) {
@@ -174,55 +174,45 @@ function _createUpdateDepartment() {
 	}
 }
 
-
-function _fetchCheckBoxClasses() {
-    $('#pageContent').html('<div class="ajax-loader other-pages-ajax-loader"><img src="' + websiteUrl + '/all-images/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+function _fetchClassesToggle() {
 	try {
 		$.ajax({
 			type: "GET",
-			url: endPoint + '/admin/settings/classes/fetch-class',
-			dataType: "json", 
+			url: `${endPoint}/admin/settings/classes/fetch-class?statusId=1`,
+			dataType: "json",
 			cache: false,
 			headers: getAuthHeaders(true),
 			success: function(info) {
 				const fetch = info.data;
+				const success = info.success;
 
-				let text = '';
-
-				if (info.success) {
+				if (success === true) {
 					for (let i = 0; i < fetch.length; i++) {
 						const classId = fetch[i].classId;
 						const className = fetch[i].className;
-						
-						text +=`
-						 	<div class="radio-in-div">
-								<div class="radio"><input type="checkbox" class="child" name="${classId}[]" data-value="${className}"><div class="border"></div></div>
+
+						const text = `
+							<div class="each-toggle-div">
 								<span>${className}</span>
-                        	</div>`;
+								<label for="class_${classId}" class="switch">
+									<input type="checkbox" class="child" id="class_${classId}" name="classId[]" data-value="${classId}">
+									<span class="slider"></span>
+									<span class="toggle-label">No</span>
+								</label>
+							</div>`;
+						$('#pageContent').append(text);
 					}
-					$('#pageContent').html(text);
+					_toggleCheck();
 				} else {
-					_actionAlert(info.message, false);
-
-					text +=`
-						<div class="false-notification-div">
-							<p>${info.message}</p>
-						</div>`;
-
-						$('#pageContent').html(text);
 					const response = info.response;
 					if (response < 100) {
 						_logOut();
 					}    
 				}
-			},
-			error: function(textStatus, errorThrown) {
-				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
 			}
 		});
 	} catch (error) {
 		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred! Please try again.', false);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
 	}
 }

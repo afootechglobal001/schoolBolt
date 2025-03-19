@@ -22,6 +22,8 @@ function _fetchClasses() {
 							<th>Created By</th>
 							<th>Updated By</th>
 							<th>Date</th>
+							<th>Subjects</th>
+							<th>Arms</th>
 							<th>Status</th>
 						</tr>
 					</thead>`;
@@ -40,11 +42,13 @@ function _fetchClasses() {
 						 	<tbody>
 								<tr class="tb-row">
 									<td>${no}</td>
-									<td class="clickable-td" title="Click to view class profile" onclick="_fetchEachClass('${classId}');">${classId}</td>
+									<td class="clickable-td" title="Click to view class profile" onclick="_fetchEachClass('${classId}', edit);">${classId}</td>
 									<td class="clickable-td">${className}</td>
 									<td>${createdBy}</td>
 									<td>${updatedBy ? updatedBy : "NULL"}</td>
 									<td>${createdTime}</td>
+									<td><button class="btn" title="Add Subject to class" onclick="_fetchEachClass('${classId}', 'addSubject');">5</button></td>
+									<td><button class="btn" title="Add arm to class" onclick="_fetchEachClass('${classId}', 'addArm');">2</button></td>
 									<td><div class="status-div ${statusName}">${statusName}</div></td>
 								</tr>
 							</tbody>`;
@@ -79,7 +83,7 @@ function _fetchClasses() {
 	}
 }
 
-function _fetchEachClass(classId) {
+function _fetchEachClass(classId, action) {
 	$("#get-form-more-div").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
 	try {
 		$.ajax({
@@ -91,7 +95,7 @@ function _fetchEachClass(classId) {
 			success: function(info) {
 				if (info.success && info.data.length > 0) {
 					sessionStorage.setItem("getEachClassSession", JSON.stringify(info.data[0]));
-					_getForm({page: 'update_class', url: adminPortalLocalUrl});
+					_getForm({page: action === 'edit' ? 'update_class' : action === 'addSubject' ? 'add_subjects' : 'add_arms', url: adminPortalLocalUrl});
 				} else {
 					const response = info.response;
 					if (response < 100) {
@@ -169,5 +173,91 @@ function _createUpdateClass() {
 	} catch (error) {
 		_actionAlert('An unexpected error occurred! Please Try Again', false);
 		$("#submitBtn").prop("disabled", false);
+	}
+}
+
+function _fetchSubjectToggle() {
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/settings/subjects/fetch-subject?statusId=1`,
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const fetch = info.data;
+				const success = info.success;
+
+				if (success === true) {
+					for (let i = 0; i < fetch.length; i++) {
+						const subjectId = fetch[i].subjectId;
+						const subjectName = fetch[i].subjectName;
+
+						const text = `
+							<div class="each-toggle-div">
+								<span>${subjectName}</span>
+								<label for="class_${subjectId}" class="switch">
+									<input type="checkbox" class="child" id="class_${subjectId}" name="subjectId[]" data-value="${subjectId}">
+									<span class="slider"></span>
+									<span class="toggle-label">No</span>
+								</label>
+							</div>`;
+						$('#pageContent').append(text);
+					}
+					_toggleCheck();
+				} else {
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+function _fetchArmToggle() {
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/settings/arms/fetch-arm?statusId=1`,
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const fetch = info.data;
+				const success = info.success;
+
+				if (success === true) {
+					for (let i = 0; i < fetch.length; i++) {
+						const armId = fetch[i].armId;
+						const armName = fetch[i].armName;
+
+						const text = `
+							<div class="each-toggle-div">
+								<span>${armName}</span>
+								<label for="class_${armId}" class="switch">
+									<input type="checkbox" class="child" id="class_${armId}" name="armId[]" data-value="${armId}">
+									<span class="slider"></span>
+									<span class="toggle-label">No</span>
+								</label>
+							</div>`;
+						$('#pageContent').append(text);
+					}
+					_toggleCheck();
+				} else {
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
 	}
 }
