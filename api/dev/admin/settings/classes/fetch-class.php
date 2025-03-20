@@ -71,7 +71,11 @@ if(!$checkSession){
             $noOfArms=mysqli_num_rows($getnoOfArmsQuery);
             $fetchQuery['noOfArms']= $noOfArms;
 
-            
+             /////////////////// for  $noOfSubjects
+             $getnoOfSubjectsQuery = mysqli_query($conn, "SELECT * FROM SUBJECT_STRUCTURE_TAB WHERE $clientIds AND classId = '$classId'");
+             $noOfSubjects=mysqli_num_rows($getnoOfSubjectsQuery);
+             $fetchQuery['noOfSubjects']= $noOfSubjects;
+
         $response['data'][] = $fetchQuery;
     }
 //////////////////////////////////////////////////////////////////////////////////////////////
