@@ -443,6 +443,7 @@ a {
 	border-radius: 5px;
 	font-family: body-font;
 	color: var(--text-color);
+	
 }
 
 
@@ -480,14 +481,19 @@ a {
 	background: rgba(231, 76, 60, .05);
 }
 
-.alert .btn {
-	height: 30px;
-	margin: -5px 0px;
-	padding: 0px 10px;
+.alert .btn-container {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.alert .btn-container .btn {
+	height: 28px;
+	padding: 0px 15px;
 	border: none;
-	border-radius: 3px;
+	border-radius: 4px;
 	background: #2DAAE1;
-	color: #FFF;
+	color: var(--white-color);
 	font-size: 11px;
 	cursor: pointer;
 	font-family: sub-title-font;
@@ -498,7 +504,7 @@ a {
 	-moz-transition: all ease 0.2s;
 }
 
-.alert .btn:hover {
+.alert .btn-container .btn:hover {
 	background: #444;
 }
 

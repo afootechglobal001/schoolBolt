@@ -24,6 +24,7 @@ function _fetchBranchStaffs() {
                         <th>Role</th>
                         <th>Last Login</th>
                         <th>Status</th>
+						<th>View</th>
                     </tr>
                 </thead>`;
 
@@ -60,13 +61,14 @@ function _fetchBranchStaffs() {
 								<td>
 									<div class="text-div">
 										<div>${emailAddress}</div> 
-										<div">${mobileNumber}</div>
+										<div>${mobileNumber}</div>
 									</div>
 								</td>
 								<td>${branchName}</td>
 								<td>${roleName}</td>
 								<td>${lastLoginTime ? lastLoginTime : "00-00-00 00:00:00"}</td>
 								<td><div class="status-div ${statusName}">${statusName}</div></td>
+								<td><button class="btn view-btn" title="VIEW STAFF PROFILE" onclick="_fetchEachBranchSaff('${staffId}');">VIEW</button></td>
 							</tr>
 						</tbody>`;
 					}

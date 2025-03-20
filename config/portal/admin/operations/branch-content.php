@@ -272,7 +272,7 @@
                 <div class="div-in">
                     <ul>
                     <li class="active" title="Dashboard" id="branch_dashboard" onclick="_getActiveBranchPage({divid:'branch_dashboard', page: 'branch_dashboard', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> Dashboard</li>
-                        <li title="Branch Staff" id="branch_staff" onclick="_getActiveBranchPage({divid:'branch_staff', page: 'branch_staff', url: adminPortalLocalUrl})"><i class="bi-person-workspace"></i> Staff</li>
+                        <li title="Branch Staff" id="branch_staff" onclick="_getActiveBranchPage({divid:'branch_staff', page: 'branch_staff', url: adminPortalLocalUrl});"><i class="bi-person-workspace"></i> Staff</li>
                         <li id="dotted" title="Branch Student"><i class="bi-mortarboard"></i> Student
                             <div class="expand-div animated fadeIn">
                                 <ul class="ul-expand">
@@ -280,7 +280,7 @@
                                        onclick="_getForm({page: 'branch_student_reg', layer:2, url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Register Student</li>
 
                                     <li id="my_students" title="View Students"
-                                        onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>View Student</li>
+                                        onclick="_getForm({page: 'student_select_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>View Student</li>
                                     
                                     <li id="my_students" title="Search Students"
                                         onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Search Student</li>
@@ -716,7 +716,14 @@
 <?php } ?>
 
 <?php if ($page == 'branch_staff') { ?>
-    <div class="alert alert-success form-alert animated fadeIn"><span><i class="bi-person-bounding-box"></i> BRANCH STAFF LIST</span></div>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <span><i class="bi-person-bounding-box"></i> BRANCH STAFF LIST</span> 
+
+        <div class="btn-container">
+            <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
+            <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i> EXPORT</button>
+        </div>
+    </div>
 
     <div class="table-div animated fadeIn">
         <table class="table" cellspacing="0" style="width:100%" id="pageContent">
