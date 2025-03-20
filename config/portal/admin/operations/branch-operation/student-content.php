@@ -397,3 +397,577 @@
         </div>
     </div>
 <?php } ?>
+
+<?php if ($page=='student_select_form'){?>
+    <div class="caption-div animated zoomIn">
+        <div class="title-div">
+           <div class="title"><i class="bi-person-check"></i> VIEW BRANCH STUDENT</div>
+           <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer?>);" title="Close"><i class="bi-x-lg"></i></button>
+        </div>
+
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, you're about to view students by their <span>Department</span>, <span>Class</span>, and <span>Arm</span>. Please select the <span>Department</span>, <span>Class</span>, and <span>Arm</span> to proceed.</div>
+
+            <div class="text_field_container" id="departmentId_container">
+                <script>
+                    selectField({
+                        id: 'departmentId',
+                        title: 'Select Department'
+                    });
+                    _getSelectDepartment('departmentId');
+                </script>
+            </div>
+
+            <div class="text_field_container" id="classId_container">
+                <script>
+                    selectField({
+                        id: 'classId',
+                        title: 'Select Class'
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container" id="armId_container">
+                <script>
+                    selectField({
+                        id: 'armId',
+                        title: 'Select Arm'
+                    });
+                </script>
+            </div>
+            
+            <button class="btn" type="button" id="submit_btn"  title="Proceed Request"  onclick="_getActiveBranchPage({divid:'branch_student_page', page: 'branch_student_page', url: adminPortalLocalUrl});">PROCEED <i class="bi-arrow-right"></i>  </button>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page=='branch_student_page') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div><span><i class="bi-person-bounding-box"></i></span> BRANCH STUDENT'S LIST  ---- <span>BASIC</span> - <span> BASIC 1</span></div> 
+
+        <div class="btn-container">
+            <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
+            <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i> EXPORT</button>
+        </div>
+    </div>
+
+    <div class="table-div animated fadeIn">
+        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+            <thead>
+                <tr class="tb-col">
+                    <th>sn</th>
+                    <th>Student ID</th>
+                    <th>Passport</th>
+                    <th>Full Name</th>
+                    <th>Gender</th>
+                    <th>Department</th>
+                    <th>Class</th>
+                    <th>Status</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr class="tb-row">
+                    <td>1</td>
+                    <td class="clickable-td" title="Click to view staff profile" onclick="">
+                        <div class="text-back-div">
+                            <div class="text-div">
+                                <div class="first-class">STAFF03520250317092429</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-back-div">
+                            <div class="image-div student-passport">
+                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student1.jpg" alt="PAUL EMMANUEL"/>
+                            </div>
+                        </div>
+                    </td>
+                    <td>PAUL EMMANUEL</td>
+                    <td>MALE</td>
+                    <td>BASIC</td>
+                    <td>BASIC 1</td>
+                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
+                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="_getForm({page: 'student_profile', layer:2, url: adminPortalLocalUrl});">VIEW</button></td>
+                </tr>
+
+                <tr class="tb-row">
+                    <td>2</td>
+                    <td class="clickable-td" title="Click to view staff profile" onclick="">
+                        <div class="text-back-div">
+                            <div class="text-div">
+                                <div class="first-class">STAFF03520250317092429</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-back-div">
+                            <div class="image-div student-passport">
+                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student2.jpg" alt="PAUL EMMANUEL"/>
+                            </div>
+                        </div>
+                    </td>
+                    <td>PAUL EMMANUEL</td>
+                    <td>MALE</td>
+                    <td>BASIC</td>
+                    <td>BASIC 1</td>
+                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
+                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="">VIEW</button></td>
+                </tr>
+
+                <tr class="tb-row">
+                    <td>3</td>
+                    <td class="clickable-td" title="Click to view staff profile" onclick="">
+                        <div class="text-back-div">
+                            <div class="text-div">
+                                <div class="first-class">STAFF03520250317092429</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-back-div">
+                            <div class="image-div student-passport">
+                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student3.jpg" alt="PAUL EMMANUEL"/>
+                            </div>
+                        </div>
+                    </td>
+                    <td>PAUL EMMANUEL</td>
+                    <td>MALE</td>
+                    <td>BASIC</td>
+                    <td>BASIC 1</td>
+                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
+                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="">VIEW</button></td>
+                </tr>
+
+                <tr class="tb-row">
+                    <td>4</td>
+                    <td class="clickable-td" title="Click to view staff profile" onclick="">
+                        <div class="text-back-div">
+                            <div class="text-div">
+                                <div class="first-class">STAFF03520250317092429</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-back-div">
+                            <div class="image-div student-passport">
+                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student2.jpg" alt="PAUL EMMANUEL"/>
+                            </div>
+                        </div>
+                    </td>
+                    <td>PAUL EMMANUEL</td>
+                    <td>MALE</td>
+                    <td>BASIC</td>
+                    <td>BASIC 1</td>
+                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
+                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="">VIEW</button></td>
+                </tr>
+
+                <tr class="tb-row">
+                    <td>5</td>
+                    <td class="clickable-td" title="Click to view staff profile" onclick="">
+                        <div class="text-back-div">
+                            <div class="text-div">
+                                <div class="first-class">STAFF03520250317092429</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-back-div">
+                            <div class="image-div student-passport">
+                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student1.jpg" alt="PAUL EMMANUEL"/>
+                            </div>
+                        </div>
+                    </td>
+                    <td>PAUL EMMANUEL</td>
+                    <td>MALE</td>
+                    <td>BASIC</td>
+                    <td>BASIC 1</td>
+                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
+                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="">VIEW</button></td>
+                </tr>
+
+                <tr class="tb-row">
+                    <td>6</td>
+                    <td class="clickable-td" title="Click to view staff profile" onclick="">
+                        <div class="text-back-div">
+                            <div class="text-div">
+                                <div class="first-class">STAFF03520250317092429</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-back-div">
+                            <div class="image-div student-passport">
+                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student2.jpg" alt="PAUL EMMANUEL"/>
+                            </div>
+                        </div>
+                    </td>
+                    <td>PAUL EMMANUEL</td>
+                    <td>MALE</td>
+                    <td>BASIC</td>
+                    <td>BASIC 1</td>
+                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
+                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="">VIEW</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+   
+<?php } ?>
+
+
+<?php if ($page=='student_profile') { ?>
+    <script>
+        getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
+    </script>
+
+    <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="top-panel-div">
+            <div class="inner-top">
+                <span><i class="bi-person-check-fill"></i> STUDENT PROFILE</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
+            </div>
+        </div>
+
+        <div class="profile-content-div">
+            <div class="bg-img">
+                <div class="mini-profile">
+                    <label>
+                        <div class="img-div" id="current_user_passport1">
+                            <img src="<?php echo $websiteUrl ?>/all-images/images/avatar.jpg" alt="Profile Image">
+                        </div>
+                    </label>
+
+                    <div class="text-back-div">
+                        <div class="inner-text">
+                            <div class="text-div">
+                                <div class="name" id="fullName">PAUL EMMANUEL</div>
+
+                                <div class="text">
+                                    <div>
+                                        <div id="statusBtn" class="status-btn ACTIVE"><span id="statusName">ACTIVE</span></div>
+                                    </div>
+                                    | LAST LOGIN DATE:
+                                    <strong id="lastLoginTime">00-00-00 00:00:00</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-div">
+                <div class="div-in">
+                    <ul>
+                        <li class="active" title="Student Profile" id="student_profile_details" onclick="_getActiveStudentPage({divid:'student_profile_details', page: 'student_profile_details', url: adminPortalLocalUrl});"><i class="bi-person-bounding-box"></i> Student Profile</li>
+                        <li title="Transcript" id="tanscript" onclick="_getActiveStudentPage({divid:'tanscript', page: 'tanscript', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> Transcript</li>
+                        <li title="Student Report" id="student_report" onclick="_getActiveStudentPage({divid:'student_report', page: 'student_report', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> Student Report</li>
+                        <li title="Student Activities" id="student_activities" onclick="_getActiveStudentPage({divid:'student_activities', page: 'student_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> Student Activities</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="field-back-div">
+                <div class="field-inner-div" id="get_student_details">
+                    <script>
+                        _getActiveStudentPage({
+                            divid: 'student_profile_details',
+                            page: 'student_profile_details',
+                            url: adminPortalLocalUrl
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php } ?>
+
+
+<!-- For Staffs Modal Pages -->
+<?php if ($page == 'student_profile_details') { ?>
+    <div class="user-in">
+        <div class="title">STUDENT BASIC INFORMATION</div>
+
+        <div class="profile-segment-div">
+            <div class="text_field_container col-3" id="updateFirstName_container">
+                <script>
+                    textField({
+                        id: 'updateFirstName',
+                        title: 'First Name'
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-3" id="updateMiddleName_container">
+                <script>
+                    textField({
+                        id: 'updateMiddleName',
+                        title: 'Middle Name'
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-3" id="updateLastName_container">
+                <script>
+                    textField({
+                        id: 'updateLastName',
+                        title: 'Last Name'
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-1" id="updateMobileNumber_container">
+                <script>
+                    textField({
+                        id: 'updateMobileNumber',
+                        title: 'Phone Number',
+                        type: 'tel'
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-1" id="updateEmailAddress_container">
+                <script>
+                    textField({
+                        id: 'updateEmailAddress',
+                        title: 'Email Address',
+                        type: 'email'
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-1" id="updateGenderId_container">
+                <script>
+                    selectField({
+                        id: 'updateGenderId',
+                        title: 'Select Gender',
+                    });
+                    _getSelectGender('updateGenderId');
+                </script>
+            </div>
+
+            <div class="text_field_container col-1" id="updateDateOfBirth_container">
+                <script>
+                     textField({
+                        id: 'updateDateOfBirth',
+                        title: 'Date Of Birth',
+                        type: 'date'
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="user-in">
+        <div class="title">STUDENT RESIDENT INFORMATION</div>
+
+        <div class="profile-segment-div">
+            <div class="text_field_container col-1" id="branchStateId_container">
+                <script>
+                    selectField({
+                        id: 'branchStateId',
+                        title: 'Select Branch State'
+                    });
+                    _getSelectBranchState('branchStateId');
+                </script>
+            </div>
+
+            <div class="text_field_container col-1" id="branchLgaId_container">
+                <script>
+                    selectField({
+                        id: 'branchLgaId',
+                        title: 'Select Branch Local Govt Area'
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-2" id="updateAddress_container">
+                <script>
+                    textField({
+                        id: 'updateAddress',
+                        title: 'Home Address'
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="user-in">
+        <div class="title">STUDENT ACCOUNT INFORMATION</div>
+
+        <div class="profile-segment-div">
+            <div class="text_field_container col-3" id="staffId_container">
+                <script>
+                    textField({
+                        id: 'staffId',
+                        title: 'Staff ID',
+                       
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-3" id="createdTime_container">
+                <script>
+                    textField({
+                        id: 'createdTime',
+                        title: 'Date Of Registration',
+                        readonly: true
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-3" id="lastLogin_container">
+                <script>
+                    textField({
+                        id: 'lastLogin',
+                        title: 'Last Login Date',
+                        readonly: true
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="user-in">
+        <div class="title">ADMINISTRATIVE INFORMATION</div>
+
+        <div class="profile-segment-div">
+            <div class="text_field_container col-3" id="updateBranchId_container">
+                <script>
+                    selectField({
+                        id: 'updateBranchId',
+                        title: 'Select Branch'
+                    });
+                    _getSelectBranch('updateBranchId');
+                </script>
+            </div>
+
+            <div class="text_field_container col-3" id="updateRoleId_container">
+                <script>
+                    selectField({
+                        id: 'updateRoleId',
+                        title: 'Select Role'
+                    });
+                    _getSelectRole('updateRoleId');
+                </script>
+            </div>
+
+            <div class="text_field_container col-3" id="updateStatusId_container">
+                <script>
+                    selectField({
+                        id: 'updateStatusId',
+                        title: 'Select Status'
+                    });
+                    _getSelectStatusId('updateStatusId', '1,2');
+                </script>
+            </div>
+        </div>
+        <div class="btn-div">
+            <button class="btn" title="UPDATE PROFILE" id="updateBtn" onclick=""> UPDATE PROFILE <i class="bi-check"></i></button>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'student_activities') { ?>
+    <div class="chart-div-notifications user-details-notf">
+        <div class="text"><i class="bi-graph-up-arrow"></i> Showing Notification History for </div>
+
+        <div class="text text-right" onclick="select_search()">
+            <span id="srch-text">Last 30 Days</span>
+            <div class="icon-div"><i class="bi-caret-down"></i></div>
+
+            <div class="srch-select alert-srch-select">
+                <div id="srch-today" onclick="_getAlertReport('srch-today', 'view_today_search');">Today</div>
+                <div id="srch-week" onclick="_getAlertReport('srch-week', 'view_thisweek_search');">This Week</div>
+                <div id="srch-7" onclick="_getAlertReport('srch-7', 'view_7days_search');">Last 7 Days</div>
+                <div id="srch-month" onclick="_getAlertReport('srch-month', 'view_thismonth_search');">This Month</div>
+                <div id="srch-30" onclick="_getAlertReport('srch-30', 'view_30days_search');">Last 30 Days</div>
+                <div id="srch-90" onclick="_getAlertReport('srch-90', 'view_90days_search');">Last 90 Days</div>
+                <div id="srch-year" onclick="_getAlertReport('srch-year', 'view_thisyear_search');">This Year</div>
+                <div id="srch-1year" onclick="_getAlertReport('srch-1year', 'view_1year_search');">Last 1 Year</div>
+                <div onclick="srch_custom('Custom Search')">Custom Search</div>
+            </div>
+        </div>
+
+        <div class="text">
+            <div class="custom-srch-div">
+                <div class="custom-srch-div-in">
+                    <div class="text_field_container dash_field_container">
+                        <input class="text_field dash_text_field bar_cust_text_field" type="text" id="datepickers-from" placeholder="" />
+                        <div class="placeholder dash_placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From</div>
+                    </div>
+
+                    <div class="text_field_container dash_field_container">
+                        <input class="text_field dash_text_field bar_cust_text_field" type="text" id="datepickers-to" placeholder="" />
+                        <div class="placeholder dash_placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To</div>
+                    </div>
+                    <button type="button" class="btn">Apply</button>
+                </div>
+            </div>
+        </div>
+
+
+        <script language="javascript">
+            $('#datepickers-from').datetimepicker({
+                lang: 'en',
+                timepicker: false,
+                format: 'Y-m-d',
+                formatDate: 'Y-M-d',
+            });
+
+            $('#datepickers-to').datetimepicker({
+                lang: 'en',
+                timepicker: false,
+                format: 'Y-m-d',
+                formatDate: 'Y-M-d',
+            });
+        </script>
+    </div>
+
+    <div class="main-alert-div">
+        <div class="system-alert" id="" onclick="_getSecondaryFormWithId('staff_alert_read');">
+            <div class="alert-name"><i class="bi-person"></i>Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
+                                                                                            ?>viewed"><i class="bi-check"></i></span></div>
+            <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...</div>
+            <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
+        </div>
+
+        <div class="system-alert" id="" onClick="_get_form_with_id()">
+            <div class="alert-name"><i class="bi-person"></i>Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
+                                                                                            ?>viewed"><i class="bi-check"></i></span></div>
+            <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...</div>
+            <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
+        </div>
+
+        <div class="system-alert" id="" onClick="_get_form_with_id()">
+            <div class="alert-name"><i class="bi-person"></i> Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
+                                                                                            ?>viewed"><i class="bi-check"></i></span></div>
+            <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...</div>
+            <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
+        </div>
+
+        <div class="system-alert" id="" onClick="_get_form_with_id()">
+            <div class="alert-name"><i class="bi-person"></i> Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
+                                                                                            ?>viewed"><i class="bi-check"></i></span></div>
+            <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...</div>
+            <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
+        </div>
+
+        <div class="system-alert" id="" onClick="_get_form_with_id()">
+            <div class="alert-name"><i class="bi-person"></i> Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
+                                                                                            ?>viewed"><i class="bi-check"></i></span></div>
+            <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...</div>
+            <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
+        </div>
+
+        <div class="system-alert" id="" onClick="_get_form_with_id()">
+            <div class="alert-name"><i class="bi-person"></i> Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
+                                                                                            ?>viewed"><i class="bi-check"></i></span></div>
+            <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...</div>
+            <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
+        </div>
+    </div>
+<?php } ?>

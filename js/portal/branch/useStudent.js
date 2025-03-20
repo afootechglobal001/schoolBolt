@@ -1,3 +1,19 @@
+function _getActiveStudentPage(props) {
+	const {
+        page = '',
+        divid = '',
+		pageContainer='get_student_details'
+    } = props;
+	_getStudentPagesActiveLink(divid);
+	if(page){
+		_getPage({page: page, pageContainer: pageContainer,  url: adminPortalLocalUrl});
+	}
+}
+function _getStudentPagesActiveLink(divid){
+	$('#student_profile_details, #student_activities').removeClass('active');
+	$("#"+divid).addClass('active');
+}
+
 //////////////////////////// upload image from webcam//////////////////////////
 Webcam.set({
     width: 270,
