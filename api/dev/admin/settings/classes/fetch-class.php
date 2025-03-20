@@ -36,6 +36,7 @@ if(!$checkSession){
     $response['data'] = array(); // Initialize the data array
 
     while ($fetchQuery = mysqli_fetch_assoc($query)) {
+        $classId=$fetchQuery['classId'];
         $statusId=$fetchQuery['statusId'];
         $createdBy=$fetchQuery['createdBy'];
         $updatedBy=$fetchQuery['updatedBy'];
@@ -63,6 +64,11 @@ if(!$checkSession){
                 $statusData[] = $geStatusFetch;
             }
             $fetchQuery['statusData']= $statusData;
+
+            /////////////////// for  $noOfArms
+            $getnoOfArmsQuery = mysqli_query($conn, "SELECT * FROM CLASS_STRUCTURE_TAB WHERE $clientIds AND parentId = '$classId'");
+            $noOfArms=mysqli_num_rows($getnoOfArmsQuery);
+            $fetchQuery['noOfArms']= $noOfArms;
 
             
         $response['data'][] = $fetchQuery;

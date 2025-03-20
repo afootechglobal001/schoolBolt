@@ -36,6 +36,7 @@ if(!$checkSession){
     $response['data'] = array(); // Initialize the data array
 
     while ($fetchQuery = mysqli_fetch_assoc($query)) {
+        $departmentId=$fetchQuery['departmentId'];
         $statusId=$fetchQuery['statusId'];
         $createdBy=$fetchQuery['createdBy'];
         $updatedBy=$fetchQuery['updatedBy'];
@@ -64,7 +65,11 @@ if(!$checkSession){
             }
             $fetchQuery['statusData']= $statusData;
 
-            
+            /////////////////// for  $noOfClasses
+            $getnoOfClassesQuery = mysqli_query($conn, "SELECT * FROM CLASS_STRUCTURE_TAB WHERE $clientIds AND parentId = '$departmentId'");
+            $noOfClasses=mysqli_num_rows($getnoOfClassesQuery);
+            $fetchQuery['noOfClasses']= $noOfClasses;
+
         $response['data'][] = $fetchQuery;
     }
 //////////////////////////////////////////////////////////////////////////////////////////////
