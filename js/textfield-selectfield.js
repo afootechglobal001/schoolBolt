@@ -270,66 +270,6 @@ function _getSelectMaritalStatus(fieldId){
 	}
 }
 
-
-function _getSelectNationlaity(fieldId){
-	try {
-		$.ajax({
-			type: "GET",
-			url: endPoint+'/preset-data/fetch-country',
-			dataType: "json",
-			cache: false,
-			headers: getAuthHeaders(),
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-				
-				if (success === true) {
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].countryId;
-						const value = data[i].countryName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
-}
-
-function _getSelectAccomodation(fieldId){
-	try {
-		$.ajax({
-			type: "GET",
-			url: endPoint+'/preset-data/fetch-accommodation',
-			dataType: "json",
-			cache: false,
-			headers: getAuthHeaders(),
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-				
-				if (success === true) {
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].accommodationId;
-						const value = data[i].accommodationName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
-}
-
-
 function _getSelectTitle(fieldId){
 	try {
 		$.ajax({
@@ -368,7 +308,6 @@ function _getSelectBirthDay(fieldId) {
 		);
 	}
 }
-
 
 function _getSelectBirthMonth(fieldId){
 	const data = [
@@ -428,7 +367,6 @@ function _getSelectBirthMonth(fieldId){
 		$('#searchList_' + fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">' + value + '</li>');
 	}	
 }
-
 
 function _getSelectBlogCategory(fieldId){
 	const data=[

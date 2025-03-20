@@ -18,13 +18,14 @@
                 </div>           
 
                 <div class="alert alert-success form-alert">
-                    <span>BASIC INFORMATIONS</span>
+                    <span>STUDENT BASIC INFORMATIONS</span>
                     <div class="text_field_back_container">
-                        <div class="text_field_container" id="surname_container">
+                        <div class="text_field_container" id="surName_container">
                             <script>
                                 textField({
-                                    id: 'surname',
-                                    title: 'SURNAME NAME'
+                                    id: 'surName',
+                                    title: 'SURNAME NAME',
+                                    onKeyUpFunction: 'copyTextbox()'
                                 });
                             </script>
                         </div>
@@ -71,37 +72,37 @@
                             <script>
                                 textField({
                                     id: 'dateOfBirth',
-                                    title: 'DATE OF BIRTH',
+                                    title: 'Dtae Of Birth',
                                     type: 'date'
                                 });
                             </script>
                         </div>
 
-                        <div class="text_field_container" id="nationalityId_container">
+                        <div class="text_field_container" id="countryId_container">
                             <script>
                                 selectField({
-                                    id: 'nationalityId',
+                                    id: 'countryId',
                                     title: 'Select Nationality'
                                 });
-                                _getSelectNationlaity('nationalityId');
+                                _getSelectNationlaity('countryId');
                             </script>
                         </div>
 
-                        <div class="text_field_container" id="branchStateId_container">
+                        <div class="text_field_container" id="stateId_container">
                             <script>
                                 selectField({
-                                    id: 'branchStateId',
-                                    title: 'Select Branch State',
+                                    id: 'stateId',
+                                    title: 'Select State Of Origin',
                                 });
-                                _getSelectBranchState('branchStateId');
+                                _getSelectBranchState('stateId');
                             </script>
                         </div>
 
-                        <div class="text_field_container" id="branchLgaId_container">
+                        <div class="text_field_container" id="lgaId_container">
                             <script>
                                 selectField({
-                                    id: 'branchLgaId',
-                                    title: 'Select Branch Local Govt Area'
+                                    id: 'lgaId',
+                                    title: 'Select Local Govt Area'
                                 });
                             </script>
                         </div>
@@ -110,15 +111,16 @@
                             <script>
                                 textField({
                                     id: 'address',
-                                    title: 'HOME ADDRESS'
+                                    title: 'HOME ADDRESS',
+                                    onKeyUpFunction: 'copyTextbox()'
                                 });
                             </script>
                         </div>
 
-                        <div class="text_field_container" id="emailAddress_container">
+                        <div class="text_field_container" id="email_container">
                             <script>
                                 textField({
-                                    id: 'emailAddress',
+                                    id: 'email',
                                     title: 'EMAIL ADDRESS',
                                     type: 'email'
                                 });
@@ -135,74 +137,63 @@
                                 });
                             </script>
                         </div>
-
-                        <div class="text_field_container" id="accommodationId_container">
-                            <script>
-                                selectField({
-                                    id: 'accommodationId',
-                                    title: 'Select Accomodation'
-                                });
-                                _getSelectAccomodation('accommodationId');
-                            </script>
-                        </div>
                     </div>
                 </div>
 
                 <div class="alert alert-success form-alert">
                     <span>FATHER's INFORMATIONS</span>
                     <div class="text_field_back_container">
-                        <div class="text_field_container" id="titleId_container">
+                        <div class="text_field_container" id="fatherTitleId_container">
                             <script>
                                 selectField({
-                                    id: 'titleId',
+                                    id: 'fatherTitleId',
                                     title: 'Select Title'
                                 });
-                                _getSelectTitle('titleId');
+                                _getSelectTitle('fatherTitleId');
                             </script>
                         </div>
 
-                        <div class="text_field_container" id="fsurname_container">
+                        <div class="text_field_container" id="fatherSurName_container">
                             <script>
                                 textField({
-                                    id: 'fsurname',
+                                    id: 'fatherSurName',
                                     title: 'SURNAME'
                                 });
                             </script>
                         </div>
 
-                        <div class="text_field_container" id="ffirstName_container">
+                        <div class="text_field_container" id="fatherOtherNames_container">
                             <script>
                                 textField({
-                                    id: 'ffirstName',
+                                    id: 'fatherOtherNames',
                                     title: 'OTHERS NAME'
                                 });
                             </script>
                         </div>
 
-                        <div class="text_field_container" id="faddress_container">
+                        <div class="text_field_container" id="fatherAddress_container">
                             <script>
                                 textField({
-                                    id: 'faddress',
-                                    title: 'HOME ADDRESS',
-                                    onKeyUpFunction: 'copyAddress()'
+                                    id: 'fatherAddress',
+                                    title: 'HOME ADDRESS'
                                 });
                             </script>
                         </div>
 
-                        <div class="text_field_container" id="femailAddress_container">
+                        <div class="text_field_container" id="fatherEmail_container">
                             <script>
                                 textField({
-                                    id: 'femailAddress',
+                                    id: 'fatherEmail',
                                     title: 'EMAIL ADDRESS',
                                     type: 'email'
                                 });
                             </script>
                         </div>
                        
-                        <div class="text_field_container" id="fmobileNumber_container">
+                        <div class="text_field_container" id="fatherMobileNumber_container">
                             <script>
                                 textField({
-                                    id: 'fmobileNumber',
+                                    id: 'fatherMobileNumber',
                                     title: 'PHONE NUMBER',
                                     type: 'tel',
                                     onKeyPressFunction: 'isNumberCheck(event);'
@@ -221,21 +212,21 @@
                                 </script>
                             </div>
 
-                            <div class="text_field_container col-1" id="birthMonth_container">
+                            <div class="text_field_container col-1" id="birthMonthId_container">
                                 <script>
                                     selectField({
-                                        id: 'birthMonth',
+                                        id: 'birthMonthId',
                                         title: 'Select Birth Month'
                                     });
-                                    _getSelectBirthMonth('birthMonth');
+                                    _getSelectBirthMonth('birthMonthId');
                                 </script>
                             </div>
                         </div>
 
-                        <div class="text_field_container" id="occupation_container">
+                        <div class="text_field_container" id="fatherOccupation_container">
                             <script>
                                 textField({
-                                    id: 'occupation',
+                                    id: 'fatherOccupation',
                                     title: 'OCCUPATION'
                                 });
                             </script>
@@ -246,58 +237,57 @@
                 <div class="alert alert-success form-alert">
                     <span>MOTHER's INFORMATIONS</span>
                     <div class="text_field_back_container">
-                        <div class="text_field_container" id="mTitleId_container">
+                        <div class="text_field_container" id="motherTitleId_container">
                             <script>
                                 selectField({
-                                    id: 'mTitleId',
+                                    id: 'motherTitleId',
                                     title: 'Select Title'
                                 });
-                                _getSelectTitle('mTitleId');
+                                _getSelectTitle('motherTitleId');
                             </script>
                         </div>
 
-                        <div class="text_field_container" id="msurname_container">
+                        <div class="text_field_container" id="motherSurName_container">
                             <script>
                                 textField({
-                                    id: 'msurname',
+                                    id: 'motherSurName',
                                     title: 'SURNAME'
                                 });
                             </script>
                         </div>
 
-                        <div class="text_field_container" id="mfirstName_container">
+                        <div class="text_field_container" id="motherOtherNames_container">
                             <script>
                                 textField({
-                                    id: 'mfirstName',
+                                    id: 'motherOtherNames',
                                     title: 'OTHERS NAME'
                                 });
                             </script>
                         </div>
 
-                        <div class="text_field_container" id="maddress_container">
+                        <div class="text_field_container" id="motherAddress_container">
                             <script>
                                 textField({
-                                    id: 'maddress',
-                                    title: 'HOME ADDRESS',
-                                    onKeyPressFunction: ''
+                                    id: 'motherAddress',
+                                    title: 'HOME ADDRESS'
                                 });
                             </script>
                         </div>
 
-                        <div class="text_field_container" id="memailAddress_container">
+                        <div class="text_field_container" id="motherEmail_container">
                             <script>
                                 textField({
-                                    id: 'memailAddress',
+                                    id: 'motherEmail',
                                     title: 'EMAIL ADDRESS',
                                     type: 'email'
                                 });
                             </script>
                         </div>
                        
-                        <div class="text_field_container" id="mmobileNumber_container">
+                        <div class="text_field_container" id="motherMobileNumber_container">
                             <script>
                                 textField({
-                                    id: 'mmobileNumber',
+                                    id: 'motherMobileNumber',
                                     title: 'PHONE NUMBER',
                                     type: 'tel',
                                     onKeyPressFunction: 'isNumberCheck(event);'
@@ -306,31 +296,31 @@
                         </div>
 
                         <div class="col-back-div">
-                            <div class="text_field_container col-1" id="mBirthDay_container">
+                            <div class="text_field_container col-1" id="mbirthDay_container">
                                 <script>
                                     selectField({
-                                        id: 'mBirthDay',
+                                        id: 'mbirthDay',
                                         title: 'Select Birth Day'
                                     });
-                                    _getSelectBirthDay('mBirthDay');
+                                    _getSelectBirthDay('mmbirthDay');
                                 </script>
                             </div>
 
-                            <div class="text_field_container col-1" id="mbirthMonth_container">
+                            <div class="text_field_container col-1" id="mbirthMonthId_container">
                                 <script>
                                     selectField({
-                                        id: 'mbirthMonth',
+                                        id: 'mbirthMonthId',
                                         title: 'Select Birth Month'
                                     });
-                                    _getSelectBirthMonth('mbirthMonth');
+                                    _getSelectBirthMonth('fbirthMonthId');
                                 </script>
                             </div>
                         </div>
 
-                        <div class="text_field_container" id="moccupation_container">
+                        <div class="text_field_container" id="motherOccupation_container">
                             <script>
                                 textField({
-                                    id: 'moccupation',
+                                    id: 'motherOccupation',
                                     title: 'OCCUPATION'
                                 });
                             </script>
@@ -341,6 +331,15 @@
                 <div class="alert alert-success form-alert">
                     <span>STUDENT's ACADEMIC INFORMATIONS</span>
                     <div class="text_field_back_container">
+                        <div class="text_field_container" id="studentOfficialId_container">
+                            <script>
+                                textField({
+                                    id: 'studentOfficialId',
+                                    title: 'Student Official ID'
+                                });
+                            </script>
+                        </div>
+
                         <div class="text_field_container" id="departmentId_container">
                             <script>
                                 selectField({
@@ -357,7 +356,6 @@
                                     id: 'classId',
                                     title: 'Select Class'
                                 });
-                                _getSelectClass('classId');
                             </script>
                         </div>
 
@@ -367,7 +365,16 @@
                                     id: 'armId',
                                     title: 'Select Arm'
                                 });
-                                _getSelectArm('armId');
+                            </script>
+                        </div>
+
+                        <div class="text_field_container" id="accommodationId_container">
+                            <script>
+                                selectField({
+                                    id: 'accommodationId',
+                                    title: 'Select Accomodation'
+                                });
+                                _getSelectAccomodation('accommodationId');
                             </script>
                         </div>
                     </div>
@@ -384,7 +391,7 @@
                 </div>
                 
                 <div>
-                    <button class="btn" title="SUBMIT" id="submitBtn" onclick="_createStaff();"> <i class="bi-check"></i> SUBMIT </button>
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
                 </div>
             </div>
         </div>
