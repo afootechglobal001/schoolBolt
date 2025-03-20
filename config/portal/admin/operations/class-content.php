@@ -150,8 +150,107 @@
     </div>
 <?php } ?>
 
-<?php if ($page=='add_subjects') { ?>
-    <script>getEachClassSession = JSON.parse(sessionStorage.getItem("getEachClassSession"));</script>	
+<?php if ($page=='add_class_arm') { ?>
+    <script> getClassArmSession = JSON.parse(sessionStorage.getItem("getClassArmSession"));</script>	
+
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="pageTitle"><i class="bi-plus-square"></i> ADD ARM TO CLASS </span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div id="user_details">
+                    <div>
+                        <div class="alert alert-success form-alert">Kindly click the <span>Add Arm</span> button to <span> ADD ARM TO <span id="className"></span> CLASS</span></div>
+                        <script>
+                            $(document).ready(function () {
+                                $("#className, #className2").html(getClassArmSession.className);
+                            });
+                        </script>
+                    </div>
+
+                    <div class="fetched-permission-back-div">
+                        <div class="title">Registered Arms</div>
+                        <div id="fetchedPermission"></div>
+                    </div>
+
+                    <script>
+                        $(document).ready(function() {
+                            var getClassArmSession = JSON.parse(sessionStorage.getItem("getClassArmSession"));
+                            let text = '';
+
+                            if (getClassArmSession && getClassArmSession.data) {
+                                const fetch = getClassArmSession.data;
+                                const noOfArms = getClassArmSession.noOfArms;
+
+                                if (noOfArms > 0) {
+                                    for (let i = 0; i < fetch.length; i++) {
+                                        const armName = fetch[i].armName;
+                                        const checked = fetch[i].checked;
+
+                                        if (checked === true) {
+                                            text += `
+                                                <div class="fetched-permission-div">
+                                                    <span>${armName}</span>
+                                                </div>`;
+                                        }
+                                    }
+                                    $("#addBtn").html(`<i class="bi-check"></i> EDIT ARM`).attr("title", "EDIT ARM");
+                                } else {
+                                    text = `
+                                        <div class="permission-form-back-div">
+                                            <div class="title-div">
+                                                <h4>No Arm Available</h4>
+                                                <p>There are currently no registered arms. To assign arm to this class, please click the "Add Arm" button below.</p>
+                                            </div>
+                                        </div>`;
+                                    $("#addBtn").html(`<i class="bi-check"></i> ADD ARM`).attr("title", "ADD ARM");
+                                }
+
+                                $("#fetchedPermission").html(text);
+                            }
+                        });
+                    </script>
+
+                    <div>
+                        <button class="btn" title="ADD ARM" id="addBtn" onclick="_getFormDetails('user_form_details');"> <i class="bi-check"></i> ADD ARM </button>
+                    </div>
+                </div>
+
+                <div id="user_form_details">
+                    <div>
+                        <div class="alert alert-success form-alert">Kindly toggle the following arm to <span> ADD ARM TO <span id="className2"></span> CLASS</span></div>
+                    </div>
+
+                    <div class="permission-form-back-div">
+                        <div class="title-div">
+                            <h4>Arms</h4>
+                            <p>Use the toggles below to assign registered arm to their respective classes. Switching to "Yes" activates the arm for class use.</p>
+                        </div>
+
+                        <div class="permission-toggle-div">
+                            <div class="toggle-title">Registered Arms</div>
+                            <div class="fetch-toggle" id="pageContent"></div>
+                        </div>
+
+                        <script>_fetchArmToggle();</script>
+                    </div>
+
+                    <div>
+                        <button class="btn" title="SUBMIT" id="submitBtn" onclick="createUpdateClassArm();"> <i class="bi-check"></i> SUBMIT </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page=='add_class_subjects') { ?>
+    <script>getClassSubjectSession = JSON.parse(sessionStorage.getItem("getClassSubjectSession"));</script>	
 
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
@@ -168,17 +267,53 @@
                         <div class="alert alert-success form-alert">Kindly click the <span>Add Subject</span> button to <span> ADD SUBJECT TO <span id="className"></span> CLASS</span></div>
                         <script>
                             $(document).ready(function () {
-                                $("#className, #className2").html(getEachClassSession.className);
+                                $("#className, #className2").html(getClassSubjectSession.className);
                             });
                         </script>
                     </div>
 
-                    <div class="permission-form-back-div">
-                        <div class="title-div">
-                            <h4>No Subject Available</h4>
-                            <p>There are currently no registered subjects. To assign subject to this department, please click the "Add Subject" button below.</p>
-                        </div>
+                    <div class="fetched-permission-back-div">
+                        <div class="title">Registered Subjects</div>
+                        <div id="fetchedPermission"></div>
                     </div>
+
+                    <script>
+                        $(document).ready(function() {
+                            var getClassSubjectSession = JSON.parse(sessionStorage.getItem("getClassSubjectSession"));
+                            let text = '';
+
+                            if (getClassSubjectSession && getClassSubjectSession.data) {
+                                const fetch = getClassSubjectSession.data;
+                                const noOfsubjects = getClassSubjectSession.noOfsubjects;
+
+                                if (noOfsubjects > 0) {
+                                    for (let i = 0; i < fetch.length; i++) {
+                                        const subjectName = fetch[i].subjectName;
+                                        const checked = fetch[i].checked;
+
+                                        if (checked === true) {
+                                            text += `
+                                                <div class="fetched-permission-div">
+                                                    <span>${subjectName}</span>
+                                                </div>`;
+                                        }
+                                    }
+                                    $("#addBtn").html(`<i class="bi-check"></i> EDIT SUBJECT`).attr("title", "EDIT SUBJECT");
+                                } else {
+                                    text = `
+                                        <div class="permission-form-back-div">
+                                            <div class="title-div">
+                                                <h4>No Subject Available</h4>
+                                                <p>There are currently no registered subjects. To assign subject to this class, please click the "Add Subject" button below.</p>
+                                            </div>
+                                        </div>`;
+                                    $("#addBtn").html(`<i class="bi-check"></i> ADD SUBJECT`).attr("title", "ADD SUBJECT");
+                                }
+
+                                $("#fetchedPermission").html(text);
+                            }
+                        });
+                    </script>
 
                     <div>
                         <button class="btn" title="ADD SUBJECT" id="submitBtn" onclick="_getFormDetails('user_form_details');"> <i class="bi-check"></i> ADD SUBJECT </button>
@@ -205,70 +340,7 @@
                     </div>
 
                     <div>
-                        <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php } ?>
-
-<?php if ($page=='add_arms') { ?>
-    <script>getEachClassSession = JSON.parse(sessionStorage.getItem("getEachClassSession"));</script>	
-
-    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
-        <div class="title-panel-div">
-            <div class="inner-top">
-                <span id="pageTitle"><i class="bi-plus-square"></i> ADD ARM TO CLASS </span>
-                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
-            </div>
-        </div>
-
-        <div class="container-back-div">
-            <div class="inner-container">
-                <div id="user_details">
-                    <div>
-                        <div class="alert alert-success form-alert">Kindly click the <span>Add Arm</span> button to <span> ADD ARM TO <span id="className"></span> CLASS</span></div>
-                        <script>
-                            $(document).ready(function () {
-                                $("#className, #className2").html(getEachClassSession.className);
-                            });
-                        </script>
-                    </div>
-
-                    <div class="permission-form-back-div">
-                        <div class="title-div">
-                            <h4>No Arm Available</h4>
-                            <p>There are currently no registered subjects. To assign subject to this department, please click the "Add Arm" button below.</p>
-                        </div>
-                    </div>
-
-                    <div>
-                        <button class="btn" title="ADD ARM" id="submitBtn" onclick="_getFormDetails('user_form_details');"> <i class="bi-check"></i> ADD ARM </button>
-                    </div>
-                </div>
-
-                <div id="user_form_details">
-                    <div>
-                        <div class="alert alert-success form-alert">Kindly toggle the following arm to <span> ADD ARM TO <span id="className2"></span> CLASS</span></div>
-                    </div>
-
-                    <div class="permission-form-back-div">
-                        <div class="title-div">
-                            <h4>Classes</h4>
-                            <p>Use the toggles below to assign registered arm to their respective classes. Switching to "Yes" activates the subject for class use.</p>
-                        </div>
-
-                        <div class="permission-toggle-div">
-                            <div class="toggle-title">Registered Arms</div>
-                            <div class="fetch-toggle" id="pageContent"></div>
-                        </div>
-
-                        <script>_fetchArmToggle();</script>
-                    </div>
-
-                    <div>
-                        <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
+                        <button class="btn" title="SUBMIT" id="submitBtn2" onclick="createUpdateClassSubject();"> <i class="bi-check"></i> SUBMIT </button>
                     </div>
                 </div>
             </div>
