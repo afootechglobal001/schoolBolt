@@ -1,4 +1,4 @@
-<?php if($page=='department_config'){?>
+<?php if ($page == 'department_config') { ?>
     <div class="page-title-back-div other-pages-title-back-div" data-aos="fade-in" data-aos-duration="1500">
         <div class="page-title-div">
             <div class="back-div"><span onclick="_getActivePage({page:'settings'});"><i class="bi-arrow-left"></i> System Settings</span> Departments</div>
@@ -12,33 +12,35 @@
                     <div class="placeholder dash_placeholder"><i class="bi-search"></i> Type here to search department...</div>
                 </div>
             </div>
-            
+
             <button class="btn" title="ADD NEW DEPARMENT" onclick="sessionStorage.removeItem('getEachDepartmentSession'); _getForm({page: 'department_reg', url: adminPortalLocalUrl});">
                 <i class="bi-plus-square"></i> ADD NEW DEPARMENT
             </button>
         </div>
     </div>
-    
+
     <div class="pages-back-div" data-aos="fade-in" data-aos-duration="1500">
         <div class="table-div animated fadeIn">
             <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-                <script>_fetchDepartments();</script>
+                <script>
+                    _fetchDepartments();
+                </script>
             </table>
         </div>
     </div>
-<?php }?>
+<?php } ?>
 
 <?php if ($page == 'department_reg') { ?>
-    <script> 
+    <script>
         getEachDepartmentSession = JSON.parse(sessionStorage.getItem("getEachDepartmentSession"));
-        $('#pageTitle, #pageTitle2').html(getEachDepartmentSession?.departmentId ? 'UPDATE DEPARTMENT':'ADD NEW DEPARTMENT');
+        $('#pageTitle, #pageTitle2').html(getEachDepartmentSession?.departmentId ? 'UPDATE DEPARTMENT' : 'ADD NEW DEPARTMENT');
     </script>
 
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
                 <span id="pageTitle"><i class="bi-plus-square"></i> ADD A NEW DEPARTMENT</span>
-                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
         </div>
 
@@ -57,14 +59,14 @@
                         });
                     </script>
                 </div>
-                
+
                 <div class="text_field_container" id="statusId_container">
                     <script>
                         selectField({
                             id: 'statusId',
                             title: 'Select Status',
-                            fieldValue: getEachDepartmentSession?.statusData[0].statusId?? '',
-                            fieldLabel: getEachDepartmentSession?.statusData[0].statusName?? ''
+                            fieldValue: getEachDepartmentSession?.statusData[0].statusId ?? '',
+                            fieldLabel: getEachDepartmentSession?.statusData[0].statusName ?? ''
                         });
                         _getSelectStatusId('statusId', '1,2');
                     </script>
@@ -78,8 +80,10 @@
     </div>
 <?php } ?>
 
-<?php if ($page=='update_department'){ ?>	
-    <script>getEachDepartmentSession = JSON.parse(sessionStorage.getItem("getEachDepartmentSession")); </script>	
+<?php if ($page == 'update_department') { ?>
+    <script>
+        getEachDepartmentSession = JSON.parse(sessionStorage.getItem("getEachDepartmentSession"));
+    </script>
 
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div top-panel-details">
@@ -87,10 +91,14 @@
                 <div class="profile-div">
                     <div class="text-div">
                         <span>Department Name</span>
-                        <h3 id="departmentName"><script> $("#departmentName").html(getEachDepartmentSession.departmentName);</script></h3>
+                        <h3 id="departmentName">
+                            <script>
+                                $("#departmentName").html(getEachDepartmentSession.departmentName);
+                            </script>
+                        </h3>
                     </div>
                 </div>
-                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
         </div>
 
@@ -103,17 +111,29 @@
                             <div class="each-details-back-list">
                                 <div class="each-details-list">
                                     <div>Full Name:</div>
-                                    <span id="fullName"><script>$("#fullName").html(capitalizeFirstLetterOfEachWord(getEachDepartmentSession?.createdBy[0].fullname));</script></span>
+                                    <span id="fullName">
+                                        <script>
+                                            $("#fullName").html(capitalizeFirstLetterOfEachWord(getEachDepartmentSession?.createdBy[0].fullname));
+                                        </script>
+                                    </span>
                                 </div>
 
                                 <div class="each-details-list">
                                     <div>Email Address:</div>
-                                    <span id="emailAddress"><script>$("#emailAddress").html(getEachDepartmentSession?.createdBy[0].emailAddress);</script></span>
+                                    <span id="emailAddress">
+                                        <script>
+                                            $("#emailAddress").html(getEachDepartmentSession?.createdBy[0].emailAddress);
+                                        </script>
+                                    </span>
                                 </div>
 
                                 <div class="each-details-list">
                                     <div>Date Created:</div>
-                                    <span id="createdTime"><script>$("#createdTime").html(getEachDepartmentSession?.createdTime);</script></span>
+                                    <span id="createdTime">
+                                        <script>
+                                            $("#createdTime").html(getEachDepartmentSession?.createdTime);
+                                        </script>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -123,17 +143,29 @@
                             <div class="each-details-back-list">
                                 <div class="each-details-list">
                                     <div>Full Name:</div>
-                                    <span id="fullName2"><script>$("#fullName2").html(capitalizeFirstLetterOfEachWord(getEachDepartmentSession?.updatedBy[0]?.fullname ?? ''));</script></span>
+                                    <span id="fullName2">
+                                        <script>
+                                            $("#fullName2").html(capitalizeFirstLetterOfEachWord(getEachDepartmentSession?.updatedBy[0]?.fullname ?? ''));
+                                        </script>
+                                    </span>
                                 </div>
 
                                 <div class="each-details-list">
                                     <div>Email Address:</div>
-                                    <span id="emailAddress2"><script>$("#emailAddress2").html(getEachDepartmentSession?.updatedBy[0]?.emailAddress ?? '');</script></span>
+                                    <span id="emailAddress2">
+                                        <script>
+                                            $("#emailAddress2").html(getEachDepartmentSession?.updatedBy[0]?.emailAddress ?? '');
+                                        </script>
+                                    </span>
                                 </div>
 
                                 <div class="each-details-list">
                                     <div>Date Updated:</div>
-                                    <span id="updatedTime"><script>$("#updatedTime").html(getEachDepartmentSession?.updatedTime);</script></span>
+                                    <span id="updatedTime">
+                                        <script>
+                                            $("#updatedTime").html(getEachDepartmentSession?.updatedTime);
+                                        </script>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -146,18 +178,20 @@
                     </button>
                 </div>
             </div>
-        </div>  
+        </div>
     </div>
 <?php } ?>
 
-<?php if ($page=='add_classes') { ?>
-    <script>getEachDepartmentSession = JSON.parse(sessionStorage.getItem("getEachDepartmentSession"));</script>	
+<?php if ($page == 'add_classes') { ?>
+    <script>
+        getDepartmentClassSession = JSON.parse(sessionStorage.getItem("getDepartmentClassSession"));
+    </script>
 
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
                 <span id="pageTitle"><i class="bi-plus-square"></i> ADD CLASS TO DEPARTMENT </span>
-                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
         </div>
 
@@ -167,21 +201,57 @@
                     <div>
                         <div class="alert alert-success form-alert">Kindly click the <span>Add Class</span> button to <span> ADD CLASS TO <span id="departmentName"></span> DEPARTMENT</span></div>
                         <script>
-                            $(document).ready(function () {
-                                $("#departmentName, #departmentName2").html(getEachDepartmentSession.departmentName);
+                            $(document).ready(function() {
+                                $("#departmentName, #departmentName2").html(getDepartmentClassSession.departmentName);
                             });
                         </script>
                     </div>
 
-                    <div class="permission-form-back-div">
-                        <div class="title-div">
-                            <h4>No Class Available</h4>
-                            <p>There are currently no registered classes. To assign classes to this department, please click the "Add Class" button below.</p>
-                        </div>
+                    <div class="fetched-permission-back-div">
+                        <div class="title">Registered Classes</div>
+                        <div id="fetchedPermission"></div>
                     </div>
 
+                    <script>
+                        $(document).ready(function() {
+                            var getDepartmentClassSession = JSON.parse(sessionStorage.getItem("getDepartmentClassSession"));
+                            let text = '';
+
+                            if (getDepartmentClassSession && getDepartmentClassSession.data) {
+                                const fetch = getDepartmentClassSession.data;
+                                const noOfClasses = getDepartmentClassSession.noOfClasses;
+
+                                if (noOfClasses > 0) {
+                                    for (let i = 0; i < fetch.length; i++) {
+                                        const className = fetch[i].className;
+                                        const checked = fetch[i].checked;
+
+                                        if (checked === true) {
+                                            text += `
+                                                <div class="fetched-permission-div">
+                                                    <span>${className}</span>
+                                                </div>`;
+                                        }
+                                    }
+                                    $("#addBtn").html(`<i class="bi-check"></i> EDIT CLASS`).attr("title", "EDIT CLASS");
+                                } else {
+                                    text = `
+                                        <div class="permission-form-back-div">
+                                            <div class="title-div">
+                                                <h4>No Class Available</h4>
+                                                <p>There are currently no registered classes. To assign classes to this department, please click the "Add Class" button below.</p>
+                                            </div>
+                                        </div>`;
+                                    $("#addBtn").html(`<i class="bi-check"></i> ADD CLASS`).attr("title", "ADD CLASS");
+                                }
+
+                                $("#fetchedPermission").html(text);
+                            }
+                        });
+                    </script>
+
                     <div>
-                        <button class="btn" title="ADD CLASS" id="submitBtn" onclick="_getFormDetails('user_form_details');"> <i class="bi-check"></i> ADD CLASS </button>
+                        <button class="btn" title="ADD CLASS" id="addBtn" onclick="_getFormDetails('user_form_details');"><i class="bi-check"></i> ADD CLASS</button>
                     </div>
                 </div>
 
@@ -201,11 +271,11 @@
                             <div class="fetch-toggle" id="pageContent"></div>
                         </div>
 
-                        <script>_fetchClassesToggle();</script>
+                        <script> _fetchClassesToggle();</script>
                     </div>
 
                     <div>
-                        <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
+                        <button class="btn" title="SUBMIT" id="submitBtn" onclick="createUpdateDepartmentClass();"> <i class="bi-check"></i> SUBMIT </button>
                     </div>
                 </div>
             </div>
