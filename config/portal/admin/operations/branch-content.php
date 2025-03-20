@@ -284,6 +284,12 @@
                                     
                                     <li id="my_students" title="Search Students"
                                         onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Search Student</li>
+                                       
+                                    <li id="my_students" title="Student Archived"
+                                        onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Student Archived</li>
+
+                                    <li id="my_students" title="Student Alumni"
+                                        onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Student Alumni</li>
                                 </ul>
                             </div>
                         </li>
