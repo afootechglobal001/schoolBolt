@@ -10,6 +10,7 @@ if(!$checkSession){
 	$response['message']="SESSION EXPIRED! Please LogIn Again.";
 	goto end;
 }
+
     //////////////////declaration of variables//////////////////////////////////////
     $q = $_GET['q'];
     $classId = $_GET['classId'];
