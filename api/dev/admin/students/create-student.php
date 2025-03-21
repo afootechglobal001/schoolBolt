@@ -12,6 +12,8 @@ if(!$checkSession){
 }
 
 	//////////////////declaration of variables//////////////////////////////////////
+    $branchId = $_GET['branchId'];
+
 	$surName=trim(strtoupper($_POST['surName']));
     $firstName=trim(strtoupper($_POST['firstName']));
     $otherNames=trim(strtoupper($_POST['otherNames']));
@@ -47,7 +49,7 @@ if(!$checkSession){
     $motherOccupation=trim(strtoupper($_POST['motherOccupation']));
 
     
-    $studentOfficialId=trim(strtoupper($_POST['studentOfficialId']));
+    $officialStudentId=trim(strtoupper($_POST['officialStudentId']));
     $departmentId=trim($_POST['departmentId']);
     $classId=trim($_POST['classId']);
     $armId=trim($_POST['armId']);
@@ -75,14 +77,7 @@ if(!$checkSession){
         ]; 
         goto end;
 	}
-    if(empty($otherNames)){
-        $response = [
-            'response'=> 102,
-            'success'=> false,
-            'message'=> "STUDENT ORTHER NAMES REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
+    
     if(empty($genderId)){
         $response = [
             'response'=> 102,
@@ -139,22 +134,7 @@ if(!$checkSession){
         ]; 
         goto end;
 	}
-    if(empty($emailAddress)){
-        $response = [
-            'response'=> 102,
-            'success'=> false,
-            'message'=> "EMAIL REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    if(empty($mobileNumber)){
-        $response = [
-            'response'=> 102,
-            'success'=> false,
-            'message'=> "PHONE NUMBER REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
+   
     if(empty($departmentId)){
         $response = [
             'response'=> 102,
@@ -196,7 +176,7 @@ if(!$checkSession){
         goto end;
 	}
 
-        if(($emailAddress) && (!filter_var($emailAddress, FILTER_VALIDATE_EMAIL))){
+        if(($email) && (!filter_var($email, FILTER_VALIDATE_EMAIL))){
             $response = [
                 'response'=> 102,
                 'success'=> false,
@@ -222,41 +202,120 @@ if(!$checkSession){
             goto end;
         }
    
-			$query=mysqli_query($conn,"SELECT * FROM STAFF_TAB WHERE $clientIds AND emailAddress='$emailAddress'") or die (mysqli_error($conn));
-			$count=mysqli_num_rows($query);
-
-            if ($count>0){ /// start if 4
-                $response = [
-                    'response'=> 103,
-                    'success'=> false,
-                    'message'=> "ACCOUNT EXIST! Account already exist by email. Check and try again.",
-                ];
-                goto end;
-            }
 
             ///////////////////////geting sequence//////////////////////////
-            $countId='STAFF';
+            $countId='STUDENT';
             $sequence=$callclass->_get_sequence_count($conn, $countId);
             $array = json_decode($sequence, true);
             $no= $array[0]['no'];
-            $staffId=$countId.$no.date("Ymdhis");
-            $password=md5($staffId);
+            $studentId=$countId.$no.date("Ymdhis");
+
+
+            $select = "SELECT `session`, termId FROM BRANCHES_TAB WHERE $clientIds AND branchId= '$branchId'";
+            $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
+            $fetchQuery = mysqli_fetch_assoc($query);
+            $session=$fetchQuery['session'];
+            $termId=$fetchQuery['termId'];
 
             
-            mysqli_query($conn,"INSERT INTO `STAFF_TAB`
-            (`clientId`, `staffId`, `firstName`, `middleName`, `lastName`, `emailAddress`, `mobileNumber`, `genderId`, `dateOfBirth`, `stateId`, `lgaId`, `address`, `branchId`, `roleId`, `statusId`, `password`, `createdBy`, `createdTime`) VALUES 
-            ('$clientId', '$staffId','$firstName', '$middleName', '$lastName', '$emailAddress', '$mobileNumber', '$genderId', '$dateOfBirth', '$stateId', '$lgaId', '$address', '$branchId', '$roleId', '$statusId', '$password', '$loginStaffId', NOW())")or die (mysqli_error($conn));
+            mysqli_query($conn,"INSERT INTO `STUDENTS_TAB`
+            (`clientId`, `branchId`, `studentId`, `surName`, `firstName`, `otherNames`, `genderId`, `maritalStatusId`, `dateOfBirth`, `countryId`, `stateId`, `lgaId`, `address`, `email`, `mobileNumber`, `statusId`, `sessionRegistered`, `termRegistered`, `createdBy`, `createdTime`) VALUES 
+            ('$clientId', '$branchId','$studentId', '$surName', '$firstName', '$otherNames', '$genderId', '$maritalStatusId', '$dateOfBirth', '$countryId', '$stateId', '$lgaId', '$address', '$email', '$mobileNumber', '$statusId','$session','$termId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
+
+
+            $fatherDateOfBirth="$fatherDayOfBirth/$fatherMonthOfBirth";
+            mysqli_query($conn,"INSERT INTO `PARENTS_TAB`
+            (`clientId`, `branchId`, `studentId`, `recordFor`, `titleId`, `surName`, `otherNames`, `address`, `email`, `mobileNumber`, `dateOfBirth`, `occupation`, `statusId`, `createdBy`, `createdTime`) VALUES
+            ('$clientId', '$branchId','$studentId', 'father', '$fatherTitleId', '$fatherSurName', '$fatherOtherNames', '$fatherAddress', '$fatherEmail', '$fatherMobileNumber', '$fatherDateOfBirth', '$fatherOccupation', '$statusId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
+
+            $motherDateOfBirth="$motherDayOfBirth/$motherMonthOfBirth";
+            mysqli_query($conn,"INSERT INTO `PARENTS_TAB`
+            (`clientId`, `branchId`, `studentId`, `recordFor`, `titleId`, `surName`, `otherNames`, `address`, `email`, `mobileNumber`, `dateOfBirth`, `occupation`, `statusId`, `createdBy`, `createdTime`) VALUES 
+            ('$clientId', '$branchId','$studentId', 'mother', '$motherTitleId', '$motherSurName', '$motherOtherNames', '$motherAddress', '$motherEmail', '$motherMobileNumber', '$motherDateOfBirth', '$motherOccupation', '$statusId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
+
+            mysqli_query($conn,"INSERT INTO `STUDENTS_CLASS_TAB`
+            (`clientId`, `branchId`, `studentId`, `session`, `termId`, `officialStudentId`, `departmentId`, `classId`, `armId`, `accommodationId`, `statusId`, `createdBy`, `createdTime`) VALUES 
+            ('$clientId', '$branchId', '$studentId', '$session', '$termId', '$officialStudentId', '$departmentId', '$classId', '$armId', '$accommodationId', '$statusId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
+
+            if($passport!='mobile'){
+                $passportName="$studentId.jpg"
+                mysqli_query($conn,"UPDATE `STUDENTS_TAB` SET passport='$passportName' WHERE studentId='$studentId'")or die (mysqli_error($conn));
+            }
 
             $response['response']=200; 
             $response['success']=true;
-            $response['message']="STAFF CREATED SUCCESFFULY!"; 
+            $response['message']="STUDENT REGISTERED SUCCESFFULY!"; 
             $response['data'] = array(); // Initialize the data array
 
-            $select="SELECT * FROM STAFF_VIEW WHERE $clientIds AND staffId = '$staffId'";
+            $select="SELECT * FROM STUDENTS_CLASS_TAB WHERE $clientIds AND branchId = '$branchId' AND studentId = '$studentId'";
             $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
             while ($fetchQuery = mysqli_fetch_assoc($query)) {
+                $branchId=$fetchQuery['branchId'];
+                $studentId=$fetchQuery['studentId'];
+                $departmentId=$fetchQuery['departmentId'];
+                $classId=$fetchQuery['classId'];
+                $armId=$fetchQuery['armId'];
+                $accommodationId=$fetchQuery['accommodationId'];
+                $statusId=$fetchQuery['statusId'];
                 $createdBy=$fetchQuery['createdBy'];
                 $updatedBy=$fetchQuery['updatedBy'];
+
+
+                /////////////////// for  $studentId
+                $studentData=array();
+                $studentDataQuery = mysqli_query($conn, "SELECT * FROM STUDENTS_TAB WHERE $clientIds AND studentId='$studentId'");
+                while ($studentDatafetch = mysqli_fetch_assoc($studentDataQuery)) {
+                    $studentData[] = $studentDatafetch;
+                }
+                $fetchQuery['studentData']= $studentData;
+
+                 /////////////////// for  $branchId
+                 $branchData=array();
+                 $branchDataQuery = mysqli_query($conn, "SELECT branchId, `name` FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+                 while ($branchDataFetch = mysqli_fetch_assoc($branchDataQuery)) {
+                     $branchData[] = $branchDataFetch;
+                 }
+                 $fetchQuery['branchData']= $branchData;
+
+                 /////////////////// for  $departmentId
+                 $departmentData=array();
+                 $departmentDataQuery = mysqli_query($conn, "SELECT departmentId, departmentName FROM DEPARTMENTS_TAB WHERE $clientIds AND departmentId='$departmentId'");
+                 while ($departmentDataFetch = mysqli_fetch_assoc($departmentDataQuery)) {
+                     $departmentData[] = $departmentDataFetch;
+                 }
+                 $fetchQuery['departmentData']= $departmentData;
+         
+                 /////////////////// for  $classId
+                 $classData=array();
+                 $classDataQuery = mysqli_query($conn, "SELECT classId, className FROM CLASSES_TAB WHERE $clientIds AND classId='$classId'");
+                 while ($classDataFetch = mysqli_fetch_assoc($classDataQuery)) {
+                     $classData[] = $classDataFetch;
+                 }
+                 $fetchQuery['classData']= $classData;
+
+                 /////////////////// for  $armId
+                 $armData=array();
+                 $armDataQuery = mysqli_query($conn, "SELECT armId, armName FROM ARMS_TAB WHERE $clientIds AND armId='$armId'");
+                 while ($armDataFetch = mysqli_fetch_assoc($armDataQuery)) {
+                     $armData[] = $armDataFetch;
+                 }
+                 $fetchQuery['armData']= $armData;
+
+                 /////////////////// for  $accommodationId
+                 $accommodationData=array();
+                 $accommodationDataQuery = mysqli_query($conn, "SELECT * FROM SETUP_ACCOMMODATION_TAB WHERE accommodationId='$accommodationId'");
+                 while ($accommodationDataFetch = mysqli_fetch_assoc($accommodationDataQuery)) {
+                     $accommodationData[] = $accommodationDataFetch;
+                 }
+                 $fetchQuery['accommodationData']= $accommodationData;
+
+                  /////////////////// for  $rolePermissionIds
+                $statusData=array();
+                $statusDataQuery = mysqli_query($conn, "SELECT * FROM SETUP_STATUS_TAB WHERE statusId ='$statusId'");
+                while ($statusDataFetch = mysqli_fetch_assoc($statusDataQuery)) {
+                    $statusData[] = $statusDataFetch;
+                }
+                $fetchQuery['statusData']= $statusData;
         
                 /////////////////// for  $createdBy
                 $createdByData=array();
@@ -273,6 +332,8 @@ if(!$checkSession){
                     $updatedByData[] = $getUpdatedByfetch;
                 }
                 $fetchQuery['updatedBy']= $updatedByData;
+
+                
                 $response['data'][] = $fetchQuery;
             }
 //////////////////////////////////////////////////////////////////////////////////////////////
