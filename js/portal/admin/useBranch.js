@@ -305,6 +305,7 @@ function _fetchBranches() {
                         <th>Number of staff</th>
                         <th>Date of Reg.</th>
                         <th>Status</th>
+						<th>View</th>
                     </tr>
                 </thead>`;
 
@@ -334,6 +335,7 @@ function _fetchBranches() {
 								<td>${totalNumberOfStaff}</td>
 								<td>${createdTime}</td>
 								<td><div class="status-div ${statusName}">${statusName}</div></td>
+								<td><button class="btn view-btn" title="Click to view branch profile" onclick="_fetchEachBranches('${branchId}');">VIEW</button></td>
 							</tr>
 						</tbody>`;
 					}

@@ -25,6 +25,7 @@ function _fetchClasses() {
 							<th>Arms</th>
 							<th>Subjects</th>
 							<th>Status</th>
+							<th>View</th>
 						</tr>
 					</thead>`;
 
@@ -44,7 +45,7 @@ function _fetchClasses() {
 						 	<tbody>
 								<tr class="tb-row">
 									<td>${no}</td>
-									<td class="clickable-td" title="Click to view class profile" onclick="_fetchEachClass('${classId}');">${classId}</td>
+									<td class="clickable-td" title="Click view to edit class" onclick="_fetchEachClass('${classId}');">${classId}</td>
 									<td class="clickable-td">${className}</td>
 									<td>${createdBy}</td>
 									<td>${updatedBy ? updatedBy : "NULL"}</td>
@@ -52,6 +53,7 @@ function _fetchClasses() {
 									<td><button class="btn" title="Add arm to class" onclick="_fetchClassArms('${classId}');">${noOfArms}</button></td>
 									<td><button class="btn" title="Add Subject to class" onclick="_fetchClassSubject('${classId}');">${noOfSubjects}</button></td>
 									<td><div class="status-div ${statusName}">${statusName}</div></td>
+									<td><button class="btn view-btn" title="Click view to edit class" onclick="_fetchEachClass('${classId}');">VIEW</button></td>
 								</tr>
 							</tbody>`;
 					}

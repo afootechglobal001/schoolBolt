@@ -22,6 +22,7 @@ function _fetchArms() {
 							<th>Updated By</th>
 							<th>Date</th>
 							<th>Status</th>
+							<th>View</th>
 						</tr>
 					</thead>`;
 				if (info.success) {
@@ -44,6 +45,7 @@ function _fetchArms() {
 									<td>${updatedBy ? updatedBy : "NULL"}</td>
 									<td>${createdTime}</td>
 									<td><div class="status-div ${statusName}">${statusName}</div></td>
+									<td><button class="btn view-btn" title="Click view to edit arm" onclick="_fetchEachArm('${armId}');">VIEW</button></td>
 								</tr>
 							</tbody>`;
 					}

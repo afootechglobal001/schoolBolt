@@ -97,6 +97,7 @@ function _fetchStaffs() {
                         <th>Role</th>
                         <th>Last Login</th>
                         <th>Status</th>
+						<th>View</th>
                     </tr>
                 </thead>`;
 
@@ -140,6 +141,7 @@ function _fetchStaffs() {
 								<td>${roleName}</td>
 								<td>${lastLoginTime ? lastLoginTime : "00-00-00 00:00:00"}</td>
 								<td><div class="status-div ${statusName}">${statusName}</div></td>
+								<td><button class="btn view-btn" title="Click to view staff profile" onclick="_fetchEachSaff('${staffId}');">VIEW</button></td>
 							</tr>
 						</tbody>`;
 					}

@@ -24,6 +24,7 @@ function _fetchDepartments() {
 							<th>Date</th>
 							<th>Class</th>
 							<th>Status</th>
+							<th>View</th>
 						</tr>
 					</thead>`;
 
@@ -49,6 +50,7 @@ function _fetchDepartments() {
 									<td>${createdTime}</td>
 									<td><button class="btn" title="Add Classes to department" onclick="_fetchDepartmentClass('${departmentId}');">${noOfClasses}</button></td>
 									<td><div class="status-div ${statusName}">${statusName}</div></td>
+									<td><button class="btn view-btn" title="Click to view department profile" onclick="_fetchEachDepartment('${departmentId}');">VIEW</button></td>
 								</tr>
 							</tbody>`;
 					}

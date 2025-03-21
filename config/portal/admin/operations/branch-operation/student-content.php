@@ -202,23 +202,23 @@
                         </div>
 
                         <div class="col-back-div">
-                            <div class="text_field_container col-1" id="birthDay_container">
+                            <div class="text_field_container col-1" id="fatherDayOfBirth_container">
                                 <script>
                                     selectField({
-                                        id: 'birthDay',
+                                        id: 'fatherDayOfBirth',
                                         title: 'Select Birth Day'
                                     });
-                                    _getSelectBirthDay('birthDay');
+                                    _getSelectBirthDay('fatherDayOfBirth');
                                 </script>
                             </div>
 
-                            <div class="text_field_container col-1" id="birthMonthId_container">
+                            <div class="text_field_container col-1" id="fatherMonthOfBirth_container">
                                 <script>
                                     selectField({
-                                        id: 'birthMonthId',
+                                        id: 'fatherMonthOfBirth',
                                         title: 'Select Birth Month'
                                     });
-                                    _getSelectBirthMonth('birthMonthId');
+                                    _getSelectBirthMonth('fatherMonthOfBirth');
                                 </script>
                             </div>
                         </div>
@@ -296,23 +296,23 @@
                         </div>
 
                         <div class="col-back-div">
-                            <div class="text_field_container col-1" id="mbirthDay_container">
+                            <div class="text_field_container col-1" id="motherDayOfBirth_container">
                                 <script>
                                     selectField({
-                                        id: 'mbirthDay',
+                                        id: 'motherDayOfBirth',
                                         title: 'Select Birth Day'
                                     });
-                                    _getSelectBirthDay('mmbirthDay');
+                                    _getSelectBirthDay('motherDayOfBirth');
                                 </script>
                             </div>
 
-                            <div class="text_field_container col-1" id="mbirthMonthId_container">
+                            <div class="text_field_container col-1" id="motherMonthOfBirth_container">
                                 <script>
                                     selectField({
-                                        id: 'mbirthMonthId',
+                                        id: 'motherMonthOfBirth',
                                         title: 'Select Birth Month'
                                     });
-                                    _getSelectBirthMonth('fbirthMonthId');
+                                    _getSelectBirthMonth('motherMonthOfBirth');
                                 </script>
                             </div>
                         </div>
@@ -331,10 +331,10 @@
                 <div class="alert alert-success form-alert">
                     <span>STUDENT's ACADEMIC INFORMATIONS</span>
                     <div class="text_field_back_container">
-                        <div class="text_field_container" id="studentOfficialId_container">
+                        <div class="text_field_container" id="officialStudentId_container">
                             <script>
                                 textField({
-                                    id: 'studentOfficialId',
+                                    id: 'officialStudentId',
                                     title: 'Student Official ID'
                                 });
                             </script>
@@ -391,7 +391,7 @@
                 </div>
                 
                 <div>
-                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick="_createStudent();"> <i class="bi-check"></i> SUBMIT </button>
                 </div>
             </div>
         </div>
@@ -401,7 +401,7 @@
 <?php if ($page=='student_select_form'){?>
     <div class="caption-div animated zoomIn">
         <div class="title-div">
-           <div class="title"><i class="bi-person-check"></i> VIEW BRANCH STUDENT</div>
+           <div class="title"><i class="bi-person-check"></i> VIEW STUDENT</div>
            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer?>);" title="Close"><i class="bi-x-lg"></i></button>
         </div>
 
@@ -460,6 +460,7 @@
                     <th>Passport</th>
                     <th>Full Name</th>
                     <th>Gender</th>
+                    <th>Age</th>
                     <th>Department</th>
                     <th>Class</th>
                     <th>Status</th>
@@ -486,6 +487,7 @@
                     </td>
                     <td>PAUL EMMANUEL</td>
                     <td>MALE</td>
+                    <td>15</td>
                     <td>BASIC</td>
                     <td>BASIC 1</td>
                     <td><div class="status-div ACTIVE">ACTIVE</div></td>
@@ -510,6 +512,7 @@
                     </td>
                     <td>PAUL EMMANUEL</td>
                     <td>MALE</td>
+                    <td>17</td>
                     <td>BASIC</td>
                     <td>BASIC 1</td>
                     <td><div class="status-div ACTIVE">ACTIVE</div></td>
@@ -534,6 +537,7 @@
                     </td>
                     <td>PAUL EMMANUEL</td>
                     <td>MALE</td>
+                    <td>12</td>
                     <td>BASIC</td>
                     <td>BASIC 1</td>
                     <td><div class="status-div ACTIVE">ACTIVE</div></td>
@@ -558,6 +562,7 @@
                     </td>
                     <td>PAUL EMMANUEL</td>
                     <td>MALE</td>
+                    <td>16</td>
                     <td>BASIC</td>
                     <td>BASIC 1</td>
                     <td><div class="status-div ACTIVE">ACTIVE</div></td>
@@ -582,6 +587,7 @@
                     </td>
                     <td>PAUL EMMANUEL</td>
                     <td>MALE</td>
+                    <td>15</td>
                     <td>BASIC</td>
                     <td>BASIC 1</td>
                     <td><div class="status-div ACTIVE">ACTIVE</div></td>
@@ -606,6 +612,7 @@
                     </td>
                     <td>PAUL EMMANUEL</td>
                     <td>MALE</td>
+                    <td>12</td>
                     <td>BASIC</td>
                     <td>BASIC 1</td>
                     <td><div class="status-div ACTIVE">ACTIVE</div></td>
