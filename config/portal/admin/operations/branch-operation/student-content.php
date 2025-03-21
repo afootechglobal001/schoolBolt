@@ -436,7 +436,7 @@
                 </script>
             </div>
             
-            <button class="btn" type="button" id="submit_btn"  title="Proceed Request"  onclick="_getActiveBranchPage({divid:'branch_student_page', page: 'branch_student_page', url: adminPortalLocalUrl});">PROCEED <i class="bi-arrow-right"></i>  </button>
+            <button class="btn" id="submit_btn"  title="Proceed Request"  onclick="_proceedFetchBranchStudents();">PROCEED <i class="bi-arrow-right"></i>  </button>
         </div>
     </div>
 <?php } ?>
@@ -453,177 +453,11 @@
 
     <div class="table-div animated fadeIn">
         <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-            <thead>
-                <tr class="tb-col">
-                    <th>sn</th>
-                    <th>Student ID</th>
-                    <th>Passport</th>
-                    <th>Full Name</th>
-                    <th>Gender</th>
-                    <th>Age</th>
-                    <th>Department</th>
-                    <th>Class</th>
-                    <th>Status</th>
-                    <th>View</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr class="tb-row">
-                    <td>1</td>
-                    <td class="clickable-td" title="Click to view staff profile" onclick="">
-                        <div class="text-back-div">
-                            <div class="text-div">
-                                <div class="first-class">STAFF03520250317092429</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-back-div">
-                            <div class="image-div student-passport">
-                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student1.jpg" alt="PAUL EMMANUEL"/>
-                            </div>
-                        </div>
-                    </td>
-                    <td>PAUL EMMANUEL</td>
-                    <td>MALE</td>
-                    <td>15</td>
-                    <td>BASIC</td>
-                    <td>BASIC 1</td>
-                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
-                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="_getForm({page: 'student_profile', layer:2, url: adminPortalLocalUrl});">VIEW</button></td>
-                </tr>
-
-                <tr class="tb-row">
-                    <td>2</td>
-                    <td class="clickable-td" title="Click to view staff profile" onclick="">
-                        <div class="text-back-div">
-                            <div class="text-div">
-                                <div class="first-class">STAFF03520250317092429</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-back-div">
-                            <div class="image-div student-passport">
-                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student2.jpg" alt="PAUL EMMANUEL"/>
-                            </div>
-                        </div>
-                    </td>
-                    <td>PAUL EMMANUEL</td>
-                    <td>MALE</td>
-                    <td>17</td>
-                    <td>BASIC</td>
-                    <td>BASIC 1</td>
-                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
-                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="">VIEW</button></td>
-                </tr>
-
-                <tr class="tb-row">
-                    <td>3</td>
-                    <td class="clickable-td" title="Click to view staff profile" onclick="">
-                        <div class="text-back-div">
-                            <div class="text-div">
-                                <div class="first-class">STAFF03520250317092429</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-back-div">
-                            <div class="image-div student-passport">
-                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student3.jpg" alt="PAUL EMMANUEL"/>
-                            </div>
-                        </div>
-                    </td>
-                    <td>PAUL EMMANUEL</td>
-                    <td>MALE</td>
-                    <td>12</td>
-                    <td>BASIC</td>
-                    <td>BASIC 1</td>
-                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
-                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="">VIEW</button></td>
-                </tr>
-
-                <tr class="tb-row">
-                    <td>4</td>
-                    <td class="clickable-td" title="Click to view staff profile" onclick="">
-                        <div class="text-back-div">
-                            <div class="text-div">
-                                <div class="first-class">STAFF03520250317092429</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-back-div">
-                            <div class="image-div student-passport">
-                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student2.jpg" alt="PAUL EMMANUEL"/>
-                            </div>
-                        </div>
-                    </td>
-                    <td>PAUL EMMANUEL</td>
-                    <td>MALE</td>
-                    <td>16</td>
-                    <td>BASIC</td>
-                    <td>BASIC 1</td>
-                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
-                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="">VIEW</button></td>
-                </tr>
-
-                <tr class="tb-row">
-                    <td>5</td>
-                    <td class="clickable-td" title="Click to view staff profile" onclick="">
-                        <div class="text-back-div">
-                            <div class="text-div">
-                                <div class="first-class">STAFF03520250317092429</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-back-div">
-                            <div class="image-div student-passport">
-                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student1.jpg" alt="PAUL EMMANUEL"/>
-                            </div>
-                        </div>
-                    </td>
-                    <td>PAUL EMMANUEL</td>
-                    <td>MALE</td>
-                    <td>15</td>
-                    <td>BASIC</td>
-                    <td>BASIC 1</td>
-                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
-                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="">VIEW</button></td>
-                </tr>
-
-                <tr class="tb-row">
-                    <td>6</td>
-                    <td class="clickable-td" title="Click to view staff profile" onclick="">
-                        <div class="text-back-div">
-                            <div class="text-div">
-                                <div class="first-class">STAFF03520250317092429</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-back-div">
-                            <div class="image-div student-passport">
-                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student2.jpg" alt="PAUL EMMANUEL"/>
-                            </div>
-                        </div>
-                    </td>
-                    <td>PAUL EMMANUEL</td>
-                    <td>MALE</td>
-                    <td>12</td>
-                    <td>BASIC</td>
-                    <td>BASIC 1</td>
-                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
-                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="">VIEW</button></td>
-                </tr>
-            </tbody>
+            <script>_fetchBranchStudents();</script>
         </table>
     </div>
    
 <?php } ?>
-
 
 <?php if ($page=='student_profile') { ?>
     <script>
@@ -691,7 +525,6 @@
     </div>
 
 <?php } ?>
-
 
 <!-- For Staffs Modal Pages -->
 <?php if ($page == 'student_profile_details') { ?>
