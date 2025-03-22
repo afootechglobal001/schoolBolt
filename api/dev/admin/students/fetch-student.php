@@ -78,7 +78,6 @@ if(!$checkSession){
         goto end;
     }
 
-
     $response['response']=200; 
     $response['success']=true;
     $response['message']="STUDENT FETCH SUCCESFFULY!";
