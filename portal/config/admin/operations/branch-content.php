@@ -230,7 +230,7 @@
                 <div class="mini-profile">
                     <label>
                         <div class="img-div" id="current_user_passport1">
-                            <img src="<?php echo $websiteUrl ?>/all-images/images/avatar.jpg" alt="Profile Image">
+                            <img src="<?php echo $websiteUrl ?>/images/portal-logo.jpg" alt="Profile Image">
                         </div>
                     </label>
 

@@ -43,7 +43,7 @@
         </div>
     </section>
 
-<?php include 'bottom-scripts.php'?>
+<?php include '../bottom-scripts.php'?>
 </body>
 </html>
 

@@ -147,12 +147,6 @@ let permissionElements = {
     </div>
     `,
 
-    34: `
-    <div class="nav-div" title="Publish" onclick="_getActivePage({nav:'publish', divid:'publish'});" id="side-publish">
-        <div class="icon"><i class="bi-cloud-upload"></i> Publish</div> 
-    </div>
-    `,
-
     41: `
     <div class="nav-div" title="Report" onclick="_getActivePage({nav:'reports', divid:'reports'});" id="side-reports">
         <div class="icon"><i class="bi-graph-up-arrow"></i> Report</div> 

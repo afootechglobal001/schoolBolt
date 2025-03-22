@@ -38,13 +38,6 @@
         <div class="hidden" id="_combo"><i class="bi-basket"></i> Visitor's Reviews</div>
     </div>
 
-    <div class="nav-div animated fadeInLeft" id="link-publish">
-        <div class="link" title="News & Blogs" onclick="_getActivePage({page:'blog_page', divid:'publish'});">- News & Blogs <div class="num" id="">0</div></div>
-        <div class="hidden" id="_blog_page"><i class="bi-journals"></i> News & Blogs</div>
-
-        <div class="link" title="FAQs" onclick="_getActivePage({page:'faq_page', divid:'publish'});">- FAQs <div class="num" id="">0</div></div>
-        <div class="hidden" id="_all_faqs"><i class="bi-patch-question"></i> Frequently Asked Question</div>
-    </div>
 
     <div class="nav-div animated fadeInLeft" id="link-reports">
         <div class="link" title="Product Report" onclick="_getPage('product_report','publish','');">- Income Report</div>

@@ -49,7 +49,7 @@ function _createOrUpdatePage() {
 
 		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
             const btn_text = $("#saveBtn").html();
-            $("#saveBtn").html('<img src="' + websiteUrl + '/all-images/images/loading.gif" width="12px" alt="Loading"/> Authenticating');
+            $("#saveBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
             $("#saveBtn").prop("disabled", true);
 			
 			const formData = new FormData();

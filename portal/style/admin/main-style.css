@@ -198,7 +198,7 @@ header .header-div-in .header-nav-div .right-nav .right-icon-div .profile-div .i
 header .header-div-in .header-nav-div .right-nav .toggle-profile-div{
 	top:70px;
 	width:300px;
-	background: rgba(215, 215, 215, .6);
+	background: rgba(215, 215, 215, 1);
 	height: auto;
 	position:absolute;
 	right:1.5%;
@@ -221,13 +221,14 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div:after{
 header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div-in{
 	padding:10px;
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
+	align-items: center;
 	gap: 8px;
 }
 
 header .header-div-in .header-nav-div .toggle-profile-div .toggle-div-in .toggle-profile-pix-div{
 	width:80px;
-	height:95px;
+	height:80px;
 	overflow:hidden;
 	border:rgba(215, 215, 215, .6) 2px solid;
 	border-radius:8px;

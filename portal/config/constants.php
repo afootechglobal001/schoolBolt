@@ -51,8 +51,8 @@ $userDeviceId=getBrowserId();
 
 	var adminLocalUrl=websiteUrl+'/config/admin/code';
 	var adminPortalLocalUrl=websiteUrl+'/config/admin/operations/code'; 
-	var adminPortalUrl=websiteUrl+'/config/admin'; /// For Portal Url //
-	var adminUrl=websiteUrl+'/config/admin/login'; /// For Admin Url //
+	var adminPortalUrl=websiteUrl+'/admin'; /// For Portal Url //
+	var adminUrl=websiteUrl+'/admin/login'; /// For Admin Url //
 	var studentPixPath=websiteUrl+'/uploaded_files/studentPix'; /// For Product Pix Path //
 </script>
 

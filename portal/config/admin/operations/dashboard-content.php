@@ -276,7 +276,7 @@
 <?php if ($page == 'logout_confirm_form') { ?>
     <div class="caption-success-div animated zoomIn">
         <div class="div-in">
-            <div class="img"><img src="<?php echo $websiteUrl?>/all-images/images/warning.gif"/></div>
+            <div class="img"><img src="<?php echo $websiteUrl?>/images/warning.gif"/></div>
             <h2>Are you sure to log-out?</h2>
             Please, confirm your log-out action.
             <div class="btn-div">

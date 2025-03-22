@@ -1,7 +1,7 @@
 <?php  include 'alert.php'?>
 <header class="fadeInDown animated">
     <div class="header-div-in"> 
-        <div class="logo-div"><img src="<?php echo $websiteUrl?>/all-images/images/logo.png" alt="<?php echo $appName?> logo" /></div>
+        <div class="logo-div"><img src="<?php echo $websiteUrl?>/images/logo.png" alt="<?php echo $appName?> logo" /></div>
 
         <div class="header-nav-div">
             <div class="left-nav">
@@ -29,17 +29,16 @@
                             <div class="name" id="loginHeaderName"><strong> <script>$("#loginHeaderName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));</script></strong></div>
                             <div class="role" id="loginRoleName"><script>$("#loginRoleName").html(capitalizeFirstLetterOfEachWord(staffLoginData.roleName));</script></div>
                         </div>
-                        <div class="img-div"><img src="<?php echo $websiteUrl?>/all-images/images/avatar.jpg" alt="<?php echo $appName?>" /></div>
+                        <div class="img-div"><img src="<?php echo $websiteUrl?>/uploaded_files/staffPix/default.jpg" alt="<?php echo $appName?>" /></div>
                     </div>
                 </div>
 
                 <div class="toggle-profile-div">
                     <div class="toggle-div-in">
-                        <div class="toggle-profile-pix-div"><img src="<?php echo $websiteUrl?>/all-images/images/avatar.jpg" alt="<?php echo $appName?>"/></div>
+                        <div class="toggle-profile-pix-div"><img src="<?php echo $websiteUrl?>/uploaded_files/staffPix/default.jpg" alt="<?php echo $appName?>"/></div>
                         <div class="header-content">
                             <div class="toggle-profile-name"><span id="loginProfileName"><script>$("#loginProfileName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));</script></span></div>
-                            <div class="toggle-profile-others">User ID: <span id="loginProfileStaffId"><script>$("#loginProfileStaffId").html(staffLoginData.staffId);</script></span></div>
-                            <div class="toggle-profile-others">Phone: <span id="loginProfileMobilePhone"><script>$("#loginProfileMobilePhone").html(staffLoginData.mobileNumber);</script></span></div>
+                            <div class="toggle-profile-others"><span id="loginProfileStaffId"><script>$("#loginProfileStaffId").html(staffLoginData.staffId);</script></span></div>
                             <div class="header-btn-div">
                                 <button class="btn" title="View Profile" type="button" onclick="_getFormWithId('update_staff','');"><i class="bi-person"></i> Profile</button>
                                 <button class="btn" title="Log-Out" type="button" onclick="_getForm({page: 'logout_confirm_form', url: adminPortalLocalUrl});"><i class="bi-box-arrow-in-right"></i> Log-Out</button>

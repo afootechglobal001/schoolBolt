@@ -1,5 +1,5 @@
 function _fetchArms() {
-    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/all-images/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
 	try {
 		$.ajax({
 			type: "GET",
@@ -133,7 +133,7 @@ function _createUpdateArm() {
 
 		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
 			const btn_text = $("#submitBtn").html();
-			$("#submitBtn").html('<img src="' + websiteUrl + '/all-images/images/loading.gif" width="12px" alt="Loading"/> Authenticating');
+			$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
 			$("#submitBtn").prop("disabled", true);
 
 			const formData = {

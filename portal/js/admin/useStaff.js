@@ -73,7 +73,7 @@ function _getSelectRole(fieldId){
 }
 
 function _fetchStaffs() {
-    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/all-images/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
 	try {
 		$.ajax({
 			type: "GET",
@@ -122,7 +122,7 @@ function _fetchStaffs() {
 								<td class="clickable-td" title="Click to view staff profile" onclick="_fetchEachSaff('${staffId}');">
 									<div class="text-back-div">
 										<div class="image-div">
-											<img src="${websiteUrl}/all-images/images/avatar.jpg" alt="${staffNames}"/>
+											<img src="${websiteUrl}/uploaded_files/staffPix/default.jpg" alt="${staffNames}"/>
 										</div>
 
 										<div class="text-div">
@@ -273,7 +273,7 @@ function _createStaff() {
 
 		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
 			const btn_text = $("#submitBtn").html();
-			$("#submitBtn").html('<img src="' + websiteUrl + '/all-images/images/loading.gif" width="12px" alt="Loading"/> Authenticating');
+			$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
 			$("#submitBtn").prop("disabled", true);
 
 			const formData = {
@@ -459,7 +459,7 @@ function _updateStaff() {
 
 		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
 			const btn_text = $("#updateBtn").html();
-			$("#updateBtn").html('<img src="' + websiteUrl + '/all-images/images/loading.gif" width="12px" alt="Loading"/> Authenticating');
+			$("#updateBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
 			$("#updateBtn").prop("disabled", true);
 
 			const formData = {

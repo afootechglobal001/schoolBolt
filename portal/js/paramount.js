@@ -6,7 +6,7 @@ function _getPage(options) {
 		pageContainer='page-content'
     } = options;
 
-		$("#"+pageContainer).html('<div class="ajax-loader"><img src="'+ websiteUrl +'/all-images/images/spinner.gif"/></div>').css({'display': 'flex','flex-direction': 'column','gap': '20px','align-items': 'center','align-items': 'center'}).fadeIn(500);
+		$("#"+pageContainer).html('<div class="ajax-loader"><img src="'+ websiteUrl +'/images/spinner.gif"/></div>').css({'display': 'flex','flex-direction': 'column','gap': '20px','align-items': 'center','align-items': 'center'}).fadeIn(500);
 		const dataString = "action=" + action + "&page=" + page;
 		$.ajax({
 			type: "POST",
@@ -43,7 +43,7 @@ function _alertClose(layer=1){
 	let text = '';
 	  text +=
 	  '<div class="alert-loading-div">' +
-		'<div class="icon"><img src="'+ websiteUrl +'/all-images/images/loading.gif" width="20px" alt="Loading"/></div>' +
+		'<div class="icon"><img src="'+ websiteUrl +'/images/loading.gif" width="20px" alt="Loading"/></div>' +
 		'<div class="text"><p>LOADING...</p></div>'+
 		'</div>';
 			$(layer===1 ? '#get-form-more-div':'#get-more-div-secondary').html(text).fadeOut(200);

@@ -78,7 +78,7 @@ function _createUpdateRole() {
 
 		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
 			const btn_text = $("#submitBtn").html();
-			$("#submitBtn").html('<img src="' + websiteUrl + '/all-images/images/loading.gif" width="12px" alt="Loading"/> Authenticating');
+			$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
 			$("#submitBtn").prop("disabled", true);
 
 			const formData = {
@@ -118,7 +118,7 @@ function _createUpdateRole() {
 }
 
 function _fetchRoles() {
-    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/all-images/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
 	try {
 		$.ajax({
 			type: "GET",
@@ -217,7 +217,7 @@ function _deleteRole() {
 			_alertClose();
 			$("#get-form-more-div").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
 			const btn =$("#del_btn_"+ getEachRoleDetails.roleId);
-			btn.html('<img src="' + websiteUrl + '/all-images/images/loading.gif" width="12px" alt="Loading"/> Authenticating').prop('disabled', true);
+			btn.html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>').prop('disabled', true);
 
 			const formData = {
 				"roleId": getEachRoleDetails.roleId
