@@ -45,7 +45,7 @@ function selectField(options) {
         <input class="searchTxt" placeholder="Type here to search"
             id="txtSearchValue_${id}" autocomplete="off"
             onkeyup="filter('${id}')">
-        <ul id="searchList_${id}" data-aos="fade-up" data-aos-duration="200">
+        <ul id="searchList_${id}">
             ${emptyValue ? `<li onclick="_clickOption('searchList_${id}', '', '${emptyValue}');">${emptyValue}</li>` : ''}
         </ul>
     </div>

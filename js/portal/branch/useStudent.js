@@ -270,7 +270,11 @@ function _getSelectArm(fieldId){
 	}
 }
 
-
+function formatDate(date) {
+	if (!date) return ""; 
+    const parts = date.split('-'); // Convert "1990-05-20" to ["1990", "05", "20"]
+    return `${parts[2]}/${parts[1]}/${parts[0]}`; // Output: "20/05/1990"
+}
 
 function _createStudent(view) {
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
@@ -286,7 +290,7 @@ function _createStudent(view) {
 		const otherNames = $('#otherNames').val();
 		const genderId = $('#genderId').val();
 		const maritalStatusId = $('#maritalStatusId').val();
-		const dateOfBirth = $('#dateOfBirth').val();
+		const dateOfBirth = formatDate($('#dateOfBirth').val()); 
 		const countryId = $('#countryId').val();
 		const stateId = $('#stateId').val();
 		const lgaId = $('#lgaId').val();
@@ -613,18 +617,18 @@ function _fetchBranchStudents() {
 						const fetchDepartmentData=fetch[i].departmentData?.[0]; 
 						const fetchClassData=fetch[i].classData?.[0]; 
 						const fetchArmData=fetch[i].armData?.[0]; 
-						const fetchStatusData=fetch[i].statusData?.[0]; 
 						
 						const studentId = fetchStudentData.studentId;
 						const passport = fetchStudentData.passport || 'default.jpg';
 						const surName = fetchStudentData.surName;
 						const firstName = fetchStudentData.firstName;
-						const fullname = surName+ ' ' +firstName;
-						const genderName = fetchStudentData.genderData.genderName;
+						const otherNames = fetchStudentData.otherNames;
+						const fullname = surName+ ' ' +firstName+ ' ' +otherNames;
+						const genderName = fetchStudentData.genderName;
 						const departmentName = fetchDepartmentData.departmentName;
 						const className = fetchClassData.className;
 						const armName = fetchArmData.armName;
-						const statusName = fetchStatusData.statusName;
+						const statusName = fetchStudentData.statusName;
 						const age = new Date().getFullYear() - new Date(fetchStudentData.dateOfBirth).getFullYear();
 
 						text +=`
@@ -719,4 +723,224 @@ function _fetchEachBranchStudents(branchId, departmentId, classId, armId, studen
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
+}
+
+
+function _updateBranchStudents() {
+	let getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));
+    try {
+
+        const surName = $('#surName').val();
+		const firstName = $('#firstName').val();
+		const otherNames = $('#otherNames').val();
+		const genderId = $('#genderId').val();
+		const maritalStatusId = $('#maritalStatusId').val();
+		const dateOfBirth = formatDate($('#dateOfBirth').val()); 
+		const countryId = $('#countryId').val();
+		const stateId = $('#stateId').val();
+		const lgaId = $('#lgaId').val();
+		const address = $('#address').val();
+		const email = $('#email').val();
+		const mobileNumber = $('#mobileNumber').val();
+		const fatherTitleId = $('#fatherTitleId').val();
+		const fatherSurName = $('#fatherSurName').val();
+        const fatherOtherNames = $('#fatherOtherNames').val();
+		const fatherEmail = $('#fatherEmail').val();
+		const fatherMobileNumber = $('#fatherMobileNumber').val();
+		const fatherDayOfBirth = $('#fatherDayOfBirth').val();
+		const fatherMonthOfBirth = $('#fatherMonthOfBirth').val();
+		const fatherOccupation = $('#fatherOccupation').val();
+		const motherTitleId = $('#motherTitleId').val();
+		const motherSurName = $('#motherSurName').val();
+		const motherOtherNames = $('#motherOtherNames').val();
+		const motherAddress = $('#motherAddress').val();
+		const motherEmail = $('#motherEmail').val();
+		const motherMobileNumber = $('#motherMobileNumber').val();
+		const motherDayOfBirth = $('#motherDayOfBirth').val();
+		const motherMonthOfBirth = $('#motherMonthOfBirth').val();
+		const officialStudentId = $('#officialStudentId').val();
+		const departmentId = $('#departmentId').val();
+        const classId = $('#classId').val();
+		const armId = $('#armId').val();
+		const accommodationId = $('#accommodationId').val();
+		const statusId = $('#statusId').val();
+
+		$('#surName, #firstName, #genderId, #maritalStatusId, #dateOfBirth, #countryId, #stateId, #lgaId, #address, #email, #mobileNumber, #fatherEmail, #motherEmail, #departmentId, #classId, #armId, #accommodationId, #statusId').removeClass('issue');
+
+        if (!surName) {
+			$('#surName').addClass('issue');
+			_actionAlert('Provide surname to continue', false);
+			return;
+		}
+		
+		if (!firstName) {
+			$('#firstName').addClass("issue");
+			_actionAlert('Provide first name to continue', false);
+			return;
+		}
+	
+		if (!genderId) {
+			$('#genderId').addClass("issue");
+			_actionAlert('Select gender to continue', false);
+			return;
+		}
+		
+		if (!maritalStatusId) {
+			$('#maritalStatusId').addClass("issue");
+			_actionAlert('Select marital status to continue', false);
+			return;
+		}
+		
+		if (!dateOfBirth) {
+			$('#dateOfBirth').addClass("issue");
+			_actionAlert('Provide date of birth to continue', false);
+			return;
+		}
+		
+		if (!countryId) {
+			$('#countryId').addClass("issue");
+			_actionAlert('Select country to continue', false);
+			return;
+		}
+		
+		if (!stateId) {
+			$('#stateId').addClass("issue");
+			_actionAlert('Select state to continue', false);
+			return;
+		}
+		
+		if (!lgaId) {
+			$('#lgaId').addClass("issue");
+			_actionAlert('Select LGA to continue', false);
+			return;
+		}
+		
+		if (!address) {
+			$('#address').addClass("issue");
+			_actionAlert('Provide address to continue', false);
+			return;
+		}
+
+		if (email && !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+			$('#email').addClass("issue");
+			_actionAlert('Provide correct email to continue', false);
+			return;
+		}
+		
+		if (fatherEmail && !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(fatherEmail)) {
+			$('#fatherEmail').addClass("issue");
+			_actionAlert('Provide father\'s correct email to continue', false);
+			return;
+		}
+		
+		if (motherEmail && !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(motherEmail)) {
+			$('#motherEmail').addClass("issue");
+			_actionAlert('Provide mother\'s correct email to continue', false);
+			return;
+		}		
+		
+		if (!departmentId) {
+			$('#departmentId').addClass("issue");
+			_actionAlert('Select department to continue', false);
+			return;
+		}
+		
+		if (!classId) {
+			$('#classId').addClass("issue");
+			_actionAlert('Select class to continue', false);
+			return;
+		}
+		
+		if (!armId) {
+			$('#armId').addClass("issue");
+			_actionAlert('Select arm to continue', false);
+			return;
+		}
+		
+		if (!accommodationId) {
+			$('#accommodationId').addClass("issue");
+			_actionAlert('Select accommodation status to continue', false);
+			return;
+		}
+		
+		if (!statusId) {
+			$('#statusId').addClass("issue");
+			_actionAlert('Select status to continue', false);
+			return;
+		}
+
+        if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
+            const btn_text = $("#updateBtn").html();
+            $("#updateBtn").html('<img src="' + websiteUrl + '/all-images/images/loading.gif" width="12px" alt="Loading"/> Authenticating');
+            $("#updateBtn").prop("disabled", true);
+
+			const formData = new FormData();
+			formData.append("surName", surName);
+			formData.append("firstName", firstName);
+			formData.append("otherNames", otherNames);
+			formData.append("genderId", genderId);
+			formData.append("maritalStatusId", maritalStatusId);
+			formData.append("dateOfBirth", dateOfBirth);
+			formData.append("countryId", countryId);
+			formData.append("stateId", stateId);
+			formData.append("lgaId", lgaId);
+			formData.append("address", address);
+			formData.append("email", email);
+			formData.append("mobileNumber", mobileNumber);
+			formData.append("fatherTitleId", fatherTitleId);
+			formData.append("fatherSurName", fatherSurName);
+			formData.append("fatherOtherNames", fatherOtherNames);
+			formData.append("fatherEmail", fatherEmail);
+			formData.append("fatherMobileNumber", fatherMobileNumber);
+			formData.append("fatherDayOfBirth", fatherDayOfBirth);	
+			formData.append("fatherMonthOfBirth", fatherMonthOfBirth);
+			formData.append("fatherOccupation", fatherOccupation);
+			formData.append("motherTitleId", motherTitleId);
+			formData.append("motherSurName", motherSurName);
+			formData.append("motherOtherNames", motherOtherNames);
+			formData.append("motherAddress", motherAddress);
+			formData.append("motherEmail", motherEmail);
+			formData.append("motherMobileNumber", motherMobileNumber);
+			formData.append("motherDayOfBirth", motherDayOfBirth);	
+			formData.append("motherMonthOfBirth", motherMonthOfBirth);
+			formData.append("officialStudentId", officialStudentId);
+			formData.append("departmentId", departmentId);
+			formData.append("classId", classId);
+			formData.append("armId", armId);
+			formData.append("accommodationId", accommodationId);
+			formData.append("statusId", statusId);
+
+            $.ajax({
+                type: "POST",
+				url: `${endPoint}/admin/students/update-student?branchId=${getEachBranchStudentsSession.branchId}&studentId=${getEachBranchStudentsSession.studentId}`,
+				data: formData,
+                dataType: "json",
+				contentType: false,
+				cache: false,
+				processData: false,
+				headers: getAuthHeaders(true),
+				success: function (info) {
+					const data = info.data[0];
+					const success = info.success;
+					const message = info.message;
+
+					if (success=== true) {
+						_actionAlert(message, true);
+						_getActiveBranchPage({divid:'branch_student_page', page: 'branch_student_page', url: adminPortalLocalUrl});	
+						_alertClose(2);
+                    } else {
+                        _actionAlert(message, false);
+                    }
+                    $("#updateBtn").html(btn_text).prop("disabled", false);
+                },
+                error: function () {
+                    _actionAlert('An error occurred while processing your request! Please Try Again', false);
+                    $("#updateBtn").html(btn_text).prop("disabled", false);
+                }
+            });
+        }
+    } catch (error) {
+        _actionAlert('An unexpected error occurred! Please Try Again', false);
+        $("#updateBtn").prop("disabled", false);
+    }
 }
