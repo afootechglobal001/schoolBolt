@@ -1,4 +1,4 @@
-<?php include '../../config/constants.php';?>
+<?php include '../config/constants.php';?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http: //www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
@@ -17,11 +17,11 @@
             <div class="login-div-in">
                 <div class="header-div animated fadeIn">
                     <div class="logo-div">
-                        <a href="<?php echo $websiteUrl ?>"><img src="<?php echo $websiteUrl?>/all-images/images/logo.png" alt="<?php echo $appName?> Logo"  class="animated zoomIn"/></a>   
+                        <a href="<?php echo $websiteUrl ?>"><img src="<?php echo $websiteUrl?>/images/logo.png" alt="<?php echo $appName?> Logo"  class="animated zoomIn"/></a>   
                     </div>
 
                     <ul>
-                        <li onclick="location.href='<?php echo $websiteUrl?>/portal/admin/login'">Back to Login</li>
+                        <li onclick="location.href='<?php echo $websiteUrl?>/admin/login'">Back to Login</li>
                     </ul>
                 </div>
 

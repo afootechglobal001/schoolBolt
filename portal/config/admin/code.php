@@ -1,4 +1,4 @@
-<?php include '../../../config/constants.php';?>
+<?php include '../constants.php';?>
 
 <?php
 $action=$_POST['action'];

@@ -49,10 +49,10 @@ $userDeviceId=getBrowserId();
 	var userIpAddress = "<?php echo $userIpAddress;?>"; /// For User IP Address //
 	var userDeviceId = "<?php echo $userDeviceId;?>"; /// For User Device Id //
 
-	var adminLocalUrl=websiteUrl+'/admin/code';
-	var adminPortalLocalUrl=websiteUrl+'/admin/operations/code'; 
-	var adminPortalUrl=websiteUrl+'/admin'; /// For Portal Url //
-	var adminUrl=websiteUrl+'/admin/login'; /// For Admin Url //
+	var adminLocalUrl=websiteUrl+'/config/admin/code';
+	var adminPortalLocalUrl=websiteUrl+'/config/admin/operations/code'; 
+	var adminPortalUrl=websiteUrl+'/config/admin'; /// For Portal Url //
+	var adminUrl=websiteUrl+'/config/admin/login'; /// For Admin Url //
 	var studentPixPath=websiteUrl+'/uploaded_files/studentPix'; /// For Product Pix Path //
 </script>
 

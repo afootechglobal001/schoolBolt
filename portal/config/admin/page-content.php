@@ -68,7 +68,7 @@
                 to reset your password. Kindly check your <strong>INBOX</strong> or <strong>SPAM</strong> to confirm.
             </div>
 
-            <button class="btn" type="button" id="submit_btn" title="Okay" onclick="location.href='<?php echo $websiteUrl?>/portal/admin/reset-password'"> 
+            <button class="btn" type="button" id="submit_btn" title="Okay" onclick="location.href='<?php echo $websiteUrl?>/admin/reset-password'"> 
                 OKAY <i class="bi-check2-all"></i>
             </button>                          
             <div class="notification"><strong>MAIL</strong> not received? <span><i class="bi-send"></i> <strong> RESEND MAIL </strong></span></div>                             
