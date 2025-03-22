@@ -37,7 +37,6 @@ function snapPicture() {
 //////////////////////////// end upload image from webcam//////////////////////////
 
 
-
 function copyTextbox() {
     setTimeout(function () {
         let addressVal = $('#address').val();
@@ -109,6 +108,7 @@ function _getSelectDepartment(fieldId){
 function _fetchSelectDepartmentClass(){
 	_getSelectClass('classId');
 }
+
 function _getSelectClass(fieldId){
 	const departmentId = $('#departmentId').val();
 	try {
@@ -144,6 +144,7 @@ function _getSelectClass(fieldId){
 function _fetchSelectClassArm(){
 	_getSelectArm('armId');
 }
+
 function _getSelectArm(fieldId){
 	const classId = $('#classId').val();
 	try {
@@ -393,8 +394,7 @@ function _createStudent(view) {
 
 						if (passportName==='default.jpg'){
 							_actionAlert(message, true);
-							_getActiveBranchPage({divid:'branch_student_page', page: 'branch_student_page', url: adminPortalLocalUrl});	
-							_alertClose(2);
+							_proceedFetchBranchStudents();
 						}else{
 							_uploadStudentPicture(passportName, message);
 						}
@@ -415,7 +415,6 @@ function _createStudent(view) {
     }
 }
 
-
 function _uploadStudentPicture(passportName, message) {
     const action = "upload_student_pix";
 
@@ -434,15 +433,13 @@ function _uploadStudentPicture(passportName, message) {
         processData: false,
         success: function (html) {
             _actionAlert(message, true);
-			_getActiveBranchPage({divid:'branch_student_page', page: 'branch_student_page', url: adminPortalLocalUrl});	
-            _alertClose(2);
+			_proceedFetchBranchStudents();
         },
         error: function () {
             _actionAlert('Upload failed! Please try again.', false);
         }
     });
 }
-
 
 function _proceedFetchBranchStudents(){
 	const departmentId = $('#departmentId').val();
@@ -514,6 +511,10 @@ function _fetchBranchStudents() {
 					</thead>`;
 
 				if (success=== true) {
+					sessionStorage.setItem("getAllBranchStudentSession", JSON.stringify(info.data));
+				console.log('getAllBranchStudentSession', info.data);
+
+
 					for (let i = 0; i < fetch.length; i++) {
 						no++;
 						const branchId = fetch[i].branchId;
@@ -632,7 +633,6 @@ function _fetchEachBranchStudents(branchId, departmentId, classId, armId, studen
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
 }
-
 
 function _updateBranchStudents() {
 	let getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));

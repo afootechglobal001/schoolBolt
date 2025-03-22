@@ -442,13 +442,9 @@
 <?php } ?>
 
 <?php if ($page == 'branch_student_page') { ?>
-    <script>
-        getAllBranchStudentSession = JSON.parse(sessionStorage.getItem("getAllBranchStudentSession"));
-    </script>
-
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <div><span><i class="bi-person-bounding-box"></i></span> BRANCH STUDENT'S LIST ---- <span id="departmentName">BASIC</span> - <span> BASIC 1</span></div>
-
+        <div><span><i class="bi-person-bounding-box"></i></span> BRANCH STUDENT'S LIST ---- <span id="">BASIC</span> - <span> BASIC 1</span></div>
+       
         <div class="btn-container">
             <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
             <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i> EXPORT</button>
