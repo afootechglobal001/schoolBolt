@@ -289,7 +289,7 @@ function _fetchBranches() {
 			headers: getAuthHeaders(true),
 			success: function(info) {
 				const fetch = info.data;
-
+				const success = info.success;
 				let text = '';
 				let no=0;
 
@@ -309,7 +309,7 @@ function _fetchBranches() {
                     </tr>
                 </thead>`;
 
-				if (info.success) {
+				if (success===true) {
 					for (let i = 0; i < fetch.length; i++) {
 						no++;
 						const branchId = fetch[i].branchId;
@@ -342,20 +342,21 @@ function _fetchBranches() {
 					$('#pageContent').html(text);
 				} else {
 					_actionAlert(info.message, false);
-
-					text +=`
-						<tbody>
-							<tr class="tb-row">
-								<div class="false-notification-div">
-									<p>${info.message}</p>
-									<div>
-										<button class="btn" onclick="_getForm({page: 'branch_reg', url: adminPortalLocalUrl});"><i class="bi-plus-square"></i> ADD NEW BRANCH</button>
+					text += `
+						tbody>
+							<tr>
+								<td colspan="11">
+									<div class="false-notification-div">
+										<p>${info.message}</p>
+										<div>
+											<button class="btn" onclick="_getForm({page: 'branch_reg', url: adminPortalLocalUrl});"><i class="bi-plus-square"></i> ADD NEW BRANCH</button>
+										</div>
 									</div>
-								</div>
+								</td>
 							</tr>
 						</tbody>`;
+					$('#pageContent').html(text);
 
-						$('#pageContent').html(text);
 					const response = info.response;
 					if (response < 100) {
 						_logOut();

@@ -436,14 +436,16 @@
                 </script>
             </div>
             
-            <button class="btn" type="button" id="submit_btn"  title="Proceed Request"  onclick="_getActiveBranchPage({divid:'branch_student_page', page: 'branch_student_page', url: adminPortalLocalUrl});">PROCEED <i class="bi-arrow-right"></i>  </button>
+            <button class="btn" id="submit_btn"  title="Proceed Request"  onclick="_proceedFetchBranchStudents();">PROCEED <i class="bi-arrow-right"></i>  </button>
         </div>
     </div>
 <?php } ?>
 
 <?php if ($page=='branch_student_page') { ?>
+    <script>getAllBranchStudentSession = JSON.parse(sessionStorage.getItem("getAllBranchStudentSession")); </script>
+
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <div><span><i class="bi-person-bounding-box"></i></span> BRANCH STUDENT'S LIST  ---- <span>BASIC</span> - <span> BASIC 1</span></div> 
+        <div><span><i class="bi-person-bounding-box"></i></span> BRANCH STUDENT'S LIST  ---- <span id="departmentName">BASIC</span> - <span> BASIC 1</span></div> 
 
         <div class="btn-container">
             <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
@@ -453,182 +455,13 @@
 
     <div class="table-div animated fadeIn">
         <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-            <thead>
-                <tr class="tb-col">
-                    <th>sn</th>
-                    <th>Student ID</th>
-                    <th>Passport</th>
-                    <th>Full Name</th>
-                    <th>Gender</th>
-                    <th>Age</th>
-                    <th>Department</th>
-                    <th>Class</th>
-                    <th>Status</th>
-                    <th>View</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr class="tb-row">
-                    <td>1</td>
-                    <td class="clickable-td" title="Click to view staff profile" onclick="">
-                        <div class="text-back-div">
-                            <div class="text-div">
-                                <div class="first-class">STAFF03520250317092429</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-back-div">
-                            <div class="image-div student-passport">
-                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student1.jpg" alt="PAUL EMMANUEL"/>
-                            </div>
-                        </div>
-                    </td>
-                    <td>PAUL EMMANUEL</td>
-                    <td>MALE</td>
-                    <td>15</td>
-                    <td>BASIC</td>
-                    <td>BASIC 1</td>
-                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
-                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="_getForm({page: 'student_profile', layer:2, url: adminPortalLocalUrl});">VIEW</button></td>
-                </tr>
-
-                <tr class="tb-row">
-                    <td>2</td>
-                    <td class="clickable-td" title="Click to view staff profile" onclick="">
-                        <div class="text-back-div">
-                            <div class="text-div">
-                                <div class="first-class">STAFF03520250317092429</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-back-div">
-                            <div class="image-div student-passport">
-                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student2.jpg" alt="PAUL EMMANUEL"/>
-                            </div>
-                        </div>
-                    </td>
-                    <td>PAUL EMMANUEL</td>
-                    <td>MALE</td>
-                    <td>17</td>
-                    <td>BASIC</td>
-                    <td>BASIC 1</td>
-                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
-                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="">VIEW</button></td>
-                </tr>
-
-                <tr class="tb-row">
-                    <td>3</td>
-                    <td class="clickable-td" title="Click to view staff profile" onclick="">
-                        <div class="text-back-div">
-                            <div class="text-div">
-                                <div class="first-class">STAFF03520250317092429</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-back-div">
-                            <div class="image-div student-passport">
-                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student3.jpg" alt="PAUL EMMANUEL"/>
-                            </div>
-                        </div>
-                    </td>
-                    <td>PAUL EMMANUEL</td>
-                    <td>MALE</td>
-                    <td>12</td>
-                    <td>BASIC</td>
-                    <td>BASIC 1</td>
-                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
-                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="">VIEW</button></td>
-                </tr>
-
-                <tr class="tb-row">
-                    <td>4</td>
-                    <td class="clickable-td" title="Click to view staff profile" onclick="">
-                        <div class="text-back-div">
-                            <div class="text-div">
-                                <div class="first-class">STAFF03520250317092429</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-back-div">
-                            <div class="image-div student-passport">
-                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student2.jpg" alt="PAUL EMMANUEL"/>
-                            </div>
-                        </div>
-                    </td>
-                    <td>PAUL EMMANUEL</td>
-                    <td>MALE</td>
-                    <td>16</td>
-                    <td>BASIC</td>
-                    <td>BASIC 1</td>
-                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
-                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="">VIEW</button></td>
-                </tr>
-
-                <tr class="tb-row">
-                    <td>5</td>
-                    <td class="clickable-td" title="Click to view staff profile" onclick="">
-                        <div class="text-back-div">
-                            <div class="text-div">
-                                <div class="first-class">STAFF03520250317092429</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-back-div">
-                            <div class="image-div student-passport">
-                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student1.jpg" alt="PAUL EMMANUEL"/>
-                            </div>
-                        </div>
-                    </td>
-                    <td>PAUL EMMANUEL</td>
-                    <td>MALE</td>
-                    <td>15</td>
-                    <td>BASIC</td>
-                    <td>BASIC 1</td>
-                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
-                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="">VIEW</button></td>
-                </tr>
-
-                <tr class="tb-row">
-                    <td>6</td>
-                    <td class="clickable-td" title="Click to view staff profile" onclick="">
-                        <div class="text-back-div">
-                            <div class="text-div">
-                                <div class="first-class">STAFF03520250317092429</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-back-div">
-                            <div class="image-div student-passport">
-                                <img src="<?php echo $websiteUrl?>/all-images/body-pix/student2.jpg" alt="PAUL EMMANUEL"/>
-                            </div>
-                        </div>
-                    </td>
-                    <td>PAUL EMMANUEL</td>
-                    <td>MALE</td>
-                    <td>12</td>
-                    <td>BASIC</td>
-                    <td>BASIC 1</td>
-                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
-                    <td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="">VIEW</button></td>
-                </tr>
-            </tbody>
+            <script>_fetchBranchStudents();</script>
         </table>
     </div>
-   
 <?php } ?>
 
-
 <?php if ($page=='student_profile') { ?>
-    <script>
-        getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
-    </script>
+    <script> getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));</script>
 
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
         <div class="top-panel-div">
@@ -642,23 +475,50 @@
             <div class="bg-img">
                 <div class="mini-profile">
                     <label>
-                        <div class="img-div" id="current_user_passport1">
-                            <img src="<?php echo $websiteUrl ?>/all-images/images/avatar.jpg" alt="Profile Image">
+                        <div class="img-div" id="currentUserPassport">
+                            <img src="<?php echo $websiteUrl?>/all-images/images/avatar.jpg" alt="Profile Image">
                         </div>
                     </label>
 
                     <div class="text-back-div">
                         <div class="inner-text">
                             <div class="text-div">
-                                <div class="name" id="fullName">PAUL EMMANUEL</div>
+                                <div class="name" id="surName">
+                                    <script>
+                                        $("#surName").html(getEachBranchStudentsSession.studentData[0].surName);
+                                    </script>
+                                </div>
 
                                 <div class="text">
                                     <div>
-                                        <div id="statusBtn" class="status-btn ACTIVE"><span id="statusName">ACTIVE</span></div>
+                                        <div id="statusBtn2" class="status-btn"><span id="statusName2"></span></div>
                                     </div>
-                                    | LAST LOGIN DATE:
-                                    <strong id="lastLoginTime">00-00-00 00:00:00</strong>
+                                    | EMAIL:
+                                    <strong id="email">
+                                        <script>
+                                            $("#email").html(getEachBranchStudentsSession.studentData[0].email);
+                                        </script>
+                                    </strong>
+                                    | ARM:
+                                    <strong id="armName">
+                                        <script>
+                                            $("#armName").html(getEachBranchStudentsSession.armData[0].armName);
+                                        </script>
+                                    </strong>
                                 </div>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        const statusName2 = getEachBranchStudentsSession.statusData[0].statusName;
+                                        const passport = getEachBranchStudentsSession.studentData[0].passport;
+
+                                        $("#statusName2").html(statusName2);
+                                        $("#statusBtn2").addClass(statusName2);
+
+                                        const passportUrl = '<?php echo $websiteUrl?>/uploaded_files/studentPix/' + passport;
+                                        $('#currentUserPassport img').attr('src', passportUrl);
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -692,61 +552,43 @@
 
 <?php } ?>
 
-
 <!-- For Staffs Modal Pages -->
 <?php if ($page == 'student_profile_details') { ?>
     <div class="user-in">
         <div class="title">STUDENT BASIC INFORMATION</div>
 
         <div class="profile-segment-div">
+            <div class="text_field_container col-3" id="updateSurname_container">
+                <script>
+                    textField({
+                        id: 'updateSurname',
+                        title: 'Surname',
+                        value: getEachBranchStudentsSession.studentData[0]?.surName ?? '',
+                    });
+                </script>
+            </div>
+
             <div class="text_field_container col-3" id="updateFirstName_container">
                 <script>
                     textField({
                         id: 'updateFirstName',
-                        title: 'First Name'
+                        title: 'First Name',
+                        value: getEachBranchStudentsSession.studentData[0]?.otherNames ?? '',
                     });
                 </script>
             </div>
 
-            <div class="text_field_container col-3" id="updateMiddleName_container">
+            <div class="text_field_container col-3" id="updateOtherName_container">
                 <script>
                     textField({
-                        id: 'updateMiddleName',
-                        title: 'Middle Name'
+                        id: 'updateOtherName',
+                        title: 'Other Name',
+                        value: getEachBranchStudentsSession.studentData[0]?.firstName ?? '',
                     });
                 </script>
             </div>
 
-            <div class="text_field_container col-3" id="updateLastName_container">
-                <script>
-                    textField({
-                        id: 'updateLastName',
-                        title: 'Last Name'
-                    });
-                </script>
-            </div>
-
-            <div class="text_field_container col-1" id="updateMobileNumber_container">
-                <script>
-                    textField({
-                        id: 'updateMobileNumber',
-                        title: 'Phone Number',
-                        type: 'tel'
-                    });
-                </script>
-            </div>
-
-            <div class="text_field_container col-1" id="updateEmailAddress_container">
-                <script>
-                    textField({
-                        id: 'updateEmailAddress',
-                        title: 'Email Address',
-                        type: 'email'
-                    });
-                </script>
-            </div>
-
-            <div class="text_field_container col-1" id="updateGenderId_container">
+            <div class="text_field_container col-3" id="updateGenderId_container">
                 <script>
                     selectField({
                         id: 'updateGenderId',
@@ -756,12 +598,44 @@
                 </script>
             </div>
 
-            <div class="text_field_container col-1" id="updateDateOfBirth_container">
+            <div class="text_field_container col-3" id="updateMaritalStatusId_container">
                 <script>
-                     textField({
+                    selectField({
+                        id: 'updateMaritalStatusId',
+                        title: 'Select Marital Status'
+                    });
+                    _getSelectMaritalStatus('updateMaritalStatusId');
+                </script>
+            </div>
+
+            <div class="text_field_container col-3" id="updateDateOfBirth_container">
+                <script>
+                    textField({
                         id: 'updateDateOfBirth',
-                        title: 'Date Of Birth',
+                        title: 'Dtae Of Birth',
                         type: 'date'
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-1" id="updateMobileNumber_container">
+                <script>
+                    textField({
+                        id: 'updateMobileNumber',
+                        title: 'Phone Number',
+                        type: 'tel',
+                        value: getEachBranchStudentsSession.studentData[0]?.mobileNumber ?? '',
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-1" id="updateEmailAddress_container">
+                <script>
+                    textField({
+                        id: 'updateEmailAddress',
+                        title: 'Email Address',
+                        type: 'email',
+                        value: getEachBranchStudentsSession.studentData[0]?.email ?? '',
                     });
                 </script>
             </div>
@@ -772,32 +646,283 @@
         <div class="title">STUDENT RESIDENT INFORMATION</div>
 
         <div class="profile-segment-div">
-            <div class="text_field_container col-1" id="branchStateId_container">
+            <div class="text_field_container col-1" id="countryId_container">
                 <script>
                     selectField({
-                        id: 'branchStateId',
-                        title: 'Select Branch State'
+                        id: 'countryId',
+                        title: 'Select Nationality'
                     });
-                    _getSelectBranchState('branchStateId');
+                    _getSelectNationlaity('countryId');
                 </script>
             </div>
 
-            <div class="text_field_container col-1" id="branchLgaId_container">
+            <div class="text_field_container col-1" id="stateId_container">
                 <script>
                     selectField({
-                        id: 'branchLgaId',
-                        title: 'Select Branch Local Govt Area'
+                        id: 'stateId',
+                        title: 'Select State Of Origin',
                     });
+                    _getSelectBranchState('stateId');
                 </script>
             </div>
 
-            <div class="text_field_container col-2" id="updateAddress_container">
+            <div class="text_field_container col-1" id="address_container">
                 <script>
                     textField({
-                        id: 'updateAddress',
+                        id: 'address',
+                        title: 'HOME ADDRESS',
+                        onKeyUpFunction: 'copyTextbox()',
+                        value: getEachBranchStudentsSession.studentData[0]?.address ?? '',
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-1" id="lgaId_container">
+                <script>
+                    selectField({
+                        id: 'lgaId',
+                        title: 'Select Local Govt Area'
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="user-in">
+        <div class="title">FATHER'S INFORMATIONS</div>
+        <div class="profile-segment-div">
+            <div class="text_field_container col-3" id="fatherTitleId_container">
+                <script>
+                    selectField({
+                        id: 'fatherTitleId',
+                        title: 'Select Title'
+                    });
+                    _getSelectTitle('fatherTitleId');
+                </script>
+            </div>
+
+            <div class="text_field_container col-3" id="fatherSurName_container">
+                <script>
+                    textField({
+                        id: 'fatherSurName',
+                        title: 'Surname',
+                        value: getEachBranchStudentsSession.studentData[0]?.address ?? '',
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-3" id="fatherOtherNames_container">
+                <script>
+                    textField({
+                        id: 'fatherOtherNames',
+                        title: 'Other Name'
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-3" id="fatherAddress_container">
+                <script>
+                    textField({
+                        id: 'fatherAddress',
                         title: 'Home Address'
                     });
                 </script>
+            </div>
+
+            <div class="text_field_container col-3" id="fatherEmail_container">
+                <script>
+                    textField({
+                        id: 'fatherEmail',
+                        title: 'Email Address',
+                        type: 'email'
+                    });
+                </script>
+            </div>
+        
+            <div class="text_field_container col-3" id="fatherMobileNumber_container">
+                <script>
+                    textField({
+                        id: 'fatherMobileNumber',
+                        title: 'Phone Number',
+                        type: 'tel',
+                        onKeyPressFunction: 'isNumberCheck(event);'
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-3" id="fatherDayOfBirth_container">
+                <script>
+                    selectField({
+                        id: 'fatherDayOfBirth',
+                        title: 'Select Birth Day'
+                    });
+                    _getSelectBirthDay('fatherDayOfBirth');
+                </script>
+            </div>
+
+            <div class="text_field_container col-3" id="fatherMonthOfBirth_container">
+                <script>
+                    selectField({
+                        id: 'fatherMonthOfBirth',
+                        title: 'Select Birth Month'
+                    });
+                    _getSelectBirthMonth('fatherMonthOfBirth');
+                </script>
+            </div>
+
+            <div class="text_field_container col-3" id="fatherOccupation_container">
+                <script>
+                    textField({
+                        id: 'fatherOccupation',
+                        title: 'Occuoation'
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="user-in">
+        <div class="title">MONTHER'S INFORMATIONS</div>
+        <div class="profile-segment-div">
+                <div class="text_field_container col-3" id="motherTitleId_container">
+                    <script>
+                        selectField({
+                            id: 'motherTitleId',
+                            title: 'Select Title'
+                        });
+                        _getSelectTitle('motherTitleId');
+                    </script>
+                </div>
+
+                <div class="text_field_container col-3" id="motherSurName_container">
+                    <script>
+                        textField({
+                            id: 'motherSurName',
+                            title: 'Surname'
+                        });
+                    </script>
+                </div>
+
+                <div class="text_field_container col-3" id="motherOtherNames_container">
+                    <script>
+                        textField({
+                            id: 'motherOtherNames',
+                            title: 'Other Names'
+                        });
+                    </script>
+                </div>
+
+                <div class="text_field_container col-3" id="motherAddress_container">
+                    <script>
+                        textField({
+                            id: 'motherAddress',
+                            title: 'Home Address'
+                        });
+                    </script>
+                </div>
+
+                <div class="text_field_container col-3" id="motherEmail_container">
+                    <script>
+                        textField({
+                            id: 'motherEmail',
+                            title: 'Email Address',
+                            type: 'email'
+                        });
+                    </script>
+                </div>
+                
+                <div class="text_field_container col-3" id="motherMobileNumber_container">
+                    <script>
+                        textField({
+                            id: 'motherMobileNumber',
+                            title: 'Phone Number',
+                            type: 'tel',
+                            onKeyPressFunction: 'isNumberCheck(event);'
+                        });
+                    </script>
+                </div>
+
+                <div class="text_field_container col-3" id="motherDayOfBirth_container">
+                    <script>
+                        selectField({
+                            id: 'motherDayOfBirth',
+                            title: 'Select Birth Day'
+                        });
+                        _getSelectBirthDay('motherDayOfBirth');
+                    </script>
+                </div>
+
+                <div class="text_field_container col-3" id="motherMonthOfBirth_container">
+                    <script>
+                        selectField({
+                            id: 'motherMonthOfBirth',
+                            title: 'Select Birth Month'
+                        });
+                        _getSelectBirthMonth('motherMonthOfBirth');
+                    </script>
+                </div>
+
+                <div class="text_field_container col-3" id="motherOccupation_container">
+                    <script>
+                        textField({
+                            id: 'motherOccupation',
+                            title: 'Occupation'
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="user-in">
+        <div class="title">ACADEMICS INFORMATIONS</div>
+            <div class="profile-segment-div">
+                <div class="text_field_container col-3" id="officialStudentId_container">
+                    <script>
+                        textField({
+                            id: 'officialStudentId',
+                            title: 'Student Official ID'
+                        });
+                    </script>
+                </div>
+
+                <div class="text_field_container col-3" id="departmentId_container">
+                    <script>
+                        selectField({
+                            id: 'departmentId',
+                            title: 'Select Department'
+                        });
+                        _getSelectDepartment('departmentId');
+                    </script>
+                </div>
+
+                <div class="text_field_container col-3" id="classId_container">
+                    <script>
+                        selectField({
+                            id: 'classId',
+                            title: 'Select Class'
+                        });
+                    </script>
+                </div>
+
+                <div class="text_field_container col-1" id="armId_container">
+                    <script>
+                        selectField({
+                            id: 'armId',
+                            title: 'Select Arm'
+                        });
+                    </script>
+                </div>
+
+                <div class="text_field_container col-1" id="accommodationId_container">
+                    <script>
+                        selectField({
+                            id: 'accommodationId',
+                            title: 'Select Accomodation'
+                        });
+                        _getSelectAccomodation('accommodationId');
+                    </script>
+                </div>
             </div>
         </div>
     </div>
@@ -806,12 +931,12 @@
         <div class="title">STUDENT ACCOUNT INFORMATION</div>
 
         <div class="profile-segment-div">
-            <div class="text_field_container col-3" id="staffId_container">
+            <div class="text_field_container col-3" id="studentId_container">
                 <script>
                     textField({
-                        id: 'staffId',
-                        title: 'Staff ID',
-                       
+                        id: 'studentId',
+                        title: 'Student ID',
+                        readonly: true
                     });
                 </script>
             </div>
@@ -826,54 +951,19 @@
                 </script>
             </div>
 
-            <div class="text_field_container col-3" id="lastLogin_container">
-                <script>
-                    textField({
-                        id: 'lastLogin',
-                        title: 'Last Login Date',
-                        readonly: true
-                    });
-                </script>
-            </div>
-        </div>
-    </div>
-
-    <div class="user-in">
-        <div class="title">ADMINISTRATIVE INFORMATION</div>
-
-        <div class="profile-segment-div">
-            <div class="text_field_container col-3" id="updateBranchId_container">
+            <div class="text_field_container col-3" id="statusId_container">
                 <script>
                     selectField({
-                        id: 'updateBranchId',
-                        title: 'Select Branch'
-                    });
-                    _getSelectBranch('updateBranchId');
-                </script>
-            </div>
-
-            <div class="text_field_container col-3" id="updateRoleId_container">
-                <script>
-                    selectField({
-                        id: 'updateRoleId',
-                        title: 'Select Role'
-                    });
-                    _getSelectRole('updateRoleId');
-                </script>
-            </div>
-
-            <div class="text_field_container col-3" id="updateStatusId_container">
-                <script>
-                    selectField({
-                        id: 'updateStatusId',
+                        id: 'statusId',
                         title: 'Select Status'
                     });
-                    _getSelectStatusId('updateStatusId', '1,2');
+                    _getSelectStatusId('statusId', '1,2');
                 </script>
             </div>
         </div>
+
         <div class="btn-div">
-            <button class="btn" title="UPDATE PROFILE" id="updateBtn" onclick=""> UPDATE PROFILE <i class="bi-check"></i></button>
+            <button class="btn" title="UPDATE PROFILE" id="updateBtn" onclick="_updateBranch();"> UPDATE PROFILE <i class="bi-check"></i></button>
         </div>
     </div>
 <?php } ?>

@@ -42,25 +42,13 @@ switch ($action){
 		require_once('branch-operation/student-content.php');
 	break;
 
-	case 'upload_product_cat_pix':
-		$oldProductPixNames=$_POST['oldProductPixNames'];
-		$newProductPixNames=$_POST['newProductPixNames'];
-		
-		if($oldProductPixNames!='' && $oldProductPixNames!='default.jpg'){
-		$myArray = explode(',', $oldProductPixNames); 
-			foreach($myArray as $productPix){
-				unlink("../../../uploaded_files/productCategoryPix/" .$productPix);
-			}
-		}
-		
-		if($newProductPixNames!=''){
-			$myArray = explode(',', $newProductPixNames); 
-				$i=0;
-				foreach($myArray as $productPix){
-					move_uploaded_file($_FILES["productPix"]["tmp_name"][$i], '../../../uploaded_files/productCategoryPix/' . $productPix);
-					$i++;
-				}
-		}
+	case 'upload_student_pix':
+		$passportName=$_POST['passportName'];
+		$passport=$_POST['passport'];
+		$passport = str_replace('data:image/jpeg;base64,', '', $passport);
+		$passport = str_replace(' ', '+', $passport);
+		$passport = base64_decode($passport);
+		file_put_contents('../../../../uploaded_files/studentPix/'.$passportName, $passport);
 	break;
 }
 ?>

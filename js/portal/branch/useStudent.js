@@ -10,7 +10,7 @@ function _getActiveStudentPage(props) {
 	}
 }
 function _getStudentPagesActiveLink(divid){
-	$('#student_profile_details, #student_activities').removeClass('active');
+	$('#student_profile_details, #tanscript, #student_activities, #student_report').removeClass('active');
 	$("#"+divid).addClass('active');
 }
 
@@ -272,9 +272,15 @@ function _getSelectArm(fieldId){
 
 
 
-function _createStudent() {
+function _createStudent(view) {
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
     try {
+		if (view=='mobile'){
+			var passport ='mobile';
+		}else{
+			var passport =document.getElementById("passport").src;
+		}
+
         const surName = $('#surName').val();
 		const firstName = $('#firstName').val();
 		const otherNames = $('#otherNames').val();
@@ -309,7 +315,6 @@ function _createStudent() {
 		const armId = $('#armId').val();
 		const accommodationId = $('#accommodationId').val();
 		const statusId = $('#statusId').val();
-		const pasport =document.getElementById("passport").src;
 
 		$('#surName, #firstName, #genderId, #maritalStatusId, #dateOfBirth, #countryId, #stateId, #lgaId, #address, #email, #mobileNumber, #fatherEmail, #motherEmail, #departmentId, #classId, #armId, #accommodationId, #statusId').removeClass('issue');
 
@@ -466,17 +471,23 @@ function _createStudent() {
 				cache: false,
 				processData: false,
 				headers: getAuthHeaders(true),
-				success: function (data) {
-					const success = data.success;
-					const message = data.message;
+				success: function (info) {
+					const data = info.data[0];
+					const success = info.success;
+					const message = info.message;
 
 					if (success=== true) {
-						const newProductPixNames = data.newProductPixNames;
-						const oldProductPixNames = data.oldProductPixNames;
+						const passportName = data.studentData[0].passport;
 
-						_uploadStudentPicture(oldProductPixNames, newProductPixNames, message);
+						if (passportName==='default.jpg'){
+							_actionAlert(message, true);
+							_getActiveBranchPage({divid:'branch_student_page', page: 'branch_student_page', url: adminPortalLocalUrl});	
+							_alertClose(2);
+						}else{
+							_uploadStudentPicture(passportName, message);
+						}
                     } else {
-                        _actionAlert(data.message, false);
+                        _actionAlert(message, false);
                     }
                     $("#submitBtn").html(btn_text).prop("disabled", false);
                 },
@@ -493,18 +504,14 @@ function _createStudent() {
 }
 
 
-function _uploadStudentPicture(oldProductPixNames, newProductPixNames, message) {
-    const action = "upload_product_cat_pix";
+function _uploadStudentPicture(passportName, message) {
+    const action = "upload_student_pix";
 
     const formData = new FormData();
-	const totalFiles = $('#productPix').get(0).files.length;
+	var passport =document.getElementById("passport").src;
     formData.append("action", action);
-    formData.append("oldProductPixNames", oldProductPixNames);
-	formData.append("newProductPixNames", newProductPixNames);
-
-	for(let i = 0; i < totalFiles; i++){
-		formData.append("productPix[]", $("#productPix").get(0).files[i]);
-	}
+    formData.append("passport", passport);
+	formData.append("passportName", passportName);
 
     $.ajax({
         url: adminPortalLocalUrl,
@@ -515,11 +522,201 @@ function _uploadStudentPicture(oldProductPixNames, newProductPixNames, message) 
         processData: false,
         success: function (html) {
             _actionAlert(message, true);
-            _alertClose();
-            _getPage({ page: 'product_category', url: adminPortalLocalUrl });
+			_getActiveBranchPage({divid:'branch_student_page', page: 'branch_student_page', url: adminPortalLocalUrl});	
+            _alertClose(2);
         },
         error: function () {
             _actionAlert('Upload failed! Please try again.', false);
         }
     });
+}
+
+
+function _proceedFetchBranchStudents(){
+	const departmentId = $('#departmentId').val();
+	const classId = $('#classId').val();
+	const armId = $('#armId').val();
+
+	$('#departmentId, #classId, #armId').removeClass('issue');
+
+	if (!departmentId) {
+		$('#departmentId').addClass("issue");
+		_actionAlert('Select department to continue', false);
+		return;
+	}
+	
+	if (!classId) {
+		$('#classId').addClass("issue");
+		_actionAlert('Select class to continue', false);
+		return;
+	}
+	
+	if (!armId) {
+		$('#armId').addClass("issue");
+		_actionAlert('Select arm to continue', false);
+		return;
+	}
+	const fetchStudentsParams={
+		departmentId: departmentId,
+		classId: classId,
+		armId: armId
+	}
+
+	sessionStorage.setItem("fetchStudentsParams", JSON.stringify(fetchStudentsParams));
+	_getActiveBranchPage({divid:'branch_student_page', page: 'branch_student_page', url: adminPortalLocalUrl});
+	_alertClose(2);
+}
+
+function _fetchBranchStudents() {
+	let fetchStudentsParams = JSON.parse(sessionStorage.getItem("fetchStudentsParams"));
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+     $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/all-images/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/students/fetch-student?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${fetchStudentsParams.departmentId}&classId=${fetchStudentsParams.classId}&armId=${fetchStudentsParams.armId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const fetch = info.data;
+				const success = info.success;
+				
+				let text = '';
+				let no=0;
+				text =`
+					<thead>
+						<tr class="tb-col">
+							<th>sn</th>
+							<th>Student ID</th>
+							<th>Passport</th>
+							<th>Full Name</th>
+							<th>Gender</th>
+							<th>Age</th>
+							<th>Department</th>
+							<th>Class</th>
+							<th>Arm</th>
+							<th>Status</th>
+							<th>View</th>
+						</tr>
+					</thead>`;
+
+				if (success=== true) {
+					for (let i = 0; i < fetch.length; i++) {
+						no++;
+						const branchId = fetch[i].branchId;
+						const departmentId = fetch[i].departmentId;
+						const classId = fetch[i].classId;
+						const armId = fetch[i].armId;
+
+						const fetchStudentData = fetch[i].studentData?.[0];
+						const fetchDepartmentData=fetch[i].departmentData?.[0]; 
+						const fetchClassData=fetch[i].classData?.[0]; 
+						const fetchArmData=fetch[i].armData?.[0]; 
+						const fetchStatusData=fetch[i].statusData?.[0]; 
+						
+						const studentId = fetchStudentData.studentId;
+						const passport = fetchStudentData.passport || 'default.jpg';
+						const surName = fetchStudentData.surName;
+						const firstName = fetchStudentData.firstName;
+						const fullname = surName+ ' ' +firstName;
+						const genderName = fetchStudentData.genderData.genderName;
+						const departmentName = fetchDepartmentData.departmentName;
+						const className = fetchClassData.className;
+						const armName = fetchArmData.armName;
+						const statusName = fetchStatusData.statusName;
+						const age = new Date().getFullYear() - new Date(fetchStudentData.dateOfBirth).getFullYear();
+
+						text +=`
+						 	<tbody>
+								<tr class="tb-row">
+									<td>${no}</td>
+									<td class="clickable-td" title="Click to view student profile" onclick="_fetchEachBranchStudents();">
+										<div class="text-back-div">
+											<div class="text-div">
+												<div class="first-class">${studentId}</div>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div class="text-back-div">
+											<div class="image-div student-passport">
+												<img src="${studentPixPath}/${passport}" alt="${fullname}"/>
+											</div>
+										</div>
+									</td>
+									<td>${fullname}</td>
+									<td>${genderName}</td>
+									<td>${age}</td>
+									<td>${departmentName}</td>
+									<td>${className}</td>
+									<td>${armName}</td>
+									<td><div class="status-div ${statusName}">${statusName}</div></td>
+									<td><button class="btn view-btn" title="Click to view student profile" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}');">VIEW</button></td>
+								</tr>
+							</tbody>`;
+					}
+					$('#pageContent').html(text);
+				} else {
+					_actionAlert(info.message, false);
+
+					text += `
+						tbody>
+							<tr>
+								<td colspan="11">
+									<div class="false-notification-div">
+										<p>${info.message}</p>
+									</div>
+								</td>
+							</tr>
+						</tbody>`;
+					$('#pageContent').html(text);
+						
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}
+
+function _fetchEachBranchStudents(branchId, departmentId, classId, armId, studentId) {
+	$("#get-form-more-div").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/students/fetch-student?branchId=${branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				if (info.success && info.data.length > 0) {
+					sessionStorage.setItem("getEachBranchStudentsSession", JSON.stringify(info.data[0]));
+					_getForm({page: 'student_profile', layer:2, url: adminPortalLocalUrl});
+				} else {
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		_alertClose();
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
 }
