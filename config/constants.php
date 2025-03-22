@@ -6,7 +6,7 @@
 	//$websiteUrl='https://schoolbolt.com'; /// For Live Server Url //
 	$websiteUrl='http://localhost/projects/schoolbolt';
 	//$websitePath = $_SERVER['DOCUMENT_ROOT'];
-	$websitePath = $SERVER['DOCUMENT_ROOT'].'/projects/schoolbolt'; //dirname(FILE_);
+	$websitePath = $_SERVER['DOCUMENT_ROOT'].'/projects/schoolbolt'; //dirname(__FILE__);
 	$codeVersion= date('Ymdhis');
 ?>
 
@@ -55,3 +55,8 @@ $userDeviceId=getBrowserId();
 	var adminUrl=websiteUrl+'/portal/admin/login'; /// For Admin Url //
 	var studentPixPath=websiteUrl+'/uploaded_files/studentPix'; /// For Product Pix Path //
 </script>
+
+
+
+
+
