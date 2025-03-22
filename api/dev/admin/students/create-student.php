@@ -60,6 +60,14 @@ if(!$checkSession){
     
 	////////////////////////////////////////////////////////////////////////////////
 
+    if (empty($branchId)){/// start if 2
+        $response = [
+            'response'=> 100,
+            'success'=> false,
+            'message'=> "BRANCH ID REQUIRED! Check the fields and try again",
+        ]; 
+        goto end;
+	}
 	if (empty($surName)){/// start if 2
         $response = [
             'response'=> 100,
@@ -238,7 +246,7 @@ if(!$checkSession){
             ('$clientId', '$branchId', '$studentId', '$session', '$termId', '$officialStudentId', '$departmentId', '$classId', '$armId', '$accommodationId', '$statusId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
 
             if($passport!='mobile'){
-                $passportName="$studentId.jpg"
+                $passportName="$studentId.jpg";
                 mysqli_query($conn,"UPDATE `STUDENTS_TAB` SET passport='$passportName' WHERE studentId='$studentId'")or die (mysqli_error($conn));
             }
 
