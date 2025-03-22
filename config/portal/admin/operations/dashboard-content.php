@@ -28,19 +28,19 @@
                         <span><i class="bi-diagram-3"></i> Branches</span>
                     </div>
 
-                    <div class="statistics-div left-border border-radius" title="Customers" onclick="_getPage('customers','customers','');">
+                    <div class="statistics-div left-border border-radius" title="Staff" onclick="_getPage('customers','customers','');">
                         <h2>250</h2> 
-                        <span><i class="bi-person"></i> Customers</span>
+                        <span><i class="bi-people"></i> Total Staff</span>
                     </div>
 
-                    <div class="statistics-div" title="Products">
+                    <div class="statistics-div" title="Students">
                         <h2>700</h2> 
-                        <span><i class="bi-boxes"></i> Products </span>
+                        <span><i class="bi-people"></i> Total Students </span>
                     </div>
 
                     <div class="statistics-div right-border" title="Combo">
                         <h2>20</h2> 
-                        <span><i class="bi-basket"></i> Combo</span>
+                        <span><i class="bi-journals"></i> Total Subjects</span>
                     </div>
                 </div>
 

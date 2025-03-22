@@ -1,0 +1,18 @@
+CREATE OR REPLACE VIEW STUDENT_VIEW AS
+SELECT a.*, b.name, c.genderName, d.maritalStatusName, e.countryName, f.stateName, g.lgaName, h.statusName FROM 
+STUDENTS_TAB a, 
+BRANCHES_TAB b, 
+SETUP_GENDER_TAB c, 
+SETUP_MARITAL_STATUS_TAB d, 
+SETUP_COUNTRY_TAB e, 
+SETUP_STATES_TAB f,
+SETUP_STATE_LGA_TAB g, 
+SETUP_STATUS_TAB h
+WHERE
+a.branchId=b.branchId AND 
+a.genderId=c.genderId AND 
+a.maritalStatusId=d.maritalStatusId AND 
+a.countryId=e.countryId AND 
+a.stateId=f.stateId AND 
+a.lgaId=g.lgaId AND
+a.statusId=h.statusId;

@@ -1,0 +1,8 @@
+CREATE OR REPLACE VIEW PARENT_VIEW AS
+SELECT a.*, b.name, c.statusName FROM 
+PARENTS_TAB a, 
+BRANCHES_TAB b, 
+SETUP_STATUS_TAB c
+WHERE
+a.branchId=b.branchId AND 
+a.statusId=c.statusId;

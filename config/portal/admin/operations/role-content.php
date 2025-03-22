@@ -87,22 +87,37 @@
 
                     <div class="permission-toggle-div">
                         <div class="toggle-title">Administrative Permissions</div>
-                        <div class="fetch-toggle" id="administrative"></div>
+                        <div class="fetch-toggle" id="staff"></div>
                     </div>
 
                     <div class="permission-toggle-div">
-                        <div class="toggle-title">Customer Permissions</div>
-                        <div class="fetch-toggle" id="customer"></div>
+                        <div class="toggle-title">Students Permissions</div>
+                        <div class="fetch-toggle" id="student"></div>
                     </div>
 
                     <div class="permission-toggle-div">
-                        <div class="toggle-title">Product Permissions</div>
-                        <div class="fetch-toggle" id="product"></div>
+                        <div class="toggle-title">Department Permissions</div>
+                        <div class="fetch-toggle" id="department"></div>
                     </div>
 
                     <div class="permission-toggle-div">
-                        <div class="toggle-title">Order Permissions</div>
-                        <div class="fetch-toggle" id="order"></div>
+                        <div class="toggle-title">Classes Permissions</div>
+                        <div class="fetch-toggle" id="class"></div>
+                    </div>
+
+                    <div class="permission-toggle-div">
+                        <div class="toggle-title">Arms Permissions</div>
+                        <div class="fetch-toggle" id="arm"></div>
+                    </div>
+
+                    <div class="permission-toggle-div">
+                        <div class="toggle-title">Subjects Permissions</div>
+                        <div class="fetch-toggle" id="subject"></div>
+                    </div>
+
+                    <div class="permission-toggle-div">
+                        <div class="toggle-title">Class Teacher's Permissions</div>
+                        <div class="fetch-toggle" id="class_teacher"></div>
                     </div>
 
                     <div class="permission-toggle-div">

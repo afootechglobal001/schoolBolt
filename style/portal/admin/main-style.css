@@ -337,8 +337,10 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
     font-size: 11px;
     display: flex;
 	flex-direction: column;
+	justify-content: center;
 	align-items: center;
 	font-family: sub-title-font;
+	text-align: center;
 }
 
 .side-nav-div .nav-back-div .nav-div .icon i{

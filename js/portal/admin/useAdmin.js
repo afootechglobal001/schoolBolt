@@ -137,13 +137,13 @@ let permissionElements = {
 
     13: `
     <div class="nav-div" title="Customers" onclick="_getActivePage({page:'customers', divid:'customers'});" id="side-customers">
-        <div class="icon"><i class="bi-people"></i> Customers</div> 
+        <div class="icon"><i class="bi-buildings"></i> <span>Hostel and Logistics</span></div> 
     </div>
     `,
 
     15: `
     <div class="nav-div" title="Products" onclick="_getActivePage({nav:'products', divid:'products'});" id="side-products">
-        <div class="icon"><i class="bi-boxes"></i> Products</div> 
+        <div class="icon"><i class="bi-chat-text"></i> Reviews</div> 
     </div>
     `,
 

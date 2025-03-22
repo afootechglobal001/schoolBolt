@@ -13,6 +13,7 @@ if(!$checkSession){
 
 	//////////////////declaration of variables//////////////////////////////////////
     $branchId = $_GET['branchId'];
+    $studentId = $_GET['studentId'];
 
 	$surName=trim(strtoupper($_POST['surName']));
     $firstName=trim(strtoupper($_POST['firstName']));
@@ -65,6 +66,14 @@ if(!$checkSession){
             'response'=> 100,
             'success'=> false,
             'message'=> "BRANCH ID REQUIRED! Check the fields and try again",
+        ]; 
+        goto end;
+	}
+    if (empty($studentId)){/// start if 2
+        $response = [
+            'response'=> 100,
+            'success'=> false,
+            'message'=> "STUDENT ID REQUIRED! Check the fields and try again",
         ]; 
         goto end;
 	}
@@ -210,49 +219,37 @@ if(!$checkSession){
             goto end;
         }
    
-
-            ///////////////////////geting sequence//////////////////////////
-            $countId='STUDENT';
-            $sequence=$callclass->_get_sequence_count($conn, $countId);
-            $array = json_decode($sequence, true);
-            $no= $array[0]['no'];
-            $studentId=$countId.$no.date("Ymdhis");
-
-
-            $select = "SELECT `session`, termId FROM BRANCHES_TAB WHERE $clientIds AND branchId= '$branchId'";
-            $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
-            $fetchQuery = mysqli_fetch_assoc($query);
-            $session=$fetchQuery['session'];
-            $termId=$fetchQuery['termId'];
-
             
-            mysqli_query($conn,"INSERT INTO `STUDENTS_TAB`
-            (`clientId`, `branchId`, `studentId`, `surName`, `firstName`, `otherNames`, `genderId`, `maritalStatusId`, `dateOfBirth`, `countryId`, `stateId`, `lgaId`, `address`, `email`, `mobileNumber`, `statusId`, `sessionRegistered`, `termRegistered`, `createdBy`, `createdTime`) VALUES 
-            ('$clientId', '$branchId','$studentId', '$surName', '$firstName', '$otherNames', '$genderId', '$maritalStatusId', '$dateOfBirth', '$countryId', '$stateId', '$lgaId', '$address', '$email', '$mobileNumber', '$statusId','$session','$termId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
+            mysqli_query($conn,"UPDATE `STUDENTS_TAB` SET
+            `surName`='$surName', `firstName`='$firstName', `otherNames`='$otherNames', `genderId`='$genderId', `maritalStatusId`='$maritalStatusId',
+            `dateOfBirth`='$dateOfBirth', `countryId`='$countryId', `stateId`='$stateId', `lgaId`='$lgaId', `address`='$address', `email`='$email',
+            `mobileNumber`='$mobileNumber', `statusId`='$statusId', `updatedBy`='$loginStaffId'
+            WHERE $clientIds AND branchId='$branchId' AND studentId='$studentId'")or die (mysqli_error($conn));
 
 
             $fatherDateOfBirth="$fatherDayOfBirth/$fatherMonthOfBirth";
-            mysqli_query($conn,"INSERT INTO `PARENTS_TAB`
-            (`clientId`, `branchId`, `studentId`, `recordFor`, `titleId`, `surName`, `otherNames`, `address`, `email`, `mobileNumber`, `dateOfBirth`, `occupation`, `statusId`, `createdBy`, `createdTime`) VALUES
-            ('$clientId', '$branchId','$studentId', 'father', '$fatherTitleId', '$fatherSurName', '$fatherOtherNames', '$fatherAddress', '$fatherEmail', '$fatherMobileNumber', '$fatherDateOfBirth', '$fatherOccupation', '$statusId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
+            mysqli_query($conn,"UPDATE `PARENTS_TAB` SET
+            `titleId`='$fatherTitleId', `surName`='$fatherSurName', `otherNames`='$fatherOtherNames', `address`='$fatherAddress', `email`='$fatherEmail',
+            `mobileNumber`='$fatherMobileNumber', `dateOfBirth`='$fatherDateOfBirth', `occupation`='$fatherOccupation', `statusId`='$statusId', 
+            `updatedBy`='$loginStaffId'
+            WHERE $clientIds AND branchId='$branchId' AND recordFor='father' AND studentId='$studentId'")or die (mysqli_error($conn));
 
             $motherDateOfBirth="$motherDayOfBirth/$motherMonthOfBirth";
-            mysqli_query($conn,"INSERT INTO `PARENTS_TAB`
-            (`clientId`, `branchId`, `studentId`, `recordFor`, `titleId`, `surName`, `otherNames`, `address`, `email`, `mobileNumber`, `dateOfBirth`, `occupation`, `statusId`, `createdBy`, `createdTime`) VALUES 
-            ('$clientId', '$branchId','$studentId', 'mother', '$motherTitleId', '$motherSurName', '$motherOtherNames', '$motherAddress', '$motherEmail', '$motherMobileNumber', '$motherDateOfBirth', '$motherOccupation', '$statusId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
+            mysqli_query($conn,"UPDATE `PARENTS_TAB` SET
+            `titleId`='$motherTitleId', `surName`='$motherSurName', `otherNames`='$motherOtherNames', `address`='$motherAddress', `email`='$motherEmail',
+            `mobileNumber`='$motherMobileNumber', `dateOfBirth`='$motherDateOfBirth', `occupation`='$motherOccupation', `statusId`='$statusId', 
+            `updatedBy`='$loginStaffId'
+            WHERE $clientIds AND branchId='$branchId' AND recordFor='mother' AND studentId='$studentId'")or die (mysqli_error($conn));
 
-            mysqli_query($conn,"INSERT INTO `STUDENTS_CLASS_TAB`
-            (`clientId`, `branchId`, `studentId`, `session`, `termId`, `officialStudentId`, `departmentId`, `classId`, `armId`, `accommodationId`, `statusId`, `createdBy`, `createdTime`) VALUES 
-            ('$clientId', '$branchId', '$studentId', '$session', '$termId', '$officialStudentId', '$departmentId', '$classId', '$armId', '$accommodationId', '$statusId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
+            mysqli_query($conn,"UPDATE `STUDENTS_CLASS_TAB` SET
+            `officialStudentId`='$officialStudentId', `departmentId`='$departmentId', `classId`='$classId', `armId`='$armId', `accommodationId`='$accommodationId',
+            `statusId`='$statusId', `updatedBy`='$loginStaffId'
+            WHERE $clientIds AND branchId='$branchId' AND studentId='$studentId'")or die (mysqli_error($conn));
 
-            if($passport!='mobile'){
-                $passportName=$studentId.uniqid().'.jpg';
-                mysqli_query($conn,"UPDATE `STUDENTS_TAB` SET passport='$passportName' WHERE studentId='$studentId'")or die (mysqli_error($conn));
-            }
 
             $response['response']=200; 
             $response['success']=true;
-            $response['message']="STUDENT REGISTERED SUCCESFFULY!"; 
+            $response['message']="STUDENT UPDATED SUCCESFFULY!"; 
             $response['data'] = array(); // Initialize the data array
 
             $select="SELECT * FROM STUDENTS_CLASS_TAB WHERE $clientIds AND branchId = '$branchId' AND studentId = '$studentId'";

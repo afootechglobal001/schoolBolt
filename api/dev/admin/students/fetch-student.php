@@ -100,28 +100,11 @@ if(!$checkSession){
 
         /////////////////// for  $studentId
         $studentData=array();
-        $studentDataQuery = mysqli_query($conn, "SELECT * FROM STUDENTS_TAB WHERE $clientIds AND studentId='$studentId'");
-
+        $studentDataQuery = mysqli_query($conn, "SELECT * FROM STUDENT_VIEW WHERE $clientIds AND studentId='$studentId'");
         while ($studentDatafetch = mysqli_fetch_assoc($studentDataQuery)) {
-            // Get gender
-            $genderId = $studentDatafetch['genderId'];
-            $studentGenderQuery = mysqli_query($conn, "SELECT * FROM SETUP_GENDER_TAB WHERE genderId='$genderId'");
-            $genderData = mysqli_fetch_assoc($studentGenderQuery);
-            $studentDatafetch['genderData'] = $genderData;
-
             $studentData[] = $studentDatafetch;
         }
-        // Assign final data to fetchQuery
         $fetchQuery['studentData'] = $studentData;
-        
-
-         /////////////////// for  $branchId
-         $branchData=array();
-         $branchDataQuery = mysqli_query($conn, "SELECT branchId, `name` FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
-         while ($branchDataFetch = mysqli_fetch_assoc($branchDataQuery)) {
-             $branchData[] = $branchDataFetch;
-         }
-         $fetchQuery['branchData']= $branchData;
 
          /////////////////// for  $departmentId
          $departmentData=array();
@@ -155,14 +138,6 @@ if(!$checkSession){
          }
          $fetchQuery['accommodationData']= $accommodationData;
 
-          /////////////////// for  $rolePermissionIds
-        $statusData=array();
-        $statusDataQuery = mysqli_query($conn, "SELECT * FROM SETUP_STATUS_TAB WHERE statusId ='$statusId'");
-        while ($statusDataFetch = mysqli_fetch_assoc($statusDataQuery)) {
-            $statusData[] = $statusDataFetch;
-        }
-        $fetchQuery['statusData']= $statusData;
-
         /////////////////// for  $createdBy
         $createdByData=array();
         $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
@@ -179,6 +154,22 @@ if(!$checkSession){
         }
         $fetchQuery['updatedBy']= $updatedByData;
 
+
+        /////////////////// for father
+        $fatherData=array();
+        $fatherDataQuery = mysqli_query($conn, "SELECT * FROM PARENT_VIEW WHERE $clientIds AND studentId='$studentId' AND recordFor='father'");
+        while ($fatherDatafetch = mysqli_fetch_assoc($fatherDataQuery)) {
+            $fatherData[] = $fatherDatafetch;
+        }
+        $fetchQuery['fatherData'] = $fatherData;
+
+        /////////////////// for mother
+        $motherData=array();
+        $motherDataQuery = mysqli_query($conn, "SELECT * FROM PARENT_VIEW WHERE $clientIds AND studentId='$studentId' AND recordFor='mother'");
+        while ($motherDatafetch = mysqli_fetch_assoc($motherDataQuery)) {
+            $motherData[] = $motherDatafetch;
+        }
+        $fetchQuery['motherData'] = $motherData;
         
         $response['data'][] = $fetchQuery;
     }

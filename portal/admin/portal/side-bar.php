@@ -28,11 +28,14 @@
 
 <div class="side-nav-bg-sub-div">
 	<div class="nav-div animated fadeInLeft" id="link-products">
-        <div class="link" title="Product Categories" onclick="_getActivePage({page:'product_category', divid:'products'});">- Product Categories <div class="num" id="">0</div></div>
-        <div class="hidden" id="_products"><i class="bi-boxes"></i> Product Categories</div>
+        <div class="link" title="Product Categories" onclick="_getActivePage({page:'product_category', divid:'products'});">- Parent Reviews <div class="num" id="">0</div></div>
+        <div class="hidden" id="_products"><i class="bi-boxes"></i> Parent Reviews</div>
 
-        <div class="link" title="Combo" onclick="">- Combo <div class="num" id="">0</div></div>
-        <div class="hidden" id="_combo"><i class="bi-basket"></i> Combo</div>
+        <div class="link" title="Combo" onclick="">- Student Reviews <div class="num" id="">0</div></div>
+        <div class="hidden" id="_combo"><i class="bi-basket"></i> Student Reviews</div>
+
+        <div class="link" title="Combo" onclick="">- Visitor's Reviews <div class="num" id="">0</div></div>
+        <div class="hidden" id="_combo"><i class="bi-basket"></i> Visitor's Reviews</div>
     </div>
 
     <div class="nav-div animated fadeInLeft" id="link-publish">
@@ -44,14 +47,17 @@
     </div>
 
     <div class="nav-div animated fadeInLeft" id="link-reports">
-        <div class="link" title="Product Report" onclick="_getPage('product_report','publish','');">- Product Report</div>
-        <div class="hidden" id="_product_report"><i class="bi-boxes"></i> Product Report</div>
+        <div class="link" title="Product Report" onclick="_getPage('product_report','publish','');">- Income Report</div>
+        <div class="hidden" id="_product_report"><i class="bi-boxes"></i> Income Report</div>
 
-        <div class="link" title="Sales Report" onclick="_getPage('sales_report','products','');">- Sales Report</div>
-        <div class="hidden" id="_sales_report"><i class="bi-boxes"></i> Sales Report</div>
+        <div class="link" title="Sales Report" onclick="_getPage('sales_report','products','');">- Expenses Report</div>
+        <div class="hidden" id="_sales_report"><i class="bi-boxes"></i> Expenses Report</div>
 
         <div class="link" title="Wallet Report" onclick="_getPage('wallet_report','products','');">- Wallet Report</div>
         <div class="hidden" id="_wallet_report"><i class="bi-credit-card"></i> Wallet Report</div>
+
+        <div class="link" title="Wallet Report" onclick="_getPage('wallet_report','products','');">- Staff Loans</div>
+        <div class="hidden" id="_wallet_report"><i class="bi-credit-card"></i> Staff Loans</div>
     </div>
     
     <div class="nav-back-container" onclick="_closeNav();"></div>
