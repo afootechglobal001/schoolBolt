@@ -31,7 +31,7 @@ function _confirmLogin() {
 		
 		//////////////// get btn text ////////////////
 		const btn_text = $("#submit_btn").html();
-		$("#submit_btn").html('<img src="' + websiteUrl + '/all-images/images/loading.gif" width="12px" alt="Loading"/> Authenticating');
+		$("#submit_btn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/> Authenticating');
 		$("#submit_btn").prop("disabled", true);
 		////////////////////////////////////////////////
 		
