@@ -10,7 +10,7 @@ function _getActiveStudentPage(props) {
 	}
 }
 function _getStudentPagesActiveLink(divid){
-	$('#student_profile_details, #student_activities').removeClass('active');
+	$('#student_profile_details, #tanscript, #student_activities, #student_report').removeClass('active');
 	$("#"+divid).addClass('active');
 }
 
@@ -581,7 +581,7 @@ function _fetchBranchStudents() {
 			success: function(info) {
 				const fetch = info.data;
 				const success = info.success;
-
+				
 				let text = '';
 				let no=0;
 				text =`
@@ -604,6 +604,11 @@ function _fetchBranchStudents() {
 				if (success=== true) {
 					for (let i = 0; i < fetch.length; i++) {
 						no++;
+						const branchId = fetch[i].branchId;
+						const departmentId = fetch[i].departmentId;
+						const classId = fetch[i].classId;
+						const armId = fetch[i].armId;
+
 						const fetchStudentData = fetch[i].studentData?.[0];
 						const fetchDepartmentData=fetch[i].departmentData?.[0]; 
 						const fetchClassData=fetch[i].classData?.[0]; 
@@ -626,7 +631,7 @@ function _fetchBranchStudents() {
 						 	<tbody>
 								<tr class="tb-row">
 									<td>${no}</td>
-									<td class="clickable-td" title="Click to view staff profile" onclick="">
+									<td class="clickable-td" title="Click to view student profile" onclick="_fetchEachBranchStudents();">
 										<div class="text-back-div">
 											<div class="text-div">
 												<div class="first-class">${studentId}</div>
@@ -647,7 +652,7 @@ function _fetchBranchStudents() {
 									<td>${className}</td>
 									<td>${armName}</td>
 									<td><div class="status-div ${statusName}">${statusName}</div></td>
-									<td><button class="btn view-btn" title="VIEW STUDENT PROFILE" onclick="_getForm({page: 'student_profile', layer:2, url: adminPortalLocalUrl});">VIEW</button></td>
+									<td><button class="btn view-btn" title="Click to view student profile" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}');">VIEW</button></td>
 								</tr>
 							</tbody>`;
 					}
@@ -656,16 +661,15 @@ function _fetchBranchStudents() {
 					_actionAlert(info.message, false);
 
 					text += `
-  					tbody>
-						<tr>
-						<td colspan="11">
-							<div class="false-notification-div">
-							<p>${info.message}</p>
-							</div>
-						</td>
-						</tr>
-					</tbody>`;
-
+						tbody>
+							<tr>
+								<td colspan="11">
+									<div class="false-notification-div">
+										<p>${info.message}</p>
+									</div>
+								</td>
+							</tr>
+						</tbody>`;
 					$('#pageContent').html(text);
 						
 					const response = info.response;
@@ -680,6 +684,38 @@ function _fetchBranchStudents() {
 			}
 		});
 	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}
+
+function _fetchEachBranchStudents(branchId, departmentId, classId, armId, studentId) {
+	$("#get-form-more-div").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/students/fetch-student?branchId=${branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				if (info.success && info.data.length > 0) {
+					sessionStorage.setItem("getEachBranchStudentsSession", JSON.stringify(info.data[0]));
+					_getForm({page: 'student_profile', layer:2, url: adminPortalLocalUrl});
+				} else {
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		_alertClose();
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
