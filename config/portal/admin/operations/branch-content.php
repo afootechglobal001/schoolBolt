@@ -72,20 +72,20 @@
                     </script>
                 </div>
 
-                <div class="text_field_container" id="branchStateId_container">
+                <div class="text_field_container" id="stateId_container">
                     <script>
                         selectField({
-                            id: 'branchStateId',
+                            id: 'stateId',
                             title: 'Select Branch State',
                         });
-                        _getSelectBranchState('branchStateId');
+                        _getSelectGeneralState('stateId');
                     </script>
                 </div>
 
-                <div class="text_field_container" id="branchLgaId_container">
+                <div class="text_field_container" id="lgaId_container">
                     <script>
                         selectField({
-                            id: 'branchLgaId',
+                            id: 'lgaId',
                             title: 'Select Branch Local Govt Area'
                         });
                     </script>
@@ -759,22 +759,22 @@
                 </script>
             </div>
 
-            <div class="text_field_container col-1" id="branchStateId_container">
+            <div class="text_field_container col-1" id="stateId_container">
                 <script>
                     selectField({
-                        id: 'branchStateId',
+                        id: 'stateId',
                         title: 'Select Branch State',
                         fieldValue: getEachBranchDetailsSession?.stateId ?? '',
                         fieldLabel: getEachBranchDetailsSession?.stateName ?? ''
                     });
-                    _getSelectBranchState('branchStateId');
+                    _getSelectGeneralState('stateId');
                 </script>
             </div>
 
-            <div class="text_field_container col-1" id="branchLgaId_container">
+            <div class="text_field_container col-1" id="lgaId_container">
                 <script>
                     selectField({
-                        id: 'branchLgaId',
+                        id: 'lgaId',
                         title: 'Select Branch Local Govt Area',
                         fieldValue: getEachBranchDetailsSession?.lgaId ?? '',
                         fieldLabel: getEachBranchDetailsSession?.lgaName ?? ''

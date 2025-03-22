@@ -48,99 +48,6 @@ function copyTextbox() {
     }, 0);
 }
 
-function _getSelectBranchState(fieldId){
-	try {
-		$.ajax({
-			type: "GET",
-			url: endPoint+"/preset-data/fetch-states",
-			dataType: "json",
-			cache: false,
-			headers: getAuthHeaders(),
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-
-				if (success === true) {
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].stateId;
-						const value = data[i].stateName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\'); _fetchBranchStateLga()">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
-}
-
-function _fetchBranchStateLga(){
-	_getSelectBranchLga('lgaId');
-}
-function _getSelectBranchLga(fieldId){
-	const stateId = $('#stateId').val();
-	try {
-		$.ajax({
-			type: "GET",
-			url: endPoint+"/preset-data/fetch-lga?stateId="+stateId,
-			dataType: "json",
-			cache: false,
-			headers: getAuthHeaders(),
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-
-				if (success === true) {
-					$('#searchList_'+ fieldId).html('');
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].lgaId;
-						const value = data[i].lgaName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
-	
-}
-
-function _getSelectNationlaity(fieldId){
-	try {
-		$.ajax({
-			type: "GET",
-			url: endPoint+'/preset-data/fetch-country',
-			dataType: "json",
-			cache: false,
-			headers: getAuthHeaders(),
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-				
-				if (success === true) {
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].countryId;
-						const value = data[i].countryName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
-}
-
 function _getSelectAccomodation(fieldId){
 	try {
 		$.ajax({
@@ -169,7 +76,6 @@ function _getSelectAccomodation(fieldId){
 		_actionAlert('An unexpected error occurred. Please try again.', false);
 	}
 }
-
 
 function _getSelectDepartment(fieldId){
 	try {
@@ -313,6 +219,7 @@ function _createStudent(view) {
 		const motherMobileNumber = $('#motherMobileNumber').val();
 		const motherDayOfBirth = $('#motherDayOfBirth').val();
 		const motherMonthOfBirth = $('#motherMonthOfBirth').val();
+		const motherOccupation = $('#motherOccupation').val();
 		const officialStudentId = $('#officialStudentId').val();
 		const departmentId = $('#departmentId').val();
         const classId = $('#classId').val();
@@ -458,6 +365,7 @@ function _createStudent(view) {
 			formData.append("motherMobileNumber", motherMobileNumber);
 			formData.append("motherDayOfBirth", motherDayOfBirth);	
 			formData.append("motherMonthOfBirth", motherMonthOfBirth);
+			formData.append("motherOccupation", motherOccupation);
 			formData.append("officialStudentId", officialStudentId);
 			formData.append("departmentId", departmentId);
 			formData.append("classId", classId);
@@ -758,6 +666,7 @@ function _updateBranchStudents() {
 		const motherMobileNumber = $('#motherMobileNumber').val();
 		const motherDayOfBirth = $('#motherDayOfBirth').val();
 		const motherMonthOfBirth = $('#motherMonthOfBirth').val();
+		const motherOccupation = $('#motherOccupation').val();
 		const officialStudentId = $('#officialStudentId').val();
 		const departmentId = $('#departmentId').val();
         const classId = $('#classId').val();
@@ -903,6 +812,7 @@ function _updateBranchStudents() {
 			formData.append("motherMobileNumber", motherMobileNumber);
 			formData.append("motherDayOfBirth", motherDayOfBirth);	
 			formData.append("motherMonthOfBirth", motherMonthOfBirth);
+			formData.append("motherOccupation", motherOccupation);
 			formData.append("officialStudentId", officialStudentId);
 			formData.append("departmentId", departmentId);
 			formData.append("classId", classId);

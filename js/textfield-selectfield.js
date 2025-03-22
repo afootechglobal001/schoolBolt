@@ -94,19 +94,6 @@ function _clickOption(selectedOption, id, value) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     
 function _getSelectPaymentMethod(fieldId){
 	const data=[
@@ -389,6 +376,99 @@ function _getSelectBlogCategory(fieldId){
 		const value = data[i].blogCatName;
 		$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
 	}	
+}
+
+function _getSelectNationality(fieldId){
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+'/preset-data/fetch-country',
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].countryId;
+						const value = data[i].countryName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+function _getSelectGeneralState(fieldId){
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+"/preset-data/fetch-states",
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].stateId;
+						const value = data[i].stateName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\'); _fetchGeneralStateLga()">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+function _fetchGeneralStateLga(){
+	_getSelectGeneralLga('lgaId');
+}
+function _getSelectGeneralLga(fieldId){
+	const stateId = $('#stateId').val();
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+"/preset-data/fetch-lga?stateId="+stateId,
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+
+				if (success === true) {
+					$('#searchList_'+ fieldId).html('');
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].lgaId;
+						const value = data[i].lgaName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+	
 }
 
 

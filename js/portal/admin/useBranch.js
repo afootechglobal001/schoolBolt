@@ -14,70 +14,6 @@ function _getBranchPagesActiveLink(divid){
 	$("#"+divid).addClass('active');
 }
 
-function _getSelectBranchState(fieldId){
-	try {
-		$.ajax({
-			type: "GET",
-			url: endPoint+"/preset-data/fetch-states",
-			dataType: "json",
-			cache: false,
-			headers: getAuthHeaders(),
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-
-				if (success === true) {
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].stateId;
-						const value = data[i].stateName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\'); _fetchBranchStateLga()">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
-}
-
-function _fetchBranchStateLga(){
-	_getSelectBranchLga('branchLgaId');
-}
-function _getSelectBranchLga(fieldId){
-	const stateId = $('#branchStateId').val();
-	try {
-		$.ajax({
-			type: "GET",
-			url: endPoint+"/preset-data/fetch-lga?stateId="+stateId,
-			dataType: "json",
-			cache: false,
-			headers: getAuthHeaders(),
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-
-				if (success === true) {
-					$('#searchList_'+ fieldId).html('');
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].lgaId;
-						const value = data[i].lgaName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
-	
-}
-
 function _getSelectBranchManagerId(fieldId){
 	let $searchList = $('#searchList_' + fieldId);
     $searchList.html('<li>Loading data...</li>');
@@ -118,8 +54,8 @@ function _createBranch() {
 	try {
 		const name = $('#name').val();
 		const mobileNumber = $('#mobileNumber').val();
-		const stateId = $('#branchStateId').val();
-		const lgaId = $('#branchLgaId').val();
+		const stateId = $('#stateId').val();
+		const lgaId = $('#lgaId').val();
 		const address = $('#address').val();
 		const smtpHost = $('#smtpHost').val();
 		const smtpUsername = $('#smtpUsername').val();
@@ -132,7 +68,7 @@ function _createBranch() {
 		const termId = $('#termId').val();
 		const statusId = $('#statusId').val();
 
-		$('#name, #mobileNumber, #branchStateId, #branchLgaId, #address, #smtpHost, #smtpUsername, #smtpPassword, #smtpPort, #supportEmail, #paymentKey, #session, #staffId, #termId, #statusId').removeClass('issue');
+		$('#name, #mobileNumber, #stateId, #lgaId, #address, #smtpHost, #smtpUsername, #smtpPassword, #smtpPort, #supportEmail, #paymentKey, #session, #staffId, #termId, #statusId').removeClass('issue');
 
 		if (!name) {
 			$('#name').addClass('issue');
@@ -147,13 +83,13 @@ function _createBranch() {
 		}
 
 		if (!stateId) {
-			$('#branchStateId').addClass("issue");
+			$('#stateId').addClass("issue");
 			_actionAlert('Select branch state to continue', false);
 			return;
 		}
 
 		if (!lgaId) {
-			$('#branchLgaId').addClass("issue");
+			$('#lgaId').addClass("issue");
 			_actionAlert('Select branch local govt area to continue', false);
 			return;
 		}
@@ -412,8 +348,8 @@ function _updateBranch() {
 	try {
 		const name = $('#updateName').val();
 		const mobileNumber = $('#updateMobileNumber').val();
-		const stateId = $('#branchStateId').val();
-		const lgaId = $('#branchLgaId').val();
+		const stateId = $('#stateId').val();
+		const lgaId = $('#lgaId').val();
 		const address = $('#updateAddress').val();
 		const smtpHost = $('#updateSmtpHost').val();
 		const smtpUsername = $('#updateSmtpUsername').val();
@@ -426,7 +362,7 @@ function _updateBranch() {
 		const termId = $('#updateTermId').val();
 		const statusId = $('#updateStatusId').val();
 
-		$('#updateName, #updateMobileNumber, #branchStateId, #branchLgaId, #updateAddress, #updateSmtpHost, #updateSmtpUsername, #updateSmtpPassword, #updateSmtpPort, #updateSupportEmail, #updatePaymentKey, #updateSession, #updateStaffId, #updateTermId, #updateStatusId').removeClass('issue');
+		$('#updateName, #updateMobileNumber, #stateId, #lgaId, #updateAddress, #updateSmtpHost, #updateSmtpUsername, #updateSmtpPassword, #updateSmtpPort, #updateSupportEmail, #updatePaymentKey, #updateSession, #updateStaffId, #updateTermId, #updateStatusId').removeClass('issue');
 
 		if (!name) {
 			$('#updateName').addClass('issue');
@@ -441,13 +377,13 @@ function _updateBranch() {
 		}
 
 		if (!stateId) {
-			$('#branchStateId').addClass("issue");
+			$('#stateId').addClass("issue");
 			_actionAlert('Select branch state to continue', false);
 			return;
 		}
 
 		if (!lgaId) {
-			$('#branchLgaId').addClass("issue");
+			$('#lgaId').addClass("issue");
 			_actionAlert('Select branch local govt area to continue', false);
 			return;
 		}

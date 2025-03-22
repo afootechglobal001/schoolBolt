@@ -184,14 +184,14 @@ function _createStaff() {
 		const mobileNumber = $('#mobileNumber').val();
 		const genderId = $('#genderId').val();
 		const dateOfBirth = formatDate($('#dateOfBirth').val()); 
-		const stateId = $('#branchStateId').val();
-		const lgaId = $('#branchLgaId').val();
+		const stateId = $('#stateId').val();
+		const lgaId = $('#lgaId').val();
 		const address = $('#address').val();
 		const branchId = $('#branchId').val();
 		const roleId = $('#roleId').val();
 		const statusId = $('#statusId').val();
 
-		$('#firstName, #middleName, #lastName, #emailAddress, #mobileNumber, #genderId, #dateOfBirth, #branchStateId, #branchLgaId, #address, #branchId, #roleId, #statusId').removeClass('issue');
+		$('#firstName, #middleName, #lastName, #emailAddress, #mobileNumber, #genderId, #dateOfBirth, #stateId, #lgaId, #address, #branchId, #roleId, #statusId').removeClass('issue');
 
 		if (!firstName) {
 			$('#firstName').addClass('issue');
@@ -236,13 +236,13 @@ function _createStaff() {
 		}
 
 		if (!stateId) {
-			$('#branchStateId').addClass("issue");
+			$('#stateId').addClass("issue");
 			_actionAlert('Select state to continue', false);
 			return;
 		}
 
 		if (!lgaId) {
-			$('#branchLgaId').addClass("issue");
+			$('#lgaId').addClass("issue");
 			_actionAlert('Select branch local govt area to continue', false);
 			return;
 		}
@@ -370,14 +370,14 @@ function _updateStaff() {
 		const mobileNumber = $('#updateMobileNumber').val();
 		const genderId = $('#updateGenderId').val();
 		const dateOfBirth = formatDate($('#updateDateOfBirth').val()); 
-		const stateId = $('#branchStateId').val();
-		const lgaId = $('#branchLgaId').val();
+		const stateId = $('#stateId').val();
+		const lgaId = $('#lgaId').val();
 		const address = $('#updateAddress').val();
 		const branchId = $('#updateBranchId').val();
 		const roleId = $('#updateRoleId').val();
 		const statusId = $('#updateStatusId').val();
 
-		$('#updateFirstName, #updateMiddleName, #updateLastName, #updateEmailAddress, #updateMobileNumber, #updateGenderId, #updateDateOfBirth, #branchStateId, #branchLgaId, #updateAddress, #updateBranchId, #updateRoleId, #updateStatusId').removeClass('issue');
+		$('#updateFirstName, #updateMiddleName, #updateLastName, #updateEmailAddress, #updateMobileNumber, #updateGenderId, #updateDateOfBirth, #stateId, #lgaId, #updateAddress, #updateBranchId, #updateRoleId, #updateStatusId').removeClass('issue');
 
 		if (!firstName) {
 			$('#updateFirstName').addClass('issue');
@@ -422,13 +422,13 @@ function _updateStaff() {
 		}
 
 		if (!stateId) {
-			$('#branchStateId').addClass("issue");
+			$('#stateId').addClass("issue");
 			_actionAlert('Select state to continue', false);
 			return;
 		}
 
 		if (!lgaId) {
-			$('#branchLgaId').addClass("issue");
+			$('#lgaId').addClass("issue");
 			_actionAlert('Select branch local govt area to continue', false);
 			return;
 		}

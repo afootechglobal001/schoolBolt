@@ -6,7 +6,7 @@
 	//$websiteUrl='https://schoolbolt.com'; /// For Live Server Url //
 	$websiteUrl='http://localhost/projects/schoolbolt';
 	//$websitePath = $_SERVER['DOCUMENT_ROOT'];
-	$websitePath = $_SERVER['DOCUMENT_ROOT'].'/projects/schoolbolt'; //dirname(__FILE__);
+	$websitePath = $SERVER['DOCUMENT_ROOT'].'/projects/schoolbolt'; //dirname(FILE_);
 	$codeVersion= date('Ymdhis');
 ?>
 
@@ -42,9 +42,9 @@ $userDeviceId=getBrowserId();
 	var websiteUrl = "<?php echo $websiteUrl;?>";
 	var clientId = "3b338d51b4971ec84429b3e1a6ffe769"; /// for dev
 	//var clientId = "1b26bb4215f64bc62160b26d9b2b4865" /// for production
-	var clientAddress = "<?php echo $websiteAutoUrl;?>";
+	var clientAddress = "<?php echo $websiteAutoUrl;?>/https://schoolbolt.com";
 	var apiKey='a7c37b6289b9dd879b2c005118d3ef14'; /// For API Key //
-	var endPoint='https://schoolbolt.com/api/dev'; /// Server End Point url
+	var endPoint='https://schoolbolt.com/dev-api/dev'; /// Server End Point url
 	var userOsBrowser = "<?php echo $userOsBrowser;?>"; /// For User OS Browser //
 	var userIpAddress = "<?php echo $userIpAddress;?>"; /// For User IP Address //
 	var userDeviceId = "<?php echo $userDeviceId;?>"; /// For User Device Id //
@@ -55,4 +55,3 @@ $userDeviceId=getBrowserId();
 	var adminUrl=websiteUrl+'/portal/admin/login'; /// For Admin Url //
 	var studentPixPath=websiteUrl+'/uploaded_files/studentPix'; /// For Product Pix Path //
 </script>
-

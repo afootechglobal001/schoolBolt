@@ -84,7 +84,7 @@
                                     id: 'countryId',
                                     title: 'Select Nationality'
                                 });
-                                _getSelectNationlaity('countryId');
+                                _getSelectNationality('countryId');
                             </script>
                         </div>
 
@@ -94,7 +94,7 @@
                                     id: 'stateId',
                                     title: 'Select State Of Origin',
                                 });
-                                _getSelectBranchState('stateId');
+                                _getSelectGeneralState('stateId');
                             </script>
                         </div>
 
@@ -683,7 +683,7 @@
                         fieldValue: getEachBranchStudentsSession.studentData[0]?.countryId ?? '',
                         fieldLabel: getEachBranchStudentsSession.studentData[0]?.countryName ?? ''
                     });
-                    _getSelectNationlaity('countryId');
+                    _getSelectNationality('countryId');
                 </script>
             </div>
 
@@ -695,7 +695,7 @@
                         fieldValue: getEachBranchStudentsSession.studentData[0]?.stateId ?? '',
                         fieldLabel: getEachBranchStudentsSession.studentData[0]?.stateName ?? ''
                     });
-                    _getSelectBranchState('stateId');
+                    _getSelectGeneralState('stateId');
                 </script>
             </div>
 
