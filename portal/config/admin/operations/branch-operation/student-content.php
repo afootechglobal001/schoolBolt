@@ -14,7 +14,7 @@
                 </div>
 
                 <div class="cam-pix" onClick="takeSnapShot()" id="cam-pix">
-                    <img src="<?php echo $websiteUrl ?>/all-images/images/sample.jpg" />
+                    <img src="<?php echo $websiteUrl ?>/images/sample.jpg" />
                 </div>
 
                 <div class="alert alert-success form-alert">

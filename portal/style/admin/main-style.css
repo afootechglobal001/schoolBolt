@@ -458,7 +458,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	background: #fff url(../../../all-images/images/title.png) center no-repeat;
+	background: #fff url(../../images/title.png) center no-repeat;
 	background-size: cover;
 }
 

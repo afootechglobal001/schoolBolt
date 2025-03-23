@@ -49,7 +49,7 @@ function _fetchBranchStaffs() {
 								<td class="clickable-td" title="Click to view staff profile" onclick="_fetchEachBranchSaff('${staffId}');">
 									<div class="text-back-div">
 										<div class="image-div">
-											<img src="${websiteUrl}/all-images/images/avatar.jpg" alt="${staffNames}"/>
+											<img src="${websiteUrl}/uploaded_files/staffPix/default.jpg" alt="${staffNames}"/>
 										</div>
 
 										<div class="text-div">
