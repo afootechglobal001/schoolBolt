@@ -75,7 +75,7 @@
 
                     <div class="left-div">
                         <div class="general-faq-div">
-                            <div class="faq-title"  id="faq201">
+                            <div class="faq-title" id="faq201">
                                 <div class="inner-title-div" onclick="_collapse('faq201')">
                                     <h2>What is SchoolBolt?</h2>
                                     <div class="expand-div" id="faq201num">&nbsp;<i class="bi-plus"></i>&nbsp;</div>

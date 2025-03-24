@@ -1155,11 +1155,11 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 .table-div .table .tb-row .text-back-div{
 	display: flex;
 	align-items: center;
-	gap: 5px;
+	gap: 8px;
 }
 
 .table-div .table .tb-row .text-back-div .text-div{
-	width: calc(100% - 30px);
+	width: calc(100% - 33px);
 	display: flex;
 	flex-direction: column;
 }
@@ -1176,6 +1176,10 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	height: 80px;
 }
 
+.table-div .table .tb-row .text-back-div .teacher-passport{
+	width: 60px;
+	height: 55px;
+}
 
 .table-div .table .tb-row .image-div img{
 	width: 100%;
@@ -1721,6 +1725,10 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+}
+
+.class-top-alert-div{
+   margin-bottom: 15px;
 }
 
 .account-form-alert{
@@ -3908,3 +3916,58 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 
 
 
+.pages-toggle-back-div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+	width: 100%;
+}
+
+.pages-toggle-back-div .pages-toggle-div{
+	width: calc(100% - 40px);
+	padding: 0px 20px;
+    border-radius: 8px 8px 5px 5px;
+	background: var(--white-color);
+    border-bottom: #CCC 1px dashed;
+	box-shadow: 0px 0px 10px 3px rgba(82, 82, 82, 0.05);
+	cursor: pointer;
+}
+
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title{
+	width: 100%;
+	min-height: 75px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-family: body-font;
+    font-size: 14px;
+	border-bottom: var(--bg-color) 1px solid;
+}
+
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title h3{
+    font-size: 16px;
+    padding: 0px 0px 0px 10px;
+    margin: 0px;
+    font-weight: lighter;
+	font-family: title-font;
+	color: #0C2B4B;
+}
+
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title .expand-div{
+	height: 40px;
+    width: 40px;
+    line-height: 40px;
+    font-size: 25px;
+	color: #0C2B4B;
+	cursor: pointer;
+}
+
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title .expand-div i{
+    font-size: 15px;
+}
+
+.pages-toggle-back-div .toggle-expand-div {
+	padding: 30px 15px;
+    font-size: 12px;
+}

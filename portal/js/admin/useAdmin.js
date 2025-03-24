@@ -113,6 +113,17 @@ function _toggleCheck(){
 	});
 }
 
+function _collapse(divId) {
+	var x = document.getElementById(divId + 'num');
+	if (x.innerHTML === '&nbsp;<i class="bi-chevron-down"></i>&nbsp;') {
+	  x.innerHTML = '&nbsp;<i class="bi-chevron-up"></i>&nbsp;';
+	} else {
+	  x.innerHTML = '&nbsp;<i class="bi-chevron-down"></i>&nbsp;';
+	}
+	  $('#'+divId+'answer').slideToggle('slow');
+  }
+  
+
 function _getFormDetails(nextId) {
 	$('#user_form_details').hide();
 	$("#" + nextId).fadeIn(1000);

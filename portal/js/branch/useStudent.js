@@ -511,10 +511,6 @@ function _fetchBranchStudents() {
 					</thead>`;
 
 				if (success=== true) {
-					sessionStorage.setItem("getAllBranchStudentSession", JSON.stringify(info.data));
-				console.log('getAllBranchStudentSession', info.data);
-
-
 					for (let i = 0; i < fetch.length; i++) {
 						no++;
 						const branchId = fetch[i].branchId;
@@ -544,7 +540,7 @@ function _fetchBranchStudents() {
 						 	<tbody>
 								<tr class="tb-row">
 									<td>${no}</td>
-									<td class="clickable-td" title="Click to view student profile" onclick="_fetchEachBranchStudents();">
+									<td class="clickable-td" title="Click to view student profile" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}');">
 										<div class="text-back-div">
 											<div class="text-div">
 												<div class="first-class">${studentId}</div>
@@ -570,6 +566,10 @@ function _fetchBranchStudents() {
 							</tbody>`;
 					}
 					$('#pageContent').html(text);
+					const departmentName = info.data?.[0]?.departmentData?.[0]?.departmentName;
+					const className = info.data?.[0]?.classData?.[0]?.className;
+					$("#departmentName3").html(departmentName);
+					$("#className2").html(className);
 				} else {
 					_actionAlert(info.message, false);
 
