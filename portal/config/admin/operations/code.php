@@ -13,9 +13,6 @@ switch ($action){
 		require_once('staff-content.php');
 		require_once('settings-content.php');
 		require_once('role-content.php');
-		require_once('customer-content.php');
-		require_once('blog-content.php');
-		require_once('faq-content.php');
 		require_once('department-content.php');
 		require_once('class-content.php');
 		require_once('arm-content.php');
@@ -33,9 +30,6 @@ switch ($action){
 		require_once('staff-content.php');
 		require_once('settings-content.php');
 		require_once('role-content.php');
-		require_once('customer-content.php');
-		require_once('blog-content.php');
-		require_once('faq-content.php');
 		require_once('department-content.php');
 		require_once('class-content.php');
 		require_once('arm-content.php');

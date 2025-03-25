@@ -1,4 +1,4 @@
-<?php if ($page=='branch_class') { ?>
+<?php if ($page=='branch_department_class') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
         <span><i class="bi-people-fill"></i> BRANCH CLASS LIST</span>
     </div>
@@ -6,7 +6,7 @@
     <div class="pages-toggle-back-div">
         <div class="pages-toggle-div">
             <div class="pages-toggle-title" onclick="_collapse('view1');" title="Click to view class teachers">
-                <h3>NURSERY 1</h3>
+                <h3>KINDERGARTEN</h3>
                 <div class="expand-div" id="view1num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
             </div>
         
@@ -39,7 +39,7 @@
                                 <td>NURSERY 1 A</td> 
                                 <td>
                                     <div class="text-back-div">
-                                        <div class="image-div teacher-passport">
+                                        <div class="image-div general-passport">
                                             <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/teacher3.png" alt="MR AHMED ODELAKIN"/>
                                         </div>
 
@@ -58,12 +58,12 @@
                                 <td>NURSERY 1 B</td> 
                                 <td>
                                     <div class="text-back-div">
-                                        <div class="image-div teacher-passport">
+                                        <div class="image-div general-passport">
                                             <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/teacher1.jpeg" alt="MISS KAFAYAT ADENIRAN"/>
                                         </div>
 
                                         <div class="text-div">
-											<div class="first-class">MISS KAFAYAT ADENIRAN</div>
+											<div class="first-class">MISS KAFAYAT ADENIRAN ADENIRAN</div>
 											<div class="second-class">adeniranatinuke26@gmail.com</div>
 										</div>
                                     </div>
@@ -77,7 +77,7 @@
                                 <td>NURSERY 1 C</td> 
                                 <td>
                                     <div class="text-back-div">
-                                        <div class="image-div teacher-passport">
+                                        <div class="image-div general-passport">
                                             <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/teacher2.jpeg" alt="MISS OGUNJIMI"/>
                                         </div>
 
@@ -97,7 +97,7 @@
 
         <div class="pages-toggle-div">
             <div class="pages-toggle-title" onclick="_collapse('view2');" title="Click to view class teachers">
-                <h3>NURSERY 2</h3>
+                <h3>NURSERY</h3>
                 <div class="expand-div" id="view2num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
             </div>
         
@@ -130,7 +130,7 @@
                                 <td>NURSERY 2 A</td> 
                                 <td>
                                     <div class="text-back-div">
-                                        <div class="image-div teacher-passport">
+                                        <div class="image-div general-passport">
                                             <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/default.jpg" alt="MISS OGUNJIMI"/>
                                         </div>
 
@@ -149,7 +149,7 @@
                                 <td>NURSERY 2 B</td> 
                                 <td>
                                     <div class="text-back-div">
-                                        <div class="image-div teacher-passport">
+                                        <div class="image-div general-passport">
                                             <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/default.jpg" alt="MISS OGUNJIMI"/>
                                         </div>
 
@@ -168,7 +168,7 @@
                                 <td>NURSERY 2 C</td> 
                                 <td>
                                     <div class="text-back-div">
-                                        <div class="image-div teacher-passport">
+                                        <div class="image-div general-passport">
                                             <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/default.jpg" alt="MISS OGUNJIMI"/>
                                         </div>
 
@@ -188,7 +188,7 @@
 
         <div class="pages-toggle-div">
             <div class="pages-toggle-title" onclick="_collapse('view3')" title="Click to view class teachers">
-                <h3>BASIC 1</h3>
+                <h3>BASIC</h3>
                 <div class="expand-div" id="view3num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
             </div>
         
@@ -221,7 +221,7 @@
                                 <td>BASIC 1 A</td> 
                                 <td>
                                     <div class="text-back-div">
-                                        <div class="image-div teacher-passport">
+                                        <div class="image-div general-passport">
                                             <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/default.jpg" alt="MISS OGUNJIMI"/>
                                         </div>
 
@@ -240,7 +240,7 @@
                                 <td>BASIC 1 B</td> 
                                 <td>
                                     <div class="text-back-div">
-                                        <div class="image-div teacher-passport">
+                                        <div class="image-div general-passport">
                                             <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/default.jpg" alt="MISS OGUNJIMI"/>
                                         </div>
 
@@ -259,7 +259,7 @@
                                 <td>BASIC 1 C</td> 
                                 <td>
                                     <div class="text-back-div">
-                                        <div class="image-div teacher-passport">
+                                        <div class="image-div general-passport">
                                             <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/default.jpg" alt="MISS OGUNJIMI"/>
                                         </div>
 
@@ -277,7 +277,6 @@
             </div>
         </div>
     </div>
-   
 <?php } ?>
 
 <?php if ($page=='assign_staff') { ?>

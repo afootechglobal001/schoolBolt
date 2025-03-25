@@ -184,6 +184,22 @@
                     </div>
                 </div>
 
+                <div class="alert alert-success form-alert"><span>SELECT BRANCH DEPARTMENTS</span>
+                    <div class="permission-form-back-div">
+                        <div class="title-div">
+                            <h4>Departments</h4>
+                            <p>Use the toggles below to assign registered Departments to their respective branches. Switching to "Yes" activates the department for branch use.</p>
+                        </div>
+
+                        <div class="permission-toggle-div">
+                            <div class="toggle-title">Registered Departments</div>
+                            <div class="fetch-toggle" id="pageContentToggle"></div>
+                        </div>
+
+                        <script>_fetchDepartmentToggle();</script>
+                    </div>            
+                </div>
+
                 <div class="text_field_container" id="staffId_container">
                     <script>
                         selectField({
@@ -294,8 +310,8 @@
                             </div>
                         </li>
 
-                        <li title="Branch Class" id="branch_class"
-                            onclick="_getActiveBranchPage({divid:'branch_class', page: 'branch_class', url: adminPortalLocalUrl});"><i class="bi-people-fill"></i> Class</li>
+                        <li title="Branch Class" id="branch_department_class"
+                            onclick="_getActiveBranchPage({divid:'branch_department_class', page: 'branch_department_class', url: adminPortalLocalUrl});"><i class="bi-people-fill"></i> Class</li>
 
                         <li title="Subject" id="branch_subject"
                         onclick="_getActiveBranchPage({divid:'branch_subject', page: 'branch_subject', url: adminPortalLocalUrl});"><i class="bi-journals"></i> Subject</li>
@@ -318,9 +334,17 @@
                             </div>
                         </li>
 
-                        <li title="Branch Profile" id="branch_profile_details"
-                            onclick="_getActiveBranchPage({divid:'branch_profile_details', page: 'branch_profile_details', url: adminPortalLocalUrl});"><i class="bi-diagram-3"></i> Profile</li>
+                        <li id="dotted" title="Branch Profile" id="branch_profile_details"><i class="bi-diagram-3"></i> Profile
+                            <div class="expand-div animated fadeIn">
+                                <ul class="ul-expand">
+                                    <li id="branch_profile_details" title="Branch Profile"
+                                    onclick="_getActiveBranchPage({divid:'branch_profile_details', page: 'branch_profile_details', url: adminPortalLocalUrl});"><i class="bi-diagram-3"></i>Branch Profile</li>
 
+                                    <li title="Edit Branch Department"
+                                        onclick="_fetchBranchDepartment();"><i class="bi-diagram-3"></i>Branch Department</li>
+                                </ul>
+                            </div>
+                        </li>
                         <li title="Branch Activities" id="branch_activities"
                             onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> Activities</li>
                     </ul>
@@ -1046,6 +1070,103 @@
                                                                                             ?>viewed"><i class="bi-check"></i></span></div>
             <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...</div>
             <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page=='edit_branch_department') { ?>
+    <script>getBranchDepartmentSession = JSON.parse(sessionStorage.getItem("getBranchDepartmentSession"));</script>	
+
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="pageTitle"><i class="bi-plus-square"></i> UPDATE BRANCH DEPARTMENT </span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div id="user_details">
+                    <div>
+                        <div class="alert alert-success form-alert">Kindly click the <span>Edit Department</span> button to <span> UPDATE DEPARTMENT TO <span id="branchName"></span> BRANCH</span></div>
+                        <script>
+                            $(document).ready(function () {
+                                $("#branchName, #branchName2").html(getBranchDepartmentSession.branchName);
+                            });
+                        </script>
+                    </div>
+
+                    <div class="fetched-permission-back-div">
+                        <div class="title">Registered Department</div>
+                        <div id="fetchedPermission"></div>
+                    </div>
+
+                    <script>
+                        $(document).ready(function() {
+                            var getBranchDepartmentSession = JSON.parse(sessionStorage.getItem("getBranchDepartmentSession"));
+                            let text = '';
+                            let hasCheckedDepartment = false;
+
+                            if (getBranchDepartmentSession && getBranchDepartmentSession.data) {
+                                const fetch = getBranchDepartmentSession.data;
+
+                                for (let i = 0; i < fetch.length; i++) {
+                                    const departmentName = fetch[i].departmentName;
+                                    const checked = fetch[i].checked;
+
+                                    if (checked === true) {
+                                        hasCheckedDepartment = true;
+                                        text += `
+                                            <div class="fetched-permission-div">
+                                                <span>${departmentName}</span>
+                                            </div>`;
+                                    }
+                                }
+
+                                if (!hasCheckedDepartment) {
+                                    text = `
+                                        <div class="permission-form-back-div">
+                                            <div class="title-div">
+                                                <h4>No Department Available</h4>
+                                                <p>There are currently no registered Departments. To register departments to this branch, please click the "Edit Department" button below.</p>
+                                            </div>
+                                        </div>`;
+                                }
+                                $("#fetchedPermission").html(text);
+                            }
+                        });
+                    </script>
+
+                    <div>
+                        <button class="btn" title="EDIT DEPARTMENT" id="addBtn" onclick="_getFormDetails('user_form_details');"> <i class="bi-check"></i> EDIT DEPARTMENT </button>
+                    </div>
+                </div>
+
+                <div id="user_form_details">
+                    <div>
+                        <div class="alert alert-success form-alert">Kindly toggle the following department to <span> UPDATE DEPARTMENT TO <span id="branchName2"></span> BRANCH</span></div>
+                    </div>
+
+                    <div class="permission-form-back-div">
+                        <div class="title-div">
+                            <h4>Departments</h4>
+                            <p>Use the toggles below to assign registered Departments to their respective branches. Switching to "Yes" activates the department for branch use.</p>
+                        </div>
+
+                        <div class="permission-toggle-div">
+                            <div class="toggle-title">Registered Departments</div>
+                            <div class="fetch-toggle" id="eachPageContentToggle"></div>
+                        </div>
+
+                        <script>_fetchEachDepartmentToggle();</script>
+                    </div> 
+
+                    <div>
+                        <button class="btn" title="SUBMIT" id="submitBtn" onclick="updateBranchDepartment();"> <i class="bi-check"></i> SUBMIT </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 <?php } ?>
