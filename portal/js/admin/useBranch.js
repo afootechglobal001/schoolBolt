@@ -626,7 +626,7 @@ function _fetchBranchDepartment() {
 			success: function(info) {
 				if (info.success && info.data.length > 0) {
 					sessionStorage.setItem("getBranchDepartmentSession", JSON.stringify(info));
-					_getForm({page: 'edit_branch_department', url: adminPortalLocalUrl});
+					_getForm({page: 'edit_branch_department', layer:2, url: adminPortalLocalUrl});
 				} else {
 					const response = info.response;
 					if (response < 100) {
