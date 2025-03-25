@@ -44,10 +44,10 @@ function _fetchBranchDepartmentClass() {
 			success: function(info) {
 				const fetch = info.data;
 				const success = info.success;
+				
 				let text = '';
 				let no=0;
 
-				text ='';
 				if (success===true) {
 					for (let i = 0; i < fetch.length; i++) {
 						no++;
