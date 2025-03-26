@@ -490,31 +490,39 @@ function _fetchBranchStudents() {
 			success: function(info) {
 				const fetch = info.data;
 				const success = info.success;
-				
+				const session = info.session;
+				const termName = info.termData.termName;
+				const departmentName = info.departmentData.departmentName;
+				const className = info.classData.className;
+				const armName = info.armData.armName;
+
+				$("#session").html(session);
+				$("#departmentName3").html(departmentName);
+				$("#className2").html(className);
+				$("#termName").html(termName);
+				$("#armName2").html(armName);
+
 				let text = '';
 				let no=0;
 				text =`
 					<thead>
 						<tr class="tb-col">
 							<th>sn</th>
-							<th>Student ID</th>
-							<th>Passport</th>
-							<th>Full Name</th>
+							<th>Student Info</th>
 							<th>Gender</th>
 							<th>Age</th>
+							<th>Session</th>
+							<th>Term</th>
 							<th>Department</th>
 							<th>Class</th>
 							<th>Arm</th>
+							<th>Accomodation</th>
 							<th>Status</th>
 							<th>View</th>
 						</tr>
 					</thead>`;
 
 				if (success=== true) {
-					sessionStorage.setItem("getAllBranchStudentSession", JSON.stringify(info.data));
-				console.log('getAllBranchStudentSession', info.data);
-
-
 					for (let i = 0; i < fetch.length; i++) {
 						no++;
 						const branchId = fetch[i].branchId;
@@ -526,6 +534,7 @@ function _fetchBranchStudents() {
 						const fetchDepartmentData=fetch[i].departmentData?.[0]; 
 						const fetchClassData=fetch[i].classData?.[0]; 
 						const fetchArmData=fetch[i].armData?.[0]; 
+						const fetchAccommodationData=fetch[i].accommodationData?.[0]; 
 						
 						const studentId = fetchStudentData.studentId;
 						const passport = fetchStudentData.passport || 'default.jpg';
@@ -538,45 +547,48 @@ function _fetchBranchStudents() {
 						const className = fetchClassData.className;
 						const armName = fetchArmData.armName;
 						const statusName = fetchStudentData.statusName;
+						const sessionRegistered = fetchStudentData.sessionRegistered;
+						const accommodationName = fetchAccommodationData.accommodationName;
 						const age = new Date().getFullYear() - new Date(fetchStudentData.dateOfBirth).getFullYear();
 
 						text +=`
 						 	<tbody>
 								<tr class="tb-row">
 									<td>${no}</td>
-									<td class="clickable-td" title="Click to view student profile" onclick="_fetchEachBranchStudents();">
-										<div class="text-back-div">
-											<div class="text-div">
-												<div class="first-class">${studentId}</div>
-											</div>
-										</div>
-									</td>
 									<td>
 										<div class="text-back-div">
-											<div class="image-div student-passport">
+											<div class="image-div general-passport">
 												<img src="${studentPixPath}/${passport}" alt="${fullname}"/>
+											</div>
+
+											<div class="text-div">
+												<div class="first-class">${fullname}</div>
+												<div class="second-class">${studentId}</div>
 											</div>
 										</div>
 									</td>
-									<td>${fullname}</td>
 									<td>${genderName}</td>
 									<td>${age}</td>
+									<td>${sessionRegistered}</td>
+									<td>${termName}</td>
 									<td>${departmentName}</td>
 									<td>${className}</td>
 									<td>${armName}</td>
+									<td>${accommodationName}</td>
 									<td><div class="status-div ${statusName}">${statusName}</div></td>
 									<td><button class="btn view-btn" title="Click to view student profile" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}');">VIEW</button></td>
 								</tr>
 							</tbody>`;
 					}
 					$('#pageContent').html(text);
+
 				} else {
 					_actionAlert(info.message, false);
 
 					text += `
-						tbody>
+						<tbody>
 							<tr>
-								<td colspan="11">
+								<td colspan="15">
 									<div class="false-notification-div">
 										<p>${info.message}</p>
 									</div>

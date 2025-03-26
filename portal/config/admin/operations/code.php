@@ -13,14 +13,12 @@ switch ($action){
 		require_once('staff-content.php');
 		require_once('settings-content.php');
 		require_once('role-content.php');
-		require_once('customer-content.php');
-		require_once('blog-content.php');
-		require_once('faq-content.php');
 		require_once('department-content.php');
 		require_once('class-content.php');
 		require_once('arm-content.php');
 		require_once('subject-content.php');
 		require_once('branch-operation/student-content.php');
+		require_once('branch-operation/class-content.php');
 	break;
 
 	case 'get_form':
@@ -32,14 +30,12 @@ switch ($action){
 		require_once('staff-content.php');
 		require_once('settings-content.php');
 		require_once('role-content.php');
-		require_once('customer-content.php');
-		require_once('blog-content.php');
-		require_once('faq-content.php');
 		require_once('department-content.php');
 		require_once('class-content.php');
 		require_once('arm-content.php');
 		require_once('subject-content.php');
 		require_once('branch-operation/student-content.php');
+		require_once('branch-operation/class-content.php');
 	break;
 
 	case 'upload_student_pix':
@@ -48,7 +44,7 @@ switch ($action){
 		$passport = str_replace('data:image/jpeg;base64,', '', $passport);
 		$passport = str_replace(' ', '+', $passport);
 		$passport = base64_decode($passport);
-		file_put_contents('../../../../uploaded_files/studentPix/'.$passportName, $passport);
+		file_put_contents('../../../uploaded_files/studentPix/'.$passportName, $passport);
 	break;
 }
 ?>

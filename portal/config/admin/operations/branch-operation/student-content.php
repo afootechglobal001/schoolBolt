@@ -443,8 +443,7 @@
 
 <?php if ($page == 'branch_student_page') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <div><span><i class="bi-person-bounding-box"></i></span> BRANCH STUDENT'S LIST ---- <span id="">BASIC</span> - <span> BASIC 1</span></div>
-       
+        <div><span><i class="bi-person-bounding-box"></i></span> BRANCH STUDENT'S LIST ---- <span id="session">Loading...</span> - <span id="termName">Loading...</span> - <span id="departmentName3">Loading...</span> - <span id="className2">Loading...</span> - <span id="armName2">Loading...</span></div>
         <div class="btn-container">
             <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
             <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i> EXPORT</button>
@@ -789,21 +788,50 @@
 
             <div class="text_field_container col-3" id="fatherDayOfBirth_container">
                 <script>
-                    selectField({
-                        id: 'fatherDayOfBirth',
-                        title: 'Select Birth Day'
-                    });
+                    $(document).ready(function() {
+                        const fDateOfBirth = getEachBranchStudentsSession.fatherData[0]?.dateOfBirth;
+
+                        let day = '';
+
+                        if (fDateOfBirth && fDateOfBirth.includes('/')) {
+                            day = fDateOfBirth.split('/')[0];
+                        }
+
+                        selectField({
+                            id: 'fatherDayOfBirth',
+                            title: 'Select Birth Day',
+                            fieldValue: day,
+                            fieldLabel: day
+                        });
                     _getSelectBirthDay('fatherDayOfBirth');
+                    });
                 </script>
             </div>
 
             <div class="text_field_container col-3" id="fatherMonthOfBirth_container">
                 <script>
-                    selectField({
-                        id: 'fatherMonthOfBirth',
-                        title: 'Select Birth Month'
+                    $(document).ready(function () {
+                        const fDateOfBirth = getEachBranchStudentsSession.fatherData[0]?.dateOfBirth;
+                        let monthNumber = '';
+                        let monthName = '';
+
+                        if (fDateOfBirth && fDateOfBirth.includes('/')) {
+                            const parts = fDateOfBirth.split('/');
+                            monthNumber = parts[1];
+                            const monthNum = parseInt(monthNumber, 10);
+                            const monthMap = {
+                                1: 'Jan',2: 'Feb', 3: 'Mar',4: 'Apr', 5: 'May',6: 'Jun',7: 'Jul', 8: 'Aug', 9: 'Sep',10: 'Oct', 11: 'Nov', 12: 'Dec'
+                            };
+                            monthName = monthMap[monthNum] || '';
+                        }
+                        selectField({
+                            id: 'fatherMonthOfBirth',
+                            title: 'Select Birth Month',
+                            fieldValue: monthNumber,
+                            fieldLabel: monthName
+                        });
+                        _getSelectBirthMonth('fatherMonthOfBirth');
                     });
-                    _getSelectBirthMonth('fatherMonthOfBirth');
                 </script>
             </div>
 

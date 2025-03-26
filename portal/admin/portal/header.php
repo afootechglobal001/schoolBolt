@@ -1,8 +1,11 @@
 <?php  include 'alert.php'?>
 <header class="fadeInDown animated">
-    <div class="header-div-in"> 
-        <div class="logo-div"><img src="<?php echo $websiteUrl?>/images/logo.png" alt="<?php echo $appName?> logo" /></div>
-
+    <div class="header-div-in">
+        <div class="logo-back-div">
+            <div class="menu-div" title="Open Menu" onclick="_openMenu()" id="menu-div"><i class="bi-text-right"></i></div>
+            <div class="logo-div"><img src="<?php echo $websiteUrl?>/images/logo.png" alt="<?php echo $appName?> logo" /></div>
+        </div>
+       
         <div class="header-nav-div">
             <div class="left-nav">
                 <ul>

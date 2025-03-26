@@ -24,6 +24,16 @@
 
 
 
+<div class="side-nav-div animated fadeInLeft" id="side-nav-div">
+    <div class="nav-back-div">
+        <div class="nav-div active-li" title="Dashboard" onclick="_getActivePage({page:'dashboard', divid:'dashboard'});" id="mobile-dashboard">           
+            <div class="icon"><i class="bi-speedometer2"></i> Dashboard</div> 
+            <div class="hidden" id="_dashboard"><i class="bi-speedometer2"></i> Admin Dashboard Overview</div>
+        </div>
+    </div>
+</div>
+
+
 <!--------------------------for nav sub div view----------------------------------------->
 
 <div class="side-nav-bg-sub-div">
