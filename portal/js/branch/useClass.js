@@ -84,7 +84,7 @@ function _fetchBranchDepartmentClass() {
                                                 </tr>
                                             </thead>
                                             <tbody>`;
-
+											
 								let sn = 0; 
 								if (classData.length > 0) {
 									for (let j = 0; j < classData.length; j++) {
