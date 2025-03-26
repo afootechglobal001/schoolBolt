@@ -26,6 +26,10 @@
                 <div class="alert alert-success form-alert">
                     <div class="alert-list-div">
                         <div class="alert-list">
+                            <div>Branch:</div>
+                            <div><span id="">AFOOTECH GLOBAL INSTITUTE</span></div>
+                        </div>
+                        <div class="alert-list">
                             <div>Department:</div>
                             <div><span id="">NURSERY</span></div>
                         </div>

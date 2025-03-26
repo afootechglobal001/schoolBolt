@@ -29,7 +29,6 @@ function _getSelectClassTeachers(fieldId){
 	}
 }
 
-
 function _fetchBranchDepartmentClass() {
     let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
     $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");
@@ -37,7 +36,7 @@ function _fetchBranchDepartmentClass() {
     try {
         $.ajax({
             type: "GET",
-            url: `${endPoint}/admin/branch/fetch-branch-department-classes?branchId=${getEachBranchDetailsSession.branchId}`,
+            url: `${endPoint}/admin/branch/department/fetch-branch-department-classes?branchId=${getEachBranchDetailsSession.branchId}`,
             dataType: "json",
             cache: false,
             headers: getAuthHeaders(true),

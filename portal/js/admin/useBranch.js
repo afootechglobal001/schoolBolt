@@ -98,7 +98,7 @@ function _fetchEachDepartmentToggle() {
 	try {
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/admin/branch/fetch-branch-departments?branchId=${getEachBranchDetailsSession?.branchId ?? ''}`,
+			url: `${endPoint}/admin/branch/department/fetch-branch-departments?branchId=${getEachBranchDetailsSession?.branchId ?? ''}`,
 			dataType: "json",
 			cache: false,
 			headers: getAuthHeaders(true),
@@ -619,7 +619,7 @@ function _fetchBranchDepartment() {
 	try {
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/admin/branch/fetch-branch-departments?branchId=${getEachBranchDetailsSession.branchId}`,
+			url: `${endPoint}/admin/branch/department/fetch-branch-departments?branchId=${getEachBranchDetailsSession.branchId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(true),
@@ -674,7 +674,7 @@ function updateBranchDepartment() {
 
 			$.ajax({
 				type: "POST",
-				url: `${endPoint}/admin/branch/update-branch-departments?branchId=${getEachBranchDetailsSession.branchId}`,
+				url: `${endPoint}/admin/branch/department/update-branch-departments?branchId=${getEachBranchDetailsSession.branchId}`,
 				data: JSON.stringify(formData),
 				dataType: "json", 
 				cache: false,
