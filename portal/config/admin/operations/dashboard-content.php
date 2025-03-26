@@ -13,8 +13,9 @@
         <div class="dashbaord-right-wrapper">
             <ul>
                 <li title="Staff" onclick="_getActivePage({page:'staff', divid:'staff'});"><i class="bi-people"></i> Staff <div class="num" id="">150</div></li>
-                <li title="Blog" onclick="_getPage('all_blogs','publish', '');"><i class="bi-journal"></i> Blog <div class="num" id="">50</div></li>
-                <li title="Frequently Asked Questions" onclick="_getPage('all_faqs','publish', '');"><i class="bi-patch-question"></i> FAQS <div class="num" id="">10</div></li>
+                <li title="Students" onclick=""><i class="bi-people"></i> Students <div class="num" id="">700</div></li>
+                <li title="Subjects" onclick=""><i class="bi-journals"></i> Subjects <div class="num" id="">20</div></li>
+                <li class="li" title="Prospective Staff" onclick=""><i class="bi-people-fill"></i> Prospective Staff <div class="num" id="">10</div></li>
             </ul> 
         </div>
     </div>
@@ -28,7 +29,7 @@
                         <span><i class="bi-diagram-3"></i> Branches</span>
                     </div>
 
-                    <div class="statistics-div left-border border-radius" title="Staff" onclick="_getPage('customers','customers','');">
+                    <div class="statistics-div left-border border-radius" title="Staff" onclick="">
                         <h2>250</h2> 
                         <span><i class="bi-people"></i> Total Staff</span>
                     </div>

@@ -19,14 +19,39 @@ header .header-div-in{
 	justify-content: space-between;
 }
 
-header .header-div-in .logo-div{
+header .header-div-in .logo-back-div{
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+header .header-div-in .logo-back-div .logo-div{
 	width:170px;
 	overflow: hidden;
 }
 
-header .header-div-in .logo-div img{
+header .header-div-in .logo-back-div .logo-div img{
     width: 100%;
 	object-fit: cover;
+}
+
+header .header-div-in .logo-back-div .menu-div{
+	display: none;
+	align-items: center;
+	justify-content: center;
+	width:35px;
+	height:35px;
+	font-size:34px;
+	padding: 4px;
+	background: var(--bg-color);
+	border-radius: 5px;
+	color: var(--sub-body-color);
+	cursor:pointer;
+	-moz-transition:all 0.2s ease-in 02s;
+	transition:all 0.2s ease-in 0.2s;
+	-webkit-transition:all 0.2s ease-in 0.2s;
+	-ms-transition:all 0.2s ease-in 0.2s;
+	-o-transition:all 0.2s ease-in 0.2s;
 }
 
 header .header-div-in .header-nav-div{
@@ -290,10 +315,38 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 
 
 
+@media all and (max-width:970px) {
+	header .header-div-in .header-nav-div .left-nav	ul{
+		display: none;
+	}
+}
 
+@media all and (max-width:700px) {
+	header .header-div-in{
+		width: 97%;
+	}
+	header .header-div-in .logo-back-div .menu-div{
+		display: flex;
+	}
+}
 
+@media all and (max-width:550px) {
+	header .header-div-in .header-nav-div .right-nav .right-icon-div{
+		min-width: 40px;
+	}
+	header .header-div-in .header-nav-div .right-nav .right-icon-div .profile-div{
+		width: auto;
+	}
+	header .header-div-in .header-nav-div .right-nav .right-icon-div .profile-div .info-div{
+		display: none;
+	}
+}
 
-
+@media all and (max-width:390px) {
+	header .header-div-in .logo-back-div .logo-div{
+		width: 120px;
+	}
+}
 
 
 
@@ -359,6 +412,11 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 }
 
 
+@media all and (max-width:700px) {
+	.side-nav-div{
+		left:-100px;
+	}
+}
 
 
 
@@ -427,7 +485,6 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 } 
 
 
-
 .content-div{
 	position:absolute;
 	width: calc(100% - 100px);
@@ -448,6 +505,20 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	overflow: auto;
 }
 
+@media all and (max-width:700px) {
+	.content-div{
+		width: 100%;
+		left:0px;	
+	}
+}
+
+@media all and (max-width:700px) {
+	.content-div .inner-content{
+		width: calc(100% - 40px);
+		height: calc(100% - 40px);
+		padding: 20px;
+	}
+}
 
 
 .page-title-back-div{
@@ -608,6 +679,25 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	background: var(--secondary-color);
 }
 
+@media all and (max-width:970px) {
+	.page-title-back-div{
+		width: calc(100% - 40px);
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: flex-start;
+		gap: 20px;
+	}
+}
+
+
+@media all and (max-width:380px) {
+	.page-title-back-div .page-title-div .main-title{
+		font-size:20px;
+		line-height:30px;
+	}
+}
+
+
 
 .page-title-back-div .dashbaord-right-wrapper{
 	display: flex;
@@ -623,7 +713,6 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	gap: 10px;
 	padding: 0px;
 	margin: 0px;
-
 }
 
 .page-title-back-div .dashbaord-right-wrapper ul li{
@@ -652,6 +741,10 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	font-size: 12px;
 }
 
+.page-title-back-div .dashbaord-right-wrapper ul .li{
+	display: none;
+}
+
 .page-title-back-div .dashbaord-right-wrapper ul li .num{
 	display: flex;
 	align-items: center;
@@ -666,6 +759,37 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	border-radius:4px;
 }
 
+@media all and (max-width:970px) {
+	.page-title-back-div .dashbaord-right-wrapper ul .li{
+		display: flex;
+	}
+}
+
+@media all and (max-width:830px) {
+	.page-title-back-div .dashbaord-right-wrapper{
+		min-width: auto;
+	}
+	.page-title-back-div .dashbaord-right-wrapper ul{
+		flex-wrap: wrap;
+	}
+	.page-title-back-div .dashbaord-right-wrapper ul li{
+		flex-grow: 1;
+		max-width: 180px;
+	}
+	.page-title-back-div .dashbaord-right-wrapper ul .li{
+		flex-grow: 1;
+		max-width: 180px;
+	}
+}
+
+@media all and (max-width:400px) {
+	.page-title-back-div .dashbaord-right-wrapper ul li{
+		max-width: 100%;
+	}
+	.page-title-back-div .dashbaord-right-wrapper ul .li{
+		max-width: 100%;
+	}
+}
 
 .dashboard-statistics-wrapper{
 	position: relative;
@@ -745,6 +869,50 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 .statistics-chart-back-div .statistics-back-div .border-radius{
 	border-radius: 0px;
 }
+
+
+@media all and (max-width:1048px) {
+	.statistics-chart-back-div .statistics-back-div .statistics-div h2{
+		font-size: 20px;
+	}
+	.statistics-chart-back-div .statistics-back-div .statistics-div span{
+		font-size: 10px;
+	}
+}
+
+@media all and (max-width:990px) {
+	.dashboard-statistics-wrapper{
+		flex-direction: column;
+	}
+	.dashboard-statistics-wrapper .left-dashbaord-container{
+		width: 100%;
+	}
+}
+
+@media all and (max-width:550px) {
+	.statistics-chart-back-div .statistics-back-div .statistics-div h2{
+		font-size: 17px;
+	}
+}
+
+@media all and (max-width:450px) {
+	.statistics-chart-back-div .statistics-back-div{
+		flex-wrap: wrap;
+	}
+	.statistics-chart-back-div .statistics-back-div .statistics-div{
+		width: calc(50% - 42px);
+	}
+	.statistics-chart-back-div .statistics-back-div .border-radius{
+		border-radius: 0px 8px 0px 0px;
+		border-right:#f0f0f0 1px solid;
+	}
+	.statistics-chart-back-div .statistics-back-div .right-border{
+		border-radius: 0px 0px 0px 0px;
+	}
+}
+
+
+
 
 /* Chart Style*/
 .chart-back-div{
@@ -978,7 +1146,15 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 }
 
 
-
+@media all and (max-width:580px) {
+	.trending-back-div .revenue-back-div .revenue-div{
+		width: 100%;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0px;
+		min-height: 30px;
+	}
+}
 
 
 
@@ -1024,8 +1200,20 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 
 
 
+@media all and (max-width:990px) {
+	.dashboard-statistics-wrapper .right-dashbaord-container{
+		display: flex;
+		flex-direction: row;
+		width:100%;
+		min-height: 350px;
+	}
+}
 
-
+@media all and (max-width:540px) {
+	.dashboard-statistics-wrapper .right-dashbaord-container{
+		flex-direction: column;
+	}
+}
 
 
 
