@@ -65,16 +65,37 @@ if(!$checkSession){
     $fetchQuery = mysqli_fetch_assoc($query);
     $session=$fetchQuery['session'];
     $termId=$fetchQuery['termId'];
+
     // Securely escape $q
     $q = mysqli_real_escape_string($conn, $q);
     $select="SELECT a.*, b.surName, b.firstName FROM STUDENTS_CLASS_TAB a, STUDENTS_TAB b WHERE a.clientId=b.clientId AND a.branchId=b.branchId AND a.studentId=b.studentId  AND  a.clientId='$clientId' AND a.branchId = '$branchId' AND a.session='$session' AND a.termId='$termId' AND a.departmentId='$departmentId' AND a.classId='$classId' AND a.armId='$armId' AND (b.surName LIKE '%$q%' OR b.firstName LIKE '%$q%') $studentIds  $statusIds ORDER BY b.surName ASC";
 
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($query);
+
+    /////////////////// for  $termId
+    $termDataQuery = mysqli_query($conn, "SELECT * FROM SETUP_TERM_TAB WHERE termId='$termId'");
+    $termDataFetch = mysqli_fetch_assoc($termDataQuery);
+    /////////////////// for  $departmentId
+    $departmentDataQuery = mysqli_query($conn, "SELECT departmentId, departmentName FROM DEPARTMENTS_TAB WHERE $clientIds AND departmentId='$departmentId'");
+    $departmentDataFetch = mysqli_fetch_assoc($departmentDataQuery);
+    /////////////////// for  $classId
+    $classDataQuery = mysqli_query($conn, "SELECT classId, className FROM CLASSES_TAB WHERE $clientIds AND classId='$classId'");
+    $classDataFetch = mysqli_fetch_assoc($classDataQuery);
+    /////////////////// for  $armId
+    $armDataQuery = mysqli_query($conn, "SELECT armId, armName FROM ARMS_TAB WHERE $clientIds AND armId='$armId'");
+    $armDataFetch = mysqli_fetch_assoc($armDataQuery);
+    
+
     if($allRecordCount==0){///start if 1
         $response['response']=200;
         $response['success']=false;
         $response['message']="No Record found";
+        $response['session'] = $session;
+        $response['termData'] = $termDataFetch;
+        $response['departmentData'] = $departmentDataFetch;
+        $response['classData'] = $classDataFetch;
+        $response['armData'] = $armDataFetch;
         goto end;
     }
 
@@ -82,6 +103,11 @@ if(!$checkSession){
     $response['success']=true;
     $response['message']="STUDENT FETCH SUCCESFFULY!";
     $response['allRecordCount']=$allRecordCount;
+    $response['session'] = $session;
+    $response['termData'] = $termDataFetch;
+    $response['departmentData'] = $departmentDataFetch;
+    $response['classData'] = $classDataFetch;
+    $response['armData'] = $armDataFetch;
     $response['data'] = array(); // Initialize the data array
 
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));

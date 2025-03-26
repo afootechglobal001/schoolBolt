@@ -27,6 +27,8 @@ if(!$checkSession){
     $session=trim($data['session']);
     $termId=trim($data['termId']);
     $statusId=trim($data['statusId']);
+
+    $departmentIds=$data['departmentIds'];
 	////////////////////////////////////////////////////////////////////////////////
 
 	if (empty($name)){/// start if 2
@@ -151,6 +153,15 @@ if(!$checkSession){
         goto end;
 	}
 
+    if(count($departmentIds)==0){
+        $response = [
+            'response'=> 102,
+            'success'=> false,
+            'message'=> "DEPARTMENTS REQUIRED! Check the fields and try again",
+        ]; 
+        goto end;
+	}
+
         if(!filter_var($smtpUsername, FILTER_VALIDATE_EMAIL)){
             $response = [
                 'response'=> 102,
@@ -203,6 +214,13 @@ if(!$checkSession){
             (`clientId`, `branchId`, `name`, `mobileNumber`, `stateId`, `lgaId`, `address`, `smtpHost`, `smtpUsername`, `smtpPassword`, `smtpPort`, `supportEmail`, `paymentKey`, `managerId`, `session`, `termId`, `statusId`, `createdBy`, `createdTime`) VALUES 
             ('$clientId','$branchId','$name', '$mobileNumber', '$stateId', '$lgaId', '$address', '$smtpHost', '$smtpUsername', '$smtpPassword', '$smtpPort', '$supportEmail', '$paymentKey', '$staffId', '$session', '$termId', '$statusId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
 
+            foreach ($departmentIds as $eachId) {
+                $departmentId = $eachId['departmentId'];
+                mysqli_query($conn,"INSERT INTO `BRANCH_DEPARTMENTS_TAB`
+                (`clientId`, `branchId`, `departmentId`, `createdBy`, `createdTime`) VALUES 
+                ('$clientId', '$branchId', '$departmentId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
+            }
+
             $response['response']=200; 
             $response['success']=true;
             $response['message']="BRANCH CREATED SUCCESFFULY!"; 
@@ -238,6 +256,15 @@ if(!$checkSession){
                     $updatedByData[] = $getUpdatedByfetch;
                 }
                 $fetchQuery['updatedBy']= $updatedByData;
+
+
+                /////////////////// for  $branchDepartmentsData
+                $branchDepartmentsData=array();
+                $branchDepartmentsQuery = mysqli_query($conn, "SELECT * FROM BRANCH_DEPARTMENTS_TAB WHERE $clientIds AND branchId='$branchId'");
+                while ($branchDepartmentsFetch = mysqli_fetch_assoc($branchDepartmentsQuery)) {
+                    $branchDepartmentsData[] = $branchDepartmentsFetch;
+                }
+                $fetchQuery['branchDepartmentsData'] = $branchDepartmentsData;
 
                  
                 $response['data'][] = $fetchQuery;

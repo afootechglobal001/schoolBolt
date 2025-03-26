@@ -76,7 +76,13 @@ if(!$checkSession){
         $userCountQuery = mysqli_query($conn, "SELECT COUNT(*) AS count FROM STAFF_TAB WHERE $clientIds AND branchId='$branchId'");
         $userCountFetch = mysqli_fetch_assoc($userCountQuery);
         $fetchQuery['totalNumberOfStaff'] = $userCountFetch['count']; // Assign the actual count value
-
+        /////////////////// for  $branchDepartmentsData
+        $branchDepartmentsData=array();
+        $branchDepartmentsQuery = mysqli_query($conn, "SELECT * FROM BRANCH_DEPARTMENTS_TAB WHERE $clientIds AND branchId='$branchId'");
+        while ($branchDepartmentsFetch = mysqli_fetch_assoc($branchDepartmentsQuery)) {
+            $branchDepartmentsData[] = $branchDepartmentsFetch;
+        }
+        $fetchQuery['branchDepartmentsData'] = $branchDepartmentsData;
         
         $response['data'][] = $fetchQuery;
     }
