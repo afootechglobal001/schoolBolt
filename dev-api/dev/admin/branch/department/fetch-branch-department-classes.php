@@ -1,5 +1,5 @@
-<?php require_once '../../config/connection.php';?>
-<?php require_once '../../config/staff-session-check.php';?>
+<?php require_once '../../../config/connection.php';?>
+<?php require_once '../../../config/staff-session-check.php';?>
 <?php
 if (!$checkBasicSecurity){/// start if 1
     goto end;
@@ -54,7 +54,14 @@ if(!$checkSession){
             $armData=array();
             $armDataQuery = mysqli_query($conn, "SELECT a.childId AS armId, b.armName FROM CLASS_STRUCTURE_TAB a, ARMS_TAB b WHERE a.clientId='$clientId' AND a.childId=b.armId AND a.parentId='$classId'");
             while ($armDataFetch = mysqli_fetch_assoc($armDataQuery)) {
+                $armId=$armDataFetch['armId'];
+                  /////////////////// for  $staffId
+                $teacherDataQuery = mysqli_query($conn, "SELECT CONCAT(b.firstName, ' ', b.lastName) AS fullname, b.emailAddress, profilePix FROM CLASS_TEACHER_TAB a, STAFF_TAB b 
+                WHERE a.clientId=b.clientId AND  a.clientId='$clientId' AND a.branchId='$branchId' AND a.departmentId='$departmentId' AND a.classId='$classId' AND a.armId='$armId' AND a.staffId=b.staffId");
+                $teacherDataFetch = mysqli_fetch_assoc($teacherDataQuery);
+                $armDataFetch['teacherData'] = $teacherDataFetch;
                 $armData[] = $armDataFetch;
+
             }
             
             $classDataFetch['armData'] = $armData;

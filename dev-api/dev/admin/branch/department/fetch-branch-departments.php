@@ -1,5 +1,5 @@
-<?php require_once '../../config/connection.php';?>
-<?php require_once '../../config/staff-session-check.php';?>
+<?php require_once '../../../config/connection.php';?>
+<?php require_once '../../../config/staff-session-check.php';?>
 <?php
 if (!$checkBasicSecurity){/// start if 1
     goto end;
@@ -12,7 +12,7 @@ if(!$checkSession){
 }
     //////////////////declaration of variables//////////////////////////////////////
     $branchId = $_GET['branchId'];
-    $departmentIds=$data['departmentIds'];
+
     if (empty($branchId)){/// start if 2
         $response = [
             'response'=> 100,
@@ -21,31 +21,12 @@ if(!$checkSession){
         ]; 
         goto end;
 	}
-    if(count($departmentIds)==0){
-        $response = [
-            'response'=> 102,
-            'success'=> false,
-            'message'=> "DEPARTMENTS REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-
-    /// delete existing records first
-    mysqli_query($conn,"DELETE FROM `BRANCH_DEPARTMENTS_TAB` WHERE $clientIds AND branchId = '$branchId'")or die (mysqli_error($conn));
-
-    foreach ($departmentIds as $eachId) {
-        $departmentId = $eachId['departmentId'];
-        mysqli_query($conn,"INSERT INTO `BRANCH_DEPARTMENTS_TAB`
-        (`clientId`, `branchId`, `departmentId`, `createdBy`, `createdTime`) VALUES 
-        ('$clientId', '$branchId', '$departmentId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
-    }
-
     $select = "SELECT * FROM BRANCH_DEPARTMENTS_TAB WHERE $clientIds AND branchId='$branchId'";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     while ($fetchQuery = mysqli_fetch_assoc($query)) {
-        $departmentIds_ .= $fetchQuery['departmentId'] . ",";
+        $departmentIds .= $fetchQuery['departmentId'] . ",";
     }
-    $departmentArray = !empty($departmentIds_) ? explode(',', rtrim($departmentIds_, ',')) : [];
+    $departmentArray = !empty($departmentIds) ? explode(',', rtrim($departmentIds, ',')) : [];
 
     $select = "SELECT `name` AS branchName FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
@@ -66,11 +47,10 @@ if(!$checkSession){
 
     $response['response']=200; 
     $response['success']=true;
-    $response['message']="BRANCH  DEPARTMENTS UPDATED SUCCESFFULY!";
+    $response['message']="BRANCH  DEPARTMENTS FETCH SUCCESFFULY!";
     $response['allRecordCount']=$allRecordCount;
     $response['branchId']=$branchId;
     $response['branchName']=$branchName;
-    $response['departmentArray']=$departmentArray;
     $response['data'] = array(); // Initialize the data array
 
     while ($fetchQuery = mysqli_fetch_assoc($query)) {
