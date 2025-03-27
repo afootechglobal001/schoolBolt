@@ -35,6 +35,7 @@ if(!$checkSession){
         goto end;
 	}
 
+    
     $oldPassportNameQuery = mysqli_query($conn, "SELECT passport FROM STUDENTS_TAB WHERE $clientIds AND studentId='$studentId'");
     $oldPassportNamefetch = mysqli_fetch_assoc($oldPassportNameQuery);
     $oldPassportName = $oldPassportNamefetch['passport'];
