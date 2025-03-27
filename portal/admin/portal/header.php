@@ -32,13 +32,21 @@
                             <div class="name" id="loginHeaderName"><strong> <script>$("#loginHeaderName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));</script></strong></div>
                             <div class="role" id="loginRoleName"><script>$("#loginRoleName").html(capitalizeFirstLetterOfEachWord(staffLoginData.roleName));</script></div>
                         </div>
-                        <div class="img-div"><img src="<?php echo $websiteUrl?>/uploaded_files/staffPix/default.jpg" alt="<?php echo $appName?>" /></div>
+                        <div class="img-div" id="profile_pix">
+                            <script>
+                                $("#profile_pix").html('<img src="<?php echo $websiteUrl; ?>/uploaded_files/staffPix/' + staffLoginData.profilePix + '" alt="Profile Image">');
+                            </script>
+                        </div>
                     </div>
                 </div>
 
                 <div class="toggle-profile-div">
                     <div class="toggle-div-in">
-                        <div class="toggle-profile-pix-div"><img src="<?php echo $websiteUrl?>/uploaded_files/staffPix/default.jpg" alt="<?php echo $appName?>"/></div>
+                        <div class="toggle-profile-pix-div" id="profile_pix2">
+                            <script>
+                                $("#profile_pix2").html('<img src="<?php echo $websiteUrl; ?>/uploaded_files/staffPix/' + staffLoginData.profilePix + '" alt="Profile Image">');
+                            </script>
+                        </div>
                         <div class="header-content">
                             <div class="toggle-profile-name"><span id="loginProfileName"><script>$("#loginProfileName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));</script></span></div>
                             <div class="toggle-profile-others"><span id="loginProfileStaffId"><script>$("#loginProfileStaffId").html(staffLoginData.staffId);</script></span></div>

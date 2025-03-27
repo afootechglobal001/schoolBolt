@@ -422,6 +422,7 @@ function _fetchEachSaff(staffId) {
 function _updateStaff() {
 	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
 	try {
+		const titleId = $('#updateTitleId').val();
 		const firstName = $('#updateFirstName').val();
 		const middleName = $('#updateMiddleName').val();
 		const lastName = $('#updateLastName').val();
@@ -436,7 +437,13 @@ function _updateStaff() {
 		const roleId = $('#updateRoleId').val();
 		const statusId = $('#updateStatusId').val();
 
-		$('#updateFirstName, #updateMiddleName, #updateLastName, #updateEmailAddress, #updateMobileNumber, #updateGenderId, #updateDateOfBirth, #stateId, #lgaId, #updateAddress, #updateBranchId, #updateRoleId, #updateStatusId').removeClass('issue');
+		$('#updateTitleId, #updateFirstName, #updateMiddleName, #updateLastName, #updateEmailAddress, #updateMobileNumber, #updateGenderId, #updateDateOfBirth, #stateId, #lgaId, #updateAddress, #updateBranchId, #updateRoleId, #updateStatusId').removeClass('issue');
+
+		if (!titleId) {
+			$('#updateTitleId').addClass('issue');
+			_actionAlert('Select title to continue', false);
+			return;
+		}
 
 		if (!firstName) {
 			$('#updateFirstName').addClass('issue');
@@ -522,6 +529,7 @@ function _updateStaff() {
 			$("#updateBtn").prop("disabled", true);
 
 			const formData = {
+				"titleId": titleId,
 				"firstName": firstName,
 				"middleName": middleName,
 				"lastName": lastName,

@@ -476,9 +476,12 @@
             <div class="bg-img">
                 <div class="mini-profile">
                     <label>
-                        <div class="img-div" id="currentUserPassport">
-                            <img src="<?php echo $websiteUrl ?>/all-images/images/avatar.jpg" alt="Profile Image">
+                        <div class="img-div" onClick="takeSnapShot('updateStudentPix')" id="cam-pix">
+                            <img src="<?php echo $websiteUrl ?>/uploaded_files/studentPix/default.jpg" alt="Profile Image">
                         </div>
+                        <script>
+                            $("#cam-pix").html('<img src="<?php echo $websiteUrl ?>/uploaded_files/studentPix/'+getEachBranchStudentsSession?.studentData?.[0]?.passport+'" alt="Profile Image">');
+                        </script>
                     </label>
 
                     <div class="text-back-div">

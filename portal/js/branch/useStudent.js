@@ -372,13 +372,14 @@ function _createStudent(view) {
 					const message = info.message;
 
 					if (success=== true) {
-						const passportName = data.studentData[0].passport;
+						const newPassportName = data.studentData[0].passport;
+						const oldPassportName = data.oldPassportName;
 
-						if (passportName==='default.jpg'){
+						if (newPassportName==='default.jpg'){
 							_actionAlert(message, true);
 							_proceedFetchBranchStudents();
 						}else{
-							_uploadStudentPicture(passportName, message);
+							_uploadStudentPicture(oldPassportName, newPassportName, message);
 						}
                     } else {
                         _actionAlert(message, false);
@@ -397,14 +398,15 @@ function _createStudent(view) {
     }
 }
 
-function _uploadStudentPicture(passportName, message) {
+function _uploadStudentPicture(oldPassportName, newPassportName, message) {
     const action = "upload_student_pix";
 
     const formData = new FormData();
 	var passport =document.getElementById("passport").src;
     formData.append("action", action);
-    formData.append("passport", passport);
-	formData.append("passportName", passportName);
+	formData.append("passport", passport);
+	formData.append("oldPassportName", oldPassportName);
+	formData.append("newPassportName", newPassportName);
 
     $.ajax({
         url: adminPortalLocalUrl,
@@ -846,4 +848,46 @@ function _updateBranchStudents() {
         _actionAlert('An unexpected error occurred! Please Try Again', false);
         $("#updateBtn").prop("disabled", false);
     }
+}
+
+function _updateStudentPix(){
+	getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));
+	try {
+			var passport =document.getElementById("passport").src;
+
+			const formData = new FormData();
+			formData.append("passport", passport);
+			$.ajax({
+				type: "POST",
+				url: `${endPoint}/admin/students/update-student-picture?branchId=${getEachBranchStudentsSession.branchId}&studentId=${getEachBranchStudentsSession.studentId}`,
+				
+				data: formData,
+                dataType: "json",
+				contentType: false,
+				cache: false,
+				processData: false,
+				headers: getAuthHeaders(true),
+				success: function (info) {
+					const success = info.success;
+					const message = info.message;
+
+					if (success=== true) {
+						const data = info.data[0];
+						const oldPassportName = data.oldPassportName;
+						const newPassportName = data.studentData[0].passport;
+						if (newPassportName!='default.jpg'){
+							_uploadStudentPicture(oldPassportName, newPassportName, message);
+						}
+					} else {
+					_actionAlert(message, false);
+					}
+				},
+				error: function (error) {
+					_actionAlert('An error occurred while processing your request! Please Try Again', false);
+				}
+			});
+		
+		} catch (error) {
+			_actionAlert('An unexpected error occurred! Please Try Again', false);
+		}
 }

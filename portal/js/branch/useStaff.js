@@ -41,6 +41,7 @@ function _fetchBranchStaffs() {
 						const roleName = fetch[i].roleName;
 						const lastLoginTime = fetch[i].lastLoginTime;
 						const statusName = fetch[i].statusName;
+						const profilePix = fetch[i].profilePix;
 
 						text +=`
 						<tbody>
@@ -49,7 +50,7 @@ function _fetchBranchStaffs() {
 								<td class="clickable-td" title="Click to view staff profile" onclick="_fetchEachBranchSaff('${staffId}');">
 									<div class="text-back-div">
 										<div class="image-div">
-											<img src="${websiteUrl}/uploaded_files/staffPix/default.jpg" alt="${staffNames}"/>
+											<img src="${websiteUrl}/uploaded_files/staffPix/${profilePix}" alt="${staffNames}"/>
 										</div>
 
 										<div class="text-div">

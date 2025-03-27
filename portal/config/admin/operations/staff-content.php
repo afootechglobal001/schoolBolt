@@ -234,7 +234,7 @@
                             <div class="text-div">
                                 <div class="name" id="fullName">
                                     <script>
-                                        $("#fullName").html(getEachStaffDetailsSession.titleId + ' ' + getEachStaffDetailsSession.fullName);
+                                        $("#fullName").html(getEachStaffDetailsSession.titleName + ' ' + getEachStaffDetailsSession.firstName+ ' ' + getEachStaffDetailsSession.lastName);
                                     </script>
                                 </div>
 
@@ -309,15 +309,15 @@
         <div class="title">STAFF BASIC INFORMATION</div>
 
         <div class="profile-segment-div">
-            <div class="text_field_container col-1" id="titleId_container">
+            <div class="text_field_container col-1" id="updateTitleId_container">
                 <script>
                     selectField({
-                        id: 'titleId',
+                        id: 'updateTitleId',
                         title: 'Select Title',
                         fieldValue: getEachStaffDetailsSession?.titleId ?? '',
                         fieldLabel: getEachStaffDetailsSession?.titleName ?? ''
                     });
-                    _getSelectTitle('titleId');
+                    _getSelectTitle('updateTitleId');
                 </script>
             </div>
 
