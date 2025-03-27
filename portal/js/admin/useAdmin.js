@@ -211,3 +211,26 @@ function _getSelectTermId(fieldId){
 		_actionAlert('An unexpected error occurred. Please try again.', false);
 	}
 }
+
+
+//////////////////////////// upload image from webcam//////////////////////////
+Webcam.set({
+    width: 270,
+    height: 200,
+    image_format: 'jpeg',
+    jpeg_quality: 1000
+});
+
+function takeSnapShot(){
+$('.webcam-div').fadeIn(500);
+Webcam.attach( '#my_camera' );
+}
+function snapPicture() {
+    Webcam.snap( function(data_uri) {
+        $('#passport').val(data_uri);
+        document.getElementById('cam-pix').innerHTML = '<img id="passport" src="'+data_uri+'"/>';
+    $('.webcam-div').fadeOut(500);
+    } );
+     Webcam.reset();
+}
+//////////////////////////// end upload image from webcam//////////////////////////

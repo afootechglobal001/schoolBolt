@@ -46,6 +46,15 @@ switch ($action){
 		$passport = base64_decode($passport);
 		file_put_contents('../../../uploaded_files/studentPix/'.$passportName, $passport);
 	break;
+
+	case 'upload_staff_pix':
+		$passportName=$_POST['passportName'];
+		$passport=$_POST['passport'];
+		$passport = str_replace('data:image/jpeg;base64,', '', $passport);
+		$passport = str_replace(' ', '+', $passport);
+		$passport = base64_decode($passport);
+		file_put_contents('../../../uploaded_files/staffPix/'.$passportName, $passport);
+	break;
 }
 ?>
 

@@ -231,7 +231,7 @@
                             <div class="text-div">
                                 <div class="name" id="fullName">
                                     <script>
-                                        $("#fullName").html(getEachStaffDetailsSession.fullName);
+                                        $("#fullName").html(getEachStaffDetailsSession.titleId + ' ' + getEachStaffDetailsSession.fullName);
                                     </script>
                                 </div>
 
@@ -306,7 +306,19 @@
         <div class="title">STAFF BASIC INFORMATION</div>
 
         <div class="profile-segment-div">
-            <div class="text_field_container col-3" id="updateFirstName_container">
+            <div class="text_field_container col-1" id="titleId_container">
+                <script>
+                    selectField({
+                        id: 'titleId',
+                        title: 'Select Title',
+                        fieldValue: getEachStaffDetailsSession?.titleId ?? '',
+                        fieldLabel: getEachStaffDetailsSession?.titleName ?? ''
+                    });
+                    _getSelectTitle('titleId');
+                </script>
+            </div>
+
+            <div class="text_field_container col-1" id="updateFirstName_container">
                 <script>
                     textField({
                         id: 'updateFirstName',
@@ -316,7 +328,7 @@
                 </script>
             </div>
 
-            <div class="text_field_container col-3" id="updateMiddleName_container">
+            <div class="text_field_container col-1" id="updateMiddleName_container">
                 <script>
                     textField({
                         id: 'updateMiddleName',
@@ -326,7 +338,7 @@
                 </script>
             </div>
 
-            <div class="text_field_container col-3" id="updateLastName_container">
+            <div class="text_field_container col-1" id="updateLastName_container">
                 <script>
                     textField({
                         id: 'updateLastName',

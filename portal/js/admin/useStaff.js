@@ -15,30 +15,6 @@ function _getStaffPagesActiveLink(divid){
 }
 
 
-//////////////////////////// upload image from webcam//////////////////////////
-Webcam.set({
-    width: 270,
-    height: 200,
-    image_format: 'jpeg',
-    jpeg_quality: 1000
-});
-
-function takeSnapShot(){
-$('.webcam-div').fadeIn(500);
-Webcam.attach( '#my_camera' );
-}
-function snapPicture() {
-    Webcam.snap( function(data_uri) {
-        $('#passport').val(data_uri);
-        document.getElementById('cam-pix').innerHTML = '<img id="passport" src="'+data_uri+'"/>';
-    $('.webcam-div').fadeOut(500);
-    } );
-     Webcam.reset();
-}
-//////////////////////////// end upload image from webcam//////////////////////////
-
-
-
 function _getSelectBranch(fieldId){
 	try {
 		$.ajax({
@@ -132,7 +108,8 @@ function _fetchStaffs() {
 						const staffId = fetch[i].staffId;
 						const firstName = fetch[i].firstName;
 						const lastName = fetch[i].lastName;
-						const staffNames = firstName + ' ' + lastName;
+						const titleName = fetch[i].titleName;
+						const staffNames = titleName + ' ' + firstName + ' ' + lastName;
 						const emailAddress = fetch[i].emailAddress;
 						const mobileNumber = fetch[i].mobileNumber;
 						const branchName = fetch[i].branchName;
@@ -215,7 +192,7 @@ function _createStaff(view) {
 			var passport =document.getElementById("passport").src;
 		}
 
-		const staffTitleId = $('#staffTitleId').val();
+		const titleId = $('#titleId').val();
 		const firstName = $('#firstName').val();
 		const middleName = $('#middleName').val();
 		const lastName = $('#lastName').val();
@@ -230,10 +207,10 @@ function _createStaff(view) {
 		const roleId = $('#roleId').val();
 		const statusId = $('#statusId').val();
 
-		$('#staffTitleId, #firstName, #middleName, #lastName, #emailAddress, #mobileNumber, #genderId, #dateOfBirth, #stateId, #lgaId, #address, #branchId, #roleId, #statusId').removeClass('issue');
+		$('#titleId, #firstName, #middleName, #lastName, #emailAddress, #mobileNumber, #genderId, #dateOfBirth, #stateId, #lgaId, #address, #branchId, #roleId, #statusId').removeClass('issue');
 
-		if (!staffTitleId) {
-			$('#staffTitleId').addClass('issue');
+		if (!titleId) {
+			$('#titleId').addClass('issue');
 			_actionAlert('Select title to continue', false);
 			return;
 		}
@@ -322,7 +299,7 @@ function _createStaff(view) {
 			$("#submitBtn").prop("disabled", true);
 
 			const formData = new FormData();
-			formData.append("staffTitleId", staffTitleId);
+			formData.append("titleId", titleId);
 			formData.append("firstName", firstName);
 			formData.append("middleName", middleName);
 			formData.append("lastName", lastName);
@@ -347,13 +324,22 @@ function _createStaff(view) {
 				contentType: false,
 				cache: false,
 				processData: false,
-				success: function (data) {
-				if (data.success) {
-					_actionAlert(data.message, true);
-					_getPage({page: 'staff', url: adminPortalLocalUrl});
-					_alertClose();
+				success: function (info) {
+					const data = info.data[0];
+					const success = info.success;
+					const message = info.message;
+
+					if (success=== true) {
+						const passportName = data.staffData[0].passport;
+
+						if (passportName==='default.jpg'){
+							_actionAlert(message, true);
+							_getPage({page: 'staff', url: adminPortalLocalUrl});
+						}else{
+							_uploadStaffPicture(passportName, message);
+						}
 				} else {
-					_actionAlert(data.message, false);
+					_actionAlert(message, false);
 				}
 				$("#submitBtn").html(btn_text).prop("disabled", false);
 			},
@@ -369,6 +355,32 @@ function _createStaff(view) {
 	}
 }
 
+
+function _uploadStaffPicture(passportName, message) {
+    const action = "upload_staff_pix";
+
+    const formData = new FormData();
+	var passport =document.getElementById("passport").src;
+    formData.append("action", action);
+    formData.append("passport", passport);
+	formData.append("passportName", passportName);
+
+    $.ajax({
+        url: adminPortalLocalUrl,
+        type: "POST",
+        data: formData,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (html) {
+            _actionAlert(message, true);
+			_getPage({page: 'staff', url: adminPortalLocalUrl});
+        },
+        error: function () {
+            _actionAlert('Upload failed! Please try again.', false);
+        }
+    });
+}
 
 function _fetchEachSaff(staffId) {
 	$("#get-form-more-div").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
