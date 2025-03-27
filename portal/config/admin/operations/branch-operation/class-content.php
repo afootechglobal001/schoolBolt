@@ -9,6 +9,8 @@
 <?php } ?>
 
 <?php if ($page=='assign_staff') { ?>
+    <script> getClassTeacherSession = JSON.parse(sessionStorage.getItem("getClassTeacherSession"));</script>
+
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
@@ -26,13 +28,24 @@
                 <div class="alert alert-success form-alert">
                     <div class="alert-list-div">
                         <div class="alert-list">
+                            <div>Branch:</div>
+                            <div><span id="branchName"><script>$("#branchName").html(getClassTeacherSession.branchData.branchName);</script></span></div>
+                        </div>
+                        <div class="alert-list">
                             <div>Department:</div>
-                            <div><span id="">NURSERY</span></div>
+                            <div><span id="departmentName"><script>$("#departmentName").html(getClassTeacherSession.departmentData.departmentName);</script></span></div>
                         </div>
                         <div class="alert-list">
                             <div>Level:</div>
-                            <div><span id="">NURSEY 1 A</span></div>
+                            <div><span id="level">
+                                <script>
+                                    $("#level").html(getClassTeacherSession.classData.className + ' ' + 
+                                    getClassTeacherSession.armData.armName);
+                                </script>
+                            </span></div>
                         </div>
+
+                        
                     </div>
                 </div>
 
@@ -40,14 +53,16 @@
                     <script>
                         selectField({
                             id: 'staffId',
-                            title: 'Select Class Teacher'
+                            title: 'Select Class Teacher',
+                            fieldValue: getClassTeacherSession?.data[0]?.staffId ?? '',
+                            fieldLabel: getClassTeacherSession?.data[0]?.teacherData?.fullname ?? ''
                         });
                         _getSelectClassTeachers('staffId');
                     </script>
                 </div>
 
                 <div>
-                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick="addClassTeacher();"> <i class="bi-check"></i> SUBMIT </button>
                 </div>
             </div>
         </div>

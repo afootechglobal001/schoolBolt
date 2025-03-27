@@ -615,7 +615,7 @@ function _fetchBranchStudents() {
 }
 
 function _fetchEachBranchStudents(branchId, departmentId, classId, armId, studentId) {
-	$("#get-form-more-div").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
+	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
 	try {
 		$.ajax({
 			type: "GET",
@@ -842,7 +842,6 @@ function _updateBranchStudents() {
 				processData: false,
 				headers: getAuthHeaders(true),
 				success: function (info) {
-					const data = info.data[0];
 					const success = info.success;
 					const message = info.message;
 

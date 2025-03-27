@@ -50,6 +50,20 @@
                     <div class="alert alert-success form-alert">Kindly fill the form below to <span> ADD A NEW STAFF</span></div>
                 </div>
 
+                <div class="cam-pix" onClick="takeSnapShot()" id="cam-pix">
+                    <img src="<?php echo $websiteUrl ?>/images/sample.jpg" />
+                </div>
+                
+                <div class="text_field_container" id="staffTitleId_container">
+                    <script>
+                        selectField({
+                            id: 'staffTitleId',
+                            title: 'Select Title'
+                        });
+                        _getSelectTitle('staffTitleId');
+                    </script>
+                </div>
+
                 <div class="text_field_container" id="firstName_container">
                     <script>
                         textField({

@@ -14,6 +14,31 @@ function _getStaffPagesActiveLink(divid){
 	$("#"+divid).addClass('active');
 }
 
+
+//////////////////////////// upload image from webcam//////////////////////////
+Webcam.set({
+    width: 270,
+    height: 200,
+    image_format: 'jpeg',
+    jpeg_quality: 1000
+});
+
+function takeSnapShot(){
+$('.webcam-div').fadeIn(500);
+Webcam.attach( '#my_camera' );
+}
+function snapPicture() {
+    Webcam.snap( function(data_uri) {
+        $('#passport').val(data_uri);
+        document.getElementById('cam-pix').innerHTML = '<img id="passport" src="'+data_uri+'"/>';
+    $('.webcam-div').fadeOut(500);
+    } );
+     Webcam.reset();
+}
+//////////////////////////// end upload image from webcam//////////////////////////
+
+
+
 function _getSelectBranch(fieldId){
 	try {
 		$.ajax({
@@ -175,8 +200,22 @@ function _fetchStaffs() {
 	}
 }
 
-function _createStaff() {
+function formatDate(date) {
+	if (!date) return ""; 
+    const parts = date.split('-');
+    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+}
+
+
+function _createStaff(view) {
 	try {
+		if (view=='mobile'){
+			var passport ='mobile';
+		}else{
+			var passport =document.getElementById("passport").src;
+		}
+
+		const staffTitleId = $('#staffTitleId').val();
 		const firstName = $('#firstName').val();
 		const middleName = $('#middleName').val();
 		const lastName = $('#lastName').val();
@@ -191,7 +230,13 @@ function _createStaff() {
 		const roleId = $('#roleId').val();
 		const statusId = $('#statusId').val();
 
-		$('#firstName, #middleName, #lastName, #emailAddress, #mobileNumber, #genderId, #dateOfBirth, #stateId, #lgaId, #address, #branchId, #roleId, #statusId').removeClass('issue');
+		$('#staffTitleId, #firstName, #middleName, #lastName, #emailAddress, #mobileNumber, #genderId, #dateOfBirth, #stateId, #lgaId, #address, #branchId, #roleId, #statusId').removeClass('issue');
+
+		if (!staffTitleId) {
+			$('#staffTitleId').addClass('issue');
+			_actionAlert('Select title to continue', false);
+			return;
+		}
 
 		if (!firstName) {
 			$('#firstName').addClass('issue');
@@ -276,35 +321,37 @@ function _createStaff() {
 			$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
 			$("#submitBtn").prop("disabled", true);
 
-			const formData = {
-				"firstName": firstName,
-				"middleName": middleName,
-				"lastName": lastName,
-				"emailAddress": emailAddress,
-				"mobileNumber": mobileNumber,
-				"genderId": genderId,
-				"dateOfBirth": dateOfBirth,
-				"stateId": stateId,
-				"lgaId": lgaId,
-				"address": address,
-				"branchId": branchId,
-				"roleId": roleId,
-				"statusId": statusId
-			};
+			const formData = new FormData();
+			formData.append("staffTitleId", staffTitleId);
+			formData.append("firstName", firstName);
+			formData.append("middleName", middleName);
+			formData.append("lastName", lastName);
+			formData.append("emailAddress", emailAddress);
+			formData.append("mobileNumber", mobileNumber);
+			formData.append("genderId", genderId);
+			formData.append("dateOfBirth", dateOfBirth);
+			formData.append("stateId", stateId);
+			formData.append("lgaId", lgaId);
+			formData.append("address", address);
+			formData.append("branchId", branchId);
+			formData.append("roleId", roleId);
+			formData.append("statusId", statusId);
+			formData.append("address", address);
+			formData.append("passport", passport);
 
 			$.ajax({
 				type: "POST",
 				url: endPoint +'/admin/staff/create-staff',
-				data: JSON.stringify(formData),
-				dataType: "json", 
+				data: formData,
+                dataType: "json",
+				contentType: false,
 				cache: false,
-				headers: getAuthHeaders(true),
 				processData: false,
 				success: function (data) {
 				if (data.success) {
 					_actionAlert(data.message, true);
-					_alertClose();
 					_getPage({page: 'staff', url: adminPortalLocalUrl});
+					_alertClose();
 				} else {
 					_actionAlert(data.message, false);
 				}
@@ -322,11 +369,6 @@ function _createStaff() {
 	}
 }
 
-function formatDate(date) {
-	if (!date) return ""; 
-    const parts = date.split('-'); // Convert "1990-05-20" to ["1990", "05", "20"]
-    return `${parts[2]}/${parts[1]}/${parts[0]}`; // Output: "20/05/1990"
-}
 
 function _fetchEachSaff(staffId) {
 	$("#get-form-more-div").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
