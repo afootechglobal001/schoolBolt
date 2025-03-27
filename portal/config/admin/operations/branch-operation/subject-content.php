@@ -14,7 +14,7 @@
                         id: 'departmentId',
                         title: 'Select Department'
                     });
-                    _getSelectDepartment('departmentId');
+                    _getSelectSubjectDepartment('departmentId');
                 </script>
             </div>
 
