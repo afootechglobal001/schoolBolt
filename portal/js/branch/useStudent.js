@@ -189,6 +189,7 @@ function _createStudent(view) {
 		const fatherTitleId = $('#fatherTitleId').val();
 		const fatherSurName = $('#fatherSurName').val();
         const fatherOtherNames = $('#fatherOtherNames').val();
+		const fatherAddress = $('#fatherAddress').val();
 		const fatherEmail = $('#fatherEmail').val();
 		const fatherMobileNumber = $('#fatherMobileNumber').val();
 		const fatherDayOfBirth = $('#fatherDayOfBirth').val();
@@ -335,6 +336,7 @@ function _createStudent(view) {
 			formData.append("fatherTitleId", fatherTitleId);
 			formData.append("fatherSurName", fatherSurName);
 			formData.append("fatherOtherNames", fatherOtherNames);
+			formData.append("fatherAddress", fatherAddress);
 			formData.append("fatherEmail", fatherEmail);
 			formData.append("fatherMobileNumber", fatherMobileNumber);
 			formData.append("fatherDayOfBirth", fatherDayOfBirth);	
@@ -649,6 +651,7 @@ function _updateBranchStudents() {
 		const fatherTitleId = $('#fatherTitleId').val();
 		const fatherSurName = $('#fatherSurName').val();
         const fatherOtherNames = $('#fatherOtherNames').val();
+		const fatherAddress = $('#fatherAddress').val();
 		const fatherEmail = $('#fatherEmail').val();
 		const fatherMobileNumber = $('#fatherMobileNumber').val();
 		const fatherDayOfBirth = $('#fatherDayOfBirth').val();
@@ -795,6 +798,7 @@ function _updateBranchStudents() {
 			formData.append("fatherTitleId", fatherTitleId);
 			formData.append("fatherSurName", fatherSurName);
 			formData.append("fatherOtherNames", fatherOtherNames);
+			formData.append("fatherAddress", fatherAddress);
 			formData.append("fatherEmail", fatherEmail);
 			formData.append("fatherMobileNumber", fatherMobileNumber);
 			formData.append("fatherDayOfBirth", fatherDayOfBirth);	
