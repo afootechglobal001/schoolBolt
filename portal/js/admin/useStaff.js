@@ -10,7 +10,7 @@ function _getActiveStaffPage(props) {
 	}
 }
 function _getStaffPagesActiveLink(divid){
-	$('#staff_profile_details, #staff_activities').removeClass('active');
+	$('#staff_dashboard, #staff_students, #staff_profile_details, #staff_activities').removeClass('active');
 	$("#"+divid).addClass('active');
 }
 

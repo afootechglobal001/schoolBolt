@@ -2172,6 +2172,10 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	-o-transition:all 0.2s ease-in 0.2s;
 }
 
+.user-managment-back-div .staff-managment-list{
+	width: 31.8%;
+}
+
 .user-managment-back-div .user-managment-list .inner-div{  
 	padding: 30px 35px;
 	display: flex;

@@ -266,7 +266,7 @@
             <div class="btn-div">
                 <div class="div-in">
                     <ul>
-                        <li class="active" title="My Profile" id="staff_profile_details" onclick="_getActiveStaffPage({divid:'staff_profile_details', page: 'staff_profile_details', url: adminPortalLocalUrl});"><i class="bi-person-bounding-box"></i> Staff Profile</li>
+                        <li class="active" title="Dashboard" id="staff_dashboard" onclick="_getActiveStaffPage({divid:'staff_dashboard', page: 'staff_dashboard', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> Staff Dashboard</li>
                         <li title="My Students" id="staff_students" onclick="_getActiveStaffPage({divid:'staff_students', page: 'staff_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> My Students</li>
                    
                         <li id="dotted" title="Branch Record"><i class="bi-file-spreadsheet"></i> Record
@@ -281,6 +281,7 @@
                             </div>
                         </li>
 
+                        <li title="My Profile" id="staff_profile_details" onclick="_getActiveStaffPage({divid:'staff_profile_details', page: 'staff_profile_details', url: adminPortalLocalUrl});"><i class="bi-person-bounding-box"></i> Staff Profile</li>
                         <li title="Staff Activities" id="staff_activities" onclick="_getActiveStaffPage({divid:'staff_activities', page: 'staff_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> Staff Activities</li>
                     </ul>
                 </div>
@@ -290,8 +291,8 @@
                 <div class="field-inner-div" id="get_staff_details">
                     <script>
                         _getActiveStaffPage({
-                            divid: 'staff_profile_details',
-                            page: 'staff_profile_details',
+                            divid: 'staff_dashboard',
+                            page: 'staff_dashboard',
                             url: adminPortalLocalUrl
                         });
                     </script>
@@ -304,6 +305,78 @@
 
 
 <!-- For Staffs Modal Pages -->
+<?php if ($page == 'staff_dashboard') { ?>
+    <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
+        <div class="user-managment-list staff-managment-list" onclick="">
+            <div class="inner-div">
+                <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/student-reg.png" alt="My Students"/></div>
+                <div class="text-div">
+                    <h3>My Students</h3>
+                    <p>Manage student records and class enrollment.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-managment-list staff-managment-list" onclick="">
+            <div class="inner-div">
+                <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/score.png" alt="Score Sheet"/></div>
+                <div class="text-div">
+                    <h3>Score Sheet</h3>
+                    <p>Record and review student scores with ease.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-managment-list staff-managment-list" onclick="">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl?>/images/compute.png" alt="Compute Score"/>
+                </div>
+                <div class="text-div">
+                    <h3>Compute Score</h3>
+                    <p>Automatically calculate student scores.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-managment-list staff-managment-list" onclick="">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl?>/images/message.png" alt="Cummulative Mark's Book"/>
+                </div>
+                <div class="text-div">
+                    <h3>Cummulative Mark's Book</h3>
+                    <p>Keep a complete record of student marks.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="user-managment-list staff-managment-list" onclick="">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl?>/images/timetable.png" alt="Class Teacher's Comment"/>
+                </div>
+                <div class="text-div">
+                    <h3>Class Teacher's Comment</h3>
+                    <p>Add feedback on student performance.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-managment-list staff-managment-list" onclick="">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl?>/images/cbt.png" alt="Student Attendance"/>
+                </div>
+                <div class="text-div">
+                    <h3>Student Attendance</h3>
+                    <p>Track and manage student attendance.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
 <?php if ($page == 'staff_profile_details') { ?>
     <div class="user-in">
         <div class="title">STAFF BASIC INFORMATION</div>
