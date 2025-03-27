@@ -54,24 +54,27 @@ function _getSelectAccomodation(fieldId){
 	}
 }
 
+
 function _getSelectDepartment(fieldId){
 	try {
 		$.ajax({
 			type: "GET",
-			url: endPoint+'/admin/settings/departments/fetch-department',
+			url: `${endPoint}/admin/branch/department/fetch-branch-departments?branchId=${getEachBranchDetailsSession.branchId}`,
 			dataType: "json",
 			cache: false,
 			headers: getAuthHeaders(true),
 			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-				
+					const data = info.data;
+					const success = info.success;
+
 				if (success === true) {
 					for (let i = 0; i < data.length; i++) {
-						const id = data[i].departmentId;
-						const value = data[i].departmentName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\'); _fetchSelectDepartmentClass();">'+ value +'</li>');
-					}	
+						if (data[i].checked) {
+							const id = data[i].departmentId;
+							const value = data[i].departmentName;
+							$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\'); _fetchSelectDepartmentClass();">'+ value +'</li>');
+						}
+					}
 				} else {
 					_actionAlert(info.message, false); 
 				}
@@ -82,6 +85,7 @@ function _getSelectDepartment(fieldId){
 		_actionAlert('An unexpected error occurred. Please try again.', false);
 	}
 }
+
 
 function _fetchSelectDepartmentClass(){
 	_getSelectClass('classId');

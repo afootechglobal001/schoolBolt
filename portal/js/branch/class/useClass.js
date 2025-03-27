@@ -181,7 +181,6 @@ function _fetchBranchDepartmentClass() {
     }
 }
 
-
 function _fetchClassTeacher(departmentId, classId, armId) {
 	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
 	try {
@@ -213,7 +212,6 @@ function _fetchClassTeacher(departmentId, classId, armId) {
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
 }
-
 
 function addClassTeacher() {
 	try {
