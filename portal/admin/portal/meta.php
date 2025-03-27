@@ -41,3 +41,4 @@
 <script src="<?php echo $websiteUrl?>/js/branch/useStudent.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/branch/class/useClass.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/branch/department/useDepartment.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/branch/subject/useSubject.js?v=<?php echo $codeVersion?>"></script>

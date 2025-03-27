@@ -313,8 +313,8 @@
                         <li title="Branch Class" id="branch_department_class"
                             onclick="_getActiveBranchPage({divid:'branch_department_class', page: 'branch_department_class', url: adminPortalLocalUrl});"><i class="bi-people-fill"></i> Class</li>
 
-                        <li title="Subject" id="branch_subject"
-                        onclick="_getActiveBranchPage({divid:'branch_subject', page: 'branch_subject', url: adminPortalLocalUrl});"><i class="bi-journals"></i> Subject</li>
+                        <li title="Branch Subject"
+                        onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-journals"></i> Subject</li>
                         
                         <li id="dotted" title="Branch Record"><i class="bi-graph-up-arrow"></i> Report
                             <div class="expand-div animated fadeIn">

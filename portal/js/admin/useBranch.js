@@ -10,7 +10,7 @@ function _getActiveBranchPage(props) {
 	}
 }
 function _getBranchPagesActiveLink(divid){
-	$('#branch_dashboard, #branch_staff, #branch_profile_details, #branch_department_class, #branch_activities, #branch_subject').removeClass('active');
+	$('#branch_dashboard, #branch_staff, #branch_profile_details, #branch_department_class, #branch_activities, #branch_subject_page').removeClass('active');
 	$("#"+divid).addClass('active');
 }
 

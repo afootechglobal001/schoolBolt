@@ -19,6 +19,7 @@ switch ($action){
 		require_once('subject-content.php');
 		require_once('branch-operation/student-content.php');
 		require_once('branch-operation/class-content.php');
+		require_once('branch-operation/subject-content.php');
 	break;
 
 	case 'get_form':
@@ -36,6 +37,7 @@ switch ($action){
 		require_once('subject-content.php');
 		require_once('branch-operation/student-content.php');
 		require_once('branch-operation/class-content.php');
+		require_once('branch-operation/subject-content.php');
 	break;
 
 	case 'upload_student_pix':

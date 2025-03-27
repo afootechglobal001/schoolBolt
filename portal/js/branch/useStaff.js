@@ -34,7 +34,8 @@ function _fetchBranchStaffs() {
 						const staffId = fetch[i].staffId;
 						const firstName = fetch[i].firstName;
 						const lastName = fetch[i].lastName;
-						const staffNames = firstName + ' ' + lastName;
+						const titleName = fetch[i].titleName;
+						const staffNames = titleName + ' ' + firstName + ' ' + lastName;
 						const emailAddress = fetch[i].emailAddress;
 						const mobileNumber = fetch[i].mobileNumber;
 						const branchName = fetch[i].branchName;
