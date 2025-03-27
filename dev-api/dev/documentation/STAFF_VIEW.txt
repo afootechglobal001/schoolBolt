@@ -1,7 +1,7 @@
 CREATE OR REPLACE VIEW STAFF_VIEW AS
 SELECT 
-a.*, b.genderName, c.stateName, d.lgaName, e.name AS branchName, f.roleName, f.rolePermissionIds, g.statusName
+a.*, b.titleName, c.genderName, d.stateName, e.lgaName, f.name AS branchName, g.roleName, g.rolePermissionIds, h.statusName
 FROM 
-STAFF_TAB a, SETUP_GENDER_TAB b, SETUP_STATES_TAB c, SETUP_STATE_LGA_TAB d, BRANCHES_TAB e, ROLE_TAB f, SETUP_STATUS_TAB g
+STAFF_TAB a, SETUP_TITLE_TAB b, SETUP_GENDER_TAB c, SETUP_STATES_TAB d, SETUP_STATE_LGA_TAB e, BRANCHES_TAB f, ROLE_TAB g, SETUP_STATUS_TAB h
 WHERE
-a.genderId=b.genderId AND a.stateId=c.stateId AND a.lgaId=d.lgaId AND a.branchId=e.branchId AND a.roleId=f.roleId AND a.statusId=g.statusId;
+a.titleId=b.titleId AND a.genderId=c.genderId AND a.stateId=d.stateId AND a.lgaId=e.lgaId AND a.branchId=f.branchId AND a.roleId=g.roleId AND a.statusId=h.statusId;

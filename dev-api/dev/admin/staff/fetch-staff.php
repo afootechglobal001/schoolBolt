@@ -46,16 +46,17 @@ if(!$checkSession){
     $response['data'] = array(); // Initialize the data array
 
     while ($fetchQuery = mysqli_fetch_assoc($query)) {
+        $titlId=$fetchQuery['titlId'];
         $firstName=$fetchQuery['firstName'];
         $lastName=$fetchQuery['lastName'];
-        $fullName="$firstName $lastName";
+        $fullName="$titlId $firstName $lastName";
         $fetchQuery['fullName']=$fullName;
         $createdBy=$fetchQuery['createdBy'];
         $updatedBy=$fetchQuery['updatedBy'];
 
         /////////////////// for  $createdBy
         $createdByData=array();
-        $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
+        $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
         while ($getCreatedByfetch = mysqli_fetch_assoc($getCreatedByQuery)) {
             $createdByData[] = $getCreatedByfetch;
         }
@@ -63,7 +64,7 @@ if(!$checkSession){
 
         /////////////////// for  $updatedBy
         $updatedByData=array();
-        $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
+        $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
         while ($getUpdatedByfetch = mysqli_fetch_assoc($getUpdatedByQuery)) {
             $updatedByData[] = $getUpdatedByfetch;
         }

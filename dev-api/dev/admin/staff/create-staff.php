@@ -12,6 +12,7 @@ if(!$checkSession){
 }
 
 	//////////////////declaration of variables//////////////////////////////////////
+    $titleId=trim(strtoupper($data['titleId']));
 	$firstName=trim(strtoupper($data['firstName']));
     $middleName=trim(strtoupper($data['middleName']));
     $lastName=trim(strtoupper($data['lastName']));
@@ -25,11 +26,18 @@ if(!$checkSession){
     $branchId=trim($data['branchId']);
     $roleId=trim($data['roleId']);
     $statusId=trim($data['statusId']);
-
+    $passport=trim($_POST['passport']);
     
 	////////////////////////////////////////////////////////////////////////////////
-
-	if (empty($firstName)){/// start if 2
+    if (empty($titleId)){
+        $response = [
+            'response'=> 100,
+            'success'=> false,
+            'message'=> "STAFF TITLE REQUIRED! Check the fields and try again",
+        ]; 
+        goto end;
+	}
+	if (empty($firstName)){
         $response = [
             'response'=> 100,
             'success'=> false,
@@ -167,9 +175,12 @@ if(!$checkSession){
 
             
             mysqli_query($conn,"INSERT INTO `STAFF_TAB`
-            (`clientId`, `staffId`, `firstName`, `middleName`, `lastName`, `emailAddress`, `mobileNumber`, `genderId`, `dateOfBirth`, `stateId`, `lgaId`, `address`, `branchId`, `roleId`, `statusId`, `password`, `createdBy`, `createdTime`) VALUES 
-            ('$clientId', '$staffId','$firstName', '$middleName', '$lastName', '$emailAddress', '$mobileNumber', '$genderId', '$dateOfBirth', '$stateId', '$lgaId', '$address', '$branchId', '$roleId', '$statusId', '$password', '$loginStaffId', NOW())")or die (mysqli_error($conn));
-
+            (`clientId`, `staffId`, `titleId`, `firstName`, `middleName`, `lastName`, `emailAddress`, `mobileNumber`, `genderId`, `dateOfBirth`, `stateId`, `lgaId`, `address`, `branchId`, `roleId`, `statusId`, `password`, `createdBy`, `createdTime`) VALUES 
+            ('$clientId', '$staffId', '$titleId', '$firstName', '$middleName', '$lastName', '$emailAddress', '$mobileNumber', '$genderId', '$dateOfBirth', '$stateId', '$lgaId', '$address', '$branchId', '$roleId', '$statusId', '$password', '$loginStaffId', NOW())")or die (mysqli_error($conn));
+            if($passport!='mobile'){
+                $passportName=$staffId.uniqid().'.jpg';
+                mysqli_query($conn,"UPDATE `STAFF_TAB` SET profilePix='$passportName' WHERE studentId='$studentId'")or die (mysqli_error($conn));
+            }
             $response['response']=200; 
             $response['success']=true;
             $response['message']="STAFF CREATED SUCCESFFULY!"; 
@@ -183,7 +194,7 @@ if(!$checkSession){
         
                 /////////////////// for  $createdBy
                 $createdByData=array();
-                $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
+                $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
                 while ($getCreatedByfetch = mysqli_fetch_assoc($getCreatedByQuery)) {
                     $createdByData[] = $getCreatedByfetch;
                 }
@@ -191,7 +202,7 @@ if(!$checkSession){
         
                 /////////////////// for  $updatedBy
                 $updatedByData=array();
-                $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
+                $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
                 while ($getUpdatedByfetch = mysqli_fetch_assoc($getUpdatedByQuery)) {
                     $updatedByData[] = $getUpdatedByfetch;
                 }

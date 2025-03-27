@@ -83,17 +83,17 @@ if(!$checkSession){
         $createdBy=$fetchQuery['createdBy'];
         $updatedBy=$fetchQuery['updatedBy'];
         /////////////////// for  $staffId
-        $teacherDataQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$staffId'");
+        $teacherDataQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$staffId'");
         $teacherDataFetch = mysqli_fetch_assoc($teacherDataQuery);
         $fetchQuery['teacherData'] = $teacherDataFetch;
 
          /////////////////// for  $createdBy
-         $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
+         $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
          $getCreatedByfetch = mysqli_fetch_assoc($getCreatedByQuery);
          $fetchQuery['createdBy'] = $getCreatedByfetch;
 
          /////////////////// for  $updatedBy
-         $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
+         $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
          $getUpdatedByfetch = mysqli_fetch_assoc($getUpdatedByQuery);
          $fetchQuery['updatedBy']= $getUpdatedByfetch;
 

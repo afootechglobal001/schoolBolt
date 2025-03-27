@@ -76,9 +76,10 @@ if (!$checkBasicSecurity){/// start if 1
 
                     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
                     while ($fetchQuery = mysqli_fetch_assoc($query)) {
+                        $titleId=$fetchQuery['titleId'];
                         $firstName=$fetchQuery['firstName'];
                         $lastName=$fetchQuery['lastName'];
-                        $fullName="$firstName $lastName";
+                        $fullName="$titleId $firstName $lastName";
                         $fetchQuery['fullName']=$fullName;
                         $response['data'][] = $fetchQuery;
                     }
