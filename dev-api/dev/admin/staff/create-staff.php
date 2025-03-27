@@ -177,10 +177,12 @@ if(!$checkSession){
             mysqli_query($conn,"INSERT INTO `STAFF_TAB`
             (`clientId`, `staffId`, `titleId`, `firstName`, `middleName`, `lastName`, `emailAddress`, `mobileNumber`, `genderId`, `dateOfBirth`, `stateId`, `lgaId`, `address`, `branchId`, `roleId`, `statusId`, `password`, `createdBy`, `createdTime`) VALUES 
             ('$clientId', '$staffId', '$titleId', '$firstName', '$middleName', '$lastName', '$emailAddress', '$mobileNumber', '$genderId', '$dateOfBirth', '$stateId', '$lgaId', '$address', '$branchId', '$roleId', '$statusId', '$password', '$loginStaffId', NOW())")or die (mysqli_error($conn));
-            if($passport!='mobile'){
+           
+           if($passport!='mobile'){
                 $passportName=$staffId.uniqid().'.jpg';
-                mysqli_query($conn,"UPDATE `STAFF_TAB` SET profilePix='$passportName' WHERE studentId='$studentId'")or die (mysqli_error($conn));
+                mysqli_query($conn,"UPDATE `STAFF_TAB` SET profilePix='$passportName' WHERE staffId='$staffId'")or die (mysqli_error($conn));
             }
+
             $response['response']=200; 
             $response['success']=true;
             $response['message']="STAFF CREATED SUCCESFFULY!"; 

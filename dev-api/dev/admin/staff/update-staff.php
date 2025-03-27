@@ -179,7 +179,7 @@ if(!$checkSession){
             `titleId`='$titleId', `firstName`='$firstName', `middleName`='$middleName', `lastName`='$lastName', `emailAddress`='$emailAddress', `mobileNumber`='$mobileNumber', `genderId`='$genderId', 
             `dateOfBirth`='$dateOfBirth', `stateId`='$stateId', `lgaId`='$lgaId', `address`='$address', `branchId`='$branchId', `roleId`='$roleId', `statusId`='$statusId', 
             `updatedBy`='$loginStaffId', `updatedTime`=NOW() WHERE $clientIds AND staffId='$staffId'")or die (mysqli_error($conn));
-
+ 
             $response['response']=200; 
             $response['success']=true;
             $response['message']="STAFF UPDATED SUCCESFFULY!"; 
