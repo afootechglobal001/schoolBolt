@@ -12,9 +12,9 @@ if(!$checkSession){
 }
 
 	//////////////////declaration of variables//////////////////////////////////////
-    $passport=trim($_POST['passport']);
     $staffId = $_GET['staffId'];
-
+    $passport=trim($_POST['passport']);
+    
 	////////////////////////////////////////////////////////////////////////////////
     if (empty($staffId)){
         $response = [
@@ -24,7 +24,10 @@ if(!$checkSession){
         ]; 
         goto end;
 	}
-
+    $oldPassportNameQuery = mysqli_query($conn, "SELECT profilePix FROM STAFF_TAB WHERE $clientIds AND staffId='$staffId'");
+    $oldPassportNamefetch = mysqli_fetch_assoc($oldPassportNameQuery);
+    $oldPassportName = $oldPassportNamefetch['profilePix'];
+    
     if($passport!='mobile'){
         $passportName=$staffId.uniqid().'.jpg';
         mysqli_query($conn,"UPDATE `STAFF_TAB` SET profilePix='$passportName' WHERE staffId='$staffId'")or die (mysqli_error($conn));
@@ -40,7 +43,7 @@ if(!$checkSession){
     while ($fetchQuery = mysqli_fetch_assoc($query)) {
         $createdBy=$fetchQuery['createdBy'];
         $updatedBy=$fetchQuery['updatedBy'];
-
+        $fetchQuery['oldPassportName']= $oldPassportName;
         /////////////////// for  $createdBy
         $createdByData=array();
         $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");

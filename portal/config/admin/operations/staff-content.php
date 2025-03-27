@@ -54,13 +54,13 @@
                     <img src="<?php echo $websiteUrl ?>/images/sample.jpg" />
                 </div>
                 
-                <div class="text_field_container" id="staffTitleId_container">
+                <div class="text_field_container" id="titleId_container">
                     <script>
                         selectField({
-                            id: 'staffTitleId',
+                            id: 'titleId',
                             title: 'Select Title'
                         });
-                        _getSelectTitle('staffTitleId');
+                        _getSelectTitle('titleId');
                     </script>
                 </div>
 
@@ -221,9 +221,12 @@
             <div class="bg-img">
                 <div class="mini-profile">
                     <label>
-                        <div class="img-div" id="current_user_passport1">
+                        <div class="img-div" onClick="takeSnapShot('updateStaffPix')" id="cam-pix">
                             <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/default.jpg" alt="Profile Image">
                         </div>
+                        <script>
+                            $("#cam-pix").html('<img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/'+getEachStaffDetailsSession.profilePix+'" alt="Profile Image">');
+                        </script>
                     </label>
 
                     <div class="text-back-div">

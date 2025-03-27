@@ -39,21 +39,29 @@ switch ($action){
 	break;
 
 	case 'upload_student_pix':
-		$passportName=$_POST['passportName'];
+		$oldPassportName=$_POST['oldPassportName'];
+		$newPassportName=$_POST['newPassportName'];
 		$passport=$_POST['passport'];
 		$passport = str_replace('data:image/jpeg;base64,', '', $passport);
 		$passport = str_replace(' ', '+', $passport);
 		$passport = base64_decode($passport);
-		file_put_contents('../../../uploaded_files/studentPix/'.$passportName, $passport);
+		if($oldPassportName!='default.jpg'){
+			unlink("../../../uploaded_files/studentPix/" .$oldPassportName);
+		}
+		file_put_contents('../../../uploaded_files/studentPix/'.$newPassportName, $passport);
 	break;
 
 	case 'upload_staff_pix':
-		$passportName=$_POST['passportName'];
+		$oldPassportName=$_POST['oldPassportName'];
+		$newPassportName=$_POST['newPassportName'];
 		$passport=$_POST['passport'];
 		$passport = str_replace('data:image/jpeg;base64,', '', $passport);
 		$passport = str_replace(' ', '+', $passport);
 		$passport = base64_decode($passport);
-		file_put_contents('../../../uploaded_files/staffPix/'.$passportName, $passport);
+		if($oldPassportName!='default.jpg'){
+			unlink("../../../uploaded_files/staffPix/" .$oldPassportName);
+		}
+		file_put_contents('../../../uploaded_files/staffPix/'.$newPassportName, $passport);
 	break;
 }
 ?>

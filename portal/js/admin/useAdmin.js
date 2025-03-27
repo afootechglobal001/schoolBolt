@@ -221,9 +221,10 @@ Webcam.set({
     jpeg_quality: 1000
 });
 
-function takeSnapShot(){
+function takeSnapShot(action='normal'){
 $('.webcam-div').fadeIn(500);
 Webcam.attach( '#my_camera' );
+sessionStorage.setItem("takeSnapShotAction", JSON.stringify(action));
 }
 function snapPicture() {
     Webcam.snap( function(data_uri) {
@@ -232,5 +233,12 @@ function snapPicture() {
     $('.webcam-div').fadeOut(500);
     } );
      Webcam.reset();
+	 let takeSnapShotAction = JSON.parse(sessionStorage.getItem("takeSnapShotAction"));
+	 if(takeSnapShotAction=='updateStaffPix'){
+		_updateStaffPix();
+	 }
+	 if(takeSnapShotAction=='updateStudentPix'){
+		_updateStudentPix();
+	 }
 }
 //////////////////////////// end upload image from webcam//////////////////////////

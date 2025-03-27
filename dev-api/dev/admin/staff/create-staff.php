@@ -12,20 +12,20 @@ if(!$checkSession){
 }
 
 	//////////////////declaration of variables//////////////////////////////////////
-    $titleId=trim(strtoupper($data['titleId']));
-	$firstName=trim(strtoupper($data['firstName']));
-    $middleName=trim(strtoupper($data['middleName']));
-    $lastName=trim(strtoupper($data['lastName']));
-    $emailAddress=trim($data['emailAddress']);
-	$mobileNumber=trim($data['mobileNumber']);
-    $genderId=trim($data['genderId']);
-    $dateOfBirth=trim($data['dateOfBirth']);
-	$stateId=trim($data['stateId']);
-    $lgaId=trim($data['lgaId']);
-    $address =trim(strtoupper(str_replace("'", "\'", $data['address'])));
-    $branchId=trim($data['branchId']);
-    $roleId=trim($data['roleId']);
-    $statusId=trim($data['statusId']);
+    $titleId=trim(strtoupper($_POST['titleId']));
+	$firstName=trim(strtoupper($_POST['firstName']));
+    $middleName=trim(strtoupper($_POST['middleName']));
+    $lastName=trim(strtoupper($_POST['lastName']));
+    $emailAddress=trim($_POST['emailAddress']);
+	$mobileNumber=trim($_POST['mobileNumber']);
+    $genderId=trim($_POST['genderId']);
+    $dateOfBirth=trim($_POST['dateOfBirth']);
+	$stateId=trim($_POST['stateId']);
+    $lgaId=trim($_POST['lgaId']);
+    $address =trim(strtoupper(str_replace("'", "\'", $_POST['address'])));
+    $branchId=trim($_POST['branchId']);
+    $roleId=trim($_POST['roleId']);
+    $statusId=trim($_POST['statusId']);
     $passport=trim($_POST['passport']);
     
 	////////////////////////////////////////////////////////////////////////////////
@@ -178,6 +178,7 @@ if(!$checkSession){
             (`clientId`, `staffId`, `titleId`, `firstName`, `middleName`, `lastName`, `emailAddress`, `mobileNumber`, `genderId`, `dateOfBirth`, `stateId`, `lgaId`, `address`, `branchId`, `roleId`, `statusId`, `password`, `createdBy`, `createdTime`) VALUES 
             ('$clientId', '$staffId', '$titleId', '$firstName', '$middleName', '$lastName', '$emailAddress', '$mobileNumber', '$genderId', '$dateOfBirth', '$stateId', '$lgaId', '$address', '$branchId', '$roleId', '$statusId', '$password', '$loginStaffId', NOW())")or die (mysqli_error($conn));
            
+           $oldPassportName='default.jpg';
            if($passport!='mobile'){
                 $passportName=$staffId.uniqid().'.jpg';
                 mysqli_query($conn,"UPDATE `STAFF_TAB` SET profilePix='$passportName' WHERE staffId='$staffId'")or die (mysqli_error($conn));
@@ -191,6 +192,7 @@ if(!$checkSession){
             $select="SELECT * FROM STAFF_VIEW WHERE $clientIds AND staffId = '$staffId'";
             $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
             while ($fetchQuery = mysqli_fetch_assoc($query)) {
+                $fetchQuery['oldPassportName']=$oldPassportName;
                 $createdBy=$fetchQuery['createdBy'];
                 $updatedBy=$fetchQuery['updatedBy'];
         

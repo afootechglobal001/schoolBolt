@@ -34,10 +34,14 @@ if(!$checkSession){
         ]; 
         goto end;
 	}
-	if($passport!='mobile'){
-        $passportName=$studentId.uniqid().'.jpg';
-        mysqli_query($conn,"UPDATE `STUDENTS_TAB` SET passport='$passportName' WHERE studentId='$studentId'")or die (mysqli_error($conn));
-    }
+
+    $oldPassportNameQuery = mysqli_query($conn, "SELECT passport FROM STUDENTS_TAB WHERE $clientIds AND studentId='$studentId'");
+    $oldPassportNamefetch = mysqli_fetch_assoc($oldPassportNameQuery);
+    $oldPassportName = $oldPassportNamefetch['passport'];
+
+    $passportName=$studentId.uniqid().'.jpg';
+    mysqli_query($conn,"UPDATE `STUDENTS_TAB` SET passport='$passportName' WHERE studentId='$studentId'")or die (mysqli_error($conn));
+
 
 
             $response['response']=200; 
@@ -57,7 +61,7 @@ if(!$checkSession){
                 $statusId=$fetchQuery['statusId'];
                 $createdBy=$fetchQuery['createdBy'];
                 $updatedBy=$fetchQuery['updatedBy'];
-
+                $fetchQuery['oldPassportName']= $oldPassportName;
 
                 /////////////////// for  $studentId
                 $studentData=array();

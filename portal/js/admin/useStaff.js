@@ -114,6 +114,7 @@ function _fetchStaffs() {
 						const mobileNumber = fetch[i].mobileNumber;
 						const branchName = fetch[i].branchName;
 						const roleName = fetch[i].roleName;
+						const profilePix = fetch[i].profilePix;
 						const lastLoginTime = fetch[i].lastLoginTime;
 						const statusName = fetch[i].statusName;
 
@@ -124,7 +125,7 @@ function _fetchStaffs() {
 								<td class="clickable-td" title="Click to view staff profile" onclick="_fetchEachSaff('${staffId}');">
 									<div class="text-back-div">
 										<div class="image-div">
-											<img src="${websiteUrl}/uploaded_files/staffPix/default.jpg" alt="${staffNames}"/>
+											<img src="${websiteUrl}/uploaded_files/staffPix/${profilePix}" alt="${staffNames}"/>
 										</div>
 
 										<div class="text-div">
@@ -324,19 +325,21 @@ function _createStaff(view) {
 				contentType: false,
 				cache: false,
 				processData: false,
+				headers: getAuthHeaders(true),
 				success: function (info) {
-					const data = info.data[0];
 					const success = info.success;
 					const message = info.message;
 
 					if (success=== true) {
-						const passportName = data.staffData[0].passport;
-
-						if (passportName==='default.jpg'){
+						const data = info.data[0];
+						const oldPassportName = data.oldPassportName;
+						const newPassportName = data.profilePix;
+						if (newPassportName==='default.jpg'){
 							_actionAlert(message, true);
 							_getPage({page: 'staff', url: adminPortalLocalUrl});
+							_alertClose();
 						}else{
-							_uploadStaffPicture(passportName, message);
+							_uploadStaffPicture(oldPassportName,newPassportName, message);
 						}
 				} else {
 					_actionAlert(message, false);
@@ -356,14 +359,15 @@ function _createStaff(view) {
 }
 
 
-function _uploadStaffPicture(passportName, message) {
+function _uploadStaffPicture(oldPassportName, newPassportName, message) {
     const action = "upload_staff_pix";
 
     const formData = new FormData();
 	var passport =document.getElementById("passport").src;
     formData.append("action", action);
     formData.append("passport", passport);
-	formData.append("passportName", passportName);
+	formData.append("oldPassportName", oldPassportName);
+	formData.append("newPassportName", newPassportName);
 
     $.ajax({
         url: adminPortalLocalUrl,
@@ -375,6 +379,7 @@ function _uploadStaffPicture(passportName, message) {
         success: function (html) {
             _actionAlert(message, true);
 			_getPage({page: 'staff', url: adminPortalLocalUrl});
+			_alertClose();
         },
         error: function () {
             _actionAlert('Upload failed! Please try again.', false);
@@ -563,4 +568,46 @@ function _updateStaff() {
 		_actionAlert('An unexpected error occurred! Please Try Again', false);
 		$("#updateBtn").prop("disabled", false);
 	}
+}
+
+function _updateStaffPix(){
+	getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
+	try {
+			//var passport ='mobile';
+			var passport =document.getElementById("passport").src;
+
+			const formData = new FormData();
+			formData.append("passport", passport);
+			$.ajax({
+				type: "POST",
+				url: `${endPoint}/admin/staff/update-staff-picture?staffId=${getEachStaffDetailsSession.staffId}`,
+				data: formData,
+                dataType: "json",
+				contentType: false,
+				cache: false,
+				processData: false,
+				headers: getAuthHeaders(true),
+				success: function (info) {
+					const success = info.success;
+					const message = info.message;
+
+					if (success=== true) {
+						const data = info.data[0];
+						const oldPassportName = data.oldPassportName;
+						const newPassportName = data.profilePix;
+						if (newPassportName!='default.jpg'){
+						_uploadStaffPicture(oldPassportName,newPassportName, message);
+						}
+					} else {
+					_actionAlert(message, false);
+					}
+				},
+				error: function (error) {
+					_actionAlert('An error occurred while processing your request! Please Try Again', false);
+				}
+			});
+		
+		} catch (error) {
+			_actionAlert('An unexpected error occurred! Please Try Again', false);
+		}
 }
