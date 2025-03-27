@@ -4066,6 +4066,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
     display: flex;
     gap: 20px;
 	flex-direction: column;
+	overflow: auto;
 }
 
 .caption-div .div-in .btn{
