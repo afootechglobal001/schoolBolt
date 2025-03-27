@@ -2,7 +2,7 @@ function _getSelectClassTeachers(fieldId){
 	try {
 		$.ajax({
 			type: "GET",
-			url: endPoint+"/admin/staff/fetch-staff?statusId=1",
+			url: `${endPoint}/admin/staff/fetch-staff?branchId=${getEachBranchDetailsSession.branchId}&statusId=1`,
 			dataType: "json",
 			cache: false,
 			headers: getAuthHeaders(true),
