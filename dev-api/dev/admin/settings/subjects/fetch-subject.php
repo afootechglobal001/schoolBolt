@@ -18,7 +18,7 @@ if(!$checkSession){
     }
     // Securely escape $q
     $q = mysqli_real_escape_string($conn, $q);
-    $select = "SELECT * FROM SUBJECTS_TAB WHERE $clientIds AND (subjectName LIKE '%$q%') $subjectIds";
+    $select = "SELECT * FROM SUBJECTS_TAB WHERE $clientIds AND (subjectName LIKE '%$q%') $subjectIds ORDER BY subjectName ASC";
 
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($query);

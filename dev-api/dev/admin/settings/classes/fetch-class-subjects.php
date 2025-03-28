@@ -38,7 +38,7 @@ if(!$checkSession){
 
 
 
-    $select="SELECT subjectId, subjectName FROM SUBJECTS_TAB WHERE $clientIds";
+    $select="SELECT subjectId, subjectName FROM SUBJECTS_TAB WHERE $clientIds ORDER BY subjectName ASC";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($query);
     if($allRecordCount==0){///start if 1
