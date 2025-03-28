@@ -56,7 +56,7 @@ if(!$checkSession){
             while ($armDataFetch = mysqli_fetch_assoc($armDataQuery)) {
                 $armId=$armDataFetch['armId'];
                   /////////////////// for  $staffId
-                $teacherDataQuery = mysqli_query($conn, "SELECT CONCAT(b.firstName, ' ', b.lastName) AS fullname, b.emailAddress, profilePix FROM CLASS_TEACHER_TAB a, STAFF_TAB b 
+                $teacherDataQuery = mysqli_query($conn, "SELECT CONCAT(b.firstName, ' ', b.lastName) AS fullname, b.emailAddress, b.profilePix FROM CLASS_TEACHER_TAB a, STAFF_TAB b 
                 WHERE a.clientId=b.clientId AND  a.clientId='$clientId' AND a.branchId='$branchId' AND a.departmentId='$departmentId' AND a.classId='$classId' AND a.armId='$armId' AND a.staffId=b.staffId");
                 $teacherDataFetch = mysqli_fetch_assoc($teacherDataQuery);
                 $armDataFetch['teacherData'] = $teacherDataFetch;
