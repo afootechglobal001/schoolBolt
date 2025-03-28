@@ -585,7 +585,7 @@
                     textField({
                         id: 'firstName',
                         title: 'First Name',
-                        value: getEachBranchStudentsSession?.studentData[0]?.otherNames ?? '',
+                        value: getEachBranchStudentsSession?.studentData[0]?.firstName ?? '',
                     });
                 </script>
             </div>
@@ -595,7 +595,7 @@
                     textField({
                         id: 'otherNames',
                         title: 'Other Name',
-                        value: getEachBranchStudentsSession?.studentData[0]?.firstName ?? '',
+                        value: getEachBranchStudentsSession?.studentData[0]?.otherNames ?? '',
                     });
                 </script>
             </div>
