@@ -8,6 +8,7 @@ function _nextLoginPage(props) {
 	_getPage({page: page, url: adminLocalUrl});
 }
 
+
 $(document).ready(function () {
 	function trim(s) {
 		return s.replace(/^\s*/, "").replace(/\s*$/, "");
