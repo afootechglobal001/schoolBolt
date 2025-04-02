@@ -657,9 +657,6 @@ function _fetchEachBranchStudents(branchId, departmentId, classId, armId, studen
 	}
 }
 
-
-
-
 function _updateBranchStudents() {
 	let getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));
     try {
@@ -922,4 +919,49 @@ function _updateStudentPix(){
 		} catch (error) {
 			_actionAlert('An unexpected error occurred! Please Try Again', false);
 		}
+}
+
+
+function _printStudents() {
+	let fetchStudentsParams = JSON.parse(sessionStorage.getItem("fetchStudentsParams"));
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/students/fetch-student?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${fetchStudentsParams.departmentId}&classId=${fetchStudentsParams.classId}&armId=${fetchStudentsParams.armId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				if (info.success > 0) {
+					sessionStorage.setItem("windowBranchStudentsSession", JSON.stringify(info));
+					windowPop(`${websiteUrl}/reports/student-list`);
+					_alertClose(2);
+				} else {
+					_actionAlert(info.message, false);
+					_alertClose(2);
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		_alertClose(2);
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}
+
+function windowPop(url) {
+	newwindow=window.open(url,'name','height=500,width=950, directories=no, titlebar=no, toolbar=no, manubar=no, left='+((screen.width/2)-(950/2))+', top='+((screen.height/2)-(500/2))+', directories=no, location=no');
+	if (window.focus) {newwindow.focus()}
+	return false;
+
 }
