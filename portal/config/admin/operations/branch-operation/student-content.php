@@ -446,7 +446,7 @@
         <div><span><i class="bi-person-bounding-box"></i></span> BRANCH STUDENT'S LIST ---- <span id="session">Loading...</span> - <span id="termName">Loading...</span> - <span id="departmentName3">Loading...</span> - <span id="className2">Loading...</span> - <span id="armName2">Loading...</span></div>
         <div class="btn-container">
             <button class="btn" title="PRINT RECORDS" onclick="_printStudents();"><i class="bi-printer"></i> PRINT</button>
-            <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i> EXPORT</button>
+            <button class="btn" title="EXPORT RECORDS" onclick="_exportStudents();"><i class="bi-file-earmark-excel"></i> EXPORT</button>
         </div>
     </div>
 

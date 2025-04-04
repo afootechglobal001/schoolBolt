@@ -481,12 +481,13 @@ function _fetchBranchStudents() {
 				const departmentName = info.departmentData.departmentName;
 				const className = info.classData.className;
 				const armName = info.armData.armName;
-
+				
 				$("#session").html(session);
 				$("#departmentName3").html(departmentName);
 				$("#className2").html(className);
 				$("#termName").html(termName);
 				$("#armName2").html(armName);
+				sessionStorage.setItem("exportBranchStudentsSession", JSON.stringify(info));
 
 				let text = '';
 				let no=0;
@@ -582,7 +583,7 @@ function _fetchBranchStudents() {
 							</tr>
 						</tbody>`;
 					$('#pageContent').html(text);
-						
+
 					const response = info.response;
 					if (response < 100) {
 						_logOut();
@@ -963,5 +964,58 @@ function windowPop(url) {
 	newwindow=window.open(url,'name','height=500,width=950, directories=no, titlebar=no, toolbar=no, manubar=no, left='+((screen.width/2)-(950/2))+', top='+((screen.height/2)-(500/2))+', directories=no, location=no');
 	if (window.focus) {newwindow.focus()}
 	return false;
+}
 
+function _exportStudents() {
+    let exportBranchStudentsSession = JSON.parse(sessionStorage.getItem("exportBranchStudentsSession"));
+
+    if (!exportBranchStudentsSession || exportBranchStudentsSession.success === false) {
+        _actionAlert('No record found!', false);
+        return;
+	}
+
+    let branchName = exportBranchStudentsSession?.data?.[0]?.studentData?.[0]?.name;
+    let departmentName = exportBranchStudentsSession?.departmentData?.departmentName;
+    let className = exportBranchStudentsSession?.classData?.className;
+    let armName = exportBranchStudentsSession?.armData?.armName;
+
+    let fileName = `${branchName} ${departmentName} ${className} ${armName} Students`;
+    exportTableToExcel("pageContent", fileName);
+}
+
+function exportTableToExcel(tableID,filename){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+	
+	// Remove all images before exporting
+    let images = tableSelect.getElementsByTagName("img");
+    while (images.length > 0) {
+        images[0].parentNode.removeChild(images[0]);
+    }
+
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20').replace(/#/g, '%23');
+    
+    // Specify file name
+    filename = filename?filename+'.xls':'excel_data.xls';
+   
+    // Create download link element
+    downloadLink = document.createElement("a");
+   
+    document.body.appendChild(downloadLink);
+    
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['\ufeff', tableHTML], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }else{
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+    
+        // Setting the file name
+        downloadLink.download = filename;
+        //triggering the function
+        downloadLink.click();
+    }
 }
