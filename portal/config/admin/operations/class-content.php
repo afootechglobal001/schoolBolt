@@ -298,7 +298,7 @@
                                                 </div>`;
                                         }
                                     }
-                                    $("#addBtn").html(`<i class="bi-check"></i> EDIT SUBJECT`).attr("title", "EDIT SUBJECT");
+                                    $("#submitBtn").html(`<i class="bi-check"></i> UPDATE SUBJECT`).attr("title", "UPDATE SUBJECT");
                                 } else {
                                     text = `
                                         <div class="permission-form-back-div">
@@ -307,7 +307,7 @@
                                                 <p>There are currently no registered subjects. To assign subject to this class, please click the "Add Subject" button below.</p>
                                             </div>
                                         </div>`;
-                                    $("#addBtn").html(`<i class="bi-check"></i> ADD SUBJECT`).attr("title", "ADD SUBJECT");
+                                    $("#submitBtn").html(`<i class="bi-check"></i> ADD SUBJECT`).attr("title", "ADD SUBJECT");
                                 }
 
                                 $("#fetchedPermission").html(text);

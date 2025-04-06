@@ -1,5 +1,5 @@
 <?php if($page=='login'){?>
-    <div class="form-div animated fadeIn" data-aos="zoom-in" data-aos-duration="1200">
+    <div class="form-div animated fadeIn" id="viewLogin" data-aos="zoom-in" data-aos-duration="1200">
         <div class="inner-form">
             <h1> 👋 Administrative <span>Log-In</span></h1>                   
 
