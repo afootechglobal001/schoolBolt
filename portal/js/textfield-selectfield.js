@@ -300,7 +300,7 @@ function _getSelectBirthMonth(fieldId){
 	const data = [
 		{
 			'birthMonthId': 1,
-			'birthMonthName': 'Jan',
+			'birthMonthName': 'January',
 		},
 		{
 			'birthMonthId': 2,
