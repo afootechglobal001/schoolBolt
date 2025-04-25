@@ -487,7 +487,16 @@ function _fetchBranchStudents() {
 				$("#className2").html(className);
 				$("#termName").html(termName);
 				$("#armName2").html(armName);
-				sessionStorage.setItem("exportBranchStudentsSession", JSON.stringify(info));
+				
+				let showButtons = `
+					<button class="btn" title="PRINT RECORDS" onclick="_printStudents('${info.departmentData.departmentId}','${info.classData.classId}','${info.armData.armId}')">
+						<i class="bi-printer"></i> PRINT
+					</button>
+					<button class="btn" title="EXPORT RECORDS" onclick="_exportStudents('${session}','${departmentName}','${className}','${armName}');">
+						<i class="bi-file-earmark-excel"></i> EXPORT
+					</button>
+				`;
+				$('#printAndExportButton').html(showButtons);
 
 				let text = '';
 				let no=0;
@@ -601,7 +610,6 @@ function _fetchBranchStudents() {
 	}
 }
 
-
 function _calculateAge(dateString) {
     if (!dateString) return "N/A";
 
@@ -624,7 +632,6 @@ function _calculateAge(dateString) {
     }
     return age;
 }
-
 
 function _fetchEachBranchStudents(branchId, departmentId, classId, armId, studentId) {
 	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
@@ -920,102 +927,4 @@ function _updateStudentPix(){
 		} catch (error) {
 			_actionAlert('An unexpected error occurred! Please Try Again', false);
 		}
-}
-
-
-function _printStudents() {
-	let fetchStudentsParams = JSON.parse(sessionStorage.getItem("fetchStudentsParams"));
-	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
-	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
-	try {
-		$.ajax({
-			type: "GET",
-			url: `${endPoint}/admin/students/fetch-student?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${fetchStudentsParams.departmentId}&classId=${fetchStudentsParams.classId}&armId=${fetchStudentsParams.armId}`,
-			dataType: "json", 
-			cache: false,
-			headers: getAuthHeaders(true),
-			success: function(info) {
-				if (info.success > 0) {
-					sessionStorage.setItem("windowBranchStudentsSession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/student-list`);
-					_alertClose(2);
-				} else {
-					_actionAlert(info.message, false);
-					_alertClose(2);
-					const response = info.response;
-					if (response < 100) {
-						_logOut();
-					}    
-				}
-			},
-			error: function(textStatus, errorThrown) {
-				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
-			}
-		});
-	} catch (error) {
-		_alertClose(2);
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred! Please try again.', false);
-	}
-}
-
-function windowPop(url) {
-	newwindow=window.open(url,'name','height=500,width=950, directories=no, titlebar=no, toolbar=no, manubar=no, left='+((screen.width/2)-(950/2))+', top='+((screen.height/2)-(500/2))+', directories=no, location=no');
-	if (window.focus) {newwindow.focus()}
-	return false;
-}
-
-function _exportStudents() {
-    let exportBranchStudentsSession = JSON.parse(sessionStorage.getItem("exportBranchStudentsSession"));
-
-    if (!exportBranchStudentsSession || exportBranchStudentsSession.success === false) {
-        _actionAlert('No record found!', false);
-        return;
-	}
-
-    let branchName = exportBranchStudentsSession?.data?.[0]?.studentData?.[0]?.name;
-    let departmentName = exportBranchStudentsSession?.departmentData?.departmentName;
-    let className = exportBranchStudentsSession?.classData?.className;
-    let armName = exportBranchStudentsSession?.armData?.armName;
-
-    let fileName = `${branchName} ${departmentName} ${className} ${armName} Students`;
-    exportTableToExcel("pageContent", fileName);
-}
-
-function exportTableToExcel(tableID,filename){
-    var downloadLink;
-    var dataType = 'application/vnd.ms-excel';
-    var tableSelect = document.getElementById(tableID);
-	
-	// Remove all images before exporting
-    let images = tableSelect.getElementsByTagName("img");
-    while (images.length > 0) {
-        images[0].parentNode.removeChild(images[0]);
-    }
-
-    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20').replace(/#/g, '%23');
-    
-    // Specify file name
-    filename = filename?filename+'.xls':'excel_data.xls';
-   
-    // Create download link element
-    downloadLink = document.createElement("a");
-   
-    document.body.appendChild(downloadLink);
-    
-    if(navigator.msSaveOrOpenBlob){
-        var blob = new Blob(['\ufeff', tableHTML], {
-            type: dataType
-        });
-        navigator.msSaveOrOpenBlob( blob, filename);
-    }else{
-        // Create a link to the file
-        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-    
-        // Setting the file name
-        downloadLink.download = filename;
-        //triggering the function
-        downloadLink.click();
-    }
 }
