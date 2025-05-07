@@ -137,14 +137,13 @@ function _fetchEachBranchSaff(staffId) {
 }
 
 
-function _fetchStaffStudentAllocated() {
-	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+function _fetchStaffSubjectAllocated() {
 	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
     $('#pageContents').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
 	try {
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/admin/staff/fetch-staff-subjects-allocated?branchId=${getEachBranchDetailsSession.branchId}&staffId=${getEachStaffDetailsSession.staffId}`,
+			url: `${endPoint}/admin/staff/fetch-staff-subjects-allocated?branchId=${getEachStaffDetailsSession.branchId}&staffId=${getEachStaffDetailsSession.staffId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(true),
@@ -167,7 +166,7 @@ function _fetchStaffStudentAllocated() {
 
 						text +=`
 							<div class="pages-toggle-div">
-								<div class="pages-toggle-title" onclick="_collapse('view${no}');" title="Click to view class teacher's students">
+								<div class="pages-toggle-title" onclick="_collapse('view${no}');" title="Click to view">
 									<h3>${className} (${subjectName})</h3>
 									<div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
 								</div>
@@ -225,15 +224,13 @@ function _fetchStaffStudentAllocated() {
 	}
 }
 
-
-function _fetchStaffStudentScoreSheet() {
-	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+function _fetchStaffSubjectScoreSheet() {
 	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
     $('#pageContent2').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
 	try {
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/admin/staff/fetch-staff-subjects-allocated?branchId=${getEachBranchDetailsSession.branchId}&staffId=${getEachStaffDetailsSession.staffId}`,
+			url: `${endPoint}/admin/staff/fetch-staff-subjects-allocated?branchId=${getEachStaffDetailsSession.branchId}&staffId=${getEachStaffDetailsSession.staffId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(true),
@@ -314,15 +311,13 @@ function _fetchStaffStudentScoreSheet() {
 	}
 }
 
-
-function _fetchStaffStudentComputeScores() {
-	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+function _fetchStaffSubjectComputeScores() {
 	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
     $('#pageContent3').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
 	try {
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/admin/staff/fetch-staff-subjects-allocated?branchId=${getEachBranchDetailsSession.branchId}&staffId=${getEachStaffDetailsSession.staffId}`,
+			url: `${endPoint}/admin/staff/fetch-staff-subjects-allocated?branchId=${getEachStaffDetailsSession.branchId}&staffId=${getEachStaffDetailsSession.staffId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(true),
@@ -403,14 +398,13 @@ function _fetchStaffStudentComputeScores() {
 	}
 }
 
-function _fetchStaffStudentCummulative() {
-	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+function _fetchStaffSubjectCummulative() {
 	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
     $('#pageContent4').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
 	try {
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/admin/staff/fetch-staff-subjects-allocated?branchId=${getEachBranchDetailsSession.branchId}&staffId=${getEachStaffDetailsSession.staffId}`,
+			url: `${endPoint}/admin/staff/fetch-staff-subjects-allocated?branchId=${getEachStaffDetailsSession.branchId}&staffId=${getEachStaffDetailsSession.staffId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(true),

@@ -711,7 +711,7 @@
     </div>
 
     <div class="pages-toggle-back-div" id="pageContents">
-        <script>_fetchStaffStudentAllocated();</script>
+        <script>_fetchStaffSubjectAllocated();</script>
     </div>
 <?php } ?>
 
@@ -721,7 +721,7 @@
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent2">
-        <script>_fetchStaffStudentScoreSheet();</script>
+        <script>_fetchStaffSubjectScoreSheet();</script>
     </div>
 <?php } ?>
 
@@ -731,10 +731,9 @@
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent3">
-        <script>_fetchStaffStudentComputeScores();</script>
+        <script>_fetchStaffSubjectComputeScores();</script>
     </div>
 <?php } ?>
-
 
 <?php if ($page == 'staff_students_cummulative_mark') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
@@ -742,6 +741,6 @@
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent4">
-        <script>_fetchStaffStudentCummulative();</script>
+        <script>_fetchStaffSubjectCummulative();</script>
     </div>
 <?php } ?>
