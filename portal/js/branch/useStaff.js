@@ -135,3 +135,358 @@ function _fetchEachBranchSaff(staffId) {
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
 }
+
+
+function _fetchStaffStudentAllocated() {
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
+    $('#pageContents').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/staff/fetch-staff-subjects-allocated?branchId=${getEachBranchDetailsSession.branchId}&staffId=${getEachStaffDetailsSession.staffId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const fetch = info.data;
+
+				let text = '';
+				let no=0;
+
+				if (info.success) {
+					for (let i = 0; i < fetch.length; i++) {
+						no++;
+						const fetchClassData = fetch[i].classData;
+						const fetchSubjectData = fetch[i].subjectData;
+						const departmentId = fetch[i].departmentId;
+						const classId = fetch[i].classId;
+						const fetchArmData = fetchClassData.armData;
+						const className = fetchClassData.className;
+						const subjectName = fetchSubjectData.subjectName;
+
+						text +=`
+							<div class="pages-toggle-div">
+								<div class="pages-toggle-title" onclick="_collapse('view${no}');" title="Click to view class teacher's students">
+									<h3>${className} (${subjectName})</h3>
+									<div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
+								</div>
+
+								<div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
+									<div class="list-back-div">`;
+										
+										if (Array.isArray(fetchArmData) && fetchArmData.length > 0) {
+											for (let k = 0; k < fetchArmData.length; k++) {
+												const armInfo = fetchArmData[k];
+												const armId = armInfo.armId;
+												const armName = armInfo.armName;
+
+												text += `
+												<div class="list-div">
+													<h4>${className} ${armName}</h4>
+													<div class="btn-container">
+														<button class="btn" title="VIEW STUDENTS" onclick="_printStudents('${departmentId}','${classId}','${armId}');">
+															<i class="bi-eye"></i> VIEW STUDENTS
+														</button>
+													</div>
+												</div>`;
+											}
+										}
+										text +=`
+									</div>
+								</div>
+							</div>
+						`;
+					}
+					$('#pageContents').html(text);
+				} else {
+					_actionAlert(info.message, false);
+
+					text +=`
+					<div class="false-notification-div">
+						<p>${info.message}</p>
+					</div>`;
+
+					$('#pageContents').html(text);
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}
+
+
+function _fetchStaffStudentScoreSheet() {
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
+    $('#pageContent2').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/staff/fetch-staff-subjects-allocated?branchId=${getEachBranchDetailsSession.branchId}&staffId=${getEachStaffDetailsSession.staffId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const fetch = info.data;
+
+				let text = '';
+				let no=0;
+
+				if (info.success) {
+					for (let i = 0; i < fetch.length; i++) {
+						no++;
+						const fetchClassData = fetch[i].classData;
+						const fetchSubjectData = fetch[i].subjectData;
+						const departmentId = fetch[i].departmentId;
+						const classId = fetch[i].classId;
+						const fetchArmData = fetchClassData.armData;
+						const className = fetchClassData.className;
+						const subjectName = fetchSubjectData.subjectName;
+
+						text +=`
+							<div class="pages-toggle-div">
+								<div class="pages-toggle-title" onclick="_collapse('view${no}');" title="Click to view class teacher's students">
+									<h3>${className} (${subjectName})</h3>
+									<div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
+								</div>
+
+								<div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
+									<div class="list-back-div">`;
+										
+										if (Array.isArray(fetchArmData) && fetchArmData.length > 0) {
+											for (let k = 0; k < fetchArmData.length; k++) {
+												const armInfo = fetchArmData[k];
+												const armId = armInfo.armId;
+												const armName = armInfo.armName;
+
+												text += `
+												<div class="list-div">
+													<h4>${className} ${armName}</h4>
+													<div class="btn-container">
+														<button class="btn" title="VIEW STUDENTS" onclick="_printStudents('${departmentId}','${classId}','${armId}');">
+															<i class="bi-eye"></i> VIEW STUDENTS
+														</button>
+													</div>
+												</div>`;
+											}
+										}
+										text +=`
+									</div>
+								</div>
+							</div>
+						`;
+					}
+					$('#pageContent2').html(text);
+				} else {
+					_actionAlert(info.message, false);
+
+					text +=`
+					<div class="false-notification-div">
+						<p>${info.message}</p>
+					</div>`;
+
+					$('#pageContent2').html(text);
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}
+
+
+function _fetchStaffStudentComputeScores() {
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
+    $('#pageContent3').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/staff/fetch-staff-subjects-allocated?branchId=${getEachBranchDetailsSession.branchId}&staffId=${getEachStaffDetailsSession.staffId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const fetch = info.data;
+
+				let text = '';
+				let no=0;
+
+				if (info.success) {
+					for (let i = 0; i < fetch.length; i++) {
+						no++;
+						const fetchClassData = fetch[i].classData;
+						const fetchSubjectData = fetch[i].subjectData;
+						const departmentId = fetch[i].departmentId;
+						const classId = fetch[i].classId;
+						const fetchArmData = fetchClassData.armData;
+						const className = fetchClassData.className;
+						const subjectName = fetchSubjectData.subjectName;
+
+						text +=`
+							<div class="pages-toggle-div">
+								<div class="pages-toggle-title" onclick="_collapse('view${no}');" title="Click to view class teacher's students">
+									<h3>${className} (${subjectName})</h3>
+									<div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
+								</div>
+
+								<div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
+									<div class="list-back-div">`;
+										
+										if (Array.isArray(fetchArmData) && fetchArmData.length > 0) {
+											for (let k = 0; k < fetchArmData.length; k++) {
+												const armInfo = fetchArmData[k];
+												const armId = armInfo.armId;
+												const armName = armInfo.armName;
+
+												text += `
+												<div class="list-div">
+													<h4>${className} ${armName}</h4>
+													<div class="btn-container">
+														<button class="btn" title="VIEW STUDENTS" onclick="_printStudents('${departmentId}','${classId}','${armId}');">
+															<i class="bi-eye"></i> VIEW STUDENTS
+														</button>
+													</div>
+												</div>`;
+											}
+										}
+										text +=`
+									</div>
+								</div>
+							</div>
+						`;
+					}
+					$('#pageContent3').html(text);
+				} else {
+					_actionAlert(info.message, false);
+
+					text +=`
+					<div class="false-notification-div">
+						<p>${info.message}</p>
+					</div>`;
+
+					$('#pageContent3').html(text);
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}
+
+function _fetchStaffStudentCummulative() {
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
+    $('#pageContent4').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/staff/fetch-staff-subjects-allocated?branchId=${getEachBranchDetailsSession.branchId}&staffId=${getEachStaffDetailsSession.staffId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const fetch = info.data;
+
+				let text = '';
+				let no=0;
+
+				if (info.success) {
+					for (let i = 0; i < fetch.length; i++) {
+						no++;
+						const fetchClassData = fetch[i].classData;
+						const fetchSubjectData = fetch[i].subjectData;
+						const departmentId = fetch[i].departmentId;
+						const classId = fetch[i].classId;
+						const fetchArmData = fetchClassData.armData;
+						const className = fetchClassData.className;
+						const subjectName = fetchSubjectData.subjectName;
+
+						text +=`
+							<div class="pages-toggle-div">
+								<div class="pages-toggle-title" onclick="_collapse('view${no}');" title="Click to view class teacher's students">
+									<h3>${className} (${subjectName})</h3>
+									<div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
+								</div>
+
+								<div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
+									<div class="list-back-div">`;
+										
+										if (Array.isArray(fetchArmData) && fetchArmData.length > 0) {
+											for (let k = 0; k < fetchArmData.length; k++) {
+												const armInfo = fetchArmData[k];
+												const armId = armInfo.armId;
+												const armName = armInfo.armName;
+
+												text += `
+												<div class="list-div">
+													<h4>${className} ${armName}</h4>
+													<div class="btn-container">
+														<button class="btn" title="VIEW STUDENTS" onclick="_printStudents('${departmentId}','${classId}','${armId}');">
+															<i class="bi-eye"></i> VIEW STUDENTS
+														</button>
+													</div>
+												</div>`;
+											}
+										}
+										text +=`
+									</div>
+								</div>
+							</div>
+						`;
+					}
+					$('#pageContent4').html(text);
+				} else {
+					_actionAlert(info.message, false);
+
+					text +=`
+					<div class="false-notification-div">
+						<p>${info.message}</p>
+					</div>`;
+
+					$('#pageContent4').html(text);
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}
