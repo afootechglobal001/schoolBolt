@@ -316,7 +316,7 @@
             </div>
         </div>
 
-        <div class="user-managment-list staff-managment-list" onclick="">
+        <div class="user-managment-list staff-managment-list" onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});">
             <div class="inner-div">
                 <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/score.png" alt="Score Sheet"/></div>
                 <div class="text-div">
@@ -326,7 +326,7 @@
             </div>
         </div>
 
-        <div class="user-managment-list staff-managment-list" onclick="">
+        <div class="user-managment-list staff-managment-list" onclick="_getActiveStaffPage({divid:'staff_students_compute_score', page: 'staff_students_compute_score', url: adminPortalLocalUrl});">
             <div class="inner-div">
                 <div class="icon-div">
                     <img src="<?php echo $websiteUrl?>/images/compute.png" alt="Compute Score"/>
@@ -338,7 +338,7 @@
             </div>
         </div>
 
-        <div class="user-managment-list staff-managment-list" onclick="">
+        <div class="user-managment-list staff-managment-list" onclick="_getActiveStaffPage({divid:'staff_students_cummulative_mark', page: 'staff_students_cummulative_mark', url: adminPortalLocalUrl});">
             <div class="inner-div">
                 <div class="icon-div">
                     <img src="<?php echo $websiteUrl?>/images/message.png" alt="Cummulative Mark's Book"/>
@@ -710,117 +710,38 @@
         <span><i class="bi-people-fill"></i> STUDENT'S LIST</span>
     </div>
 
-    <div class="pages-toggle-back-div" id="pageContent">
-        <div class="pages-toggle-div">
-            <div class="pages-toggle-title" onclick="_collapse('view1');" title="Click to view class teacher's students">
-                <h3>BASIC 1 (MATHEMATICS)</h3>
-                <div class="expand-div" id="view1num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
-            </div>
-
-            <div class="toggle-expand-div" id="view1answer" style="display: none;">  
-                <div class="list-back-div">
-                    <div class="list-div">
-                        <h4>BASIC 1 A</h4>
-                        <div class="btn-container">
-                            <button class="btn" title="VIEW STUDENTS" onclick="_getForm({page: 'view_student_modal', layer:2, url: adminPortalLocalUrl});">
-                                <i class="bi-eye"></i> VIEW STUDENTS
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="list-div">
-                        <h4>BASIC 1 B</h4>
-                        <div class="btn-container">
-                            <button class="btn" title="VIEW STUDENTS" onclick="">
-                                <i class="bi-eye"></i> VIEW STUDENTS
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="list-div">
-                        <h4>NURSERY 1 A</h4>
-                        <div class="btn-container">
-                            <button class="btn" title="VIEW STUDENTS" onclick="">
-                                <i class="bi-eye"></i> VIEW STUDENTS
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="pages-toggle-back-div" id="pageContents">
+        <script>_fetchStaffStudentAllocated();</script>
     </div>
 <?php } ?>
 
-<?php if ($page == 'view_student_modal') { ?>
-    <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
-        <div class="top-panel-div">
-            <div class="inner-top">
-                <span><i class="bi-person-check-fill"></i> STUDENT LIST</span>
-                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
-            </div>
-        </div>
-
-        <div class="profile-content-div">
-            <div class="field-back-div">
-                <div class="field-inner-div student-list-inner-div">
-                    <div class="alert alert-success top-alert-div class-top-alert-div animated fadeIn">
-                        <div><span><i class="bi-people-fill"></i> STUDENT LIST ----</span>  <span id="session">2024/2025</span> - <span id="termName">SECOND TERM</span> - <span id="departmentName3">BASIC</span> - <span id="className2">BASIC 1</span> - <span id="armName2">A</span></span></div>
-
-                        <div class="btn-container">
-                            <button class="btn" title="PRINT RECORDS" onclick=""><i class="bi-printer"></i> PRINT</button>
-                            <button class="btn" title="EXPORT RECORDS" onclick=""><i class="bi-file-earmark-excel"></i> EXPORT</button>
-                        </div>
-                    </div>
-
-                    <div class="table-div animated fadeIn">
-                        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-                            <thead>
-                                <tr class="tb-col">
-                                    <th>sn</th>
-                                    <th>Student Info</th>
-                                    <th>Gender</th>
-                                    <th>Age</th>
-                                    <th>Session</th>
-                                    <th>Term</th>
-                                    <th>Department</th>
-                                    <th>Class</th>
-                                    <th>Arm</th>
-                                    <th>Accomodation</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr class="tb-row">
-                                    <td>1</td>
-                                    <td>
-                                        <div class="text-back-div">
-                                            <div class="image-div general-passport">
-                                                <img src="<?php echo $websiteUrl?>/images/student-reg.png" alt="${fullname}"/>
-                                            </div>
-
-                                            <div class="text-div">
-                                                <div class="first-class">PAUL EMMANUEL</div>
-                                                <div class="second-class">STUDENT00220250321124557</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>MALE</td>
-                                    <td>15</td>
-                                    <td>2024/2025</td>
-                                    <td>SECOND TERM</td>
-                                    <td>BASIC</td>
-                                    <td>BASIC 1</td>
-                                    <td>A</td>
-                                    <td>DAY</td>
-                                    <td><div class="status-div ACTIVE">ACTIVE</div></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+<?php if ($page == 'staff_students_score_sheet') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <span><i class="bi-people-fill"></i> STUDENT'S SCORE SHEET</span>
     </div>
 
+    <div class="pages-toggle-back-div" id="pageContent2">
+        <script>_fetchStaffStudentScoreSheet();</script>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'staff_students_compute_score') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <span><i class="bi-people-fill"></i> STUDENT'S COMPUTE SCORE</span>
+    </div>
+
+    <div class="pages-toggle-back-div" id="pageContent3">
+        <script>_fetchStaffStudentComputeScores();</script>
+    </div>
+<?php } ?>
+
+
+<?php if ($page == 'staff_students_cummulative_mark') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <span><i class="bi-people-fill"></i> STUDENT'S CUMMULATIVE MARK BOOK</span>
+    </div>
+
+    <div class="pages-toggle-back-div" id="pageContent4">
+        <script>_fetchStaffStudentCummulative();</script>
+    </div>
 <?php } ?>
