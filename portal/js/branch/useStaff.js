@@ -184,7 +184,7 @@ function _fetchStaffSubjectAllocated() {
 												<div class="list-div">
 													<h4>${className} ${armName}</h4>
 													<div class="btn-container">
-														<button class="btn" title="VIEW STUDENTS" onclick="_printStudents('${departmentId}','${classId}','${armId}');">
+														<button class="btn" title="VIEW STUDENTS" onclick="_printAllocatedStudents('${departmentId}','${classId}','${armId}');">
 															<i class="bi-eye"></i> VIEW STUDENTS
 														</button>
 													</div>

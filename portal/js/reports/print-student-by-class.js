@@ -34,6 +34,42 @@ function _printStudents(departmentId, classId, armId) {
 	}
 }
 
+function _printAllocatedStudents(departmentId, classId, armId) {
+	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
+	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/reports/print-student-by-class?branchId=${getEachStaffDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				if (info.success > 0) {
+					sessionStorage.setItem("printStudentByClassSession", JSON.stringify(info));
+					windowPop(`${websiteUrl}/reports/student-list`);
+					_alertClose(2);
+				} else {
+					_actionAlert(info.message, false);
+					_alertClose(2);
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		_alertClose(2);
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}
+
 function windowPop(url) {
 	newwindow=window.open(url,'name','height=500,width=950, directories=no, titlebar=no, toolbar=no, manubar=no, left='+((screen.width/2)-(950/2))+', top='+((screen.height/2)-(500/2))+', directories=no, location=no');
 	if (window.focus) {newwindow.focus()}
