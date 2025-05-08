@@ -45,6 +45,7 @@
 	var userIpAddress = "<?php echo $userIpAddress;?>"; /// For User IP Address //
 	var userDeviceId = "<?php echo $userDeviceId;?>"; /// For User Device Id //
 
+	var parentLocalUrl=websiteUrl+'/config/parent/code';
 	var adminLocalUrl=websiteUrl+'/config/admin/code';
 	var adminPortalLocalUrl=websiteUrl+'/config/admin/operations/code'; 
 	var adminPortalUrl=websiteUrl+'/admin'; /// For Portal Url //

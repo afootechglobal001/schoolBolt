@@ -271,9 +271,9 @@
                         <li id="dotted" title="Branch Record"><i class="bi-file-spreadsheet"></i> Record
                             <div class="expand-div expanded animated fadeIn">
                                 <ul class="ul-expand">
-                                    <li title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
-                                    <li title="Compute Score"><i class="bi-file-spreadsheet"></i>Compute Score</li>
-                                    <li title="Cumulative Mark's Score"><i class="bi-file-spreadsheet"></i>Cumulative Mark's Score</li>
+                                    <li onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});" title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
+                                    <li onclick="_getActiveStaffPage({divid:'staff_students_compute_score', page: 'staff_students_compute_score', url: adminPortalLocalUrl});" title="Compute Score"><i class="bi-file-spreadsheet"></i>Compute Score</li>
+                                    <li onclick="_getActiveStaffPage({divid:'staff_students_cummulative_mark', page: 'staff_students_cummulative_mark', url: adminPortalLocalUrl});" title="Cumulative Mark's Score"><i class="bi-file-spreadsheet"></i>Cumulative Mark's Book</li>
                                     <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Student Attendance</li>
                                     <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Class Teacher's  Commemt</li>
                                 </ul>
