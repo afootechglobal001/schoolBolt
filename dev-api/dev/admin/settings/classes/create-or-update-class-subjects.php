@@ -32,16 +32,30 @@ if(!$checkSession){
         goto end;
 	}
     /// delete existing records first
-    mysqli_query($conn,"DELETE FROM `SUBJECT_STRUCTURE_TAB` WHERE $clientIds AND classId = '$classId'")or die (mysqli_error($conn));
+    mysqli_query($conn,"DELETE FROM `SUBJECT_STRUCTURE_TAB` 
+    WHERE $clientIds AND classId = '$classId'")or die (mysqli_error($conn));
 
+
+    $getSubjectsIdsArray = [];
 
     foreach ($subjectIds as $eachId) {
         $subjectId = $eachId['subjectId'];
-        mysqli_query($conn,"INSERT INTO `SUBJECT_STRUCTURE_TAB`
-        (`clientId`, `classId`, `subjectId`, `createdTime`) VALUES 
-        ('$clientId', '$classId', '$subjectId', NOW())")or die (mysqli_error($conn));
+        mysqli_query($conn, "INSERT INTO `SUBJECT_STRUCTURE_TAB`
+            (`clientId`, `classId`, `subjectId`, `createdTime`) VALUES 
+            ('$clientId', '$classId', '$subjectId', NOW())") or die(mysqli_error($conn));
+    
+        // Escape and quote string values
+        $escapedId = mysqli_real_escape_string($conn, $subjectId);
+        $getSubjectsIdsArray[] = "'$escapedId'";
     }
-
+    
+    $getSubjectsIds = implode(",", $getSubjectsIdsArray);
+    
+    // Delete from CLASS_SUBJECT_ALLOCATION_TAB if subjectId is not in the current list
+    mysqli_query($conn, "DELETE FROM `CLASS_SUBJECT_ALLOCATION_TAB` 
+        WHERE clientId = '$clientId' AND classId = '$classId' AND subjectId NOT IN ($getSubjectsIds)")
+        or die(mysqli_error($conn));
+    
     $response['response']=200; 
     $response['success']=true;
     $response['message']="CLASS SUBJECTS CREATED SUCCESFFULY!"; 
