@@ -91,6 +91,11 @@
                     </div>
 
                     <div class="permission-toggle-div">
+                        <div class="toggle-title">Fees Permissions</div>
+                        <div class="fetch-toggle" id="fees"></div>
+                    </div>
+
+                    <div class="permission-toggle-div">
                         <div class="toggle-title">Students Permissions</div>
                         <div class="fetch-toggle" id="student"></div>
                     </div>

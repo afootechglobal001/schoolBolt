@@ -20,7 +20,7 @@ function _getActiveLink(divid, nav) {
 	_getNav(nav);
 }
 function _removeClass(){
-	$('#side-dashboard, #side-staff, #side-customers, #side-products, #side-orders, #side-publish, #side-reports, #side-branches, #top-dashboard, #top-staff').removeClass('active-li');
+	$('#side-dashboard, #side-staff, #side-fees, #side-customers, #side-products, #side-orders, #side-publish, #side-reports, #side-branches, #top-dashboard, #top-staff').removeClass('active-li');
 	$('#mobile-dashboard').removeClass('active-li');
 }
 
@@ -165,6 +165,13 @@ let permissionElements = {
     13: `
     <div class="nav-div" title="Customers" onclick="_getActivePage({page:'customers', divid:'customers'});" id="side-customers">
         <div class="icon"><i class="bi-buildings"></i> <span>Hostel and Logistics</span></div> 
+    </div>
+    `,
+
+	45: `
+    <div class="nav-div" title="Fees" onclick="_getActivePage({page:'fees', divid:'fees'});" id="side-fees">
+        <div class="icon"><i class="bi-credit-card"></i> Fees</div> 
+        <div class="hidden" id="_staff"><i class="bi-credit-card"></i> Active Fees</div>
     </div>
     `,
 
