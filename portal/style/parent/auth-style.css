@@ -1,0 +1,303 @@
+@charset "utf-8";
+/* CSS Document */
+
+.login-session{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    background: #03001e;
+}
+
+.login-session .graphics-div{
+    position: fixed;
+    width: 50%;
+    height: 100%;
+    left: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-session .graphics-div .content{
+    min-height: 100px;
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.login-session .graphics-div .content .logo-div{
+    width: 200px;
+}
+
+.login-session .graphics-div .content .logo-div img{
+    width: 100%;
+}
+
+.login-session .graphics-div .content .graphics{
+    width: 100%;
+}
+
+.login-session .graphics-div .content .graphics img{
+    width: 100%;
+}
+
+.login-session .graphics-div .content h2{
+    color: var(--white-color);
+    text-align: center;
+    font-size: 30px;
+    line-height: 40px;
+}
+
+.login-session .graphics-div .content h2 span{
+    color: var(--secondary-color);
+    font-family: body-font;
+}
+ 
+
+.login-session .login-div{
+    position: absolute;
+    width:50%;
+    height: 100%;
+    right: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: var(--white-color);
+    overflow: auto;
+}
+
+.login-session .login-div .form-back-div {
+    padding: 40px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-session .login-div .form-back-div .form-div{
+    width: 400px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    color: var(--body-color);
+}
+
+.login-session .login-div .form-back-div .form-div .top-div{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-session .login-div .form-back-div .form-div .top-div .logo-div{
+    width: 80px;
+    height: 80px;
+    background-color: var(--white-color);
+    border-radius: 100%;
+    overflow: hidden;
+    border: var(--secondary-color) 1px solid;
+    display: none;
+}
+
+.login-session .login-div .form-back-div .form-div .top-div .logo-div img{
+    width: 100%;
+}
+
+.login-session .login-div .form-back-div .form-div .top-div h1{
+    color: var(--primary-color);
+    font-size: 35px;
+    line-height: 45px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.login-session .login-div .form-back-div .form-div .top-div h1 span{
+    color: var(--sub-body-color);
+    font-family: body-font;
+    font-size: 20px;
+}
+
+.login-session .login-div .form-back-div .form-div .inner-form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-bottom: var(--sub-body-color) 1px solid;
+    padding-bottom: 30px;
+}
+
+.login-form-alert{
+    margin: 0px auto;
+}
+
+.login-session .login-div .form-back-div .form-div .inner-form .btn{
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    font-family: sub-title-font;
+    font-size: 16px;
+    background: var(--primary-color);
+    color: var(--white-color);
+    cursor: pointer;
+    transition: all 0.2s ease-in 0.2s;
+}
+
+.login-session .login-div .form-back-div .form-div .inner-form .btn:hover{
+    background: var(--secondary-color);
+}
+
+.login-session .login-div .form-back-div .form-div p{
+   padding: 0px;
+   margin: 0px;
+   color: var(--sub-body-color);
+}
+
+.login-session .login-div .form-back-div .form-div span{
+    padding: 0px;
+    margin: 0px;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.login-session .login-div .form-back-div .form-div .inner-form .title{
+   font-size: 14px;
+   font-family: body-font;
+}
+
+
+@media all and (max-width:850px) {
+    .login-session{
+        overflow: auto;
+    }
+    .login-session .graphics-div{
+        display: none;
+    }
+    .login-session .login-div{
+        width:100%;
+    }
+    .login-session .login-div .form-back-div .form-div .logo-div{
+        display: block;
+    }
+} 
+@media all and (max-width:440px) {
+    .login-session .login-div .form-back-div .form-div{
+        width: 90%;    
+    }
+    
+}     
+
+
+
+
+
+/*--------------------------------------------------------------------------------------------------*/
+.caption-div{
+	width:500px;
+	min-height:200px;
+	background:#FFF;
+	border-radius:7px;
+	overflow:hidden;
+	display: flex;
+	flex-direction: column;
+}
+.caption-div .title-div{
+    width: calc(100% - 40px);
+    height: 50px;
+    background: #03001e;
+    padding: 0px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--white-color);
+    font-family: sub-title-font;
+}
+
+.caption-div .title-div .title{ 
+    color: var(--secondary-color);
+}
+
+.caption-div .title-div .close-btn{
+    font-family: sub-title-font;
+    border: var(--body-color) 1px solid;
+    height: 35px;
+    padding: 0px 13px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, .2);
+    cursor: pointer;
+    transition: all 0.2s ease-in 0.2s;
+	transition:all 0.2s ease-in 0.2s;
+	-moz-transition:all 0.2s ease-in 0.2s;
+	-webkit-transition:all 0.2s ease-in 0.2s;
+	-ms-transition:all 0.2s ease-in 0.2s;
+	-o-transition:all 0.2s ease-in 0.2s;
+}
+
+.caption-div .title-div .close-btn i{
+	font-size: 12px;
+    color: var(--white-color);
+}
+.caption-div .title-div .close-btn:hover{
+	opacity: .5;
+}
+
+.caption-div .div-in{
+	padding:30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.caption-div .div-in .btn{
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    font-family: sub-title-font;
+    font-size: 16px;
+    background: var(--primary-color);
+    color: var(--white-color);
+    cursor: pointer;
+    transition: all 0.2s ease-in 0.2s;
+}
+.caption-div .div-in .btn:hover{
+    background: var(--secondary-color);
+}
+.caption-div .div-in #resendOtpBtn{
+    cursor: pointer;
+    display: none;
+    font-family: body-font;
+    color: var(--sub-body-color);
+}
+
+.caption-div .div-in #resendOtpBtn:hover{
+    text-decoration: underline;
+}
+
+.caption-div .div-in #resendCountdown{
+    font-family: body-font;
+    color: var(--sub-body-color);
+}
+
+@media all and (max-width:450px) {
+	.caption-div{
+        width:340px;
+        min-height:200px;
+    }
+
+    .caption-div .div-in{
+        padding:15px 20px 35px 20px;
+    }
+} 
+
+
