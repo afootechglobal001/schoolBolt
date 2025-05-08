@@ -78,7 +78,7 @@ function _fetchBranchDepartmentClass() {
                                                 <tr class="tb-col">
                                                     <th>sn</th>
                                                     <th>Department</th>
-                                                    <th>Level</th>
+                                                    <th>Class</th>
                                                     <th>Teacher</th>
                                                     <th>Edit</th>
                                                 </tr>
