@@ -167,14 +167,7 @@ let permissionElements = {
         <div class="icon"><i class="bi-buildings"></i> <span>Hostel and Logistics</span></div> 
     </div>
     `,
-
-	45: `
-    <div class="nav-div" title="Fees" onclick="_getActivePage({page:'fees', divid:'fees'});" id="side-fees">
-        <div class="icon"><i class="bi-credit-card"></i> Fees</div> 
-        <div class="hidden" id="_staff"><i class="bi-credit-card"></i> Active Fees</div>
-    </div>
-    `,
-
+	
     15: `
     <div class="nav-div" title="Products" onclick="_getActivePage({nav:'products', divid:'products'});" id="side-products">
         <div class="icon"><i class="bi-chat-text"></i> Reviews</div> 

@@ -94,74 +94,27 @@ function _clickOption(selectedOption, id, value) {
 
 
 
-    
-function _getSelectPaymentMethod(fieldId){
+
+function _getSelectFeesOptions(fieldId){
 	const data=[
 		{
-			'paymentMethodId': 1,
-			'paymentMethodName': 'DEBIT/CREDIT CARD',
+			'optionId': true,
+			'optionName': 'MANDATORY',
 		},
 		{
-			'paymentMethodId': 2,
-			'paymentMethodName': 'PAY WITH WALLET',
-		},
-		{
-			'paymentMethodId': 3,
-			'paymentMethodName': 'BANK TRANSFER',
+			'optionId': false,
+			'optionName': 'NOT MANDATORY',
 		}
 	]
 
 	for (let i = 0; i < data.length; i++) {
-		const id = data[i].paymentMethodId;
-		const value = data[i].paymentMethodName;
-		$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
-	}	
-}
-
-function _getSelectDeliveryLocation(fieldId){
-	const data=[
-		{
-			'deliveryLocationId': 1,
-			'deliveryLocationName': 'GATEWAY POLYTECHNIC, SAAPADE',
-		},
-		{
-			'deliveryLocationId': 2,
-			'deliveryLocationName': 'OLABISI ONABANJO UNIVERSITY',
-		}
-	]
-
-	for (let i = 0; i < data.length; i++) {
-		const id = data[i].deliveryLocationId;
-		const value = data[i].deliveryLocationName;
-		$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
-	}		
-}
-
-function _getSelectDeliveryArea(fieldId){
-	const data=[
-		{
-			'deliveryAreaId': 1,
-			'deliveryAreaName': 'AGBERO ODE',
-		},
-		{
-			'deliveryAreaId': 2,
-			'deliveryAreaName': 'SABO ISHARA',
-		},
-		{
-			'deliveryAreaId': 3,
-			'deliveryAreaName': 'GARAGE IPARA',
-		}
-	]
-
-	for (let i = 0; i < data.length; i++) {
-		const id = data[i].deliveryAreaId;
-		const value = data[i].deliveryAreaName;
+		const id = data[i].optionId;
+		const value = data[i].optionName;
 		$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
 	}	
 }
 
 ///// Admin SelectFields ///////////
-
 function _getSelectStatusId(fieldId, statusIds){
 	try {
 		$.ajax({
@@ -352,29 +305,6 @@ function _getSelectBirthMonth(fieldId){
 		const id = data[i].birthMonthId;
 		const value = data[i].birthMonthName;
 		$('#searchList_' + fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">' + value + '</li>');
-	}	
-}
-
-function _getSelectBlogCategory(fieldId){
-	const data=[
-		{
-			'blogCatId': 1,
-			'blogCatName': 'GENERAL',
-		},
-		{
-			'blogCatId': 2,
-			'blogCatName': 'ANNOUNCEMENT',
-		},
-		{
-			'blogCatId': 3,
-			'blogCatName': 'PRODUCTS',
-		}
-	]
-
-	for (let i = 0; i < data.length; i++) {
-		const id = data[i].blogCatId;
-		const value = data[i].blogCatName;
-		$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
 	}	
 }
 

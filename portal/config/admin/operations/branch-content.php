@@ -36,13 +36,12 @@
     </div>
 <?php } ?>
 
-
 <?php if ($page == 'branch_reg') { ?>
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
                 <span id="panel-title"><i class="bi-plus-square"></i> ADD A NEW BRANCH</span>
-                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
         </div>
 
@@ -196,8 +195,10 @@
                             <div class="fetch-toggle" id="pageContentToggle"></div>
                         </div>
 
-                        <script>_fetchDepartmentToggle();</script>
-                    </div>            
+                        <script>
+                            _fetchDepartmentToggle();
+                        </script>
+                    </div>
                 </div>
 
                 <div class="text_field_container" id="staffId_container">
@@ -237,7 +238,7 @@
         <div class="top-panel-div">
             <div class="inner-top">
                 <span><i class="bi-diagram-3"></i> BRANCH PROFILE</span>
-                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
         </div>
 
@@ -287,20 +288,20 @@
             <div class="btn-div branch-btn-div">
                 <div class="div-in">
                     <ul>
-                    <li class="active" title="Dashboard" id="branch_dashboard" onclick="_getActiveBranchPage({divid:'branch_dashboard', page: 'branch_dashboard', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> Dashboard</li>
+                        <li class="active" title="Dashboard" id="branch_dashboard" onclick="_getActiveBranchPage({divid:'branch_dashboard', page: 'branch_dashboard', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> Dashboard</li>
                         <li title="Branch Staff" id="branch_staff" onclick="_getActiveBranchPage({divid:'branch_staff', page: 'branch_staff', url: adminPortalLocalUrl});"><i class="bi-person-workspace"></i> Staff</li>
                         <li id="dotted" title="Branch Student"><i class="bi-mortarboard"></i> Student
                             <div class="expand-div animated fadeIn">
                                 <ul class="ul-expand">
                                     <li class="active" id="reg_students" title="Register Students"
-                                       onclick="_getForm({page: 'branch_student_reg', layer:2, url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Register Student</li>
+                                        onclick="_getForm({page: 'branch_student_reg', layer:2, url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Register Student</li>
 
                                     <li id="my_students" title="View Students"
                                         onclick="_getForm({page: 'student_select_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>View Student</li>
-                                    
+
                                     <li id="my_students" title="Search Students"
                                         onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Search Student</li>
-                                       
+
                                     <li id="my_students" title="Student Archived"
                                         onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Student Archived</li>
 
@@ -314,8 +315,8 @@
                             onclick="_getActiveBranchPage({divid:'branch_department_class', page: 'branch_department_class', url: adminPortalLocalUrl});"><i class="bi-people-fill"></i> Class</li>
 
                         <li title="Branch Subject"
-                        onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-journals"></i> Subject</li>
-                        
+                            onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-journals"></i> Subject</li>
+
                         <li id="dotted" title="Branch Record"><i class="bi-graph-up-arrow"></i> Report
                             <div class="expand-div animated fadeIn">
                                 <ul class="ul-expand">
@@ -326,10 +327,11 @@
                             </div>
                         </li>
 
-                        <li id="dotted" title="Branch Settings"><i class="bi-gear-wide-connected"></i> Settings
+                        <li id="dotted" title="Branch Fees"><i class="bi-credit-card"></i> Fees
                             <div class="expand-div animated fadeIn">
                                 <ul class="ul-expand">
-                                    <li title="Change Password"><i class="bi-shield-check"></i>Change Password</li>
+                                    <li title="Fees Settings" onclick="_getActiveBranchPage({divid:'branch_fees_page', page: 'branch_fees_page', url: adminPortalLocalUrl});"><i class="bi-gear-wide-connected"></i>Fees Settings</li>
+                                    <li title="Compute Fees" onclick="_getActiveBranchPage({divid:'branch_fees_computaion_page', page: 'branch_fees_computaion_page', url: adminPortalLocalUrl});"><i class="bi-credit-card"></i>Compute Fees</li>
                                 </ul>
                             </div>
                         </li>
@@ -338,7 +340,7 @@
                             <div class="expand-div animated fadeIn">
                                 <ul class="ul-expand">
                                     <li id="branch_profile_details" title="Branch Profile"
-                                    onclick="_getActiveBranchPage({divid:'branch_profile_details', page: 'branch_profile_details', url: adminPortalLocalUrl});"><i class="bi-diagram-3"></i>Branch Profile</li>
+                                        onclick="_getActiveBranchPage({divid:'branch_profile_details', page: 'branch_profile_details', url: adminPortalLocalUrl});"><i class="bi-diagram-3"></i>Branch Profile</li>
 
                                     <li title="Edit Branch Department"
                                         onclick="_fetchBranchDepartment();"><i class="bi-diagram-3"></i>Branch Department</li>
@@ -741,7 +743,7 @@
 
 <?php if ($page == 'branch_staff') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <span><i class="bi-person-bounding-box"></i> BRANCH STAFF LIST</span> 
+        <span><i class="bi-person-bounding-box"></i> BRANCH STAFF LIST</span>
 
         <div class="btn-container">
             <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
@@ -751,10 +753,11 @@
 
     <div class="table-div animated fadeIn">
         <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-            <script>_fetchBranchStaffs();</script>
+            <script>
+                _fetchBranchStaffs();
+            </script>
         </table>
     </div>
-   
 <?php } ?>
 
 <?php if ($page == 'branch_profile_details') { ?>
@@ -1074,14 +1077,16 @@
     </div>
 <?php } ?>
 
-<?php if ($page=='edit_branch_department') { ?>
-    <script>getBranchDepartmentSession = JSON.parse(sessionStorage.getItem("getBranchDepartmentSession"));</script>	
+<?php if ($page == 'edit_branch_department') { ?>
+    <script>
+        getBranchDepartmentSession = JSON.parse(sessionStorage.getItem("getBranchDepartmentSession"));
+    </script>
 
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
                 <span id="pageTitle"><i class="bi-plus-square"></i> UPDATE BRANCH DEPARTMENT </span>
-                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
         </div>
 
@@ -1091,7 +1096,7 @@
                     <div>
                         <div class="alert alert-success form-alert">Kindly click the <span>Edit Department</span> button to <span> UPDATE DEPARTMENT TO <span id="branchName"></span> BRANCH</span></div>
                         <script>
-                            $(document).ready(function () {
+                            $(document).ready(function() {
                                 $("#branchName, #branchName2").html(getBranchDepartmentSession.branchName);
                             });
                         </script>
@@ -1159,12 +1164,302 @@
                             <div class="fetch-toggle" id="eachPageContentToggle"></div>
                         </div>
 
-                        <script>_fetchEachDepartmentToggle();</script>
-                    </div> 
+                        <script>
+                            _fetchEachDepartmentToggle();
+                        </script>
+                    </div>
 
                     <div>
                         <button class="btn" title="SUBMIT" id="submitBtn" onclick="updateBranchDepartment();"> <i class="bi-check"></i> SUBMIT </button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'branch_fees_page') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <span><i class="bi-credit-card"></i> BRANCH FEES CATEGORY</span>
+
+        <div class="btn-container">
+            <button class="btn" title="ADD FEES" onclick="_getForm({page: 'branch_fees_reg', layer:2, url: adminPortalLocalUrl});"><i class="bi-plus-square"></i> ADD FEES</button>
+        </div>
+    </div>
+
+    <div class="table-div animated fadeIn">
+        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+            <thead>
+                <tr class="tb-col">
+                    <th>sn</th>
+                    <th>Fees Name</th>
+                    <th>Fees Option</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr class="tb-row">
+                    <td>1</td>
+                    <td>Tuition Fees</td>
+                    <td class="green-color">Mandatory</td>
+                    <td><button class="btn view-btn" title="Click to edit fees" onclick="">EDIT FEES</button></td>
+                </tr>
+
+                <tr class="tb-row">
+                    <td>2</td>
+                    <td>School Bus Fees</td>
+                    <td class="orange-color">Not Mandatory</td>
+                    <td><button class="btn view-btn" title="Click to edit fees" onclick="">EDIT FEES</button></td>
+                </tr>
+
+                <tr class="tb-row">
+                    <td>1</td>
+                    <td>Tuition Fees</td>
+                    <td class="green-color">Mandatory</td>
+                    <td><button class="btn view-btn" title="Click to edit fees" onclick="">EDIT FEES</button></td>
+                </tr>
+
+                <tr class="tb-row">
+                    <td>1</td>
+                    <td>Tuition Fees</td>
+                    <td class="green-color">Mandatory</td>
+                    <td><button class="btn view-btn" title="Click to edit fees" onclick="">EDIT FEES</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'branch_fees_reg') { ?>
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="panel-title"><i class="bi-plus-square"></i> ADD A NEW FEES</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert">Kindly fill the form below to <span> ADD A NEW FEES</span></div>
+                </div>
+
+                <div class="text_field_container" id="feesName_container">
+                    <script>
+                        textField({
+                            id: 'feesName',
+                            title: 'Fee Name'
+                        });
+                    </script>
+                </div>
+
+                <div class="text_field_container" id="optionId_container">
+                    <script>
+                        selectField({
+                            id: 'optionId',
+                            title: 'Select Option',
+                        });
+                        _getSelectFeesOptions('optionId');
+                    </script>
+                </div>
+
+                <div>
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'branch_fees_computaion_page') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <span><i class="bi-credit-card"></i> DEPARTMENT FEES LIST</span>
+    </div>
+
+    <div class="pages-toggle-back-div" id="pageContent">
+        <div class="pages-toggle-div">
+            <div class="pages-toggle-title" onclick="_collapse('view1');" title="Click to view department">
+                <h3>KINDERGARTEN</h3>
+                <div class="expand-div" id="view1num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div>
+            </div>
+
+            <div class="toggle-expand-div" id="view1answer" style="display: none;">
+                <div class="table-div animated fadeIn">
+                    <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+                        <thead>
+                            <tr class="tb-col">
+                                <th>sn</th>
+                                <th>Department</th>
+                                <th>Class</th>
+                                <th>Total Payable Amount</th>
+                                <th>Updated By</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr class="tb-row">
+                                <td>1</td>
+                                <td>KINDERGARTEN</td>
+                                <td>KG 1</td>
+                                <td><s>N</s>150,000</td>
+                                <td>
+                                    <div class="text-div">
+                                        <div class="bold-font">MR ADEBOYE OLUWATOBI</div>
+                                        <div>2025-05-05 12:02:20</div>
+                                    </div>
+                                </td>
+                                <td><button class="btn view-btn" title="Click to compute fees" onclick="_getForm({page: 'branch_fees_computaion_form', layer:2, url: adminPortalLocalUrl});">COMPUTE FEES</button></td>
+                            </tr>
+
+                            <tr class="tb-row">
+                                <td>2</td>
+                                <td>KINDERGARTEN</td>
+                                <td>KG 2</td>
+                                <td><s>N</s>800,000</td>
+                                <td>
+                                    <div class="text-div">
+                                        <div class="bold-font">MR AHMED ODELAKIN</div>
+                                        <div>2025-05-05 12:02:20</div>
+                                    </div>
+                                </td>
+                                <td><button class="btn view-btn" title="Click to compute fees" onclick="_getForm({page: 'branch_fees_computaion_form', layer:2, url: adminPortalLocalUrl});">COMPUTE FEES</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="pages-toggle-div">
+            <div class="pages-toggle-title" onclick="_collapse('view2');" title="Click to view department">
+                <h3>NURSERY</h3>
+                <div class="expand-div" id="view2num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div>
+            </div>
+
+            <div class="toggle-expand-div" id="view2answer" style="display: none;">
+                <div class="table-div animated fadeIn">
+                    <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+                        <thead>
+                            <tr class="tb-col">
+                                <th>sn</th>
+                                <th>Department</th>
+                                <th>Class</th>
+                                <th>Total Payable Amount</th>
+                                <th>Updated By</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr class="tb-row">
+                                <td>1</td>
+                                <td>NURSERY</td>
+                                <td>NURSERY 1</td>
+                                <td><s>N</s>150,000</td>
+                                <td>
+                                    <div class="text-div">
+                                        <div>MR ADEBOYE OLUWATOBI</div>
+                                        <div>2025-05-05 12:02:20</div>
+                                    </div>
+                                </td>
+                                <td><button class="btn view-btn" title="Click to compute fees" onclick="_getForm({page: 'branch_fees_computaion_form', layer:2, url: adminPortalLocalUrl});">COMPUTE FEES</button></td>
+                            </tr>
+
+                            <tr class="tb-row">
+                                <td>2</td>
+                                <td>NURSERY</td>
+                                <td>NURSERY 2</td>
+                                <td><s>N</s>800,000</td>
+                                <td>
+                                    <div class="text-div">
+                                        <div>MR AHMED ODELAKIN</div>
+                                        <div>2025-05-05 12:02:20</div>
+                                    </div>
+                                </td>
+                                <td><button class="btn view-btn" title="Click to compute fees" onclick="_getForm({page: 'branch_fees_computaion_form', layer:2, url: adminPortalLocalUrl});">COMPUTE FEES</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'branch_fees_computaion_form') { ?>
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="panel-title"><i class="bi-plus-square"></i> COMPUTE FEES</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert">Kindly fill the form below to <span> COMPUTE FEES</span></div>
+                </div>
+
+                <div class="segmentDiv">
+                    <div class="segmentTitle">
+                        <span>Compute Fees Here</span>
+                    </div>
+
+                    <div class="segmentList">
+                        <script>
+                            addSegmentation();
+                        </script>
+                    </div>
+
+                    <div>
+                        <button type="button" class="add-btn" onClick="addSegmentation()"><i class="bi-plus"></i> Add fees segment</button>
+                    </div>
+                </div>
+
+                <div class="alert alert-success form-alert">
+                    <div class="alert-list-div">
+                        <span>Fees Breakdown</span>
+                        <div class="alert-list-back-div">
+                            <div class="alert-list">
+                                <div><span>Tuition Fees:</span></div>
+                                <div><span><s>N</s>150,000</span></div>
+                            </div>
+
+                            <div class="delete-div" title="Click to delete fee">
+                                <i class="bi-trash3"></i>
+                            </div>
+                        </div>
+
+                        <div class="alert-list-back-div">
+                            <div class="alert-list">
+                                <div><span>School Bus Fees:</span></div>
+                                <div><span><s>N</s>10,000</span></div>
+                            </div>
+
+                            <div class="delete-div" title="Click to delete fee">
+                                <i class="bi-trash3"></i>
+                            </div>
+                        </div>
+
+                        <div class="alert-list-back-div">
+                            <div class="alert-list">
+                                <div><span>Text Book Fees:</span></div>
+                                <div><span><s>N</s>5,000</span></div>
+                            </div>
+
+                            <div class="delete-div" title="Click to delete fee">
+                                <i class="bi-trash3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
                 </div>
             </div>
         </div>
