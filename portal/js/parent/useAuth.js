@@ -25,5 +25,17 @@ function _counDownOtp(timer){
 	  return () => clearInterval(countdown);
 }
 
+
+function _open_live_chat(){
+	$('.sidenavdiv, .sidenavdiv-in').animate({'margin-left':'0'},200);
+	$('.index-menu-back-div').animate({'margin-left':'-100%'},400);
+	$('.live-chat-back-div').animate({'margin-left':'0'},400);
+}
+
+function _close_side_nav(){
+	$('.sidenavdiv, .sidenavdiv-in').animate({'margin-left':'-100%'},200);
+	$('.index-menu-back-div,.live-chat-back-div').animate({'margin-left':'-100%'},400);
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

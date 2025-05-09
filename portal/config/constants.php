@@ -45,10 +45,12 @@
 	var userIpAddress = "<?php echo $userIpAddress;?>"; /// For User IP Address //
 	var userDeviceId = "<?php echo $userDeviceId;?>"; /// For User Device Id //
 
-	var parentLocalUrl=websiteUrl+'/config/parent/code';
 	var adminLocalUrl=websiteUrl+'/config/admin/code';
+	var parentPortalLocalUrl=websiteUrl+'/config/parent/code';
 	var adminPortalLocalUrl=websiteUrl+'/config/admin/operations/code'; 
 	var adminPortalUrl=websiteUrl+'/admin'; /// For Portal Url //
 	var adminUrl=websiteUrl+'/admin/login'; /// For Admin Url //
+	var parentLoginUrl=websiteUrl+'/parent/login'; /// For Parent Portal Url //
+	var parentPortalUrl=websiteUrl+'/parent'; /// For Parent Login Url //
 	var studentPixPath=websiteUrl+'/uploaded_files/studentPix'; /// For Product Pix Path //
 </script>

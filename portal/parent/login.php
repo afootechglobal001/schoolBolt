@@ -24,36 +24,45 @@
             <div class="form-back-div">
                 <div class="form-div" data-aos="fade-right" data-aos-duration="1600">
                     <div class="top-div">
-                        <div class="logo-div"><img src="<?php echo $websiteUrl ?>/all-images/images/login-icon.png" alt="Leaders Tutor logo" /></div>
+                        <div class="logo-div"><img src="<?php echo $websiteUrl?>/images/icon.png" alt="<?php echo $appName ?> logo" /></div>
                         <h1>👋 Hi Parent<br><span>It’s really nice to see you</span></h1>
                     </div>
 
                     <div class="inner-form">
                         <div class="alert alert-success login-form-alert">
-                            Kindly, provide your <span>Email Address</span> to Login
+                            Kindly, provide your <span>Login Details</span> to Proceed
                         </div>
 
-                        <div class="text_field_container" id="genderId_container">
+                        <div class="text_field_container" id="parentId_container">
                             <script>
                                 selectField({
-                                    id: 'genderId',
+                                    id: 'parentId',
                                     title: 'Select Parent Type'
                                 });
                             </script>
                         </div>
 
-                        <div class="text_field_container" id="userName_container">
+                        <div class="text_field_container" id="fatherEmail_container">
                             <script>
                                 textField({
-                                    id: 'userName',
-                                    title: 'Enter Your Email Address'
+                                    id: 'fatherEmail',
+                                    title: 'Parent Email'
                                 });
                             </script> 
                         </div>
 
-                        <button class="btn" title="Proceed" id="proceed_btn" onclick="_getForm({page:'otpForm', url: parentLocalUrl});">Proceed <i class="bi-arrow-right"></i></button>
+                        <div class="text_field_container" id="mobileNumber_container">
+                            <script>
+                                textField({
+                                    id: 'mobileNumber',
+                                    title: 'Mobile Number'
+                                });
+                            </script> 
+                        </div>
+
+                        <button class="btn" title="Proceed" id="login_btn" onclick="location.href='<?php echo $websiteUrl?>/parent'">Proceed <i class="bi-arrow-right"></i></button>
                     </div>
-                    <p>Need Help? <span>Contact Us</span></p>
+                    <p>Need Help? <span onclick="">Contact Us</span></p>
                 </div>
             </div>
         </div>
