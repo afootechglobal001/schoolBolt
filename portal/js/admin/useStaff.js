@@ -137,7 +137,7 @@ function _fetchStaffs() {
 								<td>
 									<div class="text-div">
 										<div>${emailAddress}</div> 
-										<div">${mobileNumber}</div>
+										<div>${mobileNumber}</div>
 									</div>
 								</td>
 								<td>${branchName}</td>

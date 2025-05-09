@@ -276,7 +276,7 @@ function _fetchBranches() {
 							<tr class="tb-row">
 								<td>${no}</td>
 								<td class="clickable-td" title="Click to view branch profile" onclick="_fetchEachBranches('${branchId}');">${name}</td>
-								<td>${smtpUsername}i</td>
+								<td>${smtpUsername}</td>
 								<td>${mobileNumber}</td>
 								<td>${address}</td>
 								<td class="clickable-td" onclick="_fetchEachSaff('${staffId}');">${managerName}</td>
@@ -519,4 +519,26 @@ function _updateBranch() {
 		_actionAlert('An unexpected error occurred! Please Try Again', false);
 		$("#updateBtn").prop("disabled", false);
 	}
+}
+
+
+
+function addSegmentation() {
+	const uniqueId = `pp_id_${Date.now()}`; // Create a unique ID
+	const template = `
+	  <div class="segmentBody">
+		<div class="text_field_container">
+		  <select id="pp_id" class="text_field ${uniqueId}">
+			<option value="" selected>- Select here -</option>
+		  </select>
+		  <div class="placeholder">--Select Fee--</div>
+		</div>
+		
+		<div class="text_field_container">
+		  <input class="text_field" type="number" id="amount" placeholder=""/>
+		  <div class="placeholder">Amount (<s>N</s>):</div>
+		</div>
+	  </div>
+	`;textField
+	$('.segmentList').append(template);
 }

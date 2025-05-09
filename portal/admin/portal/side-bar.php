@@ -6,7 +6,7 @@
         </div>
         <script>
             $(document).ready(function() {
-                let myPermissions = '7,10,13,45,15,34,41'.split(',');  // Convert to an array
+                let myPermissions = '7,10,13,15,34,41'.split(',');  // Convert to an array
                 rolePermissionIds.split(',').forEach(permissionId => {
                     if (myPermissions.includes(permissionId) && permissionElements[permissionId]) {
                     $(".nav-back-div").append(permissionElements[permissionId]); // Append dynamically
