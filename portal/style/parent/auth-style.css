@@ -7,7 +7,7 @@
     height: 100%;
     padding: 0px;
     margin: 0px;
-    background: #03001e;
+    background: #f4f4f5;
 }
 
 .login-session .graphics-div{
@@ -47,7 +47,7 @@
 }
 
 .login-session .graphics-div .content h2{
-    color: var(--white-color);
+    color: #444;
     text-align: center;
     font-size: 30px;
     line-height: 40px;
@@ -115,7 +115,7 @@
 }
 
 .login-session .login-div .form-back-div .form-div .top-div h1{
-    color: var(--primary-color);
+    color: #444;
     font-size: 35px;
     line-height: 45px;
     padding: 0px;
@@ -148,7 +148,7 @@
     border-radius: 5px;
     font-family: sub-title-font;
     font-size: 16px;
-    background: var(--primary-color);
+    background: #444444;
     color: var(--white-color);
     cursor: pointer;
     transition: all 0.2s ease-in 0.2s;

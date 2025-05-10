@@ -71,14 +71,10 @@ if(!$checkSession){
                          LIMIT 1) AS updatedBy
                 ");
 
-                
-                
                 $payableAmountDataFetch = mysqli_fetch_assoc($payableAmountDataQuery);
                 $updatedBy=$payableAmountDataFetch['updatedBy'];
                 $payableAmount = $payableAmountDataFetch['payableAmount'];
                 $classDataFetch['payableAmount'] = (is_null($payableAmount) || $payableAmount === '') ? '0.00' : $payableAmount;
-
-
 
                  /////////////////// for  $updatedBy
                 $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
@@ -88,9 +84,6 @@ if(!$checkSession){
             $classData[] = $classDataFetch;
         }
         $fetchQuery['classData']= $classData;
-
-
-
         $response['data'][] = $fetchQuery;
     }
 //////////////////////////////////////////////////////////////////////////////////////////////
