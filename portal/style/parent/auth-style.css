@@ -60,7 +60,7 @@
  
 
 .login-session .login-div{
-    position: absolute;
+    position: fixed;
     width:50%;
     height: 100%;
     right: 0px;
@@ -73,7 +73,8 @@
 }
 
 .login-session .login-div .form-back-div {
-    padding: 40px 20px;
+    height: 700px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -133,7 +134,7 @@
     flex-direction: column;
     gap: 20px;
     border-bottom: var(--sub-body-color) 1px solid;
-    padding-bottom: 30px;
+    padding-bottom: 25px;
 }
 
 .login-form-alert{
@@ -186,15 +187,18 @@
     .login-session .login-div{
         width:100%;
     }
-    .login-session .login-div .form-back-div .form-div .logo-div{
+} 
+
+@media (max-height: 700px) {
+    .login-session .login-div {
         display: block;
     }
-} 
+}
+
 @media all and (max-width:440px) {
     .login-session .login-div .form-back-div .form-div{
         width: 90%;    
     }
-    
 }     
 
 

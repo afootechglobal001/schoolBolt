@@ -93,27 +93,6 @@ function _clickOption(selectedOption, id, value) {
 };
 
 
-
-
-function _getSelectFeesOptions(fieldId){
-	const data=[
-		{
-			'optionId': true,
-			'optionName': 'MANDATORY',
-		},
-		{
-			'optionId': false,
-			'optionName': 'NOT MANDATORY',
-		}
-	]
-
-	for (let i = 0; i < data.length; i++) {
-		const id = data[i].optionId;
-		const value = data[i].optionName;
-		$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
-	}	
-}
-
 ///// Admin SelectFields ///////////
 function _getSelectStatusId(fieldId, statusIds){
 	try {

@@ -520,25 +520,3 @@ function _updateBranch() {
 		$("#updateBtn").prop("disabled", false);
 	}
 }
-
-
-
-function addSegmentation() {
-	const uniqueId = `pp_id_${Date.now()}`; // Create a unique ID
-	const template = `
-	  <div class="segmentBody">
-		<div class="text_field_container">
-		  <select id="pp_id" class="text_field ${uniqueId}">
-			<option value="" selected>- Select here -</option>
-		  </select>
-		  <div class="placeholder">--Select Fee--</div>
-		</div>
-		
-		<div class="text_field_container">
-		  <input class="text_field" type="number" id="amount" placeholder=""/>
-		  <div class="placeholder">Amount (<s>N</s>):</div>
-		</div>
-	  </div>
-	`;textField
-	$('.segmentList').append(template);
-}

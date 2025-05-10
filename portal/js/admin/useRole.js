@@ -109,7 +109,7 @@ function _createUpdateRole() {
 					_actionAlert('An error occurred while processing your request: ' + error, false);
 					$("#submitBtn").html(btn_text).prop("disabled", false);
 				}
-			});
+			});				
 		}
 	} catch (error) {
 		_actionAlert('An unexpected error occurred: ' + error.message, false);
