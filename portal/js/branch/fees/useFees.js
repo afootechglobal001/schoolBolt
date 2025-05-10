@@ -1,32 +1,3 @@
-function addSegmentation() {
-    const fieldId = `fees_${Date.now()}`;
-
-    const template = `
-        <div class="segmentBody">
-            <div class="text_field_container" id="${fieldId}_container"></div>
-
-            <div class="text_field_container">
-                <input class="text_field" type="number" id="amount" placeholder=""/>
-                <div class="placeholder">Amount (<s>N</s>):</div>
-            </div>                            
-        </div>
-    `;
-    $('.segmentList').append(template);
-
-    // Create Select Field for Fees Category with dynamic fieldId
-    selectField({
-        id: fieldId,
-        title: 'Select Fees Category'
-    });
-
-    // Populate Fees Options
-    _getSelectFeesSettings(fieldId);
-}
-
-
-
-
-
 function _getSelectFeesOptions(fieldId){
 	const data=[
 		{
@@ -409,39 +380,37 @@ function _fetchEachFeeComputeGeneral(branchId, departmentId, classId) {
 	}
 }
 
+function _clearData() {
+    $('#feesId').val('');
+
+    selectField({
+        id: 'feesId',
+        title: 'Select fee category',
+    });
+    _getSelectFeesSettings('feesId');
+
+    $('#amount').val('');
+}
 
 
 function _createFeeCompute() {
-      let getEachFeeComputeGeneral = JSON.parse(sessionStorage.getItem("getEachFeeComputeGeneral"));
+    let getEachFeeComputeGeneral = JSON.parse(sessionStorage.getItem("getEachFeeComputeGeneral"));
 	try {
 
-		 const paymentSegment = [];
-  // Get all segmentBody elements
-  const segmentBodies = document.querySelectorAll('.segmentBody');
-  segmentBodies.forEach(segmentBody => {
-    // Get the purpose and amount values
-    const fieldId = segmentBody.querySelector('#fieldId').value;
-    const sub_amount = segmentBody.querySelector('#amount').value;
-    if (fieldId && sub_amount) {
-      // Add to paymentSegment if both purpose and amount are valid
-      paymentSegment.push({
-        fieldId: parseFloat(fieldId),
-        sub_amount: parseFloat(sub_amount),
-      });
-    }
-  });
-  if (paymentSegment.length===0) {
-    $('#fieldId').addClass("issue");
-    _actionAlert('Provide payment purpose and amount to continue', false);
-  return;
-  }
+		const feesId = $('#feesId').val();
 		const amount = $('#amount').val();
 
 		$('#feesId, #amount').removeClass('issue');
 
+		if (!feesId) {
+			$('#feesId').addClass('issue');
+			_actionAlert('Select fee category to continue', false);
+			return;
+		}
+
 		if (!amount) {
 			$('#amount').addClass('issue');
-			_actionAlert('Provide fees amount continue', false);
+			_actionAlert('Provide fee amount to continue', false);
 			return;
 		}
 
@@ -451,12 +420,12 @@ function _createFeeCompute() {
 			$("#submitBtn").prop("disabled", true);
 
 			const formData = new FormData();
-			formData.append("paymentSegment", paymentSegment);
+			formData.append("feesId", feesId);
 			formData.append("amount", amount);
 
 			$.ajax({
 				type: "POST",
-				url: `${endPoint}/admin/branch/fees/create-fees-compute?branchId=${getEachFeeComputeGeneral.branchId}$departmentId=${getEachFeeComputeGeneral.departmentId}$classId=${getEachFeeComputeGeneral.classId}`,
+				url: `${endPoint}/admin/branch/fees/create-fees-compute?branchId=${getEachFeeComputeGeneral.branchData.branchId}&departmentId=${getEachFeeComputeGeneral.departmentData.departmentId}&classId=${getEachFeeComputeGeneral.classData.classId}`,
 				data: formData,
                 dataType: "json",
 				contentType: false,
@@ -467,14 +436,15 @@ function _createFeeCompute() {
 					const success = info.success;
 					const message = info.message;
 
-					if (success=== true) {
+					if (success === true) {
                         _actionAlert(message, true);
-                        _getActiveBranchPage({divid:'branch_fees_computaion_page', page: 'branch_fees_computaion_page', url: adminPortalLocalUrl});
-                        _alertClose(2);
-				} else {
-					_actionAlert(message, false);
-				}
-				$("#submitBtn").html(btnText).prop("disabled", false);
+                        _fetchFeeComputeBreakDown();
+                        _clearData()
+                        _getActiveBranchPage({ divid: 'branch_fees_computaion_page', page: 'branch_fees_computaion_page', url: adminPortalLocalUrl });
+                    } else {
+                        _actionAlert(message, false);
+                    }
+				    $("#submitBtn").html(btnText).prop("disabled", false);
 			},
 				error: function (error) {
 					_actionAlert('An error occurred while processing your request! Please Try Again', false);
@@ -486,4 +456,101 @@ function _createFeeCompute() {
 		_actionAlert('An unexpected error occurred! Please Try Again', false);
 		$("#submitBtn").prop("disabled", false);
 	}
+}
+
+
+function _fetchFeeComputeBreakDown() { 
+    let getEachFeeComputeGeneral = JSON.parse(sessionStorage.getItem("getEachFeeComputeGeneral"));
+    $('#pageContent2').html('<div class="ajax-loader pages-ajax-loader form-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");
+    try {
+        $.ajax({
+            type: "GET",
+            url: `${endPoint}/admin/branch/fees/fetch-fees-compute?branchId=${getEachFeeComputeGeneral.branchData.branchId}&departmentId=${getEachFeeComputeGeneral.departmentData.departmentId}&classId=${getEachFeeComputeGeneral.classData.classId}`,
+            dataType: "json", 
+            cache: false,   
+            headers: getAuthHeaders(true),
+            success: function(info) {
+                const fetch = info.data;
+                const success = info.success;
+
+                if (success === true) {
+                    let text = `
+                    <div class="alert alert-success form-alert">
+                        <div class="alert-list-div">
+                            <span>Fees Breakdown</span>
+                    `;
+
+                    for (let i = 0; i < fetch.length; i++) {
+                        const fetchData = fetch[i];
+                        const fcId = fetchData.fcId;
+                        const amount = fetchData.amount;
+                        const feesName = fetchData.feesData.feesName;
+
+                        text += `
+                        <div class="alert-list-back-div" id="fees_${fcId}">
+                            <div class="alert-list">
+                                <div>${feesName}:</div>
+                                <div><span><s>N</s>${amount}</span></div>
+                            </div>
+
+                            <div class="delete-div" id="delete_btn" title="Click to delete fee" onclick="deleteComputeBreakDown('${fcId}');">
+                                <i class="bi-trash3"></i>
+                            </div>
+                        </div>
+                        `;
+                    }
+
+                    text += `
+                        </div>
+                    </div>
+                    `;
+
+                    $('#pageContent2').html(text);
+                } else {
+                    $('#pageContent2').html('');
+                }
+            },
+            error: function(textStatus, errorThrown) {
+                console.error("AJAX Error: ", textStatus, errorThrown);
+                _actionAlert('An error occurred while fetching data! Please try again.', false);
+            }
+        });
+    } catch (error) {
+        _alertClose();
+        console.error("Error: ", error);
+        _actionAlert('An unexpected error occurred! Please try again.', false);
+    }
+}
+
+
+function deleteComputeBreakDown(fcId) {
+    if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
+        const btn = $("#del_btn_" + fcId);
+        btn.html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>').prop('disabled', true);
+
+        $.ajax({
+            type: "GET",
+            url: `${endPoint}/admin/branch/fees/delete-fees-compute?fcId=${fcId}`,
+            dataType: "json", 
+            cache: false,   
+            headers: getAuthHeaders(true),
+            success: function(info) {
+                if (info.success) {
+                    $('#fees_' + fcId).fadeOut(300);
+                     _actionAlert(info.message, true);
+                    _getActiveBranchPage({ divid: 'branch_fees_computaion_page', page: 'branch_fees_computaion_page', url: adminPortalLocalUrl });
+                } else {
+                    _actionAlert(info.message, false);
+                    const response = info.response;
+                    if (response < 100) {
+                        _logOut();
+                    }
+                }
+            },
+            error: function(textStatus, errorThrown) {
+                console.error("AJAX Error: ", textStatus, errorThrown);
+                _actionAlert('An error occurred while deleting. Please try again', false);
+            }
+        });
+    }
 }

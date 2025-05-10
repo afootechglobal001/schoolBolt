@@ -1233,7 +1233,7 @@
                             selectField({
                                 id: 'feesOption',
                                 title: 'Mandate Fees?',
-                                fieldValue: fetchedOption, 
+                                fieldValue: fetchedOption,
                                 fieldLabel: fetchedOption
                             });
                             _getSelectFeesOptions('feesOption');
@@ -1255,12 +1255,14 @@
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent">
-        <script>_fetchFeeComputeGeneral();</script>
+        <script>
+            _fetchFeeComputeGeneral();
+        </script>
     </div>
 <?php } ?>
 
 <?php if ($page == 'branch_fees_computaion_form') { ?>
-    <script>getEachFeeComputeGeneral = JSON.parse(sessionStorage.getItem("getEachFeeComputeGeneral"));</script>	
+    <script>getEachFeeComputeGeneral = JSON.parse(sessionStorage.getItem("getEachFeeComputeGeneral"));</script>
 
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
@@ -1274,8 +1276,8 @@
             <div class="inner-container">
                 <div>
                     <div class="alert alert-success form-alert">Kindly fill the form below to <span> COMPUTE FEES</span> for <span id="departmentName"></span>, <span id="className"></span></div>
-                     <script>
-                        $(document).ready(function () {
+                    <script>
+                        $(document).ready(function() {
                             $("#departmentName").html(getEachFeeComputeGeneral.departmentData.departmentName);
                             $("#className").html(getEachFeeComputeGeneral.classData.className);
                         });
@@ -1288,54 +1290,34 @@
                     </div>
 
                     <div class="segmentList">
-                        <script> addSegmentation();</script>
+                        <div class="text_field_container" id="feesId_container">
+                            <script>
+                                selectField({
+                                    id: 'feesId',
+                                    title: 'Select fee category',
+                                });
+                                _getSelectFeesSettings('feesId');
+                            </script>
+                        </div>
+
+                        <div class="text_field_container" id="amount_container">
+                            <script>
+                                textField({
+                                    id: 'amount',
+                                    title: 'Amount (<s>N</s>)',
+                                    type: 'number'
+                                });
+                            </script>
+                        </div>
                     </div>
 
                     <div>
-                        <button type="button" class="add-btn" onClick="addSegmentation();"><i class="bi-plus"></i> Add fees segment</button>
+                        <button type="button" class="add-btn" id="submitBtn" onClick="_createFeeCompute();"><i class="bi-plus"></i> Add new fee</button>
                     </div>
                 </div>
 
-                <div class="alert alert-success form-alert">
-                    <div class="alert-list-div">
-                        <span>Fees Breakdown</span>
-                        <div class="alert-list-back-div">
-                            <div class="alert-list">
-                                <div><span>Tuition Fees:</span></div>
-                                <div><span><s>N</s>150,000</span></div>
-                            </div>
-
-                            <div class="delete-div" title="Click to delete fee">
-                                <i class="bi-trash3"></i>
-                            </div>
-                        </div>
-
-                        <div class="alert-list-back-div">
-                            <div class="alert-list">
-                                <div><span>School Bus Fees:</span></div>
-                                <div><span><s>N</s>10,000</span></div>
-                            </div>
-
-                            <div class="delete-div" title="Click to delete fee">
-                                <i class="bi-trash3"></i>
-                            </div>
-                        </div>
-
-                        <div class="alert-list-back-div">
-                            <div class="alert-list">
-                                <div><span>Text Book Fees:</span></div>
-                                <div><span><s>N</s>5,000</span></div>
-                            </div>
-
-                            <div class="delete-div" title="Click to delete fee">
-                                <i class="bi-trash3"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
+                <div class="fetch-container" id="pageContent2">
+                    <script>_fetchFeeComputeBreakDown();</script>
                 </div>
             </div>
         </div>

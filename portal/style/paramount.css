@@ -369,6 +369,7 @@ a {
 	justify-content: space-between;
 	padding: 5px 0px;
 	border-bottom:#b6b6b6 1px dashed;
+	font-size: 11px;
 }
 
 .alert .alert-list-div .alert-list span{

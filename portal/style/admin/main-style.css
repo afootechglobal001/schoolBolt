@@ -3542,6 +3542,9 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	top: 45%;
 }
 
+.form-ajax-loader {
+	top: 75%;
+}
 
 .user-profile-div .profile-content-div .field-back-div .user-in{ 
     width: calc(100% - 40px);
