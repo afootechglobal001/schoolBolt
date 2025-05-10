@@ -1183,59 +1183,29 @@
         <span><i class="bi-credit-card"></i> BRANCH FEES CATEGORY</span>
 
         <div class="btn-container">
-            <button class="btn" title="ADD FEES" onclick="_getForm({page: 'branch_fees_reg', layer:2, url: adminPortalLocalUrl});"><i class="bi-plus-square"></i> ADD FEES</button>
+            <button class="btn" title="ADD FEES" onclick="sessionStorage.removeItem('getEachEachFeesSettings'); _getForm({page: 'branch_fees_reg', layer:2, url: adminPortalLocalUrl});"><i class="bi-plus-square"></i> ADD FEES</button>
         </div>
     </div>
 
     <div class="table-div animated fadeIn">
         <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-            <thead>
-                <tr class="tb-col">
-                    <th>sn</th>
-                    <th>Fees Name</th>
-                    <th>Fees Option</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr class="tb-row">
-                    <td>1</td>
-                    <td>Tuition Fees</td>
-                    <td class="green-color">Mandatory</td>
-                    <td><button class="btn view-btn" title="Click to edit fees" onclick="">EDIT FEES</button></td>
-                </tr>
-
-                <tr class="tb-row">
-                    <td>2</td>
-                    <td>School Bus Fees</td>
-                    <td class="orange-color">Not Mandatory</td>
-                    <td><button class="btn view-btn" title="Click to edit fees" onclick="">EDIT FEES</button></td>
-                </tr>
-
-                <tr class="tb-row">
-                    <td>1</td>
-                    <td>Tuition Fees</td>
-                    <td class="green-color">Mandatory</td>
-                    <td><button class="btn view-btn" title="Click to edit fees" onclick="">EDIT FEES</button></td>
-                </tr>
-
-                <tr class="tb-row">
-                    <td>1</td>
-                    <td>Tuition Fees</td>
-                    <td class="green-color">Mandatory</td>
-                    <td><button class="btn view-btn" title="Click to edit fees" onclick="">EDIT FEES</button></td>
-                </tr>
-            </tbody>
+            <script>
+                _fetchFeesSettings();
+            </script>
         </table>
     </div>
 <?php } ?>
 
 <?php if ($page == 'branch_fees_reg') { ?>
+    <script>
+        getEachEachFeesSettings = JSON.parse(sessionStorage.getItem("getEachEachFeesSettings"));
+        $('#pageTitle, #pageTitle2').html(getEachEachFeesSettings?.feesId ? 'UPDATE FEES' : 'ADD A NEW FEES');
+    </script>
+
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
-                <span id="panel-title"><i class="bi-plus-square"></i> ADD A NEW FEES</span>
+                <span id="pageTitle"><i class="bi-plus-square"></i> ADD A NEW FEES</span>
                 <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
         </div>
@@ -1243,30 +1213,36 @@
         <div class="container-back-div">
             <div class="inner-container">
                 <div>
-                    <div class="alert alert-success form-alert">Kindly fill the form below to <span> ADD A NEW FEES</span></div>
+                    <div class="alert alert-success form-alert">Kindly fill the form below to <span id="pageTitle2"> ADD A NEW FEES</span></div>
                 </div>
 
                 <div class="text_field_container" id="feesName_container">
                     <script>
                         textField({
                             id: 'feesName',
-                            title: 'Fee Name'
+                            title: 'Fee Name',
+                            value: getEachEachFeesSettings?.feesName ?? ''
                         });
                     </script>
                 </div>
 
-                <div class="text_field_container" id="optionId_container">
+                <div class="text_field_container" id="feesOption_container">
                     <script>
-                        selectField({
-                            id: 'optionId',
-                            title: 'Select Option',
+                        $(document).ready(function() {
+                            const fetchedOption = getEachEachFeesSettings?.feesOption;
+                            selectField({
+                                id: 'feesOption',
+                                title: 'Mandate Fees?',
+                                fieldValue: fetchedOption, 
+                                fieldLabel: fetchedOption
+                            });
+                            _getSelectFeesOptions('feesOption');
                         });
-                        _getSelectFeesOptions('optionId');
                     </script>
                 </div>
 
                 <div>
-                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick="_createUpdateFeesSettings();"> <i class="bi-check"></i> SUBMIT </button>
                 </div>
             </div>
         </div>
@@ -1279,117 +1255,13 @@
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent">
-        <div class="pages-toggle-div">
-            <div class="pages-toggle-title" onclick="_collapse('view1');" title="Click to view department">
-                <h3>KINDERGARTEN</h3>
-                <div class="expand-div" id="view1num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div>
-            </div>
-
-            <div class="toggle-expand-div" id="view1answer" style="display: none;">
-                <div class="table-div animated fadeIn">
-                    <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-                        <thead>
-                            <tr class="tb-col">
-                                <th>sn</th>
-                                <th>Department</th>
-                                <th>Class</th>
-                                <th>Total Payable Amount</th>
-                                <th>Updated By</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr class="tb-row">
-                                <td>1</td>
-                                <td>KINDERGARTEN</td>
-                                <td>KG 1</td>
-                                <td><s>N</s>150,000</td>
-                                <td>
-                                    <div class="text-div">
-                                        <div class="bold-font">MR ADEBOYE OLUWATOBI</div>
-                                        <div>2025-05-05 12:02:20</div>
-                                    </div>
-                                </td>
-                                <td><button class="btn view-btn" title="Click to compute fees" onclick="_getForm({page: 'branch_fees_computaion_form', layer:2, url: adminPortalLocalUrl});">COMPUTE FEES</button></td>
-                            </tr>
-
-                            <tr class="tb-row">
-                                <td>2</td>
-                                <td>KINDERGARTEN</td>
-                                <td>KG 2</td>
-                                <td><s>N</s>800,000</td>
-                                <td>
-                                    <div class="text-div">
-                                        <div class="bold-font">MR AHMED ODELAKIN</div>
-                                        <div>2025-05-05 12:02:20</div>
-                                    </div>
-                                </td>
-                                <td><button class="btn view-btn" title="Click to compute fees" onclick="_getForm({page: 'branch_fees_computaion_form', layer:2, url: adminPortalLocalUrl});">COMPUTE FEES</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="pages-toggle-div">
-            <div class="pages-toggle-title" onclick="_collapse('view2');" title="Click to view department">
-                <h3>NURSERY</h3>
-                <div class="expand-div" id="view2num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div>
-            </div>
-
-            <div class="toggle-expand-div" id="view2answer" style="display: none;">
-                <div class="table-div animated fadeIn">
-                    <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-                        <thead>
-                            <tr class="tb-col">
-                                <th>sn</th>
-                                <th>Department</th>
-                                <th>Class</th>
-                                <th>Total Payable Amount</th>
-                                <th>Updated By</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr class="tb-row">
-                                <td>1</td>
-                                <td>NURSERY</td>
-                                <td>NURSERY 1</td>
-                                <td><s>N</s>150,000</td>
-                                <td>
-                                    <div class="text-div">
-                                        <div>MR ADEBOYE OLUWATOBI</div>
-                                        <div>2025-05-05 12:02:20</div>
-                                    </div>
-                                </td>
-                                <td><button class="btn view-btn" title="Click to compute fees" onclick="_getForm({page: 'branch_fees_computaion_form', layer:2, url: adminPortalLocalUrl});">COMPUTE FEES</button></td>
-                            </tr>
-
-                            <tr class="tb-row">
-                                <td>2</td>
-                                <td>NURSERY</td>
-                                <td>NURSERY 2</td>
-                                <td><s>N</s>800,000</td>
-                                <td>
-                                    <div class="text-div">
-                                        <div>MR AHMED ODELAKIN</div>
-                                        <div>2025-05-05 12:02:20</div>
-                                    </div>
-                                </td>
-                                <td><button class="btn view-btn" title="Click to compute fees" onclick="_getForm({page: 'branch_fees_computaion_form', layer:2, url: adminPortalLocalUrl});">COMPUTE FEES</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <script>_fetchFeeComputeGeneral();</script>
     </div>
 <?php } ?>
 
 <?php if ($page == 'branch_fees_computaion_form') { ?>
+    <script>getEachFeeComputeGeneral = JSON.parse(sessionStorage.getItem("getEachFeeComputeGeneral"));</script>	
+
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
@@ -1401,7 +1273,13 @@
         <div class="container-back-div">
             <div class="inner-container">
                 <div>
-                    <div class="alert alert-success form-alert">Kindly fill the form below to <span> COMPUTE FEES</span></div>
+                    <div class="alert alert-success form-alert">Kindly fill the form below to <span> COMPUTE FEES</span> for <span id="departmentName"></span>, <span id="className"></span></div>
+                     <script>
+                        $(document).ready(function () {
+                            $("#departmentName").html(getEachFeeComputeGeneral.departmentData.departmentName);
+                            $("#className").html(getEachFeeComputeGeneral.classData.className);
+                        });
+                    </script>
                 </div>
 
                 <div class="segmentDiv">
@@ -1410,13 +1288,11 @@
                     </div>
 
                     <div class="segmentList">
-                        <script>
-                            addSegmentation();
-                        </script>
+                        <script> addSegmentation();</script>
                     </div>
 
                     <div>
-                        <button type="button" class="add-btn" onClick="addSegmentation()"><i class="bi-plus"></i> Add fees segment</button>
+                        <button type="button" class="add-btn" onClick="addSegmentation();"><i class="bi-plus"></i> Add fees segment</button>
                     </div>
                 </div>
 
