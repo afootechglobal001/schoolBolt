@@ -293,7 +293,7 @@ function _fetchFeeComputeGeneral() {
                                                         const classInfo = classData[j];
                                                         const classId = classInfo.classId;
                                                         const className = classInfo.className;
-                                                        const payableAmount = classInfo.payableAmount;
+                                                        const payableAmount = thousandSeperator(classInfo.payableAmount);
                                                         const updatedBy = classInfo.updatedBy?.fullname;
 
                                                         text += `
@@ -483,7 +483,7 @@ function _fetchFeeComputeBreakDown() {
                     for (let i = 0; i < fetch.length; i++) {
                         const fetchData = fetch[i];
                         const fcId = fetchData.fcId;
-                        const amount = fetchData.amount;
+                        const amount = thousandSeperator(fetchData.amount);
                         const feesName = fetchData.feesData.feesName;
 
                         text += `
