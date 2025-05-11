@@ -1,4 +1,4 @@
-<?php if ($page == 'student_profile') { ?>
+<?php if ($page == 'studentProfile') { ?>
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
         <div class="top-panel-div">
             <div class="inner-top">
@@ -9,17 +9,17 @@
 
         <div class="profile-content-div">
             <div class="bg-img">
-                <div class="mini-profile">
+                <!-- <div class="mini-profile">
                     <label>
                         <div class="img-div" onClick="takeSnapShot('updateStaffPix')" id="cam-pix">
-                            <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/default.jpg" alt="Profile Image">
+                            <img src="<?php //echo $websiteUrl ?>/uploaded_files/staffPix/default.jpg" alt="Profile Image">
                         </div>
                     </label>
 
                     <div class="text-back-div">
                         <div class="inner-text">
                             <div class="text-div">
-                                <div class="name" id="">Paul Emmanuel James</div>
+                                <div class="name" id="fullNameText"></div>
 
                                 <div class="text">
                                     ID:<strong>STUDENT05020250328113504</strong> | <strong>Junior - JSS 2 B</strong>
@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -52,13 +52,18 @@
                         _getActiveStudentPage({
                             divid: 'studentDashbaord',
                             page: 'studentDashbaord',
-                            url: parentPortalLocalUrl
+                            url: parentPortalLocalUrl,
+                            ids: ids
                         });
                     </script>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+  _getFetchEachStudentDetails(ids);
+</script>
+
 <?php } ?>
 
 

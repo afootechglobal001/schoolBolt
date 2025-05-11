@@ -1942,6 +1942,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	gap: 5px;
 	transition: 0.3s ease-in;
 	cursor: pointer;
 }
@@ -3543,7 +3544,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 }
 
 .form-ajax-loader {
-	top: 75%;
+	top: 85%;
 }
 
 .user-profile-div .profile-content-div .field-back-div .user-in{ 

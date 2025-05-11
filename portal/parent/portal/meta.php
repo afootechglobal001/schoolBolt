@@ -15,4 +15,9 @@
 <script src="<?php echo $websiteUrl?>/js/paramount.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/textfield-selectfield.js?v=<?php echo $codeVersion?>"></script>
 
+<script>
+    let parentLoginData = JSON.parse(sessionStorage.getItem("parentLoginData"));
+    let sessionStudentData = JSON.parse(sessionStorage.getItem("studentsData"));
+</script>
+
 <script src="<?php echo $websiteUrl?>/js/parent/usePortal.js?v=<?php echo $codeVersion?>"></script>

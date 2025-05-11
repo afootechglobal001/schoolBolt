@@ -475,7 +475,7 @@ function _fetchFeeComputeBreakDown() {
 
                 if (success === true) {
                     let text = `
-                    <div class="alert alert-success form-alert">
+                    <div class="alert alert-success">
                         <div class="alert-list-div">
                             <span>Fees Breakdown</span>
                     `;
