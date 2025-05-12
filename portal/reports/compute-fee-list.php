@@ -7,6 +7,7 @@
     <link href="<?php echo $websiteUrl?>/style/report-style.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
     <link href="<?php echo $websiteUrl?>/style/paramount.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
     <script src="<?php echo $websiteUrl?>/js/jquery-v3.6.1.min.js"></script>
+    <script src="<?php echo $websiteUrl?>/js/paramount.js"></script>
     <title>Compute Fee List | <?php echo $clientName ?></title>
 </head>
 
@@ -72,6 +73,7 @@
                                         const NewFeesOption = (feesOption === "TRUE") ? "MANDATORY" : "NOT MANDATORY";
 	                                    const feesOptionColor = (feesOption === "TRUE") ? "green-color" : "orange-color";
                                         const amount = fetchFeesData.amount;
+                                        const formattedAmount = amount ? thousandSeperator(amount) : "00:00";
                                         const updatedTime = fetchFeesData.updatedTime;
 
                                         text +=`
@@ -81,7 +83,7 @@
                                                     <td>${className}</td>
                                                     <td>${feesName}</td>
                                                     <td class="${feesOptionColor}">${NewFeesOption}</td>
-                                                    <td>${amount}</td>
+                                                    <td><s>N</s>${formattedAmount}</td>
                                                 </tr>                                        
                                             </tbody>`;
                                     }
