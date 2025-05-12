@@ -12,7 +12,7 @@ function textField(options) {
     const template = type === "textarea"
         ? `
           <textarea class="text_area" id="${id}" placeholder="" rows="">${value}</textarea>
-          <div class="placeholder">${title}:</div>
+          <div class="placeholder">${title}</div>
         `
         : `
           <input class="text_field" type="${type}" id="${id}" placeholder="" value="${value}"
