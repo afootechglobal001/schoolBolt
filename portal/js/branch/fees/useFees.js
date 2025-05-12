@@ -352,7 +352,7 @@ function _fetchFeeComputeGeneral() {
 																text += `
 																<td>
 																	<div class="btn-div">
-																		<button class="btn view-btn print-btn" title="Click to print fees" onclick="">PRINT FEES</button>
+																		<button class="btn view-btn print-btn" title="Click to print fees" onclick="_printComputeFee('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">PRINT FEES</button>
 																		<button class="btn view-btn decline-btn" title="Click to decline fees" id="declineBtn_${fcId}" onclick="_declineFeesCompute('${fcId}');">DECLINE FEES</button>
 																	</div>
 																</td>`;
