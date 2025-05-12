@@ -21,6 +21,17 @@ if(!$checkSession){
         ]; 
         goto end;
 	}
+    ////////////////// for  $branchId
+    $branchDataQuery = mysqli_query($conn, "SELECT branchId, name AS branchName, session AS currentSession, termId FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+    $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
+    $session=$branchDataFetch['currentSession'];
+    $termId=$branchDataFetch['termId'];
+    
+    /////////////////// for  $termId
+    $termDataQuery = mysqli_query($conn, "SELECT termId, termName AS currentTerm FROM SETUP_TERM_TAB WHERE termId='$termId'");
+    $termDataFetch = mysqli_fetch_assoc($termDataQuery);
+    $branchDataFetch['termData'] = $termDataFetch;
+        
 
     $select = "SELECT * FROM BRANCH_DEPARTMENTS_TAB WHERE $clientIds AND branchId='$branchId'";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
@@ -29,6 +40,7 @@ if(!$checkSession){
         $response['response']=200;
         $response['success']=false;
         $response['message']="No Record found";
+        $response['branchData'] = $branchDataFetch;
         goto end;
     }
 
@@ -37,6 +49,7 @@ if(!$checkSession){
     $response['success']=true;
     $response['message']="FEES FETCH SUCCESFFULY!";
     $response['allRecordCount']=$allRecordCount;
+    $response['branchData'] = $branchDataFetch;
     $response['data'] = array(); // Initialize the data array
 
     while ($fetchQuery = mysqli_fetch_assoc($query)) {
@@ -51,35 +64,32 @@ if(!$checkSession){
         while ($classDataFetch = mysqli_fetch_assoc($classDataQuery)) {
             $classId=$classDataFetch['classId'];
             
-            ////////////////// for  payableAmount
-               $payableAmountDataQuery = mysqli_query($conn, "
-                    SELECT 
-                        (SELECT IFNULL(SUM(amount), 0.00) 
-                         FROM FEES_COMPUTE_TAB 
-                         WHERE $clientIds 
-                           AND branchId='$branchId' 
-                           AND departmentId='$departmentId' 
-                           AND classId='$classId') AS payableAmount,
-                        
-                        (SELECT updatedBy 
-                         FROM FEES_COMPUTE_TAB 
-                         WHERE $clientIds 
-                           AND branchId='$branchId' 
-                           AND departmentId='$departmentId' 
-                           AND classId='$classId' 
-                         ORDER BY updatedTime DESC 
-                         LIMIT 1) AS updatedBy
-                ");
+            /////////////////// for  $FEES_COMPUTE_SUMMARY_TAB
+            $feesSummaryDataQuery = mysqli_query($conn, "SELECT * FROM FEES_COMPUTE_SUMMARY_TAB WHERE $clientIds  AND session='$session' AND termId='$termId' AND departmentId='$departmentId' AND classId='$classId'");
+            $feesSummaryDataFetch = mysqli_fetch_assoc($feesSummaryDataQuery);
+            $payableAmount=$feesSummaryDataFetch['payableAmount'];
+            $payableAmount = (is_null($payableAmount) || $payableAmount === '') ? '0.00' : $payableAmount;
+            $statusId=$feesSummaryDataFetch['statusId'];
+            $statusId = (is_null($statusId) || $statusId === '') ? 8 : $statusId;
+            $updatedBy=$feesSummaryDataFetch['updatedBy'];
+            $approvedBy=$feesSummaryDataFetch['approvedBy'];
+            /////////////////// for  $feesSummaryData
+            $classDataFetch['feesSummaryData']=$feesSummaryDataFetch;
+            /////////////////// for  $statusId
+            $getStatusQuery = mysqli_query($conn, "SELECT * FROM SETUP_STATUS_TAB WHERE statusId ='$statusId'");
+            $geStatusFetch = mysqli_fetch_assoc($getStatusQuery);
+            $classDataFetch['statusData']= $geStatusFetch;
+                
+            /////////////////// for  $updatedBy
+            $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
+            $getUpdatedByfetch = mysqli_fetch_assoc($getUpdatedByQuery);
+            $classDataFetch['updatedBy']= $getUpdatedByfetch;
 
-                $payableAmountDataFetch = mysqli_fetch_assoc($payableAmountDataQuery);
-                $updatedBy=$payableAmountDataFetch['updatedBy'];
-                $payableAmount = $payableAmountDataFetch['payableAmount'];
-                $classDataFetch['payableAmount'] = (is_null($payableAmount) || $payableAmount === '') ? '0.00' : $payableAmount;
+             /////////////////// for  $approvedBy
+            $getApprovedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$approvedBy'");
+            $getApprovedByfetch = mysqli_fetch_assoc($getApprovedByQuery);
+            $classDataFetch['approvedBy']= $getApprovedByfetch;
 
-                 /////////////////// for  $updatedBy
-                $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
-                $getUpdatedByfetch = mysqli_fetch_assoc($getUpdatedByQuery);
-                $classDataFetch['updatedBy']= $getUpdatedByfetch;
 
             $classData[] = $classDataFetch;
         }

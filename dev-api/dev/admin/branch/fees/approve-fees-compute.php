@@ -12,11 +12,11 @@ if(!$checkSession){
 }
 	//////////////////declaration of variables//////////////////////////////////////
     $fcId = $_GET['fcId'];
-    mysqli_query($conn,"DELETE FROM FEES_COMPUTE_TAB WHERE fcId='$fcId'")or die (mysqli_error($conn));
+    mysqli_query($conn,"UPDATE FEES_COMPUTE_SUMMARY_TAB SET statusId=9, approvedBy='$loginStaffId', approvedTime=NOW() WHERE fcId='$fcId'")or die (mysqli_error($conn));
    
     $response['response']=200; 
     $response['success']=true;
-    $response['message']="FEES DELETED SUCCESFFULY!"; 
+    $response['message']="FEES APPROVED SUCCESFFULY!"; 
 //////////////////////////////////////////////////////////////////////////////////////////////
 end:
 echo json_encode($response);
