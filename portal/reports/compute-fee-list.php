@@ -24,11 +24,11 @@
                     <div class="text-div">
                         <h3 id="branchName"><script>$("#branchName").html(printComputeFeeByClassSession?.branchData?.branchName);</script></h3>
                         <div class="text">Address: <strong id="address"><script>$("#address").html(printComputeFeeByClassSession?.branchData?.address);</script></strong></div>
-                        <div class="text">Phone: <strong id="mobileNumber"><script>$("#mobileNumber").html(printComputeFeeByClassSession?.branchData?.mobileNumber);</script></strong> | Official Email: <strong id="smtpUsername"><script>$("#smtpUsername").html(printStudentByClassSession?.branchData?.smtpUsername);</script></strong></div> 
+                        <div class="text">Phone: <strong id="mobileNumber"><script>$("#mobileNumber").html(printComputeFeeByClassSession?.branchData?.mobileNumber);</script></strong> | Official Email: <strong id="smtpUsername"><script>$("#smtpUsername").html(printComputeFeeByClassSession?.branchData?.smtpUsername);</script></strong></div> 
                     </div>
                 </div>
             </div>
-            <div class="title-div"><span id="titleDetails">Loading...  </span>STUDENT'S LIST</div>
+            <div class="title-div"><span id="titleDetails">Loading...  </span>FEES LIST</div>
             <script>
                 $("#titleDetails").html(printComputeFeeByClassSession?.currentSession + ' - ' +
                 printComputeFeeByClassSession?.termData?.currentTerm + ' - ' +
@@ -50,14 +50,10 @@
                                 <thead>
                                     <tr class="tb-col">
                                         <th>sn</th>
-                                        <th>Session</th>
-                                        <th>Term</th>
-                                        <th>Department</th>
                                         <th>Class</th>
-                                        <th>Fee Name</th>
+                                        <th>Fees</th>
                                         <th>Fee Option</th>
                                         <th>Amount</th>
-                                        <th>updatedTime</th>
                                     </tr>
                                 </thead>`;
 
@@ -82,14 +78,10 @@
                                             <tbody>
                                                 <tr class="tb-row">
                                                     <td>${no}</td>
-                                                    <td>${currentSession}</td>
-                                                    <td>${termName}</td>
-                                                    <td>${departmentName}</td>
                                                     <td>${className}</td>
                                                     <td>${feesName}</td>
                                                     <td class="${feesOptionColor}">${NewFeesOption}</td>
                                                     <td>${amount}</td>
-                                                    <td>${updatedTime}</td>
                                                 </tr>                                        
                                             </tbody>`;
                                     }

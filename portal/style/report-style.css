@@ -247,6 +247,14 @@
     background: none;
 }
 
+.table-div .table .green-color{
+	color:rgba(9, 172, 77, 0.9);
+}
+
+.table-div .table .orange-color{
+	color:rgba(218, 90, 31, 0.87);
+}
+
 .table-div .table .tb-row span:hover{
 	color: var(--secondary-color);
 }

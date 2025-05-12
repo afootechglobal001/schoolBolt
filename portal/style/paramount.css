@@ -63,7 +63,7 @@ a {
 /*------text field--------------------------------------------------------------------------------------------*/
 .text_field_title {
 	font-size: 12px;
-	font-family: sub-body-font;
+	font-family: sub-title-font;
 	color: var(--sub-body-color);
 	margin-bottom: -10px;
 	margin-top: 10px;
