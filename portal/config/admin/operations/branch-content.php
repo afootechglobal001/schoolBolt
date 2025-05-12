@@ -1358,12 +1358,13 @@
                                                 const amount = fetchFeeData.amount;
 
                                                 $("#fetchedFeeTextbox").append(`
+                                                    <div class="text_field_title">${feesName}</div>
                                                     <div class="text_field_container" id="${feesId}_container"></div>
                                                 `);
 
                                                 textField({
                                                     id: feesId,
-                                                    title: `${feesName} AMOUNT (<s>N</s>)`,
+                                                    title: 'AMOUNT (<s>N</s>)',
                                                     type: 'number',
                                                     value: amount
                                                 });
