@@ -1524,7 +1524,42 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	background: var(--secondary-color);
 }
 
+.table-div .table .tb-row .btn-div{
+	display: flex;
+	gap: 5px;
+	background: none;
+}
 
+.table-div .table .tb-row .btn-div .view-btn{
+	min-width: 80px;
+	padding: 8px 8px;
+	font-size: 9px;
+}
+
+.table-div .table .tb-row .btn-div .approve-btn{
+	background:rgba(9, 172, 77, 0.95);
+	color: var(--white-color);
+}
+
+.table-div .table .tb-row .btn-div .approve-btn:hover{
+	opacity: .8
+}
+
+.table-div .table .tb-row .btn-div .decline-btn{
+	background:rgba(255, 0, 0, 0.916);
+}
+
+.table-div .table .tb-row .btn-div .decline-btn:hover{
+	opacity: .8
+}
+
+.table-div .table .tb-row .btn-div .print-btn{
+	background: #2DAAE1;
+}
+
+.table-div .table .tb-row .btn-div .print-btn:hover{
+	opacity: .8
+}
 
 
 
@@ -1934,10 +1969,10 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 
 .slide-form-div .container-back-div .inner-container .segmentDiv .add-btn{
 	border: none;
-	padding: 10px 20px;
+	padding: 10px 25px;
 	border-radius: 25px;
 	font-family: sub-title-font;
-	background:  rgba(97, 97, 97, 0.9);
+	background: var(--sub-body-color);
 	color: var(--white-color);
 	display: flex;
 	align-items: center;
@@ -1946,7 +1981,6 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	transition: 0.3s ease-in;
 	cursor: pointer;
 }
-
 
 .slide-form-div .container-back-div .inner-container .alert-list-back-div{
 	display: flex;

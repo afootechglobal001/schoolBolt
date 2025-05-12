@@ -53,7 +53,7 @@
                             divid: 'studentDashbaord',
                             page: 'studentDashbaord',
                             url: parentPortalLocalUrl,
-                            ids: ids
+                            ids: 'ids'
                         });
                     </script>
                 </div>
@@ -61,9 +61,8 @@
         </div>
     </div>
     <script>
-  _getFetchEachStudentDetails(ids);
+  _getFetchEachStudentDetails('ids');
 </script>
-
 <?php } ?>
 
 

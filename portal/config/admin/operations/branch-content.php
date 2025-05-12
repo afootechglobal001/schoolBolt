@@ -1251,7 +1251,7 @@
 
 <?php if ($page == 'branch_fees_computaion_page') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <span><i class="bi-credit-card"></i> DEPARTMENT FEES LIST</span>
+        <span><i class="bi-credit-card"></i> FEES LIST</span>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent">
@@ -1282,32 +1282,58 @@
                         <div class="alert-list-div">
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
+                                    <div>School:</div>
+                                    <div><span id="session">
+                                            <script>
+                                                $("#session").html(getEachFeeComputeGeneral.branchData.branchName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
                                     <div>Session:</div>
-                                    <div><span id="currentSession"></span></div>
+                                    <div><span id="currentSession">
+                                            <script>
+                                                $("#currentSession").html(getEachFeeComputeGeneral.currentSession);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Term:</div>
+                                    <div><span id="currentTerm">
+                                            <script>
+                                                $("#currentTerm").html(getEachFeeComputeGeneral.termData.currentTerm);
+                                            </script>
+                                        </span></div>
                                 </div>
                             </div>
 
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
                                     <div>Department:</div>
-                                    <div><span id="departmentName"></span></div>
+                                    <div><span id="departmentName">
+                                            <script>
+                                                $("#departmentName").html(getEachFeeComputeGeneral.departmentData.departmentName);
+                                            </script>
+                                        </span></div>
                                 </div>
                             </div>
 
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
                                     <div>Class:</div>
-                                    <div><span id="className"></span></div>
+                                    <div><span id="className">
+                                            <script>
+                                                $("#className").html(getEachFeeComputeGeneral.classData.className);
+                                            </script>
+                                        </span></div>
                                 </div>
                             </div>
-
-                            <script>
-                                $(document).ready(function() {
-                                    $("#currentSession").html(getEachFeeComputeGeneral.branchData.currentSession);
-                                    $("#departmentName").html(getEachFeeComputeGeneral.departmentData.departmentName);
-                                    $("#className").html(getEachFeeComputeGeneral.classData.className);
-                                });
-                            </script>
                         </div>
                     </div>
 
@@ -1316,37 +1342,41 @@
                             <span>Compute Fees Here</span>
                         </div>
 
-                        <div class="segmentList">
-                            <div class="text_field_container" id="feesId_container">
-                                <script>
-                                    selectField({
-                                        id: 'feesId',
-                                        title: 'Select fee category',
-                                    });
-                                    _getSelectFeesSettings('feesId');
-                                </script>
-                            </div>
+                        <div class="segmentList" id="fetchedFeeTextbox">
+                            <script>
+                                $(document).ready(function() {
+                                    let getEachFeeComputeGeneral = JSON.parse(sessionStorage.getItem("getEachFeeComputeGeneral"));
+                                    
+                                    if (getEachFeeComputeGeneral && getEachFeeComputeGeneral.data) {
+                                        const fetchArrayData = getEachFeeComputeGeneral.data;
 
-                            <div class="text_field_container" id="amount_container">
-                                <script>
-                                    textField({
-                                        id: 'amount',
-                                        title: 'Amount (<s>N</s>)',
-                                        type: 'number'
-                                    });
-                                </script>
-                            </div>
+                                        if (fetchArrayData.length > 0) {
+                                            for (let i = 0; i < fetchArrayData.length; i++) {
+                                                const fetchFeeData = fetchArrayData[i];
+                                                const feesName = fetchFeeData.feesName;
+                                                const feesId = fetchFeeData.feesId;
+                                                const amount = fetchFeeData.amount;
+
+                                                $("#fetchedFeeTextbox").append(`
+                                                    <div class="text_field_container" id="${feesId}_container"></div>
+                                                `);
+
+                                                textField({
+                                                    id: feesId,
+                                                    title: `${feesName} AMOUNT (<s>N</s>)`,
+                                                    type: 'number',
+                                                    value: amount
+                                                });
+                                            }
+                                        }
+                                    }
+                                });
+                            </script>
                         </div>
 
                         <div>
-                            <button type="button" class="add-btn" title="Save" id="submitBtn" onClick="_createFeeCompute();"><i class="bi-save"></i> Save</button>
+                            <button type="button" class="add-btn" title="Save" id="submitBtn" onClick="saveFees();"><i class="bi-save"></i> Save</button>
                         </div>
-                    </div>
-
-                    <div class="fetch-container" id="pageContent2">
-                        <script>
-                            _fetchFeeComputeBreakDown();
-                        </script>
                     </div>
                 </div>
             </div>

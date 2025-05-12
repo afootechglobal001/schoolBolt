@@ -79,40 +79,88 @@ function _getFetchStudents() {
 }
 
 
-function _getFetchEachStudentDetails(studentIdToFind){
-	let sessionStudentData = JSON.parse(sessionStorage.getItem("sessionStudentData"));
+// function _getFetchEachStudentDetails(studentIdToFind){
+// 	let sessionStudentData = JSON.parse(sessionStorage.getItem("sessionStudentData"));
 
-	let allStudent=sessionStudentData.studentData;
-    const students = allStudent.find(s => s.studentId === studentIdToFind);
+// 	let allStudent = sessionStudentData.map(s => s.studentData);
 
-	let titleProfile='';
-	// let profileDetails ='';
+//    const students = allStudent.find(s => s.studentId === studentIdToFind);
+
+// 	alert(students.surName);
+// 	let titleProfile='';
+// 	// let profileDetails ='';
 		
-	titleProfile +=`	
-				<div class="mini-profile">
-                    <label>
-                        <div class="img-div" onClick="takeSnapShot('updateStaffPix')" id="cam-pix">
-                            <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/default.jpg" alt="Profile Image">
-                        </div>
-                    </label>
+// 	titleProfile +=`	
+// 				<div class="mini-profile">
+//                     <label>
+//                         <div class="img-div" onClick="takeSnapShot('updateStaffPix')" id="cam-pix">
+//                             <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/default.jpg" alt="Profile Image">
+//                         </div>
+//                     </label>
 
-                    <div class="text-back-div">
-                        <div class="inner-text">
-                            <div class="text-div">
-                                <div class="name">${students.surname}</div>
+//                     <div class="text-back-div">
+//                         <div class="inner-text">
+//                             <div class="text-div">
+//                                 <div class="name">${students.surName}</div>
 
-                                <div class="text">
-                                    ID:<strong>STUDENT05020250328113504</strong> | <strong>Junior - JSS 2 B</strong>
-                                    <div>
-                                        <div id="statusBtn" class="status-btn ACTIVE"><span>ACTIVE</span></div>
-                                    </div>
-                                </div>
+//                                 <div class="text">
+//                                     ID:<strong>STUDENT05020250328113504</strong> | <strong>Junior - JSS 2 B</strong>
+//                                     <div>
+//                                         <div id="statusBtn" class="status-btn ACTIVE"><span>ACTIVE</span></div>
+//                                     </div>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                     </div>
+// 				`;
+// 	$('#profile-title-div').html(titleProfile);
+
+		
+		
+// }
+
+
+
+function _getFetchEachStudentDetails(studentIdToFind) {
+    let sessionStudentData = JSON.parse(sessionStorage.getItem("sessionStudentData"));
+
+    const studentEntry = sessionStudentData.find(s => s.studentData.studentId === studentIdToFind);
+	console.log(studentEntry);
+	
+    if (!studentEntry) {
+        alert("Student not found!");
+        return;
+    }
+
+    const student = studentEntry.studentData;
+
+    alert(student.surName);
+
+    let titleProfile = `
+        <div class="mini-profile">
+            <label>
+                <div class="img-div" onClick="takeSnapShot('updateStaffPix')" id="cam-pix">
+                    <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/${student.passport}" alt="Profile Image">
+                </div>
+            </label>
+
+            <div class="text-back-div">
+                <div class="inner-text">
+                    <div class="text-div">
+                        <div class="name">${student.surName}</div>
+
+                        <div class="text">
+                            ID:<strong>${student.studentId}</strong> | <strong>${studentEntry.classData.className} - ${studentEntry.armData.armName}</strong>
+                            <div>
+                                <div id="statusBtn" class="status-btn ${student.statusName}"><span>${student.statusName}</span></div>
                             </div>
                         </div>
                     </div>
-				`;
-	$('#profile-title-div').html(titleProfile);
+                </div>
+            </div>
+        </div>
+    `;
 
-		
-		
-  }
+    $('#profile-title-div').html(titleProfile);
+}
+
