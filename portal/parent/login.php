@@ -28,39 +28,40 @@
                         <h1>👋 Hi Parent<br><span>It’s really nice to see you</span></h1>
                     </div>
 
-                    <div class="inner-form">
+                    <div class="inner-form" id="viewLogin">
                         <div class="alert alert-success login-form-alert">
                             Kindly, provide your <span>Login Details</span> to Proceed
                         </div>
 
-                        <div class="text_field_container" id="parentId_container">
+                        <div class="text_field_container" id="parentTypeId_container">
                             <script>
                                 selectField({
-                                    id: 'parentId',
+                                    id: 'parentTypeId',
                                     title: 'Select Parent Type'
                                 });
+                                _getSelectParentType('parentTypeId');
                             </script>
                         </div>
 
-                        <div class="text_field_container" id="fatherEmail_container">
+                        <div class="text_field_container" id="email_container">
                             <script>
                                 textField({
-                                    id: 'fatherEmail',
+                                    id: 'email',
                                     title: 'Parent Email'
                                 });
                             </script> 
                         </div>
 
-                        <div class="text_field_container" id="mobileNumber_container">
+                        <div class="text_field_container" id="phone_container">
                             <script>
                                 textField({
-                                    id: 'mobileNumber',
+                                    id: 'phone',
                                     title: 'Mobile Number'
                                 });
                             </script> 
                         </div>
 
-                        <button class="btn" title="Proceed" id="login_btn" onclick="location.href='<?php echo $websiteUrl?>/parent'">Proceed <i class="bi-arrow-right"></i></button>
+                        <button class="btn" title="Proceed" id="loginBtn" onclick="">Proceed <i class="bi-arrow-right"></i></button>
                     </div>
                     <p>Need Help? <span onclick="">Contact Us</span></p>
                 </div>

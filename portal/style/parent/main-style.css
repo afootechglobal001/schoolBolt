@@ -202,6 +202,10 @@ header .inner-div .mobile-logout:hover{
 	margin: 0px;
 }
 
+.mini-profile-div .profile-content .main-profile .inner-profile .pro-text-div h2 span{
+	font-size: 28px;
+}
+
 .mini-profile-div .profile-content .main-profile .inner-profile .pro-text-div .info{
 	display: flex;
     flex-direction: column;
@@ -380,11 +384,11 @@ header .inner-div .mobile-logout:hover{
    font-family: sub-title-font;
 }
 
-.content-div .dashboard-content .list .student-profile .details .text .info .active{
+.content-div .dashboard-content .list .student-profile .details .text .info .ACTIVE{
     background: #42732c;
 }
 
-.content-div .dashboard-content .list .student-profile .details .text .info .graduated{
+.content-div .dashboard-content .list .student-profile .details .text .info .GRADUATED{
     background:var(--primary-color);
 }
 
