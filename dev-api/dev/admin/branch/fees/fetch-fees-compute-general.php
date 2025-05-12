@@ -65,7 +65,7 @@ if(!$checkSession){
             $classId=$classDataFetch['classId'];
             
             /////////////////// for  $FEES_COMPUTE_SUMMARY_TAB
-            $feesSummaryDataQuery = mysqli_query($conn, "SELECT * FROM FEES_COMPUTE_SUMMARY_TAB WHERE $clientIds  AND session='$session' AND termId='$termId' AND departmentId='$departmentId' AND classId='$classId'");
+            $feesSummaryDataQuery = mysqli_query($conn, "SELECT * FROM FEES_COMPUTE_SUMMARY_TAB WHERE $clientIds  AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' AND classId='$classId'");
             $feesSummaryDataFetch = mysqli_fetch_assoc($feesSummaryDataQuery);
             $payableAmount=$feesSummaryDataFetch['payableAmount'];
             $payableAmount = (is_null($payableAmount) || $payableAmount === '') ? '0.00' : $payableAmount;
