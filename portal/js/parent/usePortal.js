@@ -11,7 +11,7 @@ function _getActiveStudentPage(props) {
 }
 
 function _getStudentPageActiveLink(divid){
-	$('#studentDashbaord').removeClass('active');
+	$('#studentDashbaord, #paymentHistory').removeClass('active');
 	$("#"+divid).addClass('active');
 }
 
@@ -27,7 +27,7 @@ function capitalizeFirstLetterOfEachWord(inputText) {
 
 function _logOut(){
 	sessionStorage.setItem("parentSessionData", JSON.stringify(''));
-	window.parent.location.href = "../";
+	window.parent.location.href = parentLoginUrl;
 }
 
 function _getFetchEachStudent(Id) {
@@ -38,4 +38,54 @@ function _getFetchEachStudent(Id) {
 		sessionStorage.setItem("getEachStudentSession", JSON.stringify(student));
 		_getForm({page: 'studentProfile', url: parentPortalLocalUrl});
 	}
+}
+
+
+function _toggleCheck(){
+	$('.switch input').on('change', function () {
+		const label = $(this).next().next(); // Grab the toggle-label span
+		label.text($(this).prop('checked') ? 'Yes' : 'No');
+	});
+}
+
+function _getFormDetails(icon, nextId) {
+	$('#proceedHideDiv').hide();
+	$("#" + nextId).fadeIn(1000);
+	$('#summaryHideDiv').fadeOut(500);
+	$("#panel-title").html($("#" + icon).html() + ' <span>PAYMENT SUMMARY</span>');
+}
+
+
+function _prevPage(nextId) {
+  $("#proceedHideDiv").hide();
+  $("#" + nextId).fadeIn(1000);
+  $("#panel-title").html('<i class="bi-plus-square"></i> </span> FEES PAYMENT');
+}
+
+function selectSearch() {
+	$(".srch-select").toggle("fast");
+}
+function srchCustom(text){
+	$('#srch-text').html(text);
+	$('.custom-srch-div').fadeIn(500);
+};
+
+
+function _getSelectPaymentMethod(fieldId){
+	const data=[
+		{
+			id: 1,
+			value: 'DEBIT/CREDIT CARD',
+		},
+		{
+			id: 2,
+			value: 'BANK TRANSFER',
+		}
+	]
+
+	for (let i = 0; i < data.length; i++) {
+		const id = data[i].id;
+		const value = data[i].value;
+		$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
+	}	
 }

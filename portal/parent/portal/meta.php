@@ -10,6 +10,7 @@
 <link href="<?php echo $websiteUrl?>/style/aos.css" type="text/css" rel="stylesheet" />
 <link href="<?php echo $websiteUrl?>/style/paramount.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
 <link href="<?php echo $websiteUrl?>/style/parent/main-style.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
+<link href="<?php echo $websiteUrl?>/style/admin/jquery.datetimepicker.css" type="text/css"rel="stylesheet"/>
 
 <script src="<?php echo $websiteUrl?>/js/jquery-v3.6.1.min.js"></script>
 <script src="<?php echo $websiteUrl?>/js/paramount.js?v=<?php echo $codeVersion?>"></script>
@@ -20,4 +21,5 @@
     let parentData=parentSessionData.parentData;
 </script>
 
+<script src="<?php echo $websiteUrl?>/js/admin/jquery.datetimepicker.js"></script>
 <script src="<?php echo $websiteUrl?>/js/parent/usePortal.js?v=<?php echo $codeVersion?>"></script>

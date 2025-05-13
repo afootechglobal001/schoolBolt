@@ -1346,7 +1346,7 @@
                             <script>
                                 $(document).ready(function() {
                                     let getEachFeeComputeGeneral = JSON.parse(sessionStorage.getItem("getEachFeeComputeGeneral"));
-                                    
+
                                     if (getEachFeeComputeGeneral && getEachFeeComputeGeneral.data) {
                                         const fetchArrayData = getEachFeeComputeGeneral.data;
 
@@ -1382,4 +1382,5 @@
                 </div>
             </div>
         </div>
-    <?php } ?>
+    </div>
+<?php } ?>
