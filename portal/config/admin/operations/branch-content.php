@@ -327,7 +327,7 @@
                             </div>
                         </li>
 
-                        <li id="dotted" title="Branch Fees"><i class="bi-credit-card"></i> Fees
+                        <li id="dotted" title="Branch Fees"><i class="bi-credit-card"></i> Account
                             <div class="expand-div animated fadeIn">
                                 <ul class="ul-expand">
                                     <li title="Fees Settings" onclick="_getActiveBranchPage({divid:'branch_fees_page', page: 'branch_fees_page', url: adminPortalLocalUrl});"><i class="bi-gear-wide-connected"></i>Fees Settings</li>

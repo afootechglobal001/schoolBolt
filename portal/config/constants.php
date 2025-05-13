@@ -39,8 +39,8 @@
 	var clientId = "3b338d51b4971ec84429b3e1a6ffe769"; /// for dev
 	var clientAddress = "<?php echo $websiteAutoUrl;?>/https://schoolbolt.com";
 	var apiKey='a7c37b6289b9dd879b2c005118d3ef14'; /// For API Key //
-	var endPoint='https://schoolbolt.com/dev-api/dev'; /// Server End Point url
-	//var endPoint='https://schoolbolt.com/production-api/dev'; /// Server End Point url
+	var endPoint='https://schoolbolt.com/api/dev'; /// Server End Point url
+	//var endPoint='https://schoolbolt.com/api/production'; /// Server End Point url
 	var userOsBrowser = "<?php echo $userOsBrowser;?>"; /// For User OS Browser //
 	var userIpAddress = "<?php echo $userIpAddress;?>"; /// For User IP Address //
 	var userDeviceId = "<?php echo $userDeviceId;?>"; /// For User Device Id //

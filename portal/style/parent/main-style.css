@@ -752,6 +752,12 @@ header .inner-div .mobile-logout:hover{
 }
 
 
+.detail-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
 .profile-details {
     width: calc(100% - 40px);

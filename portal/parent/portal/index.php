@@ -19,10 +19,20 @@
                         <div class="img-div"><img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="Parent Profile" /></div>
                         <div class="pro-text-div">
                             <h2 id="fullName">👋 Hi, <span id="fullNameText"></span></h2>
-                            <script>$("#fullNameText").html(capitalizeFirstLetterOfEachWord(parentLoginData.titleId + ' ' + parentLoginData.surName + ' ' + parentLoginData.otherNames));</script>
+                            <script>
+                                $("#fullNameText").html(capitalizeFirstLetterOfEachWord(parentData.titleId + ' ' + parentData.surName + ' ' + parentData.otherNames));
+                            </script>
                             <div class="info">
                                 <div class="info-details">
-                                    <p><span id="email"><script>$("#email").html(parentLoginData.email);</script></span></p> | <p><span id="mobileNumber"><script>$("#mobileNumber").html(parentLoginData.mobileNumber);</script></span></p>
+                                    <p><span id="email">
+                                            <script>
+                                                $("#email").html(parentData.email);
+                                            </script>
+                                        </span></p> | <p><span id="mobileNumber">
+                                            <script>
+                                                $("#mobileNumber").html(parentData.mobileNumber);
+                                            </script>
+                                        </span></p>
                                 </div>
                             </div>
                         </div>
@@ -35,7 +45,52 @@
             <div class="dashboard-content">
                 <h2>Student's List</h2>
                 <div class="list" id="pageContent">
-                    <script>_getFetchStudents();</script>
+
+                    <script>
+                        $(document).ready(function() {
+                            let parentStudents = parentSessionData.students;
+                            let content = '';
+                            if (parentStudents.length > 0) {
+                                for (let i = 0; i < parentStudents.length; i++) {
+                                    const studentInfo = parentStudents[i];
+                                    const studentId = studentInfo.studentData.studentId;
+                                    const surName = studentInfo.studentData.surName;
+                                    const firstName = studentInfo.studentData.firstName;
+                                    const otherNames = studentInfo.studentData.otherNames;
+                                    const fullname = capitalizeFirstLetterOfEachWord(surName + ' ' + firstName + ' ' + otherNames);
+                                    const passport = studentInfo.studentData.passport || 'default.jpg';
+                                    const className = studentInfo.classData.className;
+                                    const armName = studentInfo.armData.armName;
+                                    const statusName = studentInfo.studentData.statusName;
+
+                                   content += `
+                                        <div class="student-profile">
+                                            <div class="details">
+                                                <div class="pix">
+                                                    <img src="${studentPixPath}/${passport}" alt="${fullname}" />
+                                                </div>
+                                                <div class="text">
+                                                    <h3>${fullname}</h3>
+                                                    <div class="info">
+                                                        <p>Class: <span>${className}</span> - Arm: <span>${armName}</span></p>
+                                                        <button class="status-btn ${statusName}">${statusName}</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="btn" onClick="_getFetchEachStudent('${studentId}')">VIEW DETAILS</button>
+                                        </div>`;
+                                }
+			                    $('#pageContent').html(content);
+                            }else{
+                                content +=`
+                                <div class="false-notification-div">
+                                    <p>No Record Found!!!</p>
+                                </div>`;
+                                $('#pageContent').html(content);
+                            }
+
+                        });
+                    </script>
                 </div>
             </div>
         </div>

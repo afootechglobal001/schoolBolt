@@ -16,8 +16,8 @@
 <script src="<?php echo $websiteUrl?>/js/textfield-selectfield.js?v=<?php echo $codeVersion?>"></script>
 
 <script>
-    let parentLoginData = JSON.parse(sessionStorage.getItem("parentLoginData"));
-    let sessionStudentData = JSON.parse(sessionStorage.getItem("studentsData"));
+    let parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));
+    let parentData=parentSessionData.parentData;
 </script>
 
 <script src="<?php echo $websiteUrl?>/js/parent/usePortal.js?v=<?php echo $codeVersion?>"></script>

@@ -9,8 +9,6 @@ $(document).ready(function () {
 	});
 });
 
-
-
 function _getSelectParentType(fieldId) {
 	const data = [
 		{
@@ -89,8 +87,7 @@ function _confirmLogin() {
 			},
 			success: function (info) {
 				if (info.success) {
-					sessionStorage.setItem("parentLoginData", JSON.stringify(info.parentData));
-					sessionStorage.setItem("sessionStudentData", JSON.stringify(info.students));
+					sessionStorage.setItem("parentSessionData", JSON.stringify(info));
 					_actionAlert(info.message, true);
 					window.location.href = parentPortalUrl;
 				} else {

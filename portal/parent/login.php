@@ -61,7 +61,7 @@
                             </script> 
                         </div>
 
-                        <button class="btn" title="Proceed" id="loginBtn" onclick="">Proceed <i class="bi-arrow-right"></i></button>
+                        <button class="btn" title="Proceed" id="loginBtn" onclick="_confirmLogin();">Proceed <i class="bi-arrow-right"></i></button>
                     </div>
                     <p>Need Help? <span onclick="">Contact Us</span></p>
                 </div>

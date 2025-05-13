@@ -3,7 +3,8 @@ function _getPage(options) {
         page = '',
 		action='get_page',
 		url='',
-		pageContainer='page-content'
+		pageContainer='page-content',
+		id=''
     } = options;
 
 		$("#"+pageContainer).html('<div class="ajax-loader"><img src="'+ websiteUrl +'/images/spinner.gif"/></div>').css({'display': 'flex','flex-direction': 'column','gap': '20px','align-items': 'center','align-items': 'center'}).fadeIn(500);
