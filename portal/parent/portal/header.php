@@ -7,7 +7,7 @@
         <a href="<?php echo $websiteUrl?>/parent" title="Parent Dashboard"><li>Parent Dashboard</li></a>
       </ul>
     </div>
-    <button class="btn" title="Log-Out" onclick="location.href='<?php echo $websiteUrl?>/parent/login'">Log-Out</button>
+    <button class="btn" title="Log-Out" onclick="_logOut();">Log-Out</button>
     <button class="mobile-logout" title="Log-Out" onclick="_get_form('logout_confirm_form');"><i class="bi-box-arrow-in-right"></i></button>
   </div>
 </header>

@@ -25,6 +25,11 @@ function capitalizeFirstLetterOfEachWord(inputText) {
 }
 
 
+function _logOut(){
+	sessionStorage.setItem("parentSessionData", JSON.stringify(''));
+	window.parent.location.href = "../";
+}
+
 function _getFetchEachStudent(Id) {
 	let parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));
 	let parentStudents = parentSessionData.students;
