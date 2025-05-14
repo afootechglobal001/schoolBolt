@@ -44,7 +44,7 @@
                     <ul>
                         <li class="active" title="Dashboard" id="studentDashbaord" onclick="_getActiveStudentPage({divid: 'studentDashbaord', page: 'studentDashbaord', url: parentPortalLocalUrl});"><i class="bi-speedometer2"></i> Dashboard</li>
                         <li title="Student Profile" id="studentProfile" onclick="_getActiveStudentPage({divid: 'studentProfile', page: 'studentProfile', url: parentPortalLocalUrl});"><i class="bi-person-lines-fill"></i> Student Profile</li>
-                        <li title="Pay Fees" class="hide-li" id="payFees" onclick="_getForm({page: 'paymentForm', layer: 2, url: parentPortalLocalUrl});"><i class="bi-credit-card"></i> Pay Fees</li>
+                        <li title="Pay Fees" class="hide-li" id="payFees" onclick="_fetchFeesToPay();"><i class="bi-credit-card"></i> Pay Fees</li>
                         <li title="Payment History" class="hide-li" id="paymentHistory" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-clock-history"></i> Payment History</li>
                         <!-- <li title="Attendance" id="attendance" onclick=""><i class="bi-person-bounding-box"></i> Attendance</li>
                         <li title="Time Table" id="timeTable" onclick=""><i class="bi-bell"></i> Time Table</li>
@@ -54,7 +54,7 @@
                             <ul>
                                 <li title="Dashboard" class="active" onclick="_getActiveStudentPage({divid: 'studentDashbaord', page: 'studentDashbaord', url: parentPortalLocalUrl});"><i class="bi-speedometer2"></i> <span>Dashboard</span></li>
                                 <li title="Student Profile" onclick="_getActiveStudentPage({divid: 'studentProfile', page: 'studentProfile', url: parentPortalLocalUrl});"><i class="bi-person-lines-fill"></i> <span>Student Profile</span></li>
-                                <li title="Pay Fees" onclick="_getForm({page: 'paymentForm', layer: 2, url: parentPortalLocalUrl});"><i class="bi-credit-card-2-back"></i> <span>Pay Fees</span></li>
+                                <li title="Pay Fees" onclick="_fetchFeesToPay();"><i class="bi-credit-card-2-back"></i> <span>Pay Fees</span></li>
                                 <li title="Payment History" class="hide-li" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-clock-history"></i> <span>Payment History</span></li>
                                 <li title="View Result" onclick=""><i class="bi-printer"></i> <span>View Result</span></li>
                             </ul>
@@ -79,11 +79,10 @@
 <?php } ?>
 
 
-
 <!-- For Student Modal Pages -->
 <?php if ($page == 'studentDashbaord') { ?>
     <div class="card-back-div" data-aos="fade-in" data-aos-duration="1300">
-        <div class="card-div" title="Pay Fees" onclick="_getForm({page: 'paymentForm', layer: 2, url: parentPortalLocalUrl});"> 
+        <div class="card-div" title="Pay Fees" onclick="_fetchFeesToPay();"> 
             <div class="pix"><img src="<?php echo $websiteUrl?>/images/online-payment.jpg" alt="Pay Fees"></div>
             <div class="text">Pay Fees</div>
         </div>
@@ -175,13 +174,12 @@
 <?php } ?>
 
 <?php if ($page == 'paymentForm') { ?>
-    <script> getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));</script>
+    <script> getPayFeesToPaySession = JSON.parse(sessionStorage.getItem("getPayFeesToPaySession"));</script>
 
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
                 <div class="icon-title-div">
-                    <span id="backIcon" style="display:none;"><i class="bi-arrow-left" style="cursor:pointer;" title="Click to go back" onclick="_prevPage('summaryHideDiv');"></i></span>
                     <span id="panel-title"><span><i class="bi-plus-square"></i></span> FEES PAYMENT</span>
                 </div>
                 <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
@@ -190,241 +188,199 @@
 
         <div class="container-back-div">
             <div class="inner-container">
-                <div id="summaryHideDiv">
-                    <div>
-                        <div class="alert alert-success form-alert">
-                           <span>Kindly follow the instructions below to make a payment for;</span>
-                            <div class="alert-list-div">
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Student Name:</div>
-                                        <div><span id="formSurname"><script>$("#formSurname").html(getEachStudentSession.studentData.surName+' '+getEachStudentSession.studentData.firstName +' '+getEachStudentSession.studentData.otherNames);</script></span></div>
-                                    </div>
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Kindly follow the instructions below to make a payment for;</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Student Name:</div>
+                                    <div><span id="formSurname"><script>$("#formSurname").html(getEachStudentSession.studentData.surName+' '+getEachStudentSession.studentData.firstName +' '+getEachStudentSession.studentData.otherNames);</script></span></div>
                                 </div>
+                            </div>
 
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>School Name:</div>
-                                        <div><span id="formBranchName"><script>$("#formBranchName").html(getEachStudentSession.branchData.branchName);</script></span></div>
-                                    </div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>School Name:</div>
+                                    <div><span id="formBranchName"><script>$("#formBranchName").html(getPayFeesToPaySession.branchData.branchName);</script></span></div>
                                 </div>
+                            </div>
 
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Department:</div>
-                                        <div><span id="formDepartment"><script>$("#formDepartment").html(getEachStudentSession.departmentData.departmentName);</script></span></div>
-                                    </div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Department:</div>
+                                    <div><span id="formDepartment"><script>$("#formDepartment").html(getPayFeesToPaySession.departmentData.departmentName);</script></span></div>
                                 </div>
+                            </div>
 
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Class:</div>
-                                    <div><span id="formClass"><script>$("#formClass").html(getEachStudentSession.classData.className+' '+getEachStudentSession.armData.armName);</script></span></div>
-                                    </div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Class:</div>
+                                <div><span id="formClass"><script>$("#formClass").html(getPayFeesToPaySession.classData.className+' '+getEachStudentSession.armData.armName);</script></span></div>
                                 </div>
+                            </div>
 
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Session:</div>
-                                    <div><span id="formCurrentSession"><script>$("#formCurrentSession").html(getEachStudentSession.branchData.currentSession);</script></span></div>
-                                    </div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Session:</div>
+                                <div><span id="formCurrentSession"><script>$("#formCurrentSession").html(getPayFeesToPaySession.branchData.currentSession);</script></span></div>
                                 </div>
+                            </div>
 
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Term:</div>
-                                        <div><span id="formCurrentTerm"><script>$("#formCurrentTerm").html(getEachStudentSession.branchData.termData.currentTerm);</script></span></div>
-                                    </div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Term:</div>
+                                    <div><span id="formCurrentTerm"><script>$("#formCurrentTerm").html(getPayFeesToPaySession.termData.currentTerm);</script></span></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="paid-fee-conatiner">
-                        <div class="alert alert-success">
-                            <span>List of Fees Paid</span>
+                <div class="paid-fee-conatiner">
+                    <div class="alert alert-success form-alert">
+                        <span>List of Fees Paid</span>
 
-                            <div class="alert-list-div">
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>TUITION FEE:</div>
-                                        <div><span id=""><s>N</s>150,000</span></div>
-                                    </div>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>TUITION FEE:</div>
+                                    <div><span id=""><s>N</s>150,000</span></div>
                                 </div>
+                            </div>
 
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>BUS FEE:</div>
-                                        <div><span id=""><s>N</s>10,000</span></div>
-                                    </div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>BUS FEE:</div>
+                                    <div><span id=""><s>N</s>10,000</span></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="permission-form-back-div">
-                        <div class="title-div">
-                            <h4>Select Fees for Payment</h4>
-                            <p>Use the toggles below to select fees applicable to this student. Switching a toggle to "Yes" enables payment for that category.</p>
-                        </div>
-
-                        <div class="permission-toggle-div">
-                            <div class="toggle-title">Fee Categories</div>
-                            <div class="fetch-toggle" id="payment">
-                                <div class="each-toggle-div">
-                                    <div class="title-back-div">
-                                        <div class="toggle-title-div">TUITION - <span>(<s>N</s>200,000.00)</span></div>
-                                        <div class="sub-title green-color">MANDATORY</div>
-                                    </div>
-                                    <label for="tuition-fee-toggle" class="switch">
-                                        <input type="checkbox" class="child" id="tuition-fee-toggle" name="tuition_fee" data-value="tuition">
-                                        <span class="slider"></span>
-                                        <span class="toggle-label">No</span>
-                                    </label>
-                                </div>
-
-                                <div class="each-toggle-div">
-                                    <div class="title-back-div">
-                                        <div class="toggle-title-div">AFTER SCHOOL TILL 6:00PM - <span>(<s>N</s>200,000.00)</span></div>
-                                        <div class="sub-title orange-color">NOT MANDATORY</div>
-                                    </div>
-                                    <label for="tuition-fee-toggle" class="switch">
-                                        <input type="checkbox" class="child" id="tuition-fee-toggle" name="tuition_fee" data-value="tuition">
-                                        <span class="slider"></span>
-                                        <span class="toggle-label">No</span>
-                                    </label>
-                                </div>
-
-                                <div class="each-toggle-div">
-                                    <div class="title-back-div">
-                                        <div class="toggle-title-div">CODING & PROGRAMMING - <span>(<s>N</s>100,000.00)</span></div>
-                                        <div class="sub-title green-color">MANDATORY</div>
-                                    </div>
-                                    <label for="tuition-fee-toggle" class="switch">
-                                        <input type="checkbox" class="child" id="tuition-fee-toggle" name="tuition_fee" data-value="tuition">
-                                        <span class="slider"></span>
-                                        <span class="toggle-label">No</span>
-                                    </label>
-                                </div>
-
-                                <div class="each-toggle-div">
-                                    <div class="title-back-div">
-                                        <div class="toggle-title-div">EDUCATIONAL MATERIALS - <span>(<s>N</s>30,000.00)</span></div>
-                                        <div class="sub-title green-color">MANDATORY</div>
-                                    </div>
-                                    <label for="tuition-fee-toggle" class="switch">
-                                        <input type="checkbox" class="child" id="tuition-fee-toggle" name="tuition_fee" data-value="tuition">
-                                        <span class="slider"></span>
-                                        <span class="toggle-label">No</span>
-                                    </label>
-                                </div>
-
-                                <div class="each-toggle-div">
-                                    <div class="title-back-div">
-                                        <div class="toggle-title-div">TUITION - <span>(<s>N</s>200,000.00)</span></div>
-                                        <div class="sub-title green-color">MANDATORY</div>
-                                    </div>
-                                    <label for="tuition-fee-toggle" class="switch">
-                                        <input type="checkbox" class="child" id="tuition-fee-toggle" name="tuition_fee" data-value="tuition">
-                                        <span class="slider"></span>
-                                        <span class="toggle-label">No</span>
-                                    </label>
-                                </div>
-                                
-                                <div class="each-toggle-div">
-                                    <div class="title-back-div">
-                                        <div class="toggle-title-div">PTA LEVY - <span>(<s>N</s>32,000.00)</span></div>
-                                        <div class="sub-title green-color">MANDATORY</div>
-                                    </div>
-                                    <label for="bus-fee-toggle1" class="switch">
-                                        <input type="checkbox" class="child" id="bus-fee-toggle1" name="bus_fee1" data-value="bus1">
-                                        <span class="slider"></span>
-                                        <span class="toggle-label">No</span>
-                                    </label>
-                                </div>
-
-                                <div class="each-toggle-div">
-                                    <div class="title-back-div">
-                                        <div class="toggle-title-div">BUS FEE (OJOTA/M12/ALAPERE/KETU TIPPER/MARY LAND- 1 WAY) - <span>(<s>N</s>105,300.00)</span></div>
-                                       <div class="sub-title orange-color">NOT MANDATORY</div>
-                                    </div>
-                                    <label for="bus-fee-toggle" class="switch">
-                                        <input type="checkbox" class="child" id="bus-fee-toggle" name="bus_fee" data-value="bus">
-                                        <span class="slider"></span>
-                                        <span class="toggle-label">No</span>
-                                    </label>
-                                </div>
-
-                                <div class="each-toggle-div">
-                                    <div class="title-back-div">
-                                        <div class="toggle-title-div">BUS FEE (OJOTA/M12/ALAPERE/KETU TIPPER/MARY LAND- 2 WAY) - <span>(<s>N</s>105,300.00)</span></div>
-                                        <div class="sub-title orange-color">NOT MANDATORY</div>
-                                    </div>
-                                    <label for="bus-fee-toggle" class="switch">
-                                        <input type="checkbox" class="child" id="bus-fee-toggle" name="bus_fee" data-value="bus">
-                                        <span class="slider"></span>
-                                        <span class="toggle-label">No</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <script>_toggleCheck();</script>
-                        </div>
+                <div class="permission-form-back-div">
+                    <div class="title-div">
+                        <h4>Select Fees for Payment</h4>
+                        <p>Use the toggles below to select fees applicable to this student. Switching a toggle to "Yes" enables payment for that category.</p>
                     </div>
 
-                    <div>
-                        <button class="btn" title="Proceed to payment" id="addBtn" onclick="_getFormDetails('backIcon','proceedHideDiv');">PROCEED TO PAYMENT <i class="bi-arrow-right"></i></button>
-                    </div>
-                </div> 
-                
-                <div id="proceedHideDiv">
-                    <div class="proceedHideDiv">
-                        <div>
-                        <div class="alert alert-success form-alert">
-                                <span>Summary of Fees Chosen by Parent</span>
+                    <div class="permission-toggle-div">
+                        <div class="toggle-title">Fee Categories</div>
+                        <div class="fetch-toggle" id="fetchedPayment">
 
-                                <div class="alert-list-div">
-                                    <div class="alert-list-back-div">
-                                        <div class="alert-list">
-                                            <div>TUITION FEE:</div>
-                                            <div><span><s>N</s>150,000</span></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="alert-list-back-div">
-                                        <div class="alert-list">
-                                            <div>BUSS FEE:</div>
-                                            <div><span><s>N</s>10,000</span></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="alert-list-back-div">
-                                        <div class="alert-list">
-                                            <div>TOTAL AMOUNT:</div>
-                                            <div><span class="total-amount" id=""><s>N</s>160,000</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="text_field_container" id="paymentMethodId_container">
                             <script>
-                                selectField({
-                                    id: 'paymentMethodId',
-                                    title: 'Select Payment Method'
+                                $(document).ready(function() {
+                                    let text = '';
+
+                                    if (getPayFeesToPaySession && getPayFeesToPaySession.data) {
+                                        const fetch = getPayFeesToPaySession.data;
+
+                                        for (let i = 0; i < fetch.length; i++) {
+                                            const fetchedFess = fetch[i];
+                                            const feesId = fetchedFess.feesId;
+                                            const feesName = fetchedFess.feesName;
+                                            const feesOption = fetchedFess.feesOption;
+                                            const NewFeesOption = (feesOption === "TRUE") ? "MANDATORY" : "NOT MANDATORY";
+                                            const feesOptionColor = (feesOption === "TRUE") ? "green-color" : "orange-color";       
+                                            const amount = thousandSeperator(fetchedFess.amount);
+
+                                            text += `
+                                                <div class="each-toggle-div">
+                                                    <div class="title-back-div">
+                                                        <div class="toggle-title-div">${feesName} - <span>(<s>N</s>${amount})</span></div>
+                                                        <div class="sub-title ${feesOptionColor}">${NewFeesOption}</div>
+                                                    </div>
+                                                    <label for="fees_${feesId}" class="switch">
+                                                        <input type="checkbox" class="child" id="fees_${feesId}" name="feesId[]" data-value="${feesId}" value="${fetchedFess.amount}">
+                                                        <span class="slider"></span>
+                                                        <span class="toggle-label">No</span>
+                                                    </label>
+                                                </div>`;
+                                            
+                                        }
+                                        $("#fetchedPayment").html(text);
+                                        _toggleCheck();
+                                    }
                                 });
-                                _getSelectPaymentMethod('paymentMethodId');
                             </script>
                         </div>
-                    
-                        <div>
-                            <button class="btn" title="Make Payment" id="submitBtn" onclick="_getForm({page: 'accountTransferForm', layer: 2, url: parentPortalLocalUrl});"> <i class="bi-check"></i> MAKE PAYMENT </button>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Summary of Fees Chosen by Parent</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>TOTAL FEES:</div>
+                                    <div><span id="totalFee"><s>N</s>0.00</span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>SYSTEM CHARGES:</div>
+                                    <div>
+                                        <span id="schoolBoltCharges"></span>
+                                        <script>$("#schoolBoltCharges").html('<s>N</s>'+thousandSeperator(getPayFeesToPaySession.schoolBoltCharges));</script>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>TOTAL AMOUNT:</div>
+                                    <div><span class="total-amount" id="totalAmount"><s>N</s>160,000</span></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="text_field_container" id="paymentMethodId_container">
+                    <script>
+                        selectField({
+                            id: 'paymentMethodId',
+                            title: 'Select Payment Method'
+                        });
+                        _getSelectPaymentMethod('paymentMethodId');
+                    </script>
+                </div>
+        
+                <div>
+                    <button class="btn" title="Make Payment" id="submitBtn" onclick="_getForm({page: 'accountTransferForm', layer: 2, url: parentPortalLocalUrl});"> <i class="bi-check"></i> MAKE PAYMENT </button>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            function updateTotal() {
+
+                let totalFee = 0;
+                let totalAmount=0;
+
+                $('.child:checked').each(function () {
+                    totalFee += parseFloat($(this).val()) || 0;
+                });
+                totalAmount = totalFee + parseFloat(getPayFeesToPaySession.schoolBoltCharges);
+
+                $('#totalFee').html('<s>N</s>'+thousandSeperator(totalFee));
+                $('#totalAmount').html('<s>N</s>'+thousandSeperator(totalAmount));
+
+            }
+
+            // Attach event listener to checkboxes
+            $('.child').on('change', updateTotal);
+
+            // Call once on load to initialize total
+            updateTotal();
+        });
+    </script>
+
 <?php } ?>
 
 <?php if ($page == 'paymentHistory') { ?>

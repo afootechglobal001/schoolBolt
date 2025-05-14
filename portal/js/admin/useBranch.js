@@ -61,13 +61,18 @@ function _createBranch() {
 		const smtpPassword = $('#smtpPassword').val();
 		const smtpPort = $('#smtpPort').val();
 		const supportEmail = $('#supportEmail').val();
+		const accountNumber = $('#accountNumber').val();
+		const accountName = $('#accountName').val();
+		const bankName = $('#bankName').val();
 		const paymentKey = $('#paymentKey').val();
+		const secretKey = $('#secretKey').val();
+		const receiverKey = $('#receiverKey').val();
 		const session = $('#session').val();
 		const managerId = $('#staffId').val();
 		const termId = $('#termId').val();
 		const statusId = $('#statusId').val();
 
-		$('#name, #mobileNumber, #stateId, #lgaId, #address, #smtpHost, #smtpUsername, #smtpPassword, #smtpPort, #supportEmail, #paymentKey, #session, #staffId, #termId, #statusId').removeClass('issue');
+		$('#name, #mobileNumber, #stateId, #lgaId, #address, #smtpHost, #smtpUsername, #smtpPassword, #smtpPort, #supportEmail, #accountNumber, #accountName, #bankName, #paymentKey, #secretKey, #receiverKey, #session, #staffId, #termId, #statusId').removeClass('issue');
 
 		let selectedDepartment = [];
 
@@ -136,12 +141,42 @@ function _createBranch() {
 			return;
 		}
 
+		if (!accountNumber) {
+			$('#accountNumber').addClass("issue");
+			_actionAlert('Provide account number to continue', false);
+			return;
+		}
+
+		if (!accountName) {
+			$('#accountName').addClass("issue");
+			_actionAlert('Provide account name to continue', false);
+			return;
+		}
+
+		if (!bankName) {
+			$('#bankName').addClass("issue");
+			_actionAlert('Provide bank name to continue', false);
+			return;
+		}
+
 		if (!paymentKey) {
 			$('#paymentKey').addClass("issue");
 			_actionAlert('Provide branch payment key to continue', false);
 			return;
 		}
 
+		if (!secretKey) {
+			$('#secretKey').addClass("issue");
+			_actionAlert('Provide secret key to continue', false);
+			return;
+		}
+
+		if (!receiverKey) {
+			$('#receiverKey').addClass("issue");
+			_actionAlert('Provide receiver key to continue', false);
+			return;
+		}
+		
 		if (!session) {
 			$('#session').addClass("issue");
 			_actionAlert('Provide session to continue', false);
@@ -188,7 +223,12 @@ function _createBranch() {
 				"smtpPassword": smtpPassword,
 				"smtpPort": smtpPort,
 				"supportEmail": supportEmail,
+				"accountNumber": accountNumber,
+				"accountName": accountName,
+				"bankName": bankName,
 				"paymentKey": paymentKey,
+				"secretKey": secretKey,
+				"receiverKey": receiverKey,
 				"session": session,
 				departmentIds: selectedDepartment,
 				"managerId": managerId,
@@ -367,13 +407,18 @@ function _updateBranch() {
 		const smtpPassword = $('#updateSmtpPassword').val();
 		const smtpPort = $('#updateSmtpPort').val();
 		const supportEmail = $('#updateSupportEmail').val();
+		const accountNumber = $('#updateAccountNumber').val();
+		const accountName = $('#updateAccountName').val();
+		const bankName = $('#updateBankName').val();
 		const paymentKey = $('#updatePaymentKey').val();
+		const secretKey = $('#updateSecretKey').val();
+		const receiverKey = $('#updateReceiverKey').val();
 		const session = $('#updateSession').val();
 		const managerId = $('#updateStaffId').val();
 		const termId = $('#updateTermId').val();
 		const statusId = $('#updateStatusId').val();
 
-		$('#updateName, #updateMobileNumber, #stateId, #lgaId, #updateAddress, #updateSmtpHost, #updateSmtpUsername, #updateSmtpPassword, #updateSmtpPort, #updateSupportEmail, #updatePaymentKey, #updateSession, #updateStaffId, #updateTermId, #updateStatusId').removeClass('issue');
+		$('#updateName, #updateMobileNumber, #stateId, #lgaId, #updateAddress, #updateSmtpHost, #updateSmtpUsername, #updateSmtpPassword, #updateSmtpPort, #updateSupportEmail, #updateAccountNumber, #updateAccountName, #updateBankName, #updatePaymentKey, #updateSecretKey, #updateReceiverKey, #updateSession, #updateStaffId, #updateTermId, #updateStatusId').removeClass('issue');
 
 		if (!name) {
 			$('#updateName').addClass('issue');
@@ -435,9 +480,39 @@ function _updateBranch() {
 			return;
 		}
 
+		if (!accountNumber) {
+			$('#updateAccountNumber').addClass("issue");
+			_actionAlert('Provide account number to continue', false);
+			return;
+		}
+
+		if (!accountName) {
+			$('#updateAccountName').addClass("issue");
+			_actionAlert('Provide account name to continue', false);
+			return;
+		}
+
+		if (!bankName) {
+			$('#updateBankName').addClass("issue");
+			_actionAlert('Provide bank name to continue', false);
+			return;
+		}
+
 		if (!paymentKey) {
 			$('#updatePaymentKey').addClass("issue");
 			_actionAlert('Provide branch payment key to continue', false);
+			return;
+		}
+
+		if (!secretKey) {
+			$('#updateSecretKey').addClass("issue");
+			_actionAlert('Provide secret key to continue', false);
+			return;
+		}
+
+		if (!receiverKey) {
+			$('#updateReceiverKey').addClass("issue");
+			_actionAlert('Provide receiver key to continue', false);
 			return;
 		}
 
@@ -481,7 +556,12 @@ function _updateBranch() {
 				"smtpPassword": smtpPassword,
 				"smtpPort": smtpPort,
 				"supportEmail": supportEmail,
+				"accountNumber": accountNumber,
+				"accountName": accountName,
+				"bankName": bankName,
 				"paymentKey": paymentKey,
+				"secretKey": secretKey,
+				"receiverKey": receiverKey,
 				"session": session,
 				"managerId": managerId,
 				"termId": termId,
