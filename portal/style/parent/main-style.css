@@ -40,7 +40,6 @@ header .inner-div .left-div ul{
     margin: 0px;
     display: flex;
     align-items: center;
-    gap: 20px;
 }
 
 header .inner-div .left-div ul li{
@@ -123,6 +122,21 @@ header .inner-div .mobile-logout:hover{
 	}
 }
 
+@media all and (max-width:380px) {
+	header .inner-div{
+		gap: 10px;
+	}
+	header .inner-div .left-div{
+		gap: 10px;		
+	}
+	header .inner-div .left-div .logo-div{
+		width: 110px;
+	}
+	header .inner-div .left-div ul li{
+		font-size: 11px;
+	}
+}
+
 
 
 
@@ -168,6 +182,7 @@ header .inner-div .mobile-logout:hover{
 }
 
 .mini-profile-div .profile-content .main-profile .inner-profile{
+	width: 100%;
 	display: flex;
 	align-items: center;
 	gap: 15px;
@@ -189,6 +204,7 @@ header .inner-div .mobile-logout:hover{
 }
 
 .mini-profile-div .profile-content .main-profile .inner-profile .pro-text-div{
+	width: calc(100% - 95px);
 	display: flex;
 	flex-direction: column;
 	gap: 4px;
@@ -214,7 +230,9 @@ header .inner-div .mobile-logout:hover{
 }
 
 .mini-profile-div .profile-content .main-profile .inner-profile .pro-text-div .info .info-details{
+	width: 100%;
 	display: flex;
+	align-items: center;
 	gap: 10px;
 }
 
@@ -237,33 +255,27 @@ header .inner-div .mobile-logout:hover{
 }
 
 @media all and (max-width:500px) {
-	.mini-profile-div .profile-content .main-profile .inner-profile .pro-text-div .info{
-		display: flex;
-		align-items: flex-start;
-		flex-direction: column;
-	}
-
-	.mini-profile-div .profile-content .main-profile .inner-profile .pro-text-div .info p{
-		font-size: 11px;
-	}
-
-	.mini-profile-div .profile-content .main-profile .inner-profile .pro-text-div h2{
-		font-size: 4vw;
-	}
-
-	.mini-profile-div .profile-content .main-profile .inner-profile .pro-text-div .info span{
-		font-size: 11px;
+	.mini-profile-div .profile-content .main-profile .inner-profile .pro-text-div h2,
+	.mini-profile-div .profile-content .main-profile .inner-profile .pro-text-div h2 span{
+		font-size: 5vw;
 	}
 }
 
-@media all and (max-width:750px) {
-	.mini-profile-div .profile-content .main-profile{
-		width: 100%;
+@media all and (max-width:450px) {
+	.mini-profile-div .profile-content .main-profile .inner-profile .img-div {
+		width: 60px;
+		height: 60px;
+	}
+	.mini-profile-div .profile-content .main-profile .inner-profile .pro-text-div{
+		width: calc(100% - 75px);
+	}
+	.mini-profile-div .profile-content .main-profile .inner-profile .pro-text-div .info .info-details{
 		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		justify-content: center;
-		gap: 25px;
+		flex-wrap: wrap;
+		gap: 5px;
+	}
+	.mini-profile-div .profile-content .main-profile .inner-profile .pro-text-div .info .info-details p span{
+		font-size: 3vw;
 	}
 }
 
@@ -328,8 +340,8 @@ header .inner-div .mobile-logout:hover{
 .content-div .dashboard-content .list .student-profile .details{
     display: flex;
     gap: 20px;
-    align-items: center;
 }
+
 .content-div .dashboard-content .list .student-profile .details .pix{
     width: 60px;
     height: 60px;
@@ -344,6 +356,7 @@ header .inner-div .mobile-logout:hover{
 }
 
 .content-div .dashboard-content .list .student-profile .details .text{
+	width: calc(100% - 80px);
     display: flex;
     flex-direction: column;
     color: var(--sub-body-color);
@@ -420,6 +433,7 @@ header .inner-div .mobile-logout:hover{
         width: 90%;
     }
 }
+
 @media all and (max-width:680px) {
 	.content-div .dashboard-content .list .student-profile{
         flex-direction: column;
@@ -432,6 +446,7 @@ header .inner-div .mobile-logout:hover{
         font-size: 11px;
     }
 }
+
 @media all and (max-width:500px) {
     .content-div .dashboard-content .list{
         padding: 5px;
@@ -450,6 +465,13 @@ header .inner-div .mobile-logout:hover{
     }
 }
 
+
+@media all and (max-width:380px) {
+	.content-div .dashboard-content .list .student-profile .details .text .info .status-btn{
+		font-size: 9px;
+		padding: 2px 12px;
+	}
+}
 
 
 /* User Form Style*/
@@ -578,10 +600,20 @@ header .inner-div .mobile-logout:hover{
 	gap: 5px;
 }
 
+.user-profile-div .profile-content-div .bg-img .mini-profile .text-back-div .inner-text .text-div h2{
+	padding: 0px;
+	margin: 0px; 
+	font-size: 30px;
+	color: var(--sub-body-color);
+}
+
 .user-profile-div .profile-content-div .bg-img .mini-profile .text-back-div .inner-text .text-div .text{ 
+	width: 100%;
 	display: flex;
 	align-items: center;
 	gap: 5px;
+	font-size: 12px;
+    color: #776c6c;
 }
 
 .user-profile-div .profile-content-div .bg-img .mini-profile .text-back-div .inner-text .text-div .status-btn{
@@ -613,11 +645,7 @@ header .inner-div .mobile-logout:hover{
     font-size: 28px;
     font-family: title-font;
 }
- 
-.user-profile-div .profile-content-div .bg-img .mini-profile .text-back-div .inner-text .text-div .text{ 
-    font-size: 12px;
-    color: #776c6c;
-}
+
  
 .user-profile-div .profile-content-div .btn-div{
 	width: 100%;
@@ -668,74 +696,51 @@ header .inner-div .mobile-logout:hover{
 	color: var(--secondary-color);
 }
 
-.user-profile-div .profile-content-div .branch-btn-div .div-in ul li:hover,
-.user-profile-div .profile-content-div .branch-btn-div .div-in ul .active
-{
-	background: #fbfbfb;
-	color: var(--secondary-color);
+
+.user-profile-div .profile-content-div .btn-div .div-in ul li ul{
+    position: absolute;
+    width: 200px;
+    min-width: 200px;
+    height: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: var(--white-color);
+    margin-left: -200px;
+    margin-top: 5px;
+    border-radius: 10px;
+    border:  rgba(179, 176, 176, 0.5) 1px solid ;
+    display: none;
+    box-shadow: 0px 0px 10px 3px rgba(82, 82, 82, 0.1); 
+	z-index: 800;
 }
 
-#dotted .expand-div{
-	position: absolute;
-	display: none;
-	background: var(--white-color);
-	min-width: 150px;
-	border-radius: 10px;
-	margin-top: 10px;
-	box-shadow: 0px 0px 5px 2px #f0efef;	
-	transition:all 0.2s ease-in 02s;
-	-webkit-transition:all 0.2s ease-in 0.2s;
-	-ms-transition:all 0.2s ease-in 0.2s;
-	-o-transition:all 0.2s ease-in 0.2s;
-	z-index: 200;
+.user-profile-div .profile-content-div .btn-div .div-in ul li:hover ul{
+    display: block; 
 }
 
-#dotted .expanded{
-	min-width: 250px;
+.user-profile-div .profile-content-div .btn-div .div-in ul li ul li{
+    list-style: none;
+    width: calc(100% - 30px);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: var(--body-color);
+    transition: all 0.2s ease-in 0.2s; 
 }
 
-#dotted .expand-div .ul-expand{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 2px;
-	margin: 0px;
-	padding: 12px;
+.user-profile-div .profile-content-div .btn-div .div-in ul li ul li:hover{
+    width: calc(100% - 20px);
+    padding-left: 20px;
 }
 
-#dotted .expand-div .ul-expand li{
-	width: calc(100% - 20px);
-	padding: 8px 10px;
-	list-style: none;
-	font-size: 12px;
-	border-radius: 5px;
-	color: var(--sub-body-color);
-	font-family: body-font;
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	cursor: pointer;
-	transition:all 0.2s ease-in 02s;
-	-webkit-transition:all 0.2s ease-in 0.2s;
-	-ms-transition:all 0.2s ease-in 0.2s;
-	-o-transition:all 0.2s ease-in 0.2s;
+.user-profile-div .profile-content-div .btn-div .div-in ul li ul li i{
+    color: var(--secondary-color);
 }
 
-#dotted .expand-div .ul-expand li i{
-	font-size: 10px;
-	color: var(--secondary-color);
-}
 
-#dotted .expand-div .ul-expand li:hover,
-#dotted .expand-div .ul-expand .active
-{
-	color: var(--secondary-color);
-	background: #f8f8f8;
-}
-
-#dotted:hover .expand-div{
-	display: block;
-}
 
 .user-profile-div .profile-content-div .field-back-div{ 
 	position: relative;
@@ -756,6 +761,61 @@ header .inner-div .mobile-logout:hover{
 	align-items: center;
 	gap: 10px;
 }
+
+@media all and (max-width:900px) {
+	.user-profile-div{
+		width: 100%;
+	}
+}
+
+
+@media all and (max-width:700px) {
+	.user-profile-div .profile-content-div .btn-div .div-in ul .hide-li{
+		display: none;
+	}
+}
+
+@media all and (max-width:650px) {
+	.user-profile-div .profile-content-div .bg-img .mini-profile .text-back-div .inner-text .text-div h2{
+		font-size: 4.5vw;
+	}
+	.user-profile-div .profile-content-div .bg-img .mini-profile .text-back-div .inner-text .text-div .text{ 
+		flex-wrap: wrap;
+	}
+}
+
+@media all and (max-width:520px) {
+	.user-profile-div .profile-content-div .bg-img .mini-profile .text-back-div{ 
+		width: 100%;
+	}
+	.user-profile-div .profile-content-div .btn-div .div-in ul li{
+		font-size: 12px;
+	}
+}
+
+@media all and (max-width:400px) {
+	
+	.user-profile-div .profile-content-div .btn-div .div-in ul li ul{
+		width: 150px;
+		min-width: 150px;
+		margin-left: -150px;
+	}
+	.user-profile-div .profile-content-div .bg-img .mini-profile .text-back-div .inner-text .text-div .text{ 
+		font-size: 10px;
+	}
+}
+
+@media all and (max-width:320px) {
+	.user-profile-div .profile-content-div .bg-img .mini-profile .img-div{ 
+		width: 70px;
+		height: 70px;
+	}
+	.user-profile-div .profile-content-div .bg-img .mini-profile .text-back-div{ 
+		width: calc(100% - 80px);
+	}
+}
+
+
 
 
 .detail-container {
@@ -841,8 +901,7 @@ header .inner-div .mobile-logout:hover{
 .card-back-div {
     width: 100%;
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+    gap: 20px;
     align-items: center;
 }
 
@@ -889,6 +948,17 @@ header .inner-div .mobile-logout:hover{
     -moz-transform:scale(1.02) translate(1px,0px);
 	-webkit-transform:scale(1.02) translate(1px,0px);
     background: var(--secondary-color);
+}
+
+
+
+@media all and (max-width:520px) {
+	.card-back-div {
+		gap: 10px;
+	}
+	.card-back-div .card-div {
+		width: 45%;
+	}
 }
 
 
@@ -1426,6 +1496,22 @@ header .inner-div .mobile-logout:hover{
 
 
 
+@media all and (max-width:500px) {
+	.slide-form-div{
+		width: 100%;
+	}
+	.slide-form-div .container-back-div .inner-container{
+		width: calc(100% - 40px);
+		padding: 20px 20px 20px 20px;
+	}
+	.slide-form-div .title-panel-div{
+		width: calc(100% - 40px);
+		padding: 0px 20px;
+	}
+}
+
+
+
 .permission-form-back-div{
 	width: calc(100% - 22px);
 	padding: 20px 10px;
@@ -1677,7 +1763,7 @@ header .inner-div .mobile-logout:hover{
 
 
 .caption-div .div-in .btn-div .btn{
-	width: 80%;
+	width: 85%;
     height: 45px;
 	padding: 0px 25px;
     border: none;
@@ -1688,17 +1774,20 @@ header .inner-div .mobile-logout:hover{
     color: var(--white-color);
     cursor: pointer;
     transition: all 0.2s ease-in 0.2s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .caption-div .div-in .btn-div .whatsapp-btn{
-    width: 20%;
+    width: 15%;
 	background: #29BA00;
 }
 
 
 
 .caption-div .div-in .btn-div .whatsapp-btn i{
-   font-size: 25px;
+   font-size: 22px;
 }
 
 .caption-div .div-in .btn-div .btn:hover{

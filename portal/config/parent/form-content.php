@@ -1,4 +1,4 @@
-<?php if ($page == 'studentProfile') { ?>
+<?php if ($page == 'studentProfileForm') { ?>
     <script> getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));</script>
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
         <div class="top-panel-div">
@@ -20,9 +20,9 @@
                     <div class="text-back-div">
                         <div class="inner-text">
                             <div class="text-div">
-                                <div class="name" id="headerSurname">
+                                <h2 id="headerSurname">
                                     <script>$("#headerSurname").html(capitalizeFirstLetterOfEachWord(getEachStudentSession.studentData.surName+' '+getEachStudentSession.studentData.firstName +' '+getEachStudentSession.studentData.otherNames));</script>
-                                </div>
+                                </h2>
 
                                 <div class="text">
                                     ID:<strong id="headerStudentId"><script>$("#headerStudentId").html(getEachStudentSession.studentId);</script></strong> | 
@@ -43,12 +43,22 @@
                 <div class="div-in">
                     <ul>
                         <li class="active" title="Dashboard" id="studentDashbaord" onclick="_getActiveStudentPage({divid: 'studentDashbaord', page: 'studentDashbaord', url: parentPortalLocalUrl});"><i class="bi-speedometer2"></i> Dashboard</li>
-                        <li title="Pay Fees" id="payFees" onclick="_getForm({page: 'paymentForm', layer: 2, url: parentPortalLocalUrl});"><i class="bi-mortarboard"></i> Pay Fees</li>
-                        <li title="Payment History" id="paymentHistory" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-clock-history"></i> Payment History</li>
+                        <li title="Student Profile" id="studentProfile" onclick="_getActiveStudentPage({divid: 'studentProfile', page: 'studentProfile', url: parentPortalLocalUrl});"><i class="bi-person-lines-fill"></i> Student Profile</li>
+                        <li title="Pay Fees" class="hide-li" id="payFees" onclick="_getForm({page: 'paymentForm', layer: 2, url: parentPortalLocalUrl});"><i class="bi-credit-card"></i> Pay Fees</li>
+                        <li title="Payment History" class="hide-li" id="paymentHistory" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-clock-history"></i> Payment History</li>
                         <!-- <li title="Attendance" id="attendance" onclick=""><i class="bi-person-bounding-box"></i> Attendance</li>
                         <li title="Time Table" id="timeTable" onclick=""><i class="bi-bell"></i> Time Table</li>
                         <li title="Print Result" id="printResult" onclick=""><i class="bi-bell"></i> Print Result</li>
                         <li title="Assignment" id="assignment" onclick=""><i class="bi-bell"></i> Assignment</li> -->
+                        <li title="Other Links"><i class="bi-three-dots-vertical"></i>
+                            <ul>
+                                <li title="Dashboard" class="active" onclick="_getActiveStudentPage({divid: 'studentDashbaord', page: 'studentDashbaord', url: parentPortalLocalUrl});"><i class="bi-speedometer2"></i> <span>Dashboard</span></li>
+                                <li title="Student Profile" onclick="_getActiveStudentPage({divid: 'studentProfile', page: 'studentProfile', url: parentPortalLocalUrl});"><i class="bi-person-lines-fill"></i> <span>Student Profile</span></li>
+                                <li title="Pay Fees" onclick="_getForm({page: 'paymentForm', layer: 2, url: parentPortalLocalUrl});"><i class="bi-credit-card-2-back"></i> <span>Pay Fees</span></li>
+                                <li title="Payment History" class="hide-li" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-clock-history"></i> <span>Payment History</span></li>
+                                <li title="View Result" onclick=""><i class="bi-printer"></i> <span>View Result</span></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -72,8 +82,22 @@
 
 <!-- For Student Modal Pages -->
 <?php if ($page == 'studentDashbaord') { ?>
+    <div class="card-back-div" data-aos="fade-in" data-aos-duration="1300">
+        <div class="card-div" title="Pay Fees" onclick="_getForm({page: 'paymentForm', layer: 2, url: parentPortalLocalUrl});"> 
+            <div class="pix"><img src="<?php echo $websiteUrl?>/images/online-payment.jpg" alt="Pay Fees"></div>
+            <div class="text">Pay Fees</div>
+        </div>
+
+        <div class="card-div" title="View Result">
+            <div class="pix"><img src="<?php echo $websiteUrl?>/images/print-result.jpg" alt="View Result"></div>
+            <div class="text">View Result</div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'studentProfile') { ?>
     <script> getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));</script>
-    <div class="detail-container">  
+    <div class="detail-container" data-aos="fade-in" data-aos-duration="1300">  
         <div class="profile-details">
             <div class="title">
                 <i class="bi-person-lines-fill"></i>
@@ -145,13 +169,6 @@
                 <div class="details"><span>TERM</span>
                    <div id="currentTerm"><script>$("#currentTerm").html(getEachStudentSession.branchData.termData.currentTerm);</script></div>
                 </div>
-            </div>
-        </div>
-
-        <div class="card-back-div" onclick="_getForm({page: 'paymentForm', layer: 2, url: parentPortalLocalUrl});">
-            <div class="card-div">
-                <div class="pix"><img src="<?php echo $websiteUrl?>/images/online-payment.jpg" alt="Pay Fees"></div>
-                <div class="text">Pay Fees</div>
             </div>
         </div>
     </div>
@@ -411,7 +428,7 @@
 <?php } ?>
 
 <?php if ($page == 'paymentHistory') { ?>
-    <div class="detail-container">  
+    <div class="detail-container" data-aos="fade-in" data-aos-duration="1300">  
         <div class="chart-div-notifications">
             <div class="text"><i class="bi-graph-up-arrow"></i> Showing Notification History for </div>
 
@@ -596,20 +613,6 @@
     </div>
 <?php } ?>
 
-<?php if ($page == 'logOutConfirmForm') { ?>
-    <div class="caption-success-div animated zoomIn">
-        <div class="div-in">
-            <div class="img"><img src="<?php echo $websiteUrl?>/images/warning.gif"/></div>
-            <h2>Are you sure to log-out?</h2>
-            Please, confirm your log-out action.
-            <div class="btn-div">
-                <button class="btn" onclick="_logOut();">YES</button>
-                <button class="btn no-btn" onclick="_alertClose(<?php echo $modalLayer?>);">NO</button>
-            </div>
-        </div>
-    </div>
-<?php } ?>
-
 <?php if ($page == 'accountTransferForm') { ?>
     <div class="caption-div animated zoomIn">
         <div class="title-div">
@@ -630,3 +633,18 @@
         </div>
     </div>
 <?php } ?>
+
+<?php if ($page == 'logOutConfirmForm') { ?>
+    <div class="caption-success-div animated zoomIn">
+        <div class="div-in">
+            <div class="img"><img src="<?php echo $websiteUrl?>/images/warning.gif"/></div>
+            <h2>Are you sure to log-out?</h2>
+            Please, confirm your log-out action.
+            <div class="btn-div">
+                <button class="btn" onclick="_logOut();">YES</button>
+                <button class="btn no-btn" onclick="_alertClose(<?php echo $modalLayer?>);">NO</button>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+

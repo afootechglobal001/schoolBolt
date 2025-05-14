@@ -11,7 +11,7 @@ function _getActiveStudentPage(props) {
 }
 
 function _getStudentPageActiveLink(divid){
-	$('#studentDashbaord, #paymentHistory').removeClass('active');
+	$('#studentDashbaord, #paymentHistory, #studentProfile').removeClass('active');
 	$("#"+divid).addClass('active');
 }
 
@@ -36,7 +36,7 @@ function _getFetchEachStudent(Id) {
 	let student = parentStudents.find(s => s.studentId === Id);
 	if (student) {
 		sessionStorage.setItem("getEachStudentSession", JSON.stringify(student));
-		_getForm({page: 'studentProfile', url: parentPortalLocalUrl});
+		_getForm({page: 'studentProfileForm', url: parentPortalLocalUrl});
 	}
 }
 
