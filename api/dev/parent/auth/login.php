@@ -50,10 +50,6 @@ if (!$checkBasicSecurity){/// start if 1
                     'response'=> 103,
                     'success'=> false,
                     'message'=> "INVALID LOGIN CREDIENTIALS! Kindly check the login parameters and try again.",
-                    'clientIds'=> $clientIds,
-                    'parentTypeId'=> $parentTypeId,
-                    'email'=> $email,
-                    'phone'=> $phone,
                 ];
                 goto end;
             }
