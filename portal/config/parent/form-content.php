@@ -87,7 +87,7 @@
             <div class="text">Pay Fees</div>
         </div>
 
-        <div class="card-div" title="View Result">
+        <div class="card-div" title="View Result" onclick="_getForm({page: 'payemntSuccessForm', url: parentPortalLocalUrl});">
             <div class="pix"><img src="<?php echo $websiteUrl?>/images/print-result.jpg" alt="View Result"></div>
             <div class="text">View Result</div>
         </div>
@@ -241,20 +241,8 @@
                     <div class="alert alert-success form-alert">
                         <span>List of Fees Paid</span>
 
-                        <div class="alert-list-div">
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>TUITION FEE:</div>
-                                    <div><span id=""><s>N</s>150,000</span></div>
-                                </div>
-                            </div>
-
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>BUS FEE:</div>
-                                    <div><span id=""><s>N</s>10,000</span></div>
-                                </div>
-                            </div>
+                        <div class="alert-list-div" id="paidFees">
+                            No record found!
                         </div>
                     </div>
                 </div>
@@ -267,11 +255,12 @@
 
                     <div class="permission-toggle-div">
                         <div class="toggle-title">Fee Categories</div>
-                        <div class="fetch-toggle" id="fetchedPayment">
+                        <div class="fetch-toggle" id="notPaidFees">
 
                             <script>
                                 $(document).ready(function() {
-                                    let text = '';
+                                    let notPaidFees = '';
+                                    let paidFees = null;
 
                                     if (getPayFeesToPaySession && getPayFeesToPaySession.data) {
                                         const fetch = getPayFeesToPaySession.data;
@@ -284,8 +273,10 @@
                                             const NewFeesOption = (feesOption === "TRUE") ? "MANDATORY" : "NOT MANDATORY";
                                             const feesOptionColor = (feesOption === "TRUE") ? "green-color" : "orange-color";       
                                             const amount = thousandSeperator(fetchedFess.amount);
+                                            const paid = fetchedFess.paid;
 
-                                            text += `
+                                          if (paid==='FALSE'){
+                                            notPaidFees += `
                                                 <div class="each-toggle-div">
                                                     <div class="title-back-div">
                                                         <div class="toggle-title-div">${feesName} - <span>(<s>N</s>${amount})</span></div>
@@ -297,9 +288,19 @@
                                                         <span class="toggle-label">No</span>
                                                     </label>
                                                 </div>`;
+                                          }else{
+                                                paidFees += `
+                                                    <div class="alert-list-back-div">
+                                                        <div class="alert-list">
+                                                            <div>${feesName}:</div>
+                                                            <div><span id=""><s>N</s>${amount}</span></div>
+                                                        </div>
+                                                    </div>`;
+                                          }
                                             
                                         }
-                                        $("#fetchedPayment").html(text);
+                                        $("#notPaidFees").html(notPaidFees);
+                                        $("#paidFees").html(paidFees ? paidFees : 'No record found!');
                                         _toggleCheck();
                                     }
                                 });
@@ -350,7 +351,7 @@
                 </div>
         
                 <div>
-                    <button class="btn" title="Make Payment" id="submitBtn" onclick="_getForm({page: 'accountTransferForm', layer: 2, url: parentPortalLocalUrl});"> <i class="bi-check"></i> MAKE PAYMENT </button>
+                    <button class="btn" title="Make Payment" id="submitBtn" onclick="_proceedToPayment();"> <i class="bi-check"></i> MAKE PAYMENT </button>
                 </div>
             </div>
         </div>
@@ -604,3 +605,14 @@
     </div>
 <?php } ?>
 
+<?php if ($page == 'payemntSuccessForm') { ?>
+    <div class="caption-success-div animated zoomIn">
+        <div class="div-in">
+            <div class="img"><img src="<?php echo $websiteUrl?>/images/success.gif"/></div>
+            <h2>PAYMENT SUCCESSFUL</h2>
+            <div class="btn-div">
+                <button class="btn done-btn" onclick="_alertClose();">DONE</button>
+            </div>
+        </div>
+    </div>
+<?php } ?>
