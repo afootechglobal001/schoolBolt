@@ -253,7 +253,7 @@ function _proceedToPayment() {
 function _callPayStack(paymentKey, paymentId, email, amount) {
 	let getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));
 	let parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));
-	const parentFullname= parentSessionData.parentData.titleId+' '+surName+' '+otherNames;
+	const parentFullname= parentSessionData.parentData.titleId+' '+parentSessionData.parentData.surName+' '+parentSessionData.parentData.otherNames;
 	const parentPhoneNumber= parentSessionData.parentData.mobileNumber;
 	const branchId= getEachStudentSession.branchData.branchId;
 
@@ -272,8 +272,8 @@ function _callPayStack(paymentKey, paymentId, email, amount) {
 				}
 			]
 		},
-		callback: function (response) { //success
-			var stack_pay_ref = $.trim(response.reference);
+		callback: function () { //success
+			//var stack_pay_ref = $.trim(response.reference);
 			_callPaymentSuccess(paymentId,branchId);
 		},
 		onClose: function () { //update to cancelled.
@@ -283,6 +283,51 @@ function _callPayStack(paymentKey, paymentId, email, amount) {
 	});
 	handler.openIframe();
 }
+
+function _callPaymentSuccess(paymentId,branchId) {
+	try {
+		const formData = {
+			"paymentId": paymentId,
+			"branchId": branchId,
+		};
+		
+		$.ajax({
+			type: "POST",
+			url: `${endPoint}/parent/payment/payment-success`,
+			data: JSON.stringify(formData),
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(),
+			processData: false,
+			success: function (data) {
+				if (data.success) {
+					const secretKey= data.secretKey;
+					const charges= data.charges;
+					const paymentId= data.paymentId;
+					const receiverKey= data.receiverKey;
+					const reason= data.reason;
+					if(charges>0){
+						_transferToSchoolBolt(secretKey, charges, paymentId, receiverKey, reason);
+					} else {
+						_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
+					}
+				} else {
+					console.log(data);
+					_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
+				}
+			},
+			error: function (error) {
+				console.log(error);
+				_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
+			}
+		});
+		
+	} catch (error) {
+		console.log(error);
+		_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
+	}
+}
+
 
 function _callPaymentCancelled(paymentId) {
 	try {
@@ -314,37 +359,79 @@ function _callPaymentCancelled(paymentId) {
 }
 
 
-function _callPaymentSuccess(paymentId,branchId) {
+
+
+function _transferToSchoolBolt(secretKey, charges, paymentId, receiverKey, reason) {
 	try {
-		const formData = {
-			"paymentId": paymentId,
-			"branchId": branchId,
-		};
-		
 		$.ajax({
-			type: "POST",
-			url: `${endPoint}/parent/payment/payment-success`,
-			data: JSON.stringify(formData),
-			dataType: "json", 
-			cache: false,
-			headers: getAuthHeaders(),
-			processData: false,
-			success: function (data) {
-				if (data.success) {
-					
-				} else {
-					_actionAlert(data.message, false);
-				}
-				$("#submitBtn").html(btn_text).prop("disabled", false);
+			url: payStackTransferUrl,
+			method: "POST",
+			headers: {
+				"Authorization": `Bearer ${secretKey}`,
+				"Content-Type": "application/json"
 			},
-			error: function (error) {
-				_actionAlert('An error occurred while processing your request: ' + error, false);
-				$("#submitBtn").html(btn_text).prop("disabled", false);
+			data: JSON.stringify({
+				source: "balance",
+				amount: charges,
+				reference: paymentId,
+				recipient: receiverKey,
+				reason: reason
+			}),
+			success: function(response) {
+				console.log(response);
+				_transferToSchoolBoltSuccess(paymentId);
+			},
+			error: function(xhr, status, error) {
+    			console.error("Transfer failed:", status, error, xhr.responseText);
+				_transferToSchoolBoltFailed(paymentId);
+				_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
 			}
 		});
-		
 	} catch (error) {
-		_actionAlert('An unexpected error occurred: ' + error.message, false);
-		$("#submitBtn").prop("disabled", false);
-	}
+		console.error("Transfer failed:", error);
+		_transferToSchoolBoltFailed(paymentId);
+		_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
+	}	
+}
+
+
+function _transferToSchoolBoltSuccess(paymentId) {
+	const formData = {
+		"paymentId": paymentId,
+	};
+	
+	$.ajax({
+		type: "POST",
+		url: `${endPoint}/parent/payment/transfer-to-schoolbolt-success`,
+		data: JSON.stringify(formData),
+		dataType: "json", 
+		cache: false,
+		headers: getAuthHeaders(),
+		processData: false,
+		success: function (data) {
+			console.log(data);
+			_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
+		},
+	});
+}
+
+
+function _transferToSchoolBoltFailed(paymentId) {
+	const formData = {
+		"paymentId": paymentId,
+	};
+	
+	$.ajax({
+		type: "POST",
+		url: `${endPoint}/parent/payment/transfer-to-schoolbolt-failed`,
+		data: JSON.stringify(formData),
+		dataType: "json", 
+		cache: false,
+		headers: getAuthHeaders(),
+		processData: false,
+		success: function (data) {
+			console.log(data);
+			_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
+		},
+	});
 }
