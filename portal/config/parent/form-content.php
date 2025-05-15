@@ -618,7 +618,7 @@
             <div class="img"><img src="<?php echo $websiteUrl?>/images/success.gif"/></div>
             <h2>PAYMENT SUCCESSFUL</h2>
             <div class="btn-div">
-                <button class="btn done-btn" onclick="_alertClose();">DONE</button>
+                <button class="btn done-btn" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl}); _alertClose(2)">DONE</button>
             </div>
         </div>
     </div>
