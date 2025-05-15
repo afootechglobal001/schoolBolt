@@ -21,10 +21,10 @@ if (!$checkBasicSecurity){/// start if 1
         ('$paymentId', '$studentId', '$feesId', '$feesName', '$feesOption','$amount')") or die(mysqli_error($conn));
     }
     /// Delete temp payment
-    mysqli_query($conn, "DELETE FROM PAYMENT_HISTORY_TEMP_TAB WHERE $paymentId='$paymentId'")or die (mysqli_error($conn));
+    mysqli_query($conn, "DELETE FROM PAYMENT_HISTORY_TEMP_TAB WHERE paymentId='$paymentId'")or die (mysqli_error($conn));
     
    /// confirm payment first
-    mysqli_query($conn, "UPDATE PAYMENTS_TAB SET statusId=5, paydate=NOW() WHERE $paymentId='$paymentId'")or die (mysqli_error($conn));
+    mysqli_query($conn, "UPDATE PAYMENTS_TAB SET statusId=5, paydate=NOW() WHERE paymentId='$paymentId'")or die (mysqli_error($conn));
     
     ////////////////// for  $branchId
     $branchDataQuery = mysqli_query($conn, "SELECT * FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
@@ -33,7 +33,7 @@ if (!$checkBasicSecurity){/// start if 1
     $receiverKey=$branchDataFetch['receiverKey'];
    
     /////////////////// get schoolboltCharges
-    $schoolboltChargesQuery = mysqli_query($conn, "SELECT schoolBoltCharges FROM PAYMENTS_TAB WHERE $paymentId='$paymentId'");
+    $schoolboltChargesQuery = mysqli_query($conn, "SELECT schoolBoltCharges FROM PAYMENTS_TAB WHERE paymentId='$paymentId'");
     $schoolboltChargesFetch=mysqli_fetch_assoc($schoolboltChargesQuery);
     $schoolBoltCharges=$schoolboltChargesFetch['schoolBoltCharges'];
 
@@ -44,7 +44,7 @@ if (!$checkBasicSecurity){/// start if 1
     ('$clientId', '$branchId', '$paymentId', '$schoolBoltCharges', 3, NOW())") or die(mysqli_error($conn));
     }
    
-if($paymentMethodId=='PM001'){ /// DEBIT/CREDIT CARD
+
      $response = [
         'response'=> 200,
         'success'=> true,
@@ -55,20 +55,9 @@ if($paymentMethodId=='PM001'){ /// DEBIT/CREDIT CARD
         'receiverKey'=> $receiverKey,
         'reason'=> 'SchoolBolt Charges',
     ];
-}
 
-if($paymentMethodId=='PM002'){ /// BANK TRANSFER
-     $response = [
-        'response'=> 200,
-        'success'=> true,
-        'message'=> 'ACOUNT VERIFIED FOR PAYMENT. Proceed to payment.',
-        'amount'=> $totalAmount,
-        'accountName'=> $accountName,
-        'accountNumber'=> $accountNumber,
-        'bankName'=> $bankName,
-        'branchNumber'=> $mobileNumber,
-    ];
-}
+
+
 end:
 echo json_encode($response);
 ?>

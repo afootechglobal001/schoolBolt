@@ -7,7 +7,7 @@ if (!$checkBasicSecurity){/// start if 1
     $paymentId =trim($data['paymentId']);
     
    /// update PAYMENTS_TAB
-    mysqli_query($conn, "UPDATE PAYMENTS_TAB SET statusId=4, paydate=NOW() WHERE $paymentId='$paymentId'")or die (mysqli_error($conn));
+    mysqli_query($conn, "UPDATE PAYMENTS_TAB SET statusId=4, paydate=NOW() WHERE paymentId='$paymentId'")or die (mysqli_error($conn));
      $response = [
         'response'=> 200,
         'success'=> true,
