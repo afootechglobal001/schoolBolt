@@ -160,3 +160,7 @@ function _fetchFeesToPay() {
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
 }
+
+
+
+

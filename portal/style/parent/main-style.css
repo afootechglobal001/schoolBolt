@@ -977,7 +977,7 @@ header .inner-div .mobile-logout:hover{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 5px;
+	gap: 10px;
 	font-size:14px;
 }
 .caption-success-div .div-in .img{
@@ -994,14 +994,15 @@ header .inner-div .mobile-logout:hover{
 .caption-success-div .div-in h2{
 	color:#444;
 	text-align:center;
-	padding-bottom:0px;
-	margin-bottom:0px;
+	padding: 0px;
+	margin: 0px;
 }
 
 .caption-success-div .div-in .btn-div{
 	display: flex;
 	align-items: center;
 	gap: 5px;
+	margin-top: 5px;
 }
 
 .caption-success-div .div-in .btn-div .btn{
@@ -1044,6 +1045,15 @@ header .inner-div .mobile-logout:hover{
 .caption-success-div .div-in .password-div .password-btn:hover{
 	background: var(--secondary-color);
 	color:var(--sub-body-color);
+}
+
+.caption-success-div .div-in .btn-div .done-btn{
+	background: var(--sub-body-color);
+}
+
+.caption-success-div .div-in .btn-div .done-btn:hover{
+	background: var(--sub-body-color);
+	opacity: .9;
 }
 
 @media all and (max-width:500px) {
