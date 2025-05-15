@@ -2116,25 +2116,8 @@ header .inner-div .mobile-logout:hover{
 	color: var(--sub-body-color)
 }
 
-.table-div .table .tb-row .DELIVERED{
-	color: var(--primary-color);
-}
-
-.table-div .table .tb-row .READY{
-	color: rgba(19, 141, 117)
-}
-
-.table-div .table .tb-row .PROCESSING{
-	color:rgba(238, 139, 19);
-}
-
 .table-div .table .tb-row .order-status.PENDING{
 	color:rgba(238, 139, 19);
-    background: none;
-}
-
-.table-div .table .tb-row .unpaid-status.PENDING{
-	color: rgba(19, 141, 117);
     background: none;
 }
 
@@ -2150,7 +2133,7 @@ header .inner-div .mobile-logout:hover{
 	float: left;
 }
 
-.table-div .table .SUCCESS,
+.table-div .table .SUCCESSFUL,
 .table-div .table .ACTIVE{
 	background:rgba(46,204,113,.1);
 	color:rgba(9, 172, 77, 0.9);
@@ -2237,4 +2220,9 @@ header .inner-div .mobile-logout:hover{
 
 .table-div .table .tb-row .btn-div .print-btn:hover{
 	opacity: .8
+}
+
+
+.other-pages-ajax-loader {
+	top: 45%;
 }

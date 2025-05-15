@@ -4,6 +4,8 @@ if (!$checkBasicSecurity){/// start if 1
     goto end;
 }
 	//////////////////declaration of variables//////////////////////////////////////
+    $session =trim($data['session']);
+    $termId =trim($data['termId']);
 	$studentId =trim($data['studentId']);
 	$branchId=trim($data['branchId']);
 	$departmentId=trim($data['departmentId']);
@@ -11,7 +13,23 @@ if (!$checkBasicSecurity){/// start if 1
     $armId=trim($data['armId']);
 	////////////////////////////////////////////////////////////////////////////////
 
-	if (empty($studentId)){/// start if 2
+	if (empty($session)){/// start if 2
+        $response = [
+            'response'=> 100,
+            'success'=> false,
+            'message'=> "SESSION REQUIRED! Check username fields and try again",
+        ]; 
+        goto end;
+	}
+    if (empty($termId)){/// start if 2
+        $response = [
+            'response'=> 100,
+            'success'=> false,
+            'message'=> "TERM REQUIRED! Check username fields and try again",
+        ]; 
+        goto end;
+	}
+if (empty($studentId)){/// start if 2
         $response = [
             'response'=> 100,
             'success'=> false,
@@ -19,6 +37,7 @@ if (!$checkBasicSecurity){/// start if 1
         ]; 
         goto end;
 	}
+
 
     if(empty($branchId)){
         $response = [
@@ -56,10 +75,9 @@ if (!$checkBasicSecurity){/// start if 1
 
 
     ////////////////// for  $branchId
-    $branchDataQuery = mysqli_query($conn, "SELECT branchId, name AS branchName, session AS currentSession, termId FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+    $branchDataQuery = mysqli_query($conn, "SELECT branchId, name AS branchName FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
-    $session=$branchDataFetch['currentSession'];
-    $termId=$branchDataFetch['termId'];
+
     /////////////////// for  $termId
     $termDataQuery = mysqli_query($conn, "SELECT termId, termName AS currentTerm FROM SETUP_TERM_TAB WHERE termId='$termId'");
     $termDataFetch = mysqli_fetch_assoc($termDataQuery);

@@ -222,7 +222,7 @@
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
                                     <div>Session:</div>
-                                <div><span id="formCurrentSession"><script>$("#formCurrentSession").html(getPayFeesToPaySession.branchData.currentSession);</script></span></div>
+                                <div><span id="formCurrentSession"><script>$("#formCurrentSession").html(getPayFeesToPaySession.currentSession);</script></span></div>
                                 </div>
                             </div>
 
@@ -441,129 +441,7 @@
 
         <div class="table-div animated fadeIn">
             <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-                <thead>
-                    <tr class="tb-col">
-                        <th>sn</th>
-                        <th>Date</th>
-                        <th>Payment ID</th>
-                        <th>Term</th>
-                        <th>Class</th>
-                        <th>(₦)Amount</th>
-                        <th>Payment Method</th>
-                        <th>Payment Status</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr class="tb-row">
-                        <td>1</td>
-                        <td>2025-02-14 17:03:46</td>
-                        <td><span onclick="_getForm({page: 'paymentForm', layer: 2, url: parentPortalLocalUrl});">PAY5964620250203090426</span></td>
-                        <td>
-                            <div class="text-div">
-                                <div>2024/2025</div> 
-                                <div>THIRD TERM</div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="text-div">
-                                <div>NURSERY 1 A</div>
-                            </div>
-                        </td>
-                        <td><span>₦60,000.00</span></td>
-                        <td>DEBIT/CREDIT CARD</td>
-                        <td>
-                            <div class="status-div SUCCESS">SUCCESS</div>
-                        </td>
-                    </tr>
-
-                    <tr class="tb-row">
-                        <td>2</td>
-                        <td>2025-02-12 17:03:46</td>
-                        <td><span>PAY5964620250203090431</span></td>
-                        <td>
-                            <div class="text-div">
-                                <div>2024/2025</div> 
-                                <div>THIRD TERM</div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="text-div">
-                                <div>NURSERY 1 A</div>
-                            </div>
-                        </td>
-                        <td><span>₦120,000.00</span></td>
-                        <td>DEBIT/CREDIT CARD</td>
-                        <td>
-                            <div class="status-div SUCCESS">SUCCESS</div>
-                        </td>
-                    </tr>
-
-                    <tr class="tb-row">
-                        <td>3</td>
-                        <td>2025-02-22 17:03:46</td>
-                        <td><span>PAY5964620250203090411</span></td>
-                        <td>
-                            <div class="text-div">
-                                <div>2024/2025</div> 
-                                <div>THIRD TERM</div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="text-div">
-                                <div>NURSERY 1 A</div>
-                            </div>
-                        </td>
-                        <td><span>₦100,000.00</span></td>
-                        <td>BANK TRANSFER</td>
-                        <td>
-                            <div class="status-div SUCCESS">SUCCESS</div>
-                        </td>
-                    </tr>
-                    <tr class="tb-row">
-                        <td>4</td>
-                        <td>2025-02-15 17:03:46</td>
-                        <td><span>PAY5964620250203090427</span></td>
-                        <td>
-                            <div class="text-div">
-                                <div>2024/2025</div> 
-                                <div>THIRD TERM</div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="text-div">
-                                <div>NURSERY 1 A</div>
-                            </div>
-                        </td>
-                        <td><span>₦10,000.00</span></td>
-                        <td>DEBIT/CREDIT CARD</td>
-                        <td>
-                            <div class="status-div SUCCESS">SUCCESS</div>
-                        </td>
-                    </tr>
-
-                    <tr class="tb-row">
-                        <td>5</td>
-                        <td>2025-02-11 17:03:46</td>
-                        <td><span>PAY5964620250203090478</span></td>
-                       <td>
-                            <div class="text-div">
-                                <div>2024/2025</div> 
-                                <div>THIRD TERM</div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="text-div">
-                                <div>NURSERY 1 A</div>
-                            </div>
-                        </td>
-                        <td><span>₦5,000.00</span></td>
-                        <td>BANK TRANSFER</td>
-                        <td>
-                            <div class="status-div PENDING">PENDING</div>
-                        </td>
-                    </tr>
-                </tbody>
+                <script>_fetchPaymentHistory();</script>
             </table>
         </div>
     </div>
