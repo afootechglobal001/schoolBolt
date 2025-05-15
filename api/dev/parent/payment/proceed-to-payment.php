@@ -111,7 +111,7 @@ if (!$checkBasicSecurity){/// start if 1
 
 
     /////////////////// get paymentId
-    $getPaymentIdQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=3");
+    $getPaymentIdQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId IN (3,4)");
     $getPaymentIdFetch = mysqli_fetch_assoc($getPaymentIdQuery);
     $previousPaymentId=$getPaymentIdFetch['paymentId'];
     if($previousPaymentId){
@@ -140,8 +140,8 @@ if (!$checkBasicSecurity){/// start if 1
         (`paymentId`, `studentId`, `feesId`, `feesName`, `feesOption`, `amount`, `createdTime`) VALUES 
         ('$paymentId', '$studentId', '$feesId', '$feesName', '$feesOption', '$amount', NOW())") or die(mysqli_error($conn));
 
-        $totalMandatoryFees + =$feesOption==='TRUE' ? $amount:0;
-        $totalNotMandatoryFee + =$feesOption==='FALSE' ? $amount:0;
+        $totalMandatoryFees +=$feesOption==='TRUE' ? $amount:0;
+        $totalNotMandatoryFee +=$feesOption==='FALSE' ? $amount:0;
     }
 
     /////////////////// get schoolboltCharges
@@ -177,6 +177,7 @@ if($paymentMethodId=='PM001'){ /// DEBIT/CREDIT CARD
         'paymentId'=> $paymentId,
         'email'=> $email,
         'amount'=> $totalAmount*100,
+        'paymentMethodId'=> $paymentMethodId,
     ];
 }
 
@@ -190,7 +191,7 @@ if($paymentMethodId=='PM002'){ /// BANK TRANSFER
         'accountNumber'=> $accountNumber,
         'bankName'=> $bankName,
         'branchNumber'=> $mobileNumber,
-        
+        'paymentMethodId'=> $paymentMethodId,
     ];
 }
 end:
