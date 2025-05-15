@@ -45,6 +45,8 @@
 	var userIpAddress = "<?php echo $userIpAddress;?>"; /// For User IP Address //
 	var userDeviceId = "<?php echo $userDeviceId;?>"; /// For User Device Id //
 
+	var payStackTransferUrl='https://api.paystack.co/transfer'; /// API Transfer EndPoint
+
 	var adminLocalUrl=websiteUrl+'/config/admin/code';
 	var parentPortalLocalUrl=websiteUrl+'/config/parent/code';
 	var adminPortalLocalUrl=websiteUrl+'/config/admin/operations/code'; 
