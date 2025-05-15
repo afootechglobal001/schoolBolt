@@ -37,7 +37,7 @@ function getAuthHeaders() {
 }
 
 function _logOut(){
-	sessionStorage.setItem("parentSessionData", JSON.stringify(''));
+	sessionStorage.clear();
 	window.parent.location.href = parentLoginUrl;
 }
 
@@ -163,4 +163,188 @@ function _fetchFeesToPay() {
 
 
 
+function _proceedToPayment() {
+	let getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));
+	let parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));
+	
+	try {
+		const paymentMethodId = $('#paymentMethodId').val().trim();
+		$('#paymentMethodId').removeClass("issue");
 
+		let selectedFees = [];
+
+		$('.child:checked').each(function() {
+			const feesId = $(this).data('value');
+			selectedFees.push({ feesId: feesId });
+		});
+
+		if (selectedFees.length === 0) {
+			_actionAlert('Please select at least one fee to continue.', false);
+			return;
+		}
+
+		if (!paymentMethodId) {
+			$('#paymentMethodId').addClass('issue');
+			_actionAlert('Select payment method to continue', false);
+			return;
+		} 
+
+		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
+			const btn_text = $("#submitBtn").html();
+			$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+			$("#submitBtn").prop("disabled", true);
+
+			const formData = {
+				"session": getEachStudentSession?.branchData?.currentSession,
+				"termId": getEachStudentSession?.branchData?.termId,
+				"studentId": getEachStudentSession?.studentData?.studentId,
+				"branchId": getEachStudentSession?.branchData?.branchId,
+				"departmentId": getEachStudentSession?.departmentData?.departmentId,
+				"classId": getEachStudentSession?.classData?.classId,
+				"armId": getEachStudentSession?.armData?.armId,
+				feesIds: selectedFees,
+				"paymentMethodId": paymentMethodId,
+				"email": parentSessionData?.parentData?.email,
+			};
+			
+			$.ajax({
+				type: "POST",
+				url: `${endPoint}/parent/payment/proceed-to-payment`,
+				data: JSON.stringify(formData),
+				dataType: "json", 
+				cache: false,
+				headers: getAuthHeaders(),
+				processData: false,
+				success: function (data) {
+					if (data.success) {
+						sessionStorage.setItem("studentPaymentSession", JSON.stringify(data));
+						const paymentKey= data.paymentKey;
+						const paymentId= data.paymentId;
+						const email = data.email;
+						const amount = data.amount
+						const paymentMethodId = data.paymentMethodId;
+
+						if (paymentMethodId==='PM001'){/// PAYMENT BY CREDIT/DEBIT////
+							_callPayStack(paymentKey, paymentId, email, amount);
+						}
+						if (paymentMethodId==='PM002'){/// PAYMENT BY BANK TRANSFER////
+							_getForm({page: 'accountTransferForm', layer: 2, url: parentPortalLocalUrl});
+						}
+					} else {
+						_actionAlert(data.message, false);
+					}
+					$("#submitBtn").html(btn_text).prop("disabled", false);
+				},
+				error: function (error) {
+					_actionAlert('An error occurred while processing your request: ' + error, false);
+					$("#submitBtn").html(btn_text).prop("disabled", false);
+				}
+			});
+		}
+	} catch (error) {
+		_actionAlert('An unexpected error occurred: ' + error.message, false);
+		$("#submitBtn").prop("disabled", false);
+	}
+}
+
+
+
+////// CALL PAYSTACK ////////////////
+function _callPayStack(paymentKey, paymentId, email, amount) {
+	let getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));
+	let parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));
+	const parentFullname= parentSessionData.parentData.titleId+' '+surName+' '+otherNames;
+	const parentPhoneNumber= parentSessionData.parentData.mobileNumber;
+	const branchId= getEachStudentSession.branchData.branchId;
+
+	var handler = PaystackPop.setup({
+		key: paymentKey,
+		email: email,
+		amount: amount, //amt in kobo
+		ref: paymentId,
+		currency: 'NGN', // Use GHS for Ghana Cedis or USD for US Dollars
+		metadata: {
+			custom_fields: [
+				{
+					display_name: parentFullname,
+					variable_name: "mobile_number",
+					value: parentPhoneNumber
+				}
+			]
+		},
+		callback: function (response) { //success
+			var stack_pay_ref = $.trim(response.reference);
+			_callPaymentSuccess(paymentId,branchId);
+		},
+		onClose: function () { //update to cancelled.
+			_callPaymentCancelled(paymentId);
+			return false;
+		}
+	});
+	handler.openIframe();
+}
+
+function _callPaymentCancelled(paymentId) {
+	try {
+		const formData = {
+			"paymentId": paymentId,
+		};
+		
+		$.ajax({
+			type: "POST",
+			url: `${endPoint}/parent/payment/payment-cancelled`,
+			data: JSON.stringify(formData),
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(),
+			processData: false,
+			success: function () {
+				$('#submitBtn').html('<i class="bi-check"></i> MAKE PAYMENT').prop("disabled", false);
+			},
+			error: function (error) {
+				_actionAlert('An error occurred while processing your request: ' + error, false);
+				$('#submitBtn').html('<i class="bi-check"></i> MAKE PAYMENT').prop("disabled", false);
+			}
+		});
+		
+	} catch (error) {
+		_actionAlert('An unexpected error occurred: ' + error.message, false);
+		$('#submitBtn').html('<i class="bi-check"></i> MAKE PAYMENT').prop("disabled", false);
+	}
+}
+
+
+function _callPaymentSuccess(paymentId,branchId) {
+	try {
+		const formData = {
+			"paymentId": paymentId,
+			"branchId": branchId,
+		};
+		
+		$.ajax({
+			type: "POST",
+			url: `${endPoint}/parent/payment/payment-success`,
+			data: JSON.stringify(formData),
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(),
+			processData: false,
+			success: function (data) {
+				if (data.success) {
+					
+				} else {
+					_actionAlert(data.message, false);
+				}
+				$("#submitBtn").html(btn_text).prop("disabled", false);
+			},
+			error: function (error) {
+				_actionAlert('An error occurred while processing your request: ' + error, false);
+				$("#submitBtn").html(btn_text).prop("disabled", false);
+			}
+		});
+		
+	} catch (error) {
+		_actionAlert('An unexpected error occurred: ' + error.message, false);
+		$("#submitBtn").prop("disabled", false);
+	}
+}

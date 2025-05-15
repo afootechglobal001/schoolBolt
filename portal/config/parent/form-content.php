@@ -25,10 +25,9 @@
                                 </h2>
 
                                 <div class="text">
-                                    ID:<strong id="headerStudentId"><script>$("#headerStudentId").html(getEachStudentSession.studentId);</script></strong> | 
-                                    <strong id="headerClass">
-                                        <script>$("#headerClass").html(getEachStudentSession.departmentData.departmentName+' - '+getEachStudentSession.classData.className+' '+getEachStudentSession.armData.armName);</script>
-                                    </strong>
+                                    SESSION:<strong id="headerCurrentSession"><script>$("#headerCurrentSession").html(getEachStudentSession.branchData.currentSession);</script></strong> | 
+                                    TERM:<strong id="headerCurrentTerm"><script>$("#headerCurrentTerm").html(getEachStudentSession.branchData.termData.currentTerm);</script></strong> | 
+                                    CLASS:<strong id="headerClass"><script>$("#headerClass").html(getEachStudentSession.classData.className+' '+getEachStudentSession.armData.armName);</script></strong>
                                     <div id="headerStatus">
                                          <script>$("#headerStatus").html('<div id="statusBtn" class="status-btn '+getEachStudentSession.studentData.statusName+'"><span>'+getEachStudentSession.studentData.statusName+'</span></div>')</script>
                                     </div>
@@ -113,7 +112,7 @@
                 </div>
 
                 <div class="details"><span>CURRENT CLASS</span>
-                    <div id="className"><script>$("#className").html(getEachStudentSession.classData.className);</script></div>
+                    <div id="className"><script>$("#className").html(getEachStudentSession.classData.className+' '+getEachStudentSession.armData.armName);</script></div>
                 </div>
 
                 <div class="details"><span>DATE OF BIRTH</span>
@@ -571,24 +570,32 @@
 <?php } ?>
 
 <?php if ($page == 'accountTransferForm') { ?>
+    <script> studentPaymentSession = JSON.parse(sessionStorage.getItem("studentPaymentSession"));</script>
+    <script> parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));</script>
     <div class="caption-div animated zoomIn">
         <div class="title-div">
             <div class="title"><i class="bi-person-check"></i> ACCOUNT INFORMATIONS</div>
         </div>
 
         <div class="div-in animated fadeIn">
-            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, Kindly pay the sum of <span><strong><s>N</s>9,125.00</strong></span> to the account details below:</div>
-            <h3>ACCOUNT NAME: <span>IKONG EMMANUEL ODO</span></h3>
-            <h3>ACCOUNT NUMBER: <span>0247536837</span></h3>
-            <h3>BANK NAME: <span>GT BANK</span></h3>
-            <p>Contact the admin on <strong>+234-(0)705-3879-522</strong> for payment activation.</p>
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, <strong id="loginUsername"><script>$("#loginUsername").html(parentSessionData.parentData.titleId+' '+parentSessionData.parentData.surName +' '+parentSessionData.parentData.otherNames);</script></strong>, Kindly pay the sum of <span><strong id="amount"><script>$("#amount").html('<s>N</s>'+thousandSeperator(studentPaymentSession.amount));</script></strong></span> to the account details below:</div>
+            <div class="text">ACCOUNT NAME: <strong id="accountName"><script>$("#accountName").html(studentPaymentSession.accountName);</script></strong></div>
+            <div class="text">ACCOUNT NUMBER: <strong id="accountNumber"><script>$("#accountNumber").html(studentPaymentSession.accountNumber);</script></strong></div>
+            <div class="text">BANK NAME: <strong id="bankName"><script>$("#bankName").html(studentPaymentSession.bankName);</script></strong></div>
+            <p>Contact the admin on <strong id="branchNumber"><script>$("#branchNumber").html(studentPaymentSession.branchNumber);</script></strong> for payment activation.</p>
 
             <div class="btn-div">
-                <button class="btn" id="submitBtn" title="VIEW PAYMENT HISTORY" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-eye"></i> VIEW PAYMENT HISTORY </button>
-                <button class="btn whatsapp-btn" id="submitBtn" title="MESSAGE ADMIN VIA WHATSAPP" onclick=""><i class="bi-whatsapp"></i> </button>
+                <button class="btn" id="submitBtn" title="VIEW PAYMENT HISTORY" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl}); _alertClose(2)"><i class="bi-eye"></i> VIEW PAYMENT HISTORY </button>
+                <a id="callLink" href="tel:" title="Call Customer Care">
+                <button class="btn whatsapp-btn" id="submitBtn" title="PLACE A CALL ON THIS NUMBER" onclick=""><i class="bi-telephone-outbound-fill"></i> </button></a>
             </div>
         </div>
     </div>
+
+    <script>
+        // Set the href attribute with the phone number
+        $("#callLink").attr("href", "tel:" + studentPaymentSession.branchNumber);
+    </script>
 <?php } ?>
 
 <?php if ($page == 'logOutConfirmForm') { ?>

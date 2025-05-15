@@ -6,7 +6,7 @@
     <?php include 'meta.php' ?>
     <title>Parent Portal | <?php echo $appName; ?></title>
 </head>
-
+<script src="https://js.paystack.co/v1/inline.js"></script>
 <body>
     <?php include 'header.php' ?>
 
