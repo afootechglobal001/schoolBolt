@@ -148,12 +148,62 @@
                                 });
                             </script>
                         </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-success form-alert"><span>SCHOOL PAYMENT CONFIGURATION</span>
+                    <div class="text_field_back_container">
+                        <div class="text_field_container" id="accountNumber_container">
+                            <script>
+                                textField({
+                                    id: 'accountNumber',
+                                    title: 'ACCOUNT NUMBER',
+                                    type: 'number'
+                                });
+                            </script>
+                        </div>
+
+                        <div class="text_field_container" id="accountName_container">
+                            <script>
+                                textField({
+                                    id: 'accountName',
+                                    title: 'ACCOUNT NAME'
+                                });
+                            </script>
+                        </div>
+
+                        <div class="text_field_container" id="bankName_container">
+                            <script>
+                                textField({
+                                    id: 'bankName',
+                                    title: 'BANK NAME'
+                                });
+                            </script>
+                        </div>
 
                         <div class="text_field_container" id="paymentKey_container">
                             <script>
                                 textField({
                                     id: 'paymentKey',
                                     title: 'PAYMENT KEY'
+                                });
+                            </script>
+                        </div>
+
+                        <div class="text_field_container" id="secretKey_container">
+                            <script>
+                                textField({
+                                    id: 'secretKey',
+                                    title: 'SECRET KEY'
+                                });
+                            </script>
+                        </div>
+
+                        <div class="text_field_container" id="receiverKey_container">
+                            <script>
+                                textField({
+                                    id: 'receiverKey',
+                                    title: 'RECEIVER KEY'
                                 });
                             </script>
                         </div>
@@ -868,13 +918,50 @@
                 </script>
             </div>
 
-            <div class="text_field_container col-1" id="updateSupportEmail_container">
+            <div class="text_field_container col-2" id="updateSupportEmail_container">
                 <script>
                     textField({
                         id: 'updateSupportEmail',
                         title: 'SUPPORT EMAIL',
                         type: 'email',
                         value: getEachBranchDetailsSession?.supportEmail ?? ''
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="user-in branch-user-in">
+        <div class="title">SCHOOL PAYMENT CONFIGURATION</div>
+
+        <div class="profile-segment-div">
+            <div class="text_field_container col-1" id="updateAccountNumber_container">
+                <script>
+                    textField({
+                        id: 'updateAccountNumber',
+                        title: 'ACCOUNT NUMBER',
+                        type: 'number',
+                        value: getEachBranchDetailsSession?.accountNumber ?? ''
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-1" id="updateAccountName_container">
+                <script>
+                    textField({
+                        id: 'updateAccountName',
+                        title: 'ACCOUNT NAME',
+                        value: getEachBranchDetailsSession?.accountName ?? ''
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-1" id="updateBankName_container">
+                <script>
+                    textField({
+                        id: 'updateBankName',
+                        title: 'BANK NAME',
+                        value: getEachBranchDetailsSession?.bankName ?? ''
                     });
                 </script>
             </div>
@@ -885,6 +972,26 @@
                         id: 'updatePaymentKey',
                         title: 'PAYMENT KEY',
                         value: getEachBranchDetailsSession?.paymentKey ?? ''
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-1" id="updateSecretKey_container">
+                <script>
+                    textField({
+                        id: 'updateSecretKey',
+                        title: 'SECRET KEY',
+                        value: getEachBranchDetailsSession?.secretKey ?? ''
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-1" id="updateReceiverKey_container">
+                <script>
+                    textField({
+                        id: 'updateReceiverKey',
+                        title: 'RECEIVER KEY',
+                        value: getEachBranchDetailsSession?.receiverKey ?? ''
                     });
                 </script>
             </div>

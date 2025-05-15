@@ -1480,11 +1480,7 @@ header .inner-div .mobile-logout:hover{
     font-family: title-font;
 }
 
-#proceedHideDiv{
-	display: none;
-}
-
-.slide-form-div .container-back-div .inner-container .proceedHideDiv{
+.slide-form-div .container-back-div .inner-container .summaryHideDiv{
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
@@ -1521,8 +1517,6 @@ header .inner-div .mobile-logout:hover{
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
-	margin: 20px 0px;
-
 }
 
 .permission-form-back-div .title-div{  

@@ -25,10 +25,29 @@ function capitalizeFirstLetterOfEachWord(inputText) {
 }
 
 
+function getAuthHeaders() {
+    return {
+        'apiKey': apiKey,
+        'userOsBrowser': userOsBrowser,
+        'userIpAddress': userIpAddress,
+        'userDeviceId': userDeviceId,
+		'clientId': clientId,
+		'clientAddress': clientAddress
+    };
+}
+
 function _logOut(){
 	sessionStorage.setItem("parentSessionData", JSON.stringify(''));
 	window.parent.location.href = parentLoginUrl;
 }
+
+window.addEventListener("load", function () {
+	const sessionData = sessionStorage.getItem("parentSessionData");
+	if (!sessionData || sessionData === '""') {
+		_logOut();
+	}
+});
+
 
 function _getFetchEachStudent(Id) {
 	let parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));
@@ -48,7 +67,7 @@ function _toggleCheck(){
 	});
 }
 
-function _getFormDetails(icon, nextId) {
+function _getPpaymentFormDetails(icon, nextId) {
 	$('#proceedHideDiv').hide();
 	$("#" + nextId).fadeIn(1000);
 	$('#summaryHideDiv').fadeOut(500);
@@ -72,20 +91,72 @@ function srchCustom(text){
 
 
 function _getSelectPaymentMethod(fieldId){
-	const data=[
-		{
-			id: 1,
-			value: 'DEBIT/CREDIT CARD',
-		},
-		{
-			id: 2,
-			value: 'BANK TRANSFER',
-		}
-	]
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint +'/preset-data/fetch-payment-method',
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].paymentMethodId;
+						const value = data[i].paymentMethodName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
 
-	for (let i = 0; i < data.length; i++) {
-		const id = data[i].id;
-		const value = data[i].value;
-		$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
-	}	
+
+function _fetchFeesToPay() {
+    let getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));
+	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
+	try {
+
+		const formData = {
+			"studentId": getEachStudentSession?.studentData?.studentId,
+			"branchId": getEachStudentSession?.branchData?.branchId,
+			"departmentId": getEachStudentSession?.departmentData?.departmentId,
+			"classId": getEachStudentSession?.classData?.classId,
+			"armId": getEachStudentSession?.armData?.armId
+		};
+
+		$.ajax({
+			type: "POST",
+			url: `${endPoint}/parent/payment/get-fees-to-pay`,
+			data: JSON.stringify(formData),
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(),
+			processData: false,
+			success: function(info) {
+				if (info.success && info.data.length > 0) {
+					sessionStorage.setItem("getPayFeesToPaySession", JSON.stringify(info));
+					_getForm({page: 'paymentForm', layer: 2, url: parentPortalLocalUrl});
+				} else {
+					_actionAlert(info.message, false); 
+					_alertClose(2);
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
 }
