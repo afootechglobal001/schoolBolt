@@ -385,18 +385,16 @@ function _transferToSchoolBolt(secretKey, charges, paymentId, receiverKey, reaso
 			error: function(xhr, status, error) {
     			console.error("Transfer failed:", status, error, xhr.responseText);
 				_transferToSchoolBoltFailed(paymentId);
-				_retryTransferToSchoolBolt(secretKey, charges, paymentId, receiverKey, reason);
+				_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
 			}
 		});
 	} catch (error) {
 		console.error("Transfer failed:", error);
 		_transferToSchoolBoltFailed(paymentId);
-		_retryTransferToSchoolBolt(secretKey, charges, paymentId, receiverKey, reason);
+		_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
 	}	
 }
-function _retryTransferToSchoolBolt(secretKey, charges, paymentId, receiverKey, reason) {
-	_transferToSchoolBolt(secretKey, charges, paymentId, receiverKey, reason);
-}
+
 
 function _transferToSchoolBoltSuccess(paymentId) {
 	const formData = {
