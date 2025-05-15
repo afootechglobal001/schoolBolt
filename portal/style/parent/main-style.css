@@ -794,12 +794,6 @@ header .inner-div .mobile-logout:hover{
 }
 
 @media all and (max-width:400px) {
-	
-	.user-profile-div .profile-content-div .btn-div .div-in ul li ul{
-		width: 150px;
-		min-width: 150px;
-		margin-left: -150px;
-	}
 	.user-profile-div .profile-content-div .bg-img .mini-profile .text-back-div .inner-text .text-div .text{ 
 		font-size: 10px;
 	}
