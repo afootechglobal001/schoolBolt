@@ -54,7 +54,7 @@
                                 <li title="Dashboard" class="active" onclick="_getActiveStudentPage({divid: 'studentDashbaord', page: 'studentDashbaord', url: parentPortalLocalUrl});"><i class="bi-speedometer2"></i> <span>Dashboard</span></li>
                                 <li title="Student Profile" onclick="_getActiveStudentPage({divid: 'studentProfile', page: 'studentProfile', url: parentPortalLocalUrl});"><i class="bi-person-lines-fill"></i> <span>Student Profile</span></li>
                                 <li title="Pay Fees" onclick="_fetchFeesToPay();"><i class="bi-credit-card-2-back"></i> <span>Pay Fees</span></li>
-                                <li title="Payment History" class="hide-li" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-clock-history"></i> <span>Payment History</span></li>
+                                <li title="Payment History" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-clock-history"></i> <span>Payment History</span></li>
                                 <li title="View Result" onclick=""><i class="bi-printer"></i> <span>View Result</span></li>
                             </ul>
                         </li>
@@ -86,7 +86,7 @@
             <div class="text">Pay Fees</div>
         </div>
 
-        <div class="card-div" title="View Result" onclick="_getForm({page: 'payemntSuccessForm', url: parentPortalLocalUrl});">
+        <div class="card-div" title="View Result" onclick="">
             <div class="pix"><img src="<?php echo $websiteUrl?>/images/print-result.jpg" alt="View Result"></div>
             <div class="text">View Result</div>
         </div>
