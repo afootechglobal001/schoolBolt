@@ -56,7 +56,8 @@
                             <script>
                                 textField({
                                     id: 'phone',
-                                    title: 'Mobile Number'
+                                    title: 'Mobile Number',
+                                    type: 'number'
                                 });
                             </script> 
                         </div>
