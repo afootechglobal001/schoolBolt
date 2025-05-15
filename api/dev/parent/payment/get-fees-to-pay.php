@@ -86,6 +86,12 @@ if (!$checkBasicSecurity){/// start if 1
         goto end;
     }
 
+
+    /////////////////// get previous successfull payment
+    $getPaymentIdQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=5");
+    $previousPaymentCount=mysqli_num_rows($getPaymentIdQuery);
+
+
    
     $response['response']=200; 
     $response['success']=true;
@@ -95,7 +101,8 @@ if (!$checkBasicSecurity){/// start if 1
     $response['branchData'] = $branchDataFetch;
     $response['departmentData'] = $departmentDataFetch;
     $response['classData'] = $classDataFetch;
-    $response['armData'] = $armDataFetch;  
+    $response['armData'] = $armDataFetch;
+    $response['schoolBoltCharges'] = $previousPaymentCount>0 ? 0 : $schoolBoltCharges;
     $response['data'] = array(); // Initialize the data array
 
     $select = "SELECT a.feesId, a.feesName, a.feesOption, b.amount 
@@ -105,6 +112,10 @@ if (!$checkBasicSecurity){/// start if 1
     
     $getFeesToPayQuery=mysqli_query($conn,$select)or die (mysqli_error($conn));
     while ($fetchQuery = mysqli_fetch_assoc($getFeesToPayQuery)) {
+        $feesId=$fetchQuery['feesId'];
+        $paymentQuery=mysqli_query($conn,"SELECT a.paymentId FROM PAYMENTSW_TAB a, PAYMENT_HISTORY_TAB b WHERE a.clientId='$clientId' AND a.branchId='$branchId' AND a.session='$session' AND a.termId='$termId' AND a.paymentId=b.paymentId AND b.studentId='$studentId' AND b.feesId='$feesId'")or die (mysqli_error($conn));
+        $paymentCount = mysqli_num_rows($paymentQuery);
+        $fetchQuery['paid']=$paymentCount>0 ? 'TRUE' : 'FALSE';
         $response['data'][]= $fetchQuery;
     }
             

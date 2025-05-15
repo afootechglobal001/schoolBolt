@@ -23,20 +23,21 @@ if(!$checkSession){
     $smtpPassword=trim($data['smtpPassword']);
     $smtpPort=trim($data['smtpPort']);
     $supportEmail=trim($data['supportEmail']);
+
+    $accountNumber=trim($data['accountNumber']);
+    $accountName=trim($data['accountName']);
+    $bankName=trim($data['bankName']);
     $paymentKey=trim($data['paymentKey']);
+    $secretKey=trim($data['secretKey']);
+    $receiverKey=trim($data['receiverKey']);
+
     $staffId=trim($data['managerId']);
     $session=trim($data['session']);
     $termId=trim($data['termId']);
     $statusId=trim($data['statusId']);
+
+    $departmentIds=$data['departmentIds'];
 	////////////////////////////////////////////////////////////////////////////////
-    if (empty($branchId)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "BRANCH ID REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
 
 	if (empty($name)){/// start if 2
         $response = [
@@ -119,11 +120,52 @@ if(!$checkSession){
         ]; 
         goto end;
 	}
+
+    if(empty($accountNumber)){
+        $response = [
+            'response'=> 102,
+            'success'=> false,
+            'message'=> "ACCOUNT NUMBER REQUIRED! Check the fields and try again",
+        ]; 
+        goto end;
+	}
+    if(empty($accountName)){
+        $response = [
+            'response'=> 102,
+            'success'=> false,
+            'message'=> "ACCOUNT NAME REQUIRED! Check the fields and try again",
+        ]; 
+        goto end;
+	}
+    if(empty($bankName)){
+        $response = [
+            'response'=> 102,
+            'success'=> false,
+            'message'=> "BANK NAME REQUIRED! Check the fields and try again",
+        ]; 
+        goto end;
+	}
     if(empty($paymentKey)){
         $response = [
             'response'=> 102,
             'success'=> false,
             'message'=> "PAYMENT CHANNEL REQUIRED! Check the fields and try again",
+        ]; 
+        goto end;
+	}
+    if(empty($secretKey)){
+        $response = [
+            'response'=> 102,
+            'success'=> false,
+            'message'=> "PAYMENT SECRET KEY REQUIRED! Check the fields and try again",
+        ]; 
+        goto end;
+	}
+    if(empty($receiverKey)){
+        $response = [
+            'response'=> 102,
+            'success'=> false,
+            'message'=> "PAYMENT RECEIVERS KEY REQUIRED! Check the fields and try again",
         ]; 
         goto end;
 	}
@@ -202,7 +244,9 @@ if(!$checkSession){
 
             mysqli_query($conn,"UPDATE `BRANCHES_TAB` SET
             `name`='$name', `mobileNumber`='$mobileNumber', `stateId`='$stateId', `lgaId`='$lgaId', `address`='$address', `smtpHost`='$smtpHost', `smtpUsername`='$smtpUsername', 
-            `smtpPassword`='$smtpPassword', `smtpPort`='$smtpPort', `supportEmail`='$supportEmail', `paymentKey`='$paymentKey', `managerId`='$staffId', `session`='$session', `termId`='$termId', `statusId`='$statusId', 
+            `smtpPassword`='$smtpPassword', `smtpPort`='$smtpPort', `supportEmail`='$supportEmail', 
+            `accountNumber`='$accountNumber', `accountName`='$accountName', `bankName`='$bankName', `paymentKey`='$paymentKey', `secretKey`='$secretKey', `receiverKey`='$receiverKey', 
+            `managerId`='$staffId', `session`='$session', `termId`='$termId', `statusId`='$statusId', 
             `updatedBy`='$loginStaffId', `updatedTime`=NOW() WHERE $clientIds AND branchId='$branchId'")or die (mysqli_error($conn));
 
             $response['response']=200; 

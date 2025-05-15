@@ -66,7 +66,6 @@ if (!$checkBasicSecurity){/// start if 1
                     goto end;
                 }
 
-                
                 $response['response']=200; 
                 $response['success']=true;
                 $response['message']="LOGIN SUCCESSFUL!"; 
