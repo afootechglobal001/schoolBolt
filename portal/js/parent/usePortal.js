@@ -273,7 +273,7 @@ function _callPayStack(paymentKey, paymentId, email, amount) {
 			]
 		},
 		callback: function () { //success
-			$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).html('<div class="alert-loading-div"> <div class="icon"><img src="<?php echo $websiteUrl?>/images/loading.gif" width="20px" alt="Loading"/></div> <div class="text"><p>PROCESSING...</p></div> </div>').fadeIn(500);
+			$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).html(`<div class="alert-loading-div"><div class="icon"><img src="${websiteUrl}/images/loading.gif" width="20px" alt="Loading"/></div><div class="text"><p>PROCESSING...</p></div></div>`).fadeIn(500);
 			//var stack_pay_ref = $.trim(response.reference);
 			_callPaymentSuccess(paymentId,branchId);
 		},
@@ -385,16 +385,18 @@ function _transferToSchoolBolt(secretKey, charges, paymentId, receiverKey, reaso
 			error: function(xhr, status, error) {
     			console.error("Transfer failed:", status, error, xhr.responseText);
 				_transferToSchoolBoltFailed(paymentId);
-				_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
+				_retryTransferToSchoolBolt(secretKey, charges, paymentId, receiverKey, reason);
 			}
 		});
 	} catch (error) {
 		console.error("Transfer failed:", error);
 		_transferToSchoolBoltFailed(paymentId);
-		_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
+		_retryTransferToSchoolBolt(secretKey, charges, paymentId, receiverKey, reason);
 	}	
 }
-
+function _retryTransferToSchoolBolt(secretKey, charges, paymentId, receiverKey, reason) {
+	_transferToSchoolBolt(secretKey, charges, paymentId, receiverKey, reason);
+}
 
 function _transferToSchoolBoltSuccess(paymentId) {
 	const formData = {
