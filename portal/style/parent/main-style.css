@@ -1737,17 +1737,12 @@ header .inner-div .mobile-logout:hover{
 	overflow: auto;
 }
 
-.caption-div .div-in h3{
+.caption-div .div-in .text{
 	padding: 0px;
 	margin: 0px;
 	font-family: sub-title-font;
 	color: var(--sub-body-color);
 	font-size: 14px;
-}
-
-.caption-div .div-in h3 span{
-	font-family: title-font;
-	font-size: 15px;
 }
 
 
@@ -1781,6 +1776,7 @@ header .inner-div .mobile-logout:hover{
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	gap: 5px;
 }
 
 .caption-div .div-in .btn-div .whatsapp-btn{
