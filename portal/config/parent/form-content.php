@@ -259,7 +259,7 @@
                             <script>
                                 $(document).ready(function() {
                                     let notPaidFees = '';
-                                    let paidFees = null;
+                                    let paidFees = '';
 
                                     if (getPayFeesToPaySession && getPayFeesToPaySession.data) {
                                         const fetch = getPayFeesToPaySession.data;
@@ -299,7 +299,7 @@
                                             
                                         }
                                         $("#notPaidFees").html(notPaidFees);
-                                        $("#paidFees").html(paidFees ? paidFees : 'No record found!');
+                                        $("#paidFees").html(paidFees!=='' ? paidFees : 'No record found!');
                                         _toggleCheck();
                                     }
                                 });
