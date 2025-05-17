@@ -43,7 +43,39 @@ if (!$checkBasicSecurity){/// start if 1
      (`clientId`, `branchId`, `paymentId`, `amount`, `statusId`, `createdTime`) VALUES 
     ('$clientId', '$branchId', '$paymentId', '$schoolBoltCharges', 3, NOW())") or die(mysqli_error($conn));
     }
-   
+
+    ////////////////// get parent email
+    $query = mysqli_query($conn, "SELECT studentId, session, termId, email FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND paymentId='$paymentId'");
+    $fetch = mysqli_fetch_assoc($query);
+    $parentEmail=$fetch['email'];
+    $studentId=$fetch['studentId'];
+    $session=$fetch['session'];
+    $termId=$fetch['termId'];
+     ///////////////// get student details
+    $query=mysqli_query($conn,"SELECT surName, firstName, otherNames FROM STUDENTS_TAB WHERE $clientIds AND studentId='$studentId'")or die (mysqli_error($conn));
+    $fetch = mysqli_fetch_assoc($query);
+    $studentSurName=$fetch['surName'];
+    $studentFirstName=$fetch['firstName'];
+    $studentOtherNames=$fetch['otherNames'];
+    $studentFullname="$studentSurName $studentFirstName $studentOtherNames";
+
+     /////////////////// for  $termId
+    $termDataQuery = mysqli_query($conn, "SELECT termId, termName FROM SETUP_TERM_TAB WHERE termId='$termId'");
+    $termDataFetch = mysqli_fetch_assoc($termDataQuery);
+    $termName=$termDataFetch['termName'];
+
+    ///////////////// get parent name
+    $query=mysqli_query($conn,"SELECT titleId, surName, otherNames, address AS parentAddress, mobileNumber FROM PARENTS_TAB WHERE $clientIds AND email='$parentEmail'")or die (mysqli_error($conn));
+    $fetch = mysqli_fetch_assoc($query);
+    $parentTitle=$fetch['titleId'];
+    $parentSurName=$fetch['surName'];
+    $parentOtherNames=$fetch['otherNames'];
+    $parentAddress=$fetch['parentAddress'];
+    $parentMobileNumber=$fetch['mobileNumber'];
+    $parentFullname="$parentTitle $parentSurName $parentOtherNames";
+    /// send receipt
+   require_once '../../mail/parent/payment-receipt.php';
+
 
      $response = [
         'response'=> 200,

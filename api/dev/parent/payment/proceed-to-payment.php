@@ -128,11 +128,13 @@ if (!$checkBasicSecurity){/// start if 1
 
      foreach ($feesIds as $eachId) {
         $feesId = $eachId['feesId'];
-
+        /////////////////// for  $feesId
+        $feesSettingsDataQuery = mysqli_query($conn, "SELECT feesName FROM FEES_SETTINGS_TAB WHERE $clientIds AND branchId='$branchId' AND feesId='$feesId'");
+        $feesSettingsDataFetch = mysqli_fetch_assoc($feesSettingsDataQuery);
+        $feesName = $feesSettingsDataFetch['feesName'];
         /////////////////// for  $feesId
         $feesDataQuery = mysqli_query($conn, "SELECT * FROM FEES_COMPUTE_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' AND classId='$classId' AND feesId='$feesId'");
         $feesDataFetch = mysqli_fetch_assoc($feesDataQuery);
-        $feesName = $feesDataFetch['feesName'];
         $feesOption = $feesDataFetch['feesOption'];
         $amount = $feesDataFetch['amount'];
 

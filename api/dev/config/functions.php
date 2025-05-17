@@ -1,5 +1,18 @@
 <?php
 class allClass{
+    function _get_setup_backend_settings_detail_for_branch($conn, $clientId, $branchId){
+	$query=mysqli_query($conn,"SELECT * FROM BRANCHES_TAB WHERE clientId='$clientId' AND branchId='$branchId'")or die (mysqli_error($conn));
+	$fetchQuery=mysqli_fetch_array($query);
+         $response = [
+            "senderName" => $fetchQuery['name'],
+            "smtpHost" => $fetchQuery['smtpHost'],
+            "smtpUsername" => $fetchQuery['smtpUsername'],
+            "smtpPassword" => $fetchQuery['smtpPassword'],
+            "smtpPort" => $fetchQuery['smtpPort'],
+            "supportEmail" => $fetchQuery['supportEmail'],
+        ];
+		return json_encode([$response]);
+}
 /////////////////////////////////////////
 function _staff_accesskey_validation($conn, $accessKey) {
     $query = mysqli_query($conn, "SELECT * FROM STAFF_VIEW WHERE accessKey='$accessKey' AND statusId=1 AND accessKey!=''") or die(mysqli_error($conn));
