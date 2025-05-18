@@ -6,7 +6,7 @@ if (!$checkBasicSecurity){/// start if 1
 	//////////////////declaration of variables//////////////////////////////////////
 	$parentTypeId =trim($data['parentTypeId']);
 	$email=trim($data['email']);
-	$phone=trim($data['phone']);
+	$otp=trim($data['otp']);
 	////////////////////////////////////////////////////////////////////////////////
 
 	if (empty($parentTypeId)){/// start if 2
@@ -35,36 +35,26 @@ if (!$checkBasicSecurity){/// start if 1
         ]; 
         goto end;
 	}
-    if(empty($phone)){
+    if(empty($otp)){
         $response = [
             'response'=> 101,
             'success'=> false,
-            'message'=> "PHONE NUMBER REQUIRED! Check password fields and try again",
+            'message'=> "OTP REQUIRED! Check password fields and try again",
         ]; 
         goto end;
 	}
-			$select=mysqli_query($conn,"SELECT * FROM PARENTS_TAB WHERE $clientIds AND recordFor='$parentTypeId' AND email='$email' AND `mobileNumber`='$phone' LIMIT 1") or die (mysqli_error($conn));
+			$select=mysqli_query($conn,"SELECT * FROM EMAIL_VERIFICATION_TAB WHERE email='$email' AND otp='$otp'") or die (mysqli_error($conn));
 			$countUser=mysqli_num_rows($select);
             if ($countUser==0){ /// start if 4
                 $response = [
                     'response'=> 103,
                     'success'=> false,
-                    'message'=> "INVALID LOGIN CREDIENTIALS! Kindly check the login parameters and try again.",
+                    'message'=> "INVALID OTP! Kindly check and try again.",
                 ];
                 goto end;
             }
-
+                $select=mysqli_query($conn,"SELECT * FROM PARENTS_TAB WHERE $clientIds AND recordFor='$parentTypeId' AND email='$email' LIMIT 1") or die (mysqli_error($conn));
                 $fetchQuery=mysqli_fetch_assoc($select);
-                $statusId=$fetchQuery['statusId'];
-                
-                if($statusId!=1){
-                    $response = [
-                        'response'=> 102,
-                        'success'=> false,
-                        'message'=> "ACCOUNT SUSPENDED! Contact the administrator for more info.",
-                    ];
-                    goto end;
-                }
 
                 $response['response']=200; 
                 $response['success']=true;
@@ -114,6 +104,9 @@ if (!$checkBasicSecurity){/// start if 1
 
                     $response['students'][]= $fetchQuery;
                 }
+
+            /// delete the previous record
+			mysqli_query($conn,"DELETE FROM `EMAIL_VERIFICATION_TAB` WHERE email='$email'");
             
 end:
 echo json_encode($response);
