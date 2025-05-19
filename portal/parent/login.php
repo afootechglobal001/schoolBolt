@@ -26,7 +26,8 @@
                     <div class="top-div">
                         <div class="logo-div">
                             <div class="inner-logo">
-                                <img src="<?php echo $websiteUrl?>/images/icon.png" alt="<?php echo $appName?> logo" />
+                                <a href="<?php echo $websiteUrl?>" title="Click to go back">
+                                <img src="<?php echo $websiteUrl?>/images/icon.png" alt="<?php echo $appName?> logo" /></a>
                             </div>
                         </div>
                         <h1>👋 Hi Parent<br><span>It’s really nice to see you</span></h1>
