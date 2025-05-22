@@ -6,6 +6,7 @@
 	/////////////////////////////////////////////////////////////////////////////////
 	//$websiteUrl='https://schoolbolt.com/portal'; /// For Live Server Url //
 	$websiteUrl='http://localhost/projects/schoolbolt/portal';
+	$clientWebsiteUrl='https://schoolbolt.com'; /// For Live Server Client Url //
 	//$websitePath = $_SERVER['DOCUMENT_ROOT'].'/portal';
 	$websitePath = $_SERVER['DOCUMENT_ROOT'].'/projects/schoolbolt/portal'; //dirname(__FILE__);
 	$codeVersion= date('Ymdhis');

@@ -307,8 +307,8 @@
                                             const amount = thousandSeperator(fetchedFess.amount);
                                             const paid = fetchedFess.paid;
 
-                                          if (paid==='FALSE'){
-                                            notPaidFees += `
+                                            if (paid==='FALSE'){
+                                                notPaidFees += `
                                                 <div class="each-toggle-div">
                                                     <div class="title-back-div">
                                                         <div class="toggle-title-div">${feesName} - <span>(<s>N</s>${amount})</span></div>
@@ -320,16 +320,15 @@
                                                         <span class="toggle-label">No</span>
                                                     </label>
                                                 </div>`;
-                                          }else{
+                                            } else {
                                                 paidFees += `
-                                                    <div class="alert-list-back-div">
-                                                        <div class="alert-list">
-                                                            <div>${feesName}:</div>
-                                                            <div><span id=""><s>N</s>${amount}</span></div>
-                                                        </div>
-                                                    </div>`;
-                                          }
-                                            
+                                                <div class="alert-list-back-div">
+                                                    <div class="alert-list">
+                                                        <div>${feesName}:</div>
+                                                        <div><span id=""><s>N</s>${amount}</span></div>
+                                                    </div>
+                                                </div>`;
+                                            }
                                         }
                                         $("#notPaidFees").html(notPaidFees);
                                         $("#paidFees").html(paidFees!=='' ? paidFees : 'No record found!');
@@ -384,6 +383,7 @@
         
                 <div>
                     <button class="btn" title="Make Payment" id="submitBtn" onclick="_proceedToPayment();"> <i class="bi-check"></i> MAKE PAYMENT </button>
+                     <button class="btn" title="Make Payment" id="submitBtn" onclick=""> <i class="bi-check"></i> PAYMENT TESTING </button>
                 </div>
             </div>
         </div>

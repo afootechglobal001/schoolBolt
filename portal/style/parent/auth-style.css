@@ -65,29 +65,84 @@
     height: 100%;
     right: 0px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center;   
     flex-direction: column;
+    gap: 30px;
     background: var(--white-color);
-    overflow: auto;
+}
+
+
+
+.login-session .login-div header {
+    display: flex;
+	align-items: center;
+	justify-content: center;
+    position: absolute; 
+    min-height: 50px;
+    width: 100%;
+    z-index: 300;
+}
+
+.login-session .login-div header .header-div-in {
+	width: 85%;
+	min-height: 50px;
+	max-width: 1200px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+    border-bottom: rgba(215, 215, 215, .6) 1px solid;
+}
+
+.login-session .login-div header .header-div-in .logo-div {
+    width:160px;
+	cursor:pointer;
+}
+
+.login-session .login-div header .header-div-in .logo-div img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.login-session .login-div header .header-div-in ul {
+    padding: 0px;
+	margin: 0px;
+}
+
+.login-session .login-div header .header-div-in ul li{
+    list-style: none;
+	font-size: 13px;
+	font-family: body-font;
+	color: var(--sub-body-color);
+	-moz-transition:all 0.2s ease-in 02s;
+	transition:all 0.2s ease-in 0.2s;
+	-webkit-transition:all 0.2s ease-in 0.2s;
+	-ms-transition:all 0.2s ease-in 0.2s;
+	-o-transition:all 0.2s ease-in 0.2s;
+	cursor: pointer;
+}
+
+.login-session .login-div header .header-div-in ul li:hover{
+	color: 	var(--secondary-color);
 }
 
 .login-session .login-div .form-back-div {
-    height: 700px;
+    position: absolute;
+    height: calc(100% - 70px);
     width: 100%;
+    top:70px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow: auto;
 }
 
 .login-session .login-div .form-back-div .form-div{
     width: 400px;
-    height: auto;
     display: flex;
     flex-direction: column;
     gap: 20px;
     align-items: center;
-    justify-content: center;
     color: var(--body-color);
 }
 
@@ -213,8 +268,12 @@
     .login-session .login-div .form-back-div .form-div{
         width: 90%;    
     }
+    .login-session .login-div header .header-div-in {
+        width: 90%;
+    }
 }     
 
+                                            
 
 
 

@@ -30,8 +30,8 @@
                     </div>
 
                     <ul>
-                        <a href="http://localhost/projects/schoolbolt" title="<?php echo $appName ?>">            
-                        <li title="Back to website">Back to website</li></a>
+                        <a href="<?php echo $clientWebsiteUrl ?>" title="<?php echo $clientName ?>">             
+                        <li>Back to website</li></a>
                     </ul>
                 </div>
             </header>
