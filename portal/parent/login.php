@@ -69,8 +69,6 @@
                 <h2>Your Client's Education<br> <span>is at Your Fingertips!</span></h2>
             </div>
         </div>
-
-        
     </section>
 
     <?php include '../bottom-scripts.php' ?>
