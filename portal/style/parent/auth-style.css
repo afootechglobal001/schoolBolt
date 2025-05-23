@@ -14,7 +14,7 @@
     position: fixed;
     width: 50%;
     height: 100%;
-    left: 0px;
+    right: 0px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,7 +63,7 @@
     position: fixed;
     width:50%;
     height: 100%;
-    right: 0px;
+    left: 0px;
     display: flex;
     align-items: center;   
     flex-direction: column;

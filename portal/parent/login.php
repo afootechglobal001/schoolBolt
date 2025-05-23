@@ -12,18 +12,11 @@
 <body>
     <?php include 'alert.php' ?>
     <section class="login-session">
-        <div class="graphics-div">
-            <div class="content" data-aos="fade-left" data-aos-duration="800">
-                <div class="graphics" data-aos="fade-left" data-aos-duration="1200"><img src="<?php echo $websiteUrl ?>/images/check-result.webp" alt="ABCC Result checker" /></div>
-                <h2>Your Client's Education<br> <span>is at Your Fingertips!</span></h2>
-            </div>
-        </div>
-
         <div class="login-div">
             <header class="animated fadeInDown">
                 <div class="header-div-in">
                     <div class="logo-div">
-                        <a href="<?php echo $websiteUrl?>" title="<?php echo $clientName ?>">
+                        <a href="<?php echo $clientWebsiteUrl?>" title="<?php echo $clientName ?>">
                         <img src="<?php echo $websiteUrl ?>/images/logo.png" alt="<?php echo $clientName ?> Logo" class="animated zoomIn" /></a>
                     </div>
 
@@ -66,10 +59,18 @@
 
                         <button class="btn" title="Proceed" id="proceedLoginBtn" onclick="_confirmLoginEmail();">Proceed <i class="bi-arrow-right"></i></button>                                                                                                                    
                     </div>
-                    <p>Need Help? <span onclick="">Contact Us</span></p>
+                    <p>Need Help? <a href="<?php echo $clientWebsiteContactUsUrl ?>" title="Contact Us"><span>Contact Us</span></a></p>
                 </div>
             </div>
         </div>
+        <div class="graphics-div">
+            <div class="content" data-aos="fade-left" data-aos-duration="800">
+                <div class="graphics" data-aos="fade-left" data-aos-duration="1200"><img src="<?php echo $websiteUrl ?>/images/check-result.webp" alt="ABCC Result checker" /></div>
+                <h2>Your Client's Education<br> <span>is at Your Fingertips!</span></h2>
+            </div>
+        </div>
+
+        
     </section>
 
     <?php include '../bottom-scripts.php' ?>
