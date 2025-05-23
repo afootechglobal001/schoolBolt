@@ -28,47 +28,140 @@ function _getSelectParentType(fieldId) {
 	}
 }
 
+function isNumberCheck(e) {
+    var key = e.keyCode || e.which;
+
+    if (!((key >= 48 && key <= 57))) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        } else {
+            e.returnValue = false;
+        }
+    }
+}
+
+function _counDownOtp(timer){
+	$('#resendOtpBtn').hide();
+	$('#resendCountdown').fadeIn(500);
+	const countdown = setInterval(() => {
+		if (timer > 0) {
+		  timer = timer - 1;
+		  $('#timer').html(timer);
+		} else {
+			$('#resendCountdown').hide();
+			$('#resendOtpBtn').fadeIn(500);
+		  clearInterval(countdown);
+		}
+	  }, 1000);
+	  return () => clearInterval(countdown);
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-////// PARENT LOGIN FUNCTION ////////
-function _confirmLogin() {
+////// PARENT PROCEED TO LOGIN FUNCTION ////////
+function _confirmLoginEmail() {
+	parentProceedLoginSession = JSON.parse(sessionStorage.getItem("parentProceedLoginSession") || '{}');
 	try {
-		const parentTypeId = $('#parentTypeId').val().trim();
-		const email = $("#email").val().trim();
-		const phone = $("#phone").val().trim();
+		let parentTypeId = $('#parentTypeId').val();
+		let email = $('#email').val();
 
-		$('#parentTypeId, #email, #phone').removeClass("issue");
+		$('#parentTypeId, #email').removeClass("issue");
+
+		if (!parentTypeId || !email) {
+			parentTypeId = parentTypeId || parentProceedLoginSession.parentTypeId;
+			email = email || parentProceedLoginSession.email;
+		}
 
 		if (!parentTypeId) {
 			$('#parentTypeId').addClass('issue');
 			_actionAlert('Select parent type to continue', false);
 			return;
-		} 
+		}
 
-		if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+		if (!email || email.indexOf('@') <= 0) {
 			$('#email').addClass('issue');
-			_actionAlert('Provide a correct email address to continue', false);
-			return;
-		} 	
-
-		const phonePattern = /^(0)(7|8|9)(0|1)\d{8}$/;
-		if (!phone || !phonePattern.test(phone)) {
-			$('#phone').addClass('issue');
-			_actionAlert('Provide a correct phone number to continue', false);
+			_actionAlert('Provide correct email address to continue', false);
 			return;
 		}
-		
+
 		//////////////// get btn text ////////////////
-		const btnText = $("#loginBtn").html();
-		$("#loginBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
-		$("#loginBtn").prop("disabled", true);
+		const btnText = $("#proceedLoginBtn").html();
+		$("#proceedLoginBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+		$("#proceedLoginBtn").prop("disabled", true);
 		////////////////////////////////////////////////
 		
 		const formData = {
 			"parentTypeId": parentTypeId,
-			"email": email,
-			"phone": phone
+			"email": email
+		};
+
+		$.ajax({
+			type: "POST",
+			url: endPoint+'/parent/auth/verification',
+			data: JSON.stringify(formData),
+			dataType: "json", 
+			cache: false,
+			headers: {
+				'apiKey': apiKey,
+				'userOsBrowser': userOsBrowser,
+				'userIpAddress': userIpAddress,
+				'userDeviceId': userDeviceId,
+				'clientId': clientId,
+				'clientAddress': clientAddress
+			},
+			success: function (info) {
+				if (info.success) {
+					sessionStorage.setItem("parentProceedLoginSession", JSON.stringify(info));
+					_actionAlert(info.message, true);
+					_getForm({page: 'otpVerificationForm', url: parentPortalLocalUrl});
+				} else {
+					_actionAlert(info.message, false);
+				}
+				$("#proceedLoginBtn").html(btnText).prop("disabled", false);
+			},
+			error: function () {
+				_actionAlert("Unable to reach the server. Please check your connection.", false);
+				$("#proceedLoginBtn").html(btnText).prop("disabled", false);
+			}
+		});
+	} catch (error) {
+		console.error("Unexpected error:", error);
+		_actionAlert("An unexpected error occurred. Please try again.", false);
+		$("#proceedLoginBtn").prop("disabled", false);
+	}
+}
+
+
+function _resendOtp() {
+	$("#resendOtpBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+	$("#resendOtpBtn").prop("disabled", true);
+	_confirmLoginEmail();
+}
+
+////// PARENT LOGIN FUNCTION ////////
+function _proceedToLogin() {
+	let parentProceedLoginSession = JSON.parse(sessionStorage.getItem("parentProceedLoginSession"));
+	try {
+		const otp = $("#otp").val();
+
+		$('#otp').removeClass("issue");
+
+		if (!otp) {
+			$('#otp').addClass('issue');
+			_actionAlert('Provide Correct OTP To Continue', false);
+			return;
+		} 
+
+		//////////////// get btn text ////////////////
+		const btnText = $("#submitBtn").html();
+		$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+		$("#submitBtn").prop("disabled", true);
+		////////////////////////////////////////////////
+		
+		const formData = {
+			"parentTypeId": parentProceedLoginSession.parentTypeId,
+			"email": parentProceedLoginSession.email,
+			"otp": otp
 		};
 
 		$.ajax({
@@ -93,16 +186,16 @@ function _confirmLogin() {
 				} else {
 					_actionAlert(info.message, false);
 				}
-				$("#loginBtn").html(btnText).prop("disabled", false);
+				$("#submitBtn").html(btnText).prop("disabled", false);
 			},
 			error: function () {
 				_actionAlert("Unable to reach the server. Please check your connection.", false);
-				$("#loginBtn").html(btnText).prop("disabled", false);
+				$("#submitBtn").html(btnText).prop("disabled", false);
 			}
 		});
 	} catch (error) {
 		console.error("Unexpected error:", error);
 		_actionAlert("An unexpected error occurred. Please try again.", false);
-		$("#loginBtn").prop("disabled", false);
+		$("#submitBtn").prop("disabled", false);
 	}
 }

@@ -25,9 +25,14 @@
             <header>
                 <div class="header-div-in">
                     <div class="logo-div">
-                        <a href="<?php echo $websiteUrl ?>" title="<?php echo $appName ?>">
+                        <a href="<?php echo $websiteUrl?>" title="<?php echo $appName ?>">
                         <img src="<?php echo $websiteUrl ?>/images/logo.png" alt="<?php echo $appName ?> Logo" class="animated zoomIn" /></a>
                     </div>
+
+                    <ul>
+                        <a href="<?php echo $clientWebsiteUrl ?>" title="<?php echo $clientName ?>">             
+                        <li>Back to website</li></a>
+                    </ul>
                 </div>
             </header>
 

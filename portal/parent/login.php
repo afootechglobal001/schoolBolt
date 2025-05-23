@@ -14,17 +14,29 @@
     <section class="login-session">
         <div class="graphics-div">
             <div class="content" data-aos="fade-left" data-aos-duration="800">
-                <div class="logo-div"><a href="<?php echo $websiteUrl ?>"><img src="<?php echo $websiteUrl?>/images/logo.png" alt="<?php echo $appName?> Logo"  class="animated zoomIn"/></a></div>
                 <div class="graphics" data-aos="fade-left" data-aos-duration="1200"><img src="<?php echo $websiteUrl ?>/images/check-result.webp" alt="ABCC Result checker" /></div>
                 <h2>Your Client's Education<br> <span>is at Your Fingertips!</span></h2>
             </div>
         </div>
 
         <div class="login-div">
+            <header class="animated fadeInDown">
+                <div class="header-div-in">
+                    <div class="logo-div">
+                        <a href="<?php echo $websiteUrl?>" title="<?php echo $clientName ?>">
+                        <img src="<?php echo $websiteUrl ?>/images/logo.png" alt="<?php echo $clientName ?> Logo" class="animated zoomIn" /></a>
+                    </div>
+
+                    <ul>
+                        <a href="<?php echo $clientWebsiteUrl ?>" title="<?php echo $clientName ?>">            
+                        <li>Back to website</li></a>
+                    </ul>
+                </div>
+            </header>
+            
             <div class="form-back-div">
                 <div class="form-div" data-aos="fade-right" data-aos-duration="1600">
                     <div class="top-div">
-                        <div class="logo-div"><img src="<?php echo $websiteUrl?>/images/icon.png" alt="<?php echo $appName ?> logo" /></div>
                         <h1>👋 Hi Parent<br><span>It’s really nice to see you</span></h1>
                     </div>
 
@@ -52,17 +64,7 @@
                             </script> 
                         </div>
 
-                        <div class="text_field_container" id="phone_container">
-                            <script>
-                                textField({
-                                    id: 'phone',
-                                    title: 'Mobile Number',
-                                    type: 'number'
-                                });
-                            </script> 
-                        </div>
-
-                        <button class="btn" title="Proceed" id="loginBtn" onclick="_confirmLogin();">Proceed <i class="bi-arrow-right"></i></button>
+                        <button class="btn" title="Proceed" id="proceedLoginBtn" onclick="_confirmLoginEmail();">Proceed <i class="bi-arrow-right"></i></button>                                                                                                                    
                     </div>
                     <p>Need Help? <span onclick="">Contact Us</span></p>
                 </div>
