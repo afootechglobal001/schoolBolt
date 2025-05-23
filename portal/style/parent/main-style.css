@@ -897,6 +897,7 @@ header .inner-div .mobile-logout:hover{
     display: flex;
     gap: 20px;
     align-items: center;
+	flex-wrap: wrap;
 }
 
 .card-back-div .card-div {
@@ -925,6 +926,9 @@ header .inner-div .mobile-logout:hover{
     width: 100%;
     object-fit: cover;
 }
+.card-back-div .inactive-card-div .pix img{
+	filter: grayscale(1);
+}
 
 .card-back-div .card-div .text {
     color: var(--sub-body-color);
@@ -943,7 +947,13 @@ header .inner-div .mobile-logout:hover{
 	-webkit-transform:scale(1.02) translate(1px,0px);
     background: var(--secondary-color);
 }
-
+.card-back-div .inactive-card-div:hover {
+    box-shadow: none;
+    -moz-transform: scale(1) translate(0px, 0px);
+    -webkit-transform: scale(1) translate(0px, 0px);
+    transform: scale(1) translate(0px, 0px);
+    background: rgba(179, 176, 176, 1);
+}
 
 
 @media all and (max-width:520px) {

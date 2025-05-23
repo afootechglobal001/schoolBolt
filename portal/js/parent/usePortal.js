@@ -594,3 +594,33 @@ function _viewPaymentDetails(session, termId, studentId, branchId, departmentId,
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
 }
+
+
+
+
+//declare callback function
+function paymentCallback(response) {
+    console.log(response);
+}
+
+//sample payment request
+
+function _payWithInterswitch() {
+	var samplePaymentRequest = {
+		merchant_code: "MX248599",          
+		pay_item_id: "student_Id",
+		pay_item_name: "Student Name",
+		cust_name: "John Doe",
+		cust_email: "eamil@email.com",
+		cust_mobile_no: "08012345678",
+		txn_ref: "sample_txn_ref_1234",
+		amount: 10000, 
+		currency: 566,
+		mode: 'TEST',
+		access_token: true,
+		onComplete: paymentCallback,
+		site_redirect_url: window.location.origin,
+	};
+   window.webpayCheckout(samplePaymentRequest);
+}
+//call webpayCheckout to initiate the payment

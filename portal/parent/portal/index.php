@@ -96,6 +96,7 @@
         </div>
     </div>
     <?php include '../bottom-scripts.php' ?>
+    <script src="https://newwebpay.qa.interswitchng.com/inline-checkout.js"></script>
 </body>
 
 </html>

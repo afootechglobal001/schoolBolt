@@ -119,10 +119,30 @@
             <div class="text">Pay Fees</div>
         </div>
 
-        <div class="card-div" title="View Result" onclick="">
+        <!-- <div class="card-div inactive-card-div" title="Attendance" onclick="">
+            <div class="pix"><img src="<?php echo $websiteUrl?>/images/attendance.jpg" alt="Attendance"></div>
+            <div class="text">Attendance</div>
+        </div>
+
+        <div class="card-div inactive-card-div" title="Time Table" onclick="">
+            <div class="pix"><img src="<?php echo $websiteUrl?>/images/time-table.png" alt="Time Table"></div>
+            <div class="text">Time Table</div>
+        </div>
+
+        <div class="card-div inactive-card-div" title="Assignment" onclick="">
+            <div class="pix"><img src="<?php echo $websiteUrl?>/images/assignment.jpg" alt="Assignment"></div>
+            <div class="text">Assignment</div>
+        </div> -->
+
+        <div class="card-div inactive-card-div" title="View Result" onclick="">
             <div class="pix"><img src="<?php echo $websiteUrl?>/images/print-result.jpg" alt="View Result"></div>
             <div class="text">View Result</div>
         </div>
+
+        <!-- <div class="card-div inactive-card-div" title="Transcript" onclick="">
+            <div class="pix"><img src="<?php echo $websiteUrl?>/images/transcript.jpg" alt="Transcript"></div>
+            <div class="text">Transcript</div>
+        </div> -->
     </div>
 <?php } ?>
 
@@ -383,7 +403,7 @@
         
                 <div>
                     <button class="btn" title="Make Payment" id="submitBtn" onclick="_proceedToPayment();"> <i class="bi-check"></i> MAKE PAYMENT </button>
-                     <button class="btn" title="Make Payment" id="submitBtn" onclick=""> <i class="bi-check"></i> PAYMENT TESTING </button>
+                     <!-- <button class="btn" title="Make Payment" id="submitBtn" onclick="_payWithInterswitch()"> <i class="bi-check"></i> PAYMENT TESTING </button> -->
                 </div>
             </div>
         </div>
