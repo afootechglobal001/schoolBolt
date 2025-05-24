@@ -4,10 +4,10 @@
 	$appName='schoolBolt'; 
 	$clientName='SchoolBolt Edu System';
 	/////////////////////////////////////////////////////////////////////////////////
+	$clientWebsiteUrl='http://localhost/projects/schoolbolt';
+	$clientWebsiteContactUsUrl=$clientWebsiteUrl.'/contact-us';
 	//$websiteUrl='https://schoolbolt.com/portal'; /// For Live Server Url //
 	$websiteUrl='http://localhost/projects/schoolbolt/portal';
-	$clientWebsiteUrl='http://localhost/projects/schoolbolt';
-	$clientWebsiteContactUsUrl='http://localhost/projects/schoolbolt/contact-us';
 	//$websitePath = $_SERVER['DOCUMENT_ROOT'].'/portal';
 	$websitePath = $_SERVER['DOCUMENT_ROOT'].'/projects/schoolbolt/portal'; //dirname(__FILE__);
 	$codeVersion= date('Ymdhis');
