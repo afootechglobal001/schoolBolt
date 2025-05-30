@@ -13,9 +13,11 @@
                 </div>
             </div>
             
-            <button class="btn" title="ADD NEW SUBJECT" onclick="sessionStorage.removeItem('getEachSubjectSession'); _getForm({page: 'subject_reg', url: adminPortalLocalUrl});">
-                <i class="bi-plus-square"></i> ADD NEW SUBJECT
-            </button>
+            <div class="btn-div">
+                <button class="btn" title="ADD NEW SUBJECT" onclick="sessionStorage.removeItem('getEachSubjectSession'); _getForm({page: 'subject_reg', url: adminPortalLocalUrl});">
+                    <i class="bi-plus-square"></i> ADD NEW SUBJECT
+                </button>
+            </div>
         </div>
     </div>
     

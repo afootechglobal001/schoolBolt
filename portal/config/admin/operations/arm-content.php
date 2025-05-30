@@ -13,9 +13,11 @@
                 </div>
             </div>
             
-            <button class="btn" title="ADD NEW ARM" onclick="sessionStorage.removeItem('getEachArmSession'); _getForm({page: 'arm_reg', url: adminPortalLocalUrl});">
-                <i class="bi-plus-square"></i> ADD NEW ARM
-            </button>
+            <div class="btn-div">
+                <button class="btn" title="ADD NEW ARM" onclick="sessionStorage.removeItem('getEachArmSession'); _getForm({page: 'arm_reg', url: adminPortalLocalUrl});">
+                    <i class="bi-plus-square"></i> ADD NEW ARM
+                </button>
+            </div> 
         </div>
     </div>
     

@@ -505,9 +505,13 @@
 
                     <div class="trending-back-div">
                         <div class="revenue-back-div">
-                            <div class="revenue-div top-rev">Revenue For<span>January 18 2025</span>-<span>February 17 2025</span></div>
-                            <div class="revenue-div">
-                                <h3><span>₦1,343,581.63</span>(SALES)</h3>-<h3><span>₦256,000.00</span>(WALLET)</h3>
+                            <div class="top-revenue">Revenue For<span>January 18 2025</span>-<span>February 17 2025</span></div>
+                            <div class="fund-back-div">
+                                <div class="fund-div">
+                                    <h3><span>₦1,343,581.63</span>(SALES)</h3>
+                                </div>-<div class="fund-div">
+                                    <h3><span>₦256,000.00</span>(WALLET)</h3>
+                                </div>
                             </div>
                         </div>
 
