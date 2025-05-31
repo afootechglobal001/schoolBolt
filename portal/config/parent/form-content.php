@@ -403,7 +403,6 @@
         
                 <div>
                     <button class="btn" title="Make Payment" id="submitBtn" onclick="_proceedToPayment();"> <i class="bi-check"></i> MAKE PAYMENT </button>
-                     <!-- <button class="btn" title="Make Payment" id="submitBtn" onclick="_payWithInterswitch()"> <i class="bi-check"></i> PAYMENT TESTING </button> -->
                 </div>
             </div>
         </div>

@@ -223,9 +223,12 @@ function _proceedToPayment() {
 						const email = data.email;
 						const amount = data.amount
 						const paymentMethodId = data.paymentMethodId;
+						const deductCharges = data.deductCharges;
+						const schoolBoltCharges = data.schoolBoltCharges;
+						const receiverKey = data.receiverKey;
 
 						if (paymentMethodId==='PM001'){/// PAYMENT BY CREDIT/DEBIT////
-							_callPayStack(paymentKey, paymentId, email, amount);
+							_callPayStack(paymentKey, paymentId, email, amount, deductCharges, schoolBoltCharges, receiverKey);
 						}
 						if (paymentMethodId==='PM002'){/// PAYMENT BY BANK TRANSFER////
 							_getForm({page: 'accountTransferForm', layer: 2, url: parentPortalLocalUrl});
@@ -250,40 +253,59 @@ function _proceedToPayment() {
 
 
 ////// CALL PAYSTACK ////////////////
-function _callPayStack(paymentKey, paymentId, email, amount) {
-	let getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));
-	let parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));
-	const parentFullname= parentSessionData.parentData.titleId+' '+parentSessionData.parentData.surName+' '+parentSessionData.parentData.otherNames;
-	const parentPhoneNumber= parentSessionData.parentData.mobileNumber;
-	const branchId= getEachStudentSession.branchData.branchId;
+function _callPayStack(paymentKey, paymentId, email, amount, deductCharges, schoolBoltCharges, receiverKey) {
+    let getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));
+    let parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));
+    const parentFullname = parentSessionData.parentData.titleId + ' ' + parentSessionData.parentData.surName + ' ' + parentSessionData.parentData.otherNames;
+    const parentPhoneNumber = parentSessionData.parentData.mobileNumber;
+    const branchId = getEachStudentSession.branchData.branchId;
 
-	var handler = PaystackPop.setup({
-		key: paymentKey,
-		email: email,
-		amount: amount, //amt in kobo
-		ref: paymentId,
-		currency: 'NGN', // Use GHS for Ghana Cedis or USD for US Dollars
-		metadata: {
-			custom_fields: [
-				{
-					display_name: parentFullname,
-					variable_name: "mobile_number",
-					value: parentPhoneNumber
-				}
-			]
-		},
-		callback: function () { //success
-			$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).html(`<div class="alert-loading-div"><div class="icon"><img src="${websiteUrl}/images/loading.gif" width="20px" alt="Loading"/></div><div class="text"><p>PROCESSING...</p></div></div>`).fadeIn(500);
-			//var stack_pay_ref = $.trim(response.reference);
-			_callPaymentSuccess(paymentId,branchId);
-		},
-		onClose: function () { //update to cancelled.
-			_callPaymentCancelled(paymentId);
-			return false;
-		}
-	});
-	handler.openIframe();
+    // Create the base options
+    const options = {
+        key: paymentKey,
+        email: email,
+        amount: amount, // Amount in kobo
+        ref: paymentId,
+        currency: 'NGN',
+        metadata: {
+            custom_fields: [
+                {
+                    display_name: parentFullname,
+                    variable_name: "mobile_number",
+                    value: parentPhoneNumber
+                }
+            ]
+        },
+        callback: function () {
+            $("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).html(`<div class="alert-loading-div"><div class="icon"><img src="${websiteUrl}/images/loading.gif" width="20px" alt="Loading"/></div><div class="text"><p>PROCESSING...</p></div></div>`).fadeIn(500);
+            _callPaymentSuccess(paymentId, branchId);
+        },
+        onClose: function () {
+            _callPaymentCancelled(paymentId);
+            return false;
+        }
+    };
+    // Conditionally add the split configuration
+    if (deductCharges) {
+		console.log({deductCharges});
+        options.split = {
+            type: 'flat',
+            bearer_type: 'account',
+            subaccounts: [
+                {
+                    subaccount: receiverKey, // Replace with actual subaccount code
+                    share: schoolBoltCharges // Amount in kobo
+                }
+            ]
+        };
+    }
+
+    var handler = PaystackPop.setup(options);
+    handler.openIframe();
 }
+
+
+
 
 function _callPaymentSuccess(paymentId,branchId) {
 	try {
@@ -302,18 +324,10 @@ function _callPaymentSuccess(paymentId,branchId) {
 			processData: false,
 			success: function (data) {
 				if (data.success) {
-					const secretKey= data.secretKey;
-					const charges= data.charges;
-					const paymentId= data.paymentId;
-					const receiverKey= data.receiverKey;
-					const reason= data.reason;
-					if(charges>0){
-						_transferToSchoolBolt(secretKey, charges, paymentId, receiverKey, reason);
-					} else {
-						_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
-					}
+					_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
 				} else {
 					console.log(data);
+					_actionAlert(data.message, false);
 					_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
 				}
 			},
@@ -322,7 +336,6 @@ function _callPaymentSuccess(paymentId,branchId) {
 				_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
 			}
 		});
-		
 	} catch (error) {
 		console.log(error);
 		_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
@@ -356,79 +369,6 @@ function _callPaymentCancelled(paymentId) {
 		_actionAlert('An unexpected error occurred: ' + error.message, false);
 		$('#submitBtn').html('<i class="bi-check"></i> MAKE PAYMENT').prop("disabled", false);
 	}
-}
-
-function _transferToSchoolBolt(secretKey, charges, paymentId, receiverKey, reason) {
-	try {
-		$.ajax({
-			url: payStackTransferUrl,
-			method: "POST",
-			headers: {
-				"Authorization": `Bearer ${secretKey}`,
-				"Content-Type": "application/json"
-			},
-			data: JSON.stringify({
-				source: "balance",
-				amount: charges,
-				reference: paymentId,
-				recipient: receiverKey,
-				reason: reason
-			}),
-			success: function(response) {
-				console.log(response);
-				_transferToSchoolBoltSuccess(paymentId);
-			},
-			error: function(xhr, status, error) {
-    			console.error("Transfer failed:", status, error, xhr.responseText);
-				_transferToSchoolBoltFailed(paymentId);
-				_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
-			}
-		});
-	} catch (error) {
-		console.error("Transfer failed:", error);
-		_transferToSchoolBoltFailed(paymentId);
-		_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
-	}	
-}
-
-function _transferToSchoolBoltSuccess(paymentId) {
-	const formData = {
-		"paymentId": paymentId,
-	};
-	
-	$.ajax({
-		type: "POST",
-		url: `${endPoint}/parent/payment/transfer-to-schoolbolt-success`,
-		data: JSON.stringify(formData),
-		dataType: "json", 
-		cache: false,
-		headers: getAuthHeaders(),
-		processData: false,
-		success: function (data) {
-			console.log(data);
-			_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
-		},
-	});
-}
-
-function _transferToSchoolBoltFailed(paymentId) {
-	const formData = {
-		"paymentId": paymentId,
-	};
-	
-	$.ajax({
-		type: "POST",
-		url: `${endPoint}/parent/payment/transfer-to-schoolbolt-failed`,
-		data: JSON.stringify(formData),
-		dataType: "json", 
-		cache: false,
-		headers: getAuthHeaders(),
-		processData: false,
-		success: function (data) {
-			console.log(data);
-			_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
-		},
-	});
 }
 
 
@@ -594,33 +534,3 @@ function _viewPaymentDetails(session, termId, studentId, branchId, departmentId,
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
 }
-
-
-
-
-//declare callback function
-function paymentCallback(response) {
-    console.log(response);
-}
-
-//sample payment request
-
-function _payWithInterswitch() {
-	var samplePaymentRequest = {
-		merchant_code: "MX248599",          
-		pay_item_id: "student_Id",
-		pay_item_name: "Student Name",
-		cust_name: "John Doe",
-		cust_email: "eamil@email.com",
-		cust_mobile_no: "08012345678",
-		txn_ref: "sample_txn_ref_1234",
-		amount: 10000, 
-		currency: 566,
-		mode: 'TEST',
-		access_token: true,
-		onComplete: paymentCallback,
-		site_redirect_url: window.location.origin,
-	};
-   window.webpayCheckout(samplePaymentRequest);
-}
-//call webpayCheckout to initiate the payment

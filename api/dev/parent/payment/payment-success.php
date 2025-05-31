@@ -25,24 +25,10 @@ if (!$checkBasicSecurity){/// start if 1
     
    /// confirm payment first
     mysqli_query($conn, "UPDATE PAYMENTS_TAB SET statusId=5, paydate=NOW() WHERE paymentId='$paymentId'")or die (mysqli_error($conn));
-    
-    ////////////////// for  $branchId
-    $branchDataQuery = mysqli_query($conn, "SELECT * FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
-    $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
-    $secretKey=$branchDataFetch['secretKey'];
-    $receiverKey=$branchDataFetch['receiverKey'];
-   
-    /////////////////// get schoolboltCharges
-    $schoolboltChargesQuery = mysqli_query($conn, "SELECT schoolBoltCharges FROM PAYMENTS_TAB WHERE paymentId='$paymentId'");
-    $schoolboltChargesFetch=mysqli_fetch_assoc($schoolboltChargesQuery);
-    $schoolBoltCharges=$schoolboltChargesFetch['schoolBoltCharges'];
+    /// confirm payment SCHOOLBOLT_CHARGES_TAB
+    mysqli_query($conn, "UPDATE SCHOOLBOLT_CHARGES_TAB SET statusId=5 WHERE paymentId='$paymentId'")or die (mysqli_error($conn));
 
-    if($schoolBoltCharges>0){
-    //// for schoolBolt Charges
-     mysqli_query($conn, "INSERT INTO `SCHOOLBOLT_CHARGES_TAB`
-     (`clientId`, `branchId`, `paymentId`, `amount`, `statusId`, `createdTime`) VALUES 
-    ('$clientId', '$branchId', '$paymentId', '$schoolBoltCharges', 3, NOW())") or die(mysqli_error($conn));
-    }
+   
 
     ////////////////// get parent email
     $query = mysqli_query($conn, "SELECT studentId, session, termId, email FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND paymentId='$paymentId'");
@@ -81,14 +67,7 @@ if (!$checkBasicSecurity){/// start if 1
         'response'=> 200,
         'success'=> true,
         'message'=> 'PAYMENT SUCCESSFUL. Proceed to your payment history.',
-        'secretKey'=> $secretKey,
-        'charges'=> ($schoolBoltCharges-10)*100,
-        'paymentId'=> $paymentId,
-        'receiverKey'=> $receiverKey,
-        'reason'=> 'SchoolBolt Charges',
     ];
-
-
 
 end:
 echo json_encode($response);

@@ -150,7 +150,7 @@ if (!$checkBasicSecurity){/// start if 1
     $schoolboltChargesQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=5");
     $previousSchoolboltCharges=mysqli_num_rows($schoolboltChargesQuery);
     $schoolBoltCharges=$previousSchoolboltCharges>0 ? 0 : $schoolBoltCharges;
-
+    $deductCharges=$schoolBoltCharges>0 ? true: false;
     $totalFeesPaid=$totalMandatoryFees+$totalNotMandatoryFee;
     $totalAmount=$totalFeesPaid+$schoolBoltCharges;
 
@@ -158,6 +158,7 @@ if (!$checkBasicSecurity){/// start if 1
     $branchDataQuery = mysqli_query($conn, "SELECT * FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
     $paymentKey=$branchDataFetch['paymentKey'];
+    $receiverKey=$branchDataFetch['receiverKey'];
     $accountNumber=$branchDataFetch['accountNumber'];
     $accountName=$branchDataFetch['accountName'];
     $bankName=$branchDataFetch['bankName'];
@@ -168,7 +169,13 @@ if (!$checkBasicSecurity){/// start if 1
     mysqli_query($conn, "INSERT INTO `PAYMENTS_TAB`
     (`paymentId`, `clientId`, `session`, `termId`, `branchId`, `studentId`, `departmentId`, `classId`, `armId`, `totalMandatoryFees`, `totalNotMandatoryFee`, `schoolBoltCharges`, `totalFeesPaid`, `totalAmount`, `paymentMethodId`, `paymentKey`, `email`, `statusId`, `createdTime`) VALUES  
     ('$paymentId', '$clientId', '$session', '$termId', '$branchId', '$studentId', '$departmentId', '$classId', '$armId', '$totalMandatoryFees', '$totalNotMandatoryFee', '$schoolBoltCharges', '$totalFeesPaid', '$totalAmount', '$paymentMethodId', '$paymentKey', '$email', 3, NOW())") or die(mysqli_error($conn));
-
+    
+    if($schoolBoltCharges>0){
+        //// for schoolBolt Charges
+        mysqli_query($conn, "INSERT INTO `SCHOOLBOLT_CHARGES_TAB`
+        (`clientId`, `branchId`, `paymentId`, `amount`, `statusId`, `createdTime`) VALUES 
+        ('$clientId', '$branchId', '$paymentId', '$schoolBoltCharges', 3, NOW())") or die(mysqli_error($conn));
+    }
 
 if($paymentMethodId=='PM001'){ /// DEBIT/CREDIT CARD
      $response = [
@@ -180,6 +187,9 @@ if($paymentMethodId=='PM001'){ /// DEBIT/CREDIT CARD
         'email'=> $email,
         'amount'=> $totalAmount*100,
         'paymentMethodId'=> $paymentMethodId,
+        'deductCharges'=> $deductCharges,
+        'schoolBoltCharges'=> $schoolBoltCharges*100,
+        'receiverKey'=> $receiverKey,
     ];
 }
 
