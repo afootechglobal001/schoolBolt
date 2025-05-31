@@ -13,9 +13,11 @@
                 </div>
             </div>
             
-            <button class="btn" title="ADD NEW CLASS" onclick="sessionStorage.removeItem('getEachClassSession'); _getForm({page: 'class_reg', url: adminPortalLocalUrl});">
-                <i class="bi-plus-square"></i> ADD NEW CLASS
-            </button>
+            <div class="btn-div">
+                <button class="btn" title="ADD NEW CLASS" onclick="sessionStorage.removeItem('getEachClassSession'); _getForm({page: 'class_reg', url: adminPortalLocalUrl});">
+                    <i class="bi-plus-square"></i> ADD NEW CLASS
+                </button>
+            </div> 
         </div>
     </div>
     

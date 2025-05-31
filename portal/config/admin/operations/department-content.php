@@ -13,9 +13,11 @@
                 </div>
             </div>
 
-            <button class="btn" title="ADD NEW DEPARMENT" onclick="sessionStorage.removeItem('getEachDepartmentSession'); _getForm({page: 'department_reg', url: adminPortalLocalUrl});">
-                <i class="bi-plus-square"></i> ADD NEW DEPARMENT
-            </button>
+            <div class="btn-div">
+                <button class="btn" title="ADD NEW DEPARMENT" onclick="sessionStorage.removeItem('getEachDepartmentSession'); _getForm({page: 'department_reg', url: adminPortalLocalUrl});">
+                    <i class="bi-plus-square"></i> ADD NEW DEPARMENT
+                </button>
+            </div>
         </div>
     </div>
 

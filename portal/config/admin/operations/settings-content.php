@@ -7,7 +7,7 @@
         <button class="btn" title="LEARN MORE">LEARN MORE</button>
     </div>
     
-    <div class="pages-back-div">
+    <div class="pages-back-div settings-pages-back-div">
         <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
             <div class="user-managment-list" onclick="_getPage('master-count-config', 'master-count-config', '');">
                 <div class="inner-div">
