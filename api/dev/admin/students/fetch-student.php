@@ -26,6 +26,8 @@ if(!$checkSession){
     }
     if (!empty($statusId)) {
         $statusIds = "AND a.statusId IN ($statusId)";
+    }else {
+        $statusIds = "AND a.statusId =1"; // Default to active and inactive students
     }
     
     if (empty($branchId)){/// start if 2
@@ -122,79 +124,51 @@ if(!$checkSession){
         $createdBy=$fetchQuery['createdBy'];
         $updatedBy=$fetchQuery['updatedBy'];
 
-
         /////////////////// for  $studentId
-        $studentData=array();
         $studentDataQuery = mysqli_query($conn, "SELECT * FROM STUDENT_VIEW WHERE $clientIds AND studentId='$studentId'");
-        while ($studentDatafetch = mysqli_fetch_assoc($studentDataQuery)) {
-            $studentData[] = $studentDatafetch;
-        }
-        $fetchQuery['studentData'] = $studentData;
+        $studentDatafetch = mysqli_fetch_assoc($studentDataQuery);
+        $fetchQuery['studentData'] = $studentDatafetch;
 
          /////////////////// for  $departmentId
-         $departmentData=array();
          $departmentDataQuery = mysqli_query($conn, "SELECT departmentId, departmentName FROM DEPARTMENTS_TAB WHERE $clientIds AND departmentId='$departmentId'");
-         while ($departmentDataFetch = mysqli_fetch_assoc($departmentDataQuery)) {
-             $departmentData[] = $departmentDataFetch;
-         }
-         $fetchQuery['departmentData']= $departmentData;
+         $departmentDataFetch = mysqli_fetch_assoc($departmentDataQuery);
+         $fetchQuery['departmentData']= $departmentDataFetch;
  
          /////////////////// for  $classId
-         $classData=array();
          $classDataQuery = mysqli_query($conn, "SELECT classId, className FROM CLASSES_TAB WHERE $clientIds AND classId='$classId'");
-         while ($classDataFetch = mysqli_fetch_assoc($classDataQuery)) {
-             $classData[] = $classDataFetch;
-         }
-         $fetchQuery['classData']= $classData;
+         $classDataFetch = mysqli_fetch_assoc($classDataQuery);
+         $fetchQuery['classData']= $classDataFetch;
 
          /////////////////// for  $armId
-         $armData=array();
          $armDataQuery = mysqli_query($conn, "SELECT armId, armName FROM ARMS_TAB WHERE $clientIds AND armId='$armId'");
-         while ($armDataFetch = mysqli_fetch_assoc($armDataQuery)) {
-             $armData[] = $armDataFetch;
-         }
-         $fetchQuery['armData']= $armData;
+         $armDataFetch = mysqli_fetch_assoc($armDataQuery);
+         $fetchQuery['armData']= $armDataFetch;
 
          /////////////////// for  $accommodationId
-         $accommodationData=array();
          $accommodationDataQuery = mysqli_query($conn, "SELECT * FROM SETUP_ACCOMMODATION_TAB WHERE accommodationId='$accommodationId'");
-         while ($accommodationDataFetch = mysqli_fetch_assoc($accommodationDataQuery)) {
-             $accommodationData[] = $accommodationDataFetch;
-         }
-         $fetchQuery['accommodationData']= $accommodationData;
+         $accommodationDataFetch = mysqli_fetch_assoc($accommodationDataQuery);
+         $fetchQuery['accommodationData']= $accommodationDataFetch;
 
         /////////////////// for  $createdBy
-        $createdByData=array();
         $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
-        while ($getCreatedByfetch = mysqli_fetch_assoc($getCreatedByQuery)) {
-            $createdByData[] = $getCreatedByfetch;
-        }
-        $fetchQuery['createdBy']= $createdByData;
+        $getCreatedByfetch = mysqli_fetch_assoc($getCreatedByQuery);
+        $fetchQuery['createdBy']= $getCreatedByfetch;
 
         /////////////////// for  $updatedBy
-        $updatedByData=array();
         $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
-        while ($getUpdatedByfetch = mysqli_fetch_assoc($getUpdatedByQuery)) {
-            $updatedByData[] = $getUpdatedByfetch;
-        }
-        $fetchQuery['updatedBy']= $updatedByData;
+        $getUpdatedByfetch = mysqli_fetch_assoc($getUpdatedByQuery);
+        $fetchQuery['updatedBy']= $getUpdatedByfetch;
 
 
         /////////////////// for father
-        $fatherData=array();
         $fatherDataQuery = mysqli_query($conn, "SELECT * FROM PARENT_VIEW WHERE $clientIds AND studentId='$studentId' AND recordFor='father'");
-        while ($fatherDatafetch = mysqli_fetch_assoc($fatherDataQuery)) {
-            $fatherData[] = $fatherDatafetch;
-        }
-        $fetchQuery['fatherData'] = $fatherData;
+        $fatherDatafetch = mysqli_fetch_assoc($fatherDataQuery);
+        $fetchQuery['fatherData'] = $fatherDatafetch;
 
         /////////////////// for mother
-        $motherData=array();
         $motherDataQuery = mysqli_query($conn, "SELECT * FROM PARENT_VIEW WHERE $clientIds AND studentId='$studentId' AND recordFor='mother'");
-        while ($motherDatafetch = mysqli_fetch_assoc($motherDataQuery)) {
-            $motherData[] = $motherDatafetch;
-        }
-        $fetchQuery['motherData'] = $motherData;
+        $motherDatafetch = mysqli_fetch_assoc($motherDataQuery);
+        $fetchQuery['motherData'] = $motherDatafetch;
         
         $response['data'][] = $fetchQuery;
     }

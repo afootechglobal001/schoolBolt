@@ -51,7 +51,7 @@ if (!$checkBasicSecurity){/// start if 1
     $session=$fetchQuery['session'];
     $termId=$fetchQuery['termId'];
 
-    $select="SELECT a.*, b.surName, b.firstName FROM STUDENTS_CLASS_TAB a, STUDENTS_TAB b WHERE a.clientId=b.clientId AND a.branchId=b.branchId AND a.studentId=b.studentId  AND  a.clientId='$clientId' AND a.branchId = '$branchId' AND a.session='$session' AND a.termId='$termId' AND a.departmentId='$departmentId' AND a.classId='$classId' AND a.armId='$armId' AND b.statusId=1 $studentIds ORDER BY b.surName ASC";
+    $select="SELECT a.*, b.surName, b.firstName FROM STUDENTS_CLASS_TAB a, STUDENTS_TAB b WHERE a.clientId=b.clientId AND a.branchId=b.branchId AND a.studentId=b.studentId  AND  a.clientId='$clientId' AND a.branchId = '$branchId' AND a.departmentId='$departmentId' AND a.classId='$classId' AND a.armId='$armId' AND b.statusId=1 $studentIds ORDER BY b.surName ASC";
 
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($query);
