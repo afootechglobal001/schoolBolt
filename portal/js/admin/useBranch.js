@@ -287,6 +287,8 @@ function _fetchBranches() {
                         <th>sn</th>
                         <th>Name</th>
                         <th>Official Email</th>
+						<th>Session</th>
+						<th>Term</th>
                         <th>Phone Number</th>
                         <th>Address</th>
                         <th>Manager</th>
@@ -303,6 +305,8 @@ function _fetchBranches() {
 						const branchId = fetch[i].branchId;
 						const name = fetch[i].name;
 						const smtpUsername = fetch[i].smtpUsername;
+						const session = fetch[i].session;
+						const termName = fetch[i].termData[0]?.termName;
 						const mobileNumber = fetch[i].mobileNumber;
 						const address = fetch[i].address;
 						const managerName = fetch[i].managerName;
@@ -317,6 +321,8 @@ function _fetchBranches() {
 								<td>${no}</td>
 								<td class="clickable-td" title="Click to view branch profile" onclick="_fetchEachBranches('${branchId}');">${name}</td>
 								<td>${smtpUsername}</td>
+								<td>${session}</td>
+								<td>${termName}</td>
 								<td>${mobileNumber}</td>
 								<td>${address}</td>
 								<td class="clickable-td" onclick="_fetchEachSaff('${staffId}');">${managerName}</td>

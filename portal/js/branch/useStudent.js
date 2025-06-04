@@ -482,10 +482,10 @@ function _fetchBranchStudents() {
 				const className = info.classData.className;
 				const armName = info.armData.armName;
 				
-				$("#session").html(session);
+				$("#pageSession").html(session);
 				$("#departmentName3").html(departmentName);
 				$("#className2").html(className);
-				$("#termName").html(termName);
+				$("#pageTermName").html(termName);
 				$("#armName2").html(armName);
 				
 				let showButtons = `
