@@ -526,11 +526,11 @@ function _fetchBranchStudents() {
 						const classId = fetch[i].classId;
 						const armId = fetch[i].armId;
 
-						const fetchStudentData = fetch[i].studentData?.[0];
-						const fetchDepartmentData=fetch[i].departmentData?.[0]; 
-						const fetchClassData=fetch[i].classData?.[0]; 
-						const fetchArmData=fetch[i].armData?.[0]; 
-						const fetchAccommodationData=fetch[i].accommodationData?.[0]; 
+						const fetchStudentData = fetch[i].studentData;
+						const fetchDepartmentData=fetch[i].departmentData; 
+						const fetchClassData=fetch[i].classData; 
+						const fetchArmData=fetch[i].armData; 
+						const fetchAccommodationData=fetch[i].accommodationData; 
 						
 						const studentId = fetchStudentData.studentId;
 						const passport = fetchStudentData.passport || 'default.jpg';
@@ -543,7 +543,6 @@ function _fetchBranchStudents() {
 						const className = fetchClassData.className;
 						const armName = fetchArmData.armName;
 						const statusName = fetchStudentData.statusName;
-						const sessionRegistered = fetchStudentData.sessionRegistered;
 						const accommodationName = fetchAccommodationData.accommodationName;
 						const age = _calculateAge(fetchStudentData.dateOfBirth);
 
@@ -565,7 +564,7 @@ function _fetchBranchStudents() {
 									</td>
 									<td>${genderName}</td>
 									<td>${age}</td>
-									<td>${sessionRegistered}</td>
+									<td>${session}</td>
 									<td>${termName}</td>
 									<td>${departmentName}</td>
 									<td>${className}</td>

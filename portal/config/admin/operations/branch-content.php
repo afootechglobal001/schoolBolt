@@ -339,6 +339,7 @@
                 <div class="div-in">
                     <ul>
                         <li class="active" title="Dashboard" id="branch_dashboard" onclick="_getActiveBranchPage({divid:'branch_dashboard', page: 'branch_dashboard', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> Dashboard</li>
+                        <li title="Branch Settings" id="branch_settings" onclick="_getActiveBranchPage({divid:'branch_settings', page: 'branch_settings', url: adminPortalLocalUrl});"><i class="bi-gear-wide-connected"></i> Settings</li>
                         <li title="Branch Staff" id="branch_staff" onclick="_getActiveBranchPage({divid:'branch_staff', page: 'branch_staff', url: adminPortalLocalUrl});"><i class="bi-person-workspace"></i> Staff</li>
                         <li id="dotted" title="Branch Student"><i class="bi-mortarboard"></i> Student
                             <div class="expand-div animated fadeIn">
@@ -377,26 +378,9 @@
                             </div>
                         </li>
 
-                        <li id="dotted" title="Branch Fees"><i class="bi-credit-card"></i> Account
-                            <div class="expand-div animated fadeIn">
-                                <ul class="ul-expand">
-                                    <li title="Fees Settings" onclick="_getActiveBranchPage({divid:'branch_fees_page', page: 'branch_fees_page', url: adminPortalLocalUrl});"><i class="bi-gear-wide-connected"></i>Fees Settings</li>
-                                    <li title="Compute Fees" onclick="_getActiveBranchPage({divid:'branch_fees_computaion_page', page: 'branch_fees_computaion_page', url: adminPortalLocalUrl});"><i class="bi-credit-card"></i>Compute Fees</li>
-                                </ul>
-                            </div>
-                        </li>
+                        <li title="Branch Profile" title="Branch Profile" id="branch_profile_details"
+                            onclick="_getActiveBranchPage({divid:'branch_profile_details', page: 'branch_profile_details', url: adminPortalLocalUrl});"><i class="bi-diagram-3"></i> Profile</li>
 
-                        <li id="dotted" title="Branch Profile" id="branch_profile_details"><i class="bi-diagram-3"></i> Profile
-                            <div class="expand-div animated fadeIn">
-                                <ul class="ul-expand">
-                                    <li id="branch_profile_details" title="Branch Profile"
-                                        onclick="_getActiveBranchPage({divid:'branch_profile_details', page: 'branch_profile_details', url: adminPortalLocalUrl});"><i class="bi-diagram-3"></i>Branch Profile</li>
-
-                                    <li title="Edit Branch Department"
-                                        onclick="_fetchBranchDepartment();"><i class="bi-diagram-3"></i>Branch Department</li>
-                                </ul>
-                            </div>
-                        </li>
                         <li title="Branch Activities" id="branch_activities"
                             onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> Activities</li>
                     </ul>
@@ -793,6 +777,69 @@
             </div>
         </div>
     </div>
+<?php } ?>
+
+<?php if ($page == 'branch_settings') { ?>
+    <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
+        <div class="user-managment-list staff-managment-list" title="Edit Branch Department" onclick="_fetchBranchDepartment();">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/department.png" alt="Branch Department" />
+                </div>
+                <div class="text-div">
+                    <h3>Branch Department</h3>
+                    <p>Assign and manage branch departments.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-managment-list staff-managment-list" title="Fees Settings" onclick="_getActiveBranchPage({divid:'branch_fees_page', page: 'branch_fees_page', url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div"><img src="<?php echo $websiteUrl ?>/images/fees.png" alt="Fees Settings" /></div>
+                <div class="text-div">
+                    <h3>Fees Settings</h3>
+                    <p>Set tuition fees and manage billing items.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-managment-list staff-managment-list" title="Compute Fees" onclick="_getActiveBranchPage({divid:'branch_fees_computaion_page', page: 'branch_fees_computaion_page', url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/compute.png" alt="Compute Fees" />
+                </div>
+                <div class="text-div">
+                    <h3>Compute Fees</h3>
+                    <p>Compute payable fees for each branch.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-managment-list staff-managment-list" title="Assessment Settings" onclick="_getForm({page: 'branch_assessment_reg', layer:2, url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/score.png" alt="Assessment Settings" />
+                </div>
+                <div class="text-div">
+                    <h3>Assessment Settings</h3>
+                    <p>Customize Assessment scores and grading scales.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-managment-list staff-managment-list" title="Assessment Breakdown" onclick="_getActiveBranchPage({divid:'branch_assessment_breakdown_page', page: 'branch_assessment_breakdown_page', url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/assessment.png" alt="Assessment Breakdown" />
+                </div>
+                <div class="text-div">
+                    <h3>Assessment Breakdown</h3>
+                    <p>Setting scores for tests, exams, and assignments.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <?php } ?>
 
 <?php if ($page == 'branch_staff') { ?>
@@ -1373,9 +1420,7 @@
 <?php } ?>
 
 <?php if ($page == 'branch_fees_computaion_form') { ?>
-    <script>
-        getEachFeeComputeGeneral = JSON.parse(sessionStorage.getItem("getEachFeeComputeGeneral"));
-    </script>
+    <script> getEachFeeComputeGeneral = JSON.parse(sessionStorage.getItem("getEachFeeComputeGeneral"));</script>
 
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
@@ -1490,6 +1535,161 @@
                             <button type="button" class="add-btn" title="Save" id="submitBtn" onClick="saveFees();"><i class="bi-save"></i> Save</button>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'branch_assessment_reg') { ?>
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="pageTitle"><i class="bi-plus-square"></i> ADD A NEW ASSESSMENT</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert">Kindly fill the form below to <span id="pageTitle2"> ADD A NEW ASSESSMENT</span></div>
+                </div>
+
+                <div class="text_field_container" id="assessmentName_container">
+                    <script>
+                        textField({
+                            id: 'assessmentName',
+                            title: 'Assessment Name'
+                        });
+                    </script>
+                </div>
+
+                <div class="text_field_container" id="assessmentScore_container">
+                    <script>
+                        textField({
+                            id: 'assessmentScore',
+                            title: 'Total Assessment Score'
+                        });
+                    </script>
+                </div>
+
+                <div>
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Assessment Summary</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>TOTAL 1ST CA:</div>
+                                    <div><span>30</span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>TOTAL EXAM:</div>
+                                    <div><span>70</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'branch_assessment_breakdown_page') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <span><i class="bi-credit-card"></i> ASSESSMENT BREAKDOWN</span>
+    </div>
+
+    <div class="table-div animated fadeIn">
+        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+            <thead>
+                <tr class="tb-col">
+                    <th>sn</th>
+                    <th>Assessment Name</th>
+                    <th>Total Assessment Score</th>
+                    <th>Updated By</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr class="tb-row">
+                    <td>1</td>
+                    <td>TOTAL 1ST CA</td>
+                    <td>30</td>
+                    <td>PAUL EMMANUEL</td>
+                    <td><button class="btn view-btn" title="Click to edit assessment" onclick="_getForm({page: 'branch_assessment_breakdown_form', layer:2, url: adminPortalLocalUrl});">COMPUTE ASSESSMENT</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'branch_assessment_breakdown_form') { ?>
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="pageTitle"><i class="bi-plus-square"></i> COMPUTE ASSESSMENT BREAKDOWN</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert">Kindly fill the form below to <span id="pageTitle2"> COMPUTE ASSESSMENT BREAKDOWN</span> for <span id="pageTitle2"> TOTAL 1ST CA</span></div>
+                </div>
+
+                <div class="segmentDiv">
+                    <div class="segmentTitle">
+                        <span>Assessment Breakdown</span>
+                    </div>
+                    <div class="segmentList">
+                        <script> addSegmentation();</script>
+                    </div>
+                    <div>
+                        <button type="button" class="add-btn" onClick="addSegmentation()"><i class="bi-plus"></i> Add Breakdown</button>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Assessment Breakdown Summary</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>WELCOME TEST:</div>
+                                    <div><span>5</span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>ATTENDANCE:</div>
+                                    <div><span>5</span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>TOTAL SCORE:</div>
+                                    <div><span class="total-amount">30%</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
                 </div>
             </div>
         </div>

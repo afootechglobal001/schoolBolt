@@ -271,8 +271,8 @@ function _fetchStaffSubjectScoreSheet() {
 												<div class="list-div">
 													<h4>${className} ${armName}</h4>
 													<div class="btn-container">
-														<button class="btn" title="VIEW STUDENTS" onclick="_printStudents('${departmentId}','${classId}','${armId}');">
-															<i class="bi-eye"></i> VIEW STUDENTS
+														<button class="btn" title="PRINT SCORE SHEET" onclick="_printStudentScoreSheet('${departmentId}','${classId}','${armId}');">
+															<i class="bi-eye"></i> PRINT SCORE SHEET
 														</button>
 													</div>
 												</div>`;
