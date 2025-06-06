@@ -443,19 +443,120 @@
 
 <?php if ($page == 'branch_student_page') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <div><span><i class="bi-person-bounding-box"></i></span> BRANCH STUDENT'S LIST ---- <span id="session">Loading...</span> - <span id="termName">Loading...</span> - <span id="departmentName3">Loading...</span> - <span id="className2">Loading...</span> - <span id="armName2">Loading...</span></div>
+        <div><span><i class="bi-person-bounding-box"></i></span> BRANCH STUDENT'S LIST ---- <span id="pageSession">Loading...</span> - <span id="pageTermName">Loading...</span> - <span id="departmentName3">Loading...</span> - <span id="className2">Loading...</span> - <span id="armName2">Loading...</span></div>
         <div class="btn-container" id="printAndExportButton"></div>
     </div>
 
     <div class="table-div animated fadeIn">
         <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-            <script> _fetchBranchStudents();</script>
+            <script>
+                _fetchBranchStudents();
+            </script>
+        </table>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'branch_student_search') { ?>
+    <div class="alert alert-success form-alert animated fadeIn">
+        <span>Search student by surname, student Id, class, department</span>
+        <div class="long-search-div">
+            <div class="text_field_container search_field_container">
+                <input class="text_field student_text_field" type="text" id="searchContent" placeholder="" title="Type here to search students" />
+                <div class="placeholder dash_placeholder"><i class="bi-search"></i> Type here to search student by surname, student Id, class, department</div>
+            </div>
+
+            <div>
+                <button class="btn" title="SEARCH STUDENTS" onclick="">
+                    <i class="bi-search"></i> SEARCH
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-div animated fadeIn">
+        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+            <thead>
+                <tr class="tb-col">
+                    <th>sn</th>
+                    <th>Student Info</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Session</th>
+                    <th>Term</th>
+                    <th>Department</th>
+                    <th>Class</th>
+                    <th>Arm</th>
+                    <th>Accomodation</th>
+                    <th>Status</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr class="tb-row">
+                    <td>1</td>
+                    <td>
+                        <div class="text-back-div">
+                            <div class="image-div general-passport">
+                                <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="Paul Emmanuel" />
+                            </div>
+
+                            <div class="text-div">
+                                <div class="first-class">Paul Emmanuel</div>
+                                <div class="second-class">STUDENT00220250321124557</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>MALE</td>
+                    <td>15</td>
+                    <td>2024/2025</td>
+                    <td>THIRD TERM</td>
+                    <td>NURSERY</td>
+                    <td>NURSERY 1</td>
+                    <td>A</td>
+                    <td>DAY</td>
+                    <td>
+                        <div class="status-div ACTIVE">ACTIVE</div>
+                    </td>
+                    <td><button class="btn view-btn" title="Click to view student profile" onclick="">VIEW</button></td>
+                </tr>
+
+                <tr class="tb-row">
+                    <td>2</td>
+                    <td>
+                        <div class="text-back-div">
+                            <div class="image-div general-passport">
+                                <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="Paul Emmanuel" />
+                            </div>
+
+                            <div class="text-div">
+                                <div class="first-class">Paul Samson</div>
+                                <div class="second-class">STUDENT00220250321124557</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>MALE</td>
+                    <td>15</td>
+                    <td>2024/2025</td>
+                    <td>THIRD TERM</td>
+                    <td>NURSERY</td>
+                    <td>NURSERY 1</td>
+                    <td>A</td>
+                    <td>DAY</td>
+                    <td>
+                        <div class="status-div ACTIVE">ACTIVE</div>
+                    </td>
+                    <td><button class="btn view-btn" title="Click to view student profile" onclick="">VIEW</button></td>
+                </tr>
+            </tbody>
         </table>
     </div>
 <?php } ?>
 
 <?php if ($page == 'student_profile') { ?>
-    <script> getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));</script>
+    <script>
+        getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));
+    </script>
 
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
         <div class="top-panel-div">
@@ -473,7 +574,7 @@
                             <img src="<?php echo $websiteUrl ?>/uploaded_files/studentPix/default.jpg" alt="Profile Image">
                         </div>
                         <script>
-                            $("#cam-pix").html('<img src="<?php echo $websiteUrl ?>/uploaded_files/studentPix/'+getEachBranchStudentsSession?.studentData?.[0]?.passport+'" alt="Profile Image">');
+                            $("#cam-pix").html('<img src="<?php echo $websiteUrl ?>/uploaded_files/studentPix/' + getEachBranchStudentsSession?.studentData?.passport + '" alt="Profile Image">');
                         </script>
                     </label>
 
@@ -482,9 +583,9 @@
                             <div class="text-div">
                                 <div class="name" id="fullName">
                                     <script>
-                                        $("#fullName").html(getEachBranchStudentsSession?.studentData?.[0]?.surName + ' ' + 
-                                        getEachBranchStudentsSession?.studentData?.[0]?.firstName + ' ' + 
-                                        getEachBranchStudentsSession?.studentData?.[0]?.otherNames);
+                                        $("#fullName").html(getEachBranchStudentsSession?.studentData?.surName + ' ' +
+                                            getEachBranchStudentsSession?.studentData?.firstName + ' ' +
+                                            getEachBranchStudentsSession?.studentData?.otherNames);
                                     </script>
                                 </div>
 
@@ -495,27 +596,27 @@
                                     | DEPARTMENT:
                                     <strong id="departmentName2">
                                         <script>
-                                            $("#departmentName2").html(getEachBranchStudentsSession.departmentData[0].departmentName);
+                                            $("#departmentName2").html(getEachBranchStudentsSession.departmentData.departmentName);
                                         </script>
                                     </strong>
                                     | CLASS:
                                     <strong id="className">
                                         <script>
-                                            $("#className").html(getEachBranchStudentsSession.classData[0].className);
+                                            $("#className").html(getEachBranchStudentsSession.classData.className);
                                         </script>
                                     </strong>
                                     | ARM:
                                     <strong id="armName">
                                         <script>
-                                            $("#armName").html(getEachBranchStudentsSession.armData[0].armName);
+                                            $("#armName").html(getEachBranchStudentsSession.armData.armName);
                                         </script>
                                     </strong>
                                 </div>
 
                                 <script>
                                     $(document).ready(function() {
-                                        const statusName2 = getEachBranchStudentsSession.studentData[0].statusName;
-                                        const passport = getEachBranchStudentsSession.studentData[0].passport;
+                                        const statusName2 = getEachBranchStudentsSession.studentData.statusName;
+                                        const passport = getEachBranchStudentsSession.studentData.passport;
 
                                         $("#statusName2").html(statusName2);
                                         $("#statusBtn2").addClass(statusName2);
@@ -557,7 +658,7 @@
 
 <?php } ?>
 
-<!-- For Staffs Modal Pages -->
+<!-- For Student Modal Pages -->
 <?php if ($page == 'student_profile_details') { ?>
     <div class="user-in">
         <div class="title">STUDENT BASIC INFORMATION</div>
@@ -568,7 +669,7 @@
                     textField({
                         id: 'surName',
                         title: 'Surname',
-                        value: getEachBranchStudentsSession?.studentData[0]?.surName ?? '',
+                        value: getEachBranchStudentsSession?.studentData?.surName ?? '',
                     });
                 </script>
             </div>
@@ -578,7 +679,7 @@
                     textField({
                         id: 'firstName',
                         title: 'First Name',
-                        value: getEachBranchStudentsSession?.studentData[0]?.firstName ?? '',
+                        value: getEachBranchStudentsSession?.studentData?.firstName ?? '',
                     });
                 </script>
             </div>
@@ -588,7 +689,7 @@
                     textField({
                         id: 'otherNames',
                         title: 'Other Name',
-                        value: getEachBranchStudentsSession?.studentData[0]?.otherNames ?? '',
+                        value: getEachBranchStudentsSession?.studentData?.otherNames ?? '',
                     });
                 </script>
             </div>
@@ -598,8 +699,8 @@
                     selectField({
                         id: 'genderId',
                         title: 'Select Gender',
-                        fieldValue: getEachBranchStudentsSession?.studentData[0]?.genderId ?? '',
-                        fieldLabel: getEachBranchStudentsSession?.studentData[0]?.genderName ?? ''
+                        fieldValue: getEachBranchStudentsSession?.studentData?.genderId ?? '',
+                        fieldLabel: getEachBranchStudentsSession?.studentData?.genderName ?? ''
                     });
                     _getSelectGender('genderId');
                 </script>
@@ -610,8 +711,8 @@
                     selectField({
                         id: 'maritalStatusId',
                         title: 'Select Marital Status',
-                        fieldValue: getEachBranchStudentsSession?.studentData[0]?.maritalStatusId ?? '',
-                        fieldLabel: getEachBranchStudentsSession?.studentData[0]?.maritalStatusName ?? ''
+                        fieldValue: getEachBranchStudentsSession?.studentData?.maritalStatusId ?? '',
+                        fieldLabel: getEachBranchStudentsSession?.studentData?.maritalStatusName ?? ''
                     });
                     _getSelectMaritalStatus('maritalStatusId');
                 </script>
@@ -620,7 +721,7 @@
             <div class="text_field_container col-3" id="dateOfBirth_container">
                 <script>
                     $(document).ready(function() {
-                        const dob = getEachBranchStudentsSession?.studentData[0]?.dateOfBirth || '';
+                        const dob = getEachBranchStudentsSession?.studentData?.dateOfBirth || '';
 
                         function reverseFormatDate(date) {
                             if (!date) return "";
@@ -644,7 +745,7 @@
                         id: 'mobileNumber',
                         title: 'Phone Number',
                         type: 'tel',
-                        value: getEachBranchStudentsSession.studentData[0]?.mobileNumber ?? ''
+                        value: getEachBranchStudentsSession.studentData?.mobileNumber ?? ''
                     });
                 </script>
             </div>
@@ -655,7 +756,7 @@
                         id: 'email',
                         title: 'Email Address',
                         type: 'email',
-                        value: getEachBranchStudentsSession.studentData[0]?.email ?? ''
+                        value: getEachBranchStudentsSession.studentData?.email ?? ''
                     });
                 </script>
             </div>
@@ -671,8 +772,8 @@
                     selectField({
                         id: 'countryId',
                         title: 'Select Nationality',
-                        fieldValue: getEachBranchStudentsSession.studentData[0]?.countryId ?? '',
-                        fieldLabel: getEachBranchStudentsSession.studentData[0]?.countryName ?? ''
+                        fieldValue: getEachBranchStudentsSession.studentData?.countryId ?? '',
+                        fieldLabel: getEachBranchStudentsSession.studentData?.countryName ?? ''
                     });
                     _getSelectNationality('countryId');
                 </script>
@@ -683,8 +784,8 @@
                     selectField({
                         id: 'stateId',
                         title: 'Select State Of Origin',
-                        fieldValue: getEachBranchStudentsSession.studentData[0]?.stateId ?? '',
-                        fieldLabel: getEachBranchStudentsSession.studentData[0]?.stateName ?? ''
+                        fieldValue: getEachBranchStudentsSession.studentData?.stateId ?? '',
+                        fieldLabel: getEachBranchStudentsSession.studentData?.stateName ?? ''
                     });
                     _getSelectGeneralState('stateId');
                 </script>
@@ -695,8 +796,8 @@
                     selectField({
                         id: 'lgaId',
                         title: 'Select Local Govt Area',
-                        fieldValue: getEachBranchStudentsSession.studentData[0]?.lgaId ?? '',
-                        fieldLabel: getEachBranchStudentsSession.studentData[0]?.lgaName ?? ''
+                        fieldValue: getEachBranchStudentsSession.studentData?.lgaId ?? '',
+                        fieldLabel: getEachBranchStudentsSession.studentData?.lgaName ?? ''
                     });
                 </script>
             </div>
@@ -707,7 +808,7 @@
                         id: 'address',
                         title: 'HOME ADDRESS',
                         onKeyUpFunction: 'copyTextbox()',
-                        value: getEachBranchStudentsSession.studentData[0]?.address ?? ''
+                        value: getEachBranchStudentsSession.studentData?.address ?? ''
                     });
                 </script>
             </div>
@@ -722,8 +823,8 @@
                     selectField({
                         id: 'fatherTitleId',
                         title: 'Select Title',
-                        fieldValue: getEachBranchStudentsSession.fatherData[0]?.titleId ?? '',
-                        fieldLabel: getEachBranchStudentsSession.fatherData[0]?.titleId ?? ''
+                        fieldValue: getEachBranchStudentsSession.fatherData?.titleId ?? '',
+                        fieldLabel: getEachBranchStudentsSession.fatherData?.titleId ?? ''
                     });
                     _getSelectTitle('fatherTitleId');
                 </script>
@@ -734,7 +835,7 @@
                     textField({
                         id: 'fatherSurName',
                         title: 'Surname',
-                        value: getEachBranchStudentsSession.fatherData[0]?.surName ?? '',
+                        value: getEachBranchStudentsSession.fatherData?.surName ?? '',
                     });
                 </script>
             </div>
@@ -744,7 +845,7 @@
                     textField({
                         id: 'fatherOtherNames',
                         title: 'Other Name',
-                        value: getEachBranchStudentsSession.fatherData[0]?.otherNames ?? '',
+                        value: getEachBranchStudentsSession.fatherData?.otherNames ?? '',
                     });
                 </script>
             </div>
@@ -754,7 +855,7 @@
                     textField({
                         id: 'fatherAddress',
                         title: 'Home Address',
-                        value: getEachBranchStudentsSession.fatherData[0]?.address ?? '',
+                        value: getEachBranchStudentsSession.fatherData?.address ?? '',
                     });
                 </script>
             </div>
@@ -765,7 +866,7 @@
                         id: 'fatherEmail',
                         title: 'Email Address',
                         type: 'email',
-                        value: getEachBranchStudentsSession.fatherData[0]?.email ?? '',
+                        value: getEachBranchStudentsSession.fatherData?.email ?? '',
                     });
                 </script>
             </div>
@@ -776,8 +877,8 @@
                         id: 'fatherMobileNumber',
                         title: 'Phone Number',
                         type: 'tel',
-                        onKeyPressFunction: 'isNumberCheck(event);',   
-                        value: getEachBranchStudentsSession.fatherData[0]?.mobileNumber ?? '',
+                        onKeyPressFunction: 'isNumberCheck(event);',
+                        value: getEachBranchStudentsSession.fatherData?.mobileNumber ?? '',
                     });
                 </script>
             </div>
@@ -785,7 +886,7 @@
             <div class="text_field_container col-3" id="fatherDayOfBirth_container">
                 <script>
                     $(document).ready(function() {
-                        const fDateOfBirth = getEachBranchStudentsSession.fatherData[0]?.dateOfBirth;
+                        const fDateOfBirth = getEachBranchStudentsSession.fatherData?.dateOfBirth;
 
                         let day = '';
 
@@ -799,15 +900,15 @@
                             fieldValue: day,
                             fieldLabel: day
                         });
-                    _getSelectBirthDay('fatherDayOfBirth');
+                        _getSelectBirthDay('fatherDayOfBirth');
                     });
                 </script>
             </div>
 
             <div class="text_field_container col-3" id="fatherMonthOfBirth_container">
                 <script>
-                    $(document).ready(function () {
-                        const fDateOfBirth = getEachBranchStudentsSession.fatherData[0]?.dateOfBirth;
+                    $(document).ready(function() {
+                        const fDateOfBirth = getEachBranchStudentsSession.fatherData?.dateOfBirth;
                         let monthNumber = '';
                         let monthName = '';
 
@@ -816,7 +917,18 @@
                             monthNumber = parts[1];
                             const monthNum = parseInt(monthNumber, 10);
                             const monthMap = {
-                                1: 'Jan',2: 'Feb', 3: 'Mar',4: 'Apr', 5: 'May',6: 'Jun',7: 'Jul', 8: 'Aug', 9: 'Sep',10: 'Oct', 11: 'Nov', 12: 'Dec'
+                                1: 'Jan',
+                                2: 'Feb',
+                                3: 'Mar',
+                                4: 'Apr',
+                                5: 'May',
+                                6: 'Jun',
+                                7: 'Jul',
+                                8: 'Aug',
+                                9: 'Sep',
+                                10: 'Oct',
+                                11: 'Nov',
+                                12: 'Dec'
                             };
                             monthName = monthMap[monthNum] || '';
                         }
@@ -836,7 +948,7 @@
                     textField({
                         id: 'fatherOccupation',
                         title: 'Occuoation',
-                        value: getEachBranchStudentsSession.fatherData[0]?.occupation ?? '',
+                        value: getEachBranchStudentsSession.fatherData?.occupation ?? '',
                     });
                 </script>
             </div>
@@ -851,8 +963,8 @@
                     selectField({
                         id: 'motherTitleId',
                         title: 'Select Title',
-                        fieldValue: getEachBranchStudentsSession.motherData[0]?.titleId ?? '',
-                        fieldLabel: getEachBranchStudentsSession.motherData[0]?.titleId ?? ''
+                        fieldValue: getEachBranchStudentsSession.motherData?.titleId ?? '',
+                        fieldLabel: getEachBranchStudentsSession.motherData?.titleId ?? ''
                     });
                     _getSelectTitle('motherTitleId');
                 </script>
@@ -863,7 +975,7 @@
                     textField({
                         id: 'motherSurName',
                         title: 'Surname',
-                        value: getEachBranchStudentsSession.motherData[0]?.surName ?? '',
+                        value: getEachBranchStudentsSession.motherData?.surName ?? '',
                     });
                 </script>
             </div>
@@ -873,7 +985,7 @@
                     textField({
                         id: 'motherOtherNames',
                         title: 'Other Names',
-                        value: getEachBranchStudentsSession.motherData[0]?.otherNames ?? '',
+                        value: getEachBranchStudentsSession.motherData?.otherNames ?? '',
                     });
                 </script>
             </div>
@@ -883,7 +995,7 @@
                     textField({
                         id: 'motherAddress',
                         title: 'Home Address',
-                        value: getEachBranchStudentsSession.motherData[0]?.address ?? '',
+                        value: getEachBranchStudentsSession.motherData?.address ?? '',
                     });
                 </script>
             </div>
@@ -894,7 +1006,7 @@
                         id: 'motherEmail',
                         title: 'Email Address',
                         type: 'email',
-                        value: getEachBranchStudentsSession.motherData[0]?.email ?? '',
+                        value: getEachBranchStudentsSession.motherData?.email ?? '',
                     });
                 </script>
             </div>
@@ -906,7 +1018,7 @@
                         title: 'Phone Number',
                         type: 'tel',
                         onKeyPressFunction: 'isNumberCheck(event);',
-                        value: getEachBranchStudentsSession.motherData[0]?.mobileNumber ?? ''
+                        value: getEachBranchStudentsSession.motherData?.mobileNumber ?? ''
                     });
                 </script>
             </div>
@@ -914,7 +1026,7 @@
             <div class="text_field_container col-3" id="motherDayOfBirth_container">
                 <script>
                     $(document).ready(function() {
-                        const dateOfBirth = getEachBranchStudentsSession.motherData[0]?.dateOfBirth;
+                        const dateOfBirth = getEachBranchStudentsSession.motherData?.dateOfBirth;
 
                         let day = '';
 
@@ -928,15 +1040,15 @@
                             fieldValue: day,
                             fieldLabel: day
                         });
-                    _getSelectBirthDay('motherDayOfBirth');
+                        _getSelectBirthDay('motherDayOfBirth');
                     });
                 </script>
             </div>
 
             <div class="text_field_container col-3" id="motherMonthOfBirth_container">
                 <script>
-                    $(document).ready(function () {
-                        const dateOfBirth = getEachBranchStudentsSession.motherData[0]?.dateOfBirth;
+                    $(document).ready(function() {
+                        const dateOfBirth = getEachBranchStudentsSession.motherData?.dateOfBirth;
                         let monthNumber = '';
                         let monthName = '';
 
@@ -945,7 +1057,18 @@
                             monthNumber = parts[1];
                             const monthNum = parseInt(monthNumber, 10);
                             const monthMap = {
-                                1: 'Jan',2: 'Feb', 3: 'Mar',4: 'Apr', 5: 'May',6: 'Jun',7: 'Jul', 8: 'Aug', 9: 'Sep',10: 'Oct', 11: 'Nov', 12: 'Dec'
+                                1: 'Jan',
+                                2: 'Feb',
+                                3: 'Mar',
+                                4: 'Apr',
+                                5: 'May',
+                                6: 'Jun',
+                                7: 'Jul',
+                                8: 'Aug',
+                                9: 'Sep',
+                                10: 'Oct',
+                                11: 'Nov',
+                                12: 'Dec'
                             };
                             monthName = monthMap[monthNum] || '';
                         }
@@ -966,7 +1089,7 @@
                     textField({
                         id: 'motherOccupation',
                         title: 'Occupation',
-                        value: getEachBranchStudentsSession.motherData[0]?.occupation ?? '',
+                        value: getEachBranchStudentsSession.motherData?.occupation ?? '',
                     });
                 </script>
             </div>
@@ -992,8 +1115,8 @@
                     selectField({
                         id: 'accommodationId',
                         title: 'Select Accomodation',
-                        fieldValue: getEachBranchStudentsSession.accommodationData[0]?.accommodationId ?? '',
-                        fieldLabel: getEachBranchStudentsSession.accommodationData[0]?.accommodationName ?? ''
+                        fieldValue: getEachBranchStudentsSession.accommodationData?.accommodationId ?? '',
+                        fieldLabel: getEachBranchStudentsSession.accommodationData?.accommodationName ?? ''
                     });
                     _getSelectAccomodation('accommodationId');
                 </script>
@@ -1004,8 +1127,8 @@
                     selectField({
                         id: 'departmentId',
                         title: 'Select Department',
-                        fieldValue: getEachBranchStudentsSession.departmentData[0]?.departmentId ?? '',
-                        fieldLabel: getEachBranchStudentsSession.departmentData[0]?.departmentName ?? ''
+                        fieldValue: getEachBranchStudentsSession.departmentData?.departmentId ?? '',
+                        fieldLabel: getEachBranchStudentsSession.departmentData?.departmentName ?? ''
                     });
                     _getSelectDepartment('departmentId');
                 </script>
@@ -1016,8 +1139,8 @@
                     selectField({
                         id: 'classId',
                         title: 'Select Class',
-                        fieldValue: getEachBranchStudentsSession.classData[0]?.classId ?? '',
-                        fieldLabel: getEachBranchStudentsSession.classData[0]?.className ?? ''
+                        fieldValue: getEachBranchStudentsSession.classData?.classId ?? '',
+                        fieldLabel: getEachBranchStudentsSession.classData?.className ?? ''
                     });
                 </script>
             </div>
@@ -1027,8 +1150,8 @@
                     selectField({
                         id: 'armId',
                         title: 'Select Arm',
-                        fieldValue: getEachBranchStudentsSession.armData[0]?.armId ?? '',
-                        fieldLabel: getEachBranchStudentsSession.armData[0]?.armName ?? ''
+                        fieldValue: getEachBranchStudentsSession.armData?.armId ?? '',
+                        fieldLabel: getEachBranchStudentsSession.armData?.armName ?? ''
                     });
                 </script>
             </div>
@@ -1045,7 +1168,7 @@
                     textField({
                         id: 'studentId',
                         title: 'Student ID',
-                        value: getEachBranchStudentsSession?.studentData[0]?.studentId ?? '',
+                        value: getEachBranchStudentsSession?.studentData?.studentId ?? '',
                         readonly: true
                     });
                 </script>
@@ -1056,7 +1179,7 @@
                     textField({
                         id: 'createdTime',
                         title: 'Date Of Registration',
-                        value: getEachBranchStudentsSession?.studentData[0]?.createdTime ?? '',
+                        value: getEachBranchStudentsSession?.studentData?.createdTime ?? '',
                         readonly: true
                     });
                 </script>
@@ -1067,8 +1190,8 @@
                     selectField({
                         id: 'statusId',
                         title: 'Select Status',
-                        fieldValue: getEachBranchStudentsSession.studentData[0]?.statusId ?? '',
-                        fieldLabel: getEachBranchStudentsSession.studentData[0]?.statusName ?? ''
+                        fieldValue: getEachBranchStudentsSession.studentData?.statusId ?? '',
+                        fieldLabel: getEachBranchStudentsSession.studentData?.statusName ?? ''
                     });
                     _getSelectStatusId('statusId', '1,2');
                 </script>

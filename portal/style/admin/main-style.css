@@ -1072,6 +1072,10 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	font-size: 13px;
 }
 
+.search_field_container .student_text_field {
+	height: 50px;
+}
+
 .search_field_container .dash_text_field:focus+.dash_placeholder,
 .search_field_container .dash_text_field:not(:placeholder-shown)+.dash_placeholder {
 	top: 22%;
@@ -4445,4 +4449,39 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 
 .list-back-div .list-div .btn-container .btn:hover {
 	background: #444;
+}
+
+
+
+.long-search-div{
+	margin: 6px 0px 3px 0px;
+	background: none;
+	display: flex;
+	gap: 10px;
+}
+
+.long-search-div .btn{
+	border: none;
+	min-width: 150px;
+	height: 48px;
+	font-family: sub-title-font;
+	font-size: 12px;
+	padding: 0px 30px;
+	border-radius: 5px;
+	background:var(--sub-body-color);
+	color: var(--white-color);
+	cursor: pointer;
+	transition: all 0.2s ease-in 0.2s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+}
+
+.long-search-div .btn i{
+	font-size: 12px;
+}
+
+.long-search-div .btn:hover{
+	background: var(--secondary-color);
 }

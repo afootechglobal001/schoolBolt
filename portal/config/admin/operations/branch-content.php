@@ -320,6 +320,20 @@
                                             $("#smtpUsername").html(getEachBranchDetailsSession.smtpUsername);
                                         </script>
                                     </strong>
+
+                                    | SESSION:
+                                    <strong id="session">
+                                        <script>
+                                            $("#session").html(getEachBranchDetailsSession.session);
+                                        </script>
+                                    </strong>
+
+                                    | TERM:
+                                    <strong id="termName">
+                                        <script>
+                                            $("#termName").html(getEachBranchDetailsSession?.termData[0]?.termName);
+                                        </script>
+                                    </strong>
                                 </div>
 
                                 <script>
@@ -351,7 +365,7 @@
                                         onclick="_getForm({page: 'student_select_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>View Student</li>
 
                                     <li id="my_students" title="Search Students"
-                                        onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Search Student</li>
+                                        onclick="_getActiveBranchPage({divid:'branch_student_search', page: 'branch_student_search', url: adminPortalLocalUrl});"><i class="bi-search"></i>Search Student</li>
 
                                     <li id="my_students" title="Student Archived"
                                         onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Student Archived</li>

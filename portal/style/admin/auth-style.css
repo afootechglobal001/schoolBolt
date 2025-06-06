@@ -125,7 +125,7 @@
 }
 
 .center-login-div .login-div-in .form-back-div .form-div .inner-form h1{
-    color: var(--primary-color);
+    color: var(--sub-body-color);
     font-size: 22px;
     line-height: 25px;
     padding: 0px;
@@ -143,7 +143,7 @@
     border-radius: 5px;
     font-family: sub-title-font;
     font-size: 15px;
-    background: var(--primary-color);
+    background: var(--sub-body-color);
     color: var(--white-color);
     cursor: pointer;
     transition: all 0.2s ease-in 0.2s;
