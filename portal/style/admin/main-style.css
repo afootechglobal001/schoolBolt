@@ -1766,7 +1766,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
     min-width: 150px;
     padding: 0px 20px;
     font-family: sub-title-font;
-    background: var(--primary-color);
+    background: var(--sub-body-color);
     color: var(--white-color);
     cursor: pointer;
     transition: all 0.2s ease-in 0.2s;
@@ -1994,7 +1994,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 
 .slide-form-div .container-back-div .inner-container .segmentDiv{
 	display: flex;
-	gap: 10px;
+	gap: 12px;
 	flex-direction: column;
 	padding: 10px 15px;
 	border: rgba(213, 213, 213, 0.4) 1px solid;
@@ -2009,22 +2009,22 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 }
 
 .slide-form-div .container-back-div .inner-container .segmentDiv .segmentList{
-	display: flex;
-	gap: 10px;
-	flex-direction: column;
-}
-
-.slide-form-div .container-back-div .inner-container .segmentDiv .segmentBody{
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
 }
 
+.slide-form-div .container-back-div .inner-container .segmentDiv .segmentBody{
+	width: 100%;
+	display: flex;
+	gap: 10px;
+}
+
 .slide-form-div .container-back-div .inner-container .segmentDiv .add-btn{
 	border: none;
 	padding: 10px 25px;
-	border-radius: 25px;
+	border-radius: 5px;
 	font-family: sub-title-font;
 	background: var(--sub-body-color);
 	color: var(--white-color);
@@ -2036,17 +2036,21 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	cursor: pointer;
 }
 
+.slide-form-div .container-back-div .inner-container .segmentDiv .add-btn:hover{
+	background: var(--secondary-color);
+}
+
 .slide-form-div .container-back-div .inner-container .alert-list-back-div{
 	display: flex;
 	align-items: center;
 	gap: 10px;
 }
 
-.slide-form-div .container-back-div .inner-container .alert-list-back-div .delete-div i{
-	color: #F00;
-	font-size: 12px;
-	cursor: pointer;
+.slide-form-div .container-back-div .inner-container .alert-list-back-div .alert-list .total-amount{
+	font-size: 20px;
+    font-family: title-font;
 }
+
 
 @media all and (max-width:500px) {
 	.slide-form-div{

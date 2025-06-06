@@ -45,3 +45,4 @@
 <script src="<?php echo $websiteUrl?>/js/reports/print-student-by-class.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/branch/fees/useFees.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/reports/print-compute-fee-by-class.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/reports/print-student-score-sheet.js?v=<?php echo $codeVersion?>"></script>
