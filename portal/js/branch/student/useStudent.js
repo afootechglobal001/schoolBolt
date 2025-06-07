@@ -927,3 +927,142 @@ function _updateStudentPix(){
 			_actionAlert('An unexpected error occurred! Please Try Again', false);
 		}
 }
+
+
+
+function _searchBranchStudents() {
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+
+	const q = $('#q').val()
+	$('#q').removeClass('issue');
+
+	if (!q) {
+		$('#q').addClass('issue');
+		_actionAlert('Provide student information to continue', false);
+		return;
+	}
+
+	$('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/students/search-student?q=${q}&branchId=${getEachBranchDetailsSession.branchId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const fetch = info.data;
+				const success = info.success;
+				const message = info.message;
+
+				if (success=== true) {
+					_getSearchStudents(success, fetch, message);
+				} else {
+					_getSearchStudents(false, [], message);
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}
+
+function _getSearchStudents(success, fetch, message) {
+	let text = '';
+	let no=0;
+	text =`
+		<thead>
+			<tr class="tb-col">
+				<th>sn</th>
+				<th>Student Info</th>
+				<th>Gender</th>
+				<th>Age</th>
+				<th>Department</th>
+				<th>Class</th>
+				<th>Arm</th>
+				<th>Accomodation</th>
+				<th>Status</th>
+				<th>View</th>
+			</tr>
+		</thead>`;
+
+	if (success===true) {
+		for (let i = 0; i < fetch.length; i++) {
+			no++;
+			const branchId = fetch[i].branchId;
+			const departmentId = fetch[i].departmentId;
+			const classId = fetch[i].classId;
+			const armId = fetch[i].armId;
+
+			const fetchStudentData = fetch[i];
+			const fetchDepartmentData=fetch[i].departmentData; 
+			const fetchClassData=fetch[i].classData; 
+			const fetchArmData=fetch[i].armData; 
+			const fetchAccommodationData=fetch[i].accommodationData; 
+			
+			const studentId = fetchStudentData.studentId;
+			const passport = fetchStudentData.passport || 'default.jpg';
+			const surName = fetchStudentData.surName;
+			const firstName = fetchStudentData.firstName;
+			const otherNames = fetchStudentData.otherNames;
+			const fullname = surName+ ' ' +firstName+ ' ' +otherNames;
+			const genderName = fetchStudentData.genderName;
+			const departmentName = fetchDepartmentData.departmentName;
+			const className = fetchClassData.className;
+			const armName = fetchArmData.armName;
+			const statusName = fetchStudentData.statusName;
+			const accommodationName = fetchAccommodationData.accommodationName;
+			const age = _calculateAge(fetchStudentData.dateOfBirth);
+
+			text +=`
+				<tbody>
+					<tr class="tb-row">
+						<td>${no}</td>
+						<td>
+							<div class="text-back-div">
+								<div class="image-div general-passport">
+									<img src="${studentPixPath}/${passport}" alt="${fullname}"/>
+								</div>
+
+								<div class="text-div">
+									<div class="first-class">${fullname}</div>
+									<div class="second-class">${studentId}</div>
+								</div>
+							</div>
+						</td>
+						<td>${genderName}</td>
+						<td>${age}</td>
+						<td>${departmentName}</td>
+						<td>${className}</td>
+						<td>${armName}</td>
+						<td>${accommodationName}</td>
+						<td><div class="status-div ${statusName}">${statusName}</div></td>
+						<td><button class="btn view-btn" title="Click to view student profile" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}');">VIEW</button></td>
+					</tr>
+				</tbody>`;
+		}
+		$('#pageContent').html(text);
+	} else {
+		text += `
+			<tbody>
+				<tr>
+					<td colspan="15">
+						<div class="false-notification-div">
+							<p>${message ? message : 'No student records to display yet. Please search to begin.'}</p>
+						</div>
+					</td>
+				</tr>
+			</tbody>`;
+		$('#pageContent').html(text);
+	}
+}

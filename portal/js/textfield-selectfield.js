@@ -13,6 +13,7 @@ function textField(options) {
         ? `
           <textarea class="text_area" id="${id}" placeholder="" rows="">${value}</textarea>
           <div class="placeholder">${title}</div>
+		  <div class="issueText" id="issue_${id}"></div>
         `
         : `
           <input class="text_field" type="${type}" id="${id}" placeholder="" value="${value}"
@@ -20,6 +21,7 @@ function textField(options) {
 			  ${onKeyUpFunction ? `onkeyup="${onKeyUpFunction}"` : ''}
 			  ${readonly ? 'readonly' : ''}/>
           <div class="placeholder">${title}:</div>
+		  <div class="issueText" id="issue_${id}"></div>
         `;
     $('#' + id + '_container').html(template);
 }
@@ -53,48 +55,6 @@ function selectField(options) {
     $('#' + id + '_container').html(template);
 }
 
-
-function addSegmentation() {
-  const fieldId = `scores_${Date.now()}`;
-  
-  const template = `
-    <div class="segmentBody">
-        <div class="text_field_container" id="subName_container_${fieldId}"></div>
-		<div class="text_field_container" id="subScore_container_${fieldId}"></div>
-    </div>
-  `;
-
-  $('.segmentList').append(template);
-  textField({
-    id: `subName_${fieldId}`,
-    title: 'Sub Name'
-  });
-
-  textField({
-    id: `subScore_${fieldId}`,
-    title: 'Sub Score',
-    type: 'number'
-  });
-}
-
-
-
-function addSegmentation() {
-  const template = `
-  	<div class=segmentBody>
-		<div class="text_field_container">
-			<input class="text_field" type="text" id="" placeholder=""/>
-			<div class="placeholder">Sub Name:</div>
-		</div>
-
-		<div class="text_field_container">
-			<input class="text_field" type="number" id="" placeholder=""/>
-			<div class="placeholder">Sub Score:</div>
-		</div>
-	</div>
-  `;
-  $('.segmentList').append(template);
-}
 
 function _selectOption(selectBoxId) {
 	$('#txtSearchValue_'+selectBoxId).val('');

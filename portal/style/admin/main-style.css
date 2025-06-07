@@ -2044,7 +2044,31 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	background: var(--secondary-color);
 }
 
+.slide-form-div .container-back-div .inner-container .alert-main-back-div{
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+}
+
+.slide-form-div .container-back-div .inner-container .alert-main-back-div .icon-div{
+	color:#06F;
+	font-size: 13px;
+	cursor: pointer;
+	-moz-transition:all 0.2s ease-in 0.2s;
+	transition:all 0.2s ease-in 0.2s;
+	-webkit-transition:all 0.2s ease-in 0.2s;
+	-ms-transition:all 0.2s ease-in 0.2s;
+	-o-transition:all 0.2s ease-in 0.2s;
+}
+
+.slide-form-div .container-back-div .inner-container .alert-main-back-div .icon-div:hover{
+	color:var(--secondary-color);
+}
+
 .slide-form-div .container-back-div .inner-container .alert-list-back-div{
+	width: 100%;
 	display: flex;
 	align-items: center;
 	gap: 10px;

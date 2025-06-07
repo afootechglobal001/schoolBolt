@@ -829,7 +829,7 @@
             </div>
         </div>
 
-        <div class="user-managment-list staff-managment-list" title="Assessment Settings" onclick="_getForm({page: 'branch_assessment_reg', layer:2, url: adminPortalLocalUrl});">
+        <div class="user-managment-list staff-managment-list" title="Assessment Settings" onclick="_fetchAssessment();">
             <div class="inner-div">
                 <div class="icon-div">
                     <img src="<?php echo $websiteUrl ?>/images/score.png" alt="Assessment Settings" />
@@ -1453,9 +1453,9 @@
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
                                     <div>School:</div>
-                                    <div><span id="session">
+                                    <div><span id="feesBranchName">
                                             <script>
-                                                $("#session").html(getEachFeeComputeGeneral.branchData.branchName);
+                                                $("#feesBranchName").html(getEachFeeComputeGeneral.branchData.branchName);
                                             </script>
                                         </span></div>
                                 </div>
@@ -1556,6 +1556,13 @@
 <?php } ?>
 
 <?php if ($page == 'branch_assessment_reg') { ?>
+    <script>fetchAllAssessmentSession = JSON.parse(sessionStorage.getItem("fetchAllAssessmentSession"));</script>
+
+    <script> 
+        fetchEachAssessmentSession = JSON.parse(sessionStorage.getItem("fetchEachAssessmentSession"));
+        $('#pageTitle, #pageTitle2').html(fetchEachAssessmentSession?.assessmentId ? 'UPDATE ASSESSMENT':'ADD A NEW ASSESSMENT');
+    </script>
+    
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
@@ -1574,41 +1581,72 @@
                     <script>
                         textField({
                             id: 'assessmentName',
-                            title: 'Assessment Name'
+                            title: 'Assessment Name',
+                            value: fetchEachAssessmentSession?.assessmentName?? ''
                         });
                     </script>
                 </div>
 
-                <div class="text_field_container" id="assessmentScore_container">
+                <div class="text_field_container" id="assessmentTotalScore_container">
                     <script>
                         textField({
-                            id: 'assessmentScore',
-                            title: 'Total Assessment Score'
+                            id: 'assessmentTotalScore',
+                            title: 'Total Assessment Score',
+                            type: 'number',
+                            value: fetchEachAssessmentSession?.assessmentTotalScore ?? ''
                         });
                     </script>
                 </div>
 
                 <div>
-                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick="_createUpdateAssessment();"> <i class="bi-check"></i> SUBMIT </button>
                 </div>
 
                 <div>
                     <div class="alert alert-success form-alert">
                         <span>Assessment Summary</span>
-                        <div class="alert-list-div">
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>TOTAL 1ST CA:</div>
-                                    <div><span>30</span></div>
-                                </div>
-                            </div>
+                        <div class="alert-list-div" id="fetchedAssessment">
+                            <script>
+                                $(document).ready(function() {
+                                    let text = '';
 
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>TOTAL EXAM:</div>
-                                    <div><span>70</span></div>
-                                </div>
-                            </div>
+                                    if (fetchAllAssessmentSession) {
+                                        const fetch = fetchAllAssessmentSession.data;
+                                        const message = fetchAllAssessmentSession.message;
+                                        const success = fetchAllAssessmentSession.success;
+
+                                        if (success===true) {
+                                            for (let i = 0; i < fetch.length; i++) {
+                                                const fetchedAssessment = fetch[i];
+                                                const assessmentId = fetchedAssessment.assessmentId;
+                                                const assessmentName = fetchedAssessment.assessmentName;
+                                                const assessmentTotalScore = fetchedAssessment.assessmentTotalScore;
+
+                                                text += `
+                                                <div class="alert-main-back-div">
+                                                    <div class="alert-list-back-div">
+                                                        <div class="alert-list">
+                                                            <div>${assessmentName}:</div>
+                                                            <div><span>${assessmentTotalScore}</span></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="icon-div" title="Click to edit assessment" onclick="_fetchEachAssessment('${assessmentId}');"><i class="bi-pencil-square"></i></div>
+                                                </div>`;
+                                            }
+                                            $("#fetchedAssessment").html(text);
+                                        } else {
+                                            text += `
+                                            <div class="alert-list-back-div">
+                                                <div class="alert-list">
+                                                    <div>${message}.</div>
+                                                </div>
+                                            </div>`;
+                                        }
+                                        $("#fetchedAssessment").html(text);    
+                                    } 
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -1624,30 +1662,18 @@
 
     <div class="table-div animated fadeIn">
         <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-            <thead>
-                <tr class="tb-col">
-                    <th>sn</th>
-                    <th>Assessment Name</th>
-                    <th>Total Assessment Score</th>
-                    <th>Updated By</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr class="tb-row">
-                    <td>1</td>
-                    <td>TOTAL 1ST CA</td>
-                    <td>30</td>
-                    <td>PAUL EMMANUEL</td>
-                    <td><button class="btn view-btn" title="Click to edit assessment" onclick="_getForm({page: 'branch_assessment_breakdown_form', layer:2, url: adminPortalLocalUrl});">COMPUTE ASSESSMENT</button></td>
-                </tr>
-            </tbody>
+            <script>fetchAssessmentPage();</script>
         </table>
     </div>
 <?php } ?>
 
 <?php if ($page == 'branch_assessment_breakdown_form') { ?>
+    <script>fetchAssessmentBreakdownSession = JSON.parse(sessionStorage.getItem("fetchAssessmentBreakdownSession"));</script>
+    <script> 
+        fetchEachAssessmentBreakdownSession = JSON.parse(sessionStorage.getItem("fetchEachAssessmentBreakdownSession"));
+        $('#pageTitle, #pageTitle2').html(fetchEachAssessmentBreakdownSession?.assessmentId ? 'UPDATE ASSESSMENT BREAKDOWN':'COMPUTE ASSESSMENT BREAKDOWN');
+    </script>
+
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
@@ -1659,51 +1685,82 @@
         <div class="container-back-div">
             <div class="inner-container">
                 <div>
-                    <div class="alert alert-success form-alert">Kindly fill the form below to <span id="pageTitle2"> COMPUTE ASSESSMENT BREAKDOWN</span> for <span id="pageTitle2"> TOTAL 1ST CA</span></div>
+                    <div class="alert alert-success form-alert">Kindly fill the form below to <span id="pageTitle2"> COMPUTE ASSESSMENT BREAKDOWN</span> for <span id="assessmentName"><script>$("#assessmentName").html(fetchAssessmentBreakdownSession.assessmentData.assessmentName);</script></span> (<span id="assessmentTotalScore"><script>$("#assessmentTotalScore").html(fetchAssessmentBreakdownSession.assessmentData.assessmentTotalScore);</script></span>)</div>
                 </div>
 
-                <div class="segmentDiv">
-                    <div class="segmentTitle">
-                        <span>Assessment Breakdown</span>
-                    </div>
-                    <div class="segmentList">
-                        <script> addSegmentation();</script>
-                    </div>
-                    <div>
-                        <button type="button" class="add-btn" onClick="addSegmentation()"><i class="bi-plus"></i> Add Breakdown</button>
-                    </div>
+                <div class="text_field_container" id="assessmentBreakDownName_container">
+                    <script>
+                        textField({
+                            id: 'assessmentBreakDownName',
+                            title: 'Assessment Breakdown Name',
+                            value: fetchEachAssessmentBreakdownSession?.assessmentName ?? ''
+                        });
+                    </script>
+                </div>
+
+                <div class="text_field_container" id="assessmentBreakDownTotalScore_container">
+                    <script>
+                        textField({
+                            id: 'assessmentBreakDownTotalScore',
+                            title: 'Assessment Breakdown Score',
+                            value: fetchEachAssessmentBreakdownSession?.assessmentTotalScore ?? ''
+                        });
+                    </script>
+                </div>
+
+                <div>
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick="_createUpdateAssessmentBreakDown();"> <i class="bi-check"></i> SUBMIT </button>
                 </div>
 
                 <div>
                     <div class="alert alert-success form-alert">
                         <span>Assessment Breakdown Summary</span>
-                        <div class="alert-list-div">
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>WELCOME TEST:</div>
-                                    <div><span>5</span></div>
-                                </div>
-                            </div>
+                        <div class="alert-list-div" id="fetchedAssessmentBreakDown">
+                            <script>
+                                $(document).ready(function() {
+                                    let text = '';
 
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>ATTENDANCE:</div>
-                                    <div><span>5</span></div>
-                                </div>
-                            </div>
+                                    if (fetchAssessmentBreakdownSession) {
+                                        const fetch = fetchAssessmentBreakdownSession.data;
+                                        const message = fetchAssessmentBreakdownSession.message;
+                                        const success = fetchAssessmentBreakdownSession.success;
 
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>TOTAL SCORE:</div>
-                                    <div><span class="total-amount">30%</span></div>
-                                </div>
-                            </div>
+                                        if (success===true) {
+                                            for (let i = 0; i < fetch.length; i++) {
+                                                const fetchedAssessmentBreakDown = fetch[i];
+                                                const branchId = fetchedAssessmentBreakDown.branchId;
+                                                const parentId = fetchedAssessmentBreakDown.parentId;
+                                                const assessmentId = fetchedAssessmentBreakDown.assessmentId;
+                                                const assessmentName = fetchedAssessmentBreakDown.assessmentName;
+                                                const assessmentTotalScore = fetchedAssessmentBreakDown.assessmentTotalScore;
+
+                                                text += `
+                                                <div class="alert-main-back-div">
+                                                    <div class="alert-list-back-div">
+                                                        <div class="alert-list">
+                                                            <div>${assessmentName}:</div>
+                                                            <div><span>${assessmentTotalScore}</span></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="icon-div" title="Click to edit assessment breakdown" onclick="_fetchEachAssessmentBreakDown('${branchId}','${parentId}','${assessmentId}');"><i class="bi-pencil-square"></i></div>
+                                                </div>`;
+                                            }
+                                            $("#fetchedAssessmentBreakDown").html(text);
+                                        } else {
+                                            text += `
+                                            <div class="alert-list-back-div">
+                                                <div class="alert-list">
+                                                    <div>${message}.</div>
+                                                </div>
+                                            </div>`;
+                                        }
+                                        $("#fetchedAssessmentBreakDown").html(text);    
+                                    } 
+                                });
+                            </script>
                         </div>
                     </div>
-                </div>
-
-                <div>
-                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
                 </div>
             </div>
         </div>

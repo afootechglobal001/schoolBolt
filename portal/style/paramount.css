@@ -124,6 +124,13 @@ a {
 	border: #F00 1px solid;
 }
 
+.text_field_container .issueText {
+	color: #F00;
+	font-family: body-font;
+	font-size: 10px;
+	font-style: italic;
+}
+
 .text_field_container .text_field:focus+.placeholder,
 .text_field_container .text_field:not(:placeholder-shown)+.placeholder {
 	height: auto;
