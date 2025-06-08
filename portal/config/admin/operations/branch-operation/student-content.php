@@ -458,15 +458,15 @@
 
 <?php if ($page == 'branch_student_search') { ?>
     <div class="alert alert-success form-alert animated fadeIn">
-        <span>Search student by surname, student Id, class, department</span>
+        <span>Search student by surname, first name, other name, student Id</span>
         <div class="long-search-div">
             <div class="text_field_container search_field_container">
-                <input class="text_field student_text_field" type="text" id="searchContent" placeholder="" title="Type here to search students" />
-                <div class="placeholder dash_placeholder"><i class="bi-search"></i> Type here to search student by surname, student Id, class, department</div>
+                <input class="text_field student_text_field" type="text" id="q" placeholder="" title="Type here to search students" />
+                <div class="placeholder dash_placeholder"><i class="bi-search"></i> Type here to search student by surname, first name, other name, student Id</div>
             </div>
 
             <div>
-                <button class="btn" title="SEARCH STUDENTS" onclick="">
+                <button class="btn" title="SEARCH STUDENTS" onclick="_searchBranchStudents();">
                     <i class="bi-search"></i> SEARCH
                 </button>
             </div>
@@ -475,80 +475,7 @@
 
     <div class="table-div animated fadeIn">
         <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-            <thead>
-                <tr class="tb-col">
-                    <th>sn</th>
-                    <th>Student Info</th>
-                    <th>Gender</th>
-                    <th>Age</th>
-                    <th>Session</th>
-                    <th>Term</th>
-                    <th>Department</th>
-                    <th>Class</th>
-                    <th>Arm</th>
-                    <th>Accomodation</th>
-                    <th>Status</th>
-                    <th>View</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr class="tb-row">
-                    <td>1</td>
-                    <td>
-                        <div class="text-back-div">
-                            <div class="image-div general-passport">
-                                <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="Paul Emmanuel" />
-                            </div>
-
-                            <div class="text-div">
-                                <div class="first-class">Paul Emmanuel</div>
-                                <div class="second-class">STUDENT00220250321124557</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>MALE</td>
-                    <td>15</td>
-                    <td>2024/2025</td>
-                    <td>THIRD TERM</td>
-                    <td>NURSERY</td>
-                    <td>NURSERY 1</td>
-                    <td>A</td>
-                    <td>DAY</td>
-                    <td>
-                        <div class="status-div ACTIVE">ACTIVE</div>
-                    </td>
-                    <td><button class="btn view-btn" title="Click to view student profile" onclick="">VIEW</button></td>
-                </tr>
-
-                <tr class="tb-row">
-                    <td>2</td>
-                    <td>
-                        <div class="text-back-div">
-                            <div class="image-div general-passport">
-                                <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="Paul Emmanuel" />
-                            </div>
-
-                            <div class="text-div">
-                                <div class="first-class">Paul Samson</div>
-                                <div class="second-class">STUDENT00220250321124557</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>MALE</td>
-                    <td>15</td>
-                    <td>2024/2025</td>
-                    <td>THIRD TERM</td>
-                    <td>NURSERY</td>
-                    <td>NURSERY 1</td>
-                    <td>A</td>
-                    <td>DAY</td>
-                    <td>
-                        <div class="status-div ACTIVE">ACTIVE</div>
-                    </td>
-                    <td><button class="btn view-btn" title="Click to view student profile" onclick="">VIEW</button></td>
-                </tr>
-            </tbody>
+           <script>_getSearchStudents();</script>
         </table>
     </div>
 <?php } ?>
