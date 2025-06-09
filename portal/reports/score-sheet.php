@@ -7,7 +7,7 @@
     <link href="<?php echo $websiteUrl ?>/style/report-style.css?v=<?php echo $codeVersion ?>" type="text/css" rel="stylesheet" />
     <link href="<?php echo $websiteUrl ?>/style/paramount.css?v=<?php echo $codeVersion ?>" type="text/css" rel="stylesheet" />
     <script src="<?php echo $websiteUrl ?>/js/jquery-v3.6.1.min.js"></script>
-    <title>Score | <?php echo $clientName ?></title>
+    <title>Score Sheet| <?php echo $clientName ?></title>
 </head>
 
 <body>
@@ -50,7 +50,8 @@
                     printStudentScoreSheetSession?.termData?.termName + ' - ' +
                     printStudentScoreSheetSession?.departmentData?.departmentName + ' - ' +
                     printStudentScoreSheetSession?.classData?.className + ' - ' +
-                    printStudentScoreSheetSession?.armData?.armName);
+                    printStudentScoreSheetSession?.armData?.armName + ' - ' +
+                    printStudentScoreSheetSession?.subjectData?.subjectName);
             </script>
         </div>
 

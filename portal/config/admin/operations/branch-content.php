@@ -829,7 +829,7 @@
             </div>
         </div>
 
-        <div class="user-managment-list staff-managment-list" title="Assessment Settings" onclick="_fetchAssessment();">
+        <div class="user-managment-list staff-managment-list" title="Assessment Settings" onclick="_getActiveBranchPage({divid:'branch_assessment_breakdown_page', page: 'branch_assessment_breakdown_page', url: adminPortalLocalUrl});">
             <div class="inner-div">
                 <div class="icon-div">
                     <img src="<?php echo $websiteUrl ?>/images/score.png" alt="Assessment Settings" />
@@ -841,7 +841,7 @@
             </div>
         </div>
 
-        <div class="user-managment-list staff-managment-list" title="Assessment Breakdown" onclick="_getActiveBranchPage({divid:'branch_assessment_breakdown_page', page: 'branch_assessment_breakdown_page', url: adminPortalLocalUrl});">
+        <!-- <div class="user-managment-list staff-managment-list" title="Assessment Breakdown" onclick="">
             <div class="inner-div">
                 <div class="icon-div">
                     <img src="<?php echo $websiteUrl ?>/images/assessment.png" alt="Assessment Breakdown" />
@@ -851,7 +851,7 @@
                     <p>Setting scores for tests, exams, and assignments.</p>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
 <?php } ?>
@@ -1555,9 +1555,23 @@
     </div>
 <?php } ?>
 
-<?php if ($page == 'branch_assessment_reg') { ?>
-    <script>fetchAllAssessmentSession = JSON.parse(sessionStorage.getItem("fetchAllAssessmentSession"));</script>
+<?php if ($page == 'branch_assessment_breakdown_page') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <span><i class="bi-credit-card"></i> ASSESSMENT SETTINGS</span>
 
+        <div class="btn-container">
+            <button class="btn" title="ADD ASSESSMENT" onclick="sessionStorage.removeItem('fetchEachAssessmentSession'); _getForm({page: 'branch_assessment_reg', layer:2, url: adminPortalLocalUrl});"><i class="bi-plus-square"></i> ADD ASSESSMENT</button>
+        </div>
+    </div>
+
+    <div class="table-div animated fadeIn">
+        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+            <script>_fetchAssessmentPage();</script>
+        </table>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'branch_assessment_reg') { ?>
     <script> 
         fetchEachAssessmentSession = JSON.parse(sessionStorage.getItem("fetchEachAssessmentSession"));
         $('#pageTitle, #pageTitle2').html(fetchEachAssessmentSession?.assessmentId ? 'UPDATE ASSESSMENT':'ADD A NEW ASSESSMENT');
@@ -1601,69 +1615,8 @@
                 <div>
                     <button class="btn" title="SUBMIT" id="submitBtn" onclick="_createUpdateAssessment();"> <i class="bi-check"></i> SUBMIT </button>
                 </div>
-
-                <div>
-                    <div class="alert alert-success form-alert">
-                        <span>Assessment Summary</span>
-                        <div class="alert-list-div" id="fetchedAssessment">
-                            <script>
-                                $(document).ready(function() {
-                                    let text = '';
-
-                                    if (fetchAllAssessmentSession) {
-                                        const fetch = fetchAllAssessmentSession.data;
-                                        const message = fetchAllAssessmentSession.message;
-                                        const success = fetchAllAssessmentSession.success;
-
-                                        if (success===true) {
-                                            for (let i = 0; i < fetch.length; i++) {
-                                                const fetchedAssessment = fetch[i];
-                                                const assessmentId = fetchedAssessment.assessmentId;
-                                                const assessmentName = fetchedAssessment.assessmentName;
-                                                const assessmentTotalScore = fetchedAssessment.assessmentTotalScore;
-
-                                                text += `
-                                                <div class="alert-main-back-div">
-                                                    <div class="alert-list-back-div">
-                                                        <div class="alert-list">
-                                                            <div>${assessmentName}:</div>
-                                                            <div><span>${assessmentTotalScore}</span></div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="icon-div" title="Click to edit assessment" onclick="_fetchEachAssessment('${assessmentId}');"><i class="bi-pencil-square"></i></div>
-                                                </div>`;
-                                            }
-                                            $("#fetchedAssessment").html(text);
-                                        } else {
-                                            text += `
-                                            <div class="alert-list-back-div">
-                                                <div class="alert-list">
-                                                    <div>${message}.</div>
-                                                </div>
-                                            </div>`;
-                                        }
-                                        $("#fetchedAssessment").html(text);    
-                                    } 
-                                });
-                            </script>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
-    </div>
-<?php } ?>
-
-<?php if ($page == 'branch_assessment_breakdown_page') { ?>
-    <div class="alert alert-success top-alert-div animated fadeIn">
-        <span><i class="bi-credit-card"></i> ASSESSMENT BREAKDOWN</span>
-    </div>
-
-    <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-            <script>fetchAssessmentPage();</script>
-        </table>
     </div>
 <?php } ?>
 

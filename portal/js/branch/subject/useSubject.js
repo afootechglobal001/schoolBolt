@@ -146,10 +146,10 @@ function _fetchBranchSubjects() {
 				const className = info.classData.className;
 				const classId = info.classData.classId;
 
-				$("#session").html(session);
+				$("#subjectSession").html(session);
 				$("#departmentName3").html(departmentName);
 				$("#className2").html(className);
-				$("#termName").html(termName);
+				$("#subjectTermName").html(termName);
 
 				let text = '';
 				let no=0;

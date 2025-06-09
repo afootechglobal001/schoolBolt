@@ -250,6 +250,7 @@ function _fetchStaffSubjectScoreSheet() {
 						const fetchArmData = fetchClassData.armData;
 						const className = fetchClassData.className;
 						const subjectName = fetchSubjectData.subjectName;
+						const subjectId = fetchSubjectData.subjectId;
 
 						text +=`
 							<div class="pages-toggle-div">
@@ -271,7 +272,7 @@ function _fetchStaffSubjectScoreSheet() {
 												<div class="list-div">
 													<h4>${className} ${armName}</h4>
 													<div class="btn-container">
-														<button class="btn" title="PRINT SCORE SHEET" onclick="_printStudentScoreSheet('${departmentId}','${classId}','${armId}');">
+														<button class="btn" title="PRINT SCORE SHEET" onclick="_printStudentScoreSheet('${departmentId}','${classId}','${armId}','${subjectId}');">
 															<i class="bi-eye"></i> PRINT SCORE SHEET
 														</button>
 													</div>
