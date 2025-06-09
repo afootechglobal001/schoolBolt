@@ -879,6 +879,8 @@
                                             </script>
                                         </div>
 
+                                        <input type="hidden" id="" name="" value="">
+
                                         <div class="text-score">/ <span id="">15</span></div>
                                     </div>
                                 </div>
