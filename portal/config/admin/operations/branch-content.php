@@ -840,20 +840,7 @@
                 </div>
             </div>
         </div>
-
-        <!-- <div class="user-managment-list staff-managment-list" title="Assessment Breakdown" onclick="">
-            <div class="inner-div">
-                <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/assessment.png" alt="Assessment Breakdown" />
-                </div>
-                <div class="text-div">
-                    <h3>Assessment Breakdown</h3>
-                    <p>Setting scores for tests, exams, and assignments.</p>
-                </div>
-            </div>
-        </div> -->
     </div>
-
 <?php } ?>
 
 <?php if ($page == 'branch_staff') { ?>
