@@ -1411,6 +1411,13 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	flex-direction: column;
 }
 
+.table-div .table .tb-row .flex-div{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 7px;
+}
+
 .table-div .table .tb-row .text-div .bold-font{
 	font-family: sub-title-font;
 }
@@ -1576,6 +1583,11 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	min-width: 28px;
 	padding: 5px 8px;
 	font-size: 9px;
+}
+
+.table-div .table .tb-row .edit-btn{
+	min-width: 25px;
+	padding: 6px 8px;
 }
 
 .table-div .table .tb-row .btn:hover{

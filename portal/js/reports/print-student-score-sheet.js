@@ -1,10 +1,10 @@
-function _printStudentScoreSheet(departmentId, classId, armId) {
+function _printStudentScoreSheet(departmentId, classId, armId, subjectId) {
 	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
 	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
 	try {
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/reports/print-score-sheet?branchId=${getEachStaffDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+			url: `${endPoint}/reports/print-score-sheet?branchId=${getEachStaffDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&subjectId=${subjectId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(),

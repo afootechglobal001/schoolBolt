@@ -1,19 +1,78 @@
-function _fetchAssessment() {
+function _fetchAssessmentPage() {
     let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
-	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
+    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
 	try {
 		$.ajax({
 			type: "GET",
 			url: `${endPoint}/admin/branch/assessment/fetch-assessment?branchId=${getEachBranchDetailsSession.branchId}`,
 			dataType: "json", 
-			cache: false,   
+			cache: false,
 			headers: getAuthHeaders(true),
 			success: function(info) {
-				if (info) {
-					sessionStorage.removeItem("fetchEachAssessmentSession");
-					sessionStorage.setItem("fetchAllAssessmentSession", JSON.stringify(info));
-					_getForm({page: 'branch_assessment_reg', layer:2, url: adminPortalLocalUrl});
+				const fetch = info.data;
+				const success = info.success;
+
+				let text = '';
+				let no=0;
+				text =`
+				<thead>
+					<tr class="tb-col">
+						<th>sn</th>
+						<th>Assessment Name</th>
+						<th>Total Assessment Score</th>
+						<th>Updated By</th>
+						<th>Action</th>
+					</tr>
+				</thead>`;
+
+				if (success===true) {
+					for (let i = 0; i < fetch.length; i++) {
+						no++;
+						const fetchedAssessment = fetch[i];
+						const branchId = fetchedAssessment.branchId;
+						const parentId = fetchedAssessment.assessmentId;
+						const assessmentId = fetchedAssessment.assessmentId;
+						const assessmentName = fetchedAssessment.assessmentName;
+                        const assessmentTotalScore = fetchedAssessment.assessmentTotalScore;
+ 						const updatedBy = fetchedAssessment.updatedBy;
+						const updatedTime = fetchedAssessment.updatedTime;
+
+						text +=`
+						<tbody>
+							<tr class="tb-row">
+								<td>${no}</td>
+								<td> 
+									<div class="text-div flex-div">
+										<div><button class="btn view-btn edit-btn" title="Click to edit assessment" onclick="_fetchEachAssessment('${assessmentId}');"><i class="bi-pencil-square"></i></button></div>
+										<div>${assessmentName}</div>
+									</div>
+								</td>
+								<td>${assessmentTotalScore}</td>
+								<td>
+									<div class="text-div">
+										<div class="bold-font">${updatedBy ? updatedBy : "NULL"}</div>
+										<div>${updatedTime ? updatedTime : "NULL"}</div>
+									</div>
+								</td>
+								<td><button class="btn view-btn" title="Click to compute assessment breakdown" onclick="_fetchAssessmentBreakDown('${branchId}','${parentId}');">ASSESSMENT BREAKDOWN</button></td>
+							</tr>
+						</tbody>`;
+					}
+					$('#pageContent').html(text);
 				} else {
+					_actionAlert(info.message, false);
+					text += `
+						tbody>
+							<tr>
+								<td colspan="11">
+									<div class="false-notification-div">
+										<p>${info.message}</p>
+									</div>
+								</td>
+							</tr>
+						</tbody>`;
+					$('#pageContent').html(text);
+
 					const response = info.response;
 					if (response < 100) {
 						_logOut();
@@ -30,6 +89,7 @@ function _fetchAssessment() {
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
 }
+
 
 function _fetchEachAssessment(assessmentId) {
     let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
@@ -112,7 +172,8 @@ function _createUpdateAssessment() {
 				success: function (data) {
 				if (data.success) {
 					_actionAlert(data.message, true);
-					_fetchAssessment();
+					_fetchAssessmentPage();
+					_alertClose(2);
 				} else {
 					_actionAlert(data.message, false);
 				}
@@ -127,92 +188,6 @@ function _createUpdateAssessment() {
 	} catch (error) {
 		_actionAlert('An unexpected error occurred! Please Try Again', false);
 		$("#submitBtn").prop("disabled", false);
-	}
-}
-
-function fetchAssessmentPage() {
-    let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
-    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
-	try {
-		$.ajax({
-			type: "GET",
-			url: `${endPoint}/admin/branch/assessment/fetch-assessment?branchId=${getEachBranchDetailsSession.branchId}`,
-			dataType: "json", 
-			cache: false,
-			headers: getAuthHeaders(true),
-			success: function(info) {
-				const fetch = info.data;
-				const success = info.success;
-
-				let text = '';
-				let no=0;
-				text =`
-				<thead>
-					<tr class="tb-col">
-						<th>sn</th>
-						<th>Assessment Name</th>
-						<th>Total Assessment Score</th>
-						<th>Updated By</th>
-						<th>Action</th>
-					</tr>
-				</thead>`;
-
-				if (success===true) {
-					for (let i = 0; i < fetch.length; i++) {
-						no++;
-						const fetchedAssessment = fetch[i];
-						const branchId = fetchedAssessment.branchId;
-						const parentId = fetchedAssessment.assessmentId;
-						const assessmentName = fetchedAssessment.assessmentName;
-                        const assessmentTotalScore = fetchedAssessment.assessmentTotalScore;
- 						const updatedBy = fetchedAssessment.updatedBy;
-						const updatedTime = fetchedAssessment.updatedTime;
-
-						text +=`
-						<tbody>
-							<tr class="tb-row">
-								<td>${no}</td>
-								<td>${assessmentName}</td>
-								<td>${assessmentTotalScore}</td>
-								<td>
-									<div class="text-div">
-										<div class="bold-font">${updatedBy ? updatedBy : "NULL"}</div>
-										<div>${updatedTime ? updatedTime : "NULL"}</div>
-									</div>
-								</td>
-								<td><button class="btn view-btn" title="Click to compute assessment breakdown" onclick="_fetchAssessmentBreakDown('${branchId}','${parentId}');">COMPUTE ASSESSMENT</button></td>
-							</tr>
-						</tbody>`;
-					}
-					$('#pageContent').html(text);
-				} else {
-					_actionAlert(info.message, false);
-					text += `
-						tbody>
-							<tr>
-								<td colspan="11">
-									<div class="false-notification-div">
-										<p>${info.message}</p>
-									</div>
-								</td>
-							</tr>
-						</tbody>`;
-					$('#pageContent').html(text);
-
-					const response = info.response;
-					if (response < 100) {
-						_logOut();
-					}    
-				}
-			},
-			error: function(textStatus, errorThrown) {
-				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
 }
 
