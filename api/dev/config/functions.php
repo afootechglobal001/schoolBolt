@@ -43,4 +43,17 @@ function _get_sequence_count($conn, $counterId){
 
 }//end of class
 $callclass=new allClass();
+
+
+// Helper function for field validation
+function validateEmptyField($field, $fieldName) {
+    if (empty($field)) {
+        echo json_encode([
+            'response' => 100,
+            'success' => false,
+            'message' => "$fieldName REQUIRED! Check the fields and try again",
+        ]);
+        exit;
+    }
+}
 ?>
