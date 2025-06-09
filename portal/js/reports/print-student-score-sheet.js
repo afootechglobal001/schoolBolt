@@ -4,13 +4,13 @@ function _printStudentScoreSheet(departmentId, classId, armId) {
 	try {
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/reports/print-student-by-class?branchId=${getEachStaffDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+			url: `${endPoint}/reports/print-score-sheet?branchId=${getEachStaffDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(),
 			success: function(info) {
 				if (info.success > 0) {
-					sessionStorage.setItem("printStudentByClassSession", JSON.stringify(info));
+					sessionStorage.setItem("printStudentScoreSheetSession", JSON.stringify(info));
 					windowPop(`${websiteUrl}/reports/score-sheet`);
 					_alertClose(2);
 				} else {

@@ -103,6 +103,15 @@
 	overflow: auto;
 }
 
+.computation-table{
+	background: url(../images/watermark.jpg) center no-repeat;
+	background-size: cover;
+	border: 1px solid rgba(215, 215, 215, .9);
+	border-right: 0px;
+	border-bottom: 0px;
+	border-radius: 5px;
+}
+
 .table-div .table {
 	width: 100%;
 	font-size: 12px;
@@ -125,6 +134,15 @@
 	font-weight: 100;
 }
 
+.table-div .table .th {
+	padding: 5px 7px;
+	font-size: 8px;
+	font-weight: none;
+	font-family: sub-title-font;
+	color: var(--sub-body-color);
+	border-right: 1px solid rgba(215, 215, 215, .9);
+}
+
 .table-div .table .tb-row {
     height: 60px;
 	font-size: 11px;
@@ -135,6 +153,12 @@
 	-webkit-transition:all 0.2s ease-in 0.2s;
 	-ms-transition:all 0.2s ease-in 0.2s;
 	-o-transition:all 0.2s ease-in 0.2s;
+}
+
+.table-div .table .report-tb-row{
+	font-size: 10px;
+	height: 40px;
+	color: var(--sub-body-color);
 }
 
 .table-div .table .tb-row:hover {
@@ -148,6 +172,12 @@
 .table-div .table td {
     padding: 10px 20px; 
 	font-family: body-font;
+}
+
+.table-div .table .td {
+	padding: 8px 12px;
+	font-family: sub-title-font;
+	border-right: 1px solid rgba(215, 215, 215, .9);
 }
 
 .table-div .table .tb-row .clickable-td{
