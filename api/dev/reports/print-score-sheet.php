@@ -9,11 +9,14 @@ if (!$checkBasicSecurity){/// start if 1
     $departmentId = $_GET['departmentId'];
     $classId = $_GET['classId'];
     $armId = $_GET['armId'];
+    $subjectId = $_GET['subjectId'];
+    
 
     validateEmptyField($branchId, 'BRANCH');
     validateEmptyField($departmentId, 'DEPARTMENT');
     validateEmptyField($classId, 'CLASS');
     validateEmptyField($armId, 'ARM');
+    validateEmptyField($subjectId, 'SUBJECT');
 
     
      /// get scoresheet coloumns
@@ -73,6 +76,10 @@ if (!$checkBasicSecurity){/// start if 1
     /////////////////// for  $armId
     $armDataQuery = mysqli_query($conn, "SELECT armId, armName FROM ARMS_TAB WHERE $clientIds AND armId='$armId'");
     $armDataFetch = mysqli_fetch_assoc($armDataQuery);
+    /////////////////// for  $subjectId
+    $subjectDataQuery = mysqli_query($conn, "SELECT subjectId, subjectName FROM SUBJECTS_TAB WHERE $clientIds AND subjectId='$subjectId'");
+    $subjectDataFetch = mysqli_fetch_assoc($subjectDataQuery);
+    
 
     if($allRecordCount==0){///start if 1
         $response['response']=200;
@@ -91,6 +98,7 @@ if (!$checkBasicSecurity){/// start if 1
     $response['departmentData'] = $departmentDataFetch;
     $response['classData'] = $classDataFetch;
     $response['armData'] = $armDataFetch;
+    $response['subjectData'] = $subjectDataFetch;
     $response['tableTitles']=$tableTitles;
     $response['studentsData'] = array(); // Initialize the data array
 
