@@ -21,14 +21,15 @@
                     <i class="bi-plus-square"></i> ADD NEW STAFF
                 </button>
             </div>
-
         </div>
     </div>
 
     <div class="pages-back-div" data-aos="fade-in" data-aos-duration="1500">
         <div class="table-div animated fadeIn">
             <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-                <script>_fetchStaffs();</script>
+                <script>
+                    _fetchStaffs();
+                </script>
             </table>
         </div>
     </div>
@@ -39,7 +40,7 @@
         <div class="title-panel-div">
             <div class="inner-top">
                 <span id="panel-title"><i class="bi-plus-square"></i> ADD A NEW STAFF</span>
-                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
         </div>
 
@@ -52,7 +53,7 @@
                 <div class="cam-pix" onClick="takeSnapShot()" id="cam-pix">
                     <img src="<?php echo $websiteUrl ?>/images/sample.jpg" />
                 </div>
-                
+
                 <div class="text_field_container" id="titleId_container">
                     <script>
                         selectField({
@@ -212,7 +213,7 @@
         <div class="top-panel-div">
             <div class="inner-top">
                 <span><i class="bi-person-check-fill"></i> STAFF PROFILE</span>
-                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer?>);">X</div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
         </div>
 
@@ -224,7 +225,7 @@
                             <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/default.jpg" alt="Profile Image">
                         </div>
                         <script>
-                            $("#cam-pix").html('<img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/'+getEachStaffDetailsSession.profilePix+'" alt="Profile Image">');
+                            $("#cam-pix").html('<img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/' + getEachStaffDetailsSession.profilePix + '" alt="Profile Image">');
                         </script>
                     </label>
 
@@ -233,7 +234,7 @@
                             <div class="text-div">
                                 <div class="name" id="fullName">
                                     <script>
-                                        $("#fullName").html(getEachStaffDetailsSession.titleName + ' ' + getEachStaffDetailsSession.firstName+ ' ' + getEachStaffDetailsSession.lastName);
+                                        $("#fullName").html(getEachStaffDetailsSession.titleName + ' ' + getEachStaffDetailsSession.firstName + ' ' + getEachStaffDetailsSession.lastName);
                                     </script>
                                 </div>
 
@@ -267,7 +268,7 @@
                     <ul>
                         <li class="active" title="Dashboard" id="staff_dashboard" onclick="_getActiveStaffPage({divid:'staff_dashboard', page: 'staff_dashboard', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> Staff Dashboard</li>
                         <li title="My Students" id="staff_students" onclick="_getActiveStaffPage({divid:'staff_students', page: 'staff_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> My Students</li>
-                   
+
                         <li id="dotted" title="Branch Record"><i class="bi-file-spreadsheet"></i> Record
                             <div class="expand-div expanded animated fadeIn">
                                 <ul class="ul-expand">
@@ -275,7 +276,7 @@
                                     <li onclick="_getActiveStaffPage({divid:'staff_students_compute_score', page: 'staff_students_compute_score', url: adminPortalLocalUrl});" title="Compute Score"><i class="bi-file-spreadsheet"></i>Compute Score</li>
                                     <li onclick="_getActiveStaffPage({divid:'staff_students_cummulative_mark', page: 'staff_students_cummulative_mark', url: adminPortalLocalUrl});" title="Cumulative Mark's Score"><i class="bi-file-spreadsheet"></i>Cumulative Mark's Book</li>
                                     <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Student Attendance</li>
-                                    <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Class Teacher's  Commemt</li>
+                                    <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Class Teacher's Commemt</li>
                                 </ul>
                             </div>
                         </li>
@@ -304,10 +305,18 @@
 
 <!-- For Staffs Modal Pages -->
 <?php if ($page == 'staff_dashboard') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div>School - <span id="branchName">
+                <script>
+                    $("#branchName").html(getEachStaffDetailsSession.branchName);
+                </script>
+            </span> / Current Session - <span>2024/2025</span> / Current Term - <span>THIRD TERM</span></div>
+    </div>
+
     <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
         <div class="user-managment-list staff-managment-list" onclick="_getActiveStaffPage({divid:'staff_students', page: 'staff_students', url: adminPortalLocalUrl});">
             <div class="inner-div">
-                <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/student-reg.png" alt="My Students"/></div>
+                <div class="icon-div"><img src="<?php echo $websiteUrl ?>/images/student-reg.png" alt="My Students" /></div>
                 <div class="text-div">
                     <h3>My Students</h3>
                     <p>Manage student records and class enrollment.</p>
@@ -317,7 +326,7 @@
 
         <div class="user-managment-list staff-managment-list" onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});">
             <div class="inner-div">
-                <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/score.png" alt="Score Sheet"/></div>
+                <div class="icon-div"><img src="<?php echo $websiteUrl ?>/images/score.png" alt="Score Sheet" /></div>
                 <div class="text-div">
                     <h3>Score Sheet</h3>
                     <p>Record and review student scores with ease.</p>
@@ -328,7 +337,7 @@
         <div class="user-managment-list staff-managment-list" onclick="_getActiveStaffPage({divid:'staff_students_compute_score', page: 'staff_students_compute_score', url: adminPortalLocalUrl});">
             <div class="inner-div">
                 <div class="icon-div">
-                    <img src="<?php echo $websiteUrl?>/images/compute.png" alt="Compute Score"/>
+                    <img src="<?php echo $websiteUrl ?>/images/compute.png" alt="Compute Score" />
                 </div>
                 <div class="text-div">
                     <h3>Compute Score</h3>
@@ -340,7 +349,7 @@
         <div class="user-managment-list staff-managment-list" onclick="_getActiveStaffPage({divid:'staff_students_cummulative_mark', page: 'staff_students_cummulative_mark', url: adminPortalLocalUrl});">
             <div class="inner-div">
                 <div class="icon-div">
-                    <img src="<?php echo $websiteUrl?>/images/message.png" alt="Cummulative Mark's Book"/>
+                    <img src="<?php echo $websiteUrl ?>/images/message.png" alt="Cummulative Mark's Book" />
                 </div>
                 <div class="text-div">
                     <h3>Cummulative Mark's Book</h3>
@@ -348,11 +357,11 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="user-managment-list staff-managment-list" onclick="">
             <div class="inner-div">
                 <div class="icon-div">
-                    <img src="<?php echo $websiteUrl?>/images/timetable.png" alt="Class Teacher's Comment"/>
+                    <img src="<?php echo $websiteUrl ?>/images/timetable.png" alt="Class Teacher's Comment" />
                 </div>
                 <div class="text-div">
                     <h3>Class Teacher's Comment</h3>
@@ -364,7 +373,7 @@
         <div class="user-managment-list staff-managment-list" onclick="">
             <div class="inner-div">
                 <div class="icon-div">
-                    <img src="<?php echo $websiteUrl?>/images/cbt.png" alt="Student Attendance"/>
+                    <img src="<?php echo $websiteUrl ?>/images/cbt.png" alt="Student Attendance" />
                 </div>
                 <div class="text-div">
                     <h3>Student Attendance</h3>
@@ -710,36 +719,240 @@
     </div>
 
     <div class="pages-toggle-back-div" id="pageContents">
-        <script>_fetchStaffSubjectAllocated();</script>
+        <script>
+            _fetchStaffSubjectAllocated();
+        </script>
     </div>
 <?php } ?>
 
 <?php if ($page == 'staff_students_score_sheet') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <span><i class="bi-people-fill"></i> STUDENT'S SCORE SHEET</span>
+        <span><i class="bi-grid-3x3"></i> SCORE SHEET</span>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent2">
-        <script>_fetchStaffSubjectScoreSheet();</script>
+        <script>
+            _fetchStaffSubjectScoreSheet();
+        </script>
     </div>
 <?php } ?>
 
 <?php if ($page == 'staff_students_compute_score') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <span><i class="bi-people-fill"></i> STUDENT'S COMPUTE SCORE</span>
+        <span><i class="bi-grid-3x3"></i> COMPUTE SCORE</span>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent3">
-        <script>_fetchStaffSubjectComputeScores();</script>
+        <script>
+            _fetchStaffSubjectComputeScores();
+        </script>
     </div>
 <?php } ?>
 
 <?php if ($page == 'staff_students_cummulative_mark') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <span><i class="bi-people-fill"></i> STUDENT'S CUMMULATIVE MARK BOOK</span>
+        <span><i class="bi-grid-3x3"></i> CUMMULATIVE MARK BOOK</span>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent4">
-        <script>_fetchStaffSubjectCummulative();</script>
+        <script>
+            _fetchStaffSubjectCummulative();
+        </script>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'compute_score_reg') { ?>
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="panel-title"><i class="bi-plus-square"></i> COMPUTE SCORE</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div id="user_details">
+                    <div>
+                        <div class="alert form-alert compute-form-alert">
+                            Kindly follow the following instruction below to compute score for students
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="alert alert-success">
+                            <div class="alert-list-div">
+                                <div class="alert-list-back-div">
+                                    <div class="alert-list">
+                                        <div>Session:</div>
+                                        <div><span id="">2024/2025</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="alert-list-back-div">
+                                    <div class="alert-list">
+                                        <div>Term:</div>
+                                        <div><span id="">THIRD TERM</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="alert-list-back-div">
+                                    <div class="alert-list">
+                                        <div>Department:</div>
+                                        <div><span id="">KG</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="alert-list-back-div">
+                                    <div class="alert-list">
+                                        <div>Class:</div>
+                                        <div><span id="">KG 1</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="alert-list-back-div">
+                                    <div class="alert-list">
+                                        <div>Arm:</div>
+                                        <div><span id="">A</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="alert-list-back-div">
+                                    <div class="alert-list">
+                                        <div>Subject:</div>
+                                        <div><span id="">NUMERACY</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="alert-list-back-div">
+                                    <div class="alert-list">
+                                        <div>Assessment:</div>
+                                        <div><span id="">1ST CA</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="alert-list-back-div">
+                                    <div class="alert-list">
+                                        <div>Number of Records:</div>
+                                        <div><span id="">30</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btn-container compute-btn-container">
+                        <button class="btn" title="COMPUTE SCORES" id="submitBtn" onclick="_getFormDetails('user_form_details');"> <i class="bi-check"></i> COMPUTE SCORES </button>
+                        <button class="btn print-btn" title="PRINT COMPUTE SCORES" id="submitBtn" onclick=""> <i class="bi-printer"></i> PRINT SCORES </button>
+                    </div>
+                </div>
+
+                <div id="user_form_details">
+                    <div>
+                        <div class="alert alert-success form-alert compute-form-alert">
+                            <span>Kindly input score for each student to complete score computation </span>
+                        </div>
+                    </div>
+
+                    <div class="compute-score-back-div">
+                        <div class="each-compute-score-div">
+                            <div class="inner-score-div">
+                                <div class="image-div">
+                                    <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="My Students" />
+                                </div>
+
+                                <div class="text-container">
+                                    <div class="text-div">
+                                        <div>OLUPE OLAJOBI CANDY</div>
+                                        <div>KINGDERGATEN -- KG 1 A</div>
+                                    </div>
+
+                                    <div class="text-field-parent">
+                                        <div class="text_field_container compute-score-text-field" id="score_container">
+                                            <script>
+                                                textField({
+                                                    id: 'score',
+                                                    title: 'Enter Score',
+                                                    type: 'number',
+                                                    onKeyPressFunction: 'isNumberCheck(event);'
+                                                });
+                                            </script>
+                                        </div>
+
+                                        <input type="hidden" id="" name="" value="">
+
+                                        <div class="text-score">/ <span id="">15</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="each-compute-score-div">
+                            <div class="inner-score-div">
+                                <div class="image-div">
+                                    <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="My Students" />
+                                </div>
+
+                                <div class="text-container">
+                                    <div class="text-div">
+                                        <div>AFOLABI MIKE OLUWAGBENGA</div>
+                                        <div>KINGDERGATEN -- KG 1 A</div>
+                                    </div>
+
+                                    <div class="text-field-parent">
+                                        <div class="text_field_container compute-score-text-field" id="score2_container">
+                                            <script>
+                                                textField({
+                                                    id: 'score2',
+                                                    title: 'Enter Score',
+                                                    type: 'number',
+                                                    onKeyPressFunction: 'isNumberCheck(event);'
+                                                });
+                                            </script>
+                                        </div>
+
+                                        <div class="text-score">/ <span id="">15</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="each-compute-score-div">
+                            <div class="inner-score-div">
+                                <div class="image-div">
+                                    <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="My Students" />
+                                </div>
+
+                                <div class="text-container">
+                                    <div class="text-div">
+                                        <div>AKINDELE AFOLABI VICTORIA</div>
+                                        <div>KINGDERGATEN -- KG 1 A</div>
+                                    </div>
+
+                                    <div class="text-field-parent">
+                                        <div class="text_field_container compute-score-text-field" id="score3_container">
+                                            <script>
+                                                textField({
+                                                    id: 'score3',
+                                                    title: 'Enter Score',
+                                                    type: 'number',
+                                                    onKeyPressFunction: 'isNumberCheck(event);'
+                                                });
+                                            </script>
+                                        </div>
+
+                                        <div class="text-score">/ <span id="">15</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn" title="SAVE SCORES" id="submitBtn" onclick=""> <i class="bi-save"></i> SAVE </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 <?php } ?>

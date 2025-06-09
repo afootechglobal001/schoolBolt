@@ -273,7 +273,7 @@ function _fetchStaffSubjectScoreSheet() {
 													<h4>${className} ${armName}</h4>
 													<div class="btn-container">
 														<button class="btn" title="PRINT SCORE SHEET" onclick="_printStudentScoreSheet('${departmentId}','${classId}','${armId}','${subjectId}');">
-															<i class="bi-eye"></i> PRINT SCORE SHEET
+															<i class="bi-printer"></i> PRINT SCORE SHEET
 														</button>
 													</div>
 												</div>`;
@@ -333,8 +333,8 @@ function _fetchStaffSubjectComputeScores() {
 						no++;
 						const fetchClassData = fetch[i].classData;
 						const fetchSubjectData = fetch[i].subjectData;
-						const departmentId = fetch[i].departmentId;
-						const classId = fetch[i].classId;
+						// const departmentId = fetch[i].departmentId;
+						// const classId = fetch[i].classId;
 						const fetchArmData = fetchClassData.armData;
 						const className = fetchClassData.className;
 						const subjectName = fetchSubjectData.subjectName;
@@ -352,15 +352,15 @@ function _fetchStaffSubjectComputeScores() {
 										if (Array.isArray(fetchArmData) && fetchArmData.length > 0) {
 											for (let k = 0; k < fetchArmData.length; k++) {
 												const armInfo = fetchArmData[k];
-												const armId = armInfo.armId;
+												// const armId = armInfo.armId;
 												const armName = armInfo.armName;
 
 												text += `
 												<div class="list-div">
 													<h4>${className} ${armName}</h4>
 													<div class="btn-container">
-														<button class="btn" title="VIEW STUDENTS" onclick="_printStudents('${departmentId}','${classId}','${armId}');">
-															<i class="bi-eye"></i> VIEW STUDENTS
+														<button class="btn" title="MANAGE SCORES" onclick="_getForm({page: 'compute_score_reg', layer:2, url: adminPortalLocalUrl});">
+															<i class="bi-eye"></i> MANAGE SCORES
 														</button>
 													</div>
 												</div>`;
