@@ -35,7 +35,7 @@ if (!$checkBasicSecurity){/// start if 1
         $parentAssessmentName = $fetchParentAssessmentQuery['assessmentName'];
         $parentAssessmentTotalScore= $fetchParentAssessmentQuery['assessmentTotalScore'];
 
-        $select="SELECT assessmentName, assessmentTotalScore FROM BRANCH_ASSESSMENT_SETUP_TAB WHERE $clientIds  AND branchId = '$branchId' AND parentId='$parentAssessmentId'";
+        $select="SELECT assessmentName, assessmentTotalScore FROM BRANCH_ASSESSMENT_SETUP_TAB WHERE $clientIds  AND branchId = '$branchId' AND parentId='$parentAssessmentId' AND assessmentTotalScore>0";
         $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
         while ($fetch = mysqli_fetch_assoc($query)) {        
             $assessmentName = $fetch['assessmentName'];
