@@ -333,11 +333,12 @@ function _fetchStaffSubjectComputeScores() {
 						no++;
 						const fetchClassData = fetch[i].classData;
 						const fetchSubjectData = fetch[i].subjectData;
-						// const departmentId = fetch[i].departmentId;
-						// const classId = fetch[i].classId;
+						const departmentId = fetch[i].departmentId;
+						const classId = fetch[i].classId;
 						const fetchArmData = fetchClassData.armData;
 						const className = fetchClassData.className;
 						const subjectName = fetchSubjectData.subjectName;
+						const subjectId = fetchSubjectData.subjectId;
 
 						text +=`
 							<div class="pages-toggle-div">
@@ -352,14 +353,14 @@ function _fetchStaffSubjectComputeScores() {
 										if (Array.isArray(fetchArmData) && fetchArmData.length > 0) {
 											for (let k = 0; k < fetchArmData.length; k++) {
 												const armInfo = fetchArmData[k];
-												// const armId = armInfo.armId;
+												const armId = armInfo.armId;
 												const armName = armInfo.armName;
 
 												text += `
 												<div class="list-div">
 													<h4>${className} ${armName}</h4>
 													<div class="btn-container">
-														<button class="btn" title="MANAGE SCORES" onclick="_getForm({page: 'compute_score_reg', layer:2, url: adminPortalLocalUrl});">
+														<button class="btn" title="MANAGE SCORES" onclick="_fetchComputeScoreRecordDetails('${departmentId}','${classId}','${armId}','${subjectId}');">
 															<i class="bi-eye"></i> MANAGE SCORES
 														</button>
 													</div>
@@ -486,3 +487,35 @@ function _fetchStaffSubjectCummulative() {
 	}
 }
 
+
+function _fetchComputeScoreRecordDetails(departmentId, classId, armId, subjectId) {
+	$("#get-form-more-div").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/staff/records/fetch-record-details?departmentId=${departmentId}&classId=${classId}&armId=${armId}&subjectId=${subjectId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				if (info) {
+					sessionStorage.setItem("getComputeScoreRecordDetailsSession", JSON.stringify(info));
+					_getForm({page: 'compute_score_reg', layer: 2, url: adminPortalLocalUrl});
+				} else {
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		_alertClose();
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}

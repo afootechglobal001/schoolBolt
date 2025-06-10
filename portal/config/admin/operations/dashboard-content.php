@@ -6,7 +6,6 @@
                     <script>
                         $("#loginUserName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));
                     </script>
-                       
                 </span></div>
             <div class="bottom-title"><i class="bi-clock"></i> Last Login Date | <span id="loginUserLastLogin">
                     <script>
@@ -18,21 +17,21 @@
 
         <div class="dashbaord-right-wrapper">
             <ul>
-                <li title="Staff" onclick="_getActivePage({page:'staff', divid:'staff'});"><i class="bi-people"></i> Staff <div class="num" id="">150</div>
+                <li title="Staff" onclick="_getActivePage({page:'staff', divid:'staff'});"><span><i class="bi-people"></i> Staff</span> <div class="num" id="">150</div>
                 </li>
-                <li title="Students" onclick=""><i class="bi-people"></i> Students <div class="num" id="">700</div>
+                <li title="Students" onclick=""><span><i class="bi-people"></i> Students</span> <div class="num" id="">700</div>
                 </li>
-                <li title="Subjects" onclick=""><i class="bi-journals"></i> Subjects <div class="num" id="">20</div>
+                <li title="Subjects" onclick=""><span><i class="bi-journals"></i> Subjects</span> <div class="num" id="">20</div>
                 </li>
-                <li class="li" title="Prospective Staff" onclick=""><i class="bi-people-fill"></i> Prospective Staff <div class="num" id="">10</div>
+                <li class="li" title="Prospective Staff" onclick=""><span><i class="bi-people-fill"></i> Prospective Staff</span> <div class="num" id="">10</div>
                 </li>
             </ul>
         </div>
     </div>
 
-    <div class="dashboard-statistics-wrapper">
+    <div class="dashboard-statistics-wrapper" data-aos="fade-in" data-aos-duration="1500">
         <div class="left-dashbaord-container">
-            <div class="statistics-chart-back-div" data-aos="fade-in" data-aos-duration="1500">
+            <div class="statistics-chart-back-div">
                 <div class="statistics-back-div">
                     <div class="statistics-div left-border" title="Branches" onclick="_getActivePage({page:'branches', divid:'branches'});">
                         <h2>12</h2>
@@ -313,7 +312,7 @@
             </div>
         </div>
 
-        <div class="right-dashbaord-container" data-aos="fade-in" data-aos-duration="1500">
+        <div class="right-dashbaord-container">
             <div class="matrix-div">
                 <div class="inner-div">
                     <div class="title">

@@ -205,9 +205,7 @@
 <?php } ?>
 
 <?php if ($page == 'staff_profile') { ?>
-    <script>
-        getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
-    </script>
+    <script> getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));</script>
 
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
         <div class="top-panel-div">
@@ -266,10 +264,10 @@
             <div class="btn-div">
                 <div class="div-in">
                     <ul>
-                        <li class="active" title="Dashboard" id="staff_dashboard" onclick="_getActiveStaffPage({divid:'staff_dashboard', page: 'staff_dashboard', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> Staff Dashboard</li>
+                        <li class="active" title="Dashboard" id="staff_dashboard" onclick="_getActiveStaffPage({divid:'staff_dashboard', page: 'staff_dashboard', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> Dashboard</li>
                         <li title="My Students" id="staff_students" onclick="_getActiveStaffPage({divid:'staff_students', page: 'staff_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> My Students</li>
 
-                        <li id="dotted" title="Branch Record"><i class="bi-file-spreadsheet"></i> Record
+                        <li class="hide-li" id="dotted" title="Staff Record"><i class="bi-file-spreadsheet"></i> Record
                             <div class="expand-div expanded animated fadeIn">
                                 <ul class="ul-expand">
                                     <li onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});" title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
@@ -281,8 +279,28 @@
                             </div>
                         </li>
 
-                        <li title="My Profile" id="staff_profile_details" onclick="_getActiveStaffPage({divid:'staff_profile_details', page: 'staff_profile_details', url: adminPortalLocalUrl});"><i class="bi-person-bounding-box"></i> Staff Profile</li>
-                        <li title="Staff Activities" id="staff_activities" onclick="_getActiveStaffPage({divid:'staff_activities', page: 'staff_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> Staff Activities</li>
+                        <li class="hide-li" title="My Profile" id="staff_profile_details" onclick="_getActiveStaffPage({divid:'staff_profile_details', page: 'staff_profile_details', url: adminPortalLocalUrl});"><i class="bi-person-bounding-box"></i> Staff Profile</li>
+                        <li class="hide-li" title="Staff Activities" id="staff_activities" onclick="_getActiveStaffPage({divid:'staff_activities', page: 'staff_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> Staff Activities</li>
+                       
+                        <li class="li" title="Other Links"><i class="bi-three-dots-vertical"></i>
+                            <ul class="ul">
+                                <li title="Dashboard" onclick="_getActiveStaffPage({divid:'staff_dashboard', page: 'staff_dashboard', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> <span> Dashboard</span></li>
+                                <li title="My Students" onclick="_getActiveStaffPage({divid:'staff_students', page: 'staff_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> <span>My Students</span></li>
+                                <li title="Staff Record" id="dotted"><i class="bi-file-spreadsheet"></i> <span>Record</span>
+                                    <div class="expand-div expanded animated fadeIn">
+                                        <ul class="ul-expand">
+                                            <li onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});" title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
+                                            <li onclick="_getActiveStaffPage({divid:'staff_students_compute_score', page: 'staff_students_compute_score', url: adminPortalLocalUrl});" title="Compute Score"><i class="bi-file-spreadsheet"></i>Compute Score</li>
+                                            <li onclick="_getActiveStaffPage({divid:'staff_students_cummulative_mark', page: 'staff_students_cummulative_mark', url: adminPortalLocalUrl});" title="Cumulative Mark's Score"><i class="bi-file-spreadsheet"></i>Cumulative Mark's Book</li>
+                                            <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Student Attendance</li>
+                                            <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Class Teacher's Commemt</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li title="My Profile" onclick="_getActiveStaffPage({divid:'staff_profile_details', page: 'staff_profile_details', url: adminPortalLocalUrl});"><i class="bi-person-bounding-box"></i> <span>Staff Profile</span></li>
+                                <li title="Staff Activities" onclick="_getActiveStaffPage({divid:'staff_activities', page: 'staff_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> <span>Activities</span></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -750,6 +768,8 @@
 <?php } ?>
 
 <?php if ($page == 'compute_score_reg') { ?>
+    <script> getComputeScoreRecordDetailsSession = JSON.parse(sessionStorage.getItem("getComputeScoreRecordDetailsSession"));</script>
+
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
@@ -773,56 +793,42 @@
                                 <div class="alert-list-back-div">
                                     <div class="alert-list">
                                         <div>Session:</div>
-                                        <div><span id="">2024/2025</span></div>
+                                        <div><span id="formSession"><script>$("#formSession").html(getEachStaffDetailsSession?.branchData?.session);</script></span></div>
                                     </div>
                                 </div>
 
                                 <div class="alert-list-back-div">
                                     <div class="alert-list">
                                         <div>Term:</div>
-                                        <div><span id="">THIRD TERM</span></div>
+                                        <div><span id="formTermName"><script>$("#formTermName").html(getEachStaffDetailsSession?.termData?.termName);</script></span></div>
                                     </div>
                                 </div>
 
                                 <div class="alert-list-back-div">
                                     <div class="alert-list">
                                         <div>Department:</div>
-                                        <div><span id="">KG</span></div>
+                                        <div><span id="departmentName"><script>$("#departmentName").html(getComputeScoreRecordDetailsSession?.departmentData?.departmentName);</script></span></div>
                                     </div>
                                 </div>
 
                                 <div class="alert-list-back-div">
                                     <div class="alert-list">
                                         <div>Class:</div>
-                                        <div><span id="">KG 1</span></div>
+                                        <div><span id="className"><script>$("#className").html(getComputeScoreRecordDetailsSession?.classData?.className);</script></span></div>
                                     </div>
                                 </div>
 
                                 <div class="alert-list-back-div">
                                     <div class="alert-list">
                                         <div>Arm:</div>
-                                        <div><span id="">A</span></div>
+                                        <div><span id="armName"><script>$("#armName").html(getComputeScoreRecordDetailsSession?.armData?.armName);</script></span></div>
                                     </div>
                                 </div>
 
                                 <div class="alert-list-back-div">
                                     <div class="alert-list">
                                         <div>Subject:</div>
-                                        <div><span id="">NUMERACY</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Assessment:</div>
-                                        <div><span id="">1ST CA</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Number of Records:</div>
-                                        <div><span id="">30</span></div>
+                                        <div><span id="subjectName"><script>$("#subjectName").html(getComputeScoreRecordDetailsSession?.subjectData?.subjectName);</script></span></div>
                                     </div>
                                 </div>
                             </div>
