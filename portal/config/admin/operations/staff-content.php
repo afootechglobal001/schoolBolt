@@ -306,11 +306,7 @@
 <!-- For Staffs Modal Pages -->
 <?php if ($page == 'staff_dashboard') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <div>School - <span id="branchName">
-                <script>
-                    $("#branchName").html(getEachStaffDetailsSession.branchName);
-                </script>
-            </span> / Current Session - <span>2024/2025</span> / Current Term - <span>THIRD TERM</span></div>
+        <div><span><i class="bi-speedometer2"></i> DASHBOARD / </span>SCHOOL -- <span id="dashBranchName"><script>$("#dashBranchName").html(getEachStaffDetailsSession?.branchData?.branchName);</script></span> <span>/</span> CURRENT SESSION -- <span id="dashSession"><script>$("#dashSession").html(getEachStaffDetailsSession?.branchData?.session);</script></span> <span>/</span> CURRENT TERM -- <span id="dashTermName"><script>$("#dashTermName").html(getEachStaffDetailsSession?.termData?.termName);</script></span></div>
     </div>
 
     <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
@@ -715,49 +711,41 @@
 
 <?php if ($page == 'staff_students') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <span><i class="bi-people-fill"></i> STUDENT'S LIST</span>
+        <div><span><i class="bi-people-fill"></i> STUDENT'S LIST / </span> CURRENT SESSION -- <span id="stuSession"><script>$("#stuSession").html(getEachStaffDetailsSession?.branchData?.session);</script></span> <span>/</span> CURRENT TERM -- <span id="stuTermName"><script>$("#stuTermName").html(getEachStaffDetailsSession?.termData?.termName);</script></span></div>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContents">
-        <script>
-            _fetchStaffSubjectAllocated();
-        </script>
+        <script> _fetchStaffSubjectAllocated();</script>
     </div>
 <?php } ?>
 
 <?php if ($page == 'staff_students_score_sheet') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <span><i class="bi-grid-3x3"></i> SCORE SHEET</span>
+        <div><span><i class="bi-grid-3x3"></i> SCORE SHEET / </span> CURRENT SESSION -- <span id="scoreSession"><script>$("#scoreSession").html(getEachStaffDetailsSession?.branchData?.session);</script></span> <span>/</span> CURRENT TERM -- <span id="scoreTermName"><script>$("#scoreTermName").html(getEachStaffDetailsSession?.termData?.termName);</script></span></div>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent2">
-        <script>
-            _fetchStaffSubjectScoreSheet();
-        </script>
+        <script> _fetchStaffSubjectScoreSheet();</script>
     </div>
 <?php } ?>
 
 <?php if ($page == 'staff_students_compute_score') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <span><i class="bi-grid-3x3"></i> COMPUTE SCORE</span>
+        <div><span><i class="bi-grid-3x3"></i> COMPUTE SCORE / </span> CURRENT SESSION -- <span id="computeSession"><script>$("#computeSession").html(getEachStaffDetailsSession?.branchData?.session);</script></span> <span>/</span> CURRENT TERM -- <span id="computeTermName"><script>$("#computeTermName").html(getEachStaffDetailsSession?.termData?.termName);</script></span></div>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent3">
-        <script>
-            _fetchStaffSubjectComputeScores();
-        </script>
+        <script> _fetchStaffSubjectComputeScores();</script>
     </div>
 <?php } ?>
 
 <?php if ($page == 'staff_students_cummulative_mark') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <span><i class="bi-grid-3x3"></i> CUMMULATIVE MARK BOOK</span>
+        <div><span><i class="bi-grid-3x3"></i> CUMMULATIVE MARK BOOK / </span> CURRENT SESSION -- <span id="cummSession"><script>$("#cummSession").html(getEachStaffDetailsSession?.branchData?.session);</script></span> <span>/</span> CURRENT TERM -- <span id="cummTermName"><script>$("#cummTermName").html(getEachStaffDetailsSession?.termData?.termName);</script></span></div>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent4">
-        <script>
-            _fetchStaffSubjectCummulative();
-        </script>
+        <script> _fetchStaffSubjectCummulative();</script>
     </div>
 <?php } ?>
 

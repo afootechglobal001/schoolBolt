@@ -485,3 +485,4 @@ function _fetchStaffSubjectCummulative() {
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
 }
+
