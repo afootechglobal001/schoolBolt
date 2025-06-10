@@ -1820,6 +1820,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 .slide-form-div .container-back-div .inner-container .compute-btn-container{
     display: flex;
 	flex-direction: column;
+	margin-top: 10px;
 }
 
 .slide-form-div .container-back-div .inner-container .compute-btn-container .btn{
@@ -1877,6 +1878,11 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 #user_form_details{
 	display: none;
 }
+
+#computeScoreParent{
+	display: none;
+}
+
 
 .slide-form-div .container-back-div .inner-container .user_form_details .text_field_container{
 	margin: 20px 0px;

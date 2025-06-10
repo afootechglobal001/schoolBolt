@@ -142,10 +142,15 @@ function _collapse(divId) {
 
 function _getFormDetails(nextId) {
 	$('#user_form_details').hide();
-	$("#" + nextId).fadeIn(1000);
+	$("#" + nextId).show();
 	$('#user_details, #edit_btn').fadeOut(500);
 }
 
+function _getComputeForm(nextId) {
+	$('#computeScoreParent').hide();
+	$("#" + nextId).show();
+	$('#assessmentParent').hide();
+}
 
 let permissionElements = {
     7: `

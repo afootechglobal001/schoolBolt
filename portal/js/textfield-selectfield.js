@@ -6,20 +6,23 @@ function textField(options) {
         value = '',
         onKeyPressFunction = null,
 		onKeyUpFunction = null,
-		readonly = false
+		readonly = false,
+		maxlength = null
     } = options;
 
     const template = type === "textarea"
         ? `
-          <textarea class="text_area" id="${id}" placeholder="" rows="">${value}</textarea>
+          <textarea class="text_area" id="${id}" placeholder="" rows=""
+		  ${maxlength ? `maxlength="${maxlength}"` : ''}>${value}</textarea>
           <div class="placeholder">${title}</div>
 		  <div class="issueText" id="issue_${id}"></div>
         `
         : `
           <input class="text_field" type="${type}" id="${id}" placeholder="" value="${value}"
-              ${onKeyPressFunction ? `onkeypress="${onKeyPressFunction}"` : ''} 
-			  ${onKeyUpFunction ? `onkeyup="${onKeyUpFunction}"` : ''}
-			  ${readonly ? 'readonly' : ''}/>
+            ${onKeyPressFunction ? `onkeypress="${onKeyPressFunction}"` : ''} 
+			${onKeyUpFunction ? `onkeyup="${onKeyUpFunction}"` : ''}
+			${readonly ? 'readonly' : ''}
+			${maxlength ? `maxlength="${maxlength}"` : ''}/>
           <div class="placeholder">${title}:</div>
 		  <div class="issueText" id="issue_${id}"></div>
         `;

@@ -772,7 +772,7 @@
 
         <div class="container-back-div">
             <div class="inner-container">
-                <div id="user_details">
+                <div id="assessmentParent">
                     <div>
                         <div class="alert form-alert compute-form-alert">
                             Kindly follow the following instruction below to compute score for students
@@ -841,13 +841,23 @@
                         </div>
                     </div>
 
+                    <div class="text_field_container" id="assessmentId_container">
+                        <script>
+                            selectField({
+                                id: 'assessmentId',
+                                title: 'Select Computed Assessment'
+                            });
+                           
+                        </script>
+                    </div>
+
                     <div class="btn-container compute-btn-container">
-                        <button class="btn" title="COMPUTE SCORES" id="submitBtn" onclick="_getFormDetails('user_form_details');"> <i class="bi-check"></i> COMPUTE SCORES </button>
+                        <button class="btn" title="COMPUTE SCORES" id="submitBtn" onclick="_getComputeForm('computeScoreParent');"> <i class="bi-check"></i> COMPUTE SCORES </button>
                         <button class="btn print-btn" title="PRINT COMPUTE SCORES" id="submitBtn" onclick=""> <i class="bi-printer"></i> PRINT SCORES </button>
                     </div>
                 </div>
 
-                <div id="user_form_details">
+                <div id="computeScoreParent">
                     <div>
                         <div class="alert alert-success form-alert compute-form-alert">
                             <span>Kindly input score for each student to complete score computation </span>

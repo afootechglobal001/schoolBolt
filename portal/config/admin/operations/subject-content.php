@@ -59,6 +59,17 @@
                         });
                     </script>
                 </div>
+
+                <div class="text_field_container" id="subjectAbbreviation_container">
+                    <script>
+                        textField({
+                            id: 'subjectAbbreviation',
+                            title: 'Subject Abbreviation',
+                            maxlength: '3',
+                            value: getEachSubjectSession?.subjectAbbreviation ?? ''
+                        });
+                    </script>
+                </div>
                 
                 <div class="text_field_container" id="statusId_container">
                     <script>
