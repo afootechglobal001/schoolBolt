@@ -12,26 +12,14 @@ if(!$checkSession){
 }
 	//////////////////declaration of variables//////////////////////////////////////
 	$subjectName=trim(strtoupper($data['subjectName']));
+    $subjectAbbreviation=trim(strtoupper($data['subjectAbbreviation']));
     $statusId=trim(strtoupper($data['statusId']));
     
 	////////////////////////////////////////////////////////////////////////////////
+    validateEmptyField($subjectName, 'SUBJECT NAME');
+    validateEmptyField($subjectAbbreviation, 'SUBJECT ABBREVIATION');
+    validateEmptyField($statusId, 'SUBJECT STATUS');
 
-	if (empty($subjectName)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "SUBJECT NAME REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    if (empty($statusId)){/// start if 2
-        $response = [
-            'response'=> 101,
-            'success'=> false,
-            'message'=> "SUNJECT STATUS REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
 
 
    
@@ -56,8 +44,8 @@ if(!$checkSession){
 
 
             mysqli_query($conn,"INSERT INTO `SUBJECTS_TAB`
-            (`clientId`, `subjectId`, `subjectName`,  `createdBy`, `statusId`, `createdTime`) VALUES 
-            ('$clientId', '$subjectId','$subjectName', '$loginStaffId', '$statusId', NOW() )")or die (mysqli_error($conn));
+            (`clientId`, `subjectId`, `subjectName`, `subjectAbbreviation`,  `createdBy`, `statusId`, `createdTime`) VALUES 
+            ('$clientId', '$subjectId','$subjectName','$subjectAbbreviation', '$loginStaffId', '$statusId', NOW() )")or die (mysqli_error($conn));
 
             $response['response']=200; 
             $response['success']=true;

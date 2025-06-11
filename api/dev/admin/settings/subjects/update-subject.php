@@ -14,34 +14,14 @@ if(!$checkSession){
     $subjectId = $_GET['subjectId'];
 	//////////////////declaration of variables//////////////////////////////////////
 	$subjectName=trim(strtoupper($data['subjectName']));
+    $subjectAbbreviation=trim(strtoupper($data['subjectAbbreviation']));
     $statusId=trim(strtoupper($data['statusId']));
     
 	////////////////////////////////////////////////////////////////////////////////
-
-	if (empty($subjectId)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "SUBJECT ID REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    if (empty($subjectName)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "SUBJECT NAME REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    if (empty($statusId)){/// start if 2
-        $response = [
-            'response'=> 101,
-            'success'=> false,
-            'message'=> "SUBJECT STATUS REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
+     validateEmptyField($subjectId, 'SUBJECT ID');
+    validateEmptyField($subjectName, 'SUBJECT NAME');
+    validateEmptyField($subjectAbbreviation, 'SUBJECT ABBREVIATION');
+    validateEmptyField($statusId, 'SUBJECT STATUS');
 
 
    
@@ -58,7 +38,7 @@ if(!$checkSession){
             }
             
             mysqli_query($conn,"UPDATE `SUBJECTS_TAB` SET 
-            subjectName='$subjectName',  statusId='$statusId', updatedBy='$loginStaffId'
+            subjectName='$subjectName', subjectAbbreviation='$subjectAbbreviation',  statusId='$statusId', updatedBy='$loginStaffId'
             WHERE $clientIds AND subjectId = '$subjectId'")or die (mysqli_error($conn));
 
             $response['response']=200; 

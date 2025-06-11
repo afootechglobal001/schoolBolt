@@ -25,6 +25,8 @@ if(!$checkSession){
     if (!empty($statusId)) {
         $statusIds = "AND statusId IN ($statusId)";
     }
+
+    
     
     // Securely escape $q
     $q = mysqli_real_escape_string($conn, $q);
@@ -51,8 +53,19 @@ if(!$checkSession){
         $lastName=$fetchQuery['lastName'];
         $fullName="$titlId $firstName $lastName";
         $fetchQuery['fullName']=$fullName;
+         $branchId=$fetchQuery['branchId'];
         $createdBy=$fetchQuery['createdBy'];
         $updatedBy=$fetchQuery['updatedBy'];
+
+        $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, address, smtpUsername, mobileNumber, session, termId  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+        $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
+        $termId=$branchDataFetch['termId'];
+        $fetchQuery['branchData']=$branchDataFetch;
+
+        /////////////////// for  $termId
+        $termDataQuery = mysqli_query($conn, "SELECT * FROM SETUP_TERM_TAB WHERE termId='$termId'");
+        $termDataFetch = mysqli_fetch_assoc($termDataQuery);
+        $fetchQuery['termData']=$termDataFetch;
 
         /////////////////// for  $createdBy
         $createdByData=array();

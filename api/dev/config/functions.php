@@ -56,4 +56,61 @@ function validateEmptyField($field, $fieldName) {
         exit;
     }
 }
+function getGrade($percentage) {
+    if ($percentage <= 39.9) {
+        return "F9";
+    } elseif ($percentage <= 45.9) {
+        return "E8";
+    } elseif ($percentage <= 49.9) {
+        return "D7";
+    } elseif ($percentage <= 54.9) {
+        return "C6";
+    } elseif ($percentage <= 59.9) {
+        return "C5";
+    } elseif ($percentage <= 64.9) {
+        return "C4";
+    } elseif ($percentage <= 69.9) {
+        return "B3";
+    } elseif ($percentage <= 74.9) {
+        return "B2";
+    } else {
+        return "A1";
+    }
+}
+function getRemark($percentage) {
+    if ($percentage >= 75) {
+        return 'EXCELLENT';
+    } elseif ($percentage >= 70) {
+        return 'VERY GOOD';
+    } elseif ($percentage >= 60) {
+        return 'GOOD';
+    } elseif ($percentage >= 50) {
+        return 'FAIRLY GOOD';
+    } elseif ($percentage >= 45) {
+        return 'FAIR';
+    } elseif ($percentage >= 40) {
+        return 'BELOW AVERAGE';
+    } else {
+        return 'WEAK RESULT';
+    }
+}
+function getOrdinalSuffix($number) {
+    $lastTwoDigits = $number % 100;
+    $lastDigit = $number % 10;
+
+    if ($lastTwoDigits >= 11 && $lastTwoDigits <= 13) {
+        return 'TH';
+    }
+
+    switch ($lastDigit) {
+        case 1:
+            return 'ST';
+        case 2:
+            return 'ND';
+        case 3:
+            return 'RD';
+        default:
+            return 'TH';
+    }
+}
 ?>
