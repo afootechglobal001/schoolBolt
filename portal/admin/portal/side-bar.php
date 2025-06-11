@@ -14,11 +14,6 @@
                 });
             });
         </script>
-        <!-- <script>
-            if (typeof rolePermissionIds !== "undefined" && rolePermissionIds.split(",").includes("7")) {
-                $(".nav-back-div").append(permissionElements[7]);
-            }
-        </script> -->
     </div>
 </div>
 

@@ -17,9 +17,9 @@
 
         <div class="dashbaord-right-wrapper">
             <ul>
-                <li title="Staff" onclick="_getActivePage({page:'staff', divid:'staff'});"><span><i class="bi-people"></i> Staff</span> <div class="num" id="">150</div>
+                <li title="Staff" onclick="_getActivePage({page:'staff', divid:'staff'});"><span><i class="bi-diagram-3"></i> Department</span> <div class="num" id="">150</div>
                 </li>
-                <li title="Students" onclick=""><span><i class="bi-people"></i> Students</span> <div class="num" id="">700</div>
+                <li title="Students" onclick=""><span><i class="bi-people"></i> classes</span> <div class="num" id="">700</div>
                 </li>
                 <li title="Subjects" onclick=""><span><i class="bi-journals"></i> Subjects</span> <div class="num" id="">20</div>
                 </li>
@@ -50,7 +50,7 @@
 
                     <div class="statistics-div right-border" title="Combo">
                         <h2>20</h2>
-                        <span><i class="bi-journals"></i> Total Subjects</span>
+                        <span><i class="bi-people"></i> Total Allumni</span>
                     </div>
                 </div>
 
@@ -313,57 +313,11 @@
         </div>
 
         <div class="right-dashbaord-container">
-            <div class="matrix-div">
-                <div class="inner-div">
-                    <div class="title">
-                        <h3>Order Matrix</h3>
-                    </div>
-                    <div id="chartContainer1" style="width:100%; height:200px; margin:auto;"></div>
-
-                    <script type="text/javascript">
-                        var options = {
-                            title: {
-                                text: "" /*My Performance*/
-                            },
-                            data: [{
-                                type: "pie",
-                                startAngle: 45,
-                                showInLegend: "False",
-                                legendText: "{label}",
-                                indexLabel: "{label} ({y})",
-                                yValueFormatString: "#,##0.#" % "",
-                                dataPoints: [{
-                                        label: "Outstanding",
-                                        y: 5
-                                    },
-                                    {
-                                        label: "Pending",
-                                        y: 6
-                                    },
-                                    {
-                                        label: "Processing",
-                                        y: 4
-                                    },
-                                    {
-                                        label: "Ready",
-                                        y: 5
-                                    },
-                                    {
-                                        label: "Delivered",
-                                        y: 15
-                                    },
-                                ]
-                            }]
-                        };
-                        $("#chartContainer1").CanvasJSChart(options);
-                    </script>
-                </div>
-            </div>
 
             <div class="matrix-div">
                 <div class="inner-div">
                     <div class="title">
-                        <h3>Payment Matrix</h3>
+                        <h3>Payment Channel Matrix</h3>
                     </div>
                     <div id="chartContainer2" style="width:100%; height:200px; margin:auto;"></div>
 
@@ -395,6 +349,57 @@
                             }]
                         };
                         $("#chartContainer2").CanvasJSChart(options);
+                    </script>
+                </div>
+            </div>
+
+            <div class="matrix-div">
+                <div class="inner-div">
+                    <div class="title">
+                        <h3>Staff Role Matrix</h3>
+                    </div>
+                    <div id="chartContainer1" style="width:100%; height:200px; margin:auto;"></div>
+
+                    <script type="text/javascript">
+                        var options = {
+                            title: {
+                                text: "" /*My Performance*/
+                            },
+                            data: [{
+                                type: "pie",
+                                startAngle: 45,
+                                showInLegend: "False",
+                                legendText: "{label}",
+                                indexLabel: "{label} ({y})",
+                                yValueFormatString: "#,##0.#" % "",
+                                dataPoints: [{
+                                        label: "SUPER ADMIN",
+                                        y: 5
+                                    },
+                                    {
+                                        label: "ADMINISTRATOR",
+                                        y: 6
+                                    },
+                                    {
+                                        label: "SUBJECT TEACHERS",
+                                        y: 4
+                                    },
+                                    {
+                                        label: "CLASS TEACHERS",
+                                        y: 5
+                                    },
+                                    {
+                                        label: "ICT STAFF",
+                                        y: 15
+                                    },
+                                     {
+                                        label: "ACCOUNTANTS",
+                                        y: 15
+                                    },
+                                ]
+                            }]
+                        };
+                        $("#chartContainer1").CanvasJSChart(options);
                     </script>
                 </div>
             </div>

@@ -9,9 +9,8 @@
         <div class="header-nav-div">
             <div class="left-nav">
                 <ul>
-                    <li class="active-li" title="Dashboard" onclick="_getPage('dashboard','dashboard', '');" id="top-dashboard"><i class="bi-speedometer2"></i> Dashboard</li>
-                    <li title="My Profile" onclick="_getFormWithId('update_staff','');"><i class="bi-person"></i> My Profile</li>
-                    <li title="Prospective Staff" onclick="_getPage('prospective_staff','staff', '');" id="top-staff"><i class="bi-people-fill"></i> Prospective Staff <div class="num" id="">3</div></li>
+                    <li class="active-li" title="Dashboard" onclick="_getActivePage({page:'dashboard', divid:'dashboard'});" id="top-dashboard"><i class="bi-speedometer2"></i> Dashboard</li>
+                    <li title="Prospective Staff" onclick="_getPage('prospective_staff','staff', '');" id="top-staff"><i class="bi-calendar"></i> Birthday Notifications <div class="num" id="">3</div></li>
                 </ul> 
             </div>
 
