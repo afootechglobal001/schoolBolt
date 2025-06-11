@@ -10,7 +10,7 @@
             <div class="left-nav">
                 <ul>
                     <li class="active-li" title="Dashboard" onclick="_getActivePage({page:'dashboard', divid:'dashboard'});" id="top-dashboard"><i class="bi-speedometer2"></i> Dashboard</li>
-                    <li title="Prospective Staff" onclick="_getPage('prospective_staff','staff', '');" id="top-staff"><i class="bi-calendar"></i> Birthday Notifications <div class="num" id="">3</div></li>
+                    <li title="Birthday Notifications" onclick="" id="top-staff"><i class="bi-calendar"></i> Birthday Notifications <div class="num" id="">3</div></li>
                 </ul> 
             </div>
 

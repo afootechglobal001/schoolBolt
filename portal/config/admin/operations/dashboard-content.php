@@ -17,13 +17,11 @@
 
         <div class="dashbaord-right-wrapper">
             <ul>
-                <li title="Staff" onclick="_getActivePage({page:'staff', divid:'staff'});"><span><i class="bi-diagram-3"></i> Department</span> <div class="num" id="">150</div>
+                <li title="Department" onclick="_getPage({page: 'department_config', url: adminPortalLocalUrl});"><span><i class="bi-diagram-3"></i> Department</span> <div class="num" id="">150</div>
                 </li>
-                <li title="Students" onclick=""><span><i class="bi-people"></i> classes</span> <div class="num" id="">700</div>
+                <li title="Classes" onclick="_getPage({page: 'class_config', url: adminPortalLocalUrl});"><span><i class="bi-people"></i> classes</span> <div class="num" id="">700</div>
                 </li>
-                <li title="Subjects" onclick=""><span><i class="bi-journals"></i> Subjects</span> <div class="num" id="">20</div>
-                </li>
-                <li class="li" title="Prospective Staff" onclick=""><span><i class="bi-people-fill"></i> Prospective Staff</span> <div class="num" id="">10</div>
+                <li title="Subjects" onclick="_getPage({page: 'subject_config', url: adminPortalLocalUrl});"><span><i class="bi-journals"></i> Subjects</span> <div class="num" id="">20</div>
                 </li>
             </ul>
         </div>
