@@ -143,6 +143,15 @@
 	border-right: 1px solid rgba(215, 215, 215, .9);
 }
 
+.table-div .table .font {
+	padding: 8px 12px;
+	font-size: 10px;
+	font-weight: none;
+	font-family: sub-title-font;
+	color: var(--sub-body-color);
+	border-right: 1px solid rgba(215, 215, 215, .9);
+}
+
 .table-div .table .tb-row {
     height: 60px;
 	font-size: 11px;

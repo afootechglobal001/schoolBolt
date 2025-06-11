@@ -19,6 +19,7 @@ function _fetchSubjects() {
 							<th>sn</th>
 							<th>Subject ID</th>
 							<th>Subject Name</th>
+							<th>Subject Abbreviation</th>
 							<th>Created By</th>
 							<th>Updated By</th>
 							<th>Date</th>
@@ -32,6 +33,7 @@ function _fetchSubjects() {
 						no++;
 						const subjectId = fetch[i].subjectId;
 						const subjectName = fetch[i].subjectName;
+						const subjectAbbreviation = fetch[i].subjectAbbreviation;
 						const createdBy = fetch[i].createdBy[0]?.fullname;
 						const updatedBy = fetch[i].updatedBy[0]?.fullname;
 						const createdTime = fetch[i].createdTime;
@@ -43,6 +45,7 @@ function _fetchSubjects() {
 									<td>${no}</td>
 									<td class="clickable-td" title="Click to view department profile" onclick="_fetchEachSubject('${subjectId}');">${subjectId}</td>
 									<td class="clickable-td">${subjectName}</td>
+									<td>${subjectAbbreviation}</td>
 									<td>${createdBy}</td>
 									<td>${updatedBy ? updatedBy : "NULL"}</td>
 									<td>${createdTime}</td>
@@ -117,13 +120,20 @@ function _createUpdateSubject() {
 	let getEachSubjectSession = JSON.parse(sessionStorage.getItem("getEachSubjectSession"));
 	try {
 		const subjectName = $('#subjectName').val();
+		const subjectAbbreviation = $('#subjectAbbreviation').val();
 		const statusId = $('#statusId').val();
 
-		$('#subjectName, #statusId').removeClass('issue');
+		$('#subjectName, #subjectAbbreviation, #statusId').removeClass('issue');
 
 		if (!subjectName) {
 			$('#subjectName').addClass('issue');
 			_actionAlert('Provide subject name to continue', false);
+			return;
+		}
+
+		if (!subjectAbbreviation) {
+			$('#subjectAbbreviation').addClass('issue');
+			_actionAlert('Provide subject abbreviation to continue', false);
 			return;
 		}
 
@@ -140,6 +150,7 @@ function _createUpdateSubject() {
 
 			const formData = {
 				"subjectName": subjectName,
+				"subjectAbbreviation": subjectAbbreviation,
 				"statusId": statusId
 			};
 

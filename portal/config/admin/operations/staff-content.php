@@ -205,9 +205,7 @@
 <?php } ?>
 
 <?php if ($page == 'staff_profile') { ?>
-    <script>
-        getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
-    </script>
+    <script> getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));</script>
 
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
         <div class="top-panel-div">
@@ -266,10 +264,10 @@
             <div class="btn-div">
                 <div class="div-in">
                     <ul>
-                        <li class="active" title="Dashboard" id="staff_dashboard" onclick="_getActiveStaffPage({divid:'staff_dashboard', page: 'staff_dashboard', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> Staff Dashboard</li>
+                        <li class="active" title="Dashboard" id="staff_dashboard" onclick="_getActiveStaffPage({divid:'staff_dashboard', page: 'staff_dashboard', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> Dashboard</li>
                         <li title="My Students" id="staff_students" onclick="_getActiveStaffPage({divid:'staff_students', page: 'staff_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> My Students</li>
 
-                        <li id="dotted" title="Branch Record"><i class="bi-file-spreadsheet"></i> Record
+                        <li class="hide-li" id="dotted" title="Staff Record"><i class="bi-file-spreadsheet"></i> Record
                             <div class="expand-div expanded animated fadeIn">
                                 <ul class="ul-expand">
                                     <li onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});" title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
@@ -281,8 +279,28 @@
                             </div>
                         </li>
 
-                        <li title="My Profile" id="staff_profile_details" onclick="_getActiveStaffPage({divid:'staff_profile_details', page: 'staff_profile_details', url: adminPortalLocalUrl});"><i class="bi-person-bounding-box"></i> Staff Profile</li>
-                        <li title="Staff Activities" id="staff_activities" onclick="_getActiveStaffPage({divid:'staff_activities', page: 'staff_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> Staff Activities</li>
+                        <li class="hide-li" title="My Profile" id="staff_profile_details" onclick="_getActiveStaffPage({divid:'staff_profile_details', page: 'staff_profile_details', url: adminPortalLocalUrl});"><i class="bi-person-bounding-box"></i> Staff Profile</li>
+                        <li class="hide-li" title="Staff Activities" id="staff_activities" onclick="_getActiveStaffPage({divid:'staff_activities', page: 'staff_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> Staff Activities</li>
+                       
+                        <li class="li" title="Other Links"><i class="bi-three-dots-vertical"></i>
+                            <ul class="ul">
+                                <li title="Dashboard" onclick="_getActiveStaffPage({divid:'staff_dashboard', page: 'staff_dashboard', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> <span> Dashboard</span></li>
+                                <li title="My Students" onclick="_getActiveStaffPage({divid:'staff_students', page: 'staff_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> <span>My Students</span></li>
+                                <li title="Staff Record" id="dotted"><i class="bi-file-spreadsheet"></i> <span>Record</span>
+                                    <div class="expand-div expanded animated fadeIn">
+                                        <ul class="ul-expand">
+                                            <li onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});" title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
+                                            <li onclick="_getActiveStaffPage({divid:'staff_students_compute_score', page: 'staff_students_compute_score', url: adminPortalLocalUrl});" title="Compute Score"><i class="bi-file-spreadsheet"></i>Compute Score</li>
+                                            <li onclick="_getActiveStaffPage({divid:'staff_students_cummulative_mark', page: 'staff_students_cummulative_mark', url: adminPortalLocalUrl});" title="Cumulative Mark's Score"><i class="bi-file-spreadsheet"></i>Cumulative Mark's Book</li>
+                                            <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Student Attendance</li>
+                                            <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Class Teacher's Commemt</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li title="My Profile" onclick="_getActiveStaffPage({divid:'staff_profile_details', page: 'staff_profile_details', url: adminPortalLocalUrl});"><i class="bi-person-bounding-box"></i> <span>Staff Profile</span></li>
+                                <li title="Staff Activities" onclick="_getActiveStaffPage({divid:'staff_activities', page: 'staff_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> <span>Activities</span></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -306,11 +324,7 @@
 <!-- For Staffs Modal Pages -->
 <?php if ($page == 'staff_dashboard') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <div>School - <span id="branchName">
-                <script>
-                    $("#branchName").html(getEachStaffDetailsSession.branchName);
-                </script>
-            </span> / Current Session - <span>2024/2025</span> / Current Term - <span>THIRD TERM</span></div>
+        <div><span><i class="bi-speedometer2"></i> DASHBOARD / </span>SCHOOL -- <span id="dashBranchName"><script>$("#dashBranchName").html(getEachStaffDetailsSession?.branchData?.branchName);</script></span> <span>/</span> CURRENT SESSION -- <span id="dashSession"><script>$("#dashSession").html(getEachStaffDetailsSession?.branchData?.session);</script></span> <span>/</span> CURRENT TERM -- <span id="dashTermName"><script>$("#dashTermName").html(getEachStaffDetailsSession?.termData?.termName);</script></span></div>
     </div>
 
     <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
@@ -715,53 +729,47 @@
 
 <?php if ($page == 'staff_students') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <span><i class="bi-people-fill"></i> STUDENT'S LIST</span>
+        <div><span><i class="bi-people-fill"></i> STUDENT'S LIST / </span> CURRENT SESSION -- <span id="stuSession"><script>$("#stuSession").html(getEachStaffDetailsSession?.branchData?.session);</script></span> <span>/</span> CURRENT TERM -- <span id="stuTermName"><script>$("#stuTermName").html(getEachStaffDetailsSession?.termData?.termName);</script></span></div>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContents">
-        <script>
-            _fetchStaffSubjectAllocated();
-        </script>
+        <script> _fetchStaffSubjectAllocated();</script>
     </div>
 <?php } ?>
 
 <?php if ($page == 'staff_students_score_sheet') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <span><i class="bi-grid-3x3"></i> SCORE SHEET</span>
+        <div><span><i class="bi-grid-3x3"></i> SCORE SHEET / </span> CURRENT SESSION -- <span id="scoreSession"><script>$("#scoreSession").html(getEachStaffDetailsSession?.branchData?.session);</script></span> <span>/</span> CURRENT TERM -- <span id="scoreTermName"><script>$("#scoreTermName").html(getEachStaffDetailsSession?.termData?.termName);</script></span></div>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent2">
-        <script>
-            _fetchStaffSubjectScoreSheet();
-        </script>
+        <script> _fetchStaffSubjectScoreSheet();</script>
     </div>
 <?php } ?>
 
 <?php if ($page == 'staff_students_compute_score') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <span><i class="bi-grid-3x3"></i> COMPUTE SCORE</span>
+        <div><span><i class="bi-grid-3x3"></i> COMPUTE SCORE / </span> CURRENT SESSION -- <span id="computeSession"><script>$("#computeSession").html(getEachStaffDetailsSession?.branchData?.session);</script></span> <span>/</span> CURRENT TERM -- <span id="computeTermName"><script>$("#computeTermName").html(getEachStaffDetailsSession?.termData?.termName);</script></span></div>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent3">
-        <script>
-            _fetchStaffSubjectComputeScores();
-        </script>
+        <script> _fetchStaffSubjectComputeScores();</script>
     </div>
 <?php } ?>
 
 <?php if ($page == 'staff_students_cummulative_mark') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <span><i class="bi-grid-3x3"></i> CUMMULATIVE MARK BOOK</span>
+        <div><span><i class="bi-grid-3x3"></i> CUMMULATIVE MARK BOOK / </span> CURRENT SESSION -- <span id="cummSession"><script>$("#cummSession").html(getEachStaffDetailsSession?.branchData?.session);</script></span> <span>/</span> CURRENT TERM -- <span id="cummTermName"><script>$("#cummTermName").html(getEachStaffDetailsSession?.termData?.termName);</script></span></div>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent4">
-        <script>
-            _fetchStaffSubjectCummulative();
-        </script>
+        <script> _fetchStaffSubjectCummulative();</script>
     </div>
 <?php } ?>
 
-<?php if ($page == 'compute_score_reg') { ?>
+<?php if ($page == 'compute_score_proceed') { ?>
+    <script> getComputeScoreRecordDetailsSession = JSON.parse(sessionStorage.getItem("getComputeScoreRecordDetailsSession"));</script>
+
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
@@ -772,185 +780,158 @@
 
         <div class="container-back-div">
             <div class="inner-container">
-                <div id="user_details">
-                    <div>
-                        <div class="alert form-alert compute-form-alert">
-                            Kindly follow the following instruction below to compute score for students
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="alert alert-success">
-                            <div class="alert-list-div">
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Session:</div>
-                                        <div><span id="">2024/2025</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Term:</div>
-                                        <div><span id="">THIRD TERM</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Department:</div>
-                                        <div><span id="">KG</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Class:</div>
-                                        <div><span id="">KG 1</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Arm:</div>
-                                        <div><span id="">A</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Subject:</div>
-                                        <div><span id="">NUMERACY</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Assessment:</div>
-                                        <div><span id="">1ST CA</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Number of Records:</div>
-                                        <div><span id="">30</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="btn-container compute-btn-container">
-                        <button class="btn" title="COMPUTE SCORES" id="submitBtn" onclick="_getFormDetails('user_form_details');"> <i class="bi-check"></i> COMPUTE SCORES </button>
-                        <button class="btn print-btn" title="PRINT COMPUTE SCORES" id="submitBtn" onclick=""> <i class="bi-printer"></i> PRINT SCORES </button>
+                <div>
+                    <div class="alert form-alert">
+                        Kindly follow the following instruction below to compute score for students
                     </div>
                 </div>
 
-                <div id="user_form_details">
-                    <div>
-                        <div class="alert alert-success form-alert compute-form-alert">
-                            <span>Kindly input score for each student to complete score computation </span>
-                        </div>
-                    </div>
-
-                    <div class="compute-score-back-div">
-                        <div class="each-compute-score-div">
-                            <div class="inner-score-div">
-                                <div class="image-div">
-                                    <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="My Students" />
-                                </div>
-
-                                <div class="text-container">
-                                    <div class="text-div">
-                                        <div>OLUPE OLAJOBI CANDY</div>
-                                        <div>KINGDERGATEN -- KG 1 A</div>
-                                    </div>
-
-                                    <div class="text-field-parent">
-                                        <div class="text_field_container compute-score-text-field" id="score_container">
-                                            <script>
-                                                textField({
-                                                    id: 'score',
-                                                    title: 'Enter Score',
-                                                    type: 'number',
-                                                    onKeyPressFunction: 'isNumberCheck(event);'
-                                                });
-                                            </script>
-                                        </div>
-
-                                        <input type="hidden" id="" name="" value="">
-
-                                        <div class="text-score">/ <span id="">15</span></div>
-                                    </div>
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Session:</div>
+                                    <div><span id="formSession"><script>$("#formSession").html(getEachStaffDetailsSession?.branchData?.session);</script></span></div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="each-compute-score-div">
-                            <div class="inner-score-div">
-                                <div class="image-div">
-                                    <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="My Students" />
-                                </div>
-
-                                <div class="text-container">
-                                    <div class="text-div">
-                                        <div>AFOLABI MIKE OLUWAGBENGA</div>
-                                        <div>KINGDERGATEN -- KG 1 A</div>
-                                    </div>
-
-                                    <div class="text-field-parent">
-                                        <div class="text_field_container compute-score-text-field" id="score2_container">
-                                            <script>
-                                                textField({
-                                                    id: 'score2',
-                                                    title: 'Enter Score',
-                                                    type: 'number',
-                                                    onKeyPressFunction: 'isNumberCheck(event);'
-                                                });
-                                            </script>
-                                        </div>
-
-                                        <div class="text-score">/ <span id="">15</span></div>
-                                    </div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Term:</div>
+                                    <div><span id="formTermName"><script>$("#formTermName").html(getEachStaffDetailsSession?.termData?.termName);</script></span></div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="each-compute-score-div">
-                            <div class="inner-score-div">
-                                <div class="image-div">
-                                    <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="My Students" />
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Department:</div>
+                                    <div><span id="departmentName"><script>$("#departmentName").html(getComputeScoreRecordDetailsSession?.departmentData?.departmentName);</script></span></div>
                                 </div>
+                            </div>
 
-                                <div class="text-container">
-                                    <div class="text-div">
-                                        <div>AKINDELE AFOLABI VICTORIA</div>
-                                        <div>KINGDERGATEN -- KG 1 A</div>
-                                    </div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Class:</div>
+                                    <div><span id="className"><script>$("#className").html(getComputeScoreRecordDetailsSession?.classData?.className);</script></span></div>
+                                </div>
+                            </div>
 
-                                    <div class="text-field-parent">
-                                        <div class="text_field_container compute-score-text-field" id="score3_container">
-                                            <script>
-                                                textField({
-                                                    id: 'score3',
-                                                    title: 'Enter Score',
-                                                    type: 'number',
-                                                    onKeyPressFunction: 'isNumberCheck(event);'
-                                                });
-                                            </script>
-                                        </div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Arm:</div>
+                                    <div><span id="armName"><script>$("#armName").html(getComputeScoreRecordDetailsSession?.armData?.armName);</script></span></div>
+                                </div>
+                            </div>
 
-                                        <div class="text-score">/ <span id="">15</span></div>
-                                    </div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Subject:</div>
+                                    <div><span id="subjectName"><script>$("#subjectName").html(getComputeScoreRecordDetailsSession?.subjectData?.subjectName);</script></span></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div>
-                        <button class="btn" title="SAVE SCORES" id="submitBtn" onclick=""> <i class="bi-save"></i> SAVE </button>
+                <div class="text_field_container" id="assessmentId_container">
+                    <script>
+                        selectField({
+                            id: 'assessmentId',
+                            title: 'Select Computed Assessment'
+                        });
+                        _getSelectAssessment('assessmentId');
+                    </script>
+                </div>
+
+                <div class="btn-container compute-btn-container">
+                    <button class="btn" title="COMPUTE SCORES" id="submitBtn" onclick="_proceedComputeAssessment();"> <i class="bi-check"></i> COMPUTE SCORES </button>
+                    <button class="btn print-btn" title="PRINT ASSESSMENT" id="printBtn" onclick="_printAssessment();"> <i class="bi-printer"></i> PRINT SCORES </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'compute_score_save') { ?>
+    <script> getComputeScoreStudentDataSession = JSON.parse(sessionStorage.getItem("getComputeScoreStudentDataSession")); </script>
+
+    <div class="slide-form-div save-compute-slide-form" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="panel-title"><i class="bi-plus-square"></i> SAVE COMPUTE SCORE</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert compute-form-alert">
+                        <span>Kindly input score for each student to complete score computation </span>
                     </div>
+                </div>
+
+                <div class="compute-score-back-div" id="fetchStudents">
+                    <script>
+                        $(document).ready(function () {
+                            let text = '';
+
+                            if (getComputeScoreStudentDataSession) {
+                                const fetchData = getComputeScoreStudentDataSession?.studentData;
+                                const success = getComputeScoreStudentDataSession?.success;
+
+                                if (success === true && fetchData.length > 0) {
+                                    for (let i = 0; i < fetchData.length; i++) {
+                                        const student = fetchData[i].studentData;
+                                        const dept = fetchData[i].departmentData;
+                                        const classInfo = fetchData[i].classData;
+                                        const arm = fetchData[i].armData;
+                                        const score = fetchData[i].assessmentData ? fetchData[i].assessmentData.markObtained : '';
+
+                                        const fullName = `${student.surName} ${student.firstName} ${student.otherNames}`;
+                                        const passport = student.passport || 'default.jpg';
+                                        const studentId = student.studentId;
+                                       const fieldId = `score_${studentId}`;
+
+                                        $("#fetchStudents").append(`
+                                            <div class="each-compute-score-div">
+                                                <div class="inner-score-div">
+                                                    <div class="image-div">
+                                                        <img src="${studentPixPath}/${passport}" alt="${fullName}"/>
+                                                    </div>
+                                                    <div class="text-container">
+                                                        <div class="text-div">
+                                                            <div>${fullName}</div>
+                                                            <div>${dept.departmentName} -- ${classInfo.className} ${arm.armName}</div>
+                                                        </div>
+                                                        <div class="text-field-parent">
+                                                            <div class="text_field_container compute-score-text-field" id="${fieldId}_container"></div>
+                                                            <input type="hidden" class="student-id-holder" value="${studentId}">
+                                                            <div class="text-score">/ <span>${getComputeScoreStudentDataSession?.assessmentTotalScore}</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `);
+
+                                        textField({
+                                            id: fieldId,
+                                            title: 'Enter Score',
+                                            type: 'number',
+                                            value: score
+                                        });
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                </div>
+
+                <div>
+                    <button class="btn" title="SAVE SCORES" id="submitBtn" onclick="_saveAssessment();">
+                        <i class="bi-save"></i> SAVE
+                    </button>
                 </div>
             </div>
         </div>

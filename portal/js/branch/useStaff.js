@@ -333,11 +333,12 @@ function _fetchStaffSubjectComputeScores() {
 						no++;
 						const fetchClassData = fetch[i].classData;
 						const fetchSubjectData = fetch[i].subjectData;
-						// const departmentId = fetch[i].departmentId;
-						// const classId = fetch[i].classId;
+						const departmentId = fetch[i].departmentId;
+						const classId = fetch[i].classId;
 						const fetchArmData = fetchClassData.armData;
 						const className = fetchClassData.className;
 						const subjectName = fetchSubjectData.subjectName;
+						const subjectId = fetchSubjectData.subjectId;
 
 						text +=`
 							<div class="pages-toggle-div">
@@ -352,14 +353,14 @@ function _fetchStaffSubjectComputeScores() {
 										if (Array.isArray(fetchArmData) && fetchArmData.length > 0) {
 											for (let k = 0; k < fetchArmData.length; k++) {
 												const armInfo = fetchArmData[k];
-												// const armId = armInfo.armId;
+												const armId = armInfo.armId;
 												const armName = armInfo.armName;
 
 												text += `
 												<div class="list-div">
 													<h4>${className} ${armName}</h4>
 													<div class="btn-container">
-														<button class="btn" title="MANAGE SCORES" onclick="_getForm({page: 'compute_score_reg', layer:2, url: adminPortalLocalUrl});">
+														<button class="btn" title="MANAGE SCORES" onclick="_fetchComputeScoreRecordDetails('${departmentId}','${classId}','${armId}','${subjectId}');">
 															<i class="bi-eye"></i> MANAGE SCORES
 														</button>
 													</div>
@@ -483,5 +484,207 @@ function _fetchStaffSubjectCummulative() {
 	} catch (error) {
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}
+
+
+function _fetchComputeScoreRecordDetails(departmentId, classId, armId, subjectId) {
+	$("#get-form-more-div").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/staff/records/fetch-record-details?departmentId=${departmentId}&classId=${classId}&armId=${armId}&subjectId=${subjectId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				if (info) {
+					sessionStorage.setItem("getComputeScoreRecordDetailsSession", JSON.stringify(info));
+					_getForm({page: 'compute_score_proceed', layer: 2, url: adminPortalLocalUrl});
+				} else {
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		_alertClose();
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}
+
+
+function _getSelectAssessment(fieldId){
+	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/branch/assessment/fetch-assessment?branchId=${getEachStaffDetailsSession.branchId}`,
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].assessmentId;
+						const value = data[i].assessmentName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+
+function _proceedComputeAssessment() {
+	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
+	let getComputeScoreRecordDetailsSession = JSON.parse(sessionStorage.getItem("getComputeScoreRecordDetailsSession"));
+
+	const departmentId = getComputeScoreRecordDetailsSession?.departmentData?.departmentId;
+	const classId = getComputeScoreRecordDetailsSession?.classData?.classId;
+	const armId = getComputeScoreRecordDetailsSession?.armData?.armId;
+	const subjectId = getComputeScoreRecordDetailsSession?.subjectData?.subjectId;
+
+	try {
+		let issueCount=0;
+		const assessmentId = $('#assessmentId').val();
+
+		$('#assessmentId').removeClass('issue');
+		$('#issue_assessmentId').html('');
+
+		if (!assessmentId) {
+			$('#assessmentId').addClass('issue');
+			$('#issue_assessmentId').html('USER ERROR! Kindy select assessment to continue');
+			issueCount++;
+		}
+
+		if (issueCount>0){
+			return;
+		}
+
+		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
+			const btn_text = $("#submitBtn").html();
+			$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+			$("#submitBtn").prop("disabled", true);
+
+			$.ajax({
+				type: "POST",
+				url: `${endPoint}/admin/staff/records/proceed-compute-assessment?branchId=${getEachStaffDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&subjectId=${subjectId}&assessmentId=${assessmentId}`,
+				dataType: "json", 
+				cache: false,
+				headers: getAuthHeaders(true),
+				processData: false,
+				success: function (info) {
+				if (info.success) {
+					sessionStorage.setItem("getComputeScoreStudentDataSession", JSON.stringify(info));
+					_getForm({page: 'compute_score_save', layer: 2, url: adminPortalLocalUrl});
+				} else{
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					} 
+				}
+				$("#submitBtn").html(btn_text).prop("disabled", false);
+			},
+				error: function (error) {
+					_actionAlert('An error occurred while processing your request! Please Try Again', false);
+					$("#submitBtn").html(btn_text).prop("disabled", false);
+				}
+			});
+		}
+	} catch (error) {
+		_actionAlert('An unexpected error occurred! Please Try Again', false);
+		$("#submitBtn").prop("disabled", false);
+	}
+}
+
+
+function _saveAssessment() {
+	let getComputeScoreStudentDataSession = JSON.parse(sessionStorage.getItem("getComputeScoreStudentDataSession"));
+	try {
+		let issueCount = 0;
+		const assessments = [];
+
+		const maxScore = parseFloat(getComputeScoreStudentDataSession.assessmentTotalScore || 0);
+	
+		$('.student-id-holder').each(function () {
+			const studentId = $(this).val();
+			const inputSelector = `#score_${studentId}`;
+			const errorSelector = `#issue_score_${studentId}`;
+			const score = $(inputSelector).val();
+
+			$(inputSelector).removeClass('issue');
+			$(errorSelector).html('');
+
+			const parsedScore = parseFloat(score);
+			if (parsedScore < 0 || parsedScore > maxScore) {
+				$(inputSelector).addClass('issue');
+				$(errorSelector).html(`USER ERROR! Score must be between 0 and ${maxScore}`);
+				issueCount++;
+			} else {
+				assessments.push({
+					studentId: studentId,
+					score: parsedScore
+				});
+			}
+			
+		});
+
+		if (issueCount>0){
+			return;
+		}
+
+		if (confirm("Confirm!!\n\nAre you sure to PERFORM THIS ACTION?")) {
+			const btn_text = $("#submitBtn").html();
+			$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+			$("#submitBtn").prop("disabled", true);
+
+			const formData = {
+				"assessments": assessments,
+			};
+
+			$.ajax({
+				type: "POST",
+				url: `${endPoint}/admin/staff/records/save-assessments?recordId=${getComputeScoreStudentDataSession.recordId}`,
+				data: JSON.stringify(formData),
+				dataType: "json",
+				cache: false,
+				headers: getAuthHeaders(true),
+				processData: false,
+				success: function (info) {
+					if (info.success) {
+						_actionAlert(info.message, true);
+						_alertClose(2);
+						_getForm({page: 'compute_score_proceed', layer: 2, url: adminPortalLocalUrl});
+					} else {
+						_actionAlert(info.message, false);
+					}
+					$("#submitBtn").html(btn_text).prop("disabled", false);
+				},
+				error: function (error) {
+					_actionAlert('An error occurred while processing your request! Please Try Again', false);
+					$("#submitBtn").html(btn_text).prop("disabled", false);
+				}
+			});
+		}
+	} catch (error) {
+		_actionAlert('An unexpected error occurred! Please Try Again', false);
+		$("#submitBtn").prop("disabled", false);
 	}
 }

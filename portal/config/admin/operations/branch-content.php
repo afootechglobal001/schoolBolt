@@ -354,8 +354,8 @@
                     <ul>
                         <li class="active" title="Dashboard" id="branch_dashboard" onclick="_getActiveBranchPage({divid:'branch_dashboard', page: 'branch_dashboard', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> Dashboard</li>
                         <li title="Branch Settings" id="branch_settings" onclick="_getActiveBranchPage({divid:'branch_settings', page: 'branch_settings', url: adminPortalLocalUrl});"><i class="bi-gear-wide-connected"></i> Settings</li>
-                        <li title="Branch Staff" id="branch_staff" onclick="_getActiveBranchPage({divid:'branch_staff', page: 'branch_staff', url: adminPortalLocalUrl});"><i class="bi-person-workspace"></i> Staff</li>
-                        <li id="dotted" title="Branch Student"><i class="bi-mortarboard"></i> Student
+                        <li class="hide-li" title="Branch Staff" id="branch_staff" onclick="_getActiveBranchPage({divid:'branch_staff', page: 'branch_staff', url: adminPortalLocalUrl});"><i class="bi-person-workspace"></i> Staff</li>
+                        <li class="hide-li" id="dotted" title="Branch Student"><i class="bi-mortarboard"></i> Student
                             <div class="expand-div animated fadeIn">
                                 <ul class="ul-expand">
                                     <li class="active" id="reg_students" title="Register Students"
@@ -376,13 +376,13 @@
                             </div>
                         </li>
 
-                        <li title="Branch Class" id="branch_department_class"
+                        <li class="hide-li" title="Branch Class" id="branch_department_class"
                             onclick="_getActiveBranchPage({divid:'branch_department_class', page: 'branch_department_class', url: adminPortalLocalUrl});"><i class="bi-people-fill"></i> Class</li>
 
-                        <li title="Branch Subject"
+                        <li class="hide-li" title="Branch Subject"
                             onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-journals"></i> Subject</li>
 
-                        <li id="dotted" title="Branch Record"><i class="bi-graph-up-arrow"></i> Report
+                        <li class="hide-li" id="dotted" title="Branch Record"><i class="bi-graph-up-arrow"></i> Report
                             <div class="expand-div animated fadeIn">
                                 <ul class="ul-expand">
                                     <li title="Broad/Report Sheet"><i class="bi-graph-up-arrow"></i>Broad/Report Sheet</li>
@@ -392,11 +392,52 @@
                             </div>
                         </li>
 
-                        <li title="Branch Profile" title="Branch Profile" id="branch_profile_details"
+                        <li class="hide-li" title="Branch Profile" title="Branch Profile" id="branch_profile_details"
                             onclick="_getActiveBranchPage({divid:'branch_profile_details', page: 'branch_profile_details', url: adminPortalLocalUrl});"><i class="bi-diagram-3"></i> Profile</li>
 
-                        <li title="Branch Activities" id="branch_activities"
+                        <li class="hide-li" title="Branch Activities" id="branch_activities"
                             onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> Activities</li>
+                        
+                        <li class="li" title="Other Links"><i class="bi-three-dots-vertical"></i>
+                            <ul class="ul">
+                                <li title="Dashboard" onclick="_getActiveBranchPage({divid:'branch_dashboard', page: 'branch_dashboard', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> <span>Dashboard</span></li>
+                                <li title="Branch Settings" onclick="_getActiveBranchPage({divid:'branch_settings', page: 'branch_settings', url: adminPortalLocalUrl});"><i class="bi-gear-wide-connected"></i> <span>Settings</span></li>
+                                <li title="Branch Staff" onclick="_getActiveBranchPage({divid:'branch_staff', page: 'branch_staff', url: adminPortalLocalUrl});"><i class="bi-person-workspace"></i> <span>Staff</span></li>
+                                <li title="Branch Student" id="dotted"><i class="bi-mortarboard"></i> <span>Student</span>
+                                    <div class="expand-div animated fadeIn">
+                                        <ul class="ul-expand">
+                                            <li class="active" id="reg_students" title="Register Students"
+                                                onclick="_getForm({page: 'branch_student_reg', layer:2, url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Register Student</li>
+
+                                            <li id="my_students" title="View Students"
+                                                onclick="_getForm({page: 'student_select_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>View Student</li>
+
+                                            <li id="my_students" title="Search Students"
+                                                onclick="_getActiveBranchPage({divid:'branch_student_search', page: 'branch_student_search', url: adminPortalLocalUrl});"><i class="bi-search"></i>Search Student</li>
+
+                                            <li id="my_students" title="Student Archived"
+                                                onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Student Archived</li>
+
+                                            <li id="my_students" title="Student Alumni"
+                                                onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i>Student Alumni</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li title="Branch Class" onclick="_getActiveBranchPage({divid:'branch_department_class', page: 'branch_department_class', url: adminPortalLocalUrl});"><i class="bi-people-fill"></i> <span>Class</span></li>
+                                <li title="Branch Subject" onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-journals"></i> <span>Subject</span></li>
+                                <li title="Branch Report" id="dotted"><i class="bi-graph-up-arrow"></i> <span>Report</span>
+                                    <div class="expand-div animated fadeIn">
+                                        <ul class="ul-expand">
+                                            <li title="Broad/Report Sheet"><i class="bi-graph-up-arrow"></i>Broad/Report Sheet</li>
+                                            <li title="Cumulative Broadsheet"><i class="bi-graph-up-arrow"></i>Cumulative Broadsheet</li>
+                                            <li title="Promotional Panel"><i class="bi-graph-up-arrow"></i>Promotional Panel</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li title="Branch Profile" onclick="_getActiveBranchPage({divid:'branch_profile_details', page: 'branch_profile_details', url: adminPortalLocalUrl});"><i class="bi-diagram-3"></i> <span>Profile</span></li>
+                                <li title="Branch Activities" onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> <span>Activities</span></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
