@@ -767,7 +767,7 @@
     </div>
 <?php } ?>
 
-<?php if ($page == 'compute_score_reg') { ?>
+<?php if ($page == 'compute_score_proceed') { ?>
     <script> getComputeScoreRecordDetailsSession = JSON.parse(sessionStorage.getItem("getComputeScoreRecordDetailsSession"));</script>
 
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
@@ -780,181 +780,158 @@
 
         <div class="container-back-div">
             <div class="inner-container">
-                <div id="assessmentParent">
-                    <div>
-                        <div class="alert form-alert compute-form-alert">
-                            Kindly follow the following instruction below to compute score for students
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="alert alert-success">
-                            <div class="alert-list-div">
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Session:</div>
-                                        <div><span id="formSession"><script>$("#formSession").html(getEachStaffDetailsSession?.branchData?.session);</script></span></div>
-                                    </div>
-                                </div>
-
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Term:</div>
-                                        <div><span id="formTermName"><script>$("#formTermName").html(getEachStaffDetailsSession?.termData?.termName);</script></span></div>
-                                    </div>
-                                </div>
-
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Department:</div>
-                                        <div><span id="departmentName"><script>$("#departmentName").html(getComputeScoreRecordDetailsSession?.departmentData?.departmentName);</script></span></div>
-                                    </div>
-                                </div>
-
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Class:</div>
-                                        <div><span id="className"><script>$("#className").html(getComputeScoreRecordDetailsSession?.classData?.className);</script></span></div>
-                                    </div>
-                                </div>
-
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Arm:</div>
-                                        <div><span id="armName"><script>$("#armName").html(getComputeScoreRecordDetailsSession?.armData?.armName);</script></span></div>
-                                    </div>
-                                </div>
-
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>Subject:</div>
-                                        <div><span id="subjectName"><script>$("#subjectName").html(getComputeScoreRecordDetailsSession?.subjectData?.subjectName);</script></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="text_field_container" id="assessmentId_container">
-                        <script>
-                            selectField({
-                                id: 'assessmentId',
-                                title: 'Select Computed Assessment'
-                            });
-                           
-                        </script>
-                    </div>
-
-                    <div class="btn-container compute-btn-container">
-                        <button class="btn" title="COMPUTE SCORES" id="submitBtn" onclick="_getComputeForm('computeScoreParent');"> <i class="bi-check"></i> COMPUTE SCORES </button>
-                        <button class="btn print-btn" title="PRINT COMPUTE SCORES" id="submitBtn" onclick=""> <i class="bi-printer"></i> PRINT SCORES </button>
+                <div>
+                    <div class="alert form-alert">
+                        Kindly follow the following instruction below to compute score for students
                     </div>
                 </div>
 
-                <div id="computeScoreParent">
-                    <div>
-                        <div class="alert alert-success form-alert compute-form-alert">
-                            <span>Kindly input score for each student to complete score computation </span>
-                        </div>
-                    </div>
-
-                    <div class="compute-score-back-div">
-                        <div class="each-compute-score-div">
-                            <div class="inner-score-div">
-                                <div class="image-div">
-                                    <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="My Students" />
-                                </div>
-
-                                <div class="text-container">
-                                    <div class="text-div">
-                                        <div>OLUPE OLAJOBI CANDY</div>
-                                        <div>KINGDERGATEN -- KG 1 A</div>
-                                    </div>
-
-                                    <div class="text-field-parent">
-                                        <div class="text_field_container compute-score-text-field" id="score_container">
-                                            <script>
-                                                textField({
-                                                    id: 'score',
-                                                    title: 'Enter Score',
-                                                    type: 'number',
-                                                    onKeyPressFunction: 'isNumberCheck(event);'
-                                                });
-                                            </script>
-                                        </div>
-
-                                        <input type="hidden" id="" name="" value="">
-
-                                        <div class="text-score">/ <span id="">15</span></div>
-                                    </div>
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Session:</div>
+                                    <div><span id="formSession"><script>$("#formSession").html(getEachStaffDetailsSession?.branchData?.session);</script></span></div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="each-compute-score-div">
-                            <div class="inner-score-div">
-                                <div class="image-div">
-                                    <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="My Students" />
-                                </div>
-
-                                <div class="text-container">
-                                    <div class="text-div">
-                                        <div>AFOLABI MIKE OLUWAGBENGA</div>
-                                        <div>KINGDERGATEN -- KG 1 A</div>
-                                    </div>
-
-                                    <div class="text-field-parent">
-                                        <div class="text_field_container compute-score-text-field" id="score2_container">
-                                            <script>
-                                                textField({
-                                                    id: 'score2',
-                                                    title: 'Enter Score',
-                                                    type: 'number',
-                                                    onKeyPressFunction: 'isNumberCheck(event);'
-                                                });
-                                            </script>
-                                        </div>
-
-                                        <div class="text-score">/ <span id="">15</span></div>
-                                    </div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Term:</div>
+                                    <div><span id="formTermName"><script>$("#formTermName").html(getEachStaffDetailsSession?.termData?.termName);</script></span></div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="each-compute-score-div">
-                            <div class="inner-score-div">
-                                <div class="image-div">
-                                    <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="My Students" />
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Department:</div>
+                                    <div><span id="departmentName"><script>$("#departmentName").html(getComputeScoreRecordDetailsSession?.departmentData?.departmentName);</script></span></div>
                                 </div>
+                            </div>
 
-                                <div class="text-container">
-                                    <div class="text-div">
-                                        <div>AKINDELE AFOLABI VICTORIA</div>
-                                        <div>KINGDERGATEN -- KG 1 A</div>
-                                    </div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Class:</div>
+                                    <div><span id="className"><script>$("#className").html(getComputeScoreRecordDetailsSession?.classData?.className);</script></span></div>
+                                </div>
+                            </div>
 
-                                    <div class="text-field-parent">
-                                        <div class="text_field_container compute-score-text-field" id="score3_container">
-                                            <script>
-                                                textField({
-                                                    id: 'score3',
-                                                    title: 'Enter Score',
-                                                    type: 'number',
-                                                    onKeyPressFunction: 'isNumberCheck(event);'
-                                                });
-                                            </script>
-                                        </div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Arm:</div>
+                                    <div><span id="armName"><script>$("#armName").html(getComputeScoreRecordDetailsSession?.armData?.armName);</script></span></div>
+                                </div>
+                            </div>
 
-                                        <div class="text-score">/ <span id="">15</span></div>
-                                    </div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Subject:</div>
+                                    <div><span id="subjectName"><script>$("#subjectName").html(getComputeScoreRecordDetailsSession?.subjectData?.subjectName);</script></span></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div>
-                        <button class="btn" title="SAVE SCORES" id="submitBtn" onclick=""> <i class="bi-save"></i> SAVE </button>
+                <div class="text_field_container" id="assessmentId_container">
+                    <script>
+                        selectField({
+                            id: 'assessmentId',
+                            title: 'Select Computed Assessment'
+                        });
+                        _getSelectAssessment('assessmentId');
+                    </script>
+                </div>
+
+                <div class="btn-container compute-btn-container">
+                    <button class="btn" title="COMPUTE SCORES" id="submitBtn" onclick="_proceedComputeAssessment();"> <i class="bi-check"></i> COMPUTE SCORES </button>
+                    <button class="btn print-btn" title="PRINT ASSESSMENT" id="printBtn" onclick="_printAssessment();"> <i class="bi-printer"></i> PRINT SCORES </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'compute_score_save') { ?>
+    <script> getComputeScoreStudentDataSession = JSON.parse(sessionStorage.getItem("getComputeScoreStudentDataSession")); </script>
+
+    <div class="slide-form-div save-compute-slide-form" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="panel-title"><i class="bi-plus-square"></i> SAVE COMPUTE SCORE</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert compute-form-alert">
+                        <span>Kindly input score for each student to complete score computation </span>
                     </div>
+                </div>
+
+                <div class="compute-score-back-div" id="fetchStudents">
+                    <script>
+                        $(document).ready(function () {
+                            let text = '';
+
+                            if (getComputeScoreStudentDataSession) {
+                                const fetchData = getComputeScoreStudentDataSession?.studentData;
+                                const success = getComputeScoreStudentDataSession?.success;
+
+                                if (success === true && fetchData.length > 0) {
+                                    for (let i = 0; i < fetchData.length; i++) {
+                                        const student = fetchData[i].studentData;
+                                        const dept = fetchData[i].departmentData;
+                                        const classInfo = fetchData[i].classData;
+                                        const arm = fetchData[i].armData;
+                                        const score = fetchData[i].assessmentData ? fetchData[i].assessmentData.markObtained : '';
+
+                                        const fullName = `${student.surName} ${student.firstName} ${student.otherNames}`;
+                                        const passport = student.passport || 'default.jpg';
+                                        const studentId = student.studentId;
+                                       const fieldId = `score_${studentId}`;
+
+                                        $("#fetchStudents").append(`
+                                            <div class="each-compute-score-div">
+                                                <div class="inner-score-div">
+                                                    <div class="image-div">
+                                                        <img src="${studentPixPath}/${passport}" alt="${fullName}"/>
+                                                    </div>
+                                                    <div class="text-container">
+                                                        <div class="text-div">
+                                                            <div>${fullName}</div>
+                                                            <div>${dept.departmentName} -- ${classInfo.className} ${arm.armName}</div>
+                                                        </div>
+                                                        <div class="text-field-parent">
+                                                            <div class="text_field_container compute-score-text-field" id="${fieldId}_container"></div>
+                                                            <input type="hidden" class="student-id-holder" value="${studentId}">
+                                                            <div class="text-score">/ <span>${getComputeScoreStudentDataSession?.assessmentTotalScore}</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `);
+
+                                        textField({
+                                            id: fieldId,
+                                            title: 'Enter Score',
+                                            type: 'number',
+                                            value: score
+                                        });
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                </div>
+
+                <div>
+                    <button class="btn" title="SAVE SCORES" id="submitBtn" onclick="_saveAssessment();">
+                        <i class="bi-save"></i> SAVE
+                    </button>
                 </div>
             </div>
         </div>

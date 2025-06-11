@@ -1649,6 +1649,10 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	overflow: hidden;
 }
 
+.save-compute-slide-form{
+	width: 500px;
+}
+
 .slide-form-div .title-panel-div{
 	width: calc(100% - 60px);
 	height: 50px;
@@ -1822,7 +1826,6 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 .slide-form-div .container-back-div .inner-container .compute-btn-container{
     display: flex;
 	flex-direction: column;
-	margin-top: 10px;
 }
 
 .slide-form-div .container-back-div .inner-container .compute-btn-container .btn{
@@ -2172,13 +2175,13 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 } 
 
 .slide-form-div .container-back-div .inner-container .compute-score-back-div .each-compute-score-div .inner-score-div .text-container .text-field-parent .compute-score-text-field{ 
-	width: calc(100% - 38px)
+	width: calc(100% - 58px)
 } 
 
 .slide-form-div .container-back-div .inner-container .compute-score-back-div .each-compute-score-div .inner-score-div .text-container .text-field-parent .text-score{ 
-	width: 30px;
+	width: 50px;
 	font-family: body-font;
-	font-size: 15px;
+	font-size: 14px;
 	color: var(--sub-body-color);
 } 
 

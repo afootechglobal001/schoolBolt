@@ -54,6 +54,7 @@ function selectField(options) {
             ${emptyValue ? `<li onclick="_clickOption('searchList_${id}', '', '${emptyValue}');">${emptyValue}</li>` : ''}
         </ul>
     </div>
+	<div class="issueText" id="issue_${id}"></div>
     `;
     $('#' + id + '_container').html(template);
 }
