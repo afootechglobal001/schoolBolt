@@ -578,36 +578,34 @@ function _proceedComputeAssessment() {
 			return;
 		}
 
-		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
-			const btn_text = $("#submitBtn").html();
-			$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
-			$("#submitBtn").prop("disabled", true);
+		const btn_text = $("#submitBtn").html();
+		$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+		$("#submitBtn").prop("disabled", true);
 
-			$.ajax({
-				type: "POST",
-				url: `${endPoint}/admin/staff/records/proceed-compute-assessment?branchId=${getEachStaffDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&subjectId=${subjectId}&assessmentId=${assessmentId}`,
-				dataType: "json", 
-				cache: false,
-				headers: getAuthHeaders(true),
-				processData: false,
-				success: function (info) {
-				if (info.success) {
-					sessionStorage.setItem("getComputeScoreStudentDataSession", JSON.stringify(info));
-					_getForm({page: 'compute_score_save', layer: 2, url: adminPortalLocalUrl});
-				} else{
-					const response = info.response;
-					if (response < 100) {
-						_logOut();
-					} 
-				}
+		$.ajax({
+			type: "POST",
+			url: `${endPoint}/admin/staff/records/proceed-compute-assessment?branchId=${getEachStaffDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&subjectId=${subjectId}&assessmentId=${assessmentId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			processData: false,
+			success: function (info) {
+			if (info.success) {
+				sessionStorage.setItem("getComputeScoreStudentDataSession", JSON.stringify(info));
+				_getForm({page: 'compute_score_save', layer: 2, url: adminPortalLocalUrl});
+			} else{
+				const response = info.response;
+				if (response < 100) {
+					_logOut();
+				} 
+			}
+			$("#submitBtn").html(btn_text).prop("disabled", false);
+		},
+			error: function (error) {
+				_actionAlert('An error occurred while processing your request! Please Try Again', false);
 				$("#submitBtn").html(btn_text).prop("disabled", false);
-			},
-				error: function (error) {
-					_actionAlert('An error occurred while processing your request! Please Try Again', false);
-					$("#submitBtn").html(btn_text).prop("disabled", false);
-				}
-			});
-		}
+			}
+		});
 	} catch (error) {
 		_actionAlert('An unexpected error occurred! Please Try Again', false);
 		$("#submitBtn").prop("disabled", false);
