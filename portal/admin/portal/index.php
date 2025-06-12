@@ -13,7 +13,9 @@
     <div class="content-div">
         <div class="inner-content">
             <div id="page-content">
-                <script>_getActivePage({page:'dashboard', divid:'dashboard'});</script>	
+                <script>
+                     _getActivePage({page:'dashboard', divid:'dashboard'});
+                </script>	
             </div> 
         </div>
        

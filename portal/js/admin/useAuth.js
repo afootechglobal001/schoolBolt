@@ -68,9 +68,7 @@ function _confirmLogin() {
 			},
 			success: function (data) {
 				if (data.success) {
-					sessionStorage.setItem("staffLoginData", JSON.stringify(data.data[0]));
-					_actionAlert(data.message, true);
-					window.location.href = adminPortalUrl;
+					assignRole(data);
 				} else {
 					_actionAlert(data.message, false);
 				}
@@ -86,4 +84,41 @@ function _confirmLogin() {
 		_actionAlert("An unexpected error occurred. Please try again.", false);
 		$("#submit_btn").prop("disabled", false);
 	}
+}
+
+
+
+function assignRole(data) {
+	
+	const staffLoginData = data.data[0];
+	const rolePermissionIds = staffLoginData.rolePermissionIds;
+
+	const userRoles = {};
+	// Convert string to array of numbers
+	const permissions = rolePermissionIds.split(',').map(id => parseInt(id.trim(), 10));
+
+	/////Dashboard Permissions
+	permissions.includes(1) ? userRoles.canViewSuperAdminDashboard = true : false;
+	permissions.includes(2) ? userRoles.canViewAdministratorDashboard = true : false;
+	permissions.includes(3) ? userRoles.canViewSubjectTeacherDashboard = true : false;
+	permissions.includes(4) ? userRoles.canViewClassTeacherDashboard = true : false;
+
+ 	/////Branch Permissions
+	permissions.includes(7) ? userRoles.canViewBranch = true : false;
+
+
+	/////Administrative Permissions
+	permissions.includes(10) ? userRoles.canViewStaff = true : false;
+
+	/////settings Permissions
+	permissions.includes(47) ? userRoles.canViewGeneralSettings = true : false;
+
+	/////Notifications Permissions
+	permissions.includes(48) ? userRoles.canViewGeneralNotifications = true : false;
+
+	// Store in sessionStorage
+	sessionStorage.setItem('userRoles', JSON.stringify(userRoles));
+	sessionStorage.setItem("staffLoginData", JSON.stringify(staffLoginData));
+	_actionAlert(data.message, true);
+	window.location.href = adminPortalUrl;
 }

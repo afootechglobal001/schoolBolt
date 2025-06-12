@@ -1,4 +1,15 @@
 <?php if ($page == 'dashboard') { ?>
+        <script>
+            userRoles.canViewSuperAdminDashboard && _getActivePage({page:'superAdminDashboard', divid:'dashboard'});
+            userRoles.canViewAdministratorDashboard && _getActivePage({page:'administratorDashboard', divid:'dashboard'});
+            userRoles.canViewSubjectTeacherDashboard && _getActivePage({page:'subjectTeacherDashboard', divid:'dashboard'});
+            userRoles.canViewClassTeacherDashboard && _getActivePage({page:'subjectTeacherDashboard', divid:'dashboard'});
+            userRoles.canViewICTStaffDashboard && _getActivePage({page:'ICTStaffDashboard', divid:'dashboard'});
+            userRoles.canViewBursaryDashboard && _getActivePage({page:'bursaryDashboard', divid:'dashboard'});
+        </script>	
+<?php } ?>
+
+<?php if ($page == 'superAdminDashboard') { ?>
     <div class="page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
         <div class="page-title-div">
             <div class="top-title"><span id="page-title"><i class="bi-speedometer2"></i> Admin Dashboard Overview</span></div>
@@ -404,6 +415,167 @@
         </div>
     </div>
 <?php } ?>
+
+
+<?php if ($page == 'administratorDashboard') { ?>
+    <div class="page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
+        <div class="page-title-div">
+            <div class="top-title"><span id="page-title"><i class="bi-speedometer2"></i> Dashboard Overview</span></div>
+            <div class="main-title">👋 Hi, <span id="loginUserName">
+                    <script>
+                        $("#loginUserName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));
+                    </script>
+                </span></div>
+            <div class="bottom-title"><i class="bi-clock"></i> Last Login Date | <span id="loginUserLastLogin">
+                    <script>
+                        $("#loginUserLastLogin").html(staffLoginData.lastLoginTime);
+                    </script>
+                </span>
+            </div>
+        </div>
+    </div>
+
+
+      <div class="pages-back-div">
+        <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
+            <div class="user-managment-list" id="MasterCountConfigurations">
+                <script>
+                    $("#MasterCountConfigurations").html(`
+                        <div class="inner-div"  onclick="_fetchEachBranches('${staffLoginData.branchId}');">
+                            <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/calculate.png" alt="Master Count Configurations"/></div>
+                            <div class="text-div">
+                                <h3>${staffLoginData.branchName}</h3>
+                                <p>Click here to view your branch details</p>
+                            </div>
+                        </div>
+                    `);
+                </script>
+            </div>
+            
+          <div class="user-managment-list" id="MyProfile">
+                <script>
+                    $("#MyProfile").html(`
+                        <div class="inner-div"  onclick="_fetchEachStaff('${staffLoginData.staffId}');">
+                            <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/calculate.png" alt="Master Count Configurations"/></div>
+                            <div class="text-div">
+                                <h3>My Profile</h3>
+                                <p>Manages Subject Lessons, Assignments, Grades, Attendance, And Student Performance Tracking For Their Designated Subject.</p>
+                            </div>
+                        </div>
+                    `);
+                </script>
+            </div>
+
+
+            <div class="user-managment-list" onclick="_getForm({page: 'change_password', url: adminPortalLocalUrl});">
+                <div class="inner-div">
+                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/status.png" alt="User Status Configurations"/></div>
+                    <div class="text-div">
+                        <h3>Change Password</h3>
+                        <p>Click here to change and upadate your password</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+<?php } ?>
+
+<?php if ($page == 'subjectTeacherDashboard') { ?>
+    <div class="page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
+        <div class="page-title-div">
+            <div class="top-title"><span id="page-title"><i class="bi-speedometer2"></i> Dashboard Overview</span></div>
+            <div class="main-title">👋 Hi, <span id="loginUserName">
+                    <script>
+                        $("#loginUserName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));
+                    </script>
+                </span></div>
+            <div class="bottom-title"><i class="bi-clock"></i> Last Login Date | <span id="loginUserLastLogin">
+                    <script>
+                        $("#loginUserLastLogin").html(staffLoginData.lastLoginTime);
+                    </script>
+                </span>
+            </div>
+        </div>
+    </div>
+
+
+      <div class="pages-back-div">
+        <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
+            
+          <div class="user-managment-list" id="MyProfile">
+                <script>
+                    $("#MyProfile").html(`
+                        <div class="inner-div"  onclick="_fetchEachStaff('${staffLoginData.staffId}');">
+                            <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/calculate.png" alt="Master Count Configurations"/></div>
+                            <div class="text-div">
+                                <h3>My Profile</h3>
+                                <p>Manages Subject Lessons, Assignments, Grades, Attendance, And Student Performance Tracking For Their Designated Subject.</p>
+                            </div>
+                        </div>
+                    `);
+                </script>
+            </div>
+
+
+            <div class="user-managment-list" onclick="_getForm({page: 'change_password', url: adminPortalLocalUrl});">
+                <div class="inner-div">
+                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/status.png" alt="User Status Configurations"/></div>
+                    <div class="text-div">
+                        <h3>Change Password</h3>
+                        <p>Click here to change and upadate your password</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+<?php } ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <?php if ($page == 'logout_confirm_form') { ?>
     <div class="caption-success-div animated zoomIn">

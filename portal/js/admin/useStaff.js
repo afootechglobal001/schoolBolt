@@ -122,7 +122,7 @@ function _fetchStaffs() {
 						<tbody>
 							<tr class="tb-row">
 								<td>${no}</td>
-								<td class="clickable-td" title="Click to view staff profile" onclick="_fetchEachSaff('${staffId}');">
+								<td class="clickable-td" title="Click to view staff profile" onclick="_fetchEachStaff('${staffId}');">
 									<div class="text-back-div">
 										<div class="image-div">
 											<img src="${websiteUrl}/uploaded_files/staffPix/${profilePix}" alt="${staffNames}"/>
@@ -144,7 +144,7 @@ function _fetchStaffs() {
 								<td>${roleName}</td>
 								<td>${lastLoginTime ? lastLoginTime : "00-00-00 00:00:00"}</td>
 								<td><div class="status-div ${statusName}">${statusName}</div></td>
-								<td><button class="btn view-btn" title="Click to view staff profile" onclick="_fetchEachSaff('${staffId}');">VIEW</button></td>
+								<td><button class="btn view-btn" title="Click to view staff profile" onclick="_fetchEachStaff('${staffId}');">VIEW</button></td>
 							</tr>
 						</tbody>`;
 					}
@@ -387,7 +387,7 @@ function _uploadStaffPicture(oldPassportName, newPassportName, message) {
     });
 }
 
-function _fetchEachSaff(staffId) {
+function _fetchEachStaff(staffId) {
 	$("#get-form-more-div").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
 	try {
 		$.ajax({

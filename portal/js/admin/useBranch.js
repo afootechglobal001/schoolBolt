@@ -325,7 +325,7 @@ function _fetchBranches() {
 								<td>${termName}</td>
 								<td>${mobileNumber}</td>
 								<td>${address}</td>
-								<td class="clickable-td" onclick="_fetchEachSaff('${staffId}');">${managerName}</td>
+								<td class="clickable-td" onclick="_fetchEachStaff('${staffId}');">${managerName}</td>
 								<td>${totalNumberOfStaff}</td>
 								<td>${createdTime}</td>
 								<td><div class="status-div ${statusName}">${statusName}</div></td>

@@ -5,44 +5,42 @@
             <div class="hidden" id="_dashboard"><i class="bi-speedometer2"></i> Admin Dashboard Overview</div>
         </div>
         <script>
-            $(document).ready(function() {
-                let myPermissions = '7,10,13,15,34,41'.split(',');  // Convert to an array
-                rolePermissionIds.split(',').forEach(permissionId => {
-                    if (myPermissions.includes(permissionId) && permissionElements[permissionId]) {
-                    $(".nav-back-div").append(permissionElements[permissionId]); // Append dynamically
-                }
-                });
-            });
+            if (userRoles.canViewBranch) {
+                document.write(`
+                    <div class="nav-div" title="Branches" onclick="_getActivePage({page:'branches', divid:'branches'});" id="side-branches">
+                        <div class="icon"><i class="bi-diagram-3"></i> Branches</div> 
+                        <div class="hidden" id="_branches"><i class="bi-diagram-3"></i> Branches</div>
+                    </div>
+                `);
+            }
+        </script>
+
+        <script>
+            if (userRoles.canViewSuperAdminDashboard && userRoles.canViewStaff) {
+                document.write(`
+                    <div class="nav-div" title="Staff" onclick="_getActivePage({page:'staff', divid:'staff'});" id="side-staff">
+                        <div class="icon"><i class="bi-people"></i> Staff</div> 
+                        <div class="hidden" id="_staff"><i class="bi-people"></i> Active Staff</div>
+                    </div>
+                `);
+            }
+        </script>
+
+        <script>
+            if (userRoles.canViewSuperAdminDashboard) {
+                document.write(`
+                    <div class="nav-div" title="Report" onclick="_getActivePage({nav:'reports', divid:'reports'});" id="side-reports">
+                        <div class="icon"><i class="bi-graph-up-arrow"></i> Report</div> 
+                    </div>
+                `);
+            }
         </script>
     </div>
 </div>
 
-
-
-<div class="side-nav-div animated fadeInLeft" id="side-nav-div">
-    <div class="nav-back-div">
-        <div class="nav-div active-li" title="Dashboard" onclick="_getActivePage({page:'dashboard', divid:'dashboard'});" id="mobile-dashboard">           
-            <div class="icon"><i class="bi-speedometer2"></i> Dashboard</div> 
-            <div class="hidden" id="_dashboard"><i class="bi-speedometer2"></i> Admin Dashboard Overview</div>
-        </div>
-    </div>
-</div>
-
-
 <!--------------------------for nav sub div view----------------------------------------->
 
 <div class="side-nav-bg-sub-div">
-	<div class="nav-div animated fadeInLeft" id="link-products">
-        <div class="link" title="Product Categories" onclick="_getActivePage({page:'product_category', divid:'products'});">- Parent Reviews <div class="num" id="">0</div></div>
-        <div class="hidden" id="_products"><i class="bi-boxes"></i> Parent Reviews</div>
-
-        <div class="link" title="Combo" onclick="">- Student Reviews <div class="num" id="">0</div></div>
-        <div class="hidden" id="_combo"><i class="bi-basket"></i> Student Reviews</div>
-
-        <div class="link" title="Combo" onclick="">- Visitor's Reviews <div class="num" id="">0</div></div>
-        <div class="hidden" id="_combo"><i class="bi-basket"></i> Visitor's Reviews</div>
-    </div>
-
 
     <div class="nav-div animated fadeInLeft" id="link-reports">
         <div class="link" title="Product Report" onclick="_getPage('product_report','publish','');">- Income Report</div>

@@ -152,40 +152,6 @@ function _getComputeForm(nextId) {
 	$('#assessmentParent').hide();
 }
 
-let permissionElements = {
-    7: `
-    <div class="nav-div" title="Branches" onclick="_getActivePage({page:'branches', divid:'branches'});" id="side-branches">
-        <div class="icon"><i class="bi-diagram-3"></i> Branches</div> 
-        <div class="hidden" id="_branches"><i class="bi-diagram-3"></i> Branches</div>
-    </div
-    `,
-
-    10: `
-    <div class="nav-div" title="Staff" onclick="_getActivePage({page:'staff', divid:'staff'});" id="side-staff">
-        <div class="icon"><i class="bi-people"></i> Staff</div> 
-        <div class="hidden" id="_staff"><i class="bi-people"></i> Active Staff</div>
-    </div>
-    `,
-
-    13: `
-    <div class="nav-div" title="Customers" onclick="_getActivePage({page:'customers', divid:'customers'});" id="side-customers">
-        <div class="icon"><i class="bi-buildings"></i> <span>Hostel and Logistics</span></div> 
-    </div>
-    `,
-	
-    15: `
-    <div class="nav-div" title="Products" onclick="_getActivePage({nav:'products', divid:'products'});" id="side-products">
-        <div class="icon"><i class="bi-chat-text"></i> Reviews</div> 
-    </div>
-    `,
-
-    41: `
-    <div class="nav-div" title="Report" onclick="_getActivePage({nav:'reports', divid:'reports'});" id="side-reports">
-        <div class="icon"><i class="bi-graph-up-arrow"></i> Report</div> 
-    </div>
-    `
-};
-
 
 
 function _getSelectTermId(fieldId){

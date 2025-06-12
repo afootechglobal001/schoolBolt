@@ -18,6 +18,9 @@
 <script src="<?php echo $websiteUrl?>/js/webcam_library.js"></script>
 <script>
         let staffLoginData = JSON.parse(sessionStorage.getItem("staffLoginData"));
+        let userRoles = JSON.parse(sessionStorage.getItem("userRoles"));
+        console.log({staffLoginData});
+        console.log({userRoles});
         const loginStaffId = staffLoginData.staffId;
         const loginAccessKey = staffLoginData.accessKey;
         const loginRoleId = staffLoginData.roleId;
@@ -29,6 +32,7 @@
 <script src="<?php echo $websiteUrl?>/js/admin/canvasjs.min.js" type="text/javascript"></script>
 
 <script src="<?php echo $websiteUrl?>/js/admin/session_validation.js?v=<?php echo $codeVersion?>"></script>
+
 <script src="<?php echo $websiteUrl?>/js/admin/useAdmin.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/admin/useBranch.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/admin/useStaff.js?v=<?php echo $codeVersion?>"></script>

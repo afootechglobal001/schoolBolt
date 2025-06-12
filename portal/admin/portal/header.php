@@ -10,19 +10,47 @@
             <div class="left-nav">
                 <ul>
                     <li class="active-li" title="Dashboard" onclick="_getActivePage({page:'dashboard', divid:'dashboard'});" id="top-dashboard"><i class="bi-speedometer2"></i> Dashboard</li>
-                    <li title="Birthday Notifications" onclick="" id="top-staff"><i class="bi-calendar"></i> Birthday Notifications <div class="num" id="">3</div></li>
+                    <script>
+                        if (userRoles.canViewBranch) {
+                            document.write(`
+                                <li title="Branches" onclick="" id="top-staff"><i class="bi-diagram-3"></i> Branches <div class="num" id="">3</div></li>
+                            `);
+                        }
+                    </script>
+                    <script>
+                        if (userRoles.canViewStaff) {
+                            document.write(`
+                                <li title="Staff" onclick="" id="top-staff"><i class="bi-diagram-3"></i> Staff <div class="num" id="">43</div></li>
+                            `);
+                        }
+                    </script>
                 </ul> 
             </div>
 
             <div class="right-nav">
                 <div class="right-icon-div left-icon-div">
-                    <div class="icon-div" onclick="_getActivePage({page:'settings'});" title="System Settings">
-                        <i class="bi-gear"></i>
-                    </div>
-                    <div class="icon-div bell_notification" onClick="_get_page('system_alert');" title="System Alert">
-                        <i class="bi-bell"></i>
-                        <div>20</div>
-                    </div>
+                     <script>
+                        if (userRoles.canViewGeneralSettings) {
+                            document.write(`
+                                <div class="icon-div" onclick="_getActivePage({page:'settings'});" title="System Settings">
+                                    <i class="bi-gear"></i>
+                                </div>
+                            `);
+                        }
+                    </script>
+
+                     <script>
+                        if (userRoles.canViewGeneralNotifications) {
+                            document.write(`
+                                <div class="icon-div bell_notification" onClick="_get_page('system_alert');" title="System Alert">
+                                    <i class="bi-bell"></i>
+                                    <div>20</div>
+                                </div>
+                            `);
+                        }
+                    </script>
+                    
+                    
                 </div>
 
                 <div class="right-icon-div no-border" title="Click To View Profile" onclick="_toggleProfileDiv()">
