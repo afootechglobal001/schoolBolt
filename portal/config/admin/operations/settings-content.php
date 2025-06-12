@@ -126,11 +126,11 @@
                     </script> 
                 </div>
 
-                <div class="text_field_container" id="confirmPassword_container">
+                <div class="text_field_container" id="cnewPassword_container">
                     <script>
                         textField({
-                            id: 'confirmPassword',
-                            title: 'Confirm New Passwordd',
+                            id: 'cnewPassword',
+                            title: 'Confirm New Password',
                             type: 'password'
                         });
                     </script> 
@@ -139,9 +139,22 @@
                 <div class="pswd_info" style="color:#8c8d8d"><em>At least 8 charaters required including upper & lower cases and special characters and numbers.</em></div>
 
                 <div>    
-                    <button class="btn" title="CHANGE PASSWORD" id="submit_btn" onclick=""> <i class="bi-check"></i> CHANGE PASSWORD </button>             
+                    <button class="btn" title="CHANGE PASSWORD" id="submitBtn" onclick="_changePassword();"> <i class="bi-check"></i> CHANGE PASSWORD </button>             
                 </div>
             </div>
         </div>  
+    </div>
+<?php } ?>
+
+<?php if ($page == 'accessKeyValidationForm') { ?>
+    <div class="caption-success-div animated zoomIn">
+        <div class="div-in">
+            <div class="img"><img src="<?php echo $websiteUrl ?>/images/warning.gif" /></div>
+            <h2>Invalid Access Token</h2>
+            Please, Kindly LogIn Again.
+            <div class="btn-div">
+                <button class="btn logOut" onclick="_logOut();">YES</button>
+            </div>
+        </div>
     </div>
 <?php } ?>

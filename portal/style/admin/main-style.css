@@ -2323,6 +2323,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	border-radius:5px;
 	font-family:sub-title-font;
 	font-size:15px;
+	margin-top: 10px;
 	transition:all 0.2s ease-in 0.2s;
 	-moz-transition:all 0.2s ease-in 0.2s;
 	-webkit-transition:all 0.2s ease-in 0.2s;
@@ -2356,13 +2357,23 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	color:var(--sub-body-color);
 }
 
+.caption-success-div .div-in .btn-div .logOut{
+	min-width: 135px;
+	background: var(--sub-body-color);
+}
+
+.caption-success-div .div-in .btn-div .logOut:hover{
+	background: var(--sub-body-color);
+	opacity: .9;
+}
+
 @media all and (max-width:500px) {
 	.caption-success-div{
 		width:96%;
 	}
 }
 
-
+logOut
 
 
 
