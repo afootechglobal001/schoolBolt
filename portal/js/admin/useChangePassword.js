@@ -42,7 +42,7 @@ function _changePassword() {
 			if (!newPassword.match(/^(?=[^A-Z]*[A-Z])(?=[^!"#$%&'()*+,-.:;<=>?@[\]^_`{|}~]*[!"#$%&'()*+,-.:;<=>?@[\]^_`{|}~])(?=\D*\d).{8,}$/ )) {
 			$('#newPassword').addClass("issue");
 				$('#newPassword').addClass("issue");
-				$('#issue_newPassword').html('USER ERROR! Password must contain at least one uppercase letter, one number, and one special character');
+				$('#issue_newPassword').html('USER ERROR! Password Not Accepted, Please follow the instructon above');
 				issueCount++;
 			}
 		}

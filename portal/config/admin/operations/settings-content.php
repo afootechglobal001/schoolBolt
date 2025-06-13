@@ -116,6 +116,8 @@
                     </script> 
                 </div>
 
+                <div class="pswd_info" style="color:#8c8d8d"><em>At least 8 charaters required including upper & lower cases and special characters and numbers.</em></div>
+
                 <div class="text_field_container" id="newPassword_container">
                     <script>
                         textField({
@@ -136,8 +138,6 @@
                     </script> 
                 </div>
 
-                <div class="pswd_info" style="color:#8c8d8d"><em>At least 8 charaters required including upper & lower cases and special characters and numbers.</em></div>
-
                 <div>    
                     <button class="btn" title="CHANGE PASSWORD" id="submitBtn" onclick="_changePassword();"> <i class="bi-check"></i> CHANGE PASSWORD </button>             
                 </div>
@@ -147,14 +147,13 @@
 <?php } ?>
 
 <?php if ($page == 'accessKeyValidationForm') { ?>
-    <div class="caption-success-div animated zoomIn">
-        <div class="div-in">
-            <div class="img"><img src="<?php echo $websiteUrl ?>/images/warning.gif" /></div>
-            <h2>Invalid Access Token</h2>
-            Please, Kindly LogIn Again.
-            <div class="btn-div">
-                <button class="btn logOut" onclick="_logOut();">YES</button>
+    <div class="successful-div animated zoomIn">
+        <div class="success-in">
+            <div class="gif">
+                <img src="<?php echo $websiteUrl?>/images/success.gif" alt="successful gif">
             </div>
-        </div>
+            <h3>PASSWORD CHANGED SUCCESSFULLY</h3>
+            <button class="btn" title="OKAY" onclick="_logOut();">OKAY <i class="bi-check2-all"></i></button>
+        </div> 
     </div>
 <?php } ?>

@@ -134,6 +134,21 @@
                         <div class="toggle-title">Role Permissions</div>
                         <div class="fetch-toggle" id="role"></div>
                     </div>
+
+                    <div class="permission-toggle-div">
+                        <div class="toggle-title">Fees Permissions</div>
+                        <div class="fetch-toggle" id="fees"></div>
+                    </div>
+
+                    <div class="permission-toggle-div">
+                        <div class="toggle-title">Settings Permissions</div>
+                        <div class="fetch-toggle" id="settings"></div>
+                    </div>
+
+                    <div class="permission-toggle-div">
+                        <div class="toggle-title">Notifications Permissions</div>
+                        <div class="fetch-toggle" id="notifications"></div>
+                    </div>
                     <script>_fetchRolePermissions();</script>
                 </div>
                 <div>    

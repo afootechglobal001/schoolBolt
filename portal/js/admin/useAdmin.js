@@ -21,7 +21,7 @@ function _getActiveLink(divid, nav) {
 }
 function _removeClass(){
 	$('#side-dashboard, #side-staff, #side-fees, #side-customers, #side-products, #side-orders, #side-publish, #side-reports, #side-branches, #top-dashboard, #top-staff').removeClass('active-li');
-	$('#mobile-dashboard').removeClass('active-li');
+	$('#mobile-dashboard,#mobile-branches,#mobile-staff,#mobile-reports').removeClass('active-li');
 }
 
 function _getNav(nav){
@@ -47,14 +47,14 @@ function _closeAllNav(){
 
 function _openMenu(){
 	var x = document.getElementById("menu-div");
-	  if (x.innerHTML === '<i class="bi-text-right"></i>') {
-		x.innerHTML = '<i class="bi-x-lg"></i>';
-		   $('#side-nav-div').animate({'left':'0px'},200);
-	  } else {
-		x.innerHTML = '<i class="bi-text-right"></i>';
-		_closeAllNav()
-	  }
+	if (x.innerHTML === '<i class="bi-text-right"></i>') {
+	x.innerHTML = '<i class="bi-x-lg"></i>';
+		$('#side-nav-div').animate({'left':'0px'},200);
+	} else {
+	x.innerHTML = '<i class="bi-text-right"></i>';
+	_closeAllNav()
 	}
+}
 
 function capitalizeFirstLetterOfEachWord(inputText) {
 	const words = inputText.toLowerCase().split(' ');

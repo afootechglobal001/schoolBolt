@@ -636,6 +636,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 .page-title-back-div .other-pages-filter-div{
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	gap: 10px;
 }
 
@@ -688,6 +689,17 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	}
 }
 
+
+@media all and (max-width:530px) {
+	.dashbaords-page-title-back-div{
+		width: calc(100% - 30px);
+		min-height: 120px;
+		align-items: center;
+		justify-content: center;
+		padding: 20px 15px;
+	}
+}
+
 @media all and (max-width:550px) {
 	.page-title-back-div .other-pages-filter-div{
 	    flex-direction: column;
@@ -697,9 +709,9 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
     }
 }
 
-@media all and (max-width:380px) {
+@media all and (max-width:410px) {
 	.page-title-back-div .page-title-div .main-title{
-		font-size:20px;
+		font-size:5.5vw;
 		line-height:30px;
 	}
 	.page-title-back-div .other-pages-filter-div{
@@ -1053,14 +1065,13 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 .search_field_container {
 	position: relative;
 	width: 100%;
-	height: auto;
-	margin-bottom: 0px;
+	min-height: 45px;
 }
 
 .search_field_container .dash_placeholder {
-	top: 50%;
+	
 	font-size: 12px;
-	height: 20px;
+	min-height: calc(100% - 20px);
 }
 
 .search_field_container .dash_placeholder i{
@@ -1069,13 +1080,13 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 
 .search_field_container .dash_text_field {
 	width:calc(100% - 60px);
-	height: 45px;
+	min-height: 45px;
 	padding-top: 5px;
 	font-size: 13px;
 }
 
 .search_field_container .student_text_field {
-	height: 50px;
+	min-height: 50px;
 }
 
 .search_field_container .dash_text_field:focus+.dash_placeholder,
@@ -1086,12 +1097,11 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 
 
 .dash_field_container {
-	height: 35px;
+	min-height: 35px;
 }
 
 .dash_field_container .bar_cust_placeholder {
-	top: 40%;
-	height: 10px;
+	min-height: calc(100% - 10px);
 	width: calc(80% - 10px);
 	font-size: 11px;
 }
@@ -1101,7 +1111,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 }
 
 .dash_field_container .bar_cust_text_field {
-	height: 35px;
+	min-height: 35px;
 	font-size: 11px;
 	padding-top:5px;
 }
@@ -1301,6 +1311,10 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	flex-wrap: wrap;
 }
 
+.dashbaords-pg-back-div{
+	top: 170px;
+}
+
 @media all and (max-width:970px) {
 	.pages-back-div{
 		top: 190px;
@@ -1311,6 +1325,9 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	.pages-back-div{
 		width: calc(100% - 20px);
 	}
+	.dashbaords-pg-back-div{
+		top: 160px;
+	}
 }
 
 @media all and (max-width:550px) {
@@ -1320,12 +1337,18 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	.settings-pages-back-div{
 	    top: 180px;
     }
+	.dashbaords-pg-back-div{
+		top: 160px;
+	}
 }
 
 @media all and (max-width:530px) {
 	.settings-pages-back-div{
 	    top: 200px;
     }
+	.dashbaords-pg-back-div{
+		top: 200px;
+	}
 }
 
 /* Table Style*/
@@ -2373,9 +2396,6 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	}
 }
 
-logOut
-
-
 
 
 .settings-div{
@@ -2455,9 +2475,14 @@ logOut
 	font-size: 11px;
 	font-family: body-font;
 	color: var(--text-color);
-	margin-bottom: 8px;
+	line-height: 15px;
 }
 
+.slide-form-div .container-back-div .inner-container .pswd_info em{
+	padding: 0px;
+	margin: 0px;
+	
+}
 
 
 
@@ -2468,9 +2493,9 @@ logOut
 	border-radius: 10px;
 	background: var(--white-color);
 	display: flex;
-	align-items: center;
 	flex-wrap: wrap;
 	gap: 20px;
+	align-items: stretch;
 }
 
 .user-managment-back-div .user-managment-list{
@@ -2481,6 +2506,7 @@ logOut
 	border-radius: 10px;
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	cursor: pointer;
 	-moz-transition:all 0.2s ease-in 02s;
 	transition:all 0.2s ease-in 0.2s;

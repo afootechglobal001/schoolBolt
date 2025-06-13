@@ -418,7 +418,7 @@
 
 
 <?php if ($page == 'administratorDashboard') { ?>
-    <div class="page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
+    <div class="page-title-back-div dashbaords-page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
         <div class="page-title-div">
             <div class="top-title"><span id="page-title"><i class="bi-speedometer2"></i> Dashboard Overview</span></div>
             <div class="main-title">👋 Hi, <span id="loginUserName">
@@ -435,8 +435,7 @@
         </div>
     </div>
 
-
-      <div class="pages-back-div">
+    <div class="pages-back-div dashbaords-pg-back-div">
         <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
             <div class="user-managment-list" id="MasterCountConfigurations">
                 <script>
@@ -483,7 +482,7 @@
 <?php } ?>
 
 <?php if ($page == 'subjectTeacherDashboard') { ?>
-    <div class="page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
+    <div class="page-title-back-div dashbaords-page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
         <div class="page-title-div">
             <div class="top-title"><span id="page-title"><i class="bi-speedometer2"></i> Dashboard Overview</span></div>
             <div class="main-title">👋 Hi, <span id="loginUserName">
@@ -501,7 +500,7 @@
     </div>
 
 
-      <div class="pages-back-div">
+      <div class="pages-back-div dashbaords-pg-back-div">
         <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
             
           <div class="user-managment-list" id="MyProfile">
