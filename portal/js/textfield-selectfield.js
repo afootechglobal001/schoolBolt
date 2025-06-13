@@ -40,7 +40,7 @@ function selectField(options) {
     } = options;
     
     const template = `
-    <select class="text_field selectSearch" id="${id}"
+    <select class="text_field select_text_field selectSearch" id="${id}"
         onclick="_selectOption('${id}')" style="opacity: 1;">
 		${fieldValue ? `<option selected="selected" value="${fieldValue}">${fieldLabel}</option>` : '<option selected="selected" value="">Select here</option>'}
     </select>

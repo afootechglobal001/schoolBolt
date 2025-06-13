@@ -74,6 +74,8 @@ a {
 	min-height: 60px;
 }
 
+
+
 .text_field_container .placeholder {
 	position: absolute;
 	top: 55%;
@@ -112,6 +114,11 @@ a {
 
 .text_field_container .select_text_field {
 	width: 100%;
+}
+
+.text_field_container:has(.select_text_field) {
+	min-height: unset;
+	height: 60px;
 }
 
 .text_field_container .text_field:focus {
@@ -154,13 +161,14 @@ a {
 }
 
 .text_field_container .searchPanel .searchTxt{
-	width: calc(100% - 20px);
+	min-width: calc(100% - 20px);
 	height: 40px;
 	border: none;
 	border-bottom: #e2e2e2 1px solid;
 	background: #f8f8f8;
 	padding: 0px 10px;
 	font-size: 12px;
+	box-sizing: border-box;
 	font-family: body-font;
 	color: #1e1e1e;
 	-webkit-appearance: none;
