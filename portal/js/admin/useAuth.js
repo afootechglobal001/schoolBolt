@@ -172,3 +172,192 @@ function assignRole(data) {
 	_actionAlert(data.message, true);
 	window.location.href = adminPortalUrl;
 }
+
+
+function _proceedResetPassword(sessionEmail = null, btnId = "proceedBtn") {
+	try {
+		let issueCount = 0;
+		let email = sessionEmail || $('#email').val().trim();
+
+		if (!sessionEmail) {
+			$('#email').removeClass('issue');
+			$('#issue_email').html('');
+
+			if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+				$('#email').addClass('issue');
+				$('#issue_email').html('USER ERROR! Kindy provide correct email address to continue');
+				issueCount++;
+			} 	
+
+			if (issueCount > 0) return;
+		}
+
+		////////////// get btn text ////////////////
+		const btnText = $("#" + btnId).html();
+		$("#" + btnId).html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+		$("#" + btnId).prop("disabled", true);
+		////////////////////////////////////////////////
+
+		const formData = {
+			"email": email
+		};
+
+		$.ajax({
+			type: "POST",
+			url: endPoint + '/admin/auth/reset-password',
+			data: JSON.stringify(formData),
+			dataType: "json", 
+			cache: false,
+			headers: {
+				'apiKey': apiKey,
+				'userOsBrowser': userOsBrowser,
+				'userIpAddress': userIpAddress,
+				'userDeviceId': userDeviceId,
+				'clientId': clientId,
+				'clientAddress': clientAddress
+			},
+			success: function (info) {
+				if (info.success) {
+					sessionStorage.setItem("staffEmailSession", JSON.stringify(info));
+					_getPage({ page: 'send-link-mail', url: adminLocalUrl });
+				} else {
+					_actionAlert(info.message, false);
+				}
+				$("#" + btnId).html(btnText).prop("disabled", false);
+			},
+			error: function () {
+				_actionAlert("Unable to reach the server. Please check your connection.", false);
+				$("#" + btnId).html(btnText).prop("disabled", false);
+			}
+		});
+	} catch (error) {
+		console.error("Unexpected error:", error);
+		_actionAlert("An unexpected error occurred. Please try again.", false);
+		$("#" + btnId).prop("disabled", false);
+	}
+}
+
+
+
+//////LINK VERIFICATION FUNCTION////////
+function _verifyLink(ref) {
+	$("#page-content").html('<div class="ajax-loader"><img src="'+ websiteUrl +'/images/spinner.gif"/></div>').css({'display': 'flex','flex-direction': 'column','gap': '20px','align-items': 'center','align-items': 'center'}).fadeIn(500);	
+	$.ajax({
+		type: "GET",
+		url: `${endPoint}/admin/auth/verify-link?ref=${ref}`,
+		dataType: "json", 
+		cache: false,
+		headers: {
+			'apiKey': apiKey,
+			'userOsBrowser': userOsBrowser,
+			'userIpAddress': userIpAddress,
+			'userDeviceId': userDeviceId,
+			'clientId': clientId,
+			'clientAddress': clientAddress
+		},
+		success: function (info) {
+			if (info.success == true) {
+				sessionStorage.setItem("staffCompleteResetEmailSession", JSON.stringify(info));
+				_getPage({ page: 'complete-reset-password', url: adminLocalUrl });
+			} else {
+				_getPage({ page: 'verify-ref-response', url: adminLocalUrl });
+			}
+		}
+	});
+}
+
+
+function _completeResetPassword() {
+	let staffCompleteResetEmailSession = JSON.parse(sessionStorage.getItem("staffCompleteResetEmailSession"));
+	try {
+		let issueCount=0;
+		const newPassword=$('#newPassword').val();
+		const cnewPassword=$('#cnewPassword').val();
+
+		$('#newPassword, #cnewPassword').removeClass('issue');
+		$('#issue_newPassword, #issue_cnewPassword').html('');
+
+		if (!newPassword) {
+			$('#newPassword').addClass('issue');
+			$('#issue_newPassword').html('USER ERROR! Kindly Provide New Password To Continue');
+			issueCount++;
+		}
+
+		if (!cnewPassword) {
+			$('#cnewPassword').addClass('issue');
+			$('#issue_cnewPassword').html('USER ERROR! Kindly Provide Confirm New Password To Continue');
+			issueCount++;
+		}
+
+		if (newPassword && cnewPassword) {
+			if (newPassword.length < 8) {
+				$('#newPassword').addClass("issue");
+				$('#issue_newPassword').html('USER ERROR! Password must be at least 8 characters');
+				issueCount++;
+			}
+
+			if (newPassword !== cnewPassword) {
+				$('#newPassword, #cnewPassword').addClass('issue');
+				$('#issue_cnewPassword, #issue_cnewPassword').html('USER ERROR! Passwords do not match');
+				issueCount++;
+			}
+
+			if (!newPassword.match(/^(?=[^A-Z]*[A-Z])(?=[^!"#$%&'()*+,-.:;<=>?@[\]^_`{|}~]*[!"#$%&'()*+,-.:;<=>?@[\]^_`{|}~])(?=\D*\d).{8,}$/ )) {
+			$('#newPassword').addClass("issue");
+				$('#newPassword').addClass("issue");
+				$('#issue_newPassword').html('USER ERROR! Password Not Accepted, Please follow the instructon above');
+				issueCount++;
+			}
+		}
+
+		if (issueCount>0){
+			return;
+		}
+
+		//////////////// get btn text ////////////////
+		const btn_text = $("#completeBtn").html();
+		$("#completeBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+		$("#completeBtn").prop("disabled", true);
+
+		const formData = {
+			"newPassword": newPassword,
+			"cnewPassword": cnewPassword
+		};
+
+		$.ajax({
+			type: "POST",
+			url: `${endPoint}/admin/auth/complete-reset-password?email=${staffCompleteResetEmailSession.email}`,
+			data: JSON.stringify(formData),
+			dataType: "json", 
+			cache: false,
+			headers: {
+				'apiKey': apiKey,
+				'userOsBrowser': userOsBrowser,
+				'userIpAddress': userIpAddress,
+				'userDeviceId': userDeviceId,
+				'clientId': clientId,
+				'clientAddress': clientAddress
+			},
+			processData: false, 
+			success: function (info) {
+				const success = info.success;
+				const message = info.message;
+			
+				if (success == true) {
+					_actionAlert(message, true);
+					_getForm({page:'password_reset_successful', url: adminLocalUrl});
+				} else {
+					_actionAlert(message, false);				
+				}	
+				$("#submitBtn").html(btn_text).prop("disabled", false);
+			},
+			error: function (error) {
+				_actionAlert('An error occurred while processing your request! Please Try Again', false);
+				$("#submitBtn").html(btn_text).prop("disabled", false);
+			}
+		});
+	} catch (error) {
+		_actionAlert('An unexpected error occurred! Please Try Again', false);
+		$("#submitBtn").prop("disabled", false);
+	}	
+}
