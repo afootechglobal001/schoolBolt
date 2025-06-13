@@ -50,7 +50,7 @@
                 </script>
             </div>
 
-            <button class="btn" id="" title="Proceed" onclick="_getPage({page: 'send-link-mail', url: adminLocalUrl});">Proceed <i class="bi-arrow-right"></i></button>
+            <button class="btn" id="proceedBtn" title="Proceed" onclick="_getPage({page: 'send-link-mail', url: adminLocalUrl});">Proceed <i class="bi-arrow-right"></i></button>
         </div>
     </div>
 <?php }?>
