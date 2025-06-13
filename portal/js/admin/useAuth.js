@@ -102,13 +102,63 @@ function assignRole(data) {
 	permissions.includes(2) ? userRoles.canViewAdministratorDashboard = true : false;
 	permissions.includes(3) ? userRoles.canViewSubjectTeacherDashboard = true : false;
 	permissions.includes(4) ? userRoles.canViewClassTeacherDashboard = true : false;
+	permissions.includes(5) ? userRoles.canViewIctStaffDashboard = true : false;
+	permissions.includes(6) ? userRoles.canViewBursaryDashboard = true : false;
 
  	/////Branch Permissions
 	permissions.includes(7) ? userRoles.canViewBranch = true : false;
-
+	permissions.includes(8) ? userRoles.canCreateBranch = true : false;
+	permissions.includes(9) ? userRoles.canModifyBranch = true : false;
 
 	/////Administrative Permissions
 	permissions.includes(10) ? userRoles.canViewStaff = true : false;
+	permissions.includes(11) ? userRoles.canCreateStaff = true : false;
+	permissions.includes(12) ? userRoles.canModifyStaff = true : false;
+
+	/////Student Permissions
+	permissions.includes(13) ? userRoles.canViewStudent = true : false;
+	permissions.includes(14) ? userRoles.canCreateStudent = true : false;
+	permissions.includes(15) ? userRoles.canModifyStudent = true : false;
+
+	/////Department Permissions
+	permissions.includes(16) ? userRoles.canViewDepartment = true : false;
+	permissions.includes(17) ? userRoles.canCreateDepartment = true : false;
+	permissions.includes(18) ? userRoles.canModifyDepartment = true : false;
+
+	/////Class Permissions
+	permissions.includes(19) ? userRoles.canViewClass = true : false;
+	permissions.includes(20) ? userRoles.canCreateClass = true : false;
+	permissions.includes(21) ? userRoles.canModifyClass = true : false;
+
+	/////Arms Permissions
+	permissions.includes(22) ? userRoles.canViewArm = true : false;
+	permissions.includes(23) ? userRoles.canCreateArm = true : false;
+	permissions.includes(24) ? userRoles.canModifyArm = true : false;
+
+	/////Subjects Permissions
+	permissions.includes(25) ? userRoles.canViewSubject = true : false;
+	permissions.includes(26) ? userRoles.canCreateSubject = true : false;
+	permissions.includes(27) ? userRoles.canModifySubject = true : false;
+
+	/////Class Teacher's Permissions
+	permissions.includes(28) ? userRoles.canViewStudentAttendance = true : false;
+	permissions.includes(29) ? userRoles.canCreateStudentAttendance = true : false;
+	permissions.includes(30) ? userRoles.canModifyStudentAttendance = true : false;
+	permissions.includes(31) ? userRoles.canViewClassTeachersCommemt = true : false;
+	permissions.includes(32) ? userRoles.canCreateClassTeachersCommemt = true : false;
+	permissions.includes(33) ? userRoles.canModifyClassTeachersCommemt = true : false;
+
+	/////Report Permissions
+	permissions.includes(41) ? userRoles.canViewViewReport  = true : false;
+
+	/////Role Permissions
+	permissions.includes(42) ? userRoles.canViewRole = true : false;
+	permissions.includes(43) ? userRoles.canCreateRole = true : false;
+	permissions.includes(44) ? userRoles.canModifyRole = true : false;
+
+	/////Fees Permissions
+	permissions.includes(45) ? userRoles.canViewFees = true : false;
+	permissions.includes(46) ? userRoles.ComputeAndModifyFees = true : false;
 
 	/////settings Permissions
 	permissions.includes(47) ? userRoles.canViewGeneralSettings = true : false;
