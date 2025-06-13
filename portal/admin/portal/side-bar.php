@@ -1,4 +1,3 @@
-
 <script>
     function writeSidebarItems(navId) {
         document.write(`

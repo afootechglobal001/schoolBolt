@@ -441,7 +441,7 @@
                 <script>
                     $("#MasterCountConfigurations").html(`
                         <div class="inner-div"  onclick="_fetchEachBranches('${staffLoginData.branchId}');">
-                            <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/calculate.png" alt="Master Count Configurations"/></div>
+                            <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/branch.png" alt="Master Count Configurations"/></div>
                             <div class="text-div">
                                 <h3>${staffLoginData.branchName}</h3>
                                 <p>Click here to view your branch details</p>
@@ -455,9 +455,9 @@
                 <script>
                     $("#MyProfile").html(`
                         <div class="inner-div"  onclick="_fetchEachStaff('${staffLoginData.staffId}');">
-                            <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/calculate.png" alt="Master Count Configurations"/></div>
+                            <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/profile.png" alt="Master Count Configurations"/></div>
                             <div class="text-div">
-                                <h3>My Profile</h3>
+                                <h3>MY PROFILE</h3>
                                 <p>Manages Subject Lessons, Assignments, Grades, Attendance, And Student Performance Tracking For Their Designated Subject.</p>
                             </div>
                         </div>
@@ -470,15 +470,13 @@
                 <div class="inner-div">
                     <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/status.png" alt="User Status Configurations"/></div>
                     <div class="text-div">
-                        <h3>Change Password</h3>
+                        <h3>CHANGE PASSWORD</h3>
                         <p>Click here to change and upadate your password</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-   
 <?php } ?>
 
 <?php if ($page == 'subjectTeacherDashboard') { ?>
@@ -502,14 +500,13 @@
 
       <div class="pages-back-div dashbaords-pg-back-div">
         <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
-            
-          <div class="user-managment-list" id="MyProfile">
+            <div class="user-managment-list" id="MyProfile">
                 <script>
                     $("#MyProfile").html(`
-                        <div class="inner-div"  onclick="_fetchEachStaff('${staffLoginData.staffId}');">
-                            <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/calculate.png" alt="Master Count Configurations"/></div>
+                        <div class="inner-div" onclick="_fetchEachStaff('${staffLoginData.staffId}');">
+                            <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/profile.png" alt="Master Count Configurations"/></div>
                             <div class="text-div">
-                                <h3>My Profile</h3>
+                                <h3>MY PROFILE</h3>
                                 <p>Manages Subject Lessons, Assignments, Grades, Attendance, And Student Performance Tracking For Their Designated Subject.</p>
                             </div>
                         </div>
@@ -517,12 +514,11 @@
                 </script>
             </div>
 
-
             <div class="user-managment-list" onclick="_getForm({page: 'change_password', url: adminPortalLocalUrl});">
                 <div class="inner-div">
                     <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/status.png" alt="User Status Configurations"/></div>
                     <div class="text-div">
-                        <h3>Change Password</h3>
+                        <h3>CHANGE PASSWORD</h3>
                         <p>Click here to change and upadate your password</p>
                     </div>
                 </div>
