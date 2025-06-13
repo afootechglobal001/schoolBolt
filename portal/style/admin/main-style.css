@@ -2253,6 +2253,31 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 
 
 
+
+@media all and (max-width:500px) {
+	.top-alert-div{
+		flex-direction: column;	
+		gap: 7px;
+		align-items: flex-start;
+		justify-content: flex-start;
+	}
+}
+
+
+@media all and (max-width:400px) {
+	.alert .btn-container {
+		width: 100%;
+	}
+
+	.alert .btn-container .btn {
+		width: 100%;
+		height: 35px;
+	}
+}
+
+
+
+
 .product-pictures-div{
 	width:100%;
 	margin-top:10px;
@@ -3854,6 +3879,10 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	.user-profile-div .profile-content-div .btn-div .div-in ul .li{
 		display: block;
 	}
+	.user-profile-div .top-panel-div{
+		width: calc(100% - 30px);
+		padding: 0px 15px;
+	}
 }
 
 @media all and (max-width:640px) {
@@ -3861,7 +3890,6 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
         font-size: 4vw;
     }
 }
-
 
 
 
@@ -3901,6 +3929,12 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 
 .other-pages-ajax-loader {
 	top: 45%;
+}
+
+@media all and (max-width:500px) {
+	.student-ajax-loader {
+		top: 70%;
+	}
 }
 
 .form-ajax-loader {
@@ -3950,6 +3984,23 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 
 .user-profile-div .profile-content-div .field-back-div .user-in .col-3{  
 	width: 32.00%;
+}
+
+@media all and (max-width:920px) {
+	.user-profile-div .profile-content-div .field-inner-div{ 
+		width: 95%;
+	}
+	.user-profile-div .profile-content-div .field-back-div .user-in .col-1{  
+		width: 100%;
+	}
+	.user-profile-div .profile-content-div .field-back-div .user-in .col-3{  
+		width: 100%;
+	}
+
+	.user-profile-div .profile-content-div .field-back-div .user-in{ 
+		width: calc(100% - 20px);
+		padding: 10px 10px;
+	}
 }
 
 .user-profile-div .profile-content-div .field-back-div .user-in .btn-div{
@@ -4548,7 +4599,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 }
 
 .pages-toggle-back-div .pages-toggle-div{
-	width: calc(100% - 40px);
+	width: 100%;
     border-radius: 8px 8px 5px 5px;
 	background: var(--white-color);
 	border: rgba(213, 213, 213, 0.4) 1px solid;
@@ -4593,8 +4644,6 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	padding: 30px 15px;
     font-size: 12px;
 }
-
-
 
 
 
@@ -4703,3 +4752,15 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 .long-search-div .btn:hover{
 	background: var(--secondary-color);
 }
+
+@media all and (max-width:550px) {
+	.long-search-div{
+		flex-direction: column;
+	}
+} 
+
+@media all and (max-width:500px) {
+	.long-search-div .btn{
+		min-width: 100%;
+	}
+} 

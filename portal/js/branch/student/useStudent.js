@@ -942,7 +942,7 @@ function _searchBranchStudents() {
 		return;
 	}
 
-	$('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+	$('#pageContent').html('<div class="ajax-loader pages-ajax-loader student-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
 
 	try {
 		$.ajax({

@@ -42,22 +42,22 @@
         <div class="left-dashbaord-container">
             <div class="statistics-chart-back-div">
                 <div class="statistics-back-div">
-                    <div class="statistics-div left-border" title="Branches" onclick="_getActivePage({page:'branches', divid:'branches'});">
+                    <div class="statistics-div left-border" title="Total Branches" onclick="_getActivePage({page:'branches', divid:'branches'});">
                         <h2>12</h2>
                         <span><i class="bi-diagram-3"></i> Branches</span>
                     </div>
 
-                    <div class="statistics-div left-border border-radius" title="Staff" onclick="">
+                    <div class="statistics-div left-border border-radius" title="Total Staff" onclick="">
                         <h2>250</h2>
                         <span><i class="bi-people"></i> Total Staff</span>
                     </div>
 
-                    <div class="statistics-div" title="Students">
+                    <div class="statistics-div" title="Total Students">
                         <h2>700</h2>
                         <span><i class="bi-people"></i> Total Students </span>
                     </div>
 
-                    <div class="statistics-div right-border" title="Combo">
+                    <div class="statistics-div right-border" title="Total Allumni">
                         <h2>20</h2>
                         <span><i class="bi-people"></i> Total Allumni</span>
                     </div>

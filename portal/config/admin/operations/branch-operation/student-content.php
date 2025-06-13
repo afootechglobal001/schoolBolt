@@ -462,7 +462,7 @@
         <div class="long-search-div">
             <div class="text_field_container search_field_container">
                 <input class="text_field student_text_field" type="text" id="q" placeholder="" title="Type here to search students" />
-                <div class="placeholder dash_placeholder"><i class="bi-search"></i> Type here to search student by surname, first name, other name, student Id</div>
+                <div class="placeholder dash_placeholder"><i class="bi-search"></i> Type here to search student</div>
             </div>
 
             <div>
@@ -563,8 +563,16 @@
                     <ul>
                         <li class="active" title="Student Profile" id="student_profile_details" onclick="_getActiveStudentPage({divid:'student_profile_details', page: 'student_profile_details', url: adminPortalLocalUrl});"><i class="bi-person-bounding-box"></i> Student Profile</li>
                         <li title="Transcript" id="tanscript" onclick="_getActiveStudentPage({divid:'tanscript', page: 'tanscript', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> Transcript</li>
-                        <li title="Student Report" id="student_report" onclick="_getActiveStudentPage({divid:'student_report', page: 'student_report', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> Student Report</li>
-                        <li title="Student Activities" id="student_activities" onclick="_getActiveStudentPage({divid:'student_activities', page: 'student_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> Student Activities</li>
+                        <li class="hide-li" title="Student Report" id="student_report" onclick="_getActiveStudentPage({divid:'student_report', page: 'student_report', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> Student Report</li>
+                        <li class="hide-li" title="Student Activities" id="student_activities" onclick="_getActiveStudentPage({divid:'student_activities', page: 'student_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> Student Activities</li>
+                        <li class="li" title="Other Links"><i class="bi-three-dots-vertical"></i>
+                            <ul class="ul">
+                                <li title="Dashboard" onclick="_getActiveStudentPage({divid:'student_profile_details', page: 'student_profile_details', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> <span> Dashboard</span></li>
+                                <li title="Transcript" id="tanscript" onclick="_getActiveStudentPage({divid:'tanscript', page: 'tanscript', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> Transcript</li>
+                                <li title="Student Report" id="student_report" onclick="_getActiveStudentPage({divid:'student_report', page: 'student_report', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> Student Report</li>
+                                <li title="Student Activities" onclick="_getActiveStudentPage({divid:'student_activities', page: 'student_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> <span>Student Activities</span></li>
+                            </ul>
+                        </li>           
                     </ul>
                 </div>
             </div>
