@@ -2190,6 +2190,11 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	color: var(--sub-body-color);
 }
 
+.slide-form-div .container-back-div .inner-container .compute-score-back-div .each-compute-score-div .inner-score-div .text-container .text-div .name{ 
+	font-family: title-font;
+	font-size: 14px;
+}
+
 .slide-form-div .container-back-div .inner-container .compute-score-back-div .each-compute-score-div .inner-score-div .text-container .text-field-parent{ 
 	width: 100%;
 	display: flex;
@@ -2215,6 +2220,20 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 @media all and (max-width:500px) {
 	.slide-form-div{
 		width: 100%;																																 
+	}
+	.slide-form-div .container-back-div .inner-container .compute-score-back-div .each-compute-score-div .inner-score-div .image-div{ 
+		display: none;
+	} 
+	.slide-form-div .container-back-div .inner-container .compute-score-back-div .each-compute-score-div .inner-score-div .text-container{ 
+		width: 100%;
+	} 
+	.slide-form-div .title-panel-div{
+		width: calc(100% - 30px);
+		padding: 0px 15px;
+	}
+	.slide-form-div .container-back-div .inner-container{
+		width: calc(100% - 30px);
+		padding: 20px 15px 30px 15px;
 	}
 }
 

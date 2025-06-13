@@ -902,7 +902,7 @@
                                                     </div>
                                                     <div class="text-container">
                                                         <div class="text-div">
-                                                            <div>${fullName}</div>
+                                                            <div class="name">${fullName}</div>
                                                             <div>${dept.departmentName} -- ${classInfo.className} ${arm.armName}</div>
                                                         </div>
                                                         <div class="text-field-parent">
