@@ -4,7 +4,7 @@
             userRoles.canViewAdministratorDashboard && _getActivePage({page:'administratorDashboard', divid:'dashboard'});
             userRoles.canViewSubjectTeacherDashboard && _getActivePage({page:'subjectTeacherDashboard', divid:'dashboard'});
             userRoles.canViewClassTeacherDashboard && _getActivePage({page:'subjectTeacherDashboard', divid:'dashboard'});
-            userRoles.canViewICTStaffDashboard && _getActivePage({page:'ICTStaffDashboard', divid:'dashboard'});
+            userRoles.canViewIctStaffDashboard && _getActivePage({page:'ICTStaffDashboard', divid:'dashboard'});
             userRoles.canViewBursaryDashboard && _getActivePage({page:'bursaryDashboard', divid:'dashboard'});
         </script>	
 <?php } ?>
@@ -441,7 +441,7 @@
                 <script>
                     $("#MasterCountConfigurations").html(`
                         <div class="inner-div"  onclick="_fetchEachBranches('${staffLoginData.branchId}');">
-                            <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/branch.png" alt="Master Count Configurations"/></div>
+                            <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/branch.png" alt="${staffLoginData.branchName}"/></div>
                             <div class="text-div">
                                 <h3>${staffLoginData.branchName}</h3>
                                 <p>Click here to view your branch details</p>
@@ -455,7 +455,7 @@
                 <script>
                     $("#MyProfile").html(`
                         <div class="inner-div"  onclick="_fetchEachStaff('${staffLoginData.staffId}');">
-                            <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/profile.png" alt="Master Count Configurations"/></div>
+                            <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/profile.png" alt="MY PROFILE"/></div>
                             <div class="text-div">
                                 <h3>MY PROFILE</h3>
                                 <p>Manages Subject Lessons, Assignments, Grades, Attendance, And Student Performance Tracking For Their Designated Subject.</p>
@@ -527,6 +527,134 @@
     </div>
 
    
+<?php } ?>
+
+
+<?php if ($page == 'ICTStaffDashboard') { ?>
+    <div class="page-title-back-div dashbaords-page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
+        <div class="page-title-div">
+            <div class="top-title"><span id="page-title"><i class="bi-speedometer2"></i> Dashboard Overview</span></div>
+            <div class="main-title">👋 Hi, <span id="loginUserName">
+                    <script>
+                        $("#loginUserName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));
+                    </script>
+                </span></div>
+            <div class="bottom-title"><i class="bi-clock"></i> Last Login Date | <span id="loginUserLastLogin">
+                    <script>
+                        $("#loginUserLastLogin").html(staffLoginData.lastLoginTime);
+                    </script>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="pages-back-div dashbaords-pg-back-div">
+        <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
+
+            <div class="user-managment-list" id="MyProfile">
+                <script>
+                    $("#MyProfile").html(`
+                        <div class="inner-div"  onclick="_fetchEachStaff('${staffLoginData.staffId}');">
+                            <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/profile.png" alt="Master Count Configurations"/></div>
+                            <div class="text-div">
+                                <h3>MY PROFILE</h3>
+                                <p>Manages Subject Lessons, Assignments, Grades, Attendance, And Student Performance Tracking For Their Designated Subject.</p>
+                            </div>
+                        </div>
+                    `);
+                </script>
+            </div>
+
+            <div class="user-managment-list" onclick="_getActivePage({page:'branches', divid:'branches'});">
+                <div class="inner-div">
+                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/branch.png" alt="Master Count Configurations"/></div>
+                    <div class="text-div">
+                        <h3>Branches Management</h3>
+                        <p> Manage the administration of a specific school branch, handling staff, student enrollment, schedules, resources, and compliance reporting.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-managment-list" onclick="_getActivePage({page:'staff', divid:'staff'});">
+                <div class="inner-div">
+                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/staff.png" alt="Master Count Configurations"/></div>
+                    <div class="text-div">
+                        <h3>Staff Management</h3>
+                        <p>Manage staff recruitment, roles, attendance, performance, and records of all academic and non-academic staff members.</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="user-managment-list" onclick="_getPage({page: 'user-role-configuration', url: adminPortalLocalUrl});">
+                <div class="inner-div">
+                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/authorization.png" alt="User Role Management"/></div>
+                    <div class="text-div">
+                        <h3>User Role Management</h3>
+                        <p>User role configurations manage permissions, ensuring secure and efficient access to features.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-managment-list" onclick="_getPage({page: 'department_config', url: adminPortalLocalUrl});">
+                <div class="inner-div">
+                    <div class="icon-div">
+                        <img src="<?php echo $websiteUrl?>/images/department.png" alt="Department Configuration"/>
+                    </div>
+                    <div class="text-div">
+                        <h3>Departments</h3>
+                        <p>Manage, add, and update school departments efficiently.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-managment-list" onclick="_getPage({page: 'class_config', url: adminPortalLocalUrl});">
+                <div class="inner-div">
+                    <div class="icon-div">
+                        <img src="<?php echo $websiteUrl?>/images/class.png" alt="Class Configuration"/>
+                    </div>
+                    <div class="text-div">
+                        <h3>Classess</h3>
+                        <p>Create, organize, and manage classes for different levels and departments.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="user-managment-list" onclick="_getPage({page: 'arm_config', url: adminPortalLocalUrl});">
+                <div class="inner-div">
+                    <div class="icon-div">
+                        <img src="<?php echo $websiteUrl?>/images/arms.png" alt="Arms Configuration"/>
+                    </div>
+                    <div class="text-div">
+                        <h3>Arms</h3>
+                        <p>Create, organize, and manage Arms for different Classes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-managment-list" onclick="_getPage({page: 'subject_config', url: adminPortalLocalUrl});">
+                <div class="inner-div">
+                    <div class="icon-div">
+                        <img src="<?php echo $websiteUrl?>/images/subject.png" alt="Subject Configuration"/>
+                    </div>
+                    <div class="text-div">
+                        <h3>Subjects</h3>
+                        <p>Define and manage subjects offered across various classes and departments.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-managment-list" onclick="_getForm({page: 'change_password', url: adminPortalLocalUrl});">
+                <div class="inner-div">
+                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/status.png" alt="User Status Configurations"/></div>
+                    <div class="text-div">
+                        <h3>CHANGE PASSWORD</h3>
+                        <p>Click here to change and upadate your password</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <?php } ?>
 
 

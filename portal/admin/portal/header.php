@@ -13,14 +13,14 @@
                     <script>
                         if (userRoles.canViewBranch) {
                             document.write(`
-                                <li title="Branches" onclick="" id="top-staff"><i class="bi-diagram-3"></i> Branches <div class="num" id="">3</div></li>
+                                <li title="Branches" onclick="_getActivePage({page:'branches', divid:'branches'});" id="top-staff"><i class="bi-diagram-3"></i> Branches <div class="num" id="">3</div></li>
                             `);
                         }
                     </script>
                     <script>
-                        if (userRoles.canViewStaff) {
+                        if ((userRoles.canViewSuperAdminDashboard || userRoles.canViewIctStaffDashboard) && userRoles.canViewStaff) {
                             document.write(`
-                                <li title="Staff" onclick="" id="top-staff"><i class="bi-diagram-3"></i> Staff <div class="num" id="">43</div></li>
+                                <li title="Staff" onclick="_getActivePage({page:'staff', divid:'staff'});" id="top-staff"><i class="bi-diagram-3"></i> Staff <div class="num" id="">43</div></li>
                             `);
                         }
                     </script>
@@ -78,7 +78,11 @@
                             <div class="toggle-profile-name"><span id="loginProfileName"><script>$("#loginProfileName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));</script></span></div>
                             <div class="toggle-profile-others"><span id="loginProfileStaffId"><script>$("#loginProfileStaffId").html(staffLoginData.staffId);</script></span></div>
                             <div class="header-btn-div">
-                                <button class="btn" title="View Profile" type="button" onclick="_getFormWithId('update_staff','');"><i class="bi-person"></i> Profile</button>
+                                <script>
+                                    document.write(`
+                                        <button class="btn" title="View Profile" type="button" onclick="_fetchEachStaff('${staffLoginData.staffId}');"><i class="bi-person"></i> Profile</button>
+                                    `);
+                                </script>
                                 <button class="btn" title="Log-Out" type="button" onclick="_getForm({page: 'logout_confirm_form', url: adminPortalLocalUrl});"><i class="bi-box-arrow-in-right"></i> Log-Out</button>
                             </div>                    
                         </div>

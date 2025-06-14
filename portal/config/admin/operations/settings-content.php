@@ -9,15 +9,6 @@
     
     <div class="pages-back-div settings-pages-back-div">
         <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
-            <div class="user-managment-list" onclick="_getPage('master-count-config', 'master-count-config', '');">
-                <div class="inner-div">
-                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/calculate.png" alt="Master Count Configurations"/></div>
-                    <div class="text-div">
-                        <h3>Master Count Configurations</h3>
-                        <p>Master count configurations manage data totals, ensuring accurate tracking and control.</p>
-                    </div>
-                </div>
-            </div>
 
             <div class="user-managment-list" onclick="_getPage({page: 'user-role-configuration', url: adminPortalLocalUrl});">
                 <div class="inner-div">

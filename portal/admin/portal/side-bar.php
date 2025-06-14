@@ -16,7 +16,7 @@
             `);
         }
 
-        if (userRoles.canViewSuperAdminDashboard && userRoles.canViewStaff) {
+        if ((userRoles.canViewSuperAdminDashboard || userRoles.canViewIctStaffDashboard) && userRoles.canViewStaff) {
             document.write(`
                 <div class="nav-div" title="Staff" onclick="_getActivePage({page:'staff', divid:'staff'});" id="${navId}-staff">
                     <div class="icon"><i class="bi-people"></i> Staff</div> 
