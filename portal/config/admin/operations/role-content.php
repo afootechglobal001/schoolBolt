@@ -126,8 +126,8 @@
                     </div>
 
                     <div class="permission-toggle-div">
-                        <div class="toggle-title">Report Permissions</div>
-                        <div class="fetch-toggle" id="report"></div>
+                        <div class="toggle-title">Account Permissions</div>
+                        <div class="fetch-toggle" id="account"></div>
                     </div>
 
                     <div class="permission-toggle-div">
