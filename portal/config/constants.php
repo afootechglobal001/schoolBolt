@@ -5,6 +5,7 @@
 	$clientName='SchoolBolt Edu System';
 	/////////////////////////////////////////////////////////////////////////////////
 	$clientWebsiteUrl='http://localhost/projects/schoolbolt';
+	//$clientWebsiteUrl='https://schoolbolt.com';
 	$clientWebsiteContactUsUrl=$clientWebsiteUrl.'/contact-us';
 	//$websiteUrl='https://schoolbolt.com/portal'; /// For Live Server Url //
 	$websiteUrl='http://localhost/projects/schoolbolt/portal';
