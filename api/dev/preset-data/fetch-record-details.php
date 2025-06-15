@@ -1,5 +1,5 @@
-<?php require_once '../../../config/connection.php';?>
-<?php require_once '../../../config/staff-session-check.php';?>
+<?php require_once '../config/connection.php';?>
+<?php require_once '../config/staff-session-check.php';?>
 <?php
 if (!$checkBasicSecurity){/// start if 1
     goto end;
@@ -18,6 +18,7 @@ if(!$checkSession){
     $classId = $_GET['classId'];
     $armId = $_GET['armId'];
     $subjectId = $_GET['subjectId'];
+    $reportTypeId = $_GET['reportTypeId'];
 
     if ($branchId) {
         /////////////////// for  $branchId
@@ -51,6 +52,11 @@ if(!$checkSession){
         $subjectDataQuery = mysqli_query($conn, "SELECT subjectId, subjectName FROM SUBJECTS_TAB WHERE $clientIds AND subjectId='$subjectId'");
         $subjectDataFetch = mysqli_fetch_assoc($subjectDataQuery);
     }
+    if ($reportTypeId) {
+        /////////////////// for  $reportTypeId
+        $reportTypeDataQuery = mysqli_query($conn, "SELECT reportTypeId, reportTypeName FROM SETUP_REPORT_TYPE_TAB WHERE reportTypeId='$reportTypeId'");
+        $reportTypeDataFetch = mysqli_fetch_assoc($reportTypeDataQuery);
+    }
     
 
   
@@ -76,6 +82,9 @@ if(!$checkSession){
     }
      if($subjectId){
         $response['subjectData'] = $subjectDataFetch;
+    }
+     if($reportTypeId){
+        $response['reportTypeData'] = $reportTypeDataFetch;
     }
     
 //////////////////////////////////////////////////////////////////////////////////////////////

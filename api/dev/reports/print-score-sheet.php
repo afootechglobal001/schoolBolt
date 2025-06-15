@@ -20,7 +20,7 @@ if (!$checkBasicSecurity){/// start if 1
 
     
      /// get scoresheet coloumns
-    $parentAssessmentSelect="SELECT assessmentId, assessmentName, assessmentTotalScore FROM BRANCH_ASSESSMENT_SETUP_TAB WHERE $clientIds  AND branchId = '$branchId' AND (parentId IS NULL OR parentId = '')";
+    $parentAssessmentSelect="SELECT assessmentId, assessmentName, assessmentTotalScore FROM BRANCH_ASSESSMENT_SETUP_TAB WHERE $clientIds  AND branchId = '$branchId' AND (parentId IS NULL OR parentId = '') AND assessmentTotalScore>0";
     $parentAssessmentQuery=mysqli_query($conn,$parentAssessmentSelect)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($parentAssessmentQuery);
     if($allRecordCount==0){
