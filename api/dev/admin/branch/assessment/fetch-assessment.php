@@ -28,7 +28,7 @@ if(!$checkSession){
 	}
 
           
-            $select="SELECT * FROM BRANCH_ASSESSMENT_SETUP_TAB WHERE $clientIds AND branchId = '$branchId' AND (parentId IS NULL OR parentId = '')  $assessmentIds";
+            $select="SELECT * FROM BRANCH_ASSESSMENT_SETUP_TAB WHERE $clientIds AND branchId = '$branchId' AND (parentId IS NULL OR parentId = '')  AND assessmentTotalScore>0   $assessmentIds";
             $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
             $allRecordCount=mysqli_num_rows($query);
              if($allRecordCount==0){///start if 1
