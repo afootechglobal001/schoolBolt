@@ -65,7 +65,7 @@
                         textField({
                             id: 'subjectAbbreviation',
                             title: 'Subject Abbreviation',
-                            maxlength: '3',
+                            maxlength: '10',
                             value: getEachSubjectSession?.subjectAbbreviation ?? ''
                         });
                     </script>

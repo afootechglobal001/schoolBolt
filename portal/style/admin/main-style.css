@@ -4527,7 +4527,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	min-height:200px;
 	background:var(--white-color);
 	border-radius:7px;
-	overflow:hidden;
+	overflow: hidden;
 }
 .caption-div .title-div{
     width: calc(100% - 40px);
@@ -4571,7 +4571,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 }
 
 .caption-div .div-in{
-	padding:30px;
+	padding: 30px;
     display: flex;
     gap: 20px;
 	flex-direction: column;
