@@ -493,7 +493,7 @@ function _fetchComputeScoreRecordDetails(departmentId, classId, armId, subjectId
 	try {
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/admin/staff/records/fetch-record-details?departmentId=${departmentId}&classId=${classId}&armId=${armId}&subjectId=${subjectId}`,
+			url: `${endPoint}/preset-data/fetch-record-details?departmentId=${departmentId}&classId=${classId}&armId=${armId}&subjectId=${subjectId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(true),

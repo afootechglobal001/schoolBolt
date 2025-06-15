@@ -385,9 +385,9 @@
                         <li class="hide-li" id="dotted" title="Branch Record"><i class="bi-graph-up-arrow"></i> Report
                             <div class="expand-div animated fadeIn">
                                 <ul class="ul-expand">
-                                    <li title="Broad/Report Sheet"><i class="bi-graph-up-arrow"></i>Broad/Report Sheet</li>
+                                    <li title="Broad/Report Sheet" onclick=""><i class="bi-graph-up-arrow"></i>Broad/Report Sheet</li>
                                     <li title="Cumulative Broadsheet"><i class="bi-graph-up-arrow"></i>Cumulative Broadsheet</li>
-                                    <li title="Promotional Panel"><i class="bi-graph-up-arrow"></i>Promotional Panel</li>
+                                    <li title="Promotional Panel"><i class="bi-graph-up-arrow"></i>Promotion Panel</li>
                                 </ul>
                             </div>
                         </li>
@@ -1745,5 +1745,70 @@
                 </div>
             </div>
         </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'broadsheet_select_form') { ?>
+    <div class="caption-div animated zoomIn">
+        <div class="title-div">
+            <div class="title"><i class="bi-table"></i> BROAD/REPORT SHEET</div>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i class="bi-x-lg"></i></button>
+        </div>
+
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, you're about to print broad sheet for each class. Please select the <span>Session</span>, <span>Term</span>, <span>Report Type</span>, <span>Assessment</span> to proceed.</div>
+
+            <div class="text_field_container" id="sessionId_container">
+                <script>
+                    selectField({
+                        id: 'sessionId',
+                        title: 'Select Session'
+                    });
+                    _getSelectSession('sessionId');
+                </script>
+            </div>
+
+           <div class="text_field_container" id="termId_container">
+                <script>
+                    selectField({
+                        id: 'termId',
+                        title: 'Select Term'
+                    });
+                    _getSelectTermId('termId');
+                </script>
+            </div>
+
+            <div class="text_field_container" id="reportTypeId_container">
+                <script>
+                    selectField({
+                        id: 'reportTypeId',
+                        title: 'Select Report Type'
+                    });
+                    _getSelectReportType('reportTypeId');
+                </script>
+            </div>
+
+            <div class="text_field_container" id="assessmentId_container">
+                <script>
+                    selectField({
+                        id: 'assessmentId',
+                        title: 'Select Assessment'
+                    });
+                    _getSelectBranchAssessment('assessmentId');
+                </script>
+            </div>
+
+            <button class="btn" id="submitBtn" title="Proceed Request" onclick="_proceedFetchReportClasses();">PROCEED <i class="bi-arrow-right"></i> </button>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page=='branch_department_class_broadsheet') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <span><i class="bi-people-fill"></i> BRANCH CLASS LIST</span>
+    </div>
+
+    <div class="pages-toggle-back-div" id="pageContent">
+        <script>_fetchBranchDepartmentClass();</script>
     </div>
 <?php } ?>
