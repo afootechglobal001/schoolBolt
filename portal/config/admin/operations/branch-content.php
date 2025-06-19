@@ -385,7 +385,7 @@
                         <li class="hide-li" id="dotted" title="Branch Record"><i class="bi-graph-up-arrow"></i> Report
                             <div class="expand-div animated fadeIn">
                                 <ul class="ul-expand">
-                                    <li title="Broad/Report Sheet" onclick=""><i class="bi-graph-up-arrow"></i>Broad/Report Sheet</li>
+                                    <li title="Broad/Report Sheet" onclick="_getForm({page: 'broadsheet_select_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-graph-up-arrow"></i>Broad/Report Sheet</li>
                                     <li title="Cumulative Broadsheet"><i class="bi-graph-up-arrow"></i>Cumulative Broadsheet</li>
                                     <li title="Promotional Panel"><i class="bi-graph-up-arrow"></i>Promotion Panel</li>
                                 </ul>
@@ -1805,10 +1805,10 @@
 
 <?php if ($page=='branch_department_class_broadsheet') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <span><i class="bi-people-fill"></i> BRANCH CLASS LIST</span>
+        <div><span><i class="bi-person-bounding-box"></i></span> CA BROAD SHEET -- </span> <span id="dashBranchName">SCHOOLBOLT NUR/PRY SCHOOL, ODE REMO</span> - <span id="pageSession">2024/2025</span> - <span id="pageTermName">THIRD TERM</span></div>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent">
-        <script>_fetchBranchDepartmentClass();</script>
+        <script>_fetchBroadsheetClass();</script>
     </div>
 <?php } ?>

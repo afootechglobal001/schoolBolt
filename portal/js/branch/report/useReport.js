@@ -104,12 +104,11 @@ function _proceedFetchReportClasses(){
 	}
 
 	sessionStorage.setItem("fetchInfoParams", JSON.stringify(fetchInfoParams));
-	console.log({fetchInfoParams});
 	_getActiveBranchPage({divid:'branch_department_class_broadsheet', page: 'branch_department_class_broadsheet', url: adminPortalLocalUrl});
 	_alertClose(2);
 }
 
-function _fetchBranchDepartmentClass() {
+function _fetchBroadsheetClass() {
     let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
     $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");
 
@@ -137,7 +136,7 @@ function _fetchBranchDepartmentClass() {
 
                         text += `
                             <div class="pages-toggle-div">
-                                <div class="pages-toggle-title" onclick="_collapse('view${no}');" title="Click to view class teachers">
+                                <div class="pages-toggle-title" onclick="_collapse('view${no}');" title="Click to view classess">
                                     <h3>${departmentName}</h3>
                                     <div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
                                 </div>
@@ -159,10 +158,10 @@ function _fetchBranchDepartmentClass() {
                                                     <th>sn</th>
                                                     <th>Department</th>
                                                     <th>Class</th>
-                                                    <th>Teacher</th>
-                                                    <th>Edit</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
+											
                                             <tbody>`;
 
 												let sn = 0; 
@@ -179,49 +178,24 @@ function _fetchBranchDepartmentClass() {
 																const armInfo = armData[k];
 																const arm = armInfo.armName;
 																const armId = armInfo.armId;
-																const teacherData = armInfo.teacherData;
 
 																text += `
-																	<tr class="tb-row">
-																		<td>${sn}</td>
-																		<td>${departmentName}</td>
-																		<td>${className} ${arm}</td>`;
-
-																		if (teacherData && typeof teacherData) {
-																			const fullname = teacherData.fullname;
-																			const emailAddress = teacherData.emailAddress;
-																			const profilePix = teacherData.profilePix ? teacherData.profilePix : "default.jpg";
-
-																			text += `
-																				<td>
-																					<div class="text-back-div">
-																						<div class="image-div general-passport">
-																							<img src="${websiteUrl}/uploaded_files/staffPix/${profilePix}" alt="${fullname}"/>
-																						</div>
-
-																						<div class="text-div">
-																							<div class="first-class">${fullname}</div>
-																							<div class="second-class">${emailAddress}</div>
-																						</div>
-																					</div>
-																				</td>`;
-																		} else {
-																			text += '<td>No Teacher Assigned</td>';
-																		}
-
-																		text += `
-																		<td><button class="btn view-btn" title="Click to edit assign class teacher" onclick="_fetchClassTeacher('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> ASSIGN</button></td>
-																	</tr>`;
+																<tr class="tb-row">
+																	<td>${sn}</td>
+																	<td>${departmentName}</td>
+																	<td>${className} ${arm}</td>
+																	<td><button class="btn view-btn" title="Click to print broad sheet" id="printBtn" onclick="_printBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT BROAD SHEET</button></td>
+																</tr>`;
 															}
 														} else {
 															sn++;
 															text += `
-																<tr class="tb-row">
-																	<td>${sn}</td>
-																	<td>${departmentName}</td>
-																	<td>${className} (No Arm)</td>
-																	<td colspan="2">No Teacher Assigned</td>
-																</tr>`;
+															<tr class="tb-row">
+																<td>${sn}</td>
+																<td>${departmentName}</td>
+																<td>${className} (No Arm)</td>
+																<td></td>
+															</tr>`;
 														}
 													}
 												} 
