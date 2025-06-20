@@ -170,10 +170,6 @@
 	color: var(--sub-body-color);
 }
 
-.table-div .table .tb-row:hover {
-	background: rgba(215, 215, 215, .3);
-}
-
 .table-div .table .other-tb-row {
 	color: var(--sub-body-color);
 }
