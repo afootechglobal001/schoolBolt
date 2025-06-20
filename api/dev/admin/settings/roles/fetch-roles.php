@@ -10,6 +10,18 @@ if(!$checkSession){
 	$response['message']="SESSION EXPIRED! Please LogIn Again.";
 	goto end;
 }
+
+        $allowedRoles = ["R001", "R002", "R003"];
+        if (!in_array($loginRoleId, $allowedRoles)) {
+            $response = [
+                'response'=> 100,
+                'success'=> false,
+                'message'=> "PERMISSION REQUIRED TO FETCH ROLE! Contact your administrator.",
+                'loginRoleId'=> $loginRoleId,
+            ]; 
+            goto end;
+        }
+
     //////////////////declaration of variables//////////////////////////////////////
     $q = $_GET['q'];
     $roleId = $_GET['roleId'];
@@ -25,7 +37,16 @@ if(!$checkSession){
     }
     // Securely escape $q
     $q = mysqli_real_escape_string($conn, $q);
-    $select = "SELECT * FROM ROLE_TAB WHERE $clientIds AND (roleName LIKE '%$q%' OR roleDescription LIKE '%$q%') $roleIds";
+     if($loginRoleId=="R001"){ /// super admin
+        $select = "SELECT * FROM ROLE_TAB WHERE $clientIds AND (roleName LIKE '%$q%' OR roleDescription LIKE '%$q%') $roleIds";
+     }
+     if($loginRoleId=="R002"){ /// ict admin
+        $select = "SELECT * FROM ROLE_TAB WHERE $clientIds AND roleId!='R001' AND (roleName LIKE '%$q%' OR roleDescription LIKE '%$q%') $roleIds";
+     }
+    if($loginRoleId=="R003"){ /// admin
+        $select = "SELECT * FROM ROLE_TAB WHERE $clientIds AND (roleId!='R001' AND roleId!='R002') AND (roleName LIKE '%$q%' OR roleDescription LIKE '%$q%') $roleIds";
+     }
+    
 
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($query);

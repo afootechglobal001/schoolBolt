@@ -11,6 +11,16 @@ if(!$checkSession){
 	goto end;
 }
 
+        $allowedRoles = ["R001", "R002"];
+        if (!in_array($loginRoleId, $allowedRoles)) {
+        $response = [
+            'response'=> 100,
+            'success'=> false,
+            'message'=> "PERMISSION REQUIRED TO CREATE STAFF! Contact your administrator.",
+        ]; 
+        goto end;
+    }
+
 	//////////////////declaration of variables//////////////////////////////////////
     $titleId=trim(strtoupper($_POST['titleId']));
 	$firstName=trim(strtoupper($_POST['firstName']));
@@ -184,6 +194,7 @@ if(!$checkSession){
                 mysqli_query($conn,"UPDATE `STAFF_TAB` SET profilePix='$passportName' WHERE staffId='$staffId'")or die (mysqli_error($conn));
             }
 
+            
             $response['response']=200; 
             $response['success']=true;
             $response['message']="STAFF CREATED SUCCESFFULY!"; 
