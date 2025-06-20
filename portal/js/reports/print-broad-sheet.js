@@ -1,10 +1,11 @@
 function _printBroadSheet(departmentId, classId, armId) {
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
-	let fetchInfoParams = JSON.parse(sessionStorage.getItem("fetchInfoParams"));
+	let fetchPresetDataSession = JSON.parse(sessionStorage.getItem("fetchPresetDataSession"));
 
-	const session = fetchInfoParams?.session;
-	const termId = fetchInfoParams?.termId;
-	const assessmentId = fetchInfoParams?.assessmentId;
+	const session = fetchPresetDataSession?.session;
+	const termId = fetchPresetDataSession?.termData?.termId;
+	const assessmentId = fetchPresetDataSession?.assessmentData?.assessmentId;
+	
 	try {
 		$.ajax({
 			type: "GET",

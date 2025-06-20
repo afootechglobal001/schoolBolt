@@ -11,7 +11,6 @@
 </head>
 
 <body>
-    <script> printStudentScoreSheetSession = JSON.parse(sessionStorage.getItem("printStudentScoreSheetSession"));</script>
     <script> printBroadSheetsession = JSON.parse(sessionStorage.getItem("printBroadSheetsession"));</script>
 
 
@@ -26,34 +25,34 @@
                     <div class="text-div">
                         <h3 id="branchName">
                             <script>
-                                $("#branchName").html(printStudentScoreSheetSession?.branchData?.branchName);
+                                $("#branchName").html(printBroadSheetsession?.branchData?.branchName);
                             </script>
                         </h3>
                         <div class="text">Address: <strong id="address">
                                 <script>
-                                    $("#address").html(printStudentScoreSheetSession?.branchData?.address);
+                                    $("#address").html(printBroadSheetsession?.branchData?.address);
                                 </script>
                             </strong></div>
                         <div class="text">Phone: <strong id="mobileNumber">
                                 <script>
-                                    $("#mobileNumber").html(printStudentScoreSheetSession?.branchData?.mobileNumber);
+                                    $("#mobileNumber").html(printBroadSheetsession?.branchData?.mobileNumber);
                                 </script>
                             </strong> | Official Email: <strong id="smtpUsername">
                                 <script>
-                                    $("#smtpUsername").html(printStudentScoreSheetSession?.branchData?.smtpUsername);
+                                    $("#smtpUsername").html(printBroadSheetsession?.branchData?.smtpUsername);
                                 </script>
                             </strong></div>
                     </div>
                 </div>
             </div>
-            <div class="title-div"><span id="titleDetails">Loading... </span>SCORE SHEET</div>
+            <div class="title-div"><span id="titleDetails">Loading... </span>BROAD SHEET</div>
             <script>
-                $("#titleDetails").html(printStudentScoreSheetSession?.session + ' - ' +
-                    printStudentScoreSheetSession?.termData?.termName + ' - ' +
-                    printStudentScoreSheetSession?.departmentData?.departmentName + ' - ' +
-                    printStudentScoreSheetSession?.classData?.className + ' - ' +
-                    printStudentScoreSheetSession?.armData?.armName + ' - ' +
-                    printStudentScoreSheetSession?.subjectData?.subjectName);
+                $("#titleDetails").html(printBroadSheetsession?.session + ' - ' +
+                    printBroadSheetsession?.termData?.termName + ' - ' +
+                    printBroadSheetsession?.departmentData?.departmentName + ' - ' +
+                    printBroadSheetsession?.classData?.className + ' - ' +
+                    printBroadSheetsession?.armData?.armName + ' - ' +
+                    printBroadSheetsession?.assessmentData?.assessmentName);
             </script>
         </div>
 

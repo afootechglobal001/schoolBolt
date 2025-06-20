@@ -59,53 +59,75 @@ function _getSelectSession(fieldId){
 }
 
 function _proceedFetchReportClasses(){
-	let issueCount=0;
-	const session = $('#sessionId').val();
-	const termId = $('#termId').val();
-	const reportTypeId = $('#reportTypeId').val();
-	const assessmentId = $('#assessmentId').val();
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
 
-	$('#sessionId, #termId, #reportTypeId, #assessmentId').removeClass('issue');
-	$('#issue_sessionId, #issue_termId, #issue_reportTypeId, #issue_assessmentId').html('');
+	try {
+		let issueCount=0;
+		const session = $('#sessionId').val();
+		const termId = $('#termId').val();
+		const reportTypeId = $('#reportTypeId').val();
+		const assessmentId = $('#assessmentId').val();
 
-	if (!session) {
-		$('#sessionId').addClass('issue');
-		$('#issue_sessionId').html('USER ERROR! Kindly select session to continue');
-		issueCount++;
+		$('#sessionId, #termId, #reportTypeId, #assessmentId').removeClass('issue');
+		$('#issue_sessionId, #issue_termId, #issue_reportTypeId, #issue_assessmentId').html('');
+
+		if (!session) {
+			$('#sessionId').addClass('issue');
+			$('#issue_sessionId').html('USER ERROR! Kindly select session to continue');
+			issueCount++;
+		}
+
+		if (!termId) {
+			$('#termId').addClass('issue');
+			$('#issue_termId').html('USER ERROR! Kindly select term to continue');
+			issueCount++;
+		}
+
+		if (!reportTypeId) {
+			$('#reportTypeId').addClass('issue');
+			$('#issue_reportTypeId').html('USER ERROR! Kindly select report type to continue');
+			issueCount++;
+		}
+
+		if (!assessmentId) {
+			$('#assessmentId').addClass('issue');
+			$('#issue_assessmentId').html('USER ERROR! Kindly select assessment to continue');
+			issueCount++;
+		}
+
+		if (issueCount>0){
+			return;
+		}
+
+		const btnText = $("#proceedBtn").html();
+		$("#proceedBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+		$("#proceedBtn").prop("disabled", true);
+
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/preset-data/fetch-record-details?branchId=${getEachBranchDetailsSession.branchId}&session=${session}&termId=${termId}&assessmentId=${assessmentId}`,
+			dataType: "json", 
+			cache: false, 
+			headers: getAuthHeaders(true),
+			success: function (info) {
+			if (info.success) {
+				sessionStorage.setItem("fetchPresetDataSession", JSON.stringify(info));
+				_getActiveBranchPage({divid:'branch_department_class_broadsheet', page: 'branch_department_class_broadsheet', url: adminPortalLocalUrl});
+				_alertClose(2);
+			} else {
+				_actionAlert(info.message, false);
+			}
+			$("#proceedBtn").html(btnText).prop("disabled", false);
+		},
+			error: function (error) {
+				_actionAlert('An error occurred while processing your request! Please Try Again', false);
+				$("#proceedBtn").html(btnText).prop("disabled", false);
+			}
+		});
+	} catch (error) {
+		_actionAlert('An unexpected error occurred! Please Try Again', false);
+		$("#proceedBtn").prop("disabled", false);
 	}
-
-	if (!termId) {
-		$('#termId').addClass('issue');
-		$('#issue_termId').html('USER ERROR! Kindly select term to continue');
-		issueCount++;
-	}
-
-	if (!reportTypeId) {
-		$('#reportTypeId').addClass('issue');
-		$('#issue_reportTypeId').html('USER ERROR! Kindly select report type to continue');
-		issueCount++;
-	}
-
-	if (!assessmentId) {
-		$('#assessmentId').addClass('issue');
-		$('#issue_assessmentId').html('USER ERROR! Kindly select assessment to continue');
-		issueCount++;
-	}
-
-	if (issueCount>0){
-		return;
-	}
-
-	const fetchInfoParams={
-		session: session,
-		termId: termId,
-		reportTypeId: reportTypeId,
-		assessmentId: assessmentId
-	}
-
-	sessionStorage.setItem("fetchInfoParams", JSON.stringify(fetchInfoParams));
-	_getActiveBranchPage({divid:'branch_department_class_broadsheet', page: 'branch_department_class_broadsheet', url: adminPortalLocalUrl});
-	_alertClose(2);
 }
 
 function _fetchBroadsheetClass() {

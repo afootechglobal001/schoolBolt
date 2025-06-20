@@ -1798,14 +1798,16 @@
                 </script>
             </div>
 
-            <button class="btn" id="submitBtn" title="Proceed Request" onclick="_proceedFetchReportClasses();">PROCEED <i class="bi-arrow-right"></i> </button>
+            <button class="btn" id="proceedBtn" title="Proceed Request" onclick="_proceedFetchReportClasses();">PROCEED <i class="bi-arrow-right"></i> </button>
         </div>
     </div>
 <?php } ?>
 
 <?php if ($page=='branch_department_class_broadsheet') { ?>
+    <script> fetchPresetDataSession = JSON.parse(sessionStorage.getItem("fetchPresetDataSession"));</script>
+
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <div><span><i class="bi-person-bounding-box"></i></span> CA BROAD SHEET -- </span> <span id="dashBranchName">SCHOOLBOLT NUR/PRY SCHOOL, ODE REMO</span> - <span id="pageSession">2024/2025</span> - <span id="pageTermName">THIRD TERM</span></div>
+        <div><span><i class="bi-person-bounding-box"></i></span> CA BROAD SHEET -- </span> <span id="broadBranchName"><script>$("#broadBranchName").html(fetchPresetDataSession?.branchData?.branchName);</script></span> - <span id="BroadSession"><script>$("#BroadSession").html(fetchPresetDataSession?.session);</script></span> - <span id="broadTerm"><script>$("#broadTerm").html(fetchPresetDataSession?.termData?.termName);</script></span>- <span id="broadAssessmentName"><script>$("#broadAssessmentName").html(fetchPresetDataSession?.assessmentData?.assessmentName);</script></span></div>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent">

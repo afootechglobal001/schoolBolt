@@ -67,8 +67,8 @@
                             </div>
 
                             <div class="bottom-div">
-                            <a href="<?php echo $websiteUrl ?>/staff/login" title="<?php echo $appName ?>">
-                            <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
+                                <a href="<?php echo $websiteUrl ?>/admin/login" title="<?php echo $appName ?>">
+                                <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
                             </div>
                         </div>
 
@@ -83,8 +83,8 @@
                             </div>
 
                             <div class="bottom-div">
-                            <a href="<?php echo $websiteUrl ?>/account/login" title="<?php echo $appName ?>">
-                            <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
+                                <a href="<?php echo $websiteUrl ?>/admin/login" title="<?php echo $appName ?>">
+                                <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
                             </div>
                         </div>
 
@@ -99,7 +99,7 @@
                             </div>
 
                             <div class="bottom-div">
-                                <a href="<?php echo $websiteUrl ?>/student/login" title="<?php echo $appName ?>">
+                                <a href="<?php echo $websiteUrl ?>/#" title="<?php echo $appName ?>">
                                 <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
                             </div>
                         </div>
@@ -114,8 +114,8 @@
                             </div>
 
                             <div class="bottom-div">
-                            <a href="<?php echo $websiteUrl ?>/parent/login" title="<?php echo $appName ?>">
-                            <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
+                                <a href="<?php echo $websiteUrl ?>/parent/login" title="<?php echo $appName ?>">
+                                <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
                             </div>
                         </div>
                     </div>

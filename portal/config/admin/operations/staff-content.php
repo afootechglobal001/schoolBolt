@@ -620,9 +620,15 @@
                 </script>
             </div>
         </div>
-        <div class="btn-div">
-            <button class="btn" title="UPDATE PROFILE" id="updateBtn" onclick="_updateStaff();"> UPDATE PROFILE <i class="bi-check"></i></button>
-        </div>
+
+        <div class="btn-div" id="staffBtn"></div>
+        <script>
+            if (userRoles.canModifyStaff) {
+               $("#staffBtn").html(`
+                    <button class="btn" title="UPDATE PROFILE" id="updateBtn" onclick="_updateStaff();"> UPDATE PROFILE <i class="bi-check"></i></button>
+                `);
+            }
+        </script>
     </div>
 <?php } ?>
 
