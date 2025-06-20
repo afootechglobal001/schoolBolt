@@ -49,11 +49,41 @@ if (!$checkBasicSecurity){/// start if 1
     //$tableTitles .=", NO. OF SUBJECTS, MARK OBTAINABLE (%), MARK OBTAINED (%), TOTAL PERCENTAGE, POSTN. IN CALSS, REMARKS";
 
 
+    $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, address, smtpUsername, mobileNumber  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+    $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
+
+    $termDataQuery = mysqli_query($conn, "SELECT * FROM SETUP_TERM_TAB WHERE termId='$termId'");
+    $termDataFetch = mysqli_fetch_assoc($termDataQuery);
+
+    $departmentDataQuery = mysqli_query($conn, "SELECT departmentId, departmentName FROM DEPARTMENTS_TAB WHERE $clientIds AND departmentId='$departmentId'");
+    $departmentDataFetch = mysqli_fetch_assoc($departmentDataQuery);
+
+    $classDataQuery = mysqli_query($conn, "SELECT classId, className FROM CLASSES_TAB WHERE $clientIds AND classId='$classId'");
+    $classDataFetch = mysqli_fetch_assoc($classDataQuery);
+
+        $armDataQuery = mysqli_query($conn, "SELECT armId, armName FROM ARMS_TAB WHERE $clientIds AND armId='$armId'");
+    $armDataFetch = mysqli_fetch_assoc($armDataQuery);
+
+    $subjectDataQuery = mysqli_query($conn, "SELECT subjectId, subjectName FROM SUBJECTS_TAB WHERE $clientIds AND subjectId='$subjectId'");
+    $subjectDataFetch = mysqli_fetch_assoc($subjectDataQuery);
+
+    $assessmentDataQuery = mysqli_query($conn, "SELECT assessmentId, assessmentName FROM BRANCH_ASSESSMENT_SETUP_TAB  WHERE $clientIds AND branchId='$branchId' AND assessmentId='$assessmentId'");
+    $assessmentDataFetch = mysqli_fetch_assoc($assessmentDataQuery);
+
     $response['response']=200; 
     $response['success']=true;
     $response['message']="BROADSHEET FETCHED SUCCESFFULY!";
     $response['allRecordCount']=$allRecordCount;
+    $response['session'] = $session;
+    $response['branchData'] = $branchDataFetch;
+    $response['termData'] = $termDataFetch;
+    $response['departmentData'] = $departmentDataFetch;
+    $response['classData'] = $classDataFetch;
+    $response['armData'] = $armDataFetch;
+    $response['subjectData'] = $subjectDataFetch;
+    $response['assessmentData'] = $assessmentDataFetch;
     $response['tableTitles']=$tableTitles;
+    
     $response['studentData'] = array();
 
     //// get all students

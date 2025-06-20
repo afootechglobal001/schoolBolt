@@ -19,13 +19,19 @@ if(!$checkSession){
     $armId = $_GET['armId'];
     $subjectId = $_GET['subjectId'];
     $reportTypeId = $_GET['reportTypeId'];
+    $assessmentId = $_GET['assessmentId'];
 
     if ($branchId) {
         /////////////////// for  $branchId
         $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, address, smtpUsername, mobileNumber  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
         $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
-        $session=$branchDataFetch['session'];
-        $termId=$branchDataFetch['termId'];
+        if (!$session){
+            $session=$branchDataFetch['session'];
+        }
+        if (!$termId){
+            $termId=$branchDataFetch['termId'];
+        }
+
     }
     if ($termId) {
         /////////////////// for  $termId
@@ -58,8 +64,12 @@ if(!$checkSession){
         $reportTypeDataFetch = mysqli_fetch_assoc($reportTypeDataQuery);
     }
     
+    if ($assessmentId) {
+        /////////////////// for  $reportTypeId
+        $assessmentDataQuery = mysqli_query($conn, "SELECT assessmentId, assessmentName FROM BRANCH_ASSESSMENT_SETUP_TAB  WHERE $clientIds AND branchId='$branchId' AND assessmentId='$assessmentId'");
+        $assessmentDataFetch = mysqli_fetch_assoc($assessmentDataQuery);
+    }
 
-  
     $response['response']=200; 
     $response['success']=true;
     if($branchId){
@@ -85,6 +95,9 @@ if(!$checkSession){
     }
      if($reportTypeId){
         $response['reportTypeData'] = $reportTypeDataFetch;
+    }
+    if($assessmentId){
+        $response['assessmentData'] = $assessmentDataFetch;
     }
     
 //////////////////////////////////////////////////////////////////////////////////////////////
