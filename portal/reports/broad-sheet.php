@@ -11,10 +11,11 @@
 </head>
 
 <body>
-    <script> printBroadSheetsession = JSON.parse(sessionStorage.getItem("printBroadSheetsession"));</script>
+    <script>
+        printBroadSheetsession = JSON.parse(sessionStorage.getItem("printBroadSheetsession"));
+    </script>
 
-
-    <section class="body-div">
+    <section class="body-div broadsheet-body">
         <div class="header-back-div">
             <div class="header-div">
                 <div class="inner-div">
@@ -56,35 +57,72 @@
             </script>
         </div>
 
-        <div class="inner-content">
-            <div class="table-div computation-table animated fadeIn">
+        <div class="inner-content broadsheet-inner-content">
+            <div class="table-div computation-table broadsheet-table  animated fadeIn">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
-                        $(document).ready(function () {
+                        $(document).ready(function() {
                             const printBroadSheetsession = JSON.parse(sessionStorage.getItem("printBroadSheetsession"));
-
                             if (!printBroadSheetsession) return;
 
-                            const tableTitles = printBroadSheetsession.tableTitles.split(',').map(x => x.trim());
-                            const studentList = printBroadSheetsession.studentData;
-                            const scoreList = printBroadSheetsession.scoreData;
+                            const tableTitles = printBroadSheetsession?.tableTitles.split(',').map(x => x.trim());
+                            const studentList = printBroadSheetsession?.studentData;
+                            const scoreList = printBroadSheetsession?.scoreData;
+                            const summaryData = printBroadSheetsession?.summaryData;
 
                             const scoreMap = {};
 
+                            // Build scoreMap from subjects
                             scoreList.forEach(subject => {
                                 const abbr = subject.subjectAbbreviation;
                                 scoreMap[abbr] = {};
 
                                 if (Array.isArray(subject.studentScorePerSubject)) {
-                                subject.studentScorePerSubject.forEach(scoreEntry => {
-                                    scoreMap[abbr][scoreEntry.studentId] = scoreEntry.markObtained;
-                                });
+                                    subject.studentScorePerSubject.forEach(scoreEntry => {
+                                        scoreMap[abbr][scoreEntry.studentId] = scoreEntry.markObtained;
+                                    });
                                 }
+                            });
+
+                            // Add summary data into scoreMap
+                            const studentKeys = Object.keys(studentList[0]);
+                            const summaryFields = Object.keys(summaryData[0]).filter(k =>
+                                !studentKeys.includes(k)
+                            );
+
+                            summaryFields.forEach(field => {
+                                scoreMap[field] = {}; // Prepare a new entry for summaryField key
+                                summaryData.forEach(summary => {
+                                    scoreMap[field][summary.studentId] = summary[field];
+                                });
+                            });
+
+                            function normalizeWords(str) {
+                                return str.replace(/[\W_]+/g, ' ') // Remove punctuation
+                                    .replace(/([a-z])([A-Z])/g, '$1 $2') // Split camelCase
+                                    .toLowerCase()
+                                    .split(' ')
+                                    .filter(Boolean);
+                            }
+
+                            tableTitles.forEach(title => {
+                                const titleWords = normalizeWords(title);
+
+                                summaryFields.forEach(field => {
+                                    const fieldWords = normalizeWords(field);
+
+                                    // Match if at least one word overlaps
+                                    const hasOverlap = titleWords.some(word => fieldWords.includes(word));
+
+                                    if (hasOverlap) {
+                                        scoreMap[title] = scoreMap[field];
+                                    }
+                                });
                             });
 
                             const thead = $('<thead></thead>');
                             const headerRow = $('<tr class="tb-col"></tr>');
-                        
+
                             tableTitles.forEach(title => {
                                 headerRow.append($('<th class="th"></th>').text(title));
                             });
@@ -101,16 +139,18 @@
                                 row.append($('<td class="td"></td>').text(fullName));
 
                                 for (let i = 2; i < tableTitles.length; i++) {
-                                const subjectAbbr = tableTitles[i];
-                                const score = scoreMap[subjectAbbr] && scoreMap[subjectAbbr][student.studentId] ? scoreMap[subjectAbbr][student.studentId] : '';
-                                row.append($('<td class="td"></td>').text(score));
+                                    const subjectAbbr = tableTitles[i];
+                                    const score = scoreMap[subjectAbbr] && scoreMap[subjectAbbr][student.studentId] ? scoreMap[subjectAbbr][student.studentId] : '';
+                                    row.append($('<td class="td"></td>').text(score));
                                 }
 
                                 tbody.append(row);
                             });
+
                             $('#pageContent').empty().append(thead).append(tbody);
                         });
                     </script>
+
                 </table>
             </div>
         </div>
