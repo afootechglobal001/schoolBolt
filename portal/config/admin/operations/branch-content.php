@@ -428,7 +428,7 @@
                                 <li title="Branch Report" id="dotted"><i class="bi-graph-up-arrow"></i> <span>Report</span>
                                     <div class="expand-div animated fadeIn">
                                         <ul class="ul-expand">
-                                            <li title="Broad/Report Sheet"><i class="bi-graph-up-arrow"></i>Broad/Report Sheet</li>
+                                            <li title="Broad/Report Sheet" onclick="_getForm({page: 'broadsheet_select_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-graph-up-arrow"></i>Broad/Report Sheet</li>
                                             <li title="Cumulative Broadsheet"><i class="bi-graph-up-arrow"></i>Cumulative Broadsheet</li>
                                             <li title="Promotional Panel"><i class="bi-graph-up-arrow"></i>Promotional Panel</li>
                                         </ul>

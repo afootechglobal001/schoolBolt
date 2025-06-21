@@ -10,6 +10,11 @@
     flex-direction: column;
 }
 
+.broadsheet-body{
+	width: min-content;
+  	min-width: 1500px;
+}
+
 .body-div .header-back-div{
 	width: 100%;
 	display: flex;
@@ -91,6 +96,9 @@
 	padding-bottom: 40px;
 }
 
+.body-div .broadsheet-inner-content{
+    width:98.5%;
+}
 
 /* Table Style*/
 .table-div{
@@ -110,6 +118,10 @@
 	border-right: 0px;
 	border-bottom: 0px;
 	border-radius: 5px;
+}
+
+.broadsheet-table{
+	overflow: visible;
 }
 
 .table-div .table {
