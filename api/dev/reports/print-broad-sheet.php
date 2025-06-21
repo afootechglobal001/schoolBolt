@@ -149,7 +149,7 @@ if (!$checkBasicSecurity){/// start if 1
         $fetch['totalMarkObtained'] = $totalMarkObtainedFetch['totalMarkObtained'];
         
         // Calculate totalPercentage
-        $fetch['totalPercentage'] = number_format(($fetch['totalMarkObtained'] / $fetch['totalMarkObtainable']) * 100, 2);
+        $fetch['totalPercentage'] = number_format(($fetch['totalMarkObtained'] / $fetch['totalMarkObtainable']) * 100, 2) . '%'; // Assuming totalMarkObtainable is the sum of all subjects' maximum marks
 
         // get positionInClass
         $positionQuery = mysqli_query($conn, "SELECT COUNT(*) AS position FROM 
@@ -162,8 +162,8 @@ if (!$checkBasicSecurity){/// start if 1
         WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' 
         AND classId='$classId' AND armId='$armId' AND studentId='$studentId' AND assessmentId='$assessmentId'))") or die (mysqli_error($conn));
         $positionFetch = mysqli_fetch_assoc($positionQuery);
-        $fetch['positionInClass'] = $positionFetch['position'] + 1; // Adding 1 to include the current student in the position count
-
+        $positionInClass = $positionFetch['position'] + 1; // Adding 1 to include the current student in the position count
+        $fetch['positionInClass']= $positionInClass . getOrdinalSuffix($positionInClass); // Get ordinal suffix for position
         // Get remarks
         $fetch['remarks'] = getRemark($fetch['totalPercentage']);
         
