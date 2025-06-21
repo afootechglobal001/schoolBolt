@@ -181,6 +181,7 @@ function _fetchBroadsheetClass() {
                                                     <th>Department</th>
                                                     <th>Class</th>
                                                     <th>Action</th>
+													<th>Action</th>
                                                 </tr>
                                             </thead>
 											
@@ -207,6 +208,7 @@ function _fetchBroadsheetClass() {
 																	<td>${departmentName}</td>
 																	<td>${className} ${arm}</td>
 																	<td><button class="btn view-btn" title="Click to print broad sheet" id="printBtn" onclick="_printBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT BROAD SHEET</button></td>
+																	<td><button class="btn view-btn" title="Click to print terminal broad sheet" id="printBtn" onclick="_printTerminalBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT TERMINAL BROAD SHEET</button></td>
 																</tr>`;
 															}
 														} else {
@@ -216,6 +218,7 @@ function _fetchBroadsheetClass() {
 																<td>${sn}</td>
 																<td>${departmentName}</td>
 																<td>${className} (No Arm)</td>
+																<td></td>
 																<td></td>
 															</tr>`;
 														}
