@@ -105,7 +105,7 @@ function _proceedFetchReportClasses(){
 
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/preset-data/fetch-record-details?branchId=${getEachBranchDetailsSession.branchId}&session=${session}&termId=${termId}&assessmentId=${assessmentId}`,
+			url: `${endPoint}/preset-data/fetch-record-details?branchId=${getEachBranchDetailsSession.branchId}&session=${session}&termId=${termId}&assessmentId=${assessmentId}&reportTypeId=${reportTypeId}`,
 			dataType: "json", 
 			cache: false, 
 			headers: getAuthHeaders(true),
@@ -132,6 +132,10 @@ function _proceedFetchReportClasses(){
 
 function _fetchBroadsheetClass() {
     let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+	let fetchPresetDataSession = JSON.parse(sessionStorage.getItem("fetchPresetDataSession"));
+
+	const reportTypeId = fetchPresetDataSession?.reportTypeData?.reportTypeId;
+
     $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");
 
     try {
@@ -165,7 +169,7 @@ function _fetchBroadsheetClass() {
 
                                 <div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
                                     <div class="alert alert-success top-alert-div class-top-alert-div animated fadeIn">
-                                        <span><i class="bi-people-fill"></i> <span>${departmentName}</span> CLASS TEACHERS</span> 
+                                        <span><i class="bi-people-fill"></i> <span>${departmentName}</span> DEPARTMENT </span>
 
                                         <div class="btn-container">
                                             <button class="btn" title="PRINT RECORDS" onclick=""><i class="bi-printer"></i> PRINT</button>
@@ -181,7 +185,6 @@ function _fetchBroadsheetClass() {
                                                     <th>Department</th>
                                                     <th>Class</th>
                                                     <th>Action</th>
-													<th>Action</th>
                                                 </tr>
                                             </thead>
 											
@@ -206,10 +209,23 @@ function _fetchBroadsheetClass() {
 																<tr class="tb-row">
 																	<td>${sn}</td>
 																	<td>${departmentName}</td>
-																	<td>${className} ${arm}</td>
-																	<td><button class="btn view-btn" title="Click to print broad sheet" id="printBtn" onclick="_printBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT BROAD SHEET</button></td>
-																	<td><button class="btn view-btn" title="Click to print terminal broad sheet" id="printBtn" onclick="_printTerminalBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT TERMINAL BROAD SHEET</button></td>
-																</tr>`;
+																	<td>${className} ${arm}</td>`;
+
+																	if (reportTypeId==='BRS'){
+																		text += `
+																		<td>
+																			<div class="btn-div">
+																				<button class="btn view-btn" title="Click to print broad sheet" id="printBtn" onclick="_printBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT BROAD SHEET</button>
+																				<button class="btn view-btn print-btn" title="Click to print terminal broad sheet" id="printBtn" onclick="_printTerminalBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT TERMINAL BROAD SHEET</button>
+																			</div>
+																		</td>`;
+																	} else {
+																		text += `
+																		<td>
+																			<button class="btn view-btn" title="Click to view result summary" id="" onclick="_getForm({page: 'view_result_summary_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-eye"></i> VIEW RESULT SUMMARY</button>
+																		</td>`;
+																	}
+																text +=`</tr>`;
 															}
 														} else {
 															sn++;
@@ -218,7 +234,6 @@ function _fetchBroadsheetClass() {
 																<td>${sn}</td>
 																<td>${departmentName}</td>
 																<td>${className} (No Arm)</td>
-																<td></td>
 																<td></td>
 															</tr>`;
 														}
