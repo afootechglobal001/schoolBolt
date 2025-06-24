@@ -1380,11 +1380,15 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	color: var(--sub-body-color);
 }
 
-.table-div .table th {
+.table-div .table .tb-col th {
     padding: 10px 20px;
 	font-family: body-font;
 	font-size: 12px;
 	font-weight: 100;
+}
+
+.table-div .table .small-font-tb-col th{
+	font-size: 10px;
 }
 
 .table-div .table .tb-row {
@@ -1610,6 +1614,10 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	font-size: 9px;
 }
 
+.table-div .table .tb-row .min-width-btn{
+	min-width: 55px;
+}
+
 .table-div .table .tb-row .edit-btn{
 	min-width: 25px;
 	padding: 6px 8px;
@@ -1621,6 +1629,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 
 .table-div .table .tb-row .btn-div{
 	display: flex;
+	justify-content: flex-start;
 	gap: 5px;
 	background: none;
 }
@@ -3940,6 +3949,10 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 
 .user-profile-div .profile-content-div .branch-field-inner-div{ 
 	gap:15px;
+}
+
+.user-profile-div .profile-content-div .student-result-field-inner-div{ 
+	width: 93%;
 }
 
 .user-profile-div .profile-content-div .student-list-inner-div{ 
