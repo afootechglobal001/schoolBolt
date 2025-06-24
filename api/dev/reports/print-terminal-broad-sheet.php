@@ -135,9 +135,9 @@ if (!$checkBasicSecurity){/// start if 1
         $studentId = $fetch['studentId'];
 
         // Get totalSubjects
-        $totalSubjectsQuery = mysqli_query($conn, "SELECT DISTINCT(b.studentId) FROM BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB a, BRANCH_ASSESSMENT_RECORD_DETAILS_TAB b 
+        $totalSubjectsQuery = mysqli_query($conn, "SELECT DISTINCT(a.subjectId) FROM BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB a, BRANCH_ASSESSMENT_RECORD_DETAILS_TAB b 
         WHERE a.recordId=b.recordId AND  a.clientId='$clientId' AND a.branchId = '$branchId' AND a.session = '$session' AND a.termId = '$termId' 
-        AND a.departmentId = '$departmentId' AND a.classId = '$classId' AND a.armId = '$armId' AND b.studentId='$studentId'") or die (mysqli_error($conn));
+        AND a.departmentId = '$departmentId' AND a.classId = '$classId' AND a.armId = '$armId'") or die (mysqli_error($conn));
         $totalSubjects = mysqli_num_rows($totalSubjectsQuery);
         $fetch['totalSubjects'] = $totalSubjects;
         
@@ -145,12 +145,11 @@ if (!$checkBasicSecurity){/// start if 1
         $fetch['totalMarkObtainable'] = $totalSubjects * 100; // Assuming each subject has a maximum of 100 marks
 
         // get totalMarkObtained
-        $totalMarkObtainedQuery = mysqli_query($conn, "SELECT SUM(percentage) AS totalMarkObtained FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB 
+        $totalMarkObtainedQuery = mysqli_query($conn, "SELECT SUM(markObtained) AS totalMarkObtained FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB 
         WHERE recordId IN 
         (SELECT recordId FROM BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB 
         WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' 
-        AND classId='$classId' AND armId='$armId') AND studentId='$studentId'
-        ") or die (mysqli_error($conn));
+        AND classId='$classId' AND armId='$armId') AND studentId='$studentId'") or die (mysqli_error($conn));
         
         $totalMarkObtainedFetch = mysqli_fetch_assoc($totalMarkObtainedQuery);
         $fetch['totalMarkObtained'] = $totalMarkObtainedFetch['totalMarkObtained'];
