@@ -11,9 +11,9 @@
 </head>
 
 <body>
-    <script> printAssessmentSession = JSON.parse(sessionStorage.getItem("printAssessmentSession"));</script>
+    <script> printResultSummarySession = JSON.parse(sessionStorage.getItem("printResultSummarySession"));</script>
 
-    <section class="body-div terminal-body">
+    <section class="body-div all-terminal-body">
         <div class="header-back-div">
             <div class="header-div">
                 <div class="inner-div">
@@ -22,86 +22,119 @@
                     </div> 
                     
                     <div class="text-div">
-                        <h3 id="branchName">SCHOOLBOLT NUR/PRY SCHOOL, ODE REMO</h3>
-                        <div class="text">Address: <strong id="address">8, ABAREN CLOSE, OFF LOVEALL IKOSI, KETU, LAGOS</strong></div>
-                        <div class="text">Phone: <strong id="mobileNumber">08050202261</strong> | Official Email: <strong id="smtpUsername">school_1@schoolbolt.com</strong></div> 
+                        <h3 id="branchName"><script>$("#branchName").html(printResultSummarySession?.branchData?.branchName);</script></h3>
+                        <div class="text">Address: <strong id="address"><script>$("#address").html(printResultSummarySession?.branchData?.address);</script></strong></div>
+                        <div class="text">Phone: <strong id="mobileNumber"><script>$("#mobileNumber").html(printResultSummarySession?.branchData?.mobileNumber);</script></strong> | Official Email: <strong id="smtpUsername"><script>$("#smtpUsername").html(printResultSummarySession?.branchData?.smtpUsername);</script></strong></div> 
                     </div>
                 </div>
             </div>
-            <div class="title-div"><span id="titleDetails">2023/2024</span> - <span id="">THIRD TERM</span> - <span id="">KINDERGARTEN</span> - <span id="">KG 1 A</span> TERMINAL RESULT SUMMARY</div>
+            <div class="title-div"><span id="titleDetails">Loading...</span>TERMINAL RESULT SUMMARY</div>
+             <script>
+                $("#titleDetails").html(printResultSummarySession?.session + ' - ' +
+                printResultSummarySession?.termData?.termName + ' - ' +
+                printResultSummarySession?.departmentData?.departmentName + ' - ' +
+                printResultSummarySession?.classData?.className + ' ' +
+                printResultSummarySession?.armData?.armName + ' - ' +
+                printResultSummarySession?.assessmentData?.assessmentName);
+            </script>
         </div>
     
         <div class="inner-content">
             <div class="table-div computation-table animated fadeIn">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-                    <thead>
-                        <tr class="tb-col">
-                            <th class="font">sn</th>
-                            <th class="font">Full Name</th>
-                            <th class="font">No. Of Subjects</th>
-                            <th class="font">Mark Obtainable (%)</th>
-                            <th class="font">Mark Obtained (%)</th>
-                            <th class="font">Total Percentage</th>
-                            <th class="font">Postn. In Class</th>
-                            <th class="font">Overall Position</th>
-                            <th class="font">Teacher's Comment</th>
-                            <th class="font">Remark</th>
-                        </tr>
-                    </thead>
+                    <script>
+                        $(document).ready(function() {
+                            const printResultSummarySession = JSON.parse(sessionStorage.getItem("printResultSummarySession"));
+                            if (!printResultSummarySession) return;
 
-                    <tbody>
-                        <tr class="tb-row report-tb-row">
-                            <td class="td">1</td>
-                            <td class="td">AFOLABI MIKE OLUWAGBENGA</td>
-                            <td class="td">20</td>
-                            <td class="td">2000</td>
-                            <td class="td">1273.34</td>
-                            <td class="td">63.67%</td>
-                            <td class="td">7TH(7)</td>
-                            <td class="td">48TH(165)</td>
-                            <td class="td">GOOD RESULT</td>
-                            <td class="td">GOOD</td>
-                        </tr>  
-                        
-                        <tr class="tb-row report-tb-row">
-                            <td class="td">2</td>
-                            <td class="td">AFOLABI MIKE OLUWAGBENGA</td>
-                            <td class="td">20</td>
-                            <td class="td">2000</td>
-                            <td class="td">1273.34</td>
-                            <td class="td">63.67%</td>
-                            <td class="td">7TH(7)</td>
-                            <td class="td">48TH(165)</td>
-                            <td class="td">GOOD RESULT</td>
-                            <td class="td">GOOD</td>
-                        </tr>  
+                            const tableTitles = printResultSummarySession?.tableTitles.split(',').map(x => x.trim());
+                            const studentList = printResultSummarySession?.studentData;
+                            const summaryData = printResultSummarySession?.summaryData;
 
-                        <tr class="tb-row report-tb-row">
-                            <td class="td">3</td>
-                            <td class="td">AFOLABI MIKE OLUWAGBENGA</td>
-                            <td class="td">20</td>
-                            <td class="td">2000</td>
-                            <td class="td">1273.34</td>
-                            <td class="td">63.67%</td>
-                            <td class="td">7TH(7)</td>
-                            <td class="td">48TH(165)</td>
-                            <td class="td">GOOD RESULT</td>
-                            <td class="td">GOOD</td>
-                        </tr>  
+                            const scoreMap = {};
 
-                        <tr class="tb-row report-tb-row">
-                            <td class="td">4</td>
-                            <td class="td">AFOLABI MIKE OLUWAGBENGA</td>
-                            <td class="td">20</td>
-                            <td class="td">2000</td>
-                            <td class="td">1273.34</td>
-                            <td class="td">63.67%</td>
-                            <td class="td">7TH(7)</td>
-                            <td class="td">48TH(165)</td>
-                            <td class="td">GOOD RESULT</td>
-                            <td class="td">GOOD</td>
-                        </tr>  
-                    </tbody>
+                            // Extract summary fields
+                            const studentKeys = Object.keys(studentList[0] || {});
+                            const summaryFields = Object.keys(summaryData[0] || {}).filter(k => !studentKeys.includes(k));
+
+                            // Build scoreMap for summary fields
+                            summaryFields.forEach(field => {
+                                scoreMap[field] = {};
+                                summaryData.forEach(summary => {
+                                    scoreMap[field][summary.studentId] = summary[field];
+                                });
+                            });
+
+                            function normalizeWords(str) {
+                                return str
+                                    .replace(/[\W_]+/g, ' ') // Remove punctuation and underscores
+                                    .replace(/([a-z])([A-Z])/g, '$1 $2') // Split camelCase
+                                    .toLowerCase()
+                                    .split(' ')
+                                    .filter(Boolean);
+                            }
+
+                            // Map tableTitles to scoreMap fields (summary or subject)
+                            tableTitles.forEach(title => {
+                                // First try exact match
+                                if (summaryFields.includes(title)) {
+                                    scoreMap[title] = scoreMap[title];
+                                    return;
+                                }
+
+                                // Try fuzzy matching
+                                const titleWords = normalizeWords(title);
+                                let bestMatch = null;
+                                let bestMatchScore = 0;
+
+                                summaryFields.forEach(field => {
+                                    const fieldWords = normalizeWords(field);
+                                    const overlapCount = titleWords.filter(word => fieldWords
+                                        .includes(word)).length;
+
+                                    if (overlapCount > bestMatchScore) {
+                                        bestMatch = field;
+                                        bestMatchScore = overlapCount;
+                                    }
+                                });
+
+                                if (bestMatch && !scoreMap[title]) {
+                                    scoreMap[title] = scoreMap[bestMatch];
+                                }
+                            });
+
+                            // Build the table
+                            const thead = $('<thead></thead>');
+                            const headerRow = $('<tr class="tb-col"></tr>');
+
+
+                            tableTitles.forEach(title => {
+                                headerRow.append($('<th class="font"></th>').text(title));
+                            });
+
+                            thead.append(headerRow);
+
+                            const tbody = $('<tbody></tbody>');
+
+                            studentList.forEach((student, index) => {
+                                const row = $('<tr class="tb-row report-tb-row"></tr>');
+                                const fullName = `${student.surName} ${student.otherNames || ''}`.trim();
+
+                                row.append($('<td class="td"></td>').text(index + 1));
+                                row.append($('<td class="td"></td>').text(fullName));
+
+                                for (let i = 2; i < tableTitles.length; i++) {
+                                    const title = tableTitles[i];
+                                    const score = scoreMap[title] && scoreMap[title][student.studentId] ? scoreMap[title][student.studentId] : '';
+                                    row.append($('<td class="td"></td>').text(score));
+                                }
+
+                                tbody.append(row);
+                            });
+
+                            $('#pageContent').empty().append(thead).append(tbody);
+                        });
+                    </script>
                 </table>
             </div>
         </div>

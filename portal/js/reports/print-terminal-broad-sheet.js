@@ -4,6 +4,8 @@ function _printTerminalBroadSheet(departmentId, classId, armId) {
 
 	const session = fetchPresetDataSession?.session;
 	const termId = fetchPresetDataSession?.termData?.termId;
+
+	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
 	
 	try {
 		$.ajax({
@@ -19,6 +21,7 @@ function _printTerminalBroadSheet(departmentId, classId, armId) {
 					_alertClose(2);
 				} else {
 					_actionAlert(info.message, false);
+					_alertClose(2);
 					const response = info.response;
 					if (response < 100) {
 						_logOut();

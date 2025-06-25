@@ -222,7 +222,7 @@ function _fetchBroadsheetClass() {
 																	} else {
 																		text += `
 																		<td>
-																			<button class="btn view-btn" title="Click to view result summary" id="" onclick="_getForm({page: 'view_result_summary_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-eye"></i> VIEW RESULT SUMMARY</button>
+																			<button class="btn view-btn" title="Click to view result summary" id="" onclick="_viewResultSummary('${departmentId}','${classId}','${armId}');"><i class="bi-eye"></i> VIEW RESULT SUMMARY</button>
 																		</td>`;
 																	}
 																text +=`</tr>`;
@@ -273,4 +273,46 @@ function _fetchBroadsheetClass() {
         console.error("Error: ", error);
         _actionAlert('An unexpected error occurred! Please try again.', false);
     }
+}
+
+
+function _viewResultSummary(departmentId, classId, armId) {
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+	let fetchPresetDataSession = JSON.parse(sessionStorage.getItem("fetchPresetDataSession"));
+
+	const branchId = getEachBranchDetailsSession?.branchId;
+	const session = fetchPresetDataSession?.session;
+	const termId = fetchPresetDataSession?.termData?.termId;
+	const assessmentId = fetchPresetDataSession?.assessmentData?.assessmentId;
+	
+	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/reports/view-result-summary?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&assessmentId=${assessmentId}`,
+			dataType: "json", 
+			cache: false,   
+			headers: getAuthHeaders(),
+			success: function(info) {
+				if (info.success > 0) {
+					sessionStorage.setItem("getViewResultSummarySession", JSON.stringify(info));
+					_getForm({page: 'view_result_summary_form', layer:2, url: adminPortalLocalUrl});
+				} else {
+					_actionAlert(info.message, false);
+					_alertClose(2);
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}
+				}    
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
 }

@@ -1388,7 +1388,8 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 }
 
 .table-div .table .small-font-tb-col th{
-	font-size: 10px;
+	font-size: 9.5px;
+	padding: 10px 15px;
 }
 
 .table-div .table .tb-row {
@@ -1401,6 +1402,10 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	-webkit-transition:all 0.2s ease-in 0.2s;
 	-ms-transition:all 0.2s ease-in 0.2s;
 	-o-transition:all 0.2s ease-in 0.2s;
+}
+
+.table-div .table .report-tb-row {
+   font-size: 10px;
 }
 
 .table-div .table .tb-row:hover {
@@ -3952,7 +3957,7 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 }
 
 .user-profile-div .profile-content-div .student-result-field-inner-div{ 
-	width: 93%;
+	width: 95%;
 }
 
 .user-profile-div .profile-content-div .student-list-inner-div{ 
