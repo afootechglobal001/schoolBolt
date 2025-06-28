@@ -1977,7 +1977,7 @@
 
                                         const actionTd = $('<td class="td"></td>');
                                         const printButton = $(`
-                                            <button class="btn view-btn min-width-btn" title="Click to print student result" onclick="">
+                                            <button class="btn view-btn min-width-btn" title="Click to print student result" onclick="windowPop('<?php echo $websiteUrl?>/reports/each-terminal-result');">
                                                 <i class="bi-printer"></i> PRINT
                                             </button>
                                         `);
