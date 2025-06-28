@@ -101,7 +101,6 @@ function getOrdinalSuffix($number) {
     if ($lastTwoDigits >= 11 && $lastTwoDigits <= 13) {
         return 'TH';
     }
-
     switch ($lastDigit) {
         case 1:
             return 'ST';
@@ -111,6 +110,25 @@ function getOrdinalSuffix($number) {
             return 'RD';
         default:
             return 'TH';
+    }
+}
+
+
+function getPrincipalComment($percentage) {
+    if ($percentage >= 80) {
+        return 'EXCELLENT RESULT. WORK HARDER.';
+    } elseif ($percentage >= 70) {
+        return 'VERY GOOD RESULT. WORK HARDER.';
+    } elseif ($percentage >= 60) {
+        return 'GOOD RESULT. WORK HARDER.';
+    } elseif ($percentage >= 50) {
+        return 'FAIRLY GOOD RESULT. WORK HARDER.';
+    } elseif ($percentage >= 45) {
+        return 'FAIR RESULT. WORK HARDER.';
+    } elseif ($percentage >= 40) {
+        return 'BELOW AVERAGE. WORK HARDER.';
+    } else {
+        return 'WEAK RESULT. WORK HARDER.';
     }
 }
 ?>
