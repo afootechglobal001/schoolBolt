@@ -19,11 +19,16 @@
 	width: 950px;
 }
 
+.all-terminal-body{
+	width: 980px;
+}
+
 .body-div .header-back-div{
 	width: 100%;
 	display: flex;
     align-items: center;
 	flex-direction: column;
+	gap: 20px;
 }
 
 
@@ -92,12 +97,76 @@
 	color: var(--sub-body-color);
 }
 
+.top-containner-back-div{ 
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 80px;
+}
+
+.top-containner-back-div .inner-div-cont{ 
+ 	width: 95%;
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	min-height: 50px;
+}
+
+.top-containner-back-div .inner-div-cont .image-div{ 
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+	border-radius: 5px;
+}
+
+.top-containner-back-div .inner-div-cont .signature{ 
+	width: 200px;
+	display: flex;
+	align-self: flex-end;
+	overflow: hidden;
+}
+
+.top-containner-back-div .inner-div-cont .image-div img{ 
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.top-containner-back-div .inner-div-cont .content-div {
+	width: calc(100% - 120px);
+    height: auto;
+    display: flex;
+    gap: 22px 32px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.top-containner-back-div .inner-div-cont .content-div .details {
+    padding: 0px 4px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+	gap: 5px;
+    font-size: 12px;
+    border-bottom: #ccc 1px solid;
+    color: var(--sub-body-color);
+	font-family: sub-title-font;
+}
+
+.top-containner-back-div .inner-div-cont .content-div .details span {
+    color: var(--sub-body-color);
+    font-size: 12px;
+	font-family:body-font;
+}
+
 .body-div .inner-content{
     width:95%;
     height: auto;
     display: flex;
     flex-direction: column;
 	padding-bottom: 40px;
+	gap: 30px;
 }
 
 .body-div .broadsheet-inner-content{
@@ -159,6 +228,19 @@
 	border-right: 1px solid rgba(215, 215, 215, .9);
 }
 
+.table-div .table .report-tb-col th{
+	padding: 5px 7px;
+	font-size: 8px;
+	font-weight: none;
+	font-family: sub-title-font;
+	color: var(--sub-body-color);
+	border-right: 1px solid rgba(215, 215, 215, .9);
+	text-align: center;
+}
+
+
+
+
 .table-div .table .font {
 	padding: 8px 12px;
 	font-size: 10px;
@@ -195,7 +277,7 @@
 	font-family: body-font;
 }
 
-.table-div .table .td {
+.table-div .table .report-tb-row td {
 	padding: 8px 12px;
 	font-family: sub-title-font;
 	border-right: 1px solid rgba(215, 215, 215, .9);

@@ -1,0 +1,49 @@
+function _printResultSummary() {
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+	let getViewResultSummarySession = JSON.parse(sessionStorage.getItem("getViewResultSummarySession"));
+
+	const branchId = getEachBranchDetailsSession?.branchId;
+	const session = getViewResultSummarySession?.session;
+	const termId = getViewResultSummarySession?.termData?.termId;
+	const departmentId = getViewResultSummarySession?.departmentData?.departmentId;
+	const classId = getViewResultSummarySession?.classData?.classId;
+	const armId = getViewResultSummarySession?.armData?.armId;
+	const assessmentId = getViewResultSummarySession?.assessmentData?.assessmentId;
+
+	try {
+		const btnText = $("#printBtn").html();
+		$("#printBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+		$("#printBtn").prop("disabled", true);
+
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/reports/view-result-summary?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&assessmentId=${assessmentId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				if (info.success > 0) {
+					sessionStorage.setItem("printResultSummarySession", JSON.stringify(info));
+					windowPop(`${websiteUrl}/reports/terminal-result-summary`);
+				} else {
+					_actionAlert(info.message, false);
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+				$("#printBtn").html(btnText).prop("disabled", false);
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				$("#printBtn").html(btnText).prop("disabled", false);
+			}
+		});
+	} catch (error) {
+		_alertClose(2);
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+		$("#printBtn").prop("disabled", false);
+	}
+}

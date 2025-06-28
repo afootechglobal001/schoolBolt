@@ -65,121 +65,119 @@
             <div class="table-div computation-table broadsheet-table  animated fadeIn">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
-                    $(document).ready(function() {
-                        const printBroadSheetsession = JSON.parse(sessionStorage.getItem(
-                            "printBroadSheetsession"));
-                        if (!printBroadSheetsession) return;
+                        $(document).ready(function() {
+                            const printBroadSheetsession = JSON.parse(sessionStorage.getItem(
+                                "printBroadSheetsession"));
+                            if (!printBroadSheetsession) return;
 
-                        const tableTitles = printBroadSheetsession?.tableTitles.split(',').map(x => x.trim());
-                        const studentList = printBroadSheetsession?.studentData;
-                        const scoreList = printBroadSheetsession?.scoreData;
-                        const summaryData = printBroadSheetsession?.summaryData;
+                            const tableTitles = printBroadSheetsession?.tableTitles.split(',').map(x => x.trim());
+                            const studentList = printBroadSheetsession?.studentData;
+                            const scoreList = printBroadSheetsession?.scoreData;
+                            const summaryData = printBroadSheetsession?.summaryData;
 
-                        const scoreMap = {};
+                            const scoreMap = {};
 
-                        // Build subject scores into scoreMap
-                        scoreList.forEach(subject => {
-                            const abbr = subject.subjectAbbreviation;
-                            scoreMap[abbr] = {};
+                            // Build subject scores into scoreMap
+                            scoreList.forEach(subject => {
+                                const abbr = subject.subjectAbbreviation;
+                                scoreMap[abbr] = {};
 
-                            if (Array.isArray(subject.studentScorePerSubject)) {
-                                subject.studentScorePerSubject.forEach(scoreEntry => {
-                                    scoreMap[abbr][scoreEntry.studentId] = scoreEntry
-                                        .markObtained;
-                                });
-                            }
-                        });
-
-                        // Extract summary fields
-                        const studentKeys = Object.keys(studentList[0] || {});
-                        const summaryFields = Object.keys(summaryData[0] || {}).filter(k => !studentKeys
-                            .includes(k));
-
-                        // Build scoreMap for summary fields
-                        summaryFields.forEach(field => {
-                            scoreMap[field] = {};
-                            summaryData.forEach(summary => {
-                                scoreMap[field][summary.studentId] = summary[field];
-                            });
-                        });
-
-                        function normalizeWords(str) {
-                            return str
-                                .replace(/[\W_]+/g, ' ') // Remove punctuation and underscores
-                                .replace(/([a-z])([A-Z])/g, '$1 $2') // Split camelCase
-                                .toLowerCase()
-                                .split(' ')
-                                .filter(Boolean);
-                        }
-
-                        // Map tableTitles to scoreMap fields (summary or subject)
-                        tableTitles.forEach(title => {
-                            // First try exact match
-                            if (summaryFields.includes(title)) {
-                                scoreMap[title] = scoreMap[title];
-                                return;
-                            }
-
-                            // Try fuzzy matching
-                            const titleWords = normalizeWords(title);
-                            let bestMatch = null;
-                            let bestMatchScore = 0;
-
-                            summaryFields.forEach(field => {
-                                const fieldWords = normalizeWords(field);
-                                const overlapCount = titleWords.filter(word => fieldWords
-                                    .includes(word)).length;
-
-                                if (overlapCount > bestMatchScore) {
-                                    bestMatch = field;
-                                    bestMatchScore = overlapCount;
+                                if (Array.isArray(subject.studentScorePerSubject)) {
+                                    subject.studentScorePerSubject.forEach(scoreEntry => {
+                                        scoreMap[abbr][scoreEntry.studentId] = scoreEntry
+                                            .markObtained;
+                                    });
                                 }
                             });
 
-                            if (bestMatch && !scoreMap[title]) {
-                                scoreMap[title] = scoreMap[bestMatch];
-                            }
-                        });
+                            // Extract summary fields
+                            const studentKeys = Object.keys(studentList[0] || {});
+                            const summaryFields = Object.keys(summaryData[0] || {}).filter(k => !studentKeys
+                                .includes(k));
 
-                        // Build the table
-                        const thead = $('<thead></thead>');
-                        const headerRow = $('<tr class="tb-col"></tr>');
+                            // Build scoreMap for summary fields
+                            summaryFields.forEach(field => {
+                                scoreMap[field] = {};
+                                summaryData.forEach(summary => {
+                                    scoreMap[field][summary.studentId] = summary[field];
+                                });
+                            });
 
-                        tableTitles.forEach(title => {
-                            headerRow.append($('<th class="th"></th>').text(title));
-                        });
-
-                        thead.append(headerRow);
-
-                        const tbody = $('<tbody></tbody>');
-
-                        studentList.forEach((student, index) => {
-                            const row = $('<tr class="tb-row report-tb-row"></tr>');
-                            const fullName =
-                                `${student.surName} ${student.firstName} ${student.otherNames || ''}`
-                                .trim();
-
-                            row.append($('<td class="td"></td>').text(index + 1));
-                            row.append($('<td class="td"></td>').text(fullName));
-
-                            for (let i = 2; i < tableTitles.length; i++) {
-                                const subjectAbbr = tableTitles[i];
-                                const score = scoreMap[subjectAbbr] && scoreMap[subjectAbbr][student
-                                        .studentId
-                                    ] ?
-                                    scoreMap[subjectAbbr][student.studentId] :
-                                    '';
-                                row.append($('<td class="td"></td>').text(score));
+                            function normalizeWords(str) {
+                                return str
+                                    .replace(/[\W_]+/g, ' ') // Remove punctuation and underscores
+                                    .replace(/([a-z])([A-Z])/g, '$1 $2') // Split camelCase
+                                    .toLowerCase()
+                                    .split(' ')
+                                    .filter(Boolean);
                             }
 
-                            tbody.append(row);
-                        });
+                            // Map tableTitles to scoreMap fields (summary or subject)
+                            tableTitles.forEach(title => {
+                                // First try exact match
+                                if (summaryFields.includes(title)) {
+                                    scoreMap[title] = scoreMap[title];
+                                    return;
+                                }
 
-                        $('#pageContent').empty().append(thead).append(tbody);
-                    });
+                                // Try fuzzy matching
+                                const titleWords = normalizeWords(title);
+                                let bestMatch = null;
+                                let bestMatchScore = 0;
+
+                                summaryFields.forEach(field => {
+                                    const fieldWords = normalizeWords(field);
+                                    const overlapCount = titleWords.filter(word => fieldWords
+                                        .includes(word)).length;
+
+                                    if (overlapCount > bestMatchScore) {
+                                        bestMatch = field;
+                                        bestMatchScore = overlapCount;
+                                    }
+                                });
+
+                                if (bestMatch && !scoreMap[title]) {
+                                    scoreMap[title] = scoreMap[bestMatch];
+                                }
+                            });
+
+                            // Build the table
+                            const thead = $('<thead></thead>');
+                            const headerRow = $('<tr class="tb-col"></tr>');
+
+                            tableTitles.forEach(title => {
+                                headerRow.append($('<th class="th"></th>').text(title));
+                            });
+
+                            thead.append(headerRow);
+
+                            const tbody = $('<tbody></tbody>');
+
+                            studentList.forEach((student, index) => {
+                                const row = $('<tr class="tb-row report-tb-row"></tr>');
+                                const fullName =
+                                    `${student.surName} ${student.firstName} ${student.otherNames || ''}`
+                                    .trim();
+
+                                row.append($('<td class="td"></td>').text(index + 1));
+                                row.append($('<td class="td"></td>').text(fullName));
+
+                                for (let i = 2; i < tableTitles.length; i++) {
+                                    const subjectAbbr = tableTitles[i];
+                                    const score = scoreMap[subjectAbbr] && scoreMap[subjectAbbr][student
+                                            .studentId
+                                        ] ?
+                                        scoreMap[subjectAbbr][student.studentId] :
+                                        '';
+                                    row.append($('<td class="td"></td>').text(score));
+                                }
+
+                                tbody.append(row);
+                            });
+
+                            $('#pageContent').empty().append(thead).append(tbody);
+                        });
                     </script>
-
-
                 </table>
             </div>
         </div>

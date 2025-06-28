@@ -1814,7 +1814,7 @@
 <?php } ?>
 
 <?php if ($page == 'view_result_summary_form') { ?>
-    <script> getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));</script>
+    <script> getViewResultSummarySession = JSON.parse(sessionStorage.getItem("getViewResultSummarySession"));</script>
 
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
         <div class="top-panel-div">
@@ -1836,29 +1836,18 @@
                     <div class="text-back-div">
                         <div class="inner-text">
                             <div class="text-div">
-                                <div class="name" id=""> SCHOOLBOLT NUR/PRY SCHOOL, ODE REMO</div>
+                                <div class="name" id="resultBranchName"><script>$("#resultBranchName").html(getViewResultSummarySession?.branchData?.branchName);</script></div>
 
                                 <div class="text">
-                                    <div>
-                                        <div id="statusBtn" class="status-btn ACTIVE"><span id="statusName">ACTIVE</span></div>
-                                    </div>
-                                    | OFFICIAL EMAIL:
-                                    <strong id="smtpUsername">school_1@schoolbolt.com</strong>
+                                    OFFICIAL EMAIL:
+                                    <strong id="resultSmtpUsername"><script>$("#resultSmtpUsername").html(getViewResultSummarySession?.branchData?.smtpUsername);</script></strong>
 
                                     | SESSION:
-                                    <strong id="session">2024/2025</strong>
+                                    <strong id="resultSession"><script>$("#resultSession").html(getViewResultSummarySession?.session);</script></strong>
 
                                     | TERM:
-                                    <strong id="termName">THIRD TERM</strong>
+                                    <strong id="resultTermName"><script>$("#resultTermName").html(getViewResultSummarySession?.termData?.termName);</script></strong>
                                 </div>
-
-                                <script>
-                                    $(document).ready(function() {
-                                        const statusName = getEachBranchDetailsSession.statusName;
-                                        $("#statusName").html(statusName);
-                                        $("#statusBtn").addClass(statusName);
-                                    });
-                                </script>
                             </div>
                         </div>
                     </div>
@@ -1868,129 +1857,140 @@
             <div class="field-back-div background-color">
                 <div class="field-inner-div branch-field-inner-div student-result-field-inner-div" id="get_branch_details">
                     <div class="alert alert-success top-alert-div animated fadeIn">
-                        <div><span><i class="bi-grid-3x3"></i></span> <span id=""> REPORT SHEET</span> --- <span id="">2024/2025</span> - <span id="">THIRD TERM</span> - <span id="">CA</span> - <span id="">KINDERGARTEN</span> - <span id="">KG 1</span> - <span id="">A</span></div>
+                        <div><span><i class="bi-grid-3x3"></i></span> <span id="resultTypeName"><script>$("#resultTypeName").html(fetchPresetDataSession?.reportTypeData?.reportTypeName);</script></span> <span>SUMMARY</span> --- <span id="infoSession"><script>$("#infoSession").html(getViewResultSummarySession?.session);</script></span> - <span id="infoTermName"><script>$("#infoTermName").html(getViewResultSummarySession?.termData?.termName);</script></span> 
+                        - <span id="infoAssessmentName"><script>$("#infoAssessmentName").html(getViewResultSummarySession?.assessmentData?.assessmentName);</script></span> - <span id="resultDepartment"><script>$("#resultDepartment").html(getViewResultSummarySession?.departmentData?.departmentName);</script></span> - <span id="resultClass"><script>$("#resultClass").html(getViewResultSummarySession?.classData?.className);</script></span> - <span id="resultArm"><script>$("#resultArm").html(getViewResultSummarySession?.armData?.armName);</script></span></div>
                     
                         <div class="btn-container">
-                            <button class="btn" title="RESULT SUMMARY" onclick="windowPop('<?php echo $websiteUrl?>/reports/terminal-result-summary');"><i class="bi-printer"></i> RESULT SUMMARY</button>
-                            <button class="btn" title="ALL RESULT" onclick=""><i class="bi-printer"></i> ALL RESULT</button>
+                            <button class="btn" title="RESULT SUMMARY" id="printBtn" onclick="_printResultSummary();"><i class="bi-printer"></i> RESULT SUMMARY</button>
+                            <button class="btn" title="ALL RESULT" onclick="windowPop('<?php echo $websiteUrl?>/reports/all-terminal-result');"><i class="bi-printer"></i> ALL RESULT</button>
                             <button class="btn" title="PROGRESS REPORT" onclick=""><i class="bi-printer"></i> PROGRESS REPORT</button>
                         </div>            
                     </div>
 
                     <div class="table-div animated fadeIn">
-                        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-                            <thead>
-                                <tr class="tb-col small-font-tb-col">
-                                    <th>sn</th>
-                                    <th>Student Info</th>
-                                    <th>No. Of Subjects</th>
-                                    <th>Mark Obtainable (%)</th>
-                                    <th>Mark Obtained (%)</th>
-                                    <th>Total Percentage</th>
-                                    <th>Postn. In Class</th>
-                                    <th>Teacher's Comment</th>
-                                    <th>Remark</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
+                        <table class="table" cellspacing="0" style="width:100%" id="resultSumamryPageContent">
+                            <script>
+                                $(document).ready(function() {
+                                    const getViewResultSummarySession = JSON.parse(sessionStorage.getItem("getViewResultSummarySession"));
+                                    if (!getViewResultSummarySession) return;
 
-                            <tbody>
-                                <tr class="tb-row">
-                                    <td>1</td>
-                                    <td>
-                                        <div class="text-back-div">
-                                            <div class="image-div general-passport">
-                                                <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="AFOLABI MIKE OLUWAGBENGA"/>
-                                            </div>
+                                    const tableTitles = getViewResultSummarySession?.tableTitles.split(',').map(x => x.trim());
+                                    const studentList = getViewResultSummarySession?.studentData;
+                                    const summaryData = getViewResultSummarySession?.summaryData;
 
-                                            <div class="text-div">
-                                                <div class="first-class">AFOLABI MIKE OLUWAGBENGA</div>
-                                                <div class="second-class">STUDENT00220250321124557</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>20</td>
-                                    <td>2000</td>
-                                    <td>1273.34</td>
-                                    <td>63.67%</td>
-                                    <td>7TH(7)</td>
-                                    <td>Good Result</td>
-                                    <td>Good</td>
-                                    <td><button class="btn view-btn min-width-btn" title="Click to print student result" onclick=""><i class="bi-printer"></i> PRINT</button></td>
-                                </tr>
+                                    const scoreMap = {};
 
-                                <tr class="tb-row">
-                                    <td>2</td>
-                                    <td>
-                                        <div class="text-back-div">
-                                            <div class="image-div general-passport">
-                                                <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="AFOLABI MIKE OLUWAGBENGA"/>
-                                            </div>
+                                    // Extract summary fields
+                                    const studentKeys = Object.keys(studentList[0] || {});
+                                    const summaryFields = Object.keys(summaryData[0] || {}).filter(k => !studentKeys
+                                        .includes(k));
 
-                                            <div class="text-div">
-                                                <div class="first-class">AFOLABI MIKE OLUWAGBENGA</div>
-                                                <div class="second-class">STUDENT00220250321124557</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>20</td>
-                                    <td>2000</td>
-                                    <td>1273.34</td>
-                                    <td>63.67%</td>
-                                    <td>7TH(7)</td>
-                                    <td>Good Result</td>
-                                    <td>Good</td>
-                                    <td><button class="btn view-btn min-width-btn" title="Click to print student result" onclick=""><i class="bi-printer"></i> PRINT</button></td>
-                                </tr>
+                                    // Build scoreMap for summary fields
+                                    summaryFields.forEach(field => {
+                                        scoreMap[field] = {};
+                                        summaryData.forEach(summary => {
+                                            scoreMap[field][summary.studentId] = summary[field];
+                                        });
+                                    });
 
-                                <tr class="tb-row">
-                                    <td>3</td>
-                                    <td>
-                                        <div class="text-back-div">
-                                            <div class="image-div general-passport">
-                                                <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="AFOLABI MIKE OLUWAGBENGA"/>
-                                            </div>
+                                    function normalizeWords(str) {
+                                        return str
+                                            .replace(/[\W_]+/g, ' ') // Remove punctuation and underscores
+                                            .replace(/([a-z])([A-Z])/g, '$1 $2') // Split camelCase
+                                            .toLowerCase()
+                                            .split(' ')
+                                            .filter(Boolean);
+                                    }
 
-                                            <div class="text-div">
-                                                <div class="first-class">AFOLABI MIKE OLUWAGBENGA</div>
-                                                <div class="second-class">STUDENT00220250321124557</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>20</td>
-                                    <td>2000</td>
-                                    <td>1273.34</td>
-                                    <td>63.67%</td>
-                                    <td>7TH(7)</td>
-                                    <td>Good Result</td>
-                                    <td>Good</td>
-                                    <td><button class="btn view-btn min-width-btn" title="Click to print student result" onclick=""><i class="bi-printer"></i> PRINT</button></td>
-                                </tr>
+                                    // Map tableTitles to scoreMap fields (summary or subject)
+                                    tableTitles.forEach(title => {
+                                        // First try exact match
+                                        if (summaryFields.includes(title)) {
+                                            scoreMap[title] = scoreMap[title];
+                                            return;
+                                        }
 
-                                <tr class="tb-row">
-                                    <td>4</td>
-                                    <td>
-                                        <div class="text-back-div">
-                                            <div class="image-div general-passport">
-                                                <img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="AFOLABI MIKE OLUWAGBENGA"/>
-                                            </div>
+                                        // Try fuzzy matching
+                                        const titleWords = normalizeWords(title);
+                                        let bestMatch = null;
+                                        let bestMatchScore = 0;
 
-                                            <div class="text-div">
-                                                <div class="first-class">AFOLABI MIKE OLUWAGBENGA</div>
-                                                <div class="second-class">STUDENT00220250321124557</div>
+                                        summaryFields.forEach(field => {
+                                            const fieldWords = normalizeWords(field);
+                                            const overlapCount = titleWords.filter(word => fieldWords
+                                                .includes(word)).length;
+
+                                            if (overlapCount > bestMatchScore) {
+                                                bestMatch = field;
+                                                bestMatchScore = overlapCount;
+                                            }
+                                        });
+
+                                        if (bestMatch && !scoreMap[title]) {
+                                            scoreMap[title] = scoreMap[bestMatch];
+                                        }
+                                    });
+
+                                    // Build the table
+                                    const thead = $('<thead></thead>');
+                                    const headerRow = $('<tr class="tb-col small-font-tb-col"></tr>');
+
+
+                                    tableTitles.forEach(title => {
+                                        headerRow.append($('<th></th>').text(title));
+                                    });
+
+                                    headerRow.append($('<th></th>').text('ACTION'));
+
+                                    thead.append(headerRow);
+
+                                    const tbody = $('<tbody></tbody>');
+
+                                    studentList.forEach((student, index) => {
+                                        const row = $('<tr class="tb-row report-tb-row"></tr>');
+                                        const fullName = `${student.surName} ${student.otherNames || ''}`.trim();
+                                        const studentId = student.studentId;
+                                        const passportFile = student.passport ? student.passport : 'default.jpg';
+
+                                        row.append($('<td class="td"></td>').text(index + 1));
+
+                                        const studentInfoId = $('<td class="td"></td>');
+                                        const studentInfoText = `
+                                            <div class="text-back-div">
+                                                <div class="image-div general-passport">
+                                                    <img src="${studentPixPath}/${passportFile}" alt="${fullName}" />
+                                                </div>
+                                                <div class="text-div">
+                                                    <div class="first-class">${fullName}</div>
+                                                    <div class="second-class">${studentId}</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>20</td>
-                                    <td>2000</td>
-                                    <td>1273.34</td>
-                                    <td>63.67%</td>
-                                    <td>7TH(7)</td>
-                                    <td>Good Result</td>
-                                    <td>Good</td>
-                                    <td><button class="btn view-btn min-width-btn" title="Click to print student result" onclick=""><i class="bi-printer"></i> PRINT</button></td>
-                                </tr>
-                            </tbody>
+                                        `;
+                                        studentInfoId.html(studentInfoText);
+                                        row.append(studentInfoId);
+
+                                        for (let i = 2; i < tableTitles.length; i++) {
+                                            const title = tableTitles[i];
+                                            const score = scoreMap[title] && scoreMap[title][student.studentId] ? scoreMap[title][student.studentId] : '';
+                                            row.append($('<td class="td"></td>').text(score));
+                                        }
+
+                                        const actionTd = $('<td class="td"></td>');
+                                        const printButton = $(`
+                                            <button class="btn view-btn min-width-btn" title="Click to print student result" onclick="windowPop('<?php echo $websiteUrl?>/reports/each-terminal-result');">
+                                                <i class="bi-printer"></i> PRINT
+                                            </button>
+                                        `);
+
+                                        actionTd.append(printButton);
+                                        row.append(actionTd);
+
+                                        tbody.append(row);
+                                    });
+
+                                    $('#resultSumamryPageContent').empty().append(thead).append(tbody);
+                                });
+                            </script>
                         </table>
                     </div>
                 </div>
