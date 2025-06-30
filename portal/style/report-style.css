@@ -105,6 +105,10 @@
 	min-height: 80px;
 }
 
+.bottom-containner-back-div{
+	padding-bottom: 40px;
+}
+
 .top-containner-back-div .inner-div-cont{ 
  	width: 95%;
 	display: flex;
@@ -140,6 +144,10 @@
     gap: 22px 32px;
     flex-wrap: wrap;
     align-items: center;
+}
+
+.top-containner-back-div .inner-div-cont .progress-content-div {
+	justify-content: center;
 }
 
 .top-containner-back-div .inner-div-cont .content-div .details {
