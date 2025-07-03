@@ -430,6 +430,10 @@
                             <div id="">STUDENT00220250321124557</div>
                         </div>
 
+                        <div class="details"><span>CLASS</span>
+                            <div id="">KINDERGARTEN - KG 1</div>
+                        </div>
+
                         <div class="details"><span>GENDER</span>
                             <div id="">MALE</div>
                         </div>
@@ -642,17 +646,16 @@
                 <canvas id="progressChart" width="600"  height="250">
                     <script>
                         $(document).ready(function () {
-                            // Hardcoded test data (like in your screenshot)
                             const labels = [
-                                'JSS 1 1ST TERM',
-                                'JSS 1 2ND TERM',
-                                'JSS 1 3RD TERM',
-                                'JSS 2 1ST TERM',
-                                'JSS 2 2ND TERM',
-                                'JSS 2 3RD TERM',
-                                'JSS 3 1ST TERM',
-                                'JSS 3 2ND TERM',
-                                'JSS 3 3RD TERM',
+                                ['JSS 1', '1ST TERM'],
+                                ['JSS 1', '2ND TERM'],
+                                ['JSS 1', '3RD TERM'],
+                                ['JSS 2', '1ST TERM'],
+                                ['JSS 2', '2ND TERM'],
+                                ['JSS 2', '3RD TERM'],
+                                ['JSS 3', '1ST TERM'],
+                                ['JSS 3', '2ND TERM'],
+                                ['JSS 3', '3RD TERM'],
                             ];
 
                             const testData = [45.82, 48.78, 47.42, 44.36, 45.1];
@@ -695,6 +698,13 @@
                                     }
                                 },
                                 scales: {
+                                    x: {
+                                        ticks: {
+                                            maxRotation: 0,
+                                            minRotation: 0,
+                                            autoSkip: false
+                                        }
+                                    },
                                     y: {
                                         beginAtZero: true,
                                         ticks: {
