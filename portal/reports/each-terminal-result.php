@@ -643,7 +643,7 @@
 
         <div class="top-containner-back-div bottom-containner-back-div">
             <div class="inner-div-cont">
-                <canvas id="progressChart" width="600"  height="250">
+                <canvas id="progressChart" width="700"  height="250">
                     <script>
                         $(document).ready(function () {
                             const labels = [
