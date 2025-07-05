@@ -1,4 +1,4 @@
-function _printResultSummary() {
+function _printCaResultSummary() {
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
 	let getViewResultSummarySession = JSON.parse(sessionStorage.getItem("getViewResultSummarySession"));
 
@@ -24,7 +24,7 @@ function _printResultSummary() {
 			success: function(info) {
 				if (info.success > 0) {
 					sessionStorage.setItem("printResultSummarySession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/terminal-result-summary`);
+					windowPop(`${websiteUrl}/reports/print-ca-terminal-result-summary`);
 				} else {
 					_actionAlert(info.message, false);
 					const response = info.response;

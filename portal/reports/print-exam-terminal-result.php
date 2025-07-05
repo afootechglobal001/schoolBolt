@@ -381,11 +381,6 @@
                         </div>
 
                         <div class="details">
-                            <span>PRINCIPAL'S COMMENT</span>
-                            <div id="">FAIR RESULT. PROMOTED TO JSS 2</div>
-                        </div>
-
-                        <div class="details">
                             <span>SCHOOL REOPENS ON</span>
                             <div id="">MONDAY 16TH June, 2025</div>
                         </div>

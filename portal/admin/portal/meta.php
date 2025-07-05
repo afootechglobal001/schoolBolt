@@ -56,4 +56,5 @@
 <script src="<?php echo $websiteUrl?>/js/reports/print-assessment.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/reports/print-broad-sheet.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/reports/print-terminal-broad-sheet.js?v=<?php echo $codeVersion?>"></script>
-<script src="<?php echo $websiteUrl?>/js/reports/print-result-summary.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/reports/print-ca-result-summary.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/reports/print-single-assessment-result.js?v=<?php echo $codeVersion?>"></script>
