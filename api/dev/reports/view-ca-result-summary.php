@@ -12,7 +12,6 @@ if (!$checkBasicSecurity){/// start if 1
     $classId = $_GET['classId'];
     $armId = $_GET['armId'];
     $assessmentId = $_GET['assessmentId'];
-    $studentId = $_GET['studentId'];
     
 
     validateEmptyField($branchId, 'BRANCH');
@@ -22,7 +21,6 @@ if (!$checkBasicSecurity){/// start if 1
     validateEmptyField($classId, 'CLASS');
     validateEmptyField($armId, 'ARM');
     validateEmptyField($assessmentId, 'ASSESSMENT');
-    validateEmptyField($studentId, 'STUDENT');
 
 
     /// confirm if there is records
@@ -38,15 +36,11 @@ if (!$checkBasicSecurity){/// start if 1
         $response['message']="No record found!";
         goto end;
     }
-    $count=0;
-    while($broadsheetFetch = mysqli_fetch_assoc($broadsheetQuery)){
-        $recordId = $fetch['recordId'];
-        
-    }
+
+
+    /// get all tableTitles
+    $tableTitles="SN, FULL NAME, NO. OF SUBJECTS, MARK OBTAINABLE (%), MARK OBTAINED (%), TOTAL PERCENTAGE, POSTN. IN CALSS, OVERALL POSTN., REMARKS, TEACHER'S COMMENT";
     
-
-
-   
     $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, address, smtpUsername, mobileNumber  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
 
@@ -67,7 +61,7 @@ if (!$checkBasicSecurity){/// start if 1
 
     $response['response']=200; 
     $response['success']=true;
-    $response['message']="BROADSHEET FETCHED SUCCESFFULY!";
+    $response['message']="CA RESULT SUMMARY FETCHED SUCCESFFULY!";
     $response['allRecordCount']=$allRecordCount;
     $response['session'] = $session;
     $response['branchData'] = $branchDataFetch;

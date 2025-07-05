@@ -11,7 +11,6 @@ if (!$checkBasicSecurity){/// start if 1
     $departmentId = $_GET['departmentId'];
     $classId = $_GET['classId'];
     $armId = $_GET['armId'];
-    $assessmentId = $_GET['assessmentId'];
     
 
     validateEmptyField($branchId, 'BRANCH');
@@ -20,13 +19,12 @@ if (!$checkBasicSecurity){/// start if 1
     validateEmptyField($departmentId, 'DEPARTMENT');
     validateEmptyField($classId, 'CLASS');
     validateEmptyField($armId, 'ARM');
-    validateEmptyField($assessmentId, 'ASSESSMENT');
 
 
     /// confirm if there is records
     $broadsheetSelect="SELECT recordId, subjectId FROM BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB
      WHERE $clientIds  AND branchId = '$branchId'  AND session = '$session'  AND termId = '$termId'  
-     AND departmentId = '$departmentId'  AND classId = '$classId'  AND armId = '$armId'  AND assessmentId = '$assessmentId'";
+     AND departmentId = '$departmentId'  AND classId = '$classId'  AND armId = '$armId'";
      
     $broadsheetQuery=mysqli_query($conn,$broadsheetSelect)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($broadsheetQuery);
@@ -56,12 +54,9 @@ if (!$checkBasicSecurity){/// start if 1
     $armDataQuery = mysqli_query($conn, "SELECT armId, armName FROM ARMS_TAB WHERE $clientIds AND armId='$armId'");
     $armDataFetch = mysqli_fetch_assoc($armDataQuery);
 
-    $assessmentDataQuery = mysqli_query($conn, "SELECT assessmentId, assessmentName FROM BRANCH_ASSESSMENT_SETUP_TAB  WHERE $clientIds AND branchId='$branchId' AND assessmentId='$assessmentId'");
-    $assessmentDataFetch = mysqli_fetch_assoc($assessmentDataQuery);
-
     $response['response']=200; 
     $response['success']=true;
-    $response['message']="BROADSHEET FETCHED SUCCESFFULY!";
+    $response['message']="TERMINAL RESULT SUMMARY FETCHED SUCCESFFULY!";
     $response['allRecordCount']=$allRecordCount;
     $response['session'] = $session;
     $response['branchData'] = $branchDataFetch;
@@ -69,7 +64,6 @@ if (!$checkBasicSecurity){/// start if 1
     $response['departmentData'] = $departmentDataFetch;
     $response['classData'] = $classDataFetch;
     $response['armData'] = $armDataFetch;
-    $response['assessmentData'] = $assessmentDataFetch;
     $response['tableTitles']=$tableTitles;
     
     $response['studentData'] = array();
@@ -100,9 +94,22 @@ if (!$checkBasicSecurity){/// start if 1
         $studentId = $fetch['studentId'];
 
         // Get totalSubjects
-        $totalSubjectsQuery = mysqli_query($conn, "SELECT b.recordId FROM BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB a, BRANCH_ASSESSMENT_RECORD_DETAILS_TAB b 
-        WHERE a.recordId=b.recordId AND  a.clientId='$clientId' AND a.branchId = '$branchId' AND a.session = '$session' AND a.termId = '$termId' 
-        AND a.departmentId = '$departmentId' AND a.classId = '$classId' AND a.armId = '$armId' AND b.studentId='$studentId' AND a.assessmentId='$assessmentId'") or die (mysqli_error($conn));
+        $totalSubjectsQuery = mysqli_query($conn, 
+        "SELECT DISTINCT(a.subjectId)
+        FROM 
+        BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB a
+        JOIN BRANCH_ASSESSMENT_RECORD_DETAILS_TAB b ON a.recordId = b.recordId
+        WHERE 
+        a.clientId='$clientId' 
+        AND a.branchId = '$branchId' 
+        AND a.session = '$session' 
+        AND a.termId = '$termId' 
+        AND a.departmentId = '$departmentId' 
+        AND a.classId = '$classId' 
+        AND a.armId = '$armId' 
+        AND b.studentId='$studentId' 
+        ") or die (mysqli_error($conn));
+        // Count the number of distinct subjects for the student
         $totalSubjects = mysqli_num_rows($totalSubjectsQuery);
         $fetch['totalSubjects'] = $totalSubjects;
         
@@ -110,11 +117,11 @@ if (!$checkBasicSecurity){/// start if 1
         $fetch['totalMarkObtainable'] = $totalSubjects * 100; // Assuming each subject has a maximum of 100 marks
 
         // get totalMarkObtained
-        $totalMarkObtainedQuery = mysqli_query($conn, "SELECT SUM(percentage) AS totalMarkObtained FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB 
+        $totalMarkObtainedQuery = mysqli_query($conn, "SELECT SUM(markObtained) AS totalMarkObtained FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB 
         WHERE recordId IN 
         (SELECT recordId FROM BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB 
         WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' 
-        AND classId='$classId' AND armId='$armId' AND studentId='$studentId' AND assessmentId='$assessmentId')
+        AND classId='$classId' AND armId='$armId' AND studentId='$studentId')
         ") or die (mysqli_error($conn));
         $totalMarkObtainedFetch = mysqli_fetch_assoc($totalMarkObtainedQuery);
         $fetch['totalMarkObtained'] = $totalMarkObtainedFetch['totalMarkObtained'];
@@ -124,14 +131,14 @@ if (!$checkBasicSecurity){/// start if 1
 
         // get positionInClass
         $positionQuery = mysqli_query($conn, "SELECT COUNT(*) AS position FROM 
-        (SELECT studentId, SUM(percentage) AS totalMark FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB WHERE recordId IN 
+        (SELECT studentId, SUM(markObtained) AS totalMark FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB WHERE recordId IN 
         (SELECT recordId FROM BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB 
         WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' 
-        AND classId='$classId' AND armId='$armId' AND assessmentId='$assessmentId') GROUP BY studentId) AS subquery 
-        WHERE totalMark > (SELECT SUM(percentage) FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB 
+        AND classId='$classId' AND armId='$armId') GROUP BY studentId) AS subquery 
+        WHERE totalMark > (SELECT SUM(markObtained) FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB 
         WHERE recordId IN (SELECT recordId FROM BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB 
         WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' 
-        AND classId='$classId' AND armId='$armId' AND studentId='$studentId' AND assessmentId='$assessmentId'))") or die (mysqli_error($conn));
+        AND classId='$classId' AND armId='$armId' AND studentId='$studentId'))") or die (mysqli_error($conn));
         $positionFetch = mysqli_fetch_assoc($positionQuery);
         $positionInClass = $positionFetch['position'] + 1; // Adding 1 to include the current student in the position count
         $fetch['positionInClass']= $positionInClass . getOrdinalSuffix($positionInClass) . "($numberOfStudents)"; // Get ordinal suffix for position
@@ -140,14 +147,14 @@ if (!$checkBasicSecurity){/// start if 1
 
         // get overallPositionInClass
         $overallPositionQuery = mysqli_query($conn, "SELECT COUNT(*) AS position FROM 
-        (SELECT studentId, SUM(percentage) AS totalMark FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB WHERE recordId IN 
+        (SELECT studentId, SUM(markObtained) AS totalMark FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB WHERE recordId IN 
         (SELECT recordId FROM BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB 
         WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' 
-        AND classId='$classId' AND assessmentId='$assessmentId') GROUP BY studentId) AS subquery 
-        WHERE totalMark > (SELECT SUM(percentage) FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB 
+        AND classId='$classId') GROUP BY studentId) AS subquery 
+        WHERE totalMark > (SELECT SUM(markObtained) FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB 
         WHERE recordId IN (SELECT recordId FROM BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB 
         WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' 
-        AND classId='$classId' AND studentId='$studentId' AND assessmentId='$assessmentId'))") or die (mysqli_error($conn));
+        AND classId='$classId' AND studentId='$studentId'))") or die (mysqli_error($conn));
         $overallPositionFetch = mysqli_fetch_assoc($overallPositionQuery);
         $overallPositionInClass = $overallPositionFetch['position'] + 1; // Adding 1 to include the current student in the position count
         $fetch['overallPositionInClass']= $overallPositionInClass . getOrdinalSuffix($overallPositionInClass) . "($overallNumberOfStudents)"; // Get ordinal suffix for position
