@@ -1813,8 +1813,9 @@
     </div>
 <?php } ?>
 
-<?php if ($page == 'view_result_summary_form') { ?>
+<?php if ($page == 'view_broadsheet_result_summary_form') { ?>
     <script> getViewResultSummarySession = JSON.parse(sessionStorage.getItem("getViewResultSummarySession"));</script>
+    <script> getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));</script>
 
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
         <div class="top-panel-div">
@@ -1861,9 +1862,8 @@
                         - <span id="infoAssessmentName"><script>$("#infoAssessmentName").html(getViewResultSummarySession?.assessmentData?.assessmentName);</script></span> - <span id="resultDepartment"><script>$("#resultDepartment").html(getViewResultSummarySession?.departmentData?.departmentName);</script></span> - <span id="resultClass"><script>$("#resultClass").html(getViewResultSummarySession?.classData?.className);</script></span> - <span id="resultArm"><script>$("#resultArm").html(getViewResultSummarySession?.armData?.armName);</script></span></div>
                     
                         <div class="btn-container">
-                            <button class="btn" title="RESULT SUMMARY" id="printBtn" onclick="_printResultSummary();"><i class="bi-printer"></i> RESULT SUMMARY</button>
-                            <button class="btn" title="ALL RESULT" onclick="windowPop('<?php echo $websiteUrl?>/reports/all-terminal-result');"><i class="bi-printer"></i> ALL RESULT</button>
-                            <button class="btn" title="PROGRESS REPORT" onclick=""><i class="bi-printer"></i> PROGRESS REPORT</button>
+                            <button class="btn" title="CA RESULT SUMMARY" id="printBtn" onclick="_printCaResultSummary();"><i class="bi-printer"></i>CA RESULT SUMMARY</button>
+                            <button class="btn" title="ALL CA RESULT" onclick="windowPop('<?php echo $websiteUrl?>/reports/print-all-terminal-result');"><i class="bi-printer"></i> ALL CA RESULT</button>
                         </div>            
                     </div>
 
@@ -1873,7 +1873,15 @@
                                 $(document).ready(function() {
                                     const getViewResultSummarySession = JSON.parse(sessionStorage.getItem("getViewResultSummarySession"));
                                     if (!getViewResultSummarySession) return;
-
+                                        // get ids for the print button //
+                                    const branchId = getEachBranchDetailsSession?.branchId;
+                                    const session = getViewResultSummarySession?.session;
+                                    const termId = getViewResultSummarySession?.termData?.termId;
+                                    const departmentId = getViewResultSummarySession?.departmentData?.departmentId;
+                                    const classId = getViewResultSummarySession?.classData?.classId;
+                                    const armId = getViewResultSummarySession?.armData?.armId;
+                                    const assessmentId = getViewResultSummarySession?.assessmentData?.assessmentId;
+                                    
                                     const tableTitles = getViewResultSummarySession?.tableTitles.split(',').map(x => x.trim());
                                     const studentList = getViewResultSummarySession?.studentData;
                                     const summaryData = getViewResultSummarySession?.summaryData;
@@ -1977,7 +1985,7 @@
 
                                         const actionTd = $('<td class="td"></td>');
                                         const printButton = $(`
-                                            <button class="btn view-btn min-width-btn" title="Click to print student result" onclick="windowPop('<?php echo $websiteUrl?>/reports/each-terminal-result');">
+                                            <button class="btn view-btn min-width-btn" id="printAssBtn_${studentId}" title="Click to print student result" onclick="_printSingleAssessmentResult('${branchId}','${session}','${termId}','${departmentId}','${classId}','${armId}','${assessmentId}','${studentId}');">
                                                 <i class="bi-printer"></i> PRINT
                                             </button>
                                         `);

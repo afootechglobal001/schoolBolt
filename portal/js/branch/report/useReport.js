@@ -215,14 +215,17 @@ function _fetchBroadsheetClass() {
 																		text += `
 																		<td>
 																			<div class="btn-div">
-																				<button class="btn view-btn" title="Click to print broad sheet" id="printBtn" onclick="_printBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT BROAD SHEET</button>
-																				<button class="btn view-btn print-btn" title="Click to print terminal broad sheet" id="printBtn" onclick="_printTerminalBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT TERMINAL BROAD SHEET</button>
+																				<button class="btn view-btn" title="Click to print broad sheet" id="printBtn" onclick="_printBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT CA BROAD SHEET</button>
+																				<button class="btn view-btn print-btn" title="Click to print terminal broad sheet" id="printBtn" onclick="_printTerminalBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT CA TERMINAL BROAD SHEET</button>
 																			</div>
 																		</td>`;
 																	} else {
 																		text += `
 																		<td>
-																			<button class="btn view-btn" title="Click to view result summary" id="" onclick="_viewResultSummary('${departmentId}','${classId}','${armId}');"><i class="bi-eye"></i> VIEW RESULT SUMMARY</button>
+																			<div class="btn-div">
+																				<button class="btn view-btn" title="Click to view report sheet summary" id="" onclick="_viewResultSummary('${departmentId}','${classId}','${armId}');"><i class="bi-eye"></i> VIEW CA REPORT SHEET SUMMARY</button>
+																				<button class="btn view-btn print-btn" title="Click to view terminal report sheet summary" id="" onclick="_viewResultSummary('${departmentId}','${classId}','${armId}');"><i class="bi-eye"></i> VIEW TERMINAL REPORT SHEET SUMMARY</button>
+																			</div>
 																		</td>`;
 																	}
 																text +=`</tr>`;
@@ -296,7 +299,7 @@ function _viewResultSummary(departmentId, classId, armId) {
 			success: function(info) {
 				if (info.success > 0) {
 					sessionStorage.setItem("getViewResultSummarySession", JSON.stringify(info));
-					_getForm({page: 'view_result_summary_form', layer:2, url: adminPortalLocalUrl});
+					_getForm({page: 'view_broadsheet_result_summary_form', layer:2, url: adminPortalLocalUrl});
 				} else {
 					_actionAlert(info.message, false);
 					_alertClose(2);

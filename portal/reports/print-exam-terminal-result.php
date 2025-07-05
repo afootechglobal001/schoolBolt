@@ -381,11 +381,6 @@
                         </div>
 
                         <div class="details">
-                            <span>PRINCIPAL'S COMMENT</span>
-                            <div id="">FAIR RESULT. PROMOTED TO JSS 2</div>
-                        </div>
-
-                        <div class="details">
                             <span>SCHOOL REOPENS ON</span>
                             <div id="">MONDAY 16TH June, 2025</div>
                         </div>
@@ -419,7 +414,7 @@
             <div class="title-div"><span>STUDENT PROGRESS REPORT</span></div>
             <div class="top-containner-back-div">
                 <div class="inner-div-cont">
-                    <div class="content-div">
+                    <div class="content-div progress-content-div">
                         <div class="details">
                             <span>STUDENT NAME</span>
                             <div id="">MIKE AFOLABI OLUWAGBENGA</div>
@@ -428,6 +423,10 @@
                         <div class="details">
                             <span>STUDENT ID</span>
                             <div id="">STUDENT00220250321124557</div>
+                        </div>
+
+                        <div class="details"><span>CLASS</span>
+                            <div id="">KINDERGARTEN - KG 1</div>
                         </div>
 
                         <div class="details"><span>GENDER</span>
@@ -635,76 +634,115 @@
                     </tbody>
                 </table>
             </div>
+        </div>
 
-            <div class="top-containner-back-div">
-                <div class="inner-div-cont">
-                    <canvas id="progressChart" width="600"  height="250">
-                        <script>
-                            $(document).ready(function () {
-                                // Hardcoded test data (like in your screenshot)
-                                const labels = [
-                                    'JSS 1 1ST TERM',
-                                    'JSS 1 2ND TERM',
-                                    'JSS 1 3RD TERM',
-                                    'JSS 2 1ST TERM',
-                                    'JSS 2 2ND TERM'
-                                ];
+        <div class="top-containner-back-div bottom-containner-back-div">
+            <div class="inner-div-cont">
+                <canvas id="progressChart" width="700"  height="250">
+                    <script>
+                        $(document).ready(function () {
+                            const labels = [
+                                ['JSS 1', '1ST TERM'],
+                                ['JSS 1', '2ND TERM'],
+                                ['JSS 1', '3RD TERM'],
+                                ['JSS 2', '1ST TERM'],
+                                ['JSS 2', '2ND TERM'],
+                                ['JSS 2', '3RD TERM'],
+                                ['JSS 3', '1ST TERM'],
+                                ['JSS 3', '2ND TERM'],
+                                ['JSS 3', '3RD TERM'],
+                            ];
 
-                                const testData = [45.82, 48.78, 47.42, 44.36, 45.1];
+                            const testData = [45.82, 48.78, 47.42, 44.36, 45.1];
 
-                                const backgroundColors = [
-                                    'rgba(78, 115, 223, 0.7)',
-                                    'rgba(231, 74, 59, 0.7)',
-                                    'rgba(28, 200, 138, 0.7)',
-                                    'rgba(54, 185, 204, 0.7)',
-                                    'rgba(111, 66, 193, 0.7)'
-                                ];
+                            const backgroundColors = [
+                                'rgba(78, 115, 223, 0.7)',
+                                'rgba(231, 74, 59, 0.7)',
+                                'rgba(28, 200, 138, 0.7)',
+                                'rgba(54, 185, 204, 0.7)',
+                                'rgba(111, 66, 193, 0.7)'
+                            ];
 
-                                const borderColors = [
-                                    'rgb(78, 115, 223)',
-                                    'rgb(231, 74, 59)',
-                                    'rgb(28, 200, 138)',
-                                    'rgb(54, 185, 204)',
-                                    'rgb(111, 66, 193)'
-                                ];
+                            const borderColors = [
+                                'rgb(78, 115, 223)',
+                                'rgb(231, 74, 59)',
+                                'rgb(28, 200, 138)',
+                                'rgb(54, 185, 204)',
+                                'rgb(111, 66, 193)'
+                            ];
 
-                                const ctx = document.getElementById('progressChart').getContext('2d');
+                            const ctx = document.getElementById('progressChart').getContext('2d');
 
-                                new Chart(ctx, {
-                                type: 'bar',
-                                data: {
-                                    labels: labels,
-                                    datasets: [{
-                                        label: 'Advanced Breed Progress Report',
-                                        data: testData,
-                                        backgroundColor: backgroundColors,
-                                        borderColor: borderColors,
-                                        borderWidth: 1
-                                    }]
+                            new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'SchoolBolt Progress Report',
+                                    data: testData,
+                                    backgroundColor: backgroundColors,
+                                    borderColor: borderColors,
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    }
                                 },
-                                options: {
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            display: false
+                                scales: {
+                                    x: {
+                                        ticks: {
+                                            maxRotation: 0,
+                                            minRotation: 0,
+                                            autoSkip: false
                                         }
                                     },
-                                    scales: {
-                                        y: {
-                                            beginAtZero: true,
-                                            ticks: {
-                                                callback: function (value) {
-                                                    return value + '%';
-                                                }
-                                            }
+                                    y: {
+                                        beginAtZero: true,
+                                        ticks: {
+                                            callback: function (value) {
+                                                return value + '%';
+                                            },
+                                            stepSize: 10,
+                                            min: 0,
+                                            max: 50
                                         }
                                     }
+                                },
+                                animation: {
+                                    onComplete: function () {
+                                        const chart = this;
+                                        const ctx = chart.ctx;
+
+                                        ctx.save();
+                                        ctx.font = 'bold 12px Arial';
+                                        ctx.textAlign = 'center';
+                                        ctx.textBaseline = 'middle';
+
+                                        chart.data.datasets.forEach((dataset, i) => {
+                                            const meta = chart.getDatasetMeta(i);
+                                            meta.data.forEach((bar, index) => {
+                                                const value = dataset.data[index];
+                                                const x = bar.x;
+                                                const y = bar.y;
+                                                const barHeight = bar.base - y;
+
+                                                ctx.fillStyle = '#fff'; // white inside bar
+                                                ctx.fillText(value + '%', x, y + barHeight / 2);
+                                            });
+                                        });
+
+                                        ctx.restore();
+                                    }
+                                    }
                                 }
-                                });
                             });
-                        </script>
-                    </canvas>
-                </div>
+                        });
+                    </script>
+                </canvas>
             </div>
         </div>
     </section>
