@@ -1,4 +1,4 @@
-function _printSingleAssessmentResult(branchId, session, termId, departmentId, classId, armId, assessmentId, studentId) {
+function _printEachStudentCaResult(branchId, session, termId, departmentId, classId, armId, assessmentId, studentId) {
 	try {
 		const btnText = $(`#printAssBtn_${studentId}`).html();
 		$(`#printAssBtn_${studentId}`).html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
@@ -6,14 +6,14 @@ function _printSingleAssessmentResult(branchId, session, termId, departmentId, c
 
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/reports/print-single-assessment-result?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&assessmentId=${assessmentId}&studentId=${studentId}`,
+			url: `${endPoint}/reports/print-each-student-ca-result?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&assessmentId=${assessmentId}&studentId=${studentId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(),
 			success: function(info) {
 				if (info.success > 0) {
 					sessionStorage.setItem("printSingleAssessementSession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/print-single-assessment-result`);
+					windowPop(`${websiteUrl}/reports/print-each-student-ca-result`);
 				} else {
 					_actionAlert(info.message, false);
 					const response = info.response;

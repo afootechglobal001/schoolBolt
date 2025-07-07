@@ -8,7 +8,7 @@
     <link href="<?php echo $websiteUrl?>/style/paramount.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
     <script src="<?php echo $websiteUrl?>/js/jquery-v3.6.1.min.js"></script>
     <script src="<?php echo $websiteUrl?>/js/admin/chart.min.js"></script>
-    <title>Each Terminal Result | <?php echo $clientName ?></title>
+    <title>Each Student Terminal Result | <?php echo $clientName ?></title>
 </head>
 
 <body>
@@ -393,9 +393,7 @@
             </div>
         </div>
     </section>
-</body>
 
-<body>
     <section class="body-div all-terminal-body">
         <div class="header-back-div">
             <div class="header-div">

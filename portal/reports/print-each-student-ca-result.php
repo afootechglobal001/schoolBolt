@@ -103,7 +103,8 @@
                                     <tr class="tb-col font">
                                         <th>SN</th>
                                         <th>SUBJECT</th>
-                                        <th>SCORE(15)</th>
+                                        <th>MARK OBTAINABLE</th>
+                                        <th>MARK OBTAINED</th>
                                         <th>PERCENTAGE (%)</th>
                                         <th>POSN. IN CLASS</th>
                                         <th>GRADE</th>
@@ -125,9 +126,10 @@
                                             <tr class="tb-row report-tb-row">
                                                 <td>${no}</td>
                                                 <td>${subjectName}</td>
-                                                <td>20</td>
-                                                <td>${assessment.percentage ? assessment.percentage : '-'}</td>
-                                                <td>${assessment.position ? assessment.position : '-'}</td>
+                                                <td>${assessment.markObtainable ? assessment.markObtainable : '-'}</td>
+                                                <td>${assessment.markObtained ? assessment.markObtained : '-'}</td>
+                                                <td>${assessment.percentage ? assessment.percentage +'%' : '-'}</td>
+                                                <td>${assessment.positionInClass ? assessment.positionInClass : '-'}</td>
                                                 <td>${assessment.grade ? assessment.grade : '-'}</td>
                                                 <td>${assessment.remark ? assessment.remark  : '-'}</td>
                                             </tr>

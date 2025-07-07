@@ -1813,14 +1813,14 @@
     </div>
 <?php } ?>
 
-<?php if ($page == 'view_broadsheet_result_summary_form') { ?>
+<?php if ($page == 'view_ca_result_summary_form') { ?>
     <script> getViewResultSummarySession = JSON.parse(sessionStorage.getItem("getViewResultSummarySession"));</script>
     <script> getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));</script>
 
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
         <div class="top-panel-div">
             <div class="inner-top">
-                <span><i class="bi-diagram-3"></i> RESULT SUMMARY</span>
+                <span><i class="bi-diagram-3"></i> CA RESULT SUMMARY</span>
                 <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
         </div>
@@ -1863,7 +1863,7 @@
                     
                         <div class="btn-container">
                             <button class="btn" title="CA RESULT SUMMARY" id="printBtn" onclick="_printCaResultSummary();"><i class="bi-printer"></i>CA RESULT SUMMARY</button>
-                            <button class="btn" title="ALL CA RESULT" onclick="windowPop('<?php echo $websiteUrl?>/reports/print-all-terminal-result');"><i class="bi-printer"></i> ALL CA RESULT</button>
+                            <button class="btn" title="ALL CA RESULT" id="printAllBtn" onclick="_printAllStudentCaResult()"><i class="bi-printer"></i> ALL CA RESULT</button>
                         </div>            
                     </div>
 
@@ -1985,7 +1985,7 @@
 
                                         const actionTd = $('<td class="td"></td>');
                                         const printButton = $(`
-                                            <button class="btn view-btn min-width-btn" id="printAssBtn_${studentId}" title="Click to print student result" onclick="_printSingleAssessmentResult('${branchId}','${session}','${termId}','${departmentId}','${classId}','${armId}','${assessmentId}','${studentId}');">
+                                            <button class="btn view-btn min-width-btn" id="printAssBtn_${studentId}" title="Click to print student result" onclick="_printEachStudentCaResult('${branchId}','${session}','${termId}','${departmentId}','${classId}','${armId}','${assessmentId}','${studentId}');">
                                                 <i class="bi-printer"></i> PRINT
                                             </button>
                                         `);
@@ -1997,6 +1997,201 @@
                                     });
 
                                     $('#resultSumamryPageContent').empty().append(thead).append(tbody);
+                                });
+                            </script>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'view_terminal_result_summary_form') { ?>
+    <script> getViewTerminalResultSummarySession = JSON.parse(sessionStorage.getItem("getViewTerminalResultSummarySession"));</script>
+    <script> getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));</script>
+
+    <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="top-panel-div">
+            <div class="inner-top">
+                <span><i class="bi-diagram-3"></i> TERMINAL RESULT SUMMARY</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="profile-content-div">
+            <div class="bg-img">
+                <div class="mini-profile">
+                    <label>
+                        <div class="img-div" id="current_user_passport1">
+                            <img src="<?php echo $websiteUrl ?>/images/portal-logo.jpg" alt="Profile Image">
+                        </div>
+                    </label>
+
+                    <div class="text-back-div">
+                        <div class="inner-text">
+                            <div class="text-div">
+                                <div class="name" id="terminalResultBranchName"><script>$("#terminalResultBranchName").html(getViewTerminalResultSummarySession?.branchData?.branchName);</script></div>
+
+                                <div class="text">
+                                    OFFICIAL EMAIL:
+                                    <strong id="terminalResultSmtpUsername"><script>$("#terminalResultSmtpUsername").html(getViewTerminalResultSummarySession?.branchData?.smtpUsername);</script></strong>
+
+                                    | SESSION:
+                                    <strong id="terminalResultSession"><script>$("#terminalResultSession").html(getViewTerminalResultSummarySession?.session);</script></strong>
+
+                                    | TERM:
+                                    <strong id="terminalResultTermName"><script>$("#terminalResultTermName").html(getViewTerminalResultSummarySession?.termData?.termName);</script></strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field-back-div background-color">
+                <div class="field-inner-div branch-field-inner-div student-result-field-inner-div" id="get_branch_details">
+                    <div class="alert alert-success top-alert-div animated fadeIn">
+                        <div><span><i class="bi-grid-3x3"></i></span> <span id="terminalResultTypeName"><script>$("#terminalResultTypeName").html(fetchPresetDataSession?.reportTypeData?.reportTypeName);</script></span> <span>SUMMARY</span> --- <span id="terminalInfoSession"><script>$("#terminalInfoSession").html(getViewTerminalResultSummarySession?.session);</script></span> - <span id="terminalInfoTermName"><script>$("#terminalInfoTermName").html(getViewTerminalResultSummarySession?.termData?.termName);</script></span> 
+                        - <span id="terminalResultDepartment"><script>$("#terminalResultDepartment").html(getViewTerminalResultSummarySession?.departmentData?.departmentName);</script></span> - <span id="terminalResultClass"><script>$("#terminalResultClass").html(getViewTerminalResultSummarySession?.classData?.className);</script></span> - <span id="terminalResultArm"><script>$("#terminalResultArm").html(getViewTerminalResultSummarySession?.armData?.armName);</script></span></div>
+                    
+                        <div class="btn-container">
+                            <button class="btn" title="TERMINAL RESULT SUMMARY" id="printBtn" onclick="_printTerminalResultSummary();"><i class="bi-printer"></i>TERMINAL RESULT SUMMARY</button>
+                            <button class="btn" title="ALL TERMINAL RESULT" id="printAllBtn" onclick="windowPop('<?php echo $websiteUrl?>/reports/print-all-student-terminal-result');"><i class="bi-printer"></i> ALL TERMINAL RESULT</button>
+                            <button class="btn" title="PROGRESS REPORT" id="printAllBtn" onclick="windowPop('<?php echo $websiteUrl?>/reports/print-all-student-terminal-progress-report-result');"><i class="bi-printer"></i> PROGRESS REPORT</button>
+                        </div>            
+                    </div>
+
+                    <div class="table-div animated fadeIn">
+                        <table class="table" cellspacing="0" style="width:100%" id="terminalResultSumamryPageContent">
+                            <script>
+                                $(document).ready(function() {
+                                    const getViewTerminalResultSummarySession = JSON.parse(sessionStorage.getItem("getViewTerminalResultSummarySession"));
+                                    if (!getViewTerminalResultSummarySession) return;
+                                        // get ids for the print button //
+                                    const branchId = getViewTerminalResultSummarySession?.branchId;
+                                    const session = getViewTerminalResultSummarySession?.session;
+                                    const termId = getViewTerminalResultSummarySession?.termData?.termId;
+                                    const departmentId = getViewTerminalResultSummarySession?.departmentData?.departmentId;
+                                    const classId = getViewTerminalResultSummarySession?.classData?.classId;
+                                    const armId = getViewTerminalResultSummarySession?.armData?.armId;
+                                    const assessmentId = getViewTerminalResultSummarySession?.assessmentData?.assessmentId;
+                                    
+                                    const tableTitles = getViewTerminalResultSummarySession?.tableTitles.split(',').map(x => x.trim());
+                                    const studentList = getViewTerminalResultSummarySession?.studentData;
+                                    const summaryData = getViewTerminalResultSummarySession?.summaryData;
+
+                                    const scoreMap = {};
+
+                                    // Extract summary fields
+                                    const studentKeys = Object.keys(studentList[0] || {});
+                                    const summaryFields = Object.keys(summaryData[0] || {}).filter(k => !studentKeys
+                                        .includes(k));
+
+                                    // Build scoreMap for summary fields
+                                    summaryFields.forEach(field => {
+                                        scoreMap[field] = {};
+                                        summaryData.forEach(summary => {
+                                            scoreMap[field][summary.studentId] = summary[field];
+                                        });
+                                    });
+
+                                    function normalizeWords(str) {
+                                        return str
+                                            .replace(/[\W_]+/g, ' ') // Remove punctuation and underscores
+                                            .replace(/([a-z])([A-Z])/g, '$1 $2') // Split camelCase
+                                            .toLowerCase()
+                                            .split(' ')
+                                            .filter(Boolean);
+                                    }
+
+                                    // Map tableTitles to scoreMap fields (summary or subject)
+                                    tableTitles.forEach(title => {
+                                        // First try exact match
+                                        if (summaryFields.includes(title)) {
+                                            scoreMap[title] = scoreMap[title];
+                                            return;
+                                        }
+
+                                        // Try fuzzy matching
+                                        const titleWords = normalizeWords(title);
+                                        let bestMatch = null;
+                                        let bestMatchScore = 0;
+
+                                        summaryFields.forEach(field => {
+                                            const fieldWords = normalizeWords(field);
+                                            const overlapCount = titleWords.filter(word => fieldWords
+                                                .includes(word)).length;
+
+                                            if (overlapCount > bestMatchScore) {
+                                                bestMatch = field;
+                                                bestMatchScore = overlapCount;
+                                            }
+                                        });
+
+                                        if (bestMatch && !scoreMap[title]) {
+                                            scoreMap[title] = scoreMap[bestMatch];
+                                        }
+                                    });
+
+                                    // Build the table
+                                    const thead = $('<thead></thead>');
+                                    const headerRow = $('<tr class="tb-col small-font-tb-col"></tr>');
+
+
+                                    tableTitles.forEach(title => {
+                                        headerRow.append($('<th></th>').text(title));
+                                    });
+
+                                    headerRow.append($('<th></th>').text('ACTION'));
+
+                                    thead.append(headerRow);
+
+                                    const tbody = $('<tbody></tbody>');
+
+                                    studentList.forEach((student, index) => {
+                                        const row = $('<tr class="tb-row report-tb-row"></tr>');
+                                        const fullName = `${student.surName} ${student.otherNames || ''}`.trim();
+                                        const studentId = student.studentId;
+                                        const passportFile = student.passport ? student.passport : 'default.jpg';
+
+                                        row.append($('<td class="td"></td>').text(index + 1));
+
+                                        const studentInfoId = $('<td class="td"></td>');
+                                        const studentInfoText = `
+                                            <div class="text-back-div">
+                                                <div class="image-div general-passport">
+                                                    <img src="${studentPixPath}/${passportFile}" alt="${fullName}" />
+                                                </div>
+                                                <div class="text-div">
+                                                    <div class="first-class">${fullName}</div>
+                                                    <div class="second-class">${studentId}</div>
+                                                </div>
+                                            </div>
+                                        `;
+                                        studentInfoId.html(studentInfoText);
+                                        row.append(studentInfoId);
+
+                                        for (let i = 2; i < tableTitles.length; i++) {
+                                            const title = tableTitles[i];
+                                            const score = scoreMap[title] && scoreMap[title][student.studentId] ? scoreMap[title][student.studentId] : '';
+                                            row.append($('<td class="td"></td>').text(score));
+                                        }
+
+                                        const actionTd = $('<td class="td"></td>');
+                                        const printButton = $(`
+                                            <button class="btn view-btn min-width-btn" id="printAssBtn_${studentId}" title="Click to print student result" onclick="windowPop('<?php echo $websiteUrl?>/reports/print-each-student-terminal-result');">
+                                                <i class="bi-printer"></i> PRINT
+                                            </button>
+                                        `);
+
+                                        actionTd.append(printButton);
+                                        row.append(actionTd);
+
+                                        tbody.append(row);
+                                    });
+
+                                    $('#terminalResultSumamryPageContent').empty().append(thead).append(tbody);
                                 });
                             </script>
                         </table>

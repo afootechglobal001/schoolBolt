@@ -999,7 +999,7 @@ getComputeScoreRecordDetailsSession = JSON.parse(sessionStorage.getItem("getComp
             <div class="btn-container compute-btn-container">
                 <button class="btn" title="COMPUTE SCORES" id="submitBtn" onclick="_proceedComputeAssessment();"> <i
                         class="bi-check"></i> COMPUTE SCORES </button>
-                <button class="btn print-btn" title="PRINT ASSESSMENT" id="printBtn" onclick="_printAssessment();"> <i
+                <button class="btn print-btn" title="PRINT ASSESSMENT" id="printBtn" onclick="_printAssessmentPerSubject();"> <i
                         class="bi-printer"></i> PRINT SCORES </button>
             </div>
         </div>

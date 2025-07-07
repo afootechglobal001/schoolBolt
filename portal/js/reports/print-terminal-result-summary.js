@@ -1,4 +1,4 @@
-function _printCaResultSummary() {
+function _printTerminalResultSummary() {
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
 	let getViewResultSummarySession = JSON.parse(sessionStorage.getItem("getViewResultSummarySession"));
 
@@ -8,7 +8,6 @@ function _printCaResultSummary() {
 	const departmentId = getViewResultSummarySession?.departmentData?.departmentId;
 	const classId = getViewResultSummarySession?.classData?.classId;
 	const armId = getViewResultSummarySession?.armData?.armId;
-	const assessmentId = getViewResultSummarySession?.assessmentData?.assessmentId;
 
 	try {
 		const btnText = $("#printBtn").html();
@@ -17,14 +16,14 @@ function _printCaResultSummary() {
 
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/reports/view-ca-result-summary?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&assessmentId=${assessmentId}`,
+			url: `${endPoint}/reports/view-terminal-result-summary?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(),
 			success: function(info) {
 				if (info.success > 0) {
-					sessionStorage.setItem("printResultSummarySession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/print-ca-result-summary`);
+					sessionStorage.setItem("printTerminalResultSummarySession", JSON.stringify(info));
+					windowPop(`${websiteUrl}/reports/print-terminal-result-summary`);
 				} else {
 					_actionAlert(info.message, false);
 					const response = info.response;
