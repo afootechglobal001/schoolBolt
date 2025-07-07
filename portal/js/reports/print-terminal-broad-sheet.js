@@ -17,7 +17,7 @@ function _printTerminalBroadSheet(departmentId, classId, armId) {
 			success: function(info) {
 				if (info.success > 0) {
 					sessionStorage.setItem("printTerminalBroadSheetsession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/terminal-broad-sheet`);
+					windowPop(`${websiteUrl}/reports/print-terminal-broad-sheet`);
 					_alertClose(2);
 				} else {
 					_actionAlert(info.message, false);

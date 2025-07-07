@@ -879,6 +879,18 @@
                 </div>
             </div>
         </div>
+
+        <div class="user-managment-list staff-managment-list" title="Other Settings" onclick="_getForm({page: 'branch_other_settings_form', layer: 2, url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/gear.png" alt="Other Settings" />
+                </div>
+                <div class="text-div">
+                    <h3>Other Settings</h3>
+                    <p>Manage additional preferences for this branch.</p>
+                </div>
+            </div>
+        </div>
     </div>
 <?php } ?>
 
@@ -2196,6 +2208,47 @@
                             </script>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'branch_other_settings_form') { ?>
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="pageTitle"><i class="bi-plus-square"></i> ADD A NEW FEES</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert">Kindly fill the form below to <span id="pageTitle2"> ADD A NEW FEES</span></div>
+                </div>
+
+                <div class="text_field_container" id="session_container">
+                    <script>
+                        textField({
+                            id: 'session',
+                            title: 'Session'
+                        });
+                    </script>
+                </div>
+
+                <div class="text_field_container" id="feesName_container">
+                    <script>
+                        textField({
+                            id: 'feesName',
+                            title: 'Fee Name'
+                        });
+                    </script>
+                </div>
+
+                <div>
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
                 </div>
             </div>
         </div>
