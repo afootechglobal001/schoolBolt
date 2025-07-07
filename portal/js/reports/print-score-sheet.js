@@ -1,4 +1,4 @@
-function _printStudentScoreSheet(departmentId, classId, armId, subjectId) {
+function _printScoreSheet(departmentId, classId, armId, subjectId) {
 	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
 	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
 	try {
@@ -11,7 +11,7 @@ function _printStudentScoreSheet(departmentId, classId, armId, subjectId) {
 			success: function(info) {
 				if (info.success > 0) {
 					sessionStorage.setItem("printStudentScoreSheetSession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/score-sheet`);
+					windowPop(`${websiteUrl}/reports/print-score-sheet`);
 					_alertClose(2);
 				} else {
 					_actionAlert(info.message, false);

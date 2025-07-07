@@ -1,4 +1,4 @@
-function _printStudents(departmentId, classId, armId) {
+function _printStudentByClass(departmentId, classId, armId) {
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
 	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
 	try {
@@ -11,7 +11,7 @@ function _printStudents(departmentId, classId, armId) {
 			success: function(info) {
 				if (info.success > 0) {
 					sessionStorage.setItem("printStudentByClassSession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/student-list`);
+					windowPop(`${websiteUrl}/reports/print-student-by-class`);
 					_alertClose(2);
 				} else {
 					_actionAlert(info.message, false);
@@ -47,7 +47,7 @@ function _printAllocatedStudents(departmentId, classId, armId) {
 			success: function(info) {
 				if (info.success > 0) {
 					sessionStorage.setItem("printStudentByClassSession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/student-list`);
+					windowPop(`${websiteUrl}/reports/print-student-by-class`);
 					_alertClose(2);
 				} else {
 					_actionAlert(info.message, false);

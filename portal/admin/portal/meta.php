@@ -52,9 +52,11 @@
 <script src="<?php echo $websiteUrl?>/js/branch/fees/useFees.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/branch/assessment/useAssessment.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/reports/print-compute-fee-by-class.js?v=<?php echo $codeVersion?>"></script>
-<script src="<?php echo $websiteUrl?>/js/reports/print-student-score-sheet.js?v=<?php echo $codeVersion?>"></script>
-<script src="<?php echo $websiteUrl?>/js/reports/print-assessment.js?v=<?php echo $codeVersion?>"></script>
-<script src="<?php echo $websiteUrl?>/js/reports/print-broad-sheet.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/reports/print-score-sheet.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/reports/print-assessment-per-subject.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/reports/print-ca-broad-sheet.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/reports/print-terminal-broad-sheet.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/reports/print-ca-result-summary.js?v=<?php echo $codeVersion?>"></script>
-<script src="<?php echo $websiteUrl?>/js/reports/print-single-assessment-result.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/reports/print-each-student-ca-result.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/reports/print-all-student-ca-result.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/reports/print-terminal-result-summary.js?v=<?php echo $codeVersion?>"></script>

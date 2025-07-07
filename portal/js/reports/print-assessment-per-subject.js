@@ -1,4 +1,4 @@
-function _printAssessment() {
+function _printAssessmentPerSubject() {
 	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
 	let getComputeScoreRecordDetailsSession = JSON.parse(sessionStorage.getItem("getComputeScoreRecordDetailsSession"));
 
@@ -29,14 +29,14 @@ function _printAssessment() {
 		
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/reports/print-assessment?branchId=${getEachStaffDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&subjectId=${subjectId}&assessmentId=${assessmentId}`,
+			url: `${endPoint}/reports/print-assessment-per-subject?branchId=${getEachStaffDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&subjectId=${subjectId}&assessmentId=${assessmentId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(),
 			success: function(info) {
 				if (info.success > 0) {
 					sessionStorage.setItem("printAssessmentSession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/assessment-score-sheet`);
+					windowPop(`${websiteUrl}/reports/print-assessment-per-subject`);
 					_alertClose(2);
 				} else {
 					_actionAlert(info.message, false);

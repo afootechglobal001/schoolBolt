@@ -489,7 +489,7 @@ function _fetchBranchStudents() {
 				$("#armName2").html(armName);
 				
 				let showButtons = `
-					<button class="btn" title="PRINT RECORDS" onclick="_printStudents('${info.departmentData.departmentId}','${info.classData.classId}','${info.armData.armId}')">
+					<button class="btn" title="PRINT RECORDS" onclick="_printStudentByClass('${info.departmentData.departmentId}','${info.classData.classId}','${info.armData.armId}')">
 						<i class="bi-printer"></i> PRINT
 					</button>
 					<button class="btn" title="EXPORT RECORDS" onclick="_exportStudents('${session}','${departmentName}','${className}','${armName}');">

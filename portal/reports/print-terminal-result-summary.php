@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <script> printResultSummarySession = JSON.parse(sessionStorage.getItem("printResultSummarySession"));</script>
+    <script> printTerminalResultSummarySession = JSON.parse(sessionStorage.getItem("printTerminalResultSummarySession"));</script>
 
     <section class="body-div all-terminal-body">
         <div class="header-back-div">
@@ -22,20 +22,19 @@
                     </div> 
                     
                     <div class="text-div">
-                        <h3 id="branchName"><script>$("#branchName").html(printResultSummarySession?.branchData?.branchName);</script></h3>
-                        <div class="text">Address: <strong id="address"><script>$("#address").html(printResultSummarySession?.branchData?.address);</script></strong></div>
-                        <div class="text">Phone: <strong id="mobileNumber"><script>$("#mobileNumber").html(printResultSummarySession?.branchData?.mobileNumber);</script></strong> | Official Email: <strong id="smtpUsername"><script>$("#smtpUsername").html(printResultSummarySession?.branchData?.smtpUsername);</script></strong></div> 
+                        <h3 id="branchName"><script>$("#branchName").html(printTerminalResultSummarySession?.branchData?.branchName);</script></h3>
+                        <div class="text">Address: <strong id="address"><script>$("#address").html(printTerminalResultSummarySession?.branchData?.address);</script></strong></div>
+                        <div class="text">Phone: <strong id="mobileNumber"><script>$("#mobileNumber").html(printTerminalResultSummarySession?.branchData?.mobileNumber);</script></strong> | Official Email: <strong id="smtpUsername"><script>$("#smtpUsername").html(printTerminalResultSummarySession?.branchData?.smtpUsername);</script></strong></div> 
                     </div>
                 </div>
             </div>
             <div class="title-div"><span id="titleDetails">Loading...</span>TERMINAL RESULT SUMMARY</div>
              <script>
-                $("#titleDetails").html(printResultSummarySession?.session + ' - ' +
-                printResultSummarySession?.termData?.termName + ' - ' +
-                printResultSummarySession?.departmentData?.departmentName + ' - ' +
-                printResultSummarySession?.classData?.className + ' ' +
-                printResultSummarySession?.armData?.armName + ' - ' +
-                printResultSummarySession?.assessmentData?.assessmentName);
+                $("#titleDetails").html(printTerminalResultSummarySession?.session + ' - ' +
+                printTerminalResultSummarySession?.termData?.termName + ' - ' +
+                printTerminalResultSummarySession?.departmentData?.departmentName + ' - ' +
+                printTerminalResultSummarySession?.classData?.className + ' ' +
+                printTerminalResultSummarySession?.armData?.armName);
             </script>
         </div>
     
@@ -44,12 +43,12 @@
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
                         $(document).ready(function() {
-                            const printResultSummarySession = JSON.parse(sessionStorage.getItem("printResultSummarySession"));
-                            if (!printResultSummarySession) return;
+                            const printTerminalResultSummarySession = JSON.parse(sessionStorage.getItem("printTerminalResultSummarySession"));
+                            if (!printTerminalResultSummarySession) return;
 
-                            const tableTitles = printResultSummarySession?.tableTitles.split(',').map(x => x.trim());
-                            const studentList = printResultSummarySession?.studentData;
-                            const summaryData = printResultSummarySession?.summaryData;
+                            const tableTitles = printTerminalResultSummarySession?.tableTitles.split(',').map(x => x.trim());
+                            const studentList = printTerminalResultSummarySession?.studentData;
+                            const summaryData = printTerminalResultSummarySession?.summaryData;
 
                             const scoreMap = {};
 

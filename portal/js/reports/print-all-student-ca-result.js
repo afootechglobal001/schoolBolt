@@ -1,4 +1,4 @@
-function _printCaResultSummary() {
+function _printAllStudentCaResult() {
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
 	let getViewResultSummarySession = JSON.parse(sessionStorage.getItem("getViewResultSummarySession"));
 
@@ -11,20 +11,20 @@ function _printCaResultSummary() {
 	const assessmentId = getViewResultSummarySession?.assessmentData?.assessmentId;
 
 	try {
-		const btnText = $("#printBtn").html();
-		$("#printBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
-		$("#printBtn").prop("disabled", true);
+		const btnText = $("#printAllBtn").html();
+		$("#printAllBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+		$("#printAllBtn").prop("disabled", true);
 
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/reports/view-ca-result-summary?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&assessmentId=${assessmentId}`,
+			url: `${endPoint}/reports/print-all-student-ca-result?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&assessmentId=${assessmentId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(),
 			success: function(info) {
 				if (info.success > 0) {
-					sessionStorage.setItem("printResultSummarySession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/print-ca-result-summary`);
+					sessionStorage.setItem("printAllStudentCaResultSession", JSON.stringify(info));
+					windowPop(`${websiteUrl}/reports/print-all-student-ca-result`);
 				} else {
 					_actionAlert(info.message, false);
 					const response = info.response;
@@ -32,18 +32,18 @@ function _printCaResultSummary() {
 						_logOut();
 					}    
 				}
-				$("#printBtn").html(btnText).prop("disabled", false);
+				$("#printAllBtn").html(btnText).prop("disabled", false);
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
 				_actionAlert('An error occurred while fetching data! Please try again.', false);
-				$("#printBtn").html(btnText).prop("disabled", false);
+				$("#printAllBtn").html(btnText).prop("disabled", false);
 			}
 		});
 	} catch (error) {
 		_alertClose(2);
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
-		$("#printBtn").prop("disabled", false);
+		$("#printAllBtn").prop("disabled", false);
 	}
 }
