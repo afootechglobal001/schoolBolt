@@ -17,7 +17,7 @@ function _printTerminalBroadSheet(departmentId, classId, armId) {
 			success: function(info) {
 				if (info.success > 0) {
 					sessionStorage.setItem("printTerminalBroadSheetsession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/terminal-broad-sheet`);
+					windowPop(`${websiteUrl}/reports/print-terminal-broad-sheet`);
 					_alertClose(2);
 				} else {
 					_actionAlert(info.message, false);
@@ -29,6 +29,7 @@ function _printTerminalBroadSheet(departmentId, classId, armId) {
 				}
 			},
 			error: function(textStatus, errorThrown) {
+				_alertClose(2);
 				console.error("AJAX Error: ", textStatus, errorThrown);
 				_actionAlert('An error occurred while fetching data! Please try again.', false);
 			}
