@@ -21,7 +21,7 @@ if (!$checkBasicSecurity){/// start if 1
     validateEmptyField($armId, 'ARM');
 
     
-  /// confirm if there is records
+  /// confirm if there is any subject records for this class and arm
     $subjectSelect="SELECT 
     DISTINCT (subjectId) AS subjectId
     FROM 
@@ -44,19 +44,20 @@ if (!$checkBasicSecurity){/// start if 1
         goto end;
     }
 
-    // delete previous records
+    // delete previous terminal records for the class and arm
     mysqli_query($conn,"DELETE FROM BRANCH_TERMINAL_SUBJECT_REPORT_TAB WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND armId = '$armId'")or die (mysqli_error($conn));
     mysqli_query($conn,"DELETE FROM BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND armId = '$armId'")or die (mysqli_error($conn));
 
     while($subjectFetch = mysqli_fetch_assoc($subjectQuery)){
         $subjectId = $subjectFetch['subjectId'];
-
+        
+        /// get all assessment records for this subject
         $recordIdsArray = [];
         $recordIdQuery = mysqli_query($conn, "SELECT recordId FROM BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId' AND subjectId='$subjectId'") or die(mysqli_error($conn));
         while ($recordIdFetch = mysqli_fetch_assoc($recordIdQuery)) {
             $recordIdsArray[] = "'" . $recordIdFetch['recordId'] . "'";
         }
-
+       //// calculate total assessments mark for each student in the subject
         $recordIds = implode(",", $recordIdsArray);
         $studentScoreQuery = mysqli_query($conn, "SELECT DISTINCT(studentId) AS studentId, SUM(markObtained) AS totalMark FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB WHERE recordId IN ($recordIds) GROUP BY studentId") or die(mysqli_error($conn));
         $noOfStudents = mysqli_num_rows($studentScoreQuery);
@@ -68,42 +69,42 @@ if (!$checkBasicSecurity){/// start if 1
             $remark = getRemark($percentage);
 
             mysqli_query($conn,"INSERT INTO `BRANCH_TERMINAL_SUBJECT_REPORT_TAB`
-            (`clientId`, `branchId`, `session`, `termId`, `departmentId`, `classId`, `armId`, `subjectId`, `studentId`, `totalMark`, `grade`, `remark`) VALUES 
+            (`clientId`, `branchId`, `session`, `termId`, `departmentId`, `classId`, `armId`, `subjectId`, `studentId`, `allAssessmentTotalMark`, `grade`, `remark`) VALUES 
             ('$clientId', '$branchId', '$session', '$termId', '$departmentId', '$classId', '$armId', '$subjectId', '$studentId', '$totalMark', '$grade', '$remark')")or die (mysqli_error($conn));
         }
-           /// update all students position in class per subject
+        /// update students position in class per subject in the term
         $markChecker=0;
         $count=0;
-        $updatePositionSelect = "SELECT studentId, totalMark FROM BRANCH_TERMINAL_SUBJECT_REPORT_TAB WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND armId = '$armId' AND subjectId = '$subjectId' ORDER BY totalMark DESC";
+        $updatePositionSelect = "SELECT studentId, allAssessmentTotalMark FROM BRANCH_TERMINAL_SUBJECT_REPORT_TAB WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND armId = '$armId' AND subjectId = '$subjectId' ORDER BY allAssessmentTotalMark DESC";
         $updatePositionQuery = mysqli_query($conn, $updatePositionSelect) or die(mysqli_error($conn));
         while ($updatePositionFetch = mysqli_fetch_assoc($updatePositionQuery)) {
             $count++;
             $updateStudentId=$updatePositionFetch['studentId'];
-            $totalMark=$updatePositionFetch['totalMark'];
+            $allAssessmentTotalMark=$updatePositionFetch['allAssessmentTotalMark'];
 
-            if($markChecker!=$totalMark){
-                $markChecker=$totalMark;
+            if($markChecker!=$allAssessmentTotalMark){
+                $markChecker=$allAssessmentTotalMark;
                 $position=$count . getOrdinalSuffix($count)."($noOfStudents)";
             }
             mysqli_query($conn, "UPDATE BRANCH_TERMINAL_SUBJECT_REPORT_TAB SET position = '$position' WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND armId = '$armId' AND subjectId = '$subjectId' AND studentId = '$updateStudentId'") or die(mysqli_error($conn));
         }
 
 
-           /// update all students overall position in class per subject
+        /// update students overall position in class per subject in the term
         $markChecker_Overall=0;
         $count_Overall=0;
         $overallStudentScoreQuery = mysqli_query($conn, "SELECT DISTINCT(studentId) AS studentId FROM BRANCH_TERMINAL_SUBJECT_REPORT_TAB WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND subjectId = '$subjectId'") or die(mysqli_error($conn));
         $allNoOfStudents = mysqli_num_rows($overallStudentScoreQuery);
 
-        $updateOverallPositionSelect = "SELECT studentId, totalMark FROM BRANCH_TERMINAL_SUBJECT_REPORT_TAB WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND subjectId = '$subjectId' ORDER BY totalMark DESC";
+        $updateOverallPositionSelect = "SELECT studentId, allAssessmentTotalMark FROM BRANCH_TERMINAL_SUBJECT_REPORT_TAB WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND subjectId = '$subjectId' ORDER BY allAssessmentTotalMark DESC";
         $updateOverallPositionQuery = mysqli_query($conn, $updateOverallPositionSelect) or die(mysqli_error($conn));
         while ($updateOverallPositionFetch = mysqli_fetch_assoc($updateOverallPositionQuery)) {
             $count_Overall++;
             $updateStudentId=$updateOverallPositionFetch['studentId'];
-            $totalMark=$updateOverallPositionFetch['totalMark'];
+            $allAssessmentTotalMark=$updateOverallPositionFetch['allAssessmentTotalMark'];
 
-            if($markChecker_Overall!=$totalMark){
-                $markChecker_Overall=$totalMark;
+            if($markChecker_Overall!=$allAssessmentTotalMark){
+                $markChecker_Overall=$allAssessmentTotalMark;
                 $position=$count_Overall . getOrdinalSuffix($count_Overall)."($allNoOfStudents)";
             }
             mysqli_query($conn, "UPDATE BRANCH_TERMINAL_SUBJECT_REPORT_TAB SET overallPosition = '$position' WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND subjectId = '$subjectId' AND studentId = '$updateStudentId'") or die(mysqli_error($conn));
@@ -111,8 +112,8 @@ if (!$checkBasicSecurity){/// start if 1
     }
  
     //////////////////////////////////////////////////////////////////////////////////////////////
-    /// get each student totalSubjects and totalMarkObtained
-    $select="SELECT studentId, COUNT(DISTINCT subjectId) AS totalSubjects, SUM(totalMark) AS totalMarkObtained
+    /// get each student totalSubjects and totalMarkObtained for a term
+    $select="SELECT studentId, COUNT(DISTINCT subjectId) AS totalSubjects, SUM(allAssessmentTotalMark) AS totalMarkObtained
     FROM BRANCH_TERMINAL_SUBJECT_REPORT_TAB
     WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND armId = '$armId'
     GROUP BY studentId";
@@ -120,15 +121,16 @@ if (!$checkBasicSecurity){/// start if 1
     while ($fetch = mysqli_fetch_assoc($query)) {
         $studentId = $fetch['studentId'];
         $totalSubjects = $fetch['totalSubjects'];
+        $totalMarkObtainable = $totalSubjects * 100; // Assuming each subject has a maximum of 100 marks
         $totalMarkObtained = $fetch['totalMarkObtained'];
 
-        $totalPercentage = number_format(($totalMarkObtained / ($totalSubjects * 100)) * 100, 2); // Assuming each subject has a maximum of 100 marks
+        $totalPercentage = ($totalMarkObtained / $totalMarkObtainable) * 100; // Assuming each subject has a maximum of 100 marks
         $grade = getGrade($totalPercentage);
         $remark = getRemark($totalPercentage);
 
         mysqli_query($conn,"INSERT INTO `BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB`
-        (`clientId`, `branchId`, `session`, `termId`, `departmentId`, `classId`, `armId`, `studentId`, `totalPercentage`, `grade`, `remark`) VALUES 
-        ('$clientId', '$branchId', '$session', '$termId', '$departmentId', '$classId', '$armId', '$studentId', '$totalPercentage', '$grade', '$remark')")or die (mysqli_error($conn));
+        (`clientId`, `branchId`, `session`, `termId`, `departmentId`, `classId`, `armId`, `studentId`, `totalSubjects`, `totalMarkObtainable`, `totalMarkObtained`, `totalPercentage`, `grade`, `remark`) VALUES 
+        ('$clientId', '$branchId', '$session', '$termId', '$departmentId', '$classId', '$armId', '$studentId', '$totalSubjects', '$totalMarkObtainable', '$totalMarkObtained', '$totalPercentage', '$grade', '$remark')")or die (mysqli_error($conn));
     }
     //// update all students position in class
     $updatePositionQuery = mysqli_query($conn, "UPDATE BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB a
@@ -139,6 +141,15 @@ if (!$checkBasicSecurity){/// start if 1
         WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND armId = '$armId'
     ) AS ranked ON a.studentId = ranked.studentId
     SET a.position = ranked.position") or die(mysqli_error($conn));
+
+
+
+
+
+
+
+
+
 
 
     /// get all tableTitles
@@ -222,12 +233,28 @@ if (!$checkBasicSecurity){/// start if 1
         /// get SubjectLists of this student
         $totalSubjects = 0;
         $totalMarkObtained = 0;
-        $subjectListQuery = mysqli_query($conn, "SELECT a.subjectId, a.totalMark, b.subjectAbbreviation 
-        FROM BRANCH_TERMINAL_SUBJECT_REPORT_TAB a JOIN SUBJECTS_TAB b ON a.clientId=b.clientId AND a.subjectId = b.subjectId 
-        WHERE a.clientId='$clientId' AND a.branchId='$branchId' AND a.session='$session' AND a.termId='$termId' AND a.departmentId='$departmentId' AND a.classId='$classId' AND a.armId='$armId' AND a.studentId='$studentId'") or die(mysqli_error($conn));
+        
+        $subjectListSelect = "SELECT a.subjectId, 
+        a.allAssessmentTotalMark,
+        b.subjectAbbreviation
+        FROM 
+        BRANCH_TERMINAL_SUBJECT_REPORT_TAB a
+        JOIN
+        SUBJECTS_TAB b ON a.clientId=b.clientId AND a.subjectId = b.subjectId
+        WHERE
+        a.clientId='$clientId' 
+        AND a.branchId='$branchId' 
+        AND a.session='$session' 
+        AND a.termId='$termId' 
+        AND a.departmentId='$departmentId' 
+        AND a.classId='$classId' 
+        AND a.armId='$armId' 
+        AND a.studentId='$studentId'
+        ORDER BY b.subjectName ASC"; // Order by subject name
+        $subjectListQuery = mysqli_query($conn, $subjectListSelect) or die(mysqli_error($conn));
         while($subjectListFetch = mysqli_fetch_assoc($subjectListQuery)) {
             $totalSubjects++;
-            $totalMarkObtained +=(float)$subjectListFetch['totalMark'];
+            $totalMarkObtained +=(float)$subjectListFetch['allAssessmentTotalMark'];
             $fetch['studentScorePerSubject'][] = $subjectListFetch;
             
         }

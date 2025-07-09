@@ -110,6 +110,31 @@ if (!$checkBasicSecurity){/// start if 1
         
         $numOfSubjects=0;
         $markObtained=0;
+            /// confirm student subjects
+        $broadsheetSelect="SELECT 
+        a.recordId, 
+        a.subjectId, 
+        b.subjectName 
+        FROM 
+            BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB a
+        JOIN 
+            BRANCH_ASSESSMENT_RECORD_DETAILS_TAB c ON a.recordId = c.recordId
+        JOIN
+            SUBJECTS_TAB b ON a.subjectId = b.subjectId AND a.clientId = b.clientId
+        WHERE 
+            a.clientId = '$clientId' 
+            AND a.branchId = '$branchId'  
+            AND a.session = '$session'  
+            AND a.termId = '$termId'        
+            AND a.departmentId = '$departmentId'  
+            AND a.classId = '$classId'  
+            AND a.armId = '$armId'  
+            AND a.assessmentId = '$assessmentId'
+            AND c.studentId = '$studentId'
+            AND c.markObtained > 0
+        ORDER BY 
+            b.subjectName ASC
+        ";
         $broadsheetQuery=mysqli_query($conn,$broadsheetSelect)or die (mysqli_error($conn));
         while($datatFetch = mysqli_fetch_assoc($broadsheetQuery)){
             $numOfSubjects++;
