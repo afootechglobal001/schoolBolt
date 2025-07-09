@@ -2081,13 +2081,12 @@
                                     const getViewTerminalResultSummarySession = JSON.parse(sessionStorage.getItem("getViewTerminalResultSummarySession"));
                                     if (!getViewTerminalResultSummarySession) return;
                                         // get ids for the print button //
-                                    const branchId = getViewTerminalResultSummarySession?.branchId;
+                                    const branchId = getEachBranchDetailsSession?.branchId;
                                     const session = getViewTerminalResultSummarySession?.session;
                                     const termId = getViewTerminalResultSummarySession?.termData?.termId;
                                     const departmentId = getViewTerminalResultSummarySession?.departmentData?.departmentId;
                                     const classId = getViewTerminalResultSummarySession?.classData?.classId;
                                     const armId = getViewTerminalResultSummarySession?.armData?.armId;
-                                    const assessmentId = getViewTerminalResultSummarySession?.assessmentData?.assessmentId;
                                     
                                     const tableTitles = getViewTerminalResultSummarySession?.tableTitles.split(',').map(x => x.trim());
                                     const studentList = getViewTerminalResultSummarySession?.studentData;
@@ -2192,7 +2191,7 @@
 
                                         const actionTd = $('<td class="td"></td>');
                                         const printButton = $(`
-                                            <button class="btn view-btn min-width-btn" id="printAssBtn_${studentId}" title="Click to print student result" onclick="windowPop('<?php echo $websiteUrl?>/reports/print-each-student-terminal-result');">
+                                            <button class="btn view-btn min-width-btn" id="printEachAssBtn_${studentId}" title="Click to print terminal student result" onclick="printEachStudentTerminalResult('${branchId}','${session}','${termId}','${departmentId}','${classId}','${armId}','${studentId}');">
                                                 <i class="bi-printer"></i> PRINT
                                             </button>
                                         `);

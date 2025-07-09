@@ -12,6 +12,8 @@
 </head>
 
 <body>
+    <script> printEachStudentTerminalResultSession = JSON.parse(sessionStorage.getItem("printEachStudentTerminalResultSession"));</script>
+
     <section class="body-div all-terminal-body">
         <div class="header-back-div">
             <div class="header-div">
@@ -21,37 +23,65 @@
                     </div> 
                     
                     <div class="text-div">
-                        <h3 id="branchName">SCHOOLBOLT NUR/PRY SCHOOL, ODE REMO</h3>
-                        <div class="text">Address: <strong id="address">8, ABAREN CLOSE, OFF LOVEALL IKOSI, KETU, LAGOS</strong></div>
-                        <div class="text">Phone: <strong id="mobileNumber">08050202261</strong> | Official Email: <strong id="smtpUsername">school_1@schoolbolt.com</strong></div> 
+                        <h3 id="branchName">
+                            <script>
+                            $("#branchName").html(printEachStudentTerminalResultSession?.branchData?.branchName);
+                            </script>
+                        </h3>
+                        <div class="text">Address: <strong id="address">
+                                <script>
+                                $("#address").html(printEachStudentTerminalResultSession?.branchData?.address);
+                                </script>
+                            </strong></div>
+                        <div class="text">Phone: <strong id="mobileNumber">
+                                <script>
+                                $("#mobileNumber").html(printEachStudentTerminalResultSession?.branchData?.mobileNumber);
+                                </script>
+                            </strong> | Official Email: <strong id="smtpUsername">
+                                <script>
+                                $("#smtpUsername").html(printEachStudentTerminalResultSession?.branchData?.smtpUsername);
+                                </script>
+                            </strong></div>
                     </div>
                 </div>
             </div>
-            <div class="title-div"><span id="titleDetails">2023/2024</span> - <span id="">THIRD TERM</span> - <span id="">ACADEMIC SESSION</span> TERMINAL RESULT</div>
+            <div class="title-div"><span id="titleDetails">Loading...</span>TERMINAL RESULT
+                <script>
+                    $("#titleDetails").html(
+                        printEachStudentTerminalResultSession?.session + ' ACADEMIC SESSION - ' +
+                        printEachStudentTerminalResultSession?.termData?.termName + ' - ' +
+                        printEachStudentTerminalResultSession?.departmentData?.departmentName + ' - ' +
+                        printEachStudentTerminalResultSession?.classData?.className + ' - ' +
+                        printEachStudentTerminalResultSession?.armData?.armName);
+                </script>
+            </div>
             <div class="top-containner-back-div">
                 <div class="inner-div-cont">
                     <div class="content-div">
                         <div class="details">
                             <span>STUDENT NAME</span>
-                            <div id="">MIKE AFOLABI OLUWAGBENGA</div>
+                            <div id="fullName"><script>$("#fullName").html(printEachStudentTerminalResultSession?.studentData?.surName + ' ' + printEachStudentTerminalResultSession?.studentData?.firstName+ ' ' + printEachStudentTerminalResultSession?.studentData?.otherNames);</script></div>
                         </div>
 
                         <div class="details">
                             <span>STUDENT ID</span>
-                            <div id="">STUDENT00220250321124557</div>
+                            <div id="studentId"><script>$("#studentId").html(printEachStudentTerminalResultSession?.studentData?.studentId);</script></div>
                         </div>
 
                         <div class="details"><span>CLASS</span>
-                            <div id="">KINDERGARTEN - KG 1</div>
+                            <div id="className"><script>$("#className").html(printEachStudentTerminalResultSession?.classData?.className + ' ' + printEachStudentTerminalResultSession?.armData?.armName);</script></div>
                         </div>
 
                         <div class="details"><span>GENDER</span>
-                            <div id="">MALE</div>
+                            <div id="genderName"><script>$("#genderName").html(printEachStudentTerminalResultSession?.studentData?.genderName);</script></div>
                         </div>
                     </div>
 
-                    <div class="image-div">
-                        <img src="<?php echo $websiteUrl?>/images/student.jpg" alt="Avatar"/>   
+                    <div class="image-div" id="studentPix">
+                        <script>
+                            $("#studentPix").html('<img src="<?php echo $websiteUrl ?>/uploaded_files/studentPix/' +
+                            printEachStudentTerminalResultSession?.studentData?.passport + '" alt="Student Profile Image">');
+                        </script>
                     </div>
                 </div>
             </div>
@@ -60,236 +90,95 @@
         <div class="inner-content">
             <div class="table-div computation-table animated fadeIn">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-                    <thead>
-                        <tr class="tb-col report-tb-col">
-                            <th>SN</th>
-                            <th>SUBJECT</th>
-                            <th>1ST TERM SCORE(100)</th>
-                            <th>2ND TERM SCORE(100)</th>
-                            <th>1ST TEST SCORE(15)</th>
-                            <th>2ND TEST SCORE(15)</th>
-                            <th>EXAM SCORE(70)</th>
-                            <th>3RD TERM SCORE(100)</th>
-                            <th>POSN. IN CLASS</th>
-                            <th>CLASS MIN SCORE</th>
-                            <th>CLASS MAX SCORE</th>
-                            <th>CLASS AVERAGE</th>
-                            <th>ANNUAL SCORE</th>
-                            <th>ANNUAL SCORE GRADE</th>
-                            <th>REMARK</th>
-                            <th>OVERAL POSN.</th>
-                        </tr>
-                    </thead>
+                    <script>
+                        $(document).ready(function () {
+                            const sessionData = JSON.parse(sessionStorage.getItem("printEachStudentTerminalResultSession"));
+                            if (!sessionData) return;
 
-                    <tbody>
-                        <tr class="tb-row report-tb-row">
-                            <td>1</td>
-                            <td>AGRICULTURAL SCIENCE</td>
-                            <td>37</td>
-                            <td>47.1</td>
-                            <td>7</td>
-                            <td>6</td>
-                            <td>31</td>
-                            <td>44</td>
-                            <td>28TH(33)</td>
-                            <td>29.3</td>
-                            <td>88</td>
-                            <td>55.5</td>
-                            <td>42.7</td>
-                            <td>E8</td>
-                            <td>PASS</td>
-                            <td>134TH(166)</td>
-                        </tr>  
-                        
-                        <tr class="tb-row report-tb-row">
-                            <td>2</td>
-                            <td>BASIC SCIENCE</td>
-                            <td>37</td>
-                            <td>47.1</td>
-                            <td>7</td>
-                            <td>6</td>
-                            <td>31</td>
-                            <td>44</td>
-                            <td>28TH(33)</td>
-                            <td>29.3</td>
-                            <td>88</td>
-                            <td>55.5</td>
-                            <td>42.7</td>
-                            <td>E8</td>
-                            <td>PASS</td>
-                            <td>134TH(166)</td>
-                        </tr>  
+                            const tableTitles = sessionData.tableTitles.split(',').map(x => x.trim());
+                            const subjectAssessmentData = sessionData.subjectAssessmentData; 
+                            const studentSubjects = sessionData.studentSubjectAssessmentData;
 
-                       <tr class="tb-row report-tb-row">
-                            <td>3</td>
-                            <td>BASIC TECHNOLOGY</td>
-                            <td>37</td>
-                            <td>47.1</td>
-                            <td>7</td>
-                            <td>6</td>
-                            <td>31</td>
-                            <td>44</td>
-                            <td>28TH(33)</td>
-                            <td>29.3</td>
-                            <td>88</td>
-                            <td>55.5</td>
-                            <td>42.7</td>
-                            <td>E8</td>
-                            <td>PASS</td>
-                            <td>134TH(166)</td>
-                        </tr>  
+                            // 1. Build assessmentMap: name → ID
+                            const assessmentMap = {};
+                            subjectAssessmentData.forEach(a => {
+                                assessmentMap[a.assessmentName.toLowerCase()] = a.assessmentId;
+                            });
 
-                        <tr class="tb-row report-tb-row">
-                            <td>4</td>
-                            <td>CIVIC EDUCATION</td>
-                            <td>37</td>
-                            <td>47.1</td>
-                            <td>7</td>
-                            <td>6</td>
-                            <td>31</td>
-                            <td>44</td>
-                            <td>28TH(33)</td>
-                            <td>29.3</td>
-                            <td>88</td>
-                            <td>55.5</td>
-                            <td>42.7</td>
-                            <td>E8</td>
-                            <td>PASS</td>
-                            <td>134TH(166)</td>
-                        </tr>
-                        <tr class="tb-row report-tb-row">
-                            <td>4</td>
-                            <td>CIVIC EDUCATION</td>
-                            <td>37</td>
-                            <td>47.1</td>
-                            <td>7</td>
-                            <td>6</td>
-                            <td>31</td>
-                            <td>44</td>
-                            <td>28TH(33)</td>
-                            <td>29.3</td>
-                            <td>88</td>
-                            <td>55.5</td>
-                            <td>42.7</td>
-                            <td>E8</td>
-                            <td>PASS</td>
-                            <td>134TH(166)</td>
-                        </tr> 
-                        
-                        <tr class="tb-row report-tb-row">
-                            <td>5</td>
-                            <td>COMPUTER STUDIES</td>
-                            <td>37</td>
-                            <td>47.1</td>
-                            <td>7</td>
-                            <td>6</td>
-                            <td>31</td>
-                            <td>44</td>
-                            <td>28TH(33)</td>
-                            <td>29.3</td>
-                            <td>88</td>
-                            <td>55.5</td>
-                            <td>42.7</td>
-                            <td>E8</td>
-                            <td>PASS</td>
-                            <td>134TH(166)</td>
-                        </tr> 
+                            // 2. Normalize string function
+                            function normalize(str) {
+                                return str.toLowerCase().replace(/[\W_]+/g, '').trim();
+                            }
 
-                        <tr class="tb-row report-tb-row">
-                            <td>6</td>
-                            <td>ENGLISH LANGUAGE</td>
-                            <td>37</td>
-                            <td>47.1</td>
-                            <td>7</td>
-                            <td>6</td>
-                            <td>31</td>
-                            <td>44</td>
-                            <td>28TH(33)</td>
-                            <td>29.3</td>
-                            <td>88</td>
-                            <td>55.5</td>
-                            <td>42.7</td>
-                            <td>E8</td>
-                            <td>PASS</td>
-                            <td>134TH(166)</td>
-                        </tr> 
+                            // 3. String similarity score function
+                            function getSimilarityScore(a, b) {
+                                a = normalize(a);
+                                b = normalize(b);
+                                let matches = 0;
+                                for (let i = 0; i < Math.min(a.length, b.length); i++) {
+                                    if (a[i] === b[i]) matches++;
+                                }
+                                return matches / Math.max(a.length, b.length);
+                            }
 
-                        <tr class="tb-row report-tb-row">
-                            <td>7</td>
-                            <td>FRENCH</td>
-                            <td>37</td>
-                            <td>47.1</td>
-                            <td>7</td>
-                            <td>6</td>
-                            <td>31</td>
-                            <td>44</td>
-                            <td>28TH(33)</td>
-                            <td>29.3</td>
-                            <td>88</td>
-                            <td>55.5</td>
-                            <td>42.7</td>
-                            <td>E8</td>
-                            <td>PASS</td>
-                            <td>134TH(166)</td>
-                        </tr> 
+                            // 4. Build the table
+                            const thead = $('<thead></thead>');
+                            const headerRow = $('<tr class="tb-col"></tr>');
+                            tableTitles.forEach(title => {
+                                headerRow.append($('<th class="th"></th>').text(title));
+                            });
+                            thead.append(headerRow);
 
-                        <tr class="tb-row report-tb-row">
-                            <td>8</td>
-                            <td>MATHEMATICS</td>
-                            <td>37</td>
-                            <td>47.1</td>
-                            <td>7</td>
-                            <td>6</td>
-                            <td>31</td>
-                            <td>44</td>
-                            <td>28TH(33)</td>
-                            <td>29.3</td>
-                            <td>88</td>
-                            <td>55.5</td>
-                            <td>42.7</td>
-                            <td>E8</td>
-                            <td>PASS</td>
-                            <td>134TH(166)</td>
-                        </tr> 
+                            const tbody = $('<tbody></tbody>');
 
-                        <tr class="tb-row report-tb-row">
-                            <td>9</td>
-                            <td>SOCIAL STUDIES</td>
-                            <td>37</td>
-                            <td>47.1</td>
-                            <td>7</td>
-                            <td>6</td>
-                            <td>31</td>
-                            <td>44</td>
-                            <td>28TH(33)</td>
-                            <td>29.3</td>
-                            <td>88</td>
-                            <td>55.5</td>
-                            <td>42.7</td>
-                            <td>E8</td>
-                            <td>PASS</td>
-                            <td>134TH(166)</td>
-                        </tr> 
+                            studentSubjects.forEach((subject, index) => {
+                                const row = $('<tr class="tb-row report-tb-row"></tr>');
 
-                         <tr class="tb-row report-tb-row">
-                            <td>10</td>
-                            <td>YORUBA LANGUAGE</td>
-                            <td>37</td>
-                            <td>47.1</td>
-                            <td>7</td>
-                            <td>6</td>
-                            <td>31</td>
-                            <td>44</td>
-                            <td>28TH(33)</td>
-                            <td>29.3</td>
-                            <td>88</td>
-                            <td>55.5</td>
-                            <td>42.7</td>
-                            <td>E8</td>
-                            <td>PASS</td>
-                            <td>134TH(166)</td>
-                        </tr> 
-                    </tbody>
+                                row.append($('<td class="td"></td>').text(index + 1)); // SN
+                                row.append($('<td class="td"></td>').text(subject.subjectName)); // Subject Name
+
+                                for (let i = 2; i < tableTitles.length; i++) {
+                                    const title = tableTitles[i];
+                                    const normalizedTitle = normalize(title);
+                                    let cellValue = '';
+
+                                    // a) Match assessment
+                                    const assessmentKey = Object.keys(assessmentMap).find(key => normalizedTitle.includes(normalize(key)));
+                                    if (assessmentKey) {
+                                        const assessmentId = assessmentMap[assessmentKey];
+                                        cellValue = subject[assessmentId]?.markObtained ?? '';
+                                    } else {
+                                        // b) Match summary fields (e.g. totalMark, position, etc.)
+                                        const subjectKeys = Object.keys(subject).reduce((acc, key) => {
+                                            acc[normalize(key)] = subject[key];
+                                            return acc;
+                                        }, {});
+
+                                        let bestMatch = '';
+                                        let highestScore = 0;
+
+                                        Object.keys(subjectKeys).forEach(key => {
+                                            const score = getSimilarityScore(normalizedTitle, key);
+                                            if (score > highestScore) {
+                                                highestScore = score;
+                                                bestMatch = key;
+                                            }
+                                        });
+
+                                        if (highestScore >= 0.6) {
+                                            cellValue = subjectKeys[bestMatch];
+                                        }
+                                    }
+
+                                    row.append($('<td class="td"></td>').text(cellValue));
+                                }
+
+                                tbody.append(row);
+                            });
+
+                            $('#pageContent').empty().append(thead).append(tbody);
+                        });
+                    </script>
                 </table>
             </div>
 
@@ -437,7 +326,7 @@
     
         <div class="inner-content">
             <div class="table-div computation-table animated fadeIn">
-                <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+                <table class="table" cellspacing="0" style="width:100%" id="">
                     <thead>
                         <tr class="tb-col report-tb-col">
                             <th></th>
