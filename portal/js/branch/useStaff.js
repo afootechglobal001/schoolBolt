@@ -489,7 +489,7 @@ function _fetchStaffSubjectCummulative() {
 
 
 function _fetchComputeScoreRecordDetails(departmentId, classId, armId, subjectId) {
-	$("#get-form-more-div").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
+	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
 	try {
 		$.ajax({
 			type: "GET",

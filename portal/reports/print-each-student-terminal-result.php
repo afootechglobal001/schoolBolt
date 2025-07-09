@@ -90,7 +90,7 @@
         <div class="inner-content">
             <div class="table-div computation-table animated fadeIn">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-                   <script>
+                    <script>
                         $(document).ready(function () {
                             let printEachStudentTerminalResultSession = JSON.parse(sessionStorage.getItem("printEachStudentTerminalResultSession"));
                             if (!printEachStudentTerminalResultSession) return;
@@ -201,103 +201,184 @@
                 </table>
             </div>
 
-            <div class="top-containner-back-div">
-                <div class="inner-div-cont">
-                    <div class="content-div">
-                        <div class="details">
-                            <span>STUDENTS IN CLASS</span>
-                            <div id="">33</div>
-                        </div>
+            <div class="top-containner-back-div" id="bottomContainer">
+                <script>
+                    $(document).ready(function () {
+                        const termId = printEachStudentTerminalResultSession?.termData?.termId;
+                    
+                        let text='';
+                        if(termId==='3'){
+                            text +=`
+                                <div class="inner-div-cont">
+                                    <div class="content-div">
+                                        <div class="details">
+                                            <span>STUDENTS IN CLASS</span>
+                                            <div id="">33</div>
+                                        </div>
 
-                        <div class="details">
-                            <span>MARKS OBTAINABLE</span>
-                            <div id="">1600</div>
-                        </div>
+                                        <div class="details">
+                                            <span>MARKS OBTAINABLE</span>
+                                            <div id="">1600</div>
+                                        </div>
 
-                        <div class="details">
-                            <span>MARKS OBTAINED</span>
-                            <div id="">758.75</div>
-                        </div>
+                                        <div class="details">
+                                            <span>MARKS OBTAINED</span>
+                                            <div id="">758.75</div>
+                                        </div>
 
-                        <div class="details"><span>PERCENTAGE</span>
-                            <div id="">47.42 %</div>
-                        </div>
+                                        <div class="details"><span>PERCENTAGE</span>
+                                            <div id="">47.42 %</div>
+                                        </div>
 
-                        <div class="details">
-                            <span>POSITION IN CLASS</span>
-                            <div id="">33RD</div>
-                        </div>
+                                        <div class="details">
+                                            <span>POSITION IN CLASS</span>
+                                            <div id="">33RD</div>
+                                        </div>
 
-                        <div class="details">
-                            <span>NUMBER OF SITTING(S)</span>
-                            <div id="">3</div>
-                        </div>
+                                        <div class="details">
+                                            <span>NUMBER OF SITTING(S)</span>
+                                            <div id="">3</div>
+                                        </div>
 
-                        <div class="details">
-                            <span>1ST TERM OVERALL (%)</span>
-                            <div id="">45.82 %</div>
-                        </div>
+                                        <div class="details">
+                                            <span>1ST TERM OVERALL (%)</span>
+                                            <div id="">45.82 %</div>
+                                        </div>
 
-                        <div class="details">
-                            <span>2ND TERM OVERALL (%)</span>
-                            <div id="">48.78</div>
-                        </div>
+                                        <div class="details">
+                                            <span>2ND TERM OVERALL (%)</span>
+                                            <div id="">48.78</div>
+                                        </div>
 
-                        <div class="details">
-                            <span>3RD TERM OVERALL (%)</span>
-                            <div id="">47.42 %</div>
-                        </div>
+                                        <div class="details">
+                                            <span>3RD TERM OVERALL (%)</span>
+                                            <div id="">47.42 %</div>
+                                        </div>
 
-                        <div class="details">
-                            <span>AVERAGE (%)</span>
-                            <div id="">48.78</div>
-                        </div>
+                                        <div class="details">
+                                            <span>AVERAGE (%)</span>
+                                            <div id="">48.78</div>
+                                        </div>
 
-                        <div class="details">
-                            <span>ANNUAL POSITION IN CLASS</span>
-                            <div id="">33RD</div>
-                        </div>
+                                        <div class="details">
+                                            <span>ANNUAL POSITION IN CLASS</span>
+                                            <div id="">33RD</div>
+                                        </div>
 
-                        <div class="details">
-                            <span>ANNUAL OVERALL POSITION</span>
-                            <div id="">143RD(166)</div>
-                        </div>
+                                        <div class="details">
+                                            <span>ANNUAL OVERALL POSITION</span>
+                                            <div id="">143RD(166)</div>
+                                        </div>
 
-                        <div class="details">
-                            <span>TIMES SCHOOL OPENED</span>
-                            <div id="">116</div>
-                        </div>
+                                        <div class="details">
+                                            <span>TIMES SCHOOL OPENED</span>
+                                            <div id="">116</div>
+                                        </div>
 
-                        <div class="details">
-                            <span>TIMES PRESENT</span>
-                            <div id="">92</div>
-                        </div>
+                                        <div class="details">
+                                            <span>TIMES PRESENT</span>
+                                            <div id="">92</div>
+                                        </div>
 
-                        <div class="details">
-                            <span>TIMES ABSENT</span>
-                            <div id="">24</div>
-                        </div>
+                                        <div class="details">
+                                            <span>TIMES ABSENT</span>
+                                            <div id="">24</div>
+                                        </div>
 
-                        <div class="details">
-                            <span>CLASS TEACHER'S COMMENT</span>
-                            <div id="">HE RELATES WELL.</div>
-                        </div>
+                                        <div class="details">
+                                            <span>SCHOOL REOPENS ON</span>
+                                            <div id="">MONDAY 16TH June, 2025</div>
+                                        </div>
 
-                        <div class="details">
-                            <span>PRINCIPAL'S COMMENT</span>
-                            <div id="">FAIR RESULT. PROMOTED TO JSS 2</div>
-                        </div>
+                                        <div class="details">
+                                            <span>CLASS TEACHER'S COMMENT</span>
+                                            <div id="">HE RELATES WELL.</div>
+                                        </div>
 
-                        <div class="details">
-                            <span>SCHOOL REOPENS ON</span>
-                            <div id="">MONDAY 16TH June, 2025</div>
-                        </div>
-                    </div>
+                                        <div class="details">
+                                            <span>PRINCIPAL'S COMMENT</span>
+                                            <div id="">FAIR RESULT. PROMOTED TO JSS 2</div>
+                                        </div>
+                                    </div>
 
-                    <div class="image-div signature">
-                        <img src="<?php echo $websiteUrl?>/images/principal_signature.png" alt="Avatar"/>   
-                    </div>
-                </div>
+                                    <div class="image-div signature">
+                                        <img src="<?php echo $websiteUrl?>/images/principal_signature.png" alt="Avatar"/>   
+                                    </div>
+                                </div>
+                            `;
+                        }else{
+                            text +=`
+                                <div class="inner-div-cont">
+                                    <div class="content-div">
+                                        <div class="details">
+                                            <span>NUMBER OF SUBJECTS</span>
+                                            <div id="">20</div>
+                                        </div>
+
+                                        <div class="details">
+                                            <span>MARKS OBTAINABLE</span>
+                                            <div id="">1600</div>
+                                        </div>
+
+                                        <div class="details">
+                                            <span>MARKS OBTAINED</span>
+                                            <div id="">758.75</div>
+                                        </div>
+
+                                        <div class="details"><span>PERCENTAGE</span>
+                                            <div id="">47.42 %</div>
+                                        </div>
+
+                                        <div class="details">
+                                            <span>STUDENT IN CLASS</span>
+                                            <div id="">7</div>
+                                        </div>
+
+                                        <div class="details">
+                                            <span>POSITION</span>
+                                            <div id="">3</div>
+                                        </div>
+
+                                        <div class="details">
+                                            <span>TIMES SCHOOL OPENED</span>
+                                            <div id="">116</div>
+                                        </div>
+
+                                        <div class="details">
+                                            <span>TIMES PRESENT</span>
+                                            <div id="">92</div>
+                                        </div>
+
+                                        <div class="details">
+                                            <span>TIMES ABSENT</span>
+                                            <div id="">24</div>
+                                        </div>
+
+                                        <div class="details">
+                                            <span>CLASS TEACHER'S COMMENT</span>
+                                            <div id="">HE RELATES WELL.</div>
+                                        </div>
+
+                                        <div class="details">
+                                            <span>PRINCIPAL'S COMMENT</span>
+                                            <div id="">FAIR RESULT. PROMOTED TO JSS 2</div>
+                                        </div>
+
+                                        <div class="details">
+                                            <span>SCHOOL REOPENS ON</span>
+                                            <div id="">MONDAY 16TH June, 2025</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="image-div signature">
+                                        <img src="<?php echo $websiteUrl?>/images/principal_signature.png" alt="Avatar"/>   
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        $("#bottomContainer").html(text);
+                    });
+                </script>
             </div>
         </div>
     </section>
