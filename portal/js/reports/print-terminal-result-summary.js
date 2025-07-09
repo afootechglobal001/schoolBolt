@@ -1,13 +1,13 @@
 function _printTerminalResultSummary() {
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
-	let getViewResultSummarySession = JSON.parse(sessionStorage.getItem("getViewResultSummarySession"));
+	let getViewTerminalResultSummarySession = JSON.parse(sessionStorage.getItem("getViewTerminalResultSummarySession"));
 
 	const branchId = getEachBranchDetailsSession?.branchId;
-	const session = getViewResultSummarySession?.session;
-	const termId = getViewResultSummarySession?.termData?.termId;
-	const departmentId = getViewResultSummarySession?.departmentData?.departmentId;
-	const classId = getViewResultSummarySession?.classData?.classId;
-	const armId = getViewResultSummarySession?.armData?.armId;
+	const session = getViewTerminalResultSummarySession?.session;
+	const termId = getViewTerminalResultSummarySession?.termData?.termId;
+	const departmentId = getViewTerminalResultSummarySession?.departmentData?.departmentId;
+	const classId = getViewTerminalResultSummarySession?.classData?.classId;
+	const armId = getViewTerminalResultSummarySession?.armData?.armId;
 
 	try {
 		const btnText = $("#printBtn").html();

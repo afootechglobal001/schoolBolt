@@ -90,38 +90,89 @@
         <div class="inner-content">
             <div class="table-div computation-table animated fadeIn">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-                    <script>
+                   <script>
                         $(document).ready(function () {
-                            const sessionData = JSON.parse(sessionStorage.getItem("printEachStudentTerminalResultSession"));
-                            if (!sessionData) return;
+                            let printEachStudentTerminalResultSession = JSON.parse(sessionStorage.getItem("printEachStudentTerminalResultSession"));
+                            if (!printEachStudentTerminalResultSession) return;
 
-                            const tableTitles = sessionData.tableTitles.split(',').map(x => x.trim());
-                            const subjectAssessmentData = sessionData.subjectAssessmentData; 
-                            const studentSubjects = sessionData.studentSubjectAssessmentData;
+                            const tableTitles = printEachStudentTerminalResultSession?.tableTitles.split(',').map(x => x.trim());
+                            const assessments = printEachStudentTerminalResultSession?.subjectAssessmentData;
+                            const subjectList = printEachStudentTerminalResultSession?.studentSubjectAssessmentData;
 
-                            // 1. Build assessmentMap: name → ID
-                            const assessmentMap = {};
-                            subjectAssessmentData.forEach(a => {
-                                assessmentMap[a.assessmentName.toLowerCase()] = a.assessmentId;
+                            const scoreMap = {};
+                            const summaryFields = [];
+
+                            // Create a map of assessmentId -> readable name (e.g., "1ST CA (15.00)")
+                            const assessmentTitleMap = {};
+                            assessments.forEach(assessment => {
+                                const title = `${assessment.assessmentName} (${assessment.assessmentTotalScore})`;
+                                assessmentTitleMap[assessment.assessmentId] = title;
                             });
 
-                            // 2. Normalize string function
-                            function normalize(str) {
-                                return str.toLowerCase().replace(/[\W_]+/g, '').trim();
+                            // Build scoreMap dynamically from all subject entries
+                            subjectList.forEach(subject => {
+                                const subjectName = subject.subjectName;
+
+                                // First add all assessment scores
+                                Object.keys(assessmentTitleMap).forEach(assessmentId => {
+                                    const title = assessmentTitleMap[assessmentId];
+                                    if (!scoreMap[title]) {
+                                        scoreMap[title] = {};
+                                    }
+                                    const mark = subject[assessmentId]?.markObtained || '';
+                                    scoreMap[title][subjectName] = mark;
+                                });
+
+                                // Then handle summary fields dynamically
+                                Object.keys(subject).forEach(key => {
+                                    if (!scoreMap[key]) {
+                                        scoreMap[key] = {};
+                                        summaryFields.push(key);
+                                    }
+                                    scoreMap[key][subjectName] = subject[key];
+                                });
+                            });
+
+                            // Fuzzy matching helper
+                            function normalizeWords(str) {
+                                return str
+                                    .replace(/[\W_]+/g, ' ')
+                                    .replace(/([a-z])([A-Z])/g, '$1 $2')
+                                    .toLowerCase()
+                                    .split(' ')
+                                    .filter(Boolean);
                             }
 
-                            // 3. String similarity score function
-                            function getSimilarityScore(a, b) {
-                                a = normalize(a);
-                                b = normalize(b);
-                                let matches = 0;
-                                for (let i = 0; i < Math.min(a.length, b.length); i++) {
-                                    if (a[i] === b[i]) matches++;
+                            // Map tableTitles to correct scoreMap keys
+                            tableTitles.forEach(title => {
+                                if (scoreMap[title]) return; // already present
+
+                                const titleWords = normalizeWords(title);
+                                let bestMatch = null;
+                                let bestScore = 0;
+
+                                summaryFields.forEach(field => {
+                                    const fieldWords = normalizeWords(field);
+                                    const matchCount = titleWords.filter(word => fieldWords.includes(word)).length;
+                                    if (matchCount > bestScore) {
+                                        bestMatch = field;
+                                        bestScore = matchCount;
+                                    }
+                                });
+
+                                if (bestMatch && !scoreMap[title]) {
+                                    scoreMap[title] = scoreMap[bestMatch];
+                                } else if (!scoreMap[title]) {
+                                    // Check lowercase direct match (e.g., "remarks" vs "remark")
+                                    const lowerTitle = title.toLowerCase().replace(/s$/, ''); // remove trailing 's'
+                                    const fieldMatch = summaryFields.find(field => field.toLowerCase() === lowerTitle);
+                                    if (fieldMatch) {
+                                        scoreMap[title] = scoreMap[fieldMatch];
+                                    }
                                 }
-                                return matches / Math.max(a.length, b.length);
-                            }
+                            });
 
-                            // 4. Build the table
+                            // Build the table
                             const thead = $('<thead></thead>');
                             const headerRow = $('<tr class="tb-col"></tr>');
                             tableTitles.forEach(title => {
@@ -130,52 +181,20 @@
                             thead.append(headerRow);
 
                             const tbody = $('<tbody></tbody>');
+                            const uniqueSubjects = [...new Set(subjectList.map(item => item.subjectName))];
 
-                            studentSubjects.forEach((subject, index) => {
+                            uniqueSubjects.forEach((subjectName, index) => {
                                 const row = $('<tr class="tb-row report-tb-row"></tr>');
-
-                                row.append($('<td class="td"></td>').text(index + 1)); // SN
-                                row.append($('<td class="td"></td>').text(subject.subjectName)); // Subject Name
+                                row.append($('<td class="td"></td>').text(index + 1));
+                                row.append($('<td class="td"></td>').text(subjectName));
 
                                 for (let i = 2; i < tableTitles.length; i++) {
                                     const title = tableTitles[i];
-                                    const normalizedTitle = normalize(title);
-                                    let cellValue = '';
-
-                                    // a) Match assessment
-                                    const assessmentKey = Object.keys(assessmentMap).find(key => normalizedTitle.includes(normalize(key)));
-                                    if (assessmentKey) {
-                                        const assessmentId = assessmentMap[assessmentKey];
-                                        cellValue = subject[assessmentId]?.markObtained ?? '';
-                                    } else {
-                                        // b) Match summary fields (e.g. totalMark, position, etc.)
-                                        const subjectKeys = Object.keys(subject).reduce((acc, key) => {
-                                            acc[normalize(key)] = subject[key];
-                                            return acc;
-                                        }, {});
-
-                                        let bestMatch = '';
-                                        let highestScore = 0;
-
-                                        Object.keys(subjectKeys).forEach(key => {
-                                            const score = getSimilarityScore(normalizedTitle, key);
-                                            if (score > highestScore) {
-                                                highestScore = score;
-                                                bestMatch = key;
-                                            }
-                                        });
-
-                                        if (highestScore >= 0.6) {
-                                            cellValue = subjectKeys[bestMatch];
-                                        }
-                                    }
-
-                                    row.append($('<td class="td"></td>').text(cellValue));
+                                    const value = scoreMap[title]?.[subjectName] || '';
+                                    row.append($('<td class="td"></td>').text(value));
                                 }
-
                                 tbody.append(row);
                             });
-
                             $('#pageContent').empty().append(thead).append(tbody);
                         });
                     </script>
