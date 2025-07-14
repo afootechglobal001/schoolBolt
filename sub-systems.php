@@ -67,7 +67,7 @@
                                 <h2>Staff Recruitment managements</h2>
                                 <p>The system will provide job vacancy platform for staff recruitments and interview schedule by submitting their basic details, upload passport, upload CV and other means of contacts and generate a mail acknowledgment. </p>
                                 <a href="<?php echo $websiteUrl?>" title="Request For A Demo">
-                                <button class="btn" title="Request For A Demo">Request For A Demo <i class="bi-chevron-right"></i></button></a>
+                                <button class="btn" title="Request For A Demo">Request For A Dem <i class="bi-chevron-right"></i></button></a>
                             </div>
                         </div>
                     </div>
