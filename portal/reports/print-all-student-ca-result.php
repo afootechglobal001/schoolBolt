@@ -31,10 +31,9 @@
 
                     for (let i = 0; i < fetchedStudent.length; i++) {
                         const studentItems = fetchedStudent[i];
-                        const student = studentItems.studentData;
-                        const fullName = `${student.surName} ${student.firstName} ${student.otherNames}`;
-                        const studentId = student.studentId;
-                        const genderName = student.genderName;
+                        const fullName = `${studentItems.surName} ${studentItems.firstName} ${studentItems.otherNames}`;
+                        const studentId = studentItems.studentId;
+                        const genderName = studentItems.genderName;
                         const studentSubjects = studentItems.data;
 
                         let no=0;
@@ -122,7 +121,7 @@
                                             </div>
                                             
                                             <div class="image-div">
-                                                <img src="${websiteUrl}/uploaded_files/studentPix/${student.passport}" alt="Student Photo"/>
+                                                <img src="${websiteUrl}/uploaded_files/studentPix/${studentItems.passport}" alt="Student Photo"/>
                                             </div>
                                         </div>
                                     </div>
@@ -144,7 +143,7 @@
                                                 </div>
                                                 <div class="details">
                                                     <span>NUMBER OF SUBJECT</span>
-                                                    <div>${studentItems.numOfSubjects}</div>
+                                                    <div>${studentItems.totalSubjects}</div>
                                                 </div>
                                                 <div class="details">
                                                     <span>MARKS OBTAINABLE</span>
@@ -160,11 +159,11 @@
                                                 </div>
                                                 <div class="details">
                                                     <span>CLASS TEACHER'S COMMENT</span>
-                                                    <div>HE RELATES WELL.</div>
+                                                    <div>${studentItems.principalComment}</div>
                                                 </div>
                                                 <div class="details">
                                                     <span>PRINCIPAL'S COMMENT</span>
-                                                    <div>${studentItems.principalsComment}</div>
+                                                    <div>${studentItems.principalComment}</div>
                                                 </div>
                                                 <div class="details">
                                                     <span>SCHOOL REOPENS ON</span>
