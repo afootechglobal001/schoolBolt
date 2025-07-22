@@ -56,7 +56,7 @@ if (!$checkBasicSecurity){/// start if 1
         $subjectAbbreviation=$fetch['subjectAbbreviation'];
         $tableTitles .=", $subjectAbbreviation";     
     }
-    $tableTitles .=", NO. OF SUBJECTS, MARK OBTAINABLE (%), MARK OBTAINED (%), TOTAL PERCENTAGE, POSTN. IN CLASS, REMARKS";
+    $tableTitles .=", NO. OF SUBJECTS, MARK OBTAINABLE, MARK OBTAINED, TOTAL PERCENTAGE (%), POSTN. IN CLASS, REMARKS";
 
     $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, address, smtpUsername, mobileNumber  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);

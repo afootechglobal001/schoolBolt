@@ -60,6 +60,8 @@ if (!$checkBasicSecurity){/// start if 1
     b.surName, 
     b.firstName,
     b.otherNames,
+    b.passport,
+    b.genderName,
     a.totalSubjects,
     a.totalMarkObtainable,
     a.totalMarkObtained,
@@ -72,7 +74,7 @@ if (!$checkBasicSecurity){/// start if 1
     FROM 
     BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_ASSESSMENT_TAB a 
     JOIN 
-    STUDENTS_TAB b  ON a.studentId = b.studentId AND a.clientId = b.clientId
+    STUDENT_VIEW b  ON a.studentId = b.studentId AND a.clientId = b.clientId
     WHERE 
     a.clientId='$clientId' 
     AND a.branchId = '$branchId' 
