@@ -216,7 +216,7 @@ function _fetchBroadsheetClass() {
 																		<td>
 																			<div class="btn-div">
 																				<button class="btn view-btn" title="Click to print broad sheet" id="printBtn" onclick="_printCaBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT CA BROAD SHEET</button>
-																				<button class="btn view-btn print-btn" title="Click to print terminal broad sheet" id="printBtn" onclick="_printTerminalBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT CA TERMINAL BROAD SHEET</button>
+																				<button class="btn view-btn print-btn" title="Click to print terminal broad sheet" id="printBtn" onclick="_printTerminalBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT TERMINAL BROAD SHEET</button>
 																			</div>
 																		</td>`;
 																	} else {

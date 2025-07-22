@@ -1896,23 +1896,20 @@
                                     
                                     const tableTitles = getViewResultSummarySession?.tableTitles.split(',').map(x => x.trim());
                                     const studentList = getViewResultSummarySession?.studentData;
-                                    const summaryData = getViewResultSummarySession?.summaryData;
-
+                                   
+                                    // Dynamically extract all unique keys from student data
+                                    const summaryFields = Object.keys(studentList[0] || {});
                                     const scoreMap = {};
-
-                                    // Extract summary fields
-                                    const studentKeys = Object.keys(studentList[0] || {});
-                                    const summaryFields = Object.keys(summaryData[0] || {}).filter(k => !studentKeys
-                                        .includes(k));
-
-                                    // Build scoreMap for summary fields
+                                    
+                                        // Build scoreMap for summary fields (from studentList)
                                     summaryFields.forEach(field => {
                                         scoreMap[field] = {};
-                                        summaryData.forEach(summary => {
-                                            scoreMap[field][summary.studentId] = summary[field];
+                                        studentList.forEach(student => {
+                                            scoreMap[field][student.studentId] = student[field];
                                         });
                                     });
 
+                                    // Normalize for fuzzy matching
                                     function normalizeWords(str) {
                                         return str
                                             .replace(/[\W_]+/g, ' ') // Remove punctuation and underscores
@@ -1937,8 +1934,7 @@
 
                                         summaryFields.forEach(field => {
                                             const fieldWords = normalizeWords(field);
-                                            const overlapCount = titleWords.filter(word => fieldWords
-                                                .includes(word)).length;
+                                            const overlapCount = titleWords.filter(word => fieldWords.includes(word)).length;
 
                                             if (overlapCount > bestMatchScore) {
                                                 bestMatch = field;
@@ -1947,8 +1943,15 @@
                                         });
 
                                         if (bestMatch && !scoreMap[title]) {
-                                            scoreMap[title] = scoreMap[bestMatch];
-                                        }
+                                                scoreMap[title] = scoreMap[bestMatch];
+                                            } else if (!scoreMap[title]) {
+                                                // Check lowercase direct match (e.g., "remarks" vs "remark")
+                                                const lowerTitle = title.toLowerCase().replace(/s$/, ''); // remove trailing 's'
+                                                const fieldMatch = summaryFields.find(field => field.toLowerCase() === lowerTitle);
+                                                if (fieldMatch) {
+                                                    scoreMap[title] = scoreMap[fieldMatch];
+                                                }
+                                            }
                                     });
 
                                     // Build the table

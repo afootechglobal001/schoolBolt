@@ -14,9 +14,7 @@
 </head>
 
 <body>
-    <script>
-    printBroadSheetsession = JSON.parse(sessionStorage.getItem("printBroadSheetsession"));
-    </script>
+    <script> printBroadSheetsession = JSON.parse(sessionStorage.getItem("printBroadSheetsession"));</script>
 
     <section class="body-div broadsheet-body">
         <div class="header-back-div">
@@ -65,16 +63,16 @@
             <div class="table-div computation-table broadsheet-table  animated fadeIn">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
-                        $(document).ready(function() {
-                            const printBroadSheetsession = JSON.parse(sessionStorage.getItem(
-                                "printBroadSheetsession"));
+                        $(document).ready(function () {
+                            const printBroadSheetsession = JSON.parse(sessionStorage.getItem("printBroadSheetsession"));
                             if (!printBroadSheetsession) return;
 
                             const tableTitles = printBroadSheetsession?.tableTitles.split(',').map(x => x.trim());
                             const studentList = printBroadSheetsession?.studentData;
                             const scoreList = printBroadSheetsession?.scoreData;
-                            const summaryData = printBroadSheetsession?.summaryData;
 
+                            // Dynamically extract all unique keys from student data
+                            const summaryFields = Object.keys(studentList[0] || {});
                             const scoreMap = {};
 
                             // Build subject scores into scoreMap
@@ -84,25 +82,20 @@
 
                                 if (Array.isArray(subject.studentScorePerSubject)) {
                                     subject.studentScorePerSubject.forEach(scoreEntry => {
-                                        scoreMap[abbr][scoreEntry.studentId] = scoreEntry
-                                            .markObtained;
+                                        scoreMap[abbr][scoreEntry.studentId] = scoreEntry.markObtained;
                                     });
                                 }
                             });
 
-                            // Extract summary fields
-                            const studentKeys = Object.keys(studentList[0] || {});
-                            const summaryFields = Object.keys(summaryData[0] || {}).filter(k => !studentKeys
-                                .includes(k));
-
-                            // Build scoreMap for summary fields
+                            // Build scoreMap for summary fields (from studentList)
                             summaryFields.forEach(field => {
                                 scoreMap[field] = {};
-                                summaryData.forEach(summary => {
-                                    scoreMap[field][summary.studentId] = summary[field];
+                                studentList.forEach(student => {
+                                    scoreMap[field][student.studentId] = student[field];
                                 });
                             });
 
+                            // Normalize for fuzzy matching
                             function normalizeWords(str) {
                                 return str
                                     .replace(/[\W_]+/g, ' ') // Remove punctuation and underscores
@@ -127,8 +120,7 @@
 
                                 summaryFields.forEach(field => {
                                     const fieldWords = normalizeWords(field);
-                                    const overlapCount = titleWords.filter(word => fieldWords
-                                        .includes(word)).length;
+                                    const overlapCount = titleWords.filter(word => fieldWords.includes(word)).length;
 
                                     if (overlapCount > bestMatchScore) {
                                         bestMatch = field;
@@ -137,8 +129,15 @@
                                 });
 
                                 if (bestMatch && !scoreMap[title]) {
-                                    scoreMap[title] = scoreMap[bestMatch];
-                                }
+                                        scoreMap[title] = scoreMap[bestMatch];
+                                    } else if (!scoreMap[title]) {
+                                        // Check lowercase direct match (e.g., "remarks" vs "remark")
+                                        const lowerTitle = title.toLowerCase().replace(/s$/, ''); // remove trailing 's'
+                                        const fieldMatch = summaryFields.find(field => field.toLowerCase() === lowerTitle);
+                                        if (fieldMatch) {
+                                            scoreMap[title] = scoreMap[fieldMatch];
+                                        }
+                                    }
                             });
 
                             // Build the table
@@ -150,31 +149,22 @@
                             });
 
                             thead.append(headerRow);
-
                             const tbody = $('<tbody></tbody>');
 
                             studentList.forEach((student, index) => {
                                 const row = $('<tr class="tb-row report-tb-row"></tr>');
-                                const fullName =
-                                    `${student.surName} ${student.firstName} ${student.otherNames || ''}`
-                                    .trim();
+                                const fullName = `${student.surName} ${student.firstName} ${student.otherNames || ''}`.trim();
 
                                 row.append($('<td class="td"></td>').text(index + 1));
                                 row.append($('<td class="td"></td>').text(fullName));
 
                                 for (let i = 2; i < tableTitles.length; i++) {
-                                    const subjectAbbr = tableTitles[i];
-                                    const score = scoreMap[subjectAbbr] && scoreMap[subjectAbbr][student
-                                            .studentId
-                                        ] ?
-                                        scoreMap[subjectAbbr][student.studentId] :
-                                        '';
+                                    const columnKey = tableTitles[i];
+                                    const score = scoreMap[columnKey] && scoreMap[columnKey][student.studentId] ? scoreMap[columnKey][student.studentId] : '';
                                     row.append($('<td class="td"></td>').text(score));
                                 }
-
                                 tbody.append(row);
                             });
-
                             $('#pageContent').empty().append(thead).append(tbody);
                         });
                     </script>
@@ -183,5 +173,4 @@
         </div>
     </section>
 </body>
-
 </html>
