@@ -30,6 +30,7 @@ function _printCaBroadSheet(departmentId, classId, armId) {
 				}
 			},
 			error: function(textStatus, errorThrown) {
+				_alertClose(2);
 				console.error("AJAX Error: ", textStatus, errorThrown);
 				_actionAlert('An error occurred while fetching data! Please try again.', false);
 			}
