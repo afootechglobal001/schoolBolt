@@ -22,38 +22,6 @@ if (!$checkBasicSecurity){/// start if 1
     validateEmptyField($armId, 'ARM');
     validateEmptyField($assessmentId, 'ASSESSMENT');
 
-
-
-    /// confirm if there is records
-    $broadsheetSelect="SELECT 
-    a.recordId, 
-    a.subjectId, 
-    b.subjectName 
-    FROM 
-        BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB a
-    JOIN 
-        SUBJECTS_TAB b ON a.subjectId = b.subjectId AND a.clientId = b.clientId
-    WHERE 
-        a.clientId = '$clientId' 
-        AND a.branchId = '$branchId'  
-        AND a.session = '$session'  
-        AND a.termId = '$termId'        
-        AND a.departmentId = '$departmentId'  
-        AND a.classId = '$classId'  
-        AND a.armId = '$armId'  
-        AND a.assessmentId = '$assessmentId'
-    ORDER BY 
-        b.subjectName ASC
-";
-     
-    $broadsheetQuery=mysqli_query($conn,$broadsheetSelect)or die (mysqli_error($conn));
-    $allRecordCount=mysqli_num_rows($broadsheetQuery);
-    if($allRecordCount==0){
-        $response['response']=200;
-        $response['success']=false;
-        $response['message']="No record found!";
-        goto end;
-    }
    
     $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, address, smtpUsername, mobileNumber  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
@@ -87,31 +55,44 @@ if (!$checkBasicSecurity){/// start if 1
     $response['assessmentData'] = $assessmentDataFetch;
     $response['eachStudentData'] = array();
 
-    $studentsInClassSelect = "SELECT 
-    DISTINCT(a.studentId) AS studentId
+    $select="SELECT 
+    a.studentId AS studentId,
+    b.surName, 
+    b.firstName,
+    b.otherNames,
+    a.totalSubjects,
+    a.totalMarkObtainable,
+    a.totalMarkObtained,
+    a.totalPercentage,
+    a.grade,
+    a.remark,
+    a.position AS positionInClass,
+    a.overallPosition,
+    a.principalComment
     FROM 
-    BRANCH_ASSESSMENT_RECORD_DETAILS_TAB a
+    BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_ASSESSMENT_TAB a 
     JOIN 
-    BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB b ON a.recordId=b.recordId
+    STUDENTS_TAB b  ON a.studentId = b.studentId AND a.clientId = b.clientId
     WHERE 
-     b.clientId='$clientId' 
-    AND b.branchId = '$branchId' 
-    AND b.departmentId='$departmentId' 
-    AND b.classId='$classId' 
-    AND b.armId='$armId'";
+    a.clientId='$clientId' 
+    AND a.branchId = '$branchId' 
+    AND a.session = '$session' 
+    AND a.termId = '$termId' 
+    AND a.departmentId = '$departmentId' 
+    AND a.classId = '$classId' 
+    AND a.armId = '$armId'
+    AND a.assessmentId='$assessmentId'
+    ORDER BY 
+    b.surName ASC";
 
-    $studentsInClassQuery=mysqli_query($conn, $studentsInClassSelect)or die (mysqli_error($conn));
+    $studentsInClassQuery=mysqli_query($conn, $select)or die (mysqli_error($conn));
+    $numberOfStudents=mysqli_num_rows($studentsInClassQuery);
     While($studentsInClassFetch = mysqli_fetch_assoc($studentsInClassQuery)){
+        $studentsInClassFetch['numberOfStudents'] = $numberOfStudents;
         $studentId = $studentsInClassFetch['studentId'];
-   
-        $studentDataQuery=mysqli_query($conn,"SELECT studentId, surName, firstName, otherNames, passport, genderName FROM STUDENT_VIEW WHERE $clientIds AND branchId='$branchId' AND studentId='$studentId'")or die (mysqli_error($conn));
-        $studentDataFetch = mysqli_fetch_assoc($studentDataQuery);
-        $studentsInClassFetch['studentData']= $studentDataFetch;
         
-        $numOfSubjects=0;
-        $markObtained=0;
-            /// confirm student subjects
-        $broadsheetSelect="SELECT 
+        /// confirm student subjects
+        $subjectAssessmentSelect="SELECT 
         a.recordId, 
         a.subjectId, 
         b.subjectName 
@@ -135,16 +116,14 @@ if (!$checkBasicSecurity){/// start if 1
         ORDER BY 
             b.subjectName ASC
         ";
-        $broadsheetQuery=mysqli_query($conn,$broadsheetSelect)or die (mysqli_error($conn));
-        while($datatFetch = mysqli_fetch_assoc($broadsheetQuery)){
-            $numOfSubjects++;
+        $subjectAssessmentQuery=mysqli_query($conn,$subjectAssessmentSelect)or die (mysqli_error($conn));
+        while($datatFetch = mysqli_fetch_assoc($subjectAssessmentQuery)){
             $recordId = $datatFetch['recordId'];
             $subjectId = $datatFetch['subjectId'];
             
             $eachSubjectAssessmentQuery = mysqli_query($conn, "SELECT  `markObtainable`, `markObtained`, `percentage`, `grade`, `remark`, `position` FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB  WHERE recordId='$recordId' AND studentId='$studentId'") or die (mysqli_error($conn));
             $eachSubjectAssessmentFetch = mysqli_fetch_assoc($eachSubjectAssessmentQuery);
             $position =$eachSubjectAssessmentFetch['position'];
-            $markObtained +=$eachSubjectAssessmentFetch['percentage'];
             /// get number of students that did this subject
             $subjectStudentsCountsQuery = mysqli_query($conn, "SELECT COUNT(studentId) AS subjectStudentsCounts FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB WHERE recordId='$recordId'") or die (mysqli_error($conn));
             $subjectStudentsCountsFetch = mysqli_fetch_assoc($subjectStudentsCountsQuery);
@@ -154,23 +133,6 @@ if (!$checkBasicSecurity){/// start if 1
             $datatFetch['subjectAssessment'] = $eachSubjectAssessmentFetch;
             $studentsInClassFetch['data'][] = $datatFetch;
         }
-        /// get number of student in class
-        $select="SELECT DISTINCT(a.studentId) FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB a, BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB b   
-        WHERE a.recordId=b.recordId   AND  b.clientId='$clientId' AND b.branchId = '$branchId' AND b.departmentId='$departmentId' AND b.classId='$classId' AND b.armId='$armId'";
-        $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
-        $numberOfStudents=mysqli_num_rows($query);
-        $studentsInClassFetch['numberOfStudents'] = $numberOfStudents;
-        //// get number of subjects
-        $studentsInClassFetch['numOfSubjects'] = $numOfSubjects;
-        //get totalMarkObtainable
-        $studentsInClassFetch['totalMarkObtainable'] = $numOfSubjects * 100;
-        /// get totalMarkObtained
-        $studentsInClassFetch['totalMarkObtained'] = number_format((float)$markObtained, 2, '.', '');
-        // Calculate totalPercentage
-        $totalPercentage= round(($markObtained / ($numOfSubjects * 100)) * 100, 2);
-        $studentsInClassFetch['totalPercentage'] =$totalPercentage . '%';
-        // get teachers comment
-        $studentsInClassFetch['principalsComment'] = getPrincipalComment($totalPercentage);
 
         $response['eachStudentData'][]=$studentsInClassFetch;
      }

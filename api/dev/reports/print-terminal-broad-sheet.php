@@ -29,16 +29,23 @@ if (!$checkBasicSecurity){/// start if 1
         goto end;
     }
 
-    /// get all tableTitles
+   /// get all tableTitles
     $tableTitles="SN, FULL NAME";
-    $select="SELECT a.subjectId, b.subjectName, b.subjectAbbreviation 
+    $select="SELECT DISTINCT(a.subjectId) AS subjectId, 
+    b.subjectName, 
+    b.subjectAbbreviation 
     FROM 
-    SUBJECT_STRUCTURE_TAB a
+    BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB a
     JOIN
     SUBJECTS_TAB b ON a.subjectId = b.subjectId AND a.clientId = b.clientId
     WHERE 
     a.clientId='$clientId'  
-    AND a.classId='$classId'
+    AND a.branchId='$branchId' 
+    AND a.session='$session' 
+    AND a.termId='$termId' 
+    AND a.departmentId='$departmentId' 
+    AND a.classId='$classId' 
+    AND a.armId='$armId' 
     ORDER BY 
     b.subjectName ASC";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
@@ -115,7 +122,7 @@ if (!$checkBasicSecurity){/// start if 1
         a.allAssessmentTotalMark AS totalMark,
         b.subjectAbbreviation
         FROM 
-        BRANCH_TERMINAL_SUBJECT_REPORT_TAB a
+        BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_SUBJECT_TAB a
         JOIN
         SUBJECTS_TAB b ON a.clientId=b.clientId AND a.subjectId = b.subjectId
         WHERE

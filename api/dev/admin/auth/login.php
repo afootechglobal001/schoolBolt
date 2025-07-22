@@ -14,7 +14,7 @@ if (!$checkBasicSecurity){/// start if 1
             'response'=> 100,
             'success'=> false,
             'message'=> "USERNAME REQUIRED! Check username fields and try again",
-        ]; 
+        ];
         goto end;
 	}
 
@@ -23,7 +23,7 @@ if (!$checkBasicSecurity){/// start if 1
             'response'=> 101,
             'success'=> false,
             'message'=> "PASSWORD REQUIRED! Check password fields and try again",
-        ]; 
+        ];
         goto end;
 	}
 
@@ -32,11 +32,11 @@ if (!$checkBasicSecurity){/// start if 1
             'response'=> 102,
             'success'=> false,
             'message'=> "INVALID EMAIL ADDRESS! Enter a valid email address and try again",
-        ]; 
+        ];
         goto end;
 	}
 
-			$query=mysqli_query($conn,"SELECT * FROM STAFF_VIEW WHERE $clientIds AND emailAddress='$userName' AND `password`='$password'") or die (mysqli_error($conn));
+			$query=mysqli_query($conn, "SELECT * FROM STAFF_VIEW WHERE $clientIds AND emailAddress='$userName' AND `password`='$password'") or die (mysqli_error($conn));
 			$countUser=mysqli_num_rows($query);
 
             if ($countUser==0){ /// start if 4
@@ -49,7 +49,7 @@ if (!$checkBasicSecurity){/// start if 1
             }
 
                 $fetchQuery=mysqli_fetch_array($query);
-                $staffId=$fetchQuery['staffId']; 
+                $staffId=$fetchQuery['staffId'];
                 $statusId=$fetchQuery['statusId'];
 
                 if($statusId==2){
@@ -67,9 +67,9 @@ if (!$checkBasicSecurity){/// start if 1
                     /// update user on staff_tab
                     mysqli_query($conn,"UPDATE STAFF_TAB SET accessKey='$accessKey', lastLoginTime=NOW() WHERE $clientIds AND staffId='$staffId'")or die (mysqli_error($conn));
 
-                    $response['response']=200; 
+                    $response['response']=200;
                     $response['success']=true;
-                    $response['message']="LOGIN SUCCESSFUL!"; 
+                    $response['message']="LOGIN SUCCESSFUL!";
                     $response['data'] = array(); // Initialize the data array
 
                     $select="SELECT * FROM STAFF_VIEW WHERE $clientIds AND staffId = '$staffId'";

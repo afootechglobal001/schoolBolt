@@ -104,7 +104,7 @@ if (!$checkBasicSecurity){/// start if 1
     a.overallPosition,
     a.remark
     FROM 
-    BRANCH_TERMINAL_SUBJECT_REPORT_TAB a
+    BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_SUBJECT_TAB a
     JOIN
     SUBJECTS_TAB b ON a.clientId=b.clientId AND a.subjectId = b.subjectId
     WHERE 
@@ -146,13 +146,13 @@ if (!$checkBasicSecurity){/// start if 1
             $markObtainedFetch = mysqli_fetch_assoc($markObtainedQuery);
             $studentSubjectFetch[$assessmentId]['markObtained'] = $markObtainedFetch['markObtained'] ? $markObtainedFetch['markObtained'] : '';
         }
-        /// get min, max, average score in class for the subject from BRANCH_TERMINAL_SUBJECT_REPORT_TAB
+        /// get min, max, average score in class for the subject from BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_SUBJECT_TAB
         $minMaxAvgSelect = "SELECT 
         MIN(totalMark) AS minScore,
         MAX(totalMark) AS maxScore,
         AVG(totalMark) AS averageScore
         FROM 
-        BRANCH_TERMINAL_SUBJECT_REPORT_TAB
+        BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_SUBJECT_TAB
         WHERE 
         clientId='$clientId'
         AND branchId='$branchId'
