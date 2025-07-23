@@ -155,7 +155,7 @@
                                                 </div>
                                                 <div class="details">
                                                     <span>PERCENTAGE</span>
-                                                    <div>${studentItems.totalPercentage}</div>
+                                                    <div>${studentItems.totalPercentage ? studentItems.totalPercentage + '%' : '-'}</div>
                                                 </div>
                                                 <div class="details">
                                                     <span>CLASS TEACHER'S COMMENT</span>

@@ -310,11 +310,13 @@ function _viewCaResultSummary(departmentId, classId, armId) {
 				}    
 			},
 			error: function(textStatus, errorThrown) {
+				_alertClose(2);
 				console.error("AJAX Error: ", textStatus, errorThrown);
 				_actionAlert('An error occurred while fetching data! Please try again.', false);
 			}
 		});
 	} catch (error) {
+		_alertClose(2);
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
