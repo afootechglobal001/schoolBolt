@@ -92,7 +92,7 @@
         <div class="inner-content">
             <div class="table-div computation-table animated fadeIn">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-                     <script>
+                    <script>
                         $(document).ready(function() {
                             const printSingleAssessementSession = JSON.parse(sessionStorage.getItem("printSingleAssessementSession"));
                             
@@ -113,7 +113,8 @@
                                 </thead>`;
 
                             if (printSingleAssessementSession && printSingleAssessementSession.success === true) {
-                                const subjectDataList = printSingleAssessementSession.data;
+                                const subjectDataList = printSingleAssessementSession.data?.subjectData;
+                                const summary = printSingleAssessementSession?.data?.summary;
 
                                 for (let i = 0; i < subjectDataList.length; i++) {
                                     no++;
@@ -136,6 +137,13 @@
                                         </tbody>`;
                                 }
                                 $('#pageContent').html(text);
+                                
+                                $('#numberOfStudents').html(printSingleAssessementSession?.data?.numberOfStudents || '-');
+                                $('#numOfSubjects').html(summary?.totalSubjects || '-');
+                                $('#totalMarkObtainable').html(summary?.totalMarkObtainable || '-');
+                                $('#totalMarkObtained').html(summary?.totalMarkObtained || '-');
+                                $('#totalPercentage').html(summary?.totalPercentage ? summary.totalPercentage + '%' : '-');
+                                $('#principalsComment, #classTeacherComment').html(summary?.principalComment || '-');
                             }
                         });
                     </script>
@@ -147,36 +155,36 @@
                     <div class="content-div">
                         <div class="details">
                             <span>NUMBER ON ROLL</span>
-                            <div id="numberOfStudents"><script>$("#numberOfStudents").html(printSingleAssessementSession?.numberOfStudents);</script></div>
+                            <div id="numberOfStudents"></div>
                         </div>
 
                         <div class="details">
                             <span>NUMBER OF SUBJECT</span>
-                            <div id="numOfSubjects"><script>$("#numOfSubjects").html(printSingleAssessementSession?.numOfSubjects);</script></div>
+                            <div id="numOfSubjects"></div>
                         </div>
 
                         <div class="details">
                             <span>MARKS OBTAINABLE</span>
-                            <div id="totalMarkObtainable"><script>$("#totalMarkObtainable").html(printSingleAssessementSession?.totalMarkObtainable);</script></div>
+                            <div id="totalMarkObtainable"></div>
                         </div>
 
                         <div class="details">
                             <span>MARKS OBTAINED</span>
-                            <div id="totalMarkObtained"><script>$("#totalMarkObtained").html(printSingleAssessementSession?.totalMarkObtained);</script></div>
+                            <div id="totalMarkObtained"></div>
                         </div>
 
                         <div class="details"><span>PERCENTAGE</span>
-                            <div id="totalPercentage"><script>$("#totalPercentage").html(printSingleAssessementSession?.totalPercentage);</script></div>
+                            <div id="totalPercentage"></div>
                         </div>
 
                         <div class="details">
                             <span>CLASS TEACHER'S COMMENT</span>
-                            <div id="">HE RELATES WELL.</div>
+                            <div id="classTeacherComment"></div>
                         </div>
 
                         <div class="details">
                             <span>PRINCIPAL'S COMMENT</span>
-                            <div id="principalsComment"><script>$("#principalsComment").html(printSingleAssessementSession?.principalsComment);</script></div>
+                            <div id="principalsComment"></div>
                         </div>
 
                         <div class="details">
@@ -190,6 +198,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
         </div>
     </section>
 </body>
