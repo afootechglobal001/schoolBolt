@@ -13,7 +13,6 @@ if (!$checkBasicSecurity){/// start if 1
     $armId = $_GET['armId'];
     $studentId = $_GET['studentId'];
     
-
     validateEmptyField($branchId, 'BRANCH');
     validateEmptyField($session, 'SESSION');
     validateEmptyField($termId, 'TERM');
@@ -22,28 +21,6 @@ if (!$checkBasicSecurity){/// start if 1
     validateEmptyField($armId, 'ARM');
     validateEmptyField($studentId, 'STUDENT');
 
-
-    /// confirm if there is records
-    $resultSelect="SELECT * FROM BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB 
-    WHERE 
-        clientId = '$clientId' 
-        AND branchId = '$branchId'  
-        AND session = '$session'  
-        AND termId = '$termId'        
-        AND departmentId = '$departmentId'  
-        AND classId = '$classId'  
-        AND armId = '$armId'
-        AND studentId = '$studentId'
-        AND totalPercentage > 0";
-    $resultQuery=mysqli_query($conn,$resultSelect)or die (mysqli_error($conn));
-    $allRecordCount=mysqli_num_rows($resultQuery);
-    if($allRecordCount==0){
-        $response['response']=200;
-        $response['success']=false;
-        $response['message']="No record found!";
-        goto end;
-    }
-   
     $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, address, smtpUsername, mobileNumber  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
 
@@ -62,9 +39,6 @@ if (!$checkBasicSecurity){/// start if 1
     $studentDataQuery=mysqli_query($conn,"SELECT studentId, surName, firstName, otherNames, passport, genderName FROM STUDENT_VIEW WHERE $clientIds AND branchId='$branchId' AND studentId='$studentId'")or die (mysqli_error($conn));
     $studentDataFetch = mysqli_fetch_assoc($studentDataQuery);
 
-
-
-
     $response['response']=200; 
     $response['success']=true;
     $response['message']="TERMINAL RESULT FETCHED  SUCCESFFULY!";
@@ -75,8 +49,6 @@ if (!$checkBasicSecurity){/// start if 1
     $response['classData'] = $classDataFetch;
     $response['armData'] = $armDataFetch;
     $response['studentData'] = $studentDataFetch;
-
-
 
      /// get all tableTitles
     $tableTitles="SN, SUBJECTS";
