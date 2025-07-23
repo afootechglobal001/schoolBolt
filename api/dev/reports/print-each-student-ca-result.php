@@ -128,8 +128,9 @@ if (!$checkBasicSecurity){/// start if 1
 
             $eachSubjectAssessmentFetch['positionInClass']= $position . "($subjectStudentsCounts)";
             $datatFetch['subjectAssessment'] = $eachSubjectAssessmentFetch;
-            $response['data']['subjectData']=$datatFetch;
+            $response['data']['subjectData'][]=$datatFetch;
         }
+        
     
 //////////////////////////////////////////////////////////////////////////////////////////////
 end:

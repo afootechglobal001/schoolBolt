@@ -12,14 +12,12 @@ if (!$checkBasicSecurity){/// start if 1
     $classId = $_GET['classId'];
     $armId = $_GET['armId'];
     
-
     validateEmptyField($branchId, 'BRANCH');
     validateEmptyField($session, 'SESSION');
     validateEmptyField($termId, 'TERM');
     validateEmptyField($departmentId, 'DEPARTMENT');
     validateEmptyField($classId, 'CLASS');
     validateEmptyField($armId, 'ARM');
-
 
     require_once 'positioning.php';
     if(!$recordFound){
@@ -53,7 +51,7 @@ if (!$checkBasicSecurity){/// start if 1
         $subjectAbbreviation=$fetch['subjectAbbreviation'];
         $tableTitles .=", $subjectAbbreviation";     
     }
-    $tableTitles .=", NO. OF SUBJECTS, MARK OBTAINABLE (%), MARK OBTAINED (%), TOTAL PERCENTAGE, POSTN. IN CLASS, REMARKS";
+    $tableTitles .=", NO. OF SUBJECTS, MARK OBTAINABLE, MARK OBTAINED, TOTAL PERCENTAGE (%), POSTN. IN CLASS, OVERALL POSTN., REMARKS";
 
     
     $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, address, smtpUsername, mobileNumber  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
@@ -93,7 +91,15 @@ if (!$checkBasicSecurity){/// start if 1
     a.studentId AS studentId, 
     b.surName, 
     b.firstName,
-    b.otherNames
+    b.otherNames,
+    a.totalSubjects,
+    a.totalMarkObtainable,
+    a.totalMarkObtained,
+    a.totalPercentage,
+    a.grade,
+    a.remark,
+    a.position AS positionInClass,
+    a.overallPosition
     FROM 
     BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB a 
     JOIN 
@@ -109,15 +115,10 @@ if (!$checkBasicSecurity){/// start if 1
     ORDER BY 
     b.surName ASC";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
-    /// get total number of students
-    $totalNoOfStudents = mysqli_num_rows($query);
      // Get total subjects for the class
     while ($fetch = mysqli_fetch_assoc($query)) { 
         $studentId = $fetch['studentId'];
         /// get SubjectLists of this student
-        $totalSubjects = 0;
-        $totalMarkObtained = 0;
-        
         $subjectListSelect = "SELECT a.subjectId, 
         a.allAssessmentTotalMark AS totalMark,
         b.subjectAbbreviation
@@ -137,25 +138,8 @@ if (!$checkBasicSecurity){/// start if 1
         ORDER BY b.subjectName ASC"; // Order by subject name
         $subjectListQuery = mysqli_query($conn, $subjectListSelect) or die(mysqli_error($conn));
         while($subjectListFetch = mysqli_fetch_assoc($subjectListQuery)) {
-            $totalSubjects++;
-            $totalMarkObtained +=(float)$subjectListFetch['totalMark'];
             $fetch['studentScorePerSubject'][] = $subjectListFetch;
-            
         }
-        $fetch['totalSubjects'] = $totalSubjects;
-        //get totalMarkObtainable
-        $fetch['totalMarkObtainable'] = $totalSubjects * 100; // Assuming each subject has a maximum of 100 marks
-        // get totalMarkObtained
-        $fetch['totalMarkObtained'] = number_format($totalMarkObtained, 2, '.', '');
-         // Calculate totalPercentage
-        $fetch['totalPercentage'] = number_format(($fetch['totalMarkObtained'] / $fetch['totalMarkObtainable']) * 100, 2) . '%'; // Assuming totalMarkObtainable is the sum of all subjects' maximum marks
-        // Get remarks
-        $fetch['remarks'] = getRemark($fetch['totalPercentage']);
-        // get positionInClass using totalPercentage
-        $positionQuery = mysqli_query($conn, "SELECT position FROM BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId' AND studentId='$studentId'") or die(mysqli_error($conn));
-        $positionFetch = mysqli_fetch_assoc($positionQuery);
-        $positionInClass = $positionFetch['position'];
-        $fetch['positionInClass']= $positionInClass; // Get ordinal suffix for position
         $response['studentData'][] = $fetch;
     }
 
