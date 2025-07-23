@@ -90,6 +90,7 @@
                                 });
                             });
 
+                            // Normalize for fuzzy matching
                             function normalizeWords(str) {
                                 return str
                                     .replace(/[\W_]+/g, ' ') // Remove punctuation and underscores
@@ -115,6 +116,7 @@
                                 summaryFields.forEach(field => {
                                     const fieldWords = normalizeWords(field);
                                     const overlapCount = titleWords.filter(word => fieldWords.includes(word)).length;
+
                                     if (overlapCount > bestMatchScore) {
                                         bestMatch = field;
                                         bestMatchScore = overlapCount;
@@ -122,8 +124,15 @@
                                 });
 
                                 if (bestMatch && !scoreMap[title]) {
-                                    scoreMap[title] = scoreMap[bestMatch];
-                                }
+                                        scoreMap[title] = scoreMap[bestMatch];
+                                    } else if (!scoreMap[title]) {
+                                        // Check lowercase direct match (e.g., "remarks" vs "remark")
+                                        const lowerTitle = title.toLowerCase().replace(/s$/, ''); // remove trailing 's'
+                                        const fieldMatch = summaryFields.find(field => field.toLowerCase() === lowerTitle);
+                                        if (fieldMatch) {
+                                            scoreMap[title] = scoreMap[fieldMatch];
+                                        }
+                                    }
                             });
 
                             // Build the table
