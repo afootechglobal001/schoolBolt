@@ -392,9 +392,25 @@
                     </div> 
                     
                     <div class="text-div">
-                        <h3 id="branchName">SCHOOLBOLT NUR/PRY SCHOOL, ODE REMO</h3>
-                        <div class="text">Address: <strong id="address">8, ABAREN CLOSE, OFF LOVEALL IKOSI, KETU, LAGOS</strong></div>
-                        <div class="text">Phone: <strong id="mobileNumber">08050202261</strong> | Official Email: <strong id="smtpUsername">school_1@schoolbolt.com</strong></div> 
+                        <h3 id="reportBranchName">
+                            <script>
+                            $("#reportBranchName").html(printEachStudentTerminalResultSession?.branchData?.branchName);
+                            </script>
+                        </h3>
+                        <div class="text">Address: <strong id="reportAddress">
+                                <script>
+                                $("#reportAddress").html(printEachStudentTerminalResultSession?.branchData?.address);
+                                </script>
+                            </strong></div>
+                        <div class="text">Phone: <strong id="reportMobileNumber">
+                                <script>
+                                $("#reportMobileNumber").html(printEachStudentTerminalResultSession?.branchData?.mobileNumber);
+                                </script>
+                            </strong> | Official Email: <strong id="reportSmtpUsername">
+                                <script>
+                                $("#reportSmtpUsername").html(printEachStudentTerminalResultSession?.branchData?.smtpUsername);
+                                </script>
+                            </strong></div>
                     </div>
                 </div>
             </div>
@@ -404,20 +420,20 @@
                     <div class="content-div progress-content-div">
                         <div class="details">
                             <span>STUDENT NAME</span>
-                            <div id="">MIKE AFOLABI OLUWAGBENGA</div>
+                            <div id="reportFullName"><script>$("#reportFullName").html(printEachStudentTerminalResultSession?.studentData?.surName + ' ' + printEachStudentTerminalResultSession?.studentData?.firstName+ ' ' + printEachStudentTerminalResultSession?.studentData?.otherNames);</script></div>
                         </div>
 
                         <div class="details">
                             <span>STUDENT ID</span>
-                            <div id="">STUDENT00220250321124557</div>
+                            <div id="reportStudentId"><script>$("#reportStudentId").html(printEachStudentTerminalResultSession?.studentData?.studentId);</script></div>
                         </div>
 
                         <div class="details"><span>CLASS</span>
-                            <div id="">KINDERGARTEN - KG 1</div>
+                            <div id="reportClassName"><script>$("#reportClassName").html(printEachStudentTerminalResultSession?.classData?.className + ' ' + printEachStudentTerminalResultSession?.armData?.armName);</script></div>
                         </div>
 
                         <div class="details"><span>GENDER</span>
-                            <div id="">MALE</div>
+                            <div id="reportGenderName"><script>$("#reportGenderName").html(printEachStudentTerminalResultSession?.studentData?.genderName);</script></div>
                         </div>
                     </div>
                 </div>
