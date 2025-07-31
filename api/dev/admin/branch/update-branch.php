@@ -34,6 +34,8 @@ if(!$checkSession){
     $staffId=trim($data['managerId']);
     $session=trim($data['session']);
     $termId=trim($data['termId']);
+    $timeSchoolOpened=trim($data['timeSchoolOpened']);
+    $schoolResumptionDate=trim($data['schoolResumptionDate']);
     $statusId=trim($data['statusId']);
 
     $departmentIds=$data['departmentIds'];
@@ -193,6 +195,23 @@ if(!$checkSession){
         ]; 
         goto end;
 	}
+    if(empty($timeSchoolOpened)){
+        $response = [
+            'response'=> 102,
+            'success'=> false,
+            'message'=> "TIME SCHOOL OPENED REQUIRED! Check the fields and try again",
+        ]; 
+        goto end;
+    }
+    if(empty($schoolResumptionDate)){
+        $response = [
+            'response'=> 102,
+            'success'=> false,
+            'message'=> "SCHOOL RESUMPTION DATE REQUIRED! Check the fields and try again",
+        ]; 
+        goto end;
+    }
+        
     if(empty($statusId)){
         $response = [
             'response'=> 102,
@@ -246,7 +265,7 @@ if(!$checkSession){
             `name`='$name', `mobileNumber`='$mobileNumber', `stateId`='$stateId', `lgaId`='$lgaId', `address`='$address', `smtpHost`='$smtpHost', `smtpUsername`='$smtpUsername', 
             `smtpPassword`='$smtpPassword', `smtpPort`='$smtpPort', `supportEmail`='$supportEmail', 
             `accountNumber`='$accountNumber', `accountName`='$accountName', `bankName`='$bankName', `paymentKey`='$paymentKey', `secretKey`='$secretKey', `receiverKey`='$receiverKey', 
-            `managerId`='$staffId', `session`='$session', `termId`='$termId', `statusId`='$statusId', 
+            `managerId`='$staffId', `session`='$session', `termId`='$termId', `timeSchoolOpened`='$timeSchoolOpened', `schoolResumptionDate`='$schoolResumptionDate',  `statusId`='$statusId', 
             `updatedBy`='$loginStaffId', `updatedTime`=NOW() WHERE $clientIds AND branchId='$branchId'")or die (mysqli_error($conn));
 
             $response['response']=200; 
