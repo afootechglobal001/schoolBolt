@@ -14,6 +14,57 @@ function _getBranchPagesActiveLink(divid){
 	$("#"+divid).addClass('active');
 }
 
+
+
+$(function () {
+	schoolLogoPixPreview = {
+		UpdatePreview: function (obj) {
+			if (!window.FileReader) {
+				console.error("FileReader is not supported.");
+				return;
+			}
+			const file = obj.files[0];
+			if (!file) return;
+			const reader = new FileReader();
+
+			reader.onload = function (e) {
+				const img = new Image();
+				img.onload = function () {
+					if (img.width <= 150 && img.height <= 150) {
+						$('#schoolLogoPreviewPix').prop("src", e.target.result);
+					} else {
+						_actionAlert("Image must be exactly 150x150 pixels.", false);
+						obj.value = ""; // Clear the file input
+						$('#schoolLogoPreviewPix').prop("src", `${websiteUrl}/images/sample.jpg`);
+					}
+				};
+				img.src = e.target.result;
+			};
+			reader.readAsDataURL(file);
+		}
+	};
+});
+
+
+$(function () {
+	principalSignaturePixPreview = {
+	UpdatePreview: function (obj) {
+		if (!window.FileReader) {
+		// Handle browsers that don't support FileReader
+		console.error("FileReader is not supported.");
+		} else {
+		var reader = new FileReader();
+
+		reader.onload = function (e) {
+			$('#principalSignaturePreviewPix').prop("src", e.target.result);
+		};
+		reader.readAsDataURL(obj.files[0]);
+		}
+	},
+	};
+});
+
+
 function _getSelectBranchManagerId(fieldId){
 	let $searchList = $('#searchList_' + fieldId);
     $searchList.html('<li>Loading data...</li>');

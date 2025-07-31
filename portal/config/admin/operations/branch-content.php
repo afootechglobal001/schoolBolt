@@ -1126,6 +1126,25 @@
                     _getSelectTermId('updateTermId');
                 </script>
             </div>
+
+            <div class="text_field_container col-1" id="updateSchoolOpened_container">
+                <script>
+                    textField({
+                        id: 'updateSchoolOpened',
+                        title: 'Time School Opened'
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container col-1" id="schoolResumptionDate_container">
+                <script>
+                    textField({
+                        id: 'schoolResumptionDate',
+                        title: 'School Resumption Date',
+                        type: 'date',
+                    });
+                </script>
+            </div>
         </div>
     </div>
 
@@ -2223,7 +2242,7 @@
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
-                <span id="pageTitle"><i class="bi-plus-square"></i> ADD A NEW FEES</span>
+                <span id="pageTitle"><i class="bi-gear-wide-connected"></i> CONFIGURE OTHER SETTINGS</span>
                 <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
         </div>
@@ -2231,26 +2250,64 @@
         <div class="container-back-div">
             <div class="inner-container">
                 <div>
-                    <div class="alert alert-success form-alert">Kindly fill the form below to <span id="pageTitle2"> ADD A NEW FEES</span></div>
+                    <div class="alert alert-success form-alert">Kindly fill the form below to <span id="pageTitle2"> CONFIGURE OTHER SETTINGS</span></div>
                 </div>
 
-                <div class="text_field_container" id="session_container">
+                <div class="text_field_container" id="currentSession_container">
                     <script>
                         textField({
-                            id: 'session',
-                            title: 'Session'
+                            id: 'currentSession',
+                            title: 'Current Session'
                         });
                     </script>
                 </div>
 
-                <div class="text_field_container" id="feesName_container">
+                <div class="text_field_container" id="termId_container">
+                    <script>
+                        selectField({
+                            id: 'termId',
+                            title: 'Current Term'
+                        });
+                        _getSelectTermId('termId');
+                    </script>
+                </div>
+
+                <div class="text_field_container" id="timeSchoolOpened_container">
                     <script>
                         textField({
-                            id: 'feesName',
-                            title: 'Fee Name'
+                            id: 'timeSchoolOpened',
+                            title: 'Time School Opened'
                         });
                     </script>
                 </div>
+
+                <div class="text_field_container" id="schoolResumptionDate_container">
+                    <script>
+                        textField({
+                            id: 'schoolResumptionDate',
+                            title: 'School Resumption Date',
+                            type: 'date'
+                        });
+                    </script>
+                </div>
+
+                <div class="title">UPLOAD SCHOOL LOGO: <i>(JPG, PNG FORMAT ONLY) (150 X 150)</i> <span>*</span></div>
+                <label>
+                    <div class="pix-div">
+                        <label>
+                        <img id="schoolLogoPreviewPix" src="<?php echo $websiteUrl?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="" style="display:none" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif" onchange="schoolLogoPixPreview.UpdatePreview(this);" />
+                    </div> 
+                </label>
+
+                <div class="title">UPLOAD PRINCIPAL SIGNATURE: <i>(JPG, PNG FORMAT ONLY)</i> <span>*</span></div>
+                <label>
+                    <div class="pix-div">
+                        <label>
+                        <img id="principalSignaturePreviewPix" src="<?php echo $websiteUrl?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="" style="display:none" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif" onchange="principalSignaturePixPreview.UpdatePreview(this);" />
+                    </div> 
+                </label>
 
                 <div>
                     <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
