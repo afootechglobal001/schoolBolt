@@ -370,7 +370,6 @@ function _fetchBranches() {
 							<tr class="tb-row">
 								<td>${no}</td>
 								<td class="clickable-td" title="Click to view branch profile" onclick="_fetchEachBranches('${branchId}');">${name}<br/><span>${smtpUsername}</span></td>
-								
 								<td>${session}</td>
 								<td>${termName}</td>
 								<td>${mobileNumber}</td>
