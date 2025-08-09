@@ -213,7 +213,7 @@
                                     <div class="content-div">
                                         <div class="details">
                                             <span>STUDENTS IN CLASS</span>
-                                            <div id="">33</div>
+                                            <div id="">34</div>
                                         </div>
 
                                         <div class="details">

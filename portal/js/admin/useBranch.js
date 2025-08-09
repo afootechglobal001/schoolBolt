@@ -472,9 +472,11 @@ function _updateBranch() {
 		const session = $('#updateSession').val();
 		const managerId = $('#updateStaffId').val();
 		const termId = $('#updateTermId').val();
+		const timeSchoolOpened = $('#timeSchoolOpened').val();
+		const schoolResumptionDate = $('#schoolResumptionDate').val();
 		const statusId = $('#updateStatusId').val();
 
-		$('#updateName, #updateMobileNumber, #stateId, #lgaId, #updateAddress, #updateSmtpHost, #updateSmtpUsername, #updateSmtpPassword, #updateSmtpPort, #updateSupportEmail, #updateAccountNumber, #updateAccountName, #updateBankName, #updatePaymentKey, #updateSecretKey, #updateReceiverKey, #updateSession, #updateStaffId, #updateTermId, #updateStatusId').removeClass('issue');
+		$('#updateName, #updateMobileNumber, #stateId, #lgaId, #updateAddress, #updateSmtpHost, #updateSmtpUsername, #updateSmtpPassword, #updateSmtpPort, #updateSupportEmail, #updateAccountNumber, #updateAccountName, #updateBankName, #updatePaymentKey, #updateSecretKey, #updateReceiverKey, #updateSession, #updateStaffId, #updateTermId, #timeSchoolOpened, #schoolResumptionDate, #updateStatusId').removeClass('issue');
 
 		if (!name) {
 			$('#updateName').addClass('issue');
@@ -590,6 +592,18 @@ function _updateBranch() {
 			return;
 		}
 
+		if (!timeSchoolOpened) {
+			$('#timeSchoolOpened').addClass("issue");
+			_actionAlert('Provide Time School Opened to continue', false);
+			return;
+		}
+
+		if (!schoolResumptionDate) {
+			$('#schoolResumptionDate').addClass("issue");
+			_actionAlert('Provide School Resumption Date to continue', false);
+			return;
+		}
+
 		if (!statusId) {
 			$('#updateStatusId').addClass("issue");
 			_actionAlert('Select status to continue', false);
@@ -621,6 +635,8 @@ function _updateBranch() {
 				"session": session,
 				"managerId": managerId,
 				"termId": termId,
+				"timeSchoolOpened": timeSchoolOpened,
+				"schoolResumptionDate": schoolResumptionDate,
 				"statusId": statusId
 			};
 
