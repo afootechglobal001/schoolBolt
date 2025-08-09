@@ -280,7 +280,9 @@
 <?php } ?>
 
 <?php if ($page == 'branch_profile') { ?>
-    <script> getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));</script>
+    <script>
+        getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+    </script>
 
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
         <div class="top-panel-div">
@@ -395,7 +397,7 @@
 
                         <li class="hide-li" title="Branch Activities" id="branch_activities"
                             onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> Activities</li>
-                        
+
                         <li class="li" title="Other Links"><i class="bi-three-dots-vertical"></i>
                             <ul class="ul">
                                 <li title="Dashboard" onclick="_getActiveBranchPage({divid:'branch_dashboard', page: 'branch_dashboard', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> <span>Dashboard</span></li>
@@ -1127,24 +1129,42 @@
                 </script>
             </div>
 
-            <div class="text_field_container col-1" id="updateSchoolOpened_container">
+            <div class="text_field_container col-1" id="timeSchoolOpened_container">
                 <script>
                     textField({
-                        id: 'updateSchoolOpened',
-                        title: 'Time School Opened'
+                        id: 'timeSchoolOpened',
+                        title: 'Time School Opened',
+                        value: getEachBranchDetailsSession?.timeSchoolOpened ?? '',
                     });
                 </script>
             </div>
 
             <div class="text_field_container col-1" id="schoolResumptionDate_container">
                 <script>
-                    textField({
-                        id: 'schoolResumptionDate',
-                        title: 'School Resumption Date',
-                        type: 'date',
+                    $(document).ready(function() {
+                        const bdate = getEachBranchDetailsSession?.schoolResumptionDate || '';
+
+                        function formatDateForInput(date) {
+                            if (!date) return "";
+                            // If the date is in DD/MM/YYYY format
+                            if (date.includes("/")) {
+                                const [day, month, year] = date.split("/");
+                                return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+                            }
+                            // Already in YYYY-MM-DD format
+                            return date;
+                        }
+
+                        textField({
+                            id: 'schoolResumptionDate',
+                            title: 'School Resumption Date',
+                            type: 'date',
+                            value: formatDateForInput(bdate)
+                        });
                     });
                 </script>
             </div>
+
         </div>
     </div>
 
@@ -1491,7 +1511,9 @@
 <?php } ?>
 
 <?php if ($page == 'branch_fees_computaion_form') { ?>
-    <script> getEachFeeComputeGeneral = JSON.parse(sessionStorage.getItem("getEachFeeComputeGeneral"));</script>
+    <script>
+        getEachFeeComputeGeneral = JSON.parse(sessionStorage.getItem("getEachFeeComputeGeneral"));
+    </script>
 
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
@@ -1623,17 +1645,19 @@
 
     <div class="table-div animated fadeIn">
         <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-            <script>_fetchAssessmentPage();</script>
+            <script>
+                _fetchAssessmentPage();
+            </script>
         </table>
     </div>
 <?php } ?>
 
 <?php if ($page == 'branch_assessment_reg') { ?>
-    <script> 
+    <script>
         fetchEachAssessmentSession = JSON.parse(sessionStorage.getItem("fetchEachAssessmentSession"));
-        $('#pageTitle, #pageTitle2').html(fetchEachAssessmentSession?.assessmentId ? 'UPDATE ASSESSMENT':'ADD A NEW ASSESSMENT');
+        $('#pageTitle, #pageTitle2').html(fetchEachAssessmentSession?.assessmentId ? 'UPDATE ASSESSMENT' : 'ADD A NEW ASSESSMENT');
     </script>
-    
+
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
@@ -1653,7 +1677,7 @@
                         textField({
                             id: 'assessmentName',
                             title: 'Assessment Name',
-                            value: fetchEachAssessmentSession?.assessmentName?? ''
+                            value: fetchEachAssessmentSession?.assessmentName ?? ''
                         });
                     </script>
                 </div>
@@ -1678,10 +1702,12 @@
 <?php } ?>
 
 <?php if ($page == 'branch_assessment_breakdown_form') { ?>
-    <script>fetchAssessmentBreakdownSession = JSON.parse(sessionStorage.getItem("fetchAssessmentBreakdownSession"));</script>
-    <script> 
+    <script>
+        fetchAssessmentBreakdownSession = JSON.parse(sessionStorage.getItem("fetchAssessmentBreakdownSession"));
+    </script>
+    <script>
         fetchEachAssessmentBreakdownSession = JSON.parse(sessionStorage.getItem("fetchEachAssessmentBreakdownSession"));
-        $('#pageTitle, #pageTitle2').html(fetchEachAssessmentBreakdownSession?.assessmentId ? 'UPDATE ASSESSMENT BREAKDOWN':'COMPUTE ASSESSMENT BREAKDOWN');
+        $('#pageTitle, #pageTitle2').html(fetchEachAssessmentBreakdownSession?.assessmentId ? 'UPDATE ASSESSMENT BREAKDOWN' : 'COMPUTE ASSESSMENT BREAKDOWN');
     </script>
 
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
@@ -1695,7 +1721,15 @@
         <div class="container-back-div">
             <div class="inner-container">
                 <div>
-                    <div class="alert alert-success form-alert">Kindly fill the form below to <span id="pageTitle2"> COMPUTE ASSESSMENT BREAKDOWN</span> for <span id="assessmentName"><script>$("#assessmentName").html(fetchAssessmentBreakdownSession.assessmentData.assessmentName);</script></span> (<span id="assessmentTotalScore"><script>$("#assessmentTotalScore").html(fetchAssessmentBreakdownSession.assessmentData.assessmentTotalScore);</script></span>)</div>
+                    <div class="alert alert-success form-alert">Kindly fill the form below to <span id="pageTitle2"> COMPUTE ASSESSMENT BREAKDOWN</span> for <span id="assessmentName">
+                            <script>
+                                $("#assessmentName").html(fetchAssessmentBreakdownSession.assessmentData.assessmentName);
+                            </script>
+                        </span> (<span id="assessmentTotalScore">
+                            <script>
+                                $("#assessmentTotalScore").html(fetchAssessmentBreakdownSession.assessmentData.assessmentTotalScore);
+                            </script>
+                        </span>)</div>
                 </div>
 
                 <div class="text_field_container" id="assessmentBreakDownName_container">
@@ -1735,7 +1769,7 @@
                                         const message = fetchAssessmentBreakdownSession.message;
                                         const success = fetchAssessmentBreakdownSession.success;
 
-                                        if (success===true) {
+                                        if (success === true) {
                                             for (let i = 0; i < fetch.length; i++) {
                                                 const fetchedAssessmentBreakDown = fetch[i];
                                                 const branchId = fetchedAssessmentBreakDown.branchId;
@@ -1765,8 +1799,8 @@
                                                 </div>
                                             </div>`;
                                         }
-                                        $("#fetchedAssessmentBreakDown").html(text);    
-                                    } 
+                                        $("#fetchedAssessmentBreakDown").html(text);
+                                    }
                                 });
                             </script>
                         </div>
@@ -1797,7 +1831,7 @@
                 </script>
             </div>
 
-           <div class="text_field_container" id="termId_container">
+            <div class="text_field_container" id="termId_container">
                 <script>
                     selectField({
                         id: 'termId',
@@ -1832,21 +1866,49 @@
     </div>
 <?php } ?>
 
-<?php if ($page=='branch_department_class_broadsheet') { ?>
-    <script> fetchPresetDataSession = JSON.parse(sessionStorage.getItem("fetchPresetDataSession"));</script>
+<?php if ($page == 'branch_department_class_broadsheet') { ?>
+    <script>
+        fetchPresetDataSession = JSON.parse(sessionStorage.getItem("fetchPresetDataSession"));
+    </script>
 
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <div><span><i class="bi-grid-3x3"></i></span> <span id="reportTypeName"><script>$("#reportTypeName").html(fetchPresetDataSession?.reportTypeData?.reportTypeName);</script></span> -- <span id="broadBranchName"><script>$("#broadBranchName").html(fetchPresetDataSession?.branchData?.branchName);</script></span> - <span id="BroadSession"><script>$("#BroadSession").html(fetchPresetDataSession?.session);</script></span> - <span id="broadTerm"><script>$("#broadTerm").html(fetchPresetDataSession?.termData?.termName);</script></span>- <span id="broadAssessmentName"><script>$("#broadAssessmentName").html(fetchPresetDataSession?.assessmentData?.assessmentName);</script></span></div>
+        <div><span><i class="bi-grid-3x3"></i></span> <span id="reportTypeName">
+                <script>
+                    $("#reportTypeName").html(fetchPresetDataSession?.reportTypeData?.reportTypeName);
+                </script>
+            </span> -- <span id="broadBranchName">
+                <script>
+                    $("#broadBranchName").html(fetchPresetDataSession?.branchData?.branchName);
+                </script>
+            </span> - <span id="BroadSession">
+                <script>
+                    $("#BroadSession").html(fetchPresetDataSession?.session);
+                </script>
+            </span> - <span id="broadTerm">
+                <script>
+                    $("#broadTerm").html(fetchPresetDataSession?.termData?.termName);
+                </script>
+            </span>- <span id="broadAssessmentName">
+                <script>
+                    $("#broadAssessmentName").html(fetchPresetDataSession?.assessmentData?.assessmentName);
+                </script>
+            </span></div>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent">
-        <script>_fetchBroadsheetClass();</script>
+        <script>
+            _fetchBroadsheetClass();
+        </script>
     </div>
 <?php } ?>
 
 <?php if ($page == 'view_ca_result_summary_form') { ?>
-    <script> getViewResultSummarySession = JSON.parse(sessionStorage.getItem("getViewResultSummarySession"));</script>
-    <script> getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));</script>
+    <script>
+        getViewResultSummarySession = JSON.parse(sessionStorage.getItem("getViewResultSummarySession"));
+    </script>
+    <script>
+        getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+    </script>
 
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
         <div class="top-panel-div">
@@ -1868,17 +1930,33 @@
                     <div class="text-back-div">
                         <div class="inner-text">
                             <div class="text-div">
-                                <div class="name" id="resultBranchName"><script>$("#resultBranchName").html(getViewResultSummarySession?.branchData?.branchName);</script></div>
+                                <div class="name" id="resultBranchName">
+                                    <script>
+                                        $("#resultBranchName").html(getViewResultSummarySession?.branchData?.branchName);
+                                    </script>
+                                </div>
 
                                 <div class="text">
                                     OFFICIAL EMAIL:
-                                    <strong id="resultSmtpUsername"><script>$("#resultSmtpUsername").html(getViewResultSummarySession?.branchData?.smtpUsername);</script></strong>
+                                    <strong id="resultSmtpUsername">
+                                        <script>
+                                            $("#resultSmtpUsername").html(getViewResultSummarySession?.branchData?.smtpUsername);
+                                        </script>
+                                    </strong>
 
                                     | SESSION:
-                                    <strong id="resultSession"><script>$("#resultSession").html(getViewResultSummarySession?.session);</script></strong>
+                                    <strong id="resultSession">
+                                        <script>
+                                            $("#resultSession").html(getViewResultSummarySession?.session);
+                                        </script>
+                                    </strong>
 
                                     | TERM:
-                                    <strong id="resultTermName"><script>$("#resultTermName").html(getViewResultSummarySession?.termData?.termName);</script></strong>
+                                    <strong id="resultTermName">
+                                        <script>
+                                            $("#resultTermName").html(getViewResultSummarySession?.termData?.termName);
+                                        </script>
+                                    </strong>
                                 </div>
                             </div>
                         </div>
@@ -1889,13 +1967,41 @@
             <div class="field-back-div background-color">
                 <div class="field-inner-div branch-field-inner-div student-result-field-inner-div" id="get_branch_details">
                     <div class="alert alert-success top-alert-div animated fadeIn">
-                        <div><span><i class="bi-grid-3x3"></i></span> <span id="resultTypeName"><script>$("#resultTypeName").html(fetchPresetDataSession?.reportTypeData?.reportTypeName);</script></span> <span>SUMMARY</span> --- <span id="infoSession"><script>$("#infoSession").html(getViewResultSummarySession?.session);</script></span> - <span id="infoTermName"><script>$("#infoTermName").html(getViewResultSummarySession?.termData?.termName);</script></span> 
-                        - <span id="infoAssessmentName"><script>$("#infoAssessmentName").html(getViewResultSummarySession?.assessmentData?.assessmentName);</script></span> - <span id="resultDepartment"><script>$("#resultDepartment").html(getViewResultSummarySession?.departmentData?.departmentName);</script></span> - <span id="resultClass"><script>$("#resultClass").html(getViewResultSummarySession?.classData?.className);</script></span> - <span id="resultArm"><script>$("#resultArm").html(getViewResultSummarySession?.armData?.armName);</script></span></div>
-                    
+                        <div><span><i class="bi-grid-3x3"></i></span> <span id="resultTypeName">
+                                <script>
+                                    $("#resultTypeName").html(fetchPresetDataSession?.reportTypeData?.reportTypeName);
+                                </script>
+                            </span> <span>SUMMARY</span> --- <span id="infoSession">
+                                <script>
+                                    $("#infoSession").html(getViewResultSummarySession?.session);
+                                </script>
+                            </span> - <span id="infoTermName">
+                                <script>
+                                    $("#infoTermName").html(getViewResultSummarySession?.termData?.termName);
+                                </script>
+                            </span>
+                            - <span id="infoAssessmentName">
+                                <script>
+                                    $("#infoAssessmentName").html(getViewResultSummarySession?.assessmentData?.assessmentName);
+                                </script>
+                            </span> - <span id="resultDepartment">
+                                <script>
+                                    $("#resultDepartment").html(getViewResultSummarySession?.departmentData?.departmentName);
+                                </script>
+                            </span> - <span id="resultClass">
+                                <script>
+                                    $("#resultClass").html(getViewResultSummarySession?.classData?.className);
+                                </script>
+                            </span> - <span id="resultArm">
+                                <script>
+                                    $("#resultArm").html(getViewResultSummarySession?.armData?.armName);
+                                </script>
+                            </span></div>
+
                         <div class="btn-container">
                             <button class="btn" title="CA RESULT SUMMARY" id="printBtn" onclick="_printCaResultSummary();"><i class="bi-printer"></i>CA RESULT SUMMARY</button>
                             <button class="btn" title="ALL CA RESULT" id="printAllBtn" onclick="_printAllStudentCaResult()"><i class="bi-printer"></i> ALL CA RESULT</button>
-                        </div>            
+                        </div>
                     </div>
 
                     <div class="table-div animated fadeIn">
@@ -1904,7 +2010,7 @@
                                 $(document).ready(function() {
                                     const getViewResultSummarySession = JSON.parse(sessionStorage.getItem("getViewResultSummarySession"));
                                     if (!getViewResultSummarySession) return;
-                                        // get ids for the print button //
+                                    // get ids for the print button //
                                     const branchId = getEachBranchDetailsSession?.branchId;
                                     const session = getViewResultSummarySession?.session;
                                     const termId = getViewResultSummarySession?.termData?.termId;
@@ -1912,15 +2018,15 @@
                                     const classId = getViewResultSummarySession?.classData?.classId;
                                     const armId = getViewResultSummarySession?.armData?.armId;
                                     const assessmentId = getViewResultSummarySession?.assessmentData?.assessmentId;
-                                    
+
                                     const tableTitles = getViewResultSummarySession?.tableTitles.split(',').map(x => x.trim());
                                     const studentList = getViewResultSummarySession?.studentData;
-                                   
+
                                     // Dynamically extract all unique keys from student data
                                     const summaryFields = Object.keys(studentList[0] || {});
                                     const scoreMap = {};
-                                    
-                                        // Build scoreMap for summary fields (from studentList)
+
+                                    // Build scoreMap for summary fields (from studentList)
                                     summaryFields.forEach(field => {
                                         scoreMap[field] = {};
                                         studentList.forEach(student => {
@@ -1962,15 +2068,15 @@
                                         });
 
                                         if (bestMatch && !scoreMap[title]) {
-                                                scoreMap[title] = scoreMap[bestMatch];
-                                            } else if (!scoreMap[title]) {
-                                                // Check lowercase direct match (e.g., "remarks" vs "remark")
-                                                const lowerTitle = title.toLowerCase().replace(/s$/, ''); // remove trailing 's'
-                                                const fieldMatch = summaryFields.find(field => field.toLowerCase() === lowerTitle);
-                                                if (fieldMatch) {
-                                                    scoreMap[title] = scoreMap[fieldMatch];
-                                                }
+                                            scoreMap[title] = scoreMap[bestMatch];
+                                        } else if (!scoreMap[title]) {
+                                            // Check lowercase direct match (e.g., "remarks" vs "remark")
+                                            const lowerTitle = title.toLowerCase().replace(/s$/, ''); // remove trailing 's'
+                                            const fieldMatch = summaryFields.find(field => field.toLowerCase() === lowerTitle);
+                                            if (fieldMatch) {
+                                                scoreMap[title] = scoreMap[fieldMatch];
                                             }
+                                        }
                                     });
 
                                     // Build the table
@@ -2042,8 +2148,12 @@
 <?php } ?>
 
 <?php if ($page == 'view_terminal_result_summary_form') { ?>
-    <script> getViewTerminalResultSummarySession = JSON.parse(sessionStorage.getItem("getViewTerminalResultSummarySession"));</script>
-    <script> getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));</script>
+    <script>
+        getViewTerminalResultSummarySession = JSON.parse(sessionStorage.getItem("getViewTerminalResultSummarySession"));
+    </script>
+    <script>
+        getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+    </script>
 
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
         <div class="top-panel-div">
@@ -2065,17 +2175,33 @@
                     <div class="text-back-div">
                         <div class="inner-text">
                             <div class="text-div">
-                                <div class="name" id="terminalResultBranchName"><script>$("#terminalResultBranchName").html(getViewTerminalResultSummarySession?.branchData?.branchName);</script></div>
+                                <div class="name" id="terminalResultBranchName">
+                                    <script>
+                                        $("#terminalResultBranchName").html(getViewTerminalResultSummarySession?.branchData?.branchName);
+                                    </script>
+                                </div>
 
                                 <div class="text">
                                     OFFICIAL EMAIL:
-                                    <strong id="terminalResultSmtpUsername"><script>$("#terminalResultSmtpUsername").html(getViewTerminalResultSummarySession?.branchData?.smtpUsername);</script></strong>
+                                    <strong id="terminalResultSmtpUsername">
+                                        <script>
+                                            $("#terminalResultSmtpUsername").html(getViewTerminalResultSummarySession?.branchData?.smtpUsername);
+                                        </script>
+                                    </strong>
 
                                     | SESSION:
-                                    <strong id="terminalResultSession"><script>$("#terminalResultSession").html(getViewTerminalResultSummarySession?.session);</script></strong>
+                                    <strong id="terminalResultSession">
+                                        <script>
+                                            $("#terminalResultSession").html(getViewTerminalResultSummarySession?.session);
+                                        </script>
+                                    </strong>
 
                                     | TERM:
-                                    <strong id="terminalResultTermName"><script>$("#terminalResultTermName").html(getViewTerminalResultSummarySession?.termData?.termName);</script></strong>
+                                    <strong id="terminalResultTermName">
+                                        <script>
+                                            $("#terminalResultTermName").html(getViewTerminalResultSummarySession?.termData?.termName);
+                                        </script>
+                                    </strong>
                                 </div>
                             </div>
                         </div>
@@ -2086,14 +2212,38 @@
             <div class="field-back-div background-color">
                 <div class="field-inner-div branch-field-inner-div student-result-field-inner-div" id="get_branch_details">
                     <div class="alert alert-success top-alert-div animated fadeIn">
-                        <div><span><i class="bi-grid-3x3"></i></span> <span id="terminalResultTypeName"><script>$("#terminalResultTypeName").html(fetchPresetDataSession?.reportTypeData?.reportTypeName);</script></span> <span>SUMMARY</span> --- <span id="terminalInfoSession"><script>$("#terminalInfoSession").html(getViewTerminalResultSummarySession?.session);</script></span> - <span id="terminalInfoTermName"><script>$("#terminalInfoTermName").html(getViewTerminalResultSummarySession?.termData?.termName);</script></span> 
-                        - <span id="terminalResultDepartment"><script>$("#terminalResultDepartment").html(getViewTerminalResultSummarySession?.departmentData?.departmentName);</script></span> - <span id="terminalResultClass"><script>$("#terminalResultClass").html(getViewTerminalResultSummarySession?.classData?.className);</script></span> - <span id="terminalResultArm"><script>$("#terminalResultArm").html(getViewTerminalResultSummarySession?.armData?.armName);</script></span></div>
-                    
+                        <div><span><i class="bi-grid-3x3"></i></span> <span id="terminalResultTypeName">
+                                <script>
+                                    $("#terminalResultTypeName").html(fetchPresetDataSession?.reportTypeData?.reportTypeName);
+                                </script>
+                            </span> <span>SUMMARY</span> --- <span id="terminalInfoSession">
+                                <script>
+                                    $("#terminalInfoSession").html(getViewTerminalResultSummarySession?.session);
+                                </script>
+                            </span> - <span id="terminalInfoTermName">
+                                <script>
+                                    $("#terminalInfoTermName").html(getViewTerminalResultSummarySession?.termData?.termName);
+                                </script>
+                            </span>
+                            - <span id="terminalResultDepartment">
+                                <script>
+                                    $("#terminalResultDepartment").html(getViewTerminalResultSummarySession?.departmentData?.departmentName);
+                                </script>
+                            </span> - <span id="terminalResultClass">
+                                <script>
+                                    $("#terminalResultClass").html(getViewTerminalResultSummarySession?.classData?.className);
+                                </script>
+                            </span> - <span id="terminalResultArm">
+                                <script>
+                                    $("#terminalResultArm").html(getViewTerminalResultSummarySession?.armData?.armName);
+                                </script>
+                            </span></div>
+
                         <div class="btn-container">
                             <button class="btn" title="TERMINAL RESULT SUMMARY" id="printBtn" onclick="_printTerminalResultSummary();"><i class="bi-printer"></i>TERMINAL RESULT SUMMARY</button>
-                            <button class="btn" title="ALL TERMINAL RESULT" id="printAllBtn" onclick="windowPop('<?php echo $websiteUrl?>/reports/print-all-student-terminal-result');"><i class="bi-printer"></i> ALL TERMINAL RESULT</button>
-                            <button class="btn" title="PROGRESS REPORT" id="printAllBtn" onclick="windowPop('<?php echo $websiteUrl?>/reports/print-all-student-terminal-progress-report-result');"><i class="bi-printer"></i> PROGRESS REPORT</button>
-                        </div>            
+                            <button class="btn" title="ALL TERMINAL RESULT" id="printAllBtn" onclick="windowPop('<?php echo $websiteUrl ?>/reports/print-all-student-terminal-result');"><i class="bi-printer"></i> ALL TERMINAL RESULT</button>
+                            <button class="btn" title="PROGRESS REPORT" id="printAllBtn" onclick="windowPop('<?php echo $websiteUrl ?>/reports/print-all-student-terminal-progress-report-result');"><i class="bi-printer"></i> PROGRESS REPORT</button>
+                        </div>
                     </div>
 
                     <div class="table-div animated fadeIn">
@@ -2102,22 +2252,22 @@
                                 $(document).ready(function() {
                                     const getViewTerminalResultSummarySession = JSON.parse(sessionStorage.getItem("getViewTerminalResultSummarySession"));
                                     if (!getViewTerminalResultSummarySession) return;
-                                        // get ids for the print button //
+                                    // get ids for the print button //
                                     const branchId = getEachBranchDetailsSession?.branchId;
                                     const session = getViewTerminalResultSummarySession?.session;
                                     const termId = getViewTerminalResultSummarySession?.termData?.termId;
                                     const departmentId = getViewTerminalResultSummarySession?.departmentData?.departmentId;
                                     const classId = getViewTerminalResultSummarySession?.classData?.classId;
                                     const armId = getViewTerminalResultSummarySession?.armData?.armId;
-                                    
+
                                     const tableTitles = getViewTerminalResultSummarySession?.tableTitles.split(',').map(x => x.trim());
                                     const studentList = getViewTerminalResultSummarySession?.studentData;
 
                                     // Dynamically extract all unique keys from student data
                                     const summaryFields = Object.keys(studentList[0] || {});
                                     const scoreMap = {};
-                                    
-                                        // Build scoreMap for summary fields (from studentList)
+
+                                    // Build scoreMap for summary fields (from studentList)
                                     summaryFields.forEach(field => {
                                         scoreMap[field] = {};
                                         studentList.forEach(student => {
@@ -2159,15 +2309,15 @@
                                         });
 
                                         if (bestMatch && !scoreMap[title]) {
-                                                scoreMap[title] = scoreMap[bestMatch];
-                                            } else if (!scoreMap[title]) {
-                                                // Check lowercase direct match (e.g., "remarks" vs "remark")
-                                                const lowerTitle = title.toLowerCase().replace(/s$/, ''); // remove trailing 's'
-                                                const fieldMatch = summaryFields.find(field => field.toLowerCase() === lowerTitle);
-                                                if (fieldMatch) {
-                                                    scoreMap[title] = scoreMap[fieldMatch];
-                                                }
+                                            scoreMap[title] = scoreMap[bestMatch];
+                                        } else if (!scoreMap[title]) {
+                                            // Check lowercase direct match (e.g., "remarks" vs "remark")
+                                            const lowerTitle = title.toLowerCase().replace(/s$/, ''); // remove trailing 's'
+                                            const fieldMatch = summaryFields.find(field => field.toLowerCase() === lowerTitle);
+                                            if (fieldMatch) {
+                                                scoreMap[title] = scoreMap[fieldMatch];
                                             }
+                                        }
                                     });
 
                                     // Build the table
@@ -2295,18 +2445,18 @@
                 <label>
                     <div class="pix-div">
                         <label>
-                        <img id="schoolLogoPreviewPix" src="<?php echo $websiteUrl?>/images/sample.jpg" alt="Default Image">
-                        <input type="file" id="" style="display:none" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif" onchange="schoolLogoPixPreview.UpdatePreview(this);" />
-                    </div> 
+                            <img id="schoolLogoPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                            <input type="file" id="" style="display:none" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif" onchange="schoolLogoPixPreview.UpdatePreview(this);" />
+                    </div>
                 </label>
 
                 <div class="title">UPLOAD PRINCIPAL SIGNATURE: <i>(JPG, PNG FORMAT ONLY)</i> <span>*</span></div>
                 <label>
                     <div class="pix-div">
                         <label>
-                        <img id="principalSignaturePreviewPix" src="<?php echo $websiteUrl?>/images/sample.jpg" alt="Default Image">
-                        <input type="file" id="" style="display:none" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif" onchange="principalSignaturePixPreview.UpdatePreview(this);" />
-                    </div> 
+                            <img id="principalSignaturePreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                            <input type="file" id="" style="display:none" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif" onchange="principalSignaturePixPreview.UpdatePreview(this);" />
+                    </div>
                 </label>
 
                 <div>
