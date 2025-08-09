@@ -337,7 +337,6 @@ function _fetchBranches() {
                     <tr class="tb-col">
                         <th>sn</th>
                         <th>Name</th>
-                        <th>Official Email</th>
 						<th>Session</th>
 						<th>Term</th>
                         <th>Phone Number</th>
@@ -370,8 +369,8 @@ function _fetchBranches() {
 						<tbody>
 							<tr class="tb-row">
 								<td>${no}</td>
-								<td class="clickable-td" title="Click to view branch profile" onclick="_fetchEachBranches('${branchId}');">${name}</td>
-								<td>${smtpUsername}</td>
+								<td class="clickable-td" title="Click to view branch profile" onclick="_fetchEachBranches('${branchId}');">${name}<br/><span>${smtpUsername}</span></td>
+								
 								<td>${session}</td>
 								<td>${termName}</td>
 								<td>${mobileNumber}</td>

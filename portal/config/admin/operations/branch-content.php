@@ -4,7 +4,7 @@
             <div class="main-title title"><i class="bi-diagram-3"></i> <strong>Branches</strong></div>
             <div class="bottom-title">
                 Active: <span id="active-staff">10</span> |
-                Suspended: <span>5</span>
+                Suspended: <span>7</span>
             </div>
         </div>
 

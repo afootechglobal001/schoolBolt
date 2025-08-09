@@ -1432,6 +1432,10 @@ header .header-div-in .header-nav-div .right-nav .toggle-profile-div .toggle-div
 	-ms-transition:all 0.2s ease-in 0.2s;
 	-o-transition:all 0.2s ease-in 0.2s;
 }
+.table-div .table .tb-row .clickable-td span{
+	font-size: 11px;
+	color: var(--text-color);
+}
 
 .table-div .table .tb-row .text-back-div{
 	display: flex;
