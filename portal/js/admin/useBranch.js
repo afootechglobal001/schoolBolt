@@ -34,8 +34,6 @@ $(function () {
 						$('#schoolLogoPreviewPix').prop("src", e.target.result);
 					} else {
 						_actionAlert("Image must be exactly 150x150 pixels.", false);
-						obj.value = ""; // Clear the file input
-						$('#schoolLogoPreviewPix').prop("src", `${websiteUrl}/images/sample.jpg`);
 					}
 				};
 				img.src = e.target.result;
@@ -670,4 +668,151 @@ function _updateBranch() {
 		_actionAlert('An unexpected error occurred! Please Try Again', false);
 		$("#updateBtn").prop("disabled", false);
 	}
+}
+
+
+function _updateBranchConfig() {
+	try {
+		let issueCount = 0;
+		const session = $('#currentSession').val();
+		const termId = $('#termId').val();
+		const timeSchoolOpened = $('#timeSchoolOpened').val();
+		const schoolResumptionDate = $('#schoolResumptionDate').val();
+		const schoolLogo = $("#schoolLogo").prop("files")[0];
+		const principalSignature = $("#principalSignature").prop("files")[0];
+
+		$('#currentSession, #termId, #timeSchoolOpened, #schoolResumptionDate').removeClass('issue');
+		$('#issue_currentSession, #issue_termId, #issue_timeSchoolOpened, #issue_schoolResumptionDate').html('');
+
+		if (!session) {
+			$('#currentSession').addClass('issue');
+			$('#issue_currentSession').html('USER ERROR! Kindly Select current session to continue');
+			issueCount++;
+		}
+
+		if (!termId) {
+			$('#termId').addClass('issue');
+			$('#issue_termId').html('USER ERROR! Kindly Select term to continue');
+			issueCount++;
+		}
+
+		if (!timeSchoolOpened) {
+			$('#timeSchoolOpened').addClass("issue");
+			$('#issue_timeSchoolOpened').html('USER ERROR! Kindly Provide time school opened to continue');
+			issueCount++;
+		}
+
+		if (!schoolResumptionDate) {
+			$('#schoolResumptionDate').addClass("issue");
+			$('#issue_schoolResumptionDate').html('USER ERROR! Kindly Provide school resumption date to continue');
+			issueCount++;
+		}
+
+		if (issueCount > 0) return;
+		
+		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
+			const btnText = $("#submitBtn").html();
+			$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+			$("#submitBtn").prop("disabled", true);
+
+			const formData = new FormData();
+			formData.append("session", session);
+			formData.append("termId", termId);
+			formData.append("timeSchoolOpened", timeSchoolOpened);
+			formData.append("schoolResumptionDate", schoolResumptionDate);
+
+			if (schoolLogo) {
+            	formData.append("schoolLogo", schoolLogo);
+        	}
+
+			if (principalSignature) {
+            	formData.append("principalSignature", principalSignature);
+        	}
+
+			$.ajax({
+				type: "POST",
+				url: `${endPoint}/admin/branch/update-branch-config?branchId=${getEachBranchDetailsSession.branchId}`,
+				data: formData,
+                dataType: "json",
+				contentType: false,
+				cache: false,
+				processData: false,
+				headers: getAuthHeaders(true),
+				success: function (info) {
+					const success = info.success;
+					const message = info.message;
+
+					if (success=== true) {
+						const data = info.data;
+						const oldSchoolLogo = data.oldSchoolLogo;
+						const newSchoolLogo = data.schoolLogo;
+						const oldPrincipalSignature = data.oldPrincipalSignature;
+						const newPrincipalSignature = data.principalSignature;
+
+						if (newSchoolLogo !== '') {
+							_uploadSchoolLogo('schoolLogo', oldSchoolLogo, newSchoolLogo, message);
+						}
+
+						if (newPrincipalSignature !== '') {
+							_uploadSchoolLogo('principalSignature', oldPrincipalSignature, newPrincipalSignature, message);
+						}
+
+						if (newSchoolLogo === '' && newPrincipalSignature === '') {
+							_actionAlert(message, true);
+							_fetchEachBranches(getEachBranchDetailsSession.branchId);
+							_getPage({ page: 'branches', url: adminPortalLocalUrl });
+							_alertClose(2);
+						}
+					} else {
+						_actionAlert(message, false);
+					}
+					$("#submitBtn").html(btnText).prop("disabled", false);
+			},
+				error: function (error) {
+					_actionAlert('An error occurred while processing your request! Please Try Again', false);
+					$("#submitBtn").html(btnText).prop("disabled", false);
+				}
+			});
+		}
+	} catch (error) {
+		_actionAlert('An unexpected error occurred! Please Try Again', false);
+		$("#submitBtn").prop("disabled", false);
+	}
+}
+
+let _pendingUploads = 0;
+function _uploadSchoolLogo(fileType, oldFile, newFile, message) {
+    _pendingUploads++; // track uploads
+
+    const uploadedFile = $("#" + fileType).prop("files")[0];
+
+    const formData = new FormData();
+    formData.append("action", "uploadFile");
+    formData.append("fileType", fileType);
+    formData.append("oldFile", oldFile);
+    formData.append("newFile", newFile);
+    formData.append(fileType, uploadedFile);
+
+    $.ajax({
+        url: adminPortalLocalUrl,
+        type: "POST",
+        data: formData,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function () {
+            _pendingUploads--;
+
+            if (_pendingUploads === 0) { // all uploads done
+                _actionAlert(message, true);
+                _fetchEachBranches(getEachBranchDetailsSession.branchId);
+                _getPage({ page: 'branches', url: adminPortalLocalUrl });
+                _alertClose(2);
+            }
+        },
+        error: function () {
+            _pendingUploads--;
+            _actionAlert('Upload failed! Please try again.', false);
+        }
+    });
 }
