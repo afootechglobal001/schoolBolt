@@ -1440,6 +1440,7 @@
         <span><i class="bi-credit-card"></i> BRANCH FEES CATEGORY</span>
 
         <div class="btn-container">
+            <button class="btn" title="PRINT FEES" onclick="_printBranchFeesSettings();"><i class="bi-printer"></i> PRINT FEES</button>
             <button class="btn" title="ADD FEES" onclick="sessionStorage.removeItem('getEachEachFeesSettings'); _getForm({page: 'branch_fees_reg', layer:2, url: adminPortalLocalUrl});"><i class="bi-plus-square"></i> ADD FEES</button>
         </div>
     </div>

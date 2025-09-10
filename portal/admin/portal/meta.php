@@ -61,3 +61,4 @@
 <script src="<?php echo $websiteUrl?>/js/reports/print-all-student-ca-result.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/reports/print-terminal-result-summary.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/reports/print-each-student-terminal-result.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/reports/print-fees-settings.js?v=<?php echo $codeVersion?>"></script>

@@ -432,6 +432,7 @@ function _fetchFeeComputeGeneral() {
                   text += `
 																<td>
 																	<div class="btn-div">
+																		<button class="btn view-btn print-btn" title="Click to print fees" onclick="_printComputeFee('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">PRINT FEES</button>
 																		<button class="btn view-btn" title="Click to compute fees" onclick="_fetchEachFeeComputeGeneral('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">COMPUTE FEES</button>
 																		<button class="btn view-btn approve-btn" title="Click to approve fees" id="approveBtn_${fcId}" onclick="_approveFeesCompute('${fcId}');">APPROVE FEES</button>
 																	</div>
