@@ -18,6 +18,9 @@ if(!$checkSession){
     if (!empty($feesId)) {
         $feesIds = "AND feesId ='$feesId'";
     }
+
+    $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, schoolLogo, address, smtpUsername, mobileNumber  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+    $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
   
     // Securely escape $q
     $q = mysqli_real_escape_string($conn, $q);
@@ -36,6 +39,7 @@ if(!$checkSession){
     $response['success']=true;
     $response['message']="FEES SETTINGS FETCH SUCCESFFULY!";
     $response['allRecordCount']=$allRecordCount;
+    $response['branchData'] = $branchDataFetch;
     $response['data'] = array(); // Initialize the data array
 
     while ($fetchQuery = mysqli_fetch_assoc($query)) {
@@ -43,10 +47,6 @@ if(!$checkSession){
         $createdBy=$fetchQuery['createdBy'];
         $updatedBy=$fetchQuery['updatedBy'];
        
-        ////////////////// for  $branchId
-        $branchDataQuery = mysqli_query($conn, "SELECT branchId, name AS branchName FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
-        $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
-        $response['branchData'] = $branchDataFetch;
         /////////////////// for  $createdBy
          $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
          $getCreatedByfetch = mysqli_fetch_assoc($getCreatedByQuery);

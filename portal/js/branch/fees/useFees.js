@@ -1,70 +1,96 @@
-function _getSelectFeesOptions(fieldId){
-	const data=[
-		{
-			'id': true,
-			'value': 'TRUE',
-		},
-		{
-			'id': false,
-			'value': 'FALSE',
-		},
-	]
+function _getSelectFeesOptions(fieldId) {
+  const data = [
+    {
+      id: true,
+      value: "TRUE",
+    },
+    {
+      id: false,
+      value: "FALSE",
+    },
+  ];
 
-	for (let i = 0; i < data.length; i++) {
-		const id = data[i].id;
-		const value = data[i].value;
-		$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
-	}	
+  for (let i = 0; i < data.length; i++) {
+    const id = data[i].id;
+    const value = data[i].value;
+    $("#searchList_" + fieldId).append(
+      "<li onclick=\"_clickOption('searchList_" +
+        fieldId +
+        "', '" +
+        id +
+        "', '" +
+        value +
+        "')\">" +
+        value +
+        "</li>"
+    );
+  }
 }
 
+function _getSelectFeesSettings(fieldId) {
+  try {
+    $.ajax({
+      type: "GET",
+      url: `${endPoint}/admin/branch/fees/fetch-fees-settings?branchId=${getEachBranchDetailsSession.branchId}`,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(true),
+      success: function (info) {
+        const data = info.data;
+        const success = info.success;
 
-function _getSelectFeesSettings(fieldId){
-	try {
-		$.ajax({
-			type: "GET",
-			url: `${endPoint}/admin/branch/fees/fetch-fees-settings?branchId=${getEachBranchDetailsSession.branchId}`,
-			dataType: "json",
-			cache: false,
-			headers: getAuthHeaders(true),
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-				
-				if (success === true) {
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].feesId;
-						const value = data[i].feesName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
+        if (success === true) {
+          for (let i = 0; i < data.length; i++) {
+            const id = data[i].feesId;
+            const value = data[i].feesName;
+            $("#searchList_" + fieldId).append(
+              "<li onclick=\"_clickOption('searchList_" +
+                fieldId +
+                "', '" +
+                id +
+                "', '" +
+                value +
+                "');\">" +
+                value +
+                "</li>"
+            );
+          }
+        } else {
+          _actionAlert(info.message, false);
+        }
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred. Please try again.", false);
+  }
 }
-
 
 function _fetchFeesSettings() {
-    let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
-    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
-	try {
-		$.ajax({
-			type: "GET",
-			url: `${endPoint}/admin/branch/fees/fetch-fees-settings?branchId=${getEachBranchDetailsSession.branchId}`,
-			dataType: "json", 
-			cache: false,
-			headers: getAuthHeaders(true),
-			success: function(info) {
-				const fetch = info.data;
-				const success = info.success;
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession")
+  );
+  $("#pageContent")
+    .html(
+      '<div class="ajax-loader pages-ajax-loader"><img src="' +
+        websiteUrl +
+        '/images/spinner.gif" alt="Loading"/></div>'
+    )
+    .fadeIn("fast");
+  try {
+    $.ajax({
+      type: "GET",
+      url: `${endPoint}/admin/branch/fees/fetch-fees-settings?branchId=${getEachBranchDetailsSession.branchId}`,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(true),
+      success: function (info) {
+        const fetch = info.data;
+        const success = info.success;
 
-				let text = '';
-				let no=0;
-				text =`
+        let text = "";
+        let no = 0;
+        text = `
 				<thead>
                     <tr class="tb-col">
                         <th>sn</th>
@@ -75,17 +101,19 @@ function _fetchFeesSettings() {
                     </tr>
                 </thead>`;
 
-				if (success===true) {
-					for (let i = 0; i < fetch.length; i++) {
-						no++;
-						const feesId = fetch[i].feesId;
-						const feesName = fetch[i].feesName;
-						const fetchedFeesOption = fetch[i].feesOption;
-                        const NewFeesOption = (fetchedFeesOption === "TRUE") ? "MANDATORY" : "NOT MANDATORY";
-	                    const feesOptionColor = (fetchedFeesOption === "TRUE") ? "green-color" : "orange-color";
-                        const updatedBy = fetch[i].updatedBy?.fullname;
+        if (success === true) {
+          for (let i = 0; i < fetch.length; i++) {
+            no++;
+            const feesId = fetch[i].feesId;
+            const feesName = fetch[i].feesName;
+            const fetchedFeesOption = fetch[i].feesOption;
+            const NewFeesOption =
+              fetchedFeesOption === "TRUE" ? "MANDATORY" : "NOT MANDATORY";
+            const feesOptionColor =
+              fetchedFeesOption === "TRUE" ? "green-color" : "orange-color";
+            const updatedBy = fetch[i].updatedBy?.fullname;
 
-						text +=`
+            text += `
 						<tbody>
 							<tr class="tb-row">
                                 <td>${no}</td>
@@ -95,11 +123,11 @@ function _fetchFeesSettings() {
                                 <td><button class="btn view-btn" title="Click to edit fees" onclick="_fetchEachFeesSettings('${feesId}')">EDIT FEES</button></td>
                             </tr>
 						</tbody>`;
-					}
-					$('#pageContent').html(text);
-				} else {
-					_actionAlert(info.message, false);
-					text += `
+          }
+          $("#pageContent").html(text);
+        } else {
+          _actionAlert(info.message, false);
+          text += `
 						tbody>
 							<tr>
 								<td colspan="11">
@@ -112,161 +140,199 @@ function _fetchFeesSettings() {
 								</td>
 							</tr>
 						</tbody>`;
-					$('#pageContent').html(text);
+          $("#pageContent").html(text);
 
-					const response = info.response;
-					if (response < 100) {
-						_logOut();
-					}    
-				}
-			},
-			error: function(textStatus, errorThrown) {
-				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred! Please try again.', false);
-	}
+          const response = info.response;
+          if (response < 100) {
+            _logOut();
+          }
+        }
+      },
+      error: function (textStatus, errorThrown) {
+        console.error("AJAX Error: ", textStatus, errorThrown);
+        _actionAlert(
+          "An error occurred while fetching data! Please try again.",
+          false
+        );
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred! Please try again.", false);
+  }
 }
-
-
 
 function _fetchEachFeesSettings(feesId) {
-    let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
-	$("#get-form-more-div").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
-	try {
-		$.ajax({
-			type: "GET",
-			url: `${endPoint}/admin/branch/fees/fetch-fees-settings?branchId=${getEachBranchDetailsSession.branchId}&feesId=${feesId}`,
-			dataType: "json", 
-			cache: false,   
-			headers: getAuthHeaders(true),
-			success: function(info) {
-				if (info.success && info.data.length > 0) {
-					sessionStorage.setItem("getEachEachFeesSettings", JSON.stringify(info.data[0]));
-					_getForm({page: 'branch_fees_reg', layer:2, url: adminPortalLocalUrl});
-				} else {
-					const response = info.response;
-					if (response < 100) {
-						_logOut();
-					}    
-				}
-			},
-			error: function(textStatus, errorThrown) {
-				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred! Please try again.', false);
-	}
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession")
+  );
+  $("#get-form-more-div")
+    .css({
+      display: "flex",
+      "justify-content": "center",
+      "align-items": "center",
+    })
+    .fadeIn(500);
+  try {
+    $.ajax({
+      type: "GET",
+      url: `${endPoint}/admin/branch/fees/fetch-fees-settings?branchId=${getEachBranchDetailsSession.branchId}&feesId=${feesId}`,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(true),
+      success: function (info) {
+        if (info.success && info.data.length > 0) {
+          sessionStorage.setItem(
+            "getEachEachFeesSettings",
+            JSON.stringify(info.data[0])
+          );
+          _getForm({
+            page: "branch_fees_reg",
+            layer: 2,
+            url: adminPortalLocalUrl,
+          });
+        } else {
+          const response = info.response;
+          if (response < 100) {
+            _logOut();
+          }
+        }
+      },
+      error: function (textStatus, errorThrown) {
+        console.error("AJAX Error: ", textStatus, errorThrown);
+        _actionAlert(
+          "An error occurred while fetching data! Please try again.",
+          false
+        );
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred! Please try again.", false);
+  }
 }
-
-
 
 function _createUpdateFeesSettings() {
-      let getEachEachFeesSettings = JSON.parse(sessionStorage.getItem("getEachEachFeesSettings"));
-	try {
+  let getEachEachFeesSettings = JSON.parse(
+    sessionStorage.getItem("getEachEachFeesSettings")
+  );
+  try {
+    const feesName = $("#feesName").val();
+    const feesOption = $("#feesOption").val();
 
-		const feesName = $('#feesName').val();
-		const feesOption = $('#feesOption').val();
+    $("#feesName, #feesOption").removeClass("issue");
 
-		$('#feesName, #feesOption').removeClass('issue');
+    if (!feesName) {
+      $("#feesName").addClass("issue");
+      _actionAlert("Provide fees name to continue", false);
+      return;
+    }
 
-		if (!feesName) {
-			$('#feesName').addClass('issue');
-			_actionAlert('Provide fees name to continue', false);
-			return;
-		}
+    if (!feesOption) {
+      $("#feesOption").addClass("issue");
+      _actionAlert("Select fees option to continue", false);
+      return;
+    }
 
-		if (!feesOption) {
-			$('#feesOption').addClass('issue');
-			_actionAlert('Select fees option to continue', false);
-			return;
-		}
+    if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
+      const btnText = $("#submitBtn").html();
+      $("#submitBtn").html(
+        '<img src="' +
+          websiteUrl +
+          '/images/loading.gif" width="12px" alt="Loading"/>'
+      );
+      $("#submitBtn").prop("disabled", true);
 
-		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
-			const btnText = $("#submitBtn").html();
-			$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
-			$("#submitBtn").prop("disabled", true);
+      const formData = new FormData();
+      formData.append("feesName", feesName);
+      formData.append("feesOption", feesOption);
 
-			const formData = new FormData();
-			formData.append("feesName", feesName);
-			formData.append("feesOption", feesOption);
+      let callUrl = getEachEachFeesSettings?.feesId
+        ? `${endPoint}/admin/branch/fees/update-fees-settings?branchId=${getEachBranchDetailsSession.branchId}&feesId=${getEachEachFeesSettings?.feesId}`
+        : `${endPoint}/admin/branch/fees/create-fees-settings?branchId=${getEachBranchDetailsSession.branchId}`;
 
-            let callUrl= getEachEachFeesSettings?.feesId ? `${endPoint}/admin/branch/fees/update-fees-settings?branchId=${getEachBranchDetailsSession.branchId}&feesId=${getEachEachFeesSettings?.feesId}` : `${endPoint}/admin/branch/fees/create-fees-settings?branchId=${getEachBranchDetailsSession.branchId}`;
+      $.ajax({
+        type: "POST",
+        url: callUrl,
+        data: formData,
+        dataType: "json",
+        contentType: false,
+        cache: false,
+        processData: false,
+        headers: getAuthHeaders(true),
+        success: function (info) {
+          const success = info.success;
+          const message = info.message;
 
-			$.ajax({
-				type: "POST",
-				url: callUrl,
-				data: formData,
-                dataType: "json",
-				contentType: false,
-				cache: false,
-				processData: false,
-				headers: getAuthHeaders(true),
-				success: function (info) {
-					const success = info.success;
-					const message = info.message;
-
-					if (success=== true) {
-                        _actionAlert(message, true);
-                        _getActiveBranchPage({divid:'branch_fees_page', page: 'branch_fees_page', url: adminPortalLocalUrl});
-                        _alertClose(2);
-				} else {
-					_actionAlert(message, false);
-				}
-				$("#submitBtn").html(btnText).prop("disabled", false);
-			},
-				error: function (error) {
-					_actionAlert('An error occurred while processing your request! Please Try Again', false);
-					$("#submitBtn").html(btnText).prop("disabled", false);
-				}
-			});
-		}
-	} catch (error) {
-		_actionAlert('An unexpected error occurred! Please Try Again', false);
-		$("#submitBtn").prop("disabled", false);
-	}
+          if (success === true) {
+            _actionAlert(message, true);
+            _getActiveBranchPage({
+              divid: "branch_fees_page",
+              page: "branch_fees_page",
+              url: adminPortalLocalUrl,
+            });
+            _alertClose(2);
+          } else {
+            _actionAlert(message, false);
+          }
+          $("#submitBtn").html(btnText).prop("disabled", false);
+        },
+        error: function (error) {
+          _actionAlert(
+            "An error occurred while processing your request! Please Try Again",
+            false
+          );
+          $("#submitBtn").html(btnText).prop("disabled", false);
+        },
+      });
+    }
+  } catch (error) {
+    _actionAlert("An unexpected error occurred! Please Try Again", false);
+    $("#submitBtn").prop("disabled", false);
+  }
 }
 
-
 function _fetchFeeComputeGeneral() {
-    let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
-    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession")
+  );
+  $("#pageContent")
+    .html(
+      '<div class="ajax-loader pages-ajax-loader"><img src="' +
+        websiteUrl +
+        '/images/spinner.gif" alt="Loading"/></div>'
+    )
+    .fadeIn("fast");
 
-    try {
-        $.ajax({
-            type: "GET",
-            url: `${endPoint}/admin/branch/fees/fetch-fees-compute-general?branchId=${getEachBranchDetailsSession.branchId}`,
-            dataType: "json",
-            cache: false,
-            headers: getAuthHeaders(true),
-            success: function(info) {
-               	const fetch = info.data;
-                const fetchBranchData = info.branchData;
-                const success = info.success;
+  try {
+    $.ajax({
+      type: "GET",
+      url: `${endPoint}/admin/branch/fees/fetch-fees-compute-general?branchId=${getEachBranchDetailsSession.branchId}`,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(true),
+      success: function (info) {
+        const fetch = info.data;
+        const fetchBranchData = info.branchData;
+        const success = info.success;
 
-                const currentSession = fetchBranchData.currentSession;
-                const currentTerm = fetchBranchData.termData.currentTerm;
-                const termId = fetchBranchData.termData.termId;
+        const currentSession = fetchBranchData.currentSession;
+        const currentTerm = fetchBranchData.termData.currentTerm;
+        const termId = fetchBranchData.termData.termId;
 
-                let text = '';
-                let no = 0;	
+        let text = "";
+        let no = 0;
 
-                if (success === true) {
-                    for (let i = 0; i < fetch.length; i++) {
-                        no++;
-                        const department = fetch[i];
-                        const departmentName = department.departmentData.departmentName;
-                        const branchId = department.branchId;
-						const departmentId = department.departmentData.departmentId;
-                        const classData = department.classData;
+        if (success === true) {
+          for (let i = 0; i < fetch.length; i++) {
+            no++;
+            const department = fetch[i];
+            const departmentName = department.departmentData.departmentName;
+            const branchId = department.branchId;
+            const departmentId = department.departmentData.departmentId;
+            const classData = department.classData;
 
-                        text += `
+            text += `
                             <div class="pages-toggle-div">
                                 <div class="pages-toggle-title" onclick="_collapse('view${no}');" title="Click to view department">
                                     <h3>${departmentName}</h3>
@@ -293,25 +359,27 @@ function _fetchFeeComputeGeneral() {
 
                                             <tbody>`;
 
-                                                let sn = 0; 						 
-                                                if (classData.length > 0) {
-                                                    for (let j = 0; j < classData.length; j++) {
-                                                        sn++
-                                                        const classInfo = classData[j];
-                                                        const classId = classInfo.classId;
-                                                        const className = classInfo.className;
-														const payableAmount = classInfo?.feesSummaryData?.payableAmount;
-    													const formattedAmount = payableAmount ? thousandSeperator(payableAmount) : "00:00";
-														const statusName = classInfo.statusData.statusName;
-                                                        const updatedBy = classInfo?.updatedBy?.fullname;
-														const updatedTime = classInfo?.feesSummaryData?.updatedTime;
-														const approvedBy = classInfo?.approvedBy?.fullname;
-														const approvedTime = classInfo?.feesSummaryData?.approvedTime;
-														const feesSummaryData = classInfo?.feesSummaryData;
-														const feeStatus = classInfo?.feesSummaryData?.statusId;
-														const fcId = classInfo?.feesSummaryData?.fcId;
+            let sn = 0;
+            if (classData.length > 0) {
+              for (let j = 0; j < classData.length; j++) {
+                sn++;
+                const classInfo = classData[j];
+                const classId = classInfo.classId;
+                const className = classInfo.className;
+                const payableAmount = classInfo?.feesSummaryData?.payableAmount;
+                const formattedAmount = payableAmount
+                  ? thousandSeperator(payableAmount)
+                  : "00:00";
+                const statusName = classInfo.statusData.statusName;
+                const updatedBy = classInfo?.updatedBy?.fullname;
+                const updatedTime = classInfo?.feesSummaryData?.updatedTime;
+                const approvedBy = classInfo?.approvedBy?.fullname;
+                const approvedTime = classInfo?.feesSummaryData?.approvedTime;
+                const feesSummaryData = classInfo?.feesSummaryData;
+                const feeStatus = classInfo?.feesSummaryData?.statusId;
+                const fcId = classInfo?.feesSummaryData?.fcId;
 
-                                                        text += `
+                text += `
                                                         <tr class="tb-row">
                                                             <td>${sn}</td>
 															<td>${currentSession}</td>
@@ -322,54 +390,74 @@ function _fetchFeeComputeGeneral() {
 															<td>${statusName}</td>
                                                             <td>
                                                                 <div class="text-div">
-                                                                    <div class="bold-font">${updatedBy ? updatedBy : "NULL"}</div>
-                                                                    <div>${updatedTime ? updatedTime : "NULL"}</div>
+                                                                    <div class="bold-font">${
+                                                                      updatedBy
+                                                                        ? updatedBy
+                                                                        : "NULL"
+                                                                    }</div>
+                                                                    <div>${
+                                                                      updatedTime
+                                                                        ? updatedTime
+                                                                        : "NULL"
+                                                                    }</div>
                                                                 </div>
                                                             </td>
 															<td>
                                                                 <div class="text-div">
-                                                                    <div class="bold-font">${approvedBy ? approvedBy : "NULL"}</div>
-                                                                    <div>${approvedTime ? approvedTime : "NULL"}</div>
+                                                                    <div class="bold-font">${
+                                                                      approvedBy
+                                                                        ? approvedBy
+                                                                        : "NULL"
+                                                                    }</div>
+                                                                    <div>${
+                                                                      approvedTime
+                                                                        ? approvedTime
+                                                                        : "NULL"
+                                                                    }</div>
                                                                 </div>
                                                             </td>`;
 
- 															if (!feesSummaryData || feesSummaryData === 'null' || feesSummaryData === 'NULL') {
-																text += `
+                if (
+                  !feesSummaryData ||
+                  feesSummaryData === "null" ||
+                  feesSummaryData === "NULL"
+                ) {
+                  text += `
 																<td>
 																	<div class="btn-div">
 																		<button class="btn view-btn" title="Click to compute fees" onclick="_fetchEachFeeComputeGeneral('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">COMPUTE FEES</button>
 																	</div>
 																</td>`;
-															} else if(feeStatus==="8" || feeStatus==="10") {
-																text += `
+                } else if (feeStatus === "8" || feeStatus === "10") {
+                  text += `
 																<td>
 																	<div class="btn-div">
 																		<button class="btn view-btn" title="Click to compute fees" onclick="_fetchEachFeeComputeGeneral('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">COMPUTE FEES</button>
 																		<button class="btn view-btn approve-btn" title="Click to approve fees" id="approveBtn_${fcId}" onclick="_approveFeesCompute('${fcId}');">APPROVE FEES</button>
 																	</div>
 																</td>`;
-															}else {
-																text += `
+                } else {
+                  text += `
 																<td>
 																	<div class="btn-div">
 																		<button class="btn view-btn print-btn" title="Click to print fees" onclick="_printComputeFee('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">PRINT FEES</button>
 																		<button class="btn view-btn decline-btn" title="Click to decline fees" id="declineBtn_${fcId}" onclick="_declineFeesCompute('${fcId}');">DECLINE FEES</button>
 																	</div>
 																</td>`;
-															}
- 														text +=`</tr>`;
-                                                    }
-                                                } 
-                                            text += `</tbody>
+                }
+                text += `</tr>`;
+              }
+            }
+            text += `</tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>`;
-                    }
-                    $('#pageContent').html(text);
-                } else {
-                    _actionAlert(info.message, false);
-                    $('#pageContent').html(`
+          }
+          $("#pageContent").html(text);
+        } else {
+          _actionAlert(info.message, false);
+          $("#pageContent").html(`
                         <tbody>
                             <tr>
                                 <td colspan="15">
@@ -380,199 +468,248 @@ function _fetchFeeComputeGeneral() {
                             </tr>
                         </tbody>`);
 
-                    if (info.response < 100) {
-                        _logOut();
-                    }
-                }
-            },
-            error: function(textStatus, errorThrown) {
-                console.error("AJAX Error: ", textStatus, errorThrown);
-                _actionAlert('An error occurred while fetching data! Please try again.', false);
-            }
+          if (info.response < 100) {
+            _logOut();
+          }
+        }
+      },
+      error: function (textStatus, errorThrown) {
+        console.error("AJAX Error: ", textStatus, errorThrown);
+        _actionAlert(
+          "An error occurred while fetching data! Please try again.",
+          false
+        );
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred! Please try again.", false);
+  }
+}
+
+function _fetchEachFeeComputeGeneral(
+  branchId,
+  departmentId,
+  classId,
+  session,
+  termId
+) {
+  $("#get-form-more-div")
+    .css({
+      display: "flex",
+      "justify-content": "center",
+      "align-items": "center",
+    })
+    .fadeIn(500);
+  try {
+    $.ajax({
+      type: "GET",
+      url: `${endPoint}/admin/branch/fees/fetch-fees-compute?branchId=${branchId}&departmentId=${departmentId}&classId=${classId}&session=${session}&termId=${termId}`,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(true),
+      success: function (info) {
+        sessionStorage.setItem(
+          "getEachFeeComputeGeneral",
+          JSON.stringify(info)
+        );
+        _getForm({
+          page: "branch_fees_computaion_form",
+          layer: 2,
+          url: adminPortalLocalUrl,
         });
-    } catch (error) {
-        console.error("Error: ", error);
-        _actionAlert('An unexpected error occurred! Please try again.', false);
-    }
+
+        const response = info.response;
+        if (response < 100) {
+          _logOut();
+        }
+      },
+      error: function (textStatus, errorThrown) {
+        console.error("AJAX Error: ", textStatus, errorThrown);
+        _actionAlert(
+          "An error occurred while fetching data! Please try again.",
+          false
+        );
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred! Please try again.", false);
+  }
 }
-
-
-function _fetchEachFeeComputeGeneral(branchId, departmentId, classId, session, termId) {
-	$("#get-form-more-div").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
-	try {
-		$.ajax({
-			type: "GET",
-			url: `${endPoint}/admin/branch/fees/fetch-fees-compute?branchId=${branchId}&departmentId=${departmentId}&classId=${classId}&session=${session}&termId=${termId}`,
-			dataType: "json", 
-			cache: false,   
-			headers: getAuthHeaders(true),
-			success: function(info) {
-				sessionStorage.setItem("getEachFeeComputeGeneral", JSON.stringify(info));
-				_getForm({page: 'branch_fees_computaion_form', layer:2, url: adminPortalLocalUrl});
-			
-				const response = info.response;
-				if (response < 100) {
-					_logOut();
-				}    
-			},
-			error: function(textStatus, errorThrown) {
-				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred! Please try again.', false);
-	}
-}
-
-
 
 function saveFees() {
-    let getEachFeeComputeGeneral = JSON.parse(sessionStorage.getItem("getEachFeeComputeGeneral"));
-	try {
+  let getEachFeeComputeGeneral = JSON.parse(
+    sessionStorage.getItem("getEachFeeComputeGeneral")
+  );
+  try {
+    let classFees = [];
+    $(".text_field_container").each(function () {
+      let input = $(this).find("input");
+      let feesId = input.attr("id");
+      let feeValue = input.val();
 
-		let classFees = [];
-		$('.text_field_container').each(function () {
-			let input = $(this).find('input');
-			let feesId = input.attr('id');
-			let feeValue = input.val();
+      classFees.push({
+        feesId: feesId,
+        amount: feeValue,
+      });
+    });
 
-			classFees.push({
-				feesId: feesId,
-				amount: feeValue
-			});
-		});
+    let atLeastOneFilled = classFees.some((fee) => fee.amount.trim() !== "");
+    if (!atLeastOneFilled) {
+      _actionAlert(
+        "Please enter at least one fee amount before saving!",
+        false
+      );
+      return;
+    }
 
-		let atLeastOneFilled = classFees.some(fee => fee.amount.trim() !== "");
-		if (!atLeastOneFilled) {
-			_actionAlert("Please enter at least one fee amount before saving!", false);
-			return;
-		}
+    if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
+      const btnText = $("#submitBtn").html();
+      $("#submitBtn").html(
+        '<img src="' +
+          websiteUrl +
+          '/images/loading.gif" width="12px" alt="Loading"/>'
+      );
+      $("#submitBtn").prop("disabled", true);
 
-		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
-			const btnText = $("#submitBtn").html();
-			$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
-			$("#submitBtn").prop("disabled", true);
+      $.ajax({
+        type: "POST",
+        url: `${endPoint}/admin/branch/fees/create-fees-compute?branchId=${getEachFeeComputeGeneral.branchData.branchId}&departmentId=${getEachFeeComputeGeneral.departmentData.departmentId}&classId=${getEachFeeComputeGeneral.classData.classId}&session=${getEachFeeComputeGeneral.currentSession}&termId=${getEachFeeComputeGeneral.termData.termId}`,
+        dataType: "json",
+        data: JSON.stringify({ classFees: classFees }),
+        contentType: "application/json",
+        processData: false,
+        cache: false,
+        headers: getAuthHeaders(true),
+        success: function (info) {
+          const success = info.success;
+          const message = info.message;
 
-			$.ajax({
-				type: "POST",
-				url: `${endPoint}/admin/branch/fees/create-fees-compute?branchId=${getEachFeeComputeGeneral.branchData.branchId}&departmentId=${getEachFeeComputeGeneral.departmentData.departmentId}&classId=${getEachFeeComputeGeneral.classData.classId}&session=${getEachFeeComputeGeneral.currentSession}&termId=${getEachFeeComputeGeneral.termData.termId}`,
-        		dataType: "json",
-				data: JSON.stringify({ classFees: classFees }),
-				contentType: "application/json",
-				processData: false,
-				cache: false,
-				headers: getAuthHeaders(true),
-				success: function (info) {
-					const success = info.success;
-					const message = info.message;
-
-					if (success === true) {
-                        _actionAlert(message, true);
-                        _getActiveBranchPage({ divid: 'branch_fees_computaion_page', page: 'branch_fees_computaion_page', url: adminPortalLocalUrl });
-                    	_alertClose(2);
-					} else {
-                        _actionAlert(message, false);
-                    }
-				    $("#submitBtn").html(btnText).prop("disabled", false);
-			},
-				error: function (error) {
-					_actionAlert('An error occurred while processing your request! Please Try Again', false);
-					$("#submitBtn").html(btnText).prop("disabled", false);
-				}
-			});
-		}
-	} catch (error) {
-		_actionAlert('An unexpected error occurred! Please Try Again', false);
-		$("#submitBtn").prop("disabled", false);
-	}
+          if (success === true) {
+            _actionAlert(message, true);
+            _getActiveBranchPage({
+              divid: "branch_fees_computaion_page",
+              page: "branch_fees_computaion_page",
+              url: adminPortalLocalUrl,
+            });
+            _alertClose(2);
+          } else {
+            _actionAlert(message, false);
+          }
+          $("#submitBtn").html(btnText).prop("disabled", false);
+        },
+        error: function (error) {
+          _actionAlert(
+            "An error occurred while processing your request! Please Try Again",
+            false
+          );
+          $("#submitBtn").html(btnText).prop("disabled", false);
+        },
+      });
+    }
+  } catch (error) {
+    _actionAlert("An unexpected error occurred! Please Try Again", false);
+    $("#submitBtn").prop("disabled", false);
+  }
 }
 
 function _approveFeesCompute(fcId) {
-	try {
-		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
-			const btnId = `#approveBtn_${fcId}`;
-			const btn = $(btnId);
-			const btnText = btn.html();
+  try {
+    if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
+      const btnId = `#approveBtn_${fcId}`;
+      const btn = $(btnId);
+      const btnText = btn.html();
 
-			btn.html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
-			btn.prop("disabled", true);
+      btn.html(
+        '<img src="' +
+          websiteUrl +
+          '/images/loading.gif" width="12px" alt="Loading"/>'
+      );
+      btn.prop("disabled", true);
 
-			$.ajax({
-				type: "GET",
-				url: `${endPoint}/admin/branch/fees/approve-fees-compute?fcId=${fcId}`,
-				dataType: "json",
-				cache: false,
-				headers: getAuthHeaders(true),
-				success: function (info) {
-					const success = info.success;
-					const message = info.message;
+      $.ajax({
+        type: "GET",
+        url: `${endPoint}/admin/branch/fees/approve-fees-compute?fcId=${fcId}`,
+        dataType: "json",
+        cache: false,
+        headers: getAuthHeaders(true),
+        success: function (info) {
+          const success = info.success;
+          const message = info.message;
 
-					if (success === true) {
-						_actionAlert(message, success);
-						_getActiveBranchPage({
-							divid: 'branch_fees_computaion_page',
-							page: 'branch_fees_computaion_page',
-							url: adminPortalLocalUrl
-						});
-					}
+          if (success === true) {
+            _actionAlert(message, success);
+            _getActiveBranchPage({
+              divid: "branch_fees_computaion_page",
+              page: "branch_fees_computaion_page",
+              url: adminPortalLocalUrl,
+            });
+          }
 
-					btn.html(btnText).prop("disabled", false);
-				},
-				error: function () {
-					_actionAlert('An error occurred while processing your request! Please Try Again', false);
-					btn.html(btnText).prop("disabled", false);
-				}
-			});
-		}
-	} catch (error) {
-		_actionAlert('An unexpected error occurred! Please Try Again', false);
-		$(`#approveBtn_${fcId}`).prop("disabled", false);
-	}
+          btn.html(btnText).prop("disabled", false);
+        },
+        error: function () {
+          _actionAlert(
+            "An error occurred while processing your request! Please Try Again",
+            false
+          );
+          btn.html(btnText).prop("disabled", false);
+        },
+      });
+    }
+  } catch (error) {
+    _actionAlert("An unexpected error occurred! Please Try Again", false);
+    $(`#approveBtn_${fcId}`).prop("disabled", false);
+  }
 }
-
 
 function _declineFeesCompute(fcId) {
-	try {
-		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
-			const btnId = `#declineBtn_${fcId}`;
-			const btn = $(btnId);
-			const btnText = btn.html();
+  try {
+    if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
+      const btnId = `#declineBtn_${fcId}`;
+      const btn = $(btnId);
+      const btnText = btn.html();
 
-			btn.html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
-			btn.prop("disabled", true);
+      btn.html(
+        '<img src="' +
+          websiteUrl +
+          '/images/loading.gif" width="12px" alt="Loading"/>'
+      );
+      btn.prop("disabled", true);
 
-			$.ajax({
-				type: "GET",
-				url: `${endPoint}/admin/branch/fees/decline-fees-compute?fcId=${fcId}`,
-				dataType: "json",
-				cache: false,
-				headers: getAuthHeaders(true),
-				success: function (info) {
-					const success = info.success;
-					const message = info.message;
+      $.ajax({
+        type: "GET",
+        url: `${endPoint}/admin/branch/fees/decline-fees-compute?fcId=${fcId}`,
+        dataType: "json",
+        cache: false,
+        headers: getAuthHeaders(true),
+        success: function (info) {
+          const success = info.success;
+          const message = info.message;
 
-					if (success === true) {
-						_actionAlert(message, success);
-						_getActiveBranchPage({
-							divid: 'branch_fees_computaion_page',
-							page: 'branch_fees_computaion_page',
-							url: adminPortalLocalUrl
-						});
-					}
+          if (success === true) {
+            _actionAlert(message, success);
+            _getActiveBranchPage({
+              divid: "branch_fees_computaion_page",
+              page: "branch_fees_computaion_page",
+              url: adminPortalLocalUrl,
+            });
+          }
 
-					btn.html(btnText).prop("disabled", false);
-				},
-				error: function () {
-					_actionAlert('An error occurred while processing your request! Please Try Again', false);
-					btn.html(btnText).prop("disabled", false);
-				}
-			});
-		}
-	} catch (error) {
-		_actionAlert('An unexpected error occurred! Please Try Again', false);
-		$(`#declineBtn_${fcId}`).prop("disabled", false);
-	}
+          btn.html(btnText).prop("disabled", false);
+        },
+        error: function () {
+          _actionAlert(
+            "An error occurred while processing your request! Please Try Again",
+            false
+          );
+          btn.html(btnText).prop("disabled", false);
+        },
+      });
+    }
+  } catch (error) {
+    _actionAlert("An unexpected error occurred! Please Try Again", false);
+    $(`#declineBtn_${fcId}`).prop("disabled", false);
+  }
 }
-

@@ -78,7 +78,7 @@ if (!$checkBasicSecurity){/// start if 1
                     
                     
                      ////////////////// for  $branchId
-                    $branchDataQuery = mysqli_query($conn, "SELECT branchId, name AS branchName, address, mobileNumber, smtpUsername AS email, session AS currentSession, termId FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+                    $branchDataQuery = mysqli_query($conn, "SELECT branchId, name AS branchName, schoolLogo, address, mobileNumber, smtpUsername AS email, session AS currentSession, termId FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
                     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
                     $termId=$branchDataFetch['termId'];
                     
