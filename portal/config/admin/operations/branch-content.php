@@ -302,7 +302,7 @@
                     <script>
                         $(document).ready(function () {
                             const schoolLogo = getEachBranchDetailsSession.schoolLogo;
-                            const logoUrl = schoolLogo ? "<?php echo $websiteUrl ?>/uploaded_files/branchLogo/" + schoolLogo : "<?php echo $websiteUrl ?>/images/portal-logo.jpg";
+                            const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` : "<?php echo $websiteUrl ?>/images/portal-logo.jpg";
 
                             $("#profileSchoolLogoImg").attr("src", logoUrl).attr("alt", getEachBranchDetailsSession.name + " Logo");
                         });

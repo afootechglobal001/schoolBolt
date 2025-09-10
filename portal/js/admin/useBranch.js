@@ -14,35 +14,23 @@ function _getBranchPagesActiveLink(divid){
 	$("#"+divid).addClass('active');
 }
 
-
-
 $(function () {
 	schoolLogoPixPreview = {
-		UpdatePreview: function (obj) {
-			if (!window.FileReader) {
-				console.error("FileReader is not supported.");
-				return;
-			}
-			const file = obj.files[0];
-			if (!file) return;
-			const reader = new FileReader();
+	UpdatePreview: function (obj) {
+		if (!window.FileReader) {
+		// Handle browsers that don't support FileReader
+		console.error("FileReader is not supported.");
+		} else {
+		var reader = new FileReader();
 
-			reader.onload = function (e) {
-				const img = new Image();
-				img.onload = function () {
-					if (img.width <= 150 && img.height <= 150) {
-						$('#schoolLogoPreviewPix').prop("src", e.target.result);
-					} else {
-						_actionAlert("Image must be exactly 150x150 pixels.", false);
-					}
-				};
-				img.src = e.target.result;
-			};
-			reader.readAsDataURL(file);
+		reader.onload = function (e) {
+			$('#schoolLogoPreviewPix').prop("src", e.target.result);
+		};
+		reader.readAsDataURL(obj.files[0]);
 		}
+	},
 	};
 });
-
 
 $(function () {
 	principalSignaturePixPreview = {
