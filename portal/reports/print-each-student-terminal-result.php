@@ -8,6 +8,7 @@
     <link href="<?php echo $websiteUrl?>/style/paramount.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
     <script src="<?php echo $websiteUrl?>/js/jquery-v3.6.1.min.js"></script>
     <script src="<?php echo $websiteUrl?>/js/admin/chart.min.js"></script>
+    <script src="<?php echo $websiteUrl?>/js/scripts.js?v=<?php echo $codeVersion?>"></script>
     <title>Each Student Terminal Result | <?php echo $clientName ?></title>
 </head>
 
@@ -214,39 +215,46 @@
                 <script>
                     $(document).ready(function () {
                         const termId = printEachStudentTerminalResultSession?.termData?.termId;
-                    
+                        const items = printEachStudentTerminalResultSession?.resultSummary;
+                        const branchItems = printEachStudentTerminalResultSession?.branchData;
+
                         let text='';
                         if(termId==='3'){
                             text +=`
                                 <div class="inner-div-cont">
                                     <div class="content-div">
                                         <div class="details">
+                                            <span>NUMBER OF SUBJECTS</span>
+                                            <div>${items.totalSubjects}</div>
+                                        </div>
+
+                                        <div class="details">
                                             <span>STUDENTS IN CLASS</span>
-                                            <div id="">34</div>
+                                            <div>${items.noOfStudentsInArm}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>MARKS OBTAINABLE</span>
-                                            <div id="">1600</div>
+                                            <div>${items.totalMarkObtainable}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>MARKS OBTAINED</span>
-                                            <div id="">758.75</div>
+                                            <div>${items.totalMarkObtained}</div>
                                         </div>
 
                                         <div class="details"><span>PERCENTAGE</span>
-                                            <div id="">47.42 %</div>
+                                            <div>${items.totalPercentage + '%'}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>POSITION IN CLASS</span>
-                                            <div id="">33RD</div>
+                                            <div>${items.positionInClass}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>NUMBER OF SITTING(S)</span>
-                                            <div id="">3</div>
+                                            <div>${items.noOfStudentsInClass}</div>
                                         </div>
 
                                         <div class="details">
@@ -281,7 +289,7 @@
 
                                         <div class="details">
                                             <span>TIMES SCHOOL OPENED</span>
-                                            <div id="">116</div>
+                                            <div>${branchItems.timeSchoolOpened}</div>
                                         </div>
 
                                         <div class="details">
@@ -296,22 +304,22 @@
 
                                         <div class="details">
                                             <span>SCHOOL REOPENS ON</span>
-                                            <div id="">MONDAY 16TH June, 2025</div>
+                                            <div>${formatDate(branchItems.schoolResumptionDate)}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>CLASS TEACHER'S COMMENT</span>
-                                            <div id="">HE RELATES WELL.</div>
+                                            <div>${items.principalComment}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>PRINCIPAL'S COMMENT</span>
-                                            <div id="">FAIR RESULT. PROMOTED TO JSS 2</div>
+                                            <div>${items.principalComment}</div>
                                         </div>
                                     </div>
 
                                     <div class="image-div signature">
-                                        <img src="<?php echo $websiteUrl?>/images/principal_signature.png" alt="Avatar"/>   
+                                        <img src="${principalSignaturePixPath}/${branchItems.principalSignature}" alt="${branchItems.branchName} PRINCIPAL SIGNATURE"/>
                                     </div>
                                 </div>
                             `;
@@ -321,36 +329,36 @@
                                     <div class="content-div">
                                         <div class="details">
                                             <span>NUMBER OF SUBJECTS</span>
-                                            <div id="">20</div>
+                                            <div>${items.totalSubjects}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>MARKS OBTAINABLE</span>
-                                            <div id="">1600</div>
+                                            <div>${items.totalMarkObtainable}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>MARKS OBTAINED</span>
-                                            <div id="">758.75</div>
+                                            <div>${items.totalMarkObtained}</div>
                                         </div>
 
                                         <div class="details"><span>PERCENTAGE</span>
-                                            <div id="">47.42 %</div>
+                                            <div>${items.totalPercentage + '%'}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>STUDENT IN CLASS</span>
-                                            <div id="">7</div>
+                                            <div>${items.noOfStudentsInClass}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>POSITION</span>
-                                            <div id="">3</div>
+                                            <div>${items.positionInClass}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>TIMES SCHOOL OPENED</span>
-                                            <div id="">116</div>
+                                            <div>${branchItems.timeSchoolOpened}</div>
                                         </div>
 
                                         <div class="details">
@@ -365,22 +373,22 @@
 
                                         <div class="details">
                                             <span>CLASS TEACHER'S COMMENT</span>
-                                            <div id="">HE RELATES WELL.</div>
+                                            <div>${items.principalComment}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>PRINCIPAL'S COMMENT</span>
-                                            <div id="">FAIR RESULT. PROMOTED TO JSS 2</div>
+                                            <div>${items.principalComment}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>SCHOOL REOPENS ON</span>
-                                            <div id="">MONDAY 16TH June, 2025</div>
+                                            <div>${formatDate(branchItems.schoolResumptionDate)}</div>
                                         </div>
                                     </div>
 
                                     <div class="image-div signature">
-                                        <img src="<?php echo $websiteUrl?>/images/principal_signature.png" alt="Avatar"/>   
+                                        <img src="${principalSignaturePixPath}/${branchItems.principalSignature}" alt="${branchItems.branchName} PRINCIPAL SIGNATURE"/>
                                     </div>
                                 </div>
                             `;

@@ -59,4 +59,5 @@
 	var parentPortalUrl=websiteUrl+'/parent'; /// For Parent Login Url //
 	var studentPixPath=websiteUrl+'/uploaded_files/studentPix'; /// For Student Pix Path //
 	var schoolLogoPixPath=websiteUrl+'/uploaded_files/branchLogo'; /// For School Pix Path //
+	var principalSignaturePixPath=websiteUrl+'/uploaded_files/branchPrincipalSignature'; /// For School Pix Path //
 </script>

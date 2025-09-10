@@ -7,6 +7,7 @@
     <link href="<?php echo $websiteUrl?>/style/report-style.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
     <link href="<?php echo $websiteUrl?>/style/paramount.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
     <script src="<?php echo $websiteUrl?>/js/jquery-v3.6.1.min.js"></script>
+    <script src="<?php echo $websiteUrl?>/js/scripts.js?v=<?php echo $codeVersion?>"></script>
     <title>ALL STUDENT CA RESULT | <?php echo $clientName ?></title>
 </head>
 
@@ -79,13 +80,16 @@
                             `;
                         }
 
+                        const schoolLogo = branch.schoolLogo;
+                        const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` : `${websiteUrl}/images/report/icon.png`;
+
                         sectionHtml += `
                             <section class="body-div all-terminal-body" style="page-break-after: always;">
                                 <div class="header-back-div">
                                     <div class="header-div">
                                         <div class="inner-div">
                                             <div class="logo-div">
-                                                <img src="${websiteUrl}/images/report/icon.png" alt="Logo"/>
+                                                <img src="${logoUrl}" alt="${branch.branchName} LOGO"/>
                                             </div>
                                             <div class="text-div">
                                                 <h3>${branch.branchName}</h3>
@@ -121,7 +125,7 @@
                                             </div>
                                             
                                             <div class="image-div">
-                                                <img src="${websiteUrl}/uploaded_files/studentPix/${studentItems.passport}" alt="Student Photo"/>
+                                                <img src="${studentPixPath}/${studentItems.passport}" alt="${fullName}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -167,12 +171,12 @@
                                                 </div>
                                                 <div class="details">
                                                     <span>SCHOOL REOPENS ON</span>
-                                                    <div>MONDAY 16TH June, 2025</div>
+                                                    <div>${formatDate(branch.schoolResumptionDate)}</div>
                                                 </div>
                                             </div>
 
                                             <div class="image-div signature">
-                                                <img src="${websiteUrl}/images/principal_signature.png" alt="Principal Signature"/>
+                                                <img src="${principalSignaturePixPath}/${branch.principalSignature}" alt="${branch.branchName} PRINCIPAL SIGNATURE"/>
                                             </div>
                                         </div>
                                     </div>
