@@ -1930,11 +1930,18 @@
         <div class="profile-content-div">
             <div class="bg-img">
                 <div class="mini-profile">
-                    <label>
-                        <div class="img-div" id="current_user_passport1">
-                            <img src="<?php echo $websiteUrl ?>/images/portal-logo.jpg" alt="Profile Image">
-                        </div>
-                    </label>
+                    <div class="img-div">
+                        <img id="summarySchoolLogo" src="<?php echo $websiteUrl ?>/images/portal-logo.jpg" alt="Profile Image">
+                    </div>
+
+                    <script>
+                        $(document).ready(function () {
+                            const schoolLogo = getViewResultSummarySession?.branchData?.schoolLogo;
+                            const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` : "<?php echo $websiteUrl ?>/images/report/icon.png";
+
+                            $("#summarySchoolLogo").attr("src", logoUrl).attr("alt", getViewResultSummarySession?.branchData?.branchName + " Logo");
+                        });
+                    </script>
 
                     <div class="text-back-div">
                         <div class="inner-text">
@@ -2175,11 +2182,18 @@
         <div class="profile-content-div">
             <div class="bg-img">
                 <div class="mini-profile">
-                    <label>
-                        <div class="img-div" id="current_user_passport1">
-                            <img src="<?php echo $websiteUrl ?>/images/portal-logo.jpg" alt="Profile Image">
-                        </div>
-                    </label>
+                    <div class="img-div" id="current_user_passport1">
+                        <img id="terminalSchoolLogo" src="<?php echo $websiteUrl ?>/images/portal-logo.jpg" alt="Profile Image">
+                    </div>
+
+                    <script>
+                        $(document).ready(function () {
+                            const schoolLogo = getViewTerminalResultSummarySession?.branchData?.schoolLogo;
+                            const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` : "<?php echo $websiteUrl ?>/images/report/icon.png";
+
+                            $("#terminalSchoolLogo").attr("src", logoUrl).attr("alt", getViewTerminalResultSummarySession?.branchData?.branchName + " Logo");
+                        });
+                    </script>
 
                     <div class="text-back-div">
                         <div class="inner-text">
