@@ -23,7 +23,7 @@ if(!$checkSession){
 
     if ($branchId) {
         /////////////////// for  $branchId
-        $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, address, smtpUsername, mobileNumber  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+        $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, schoolLogo, address, smtpUsername, mobileNumber  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
         $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
         if (!$session){
             $session=$branchDataFetch['session'];

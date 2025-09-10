@@ -26,7 +26,7 @@ if(!$checkSession){
     validateEmptyField($assessmentId, 'ASSESSMENT ID');
 
 
-    $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, address, smtpUsername, mobileNumber, session, termId  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+    $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, schoolLogo, address, smtpUsername, mobileNumber, session, termId  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
     $session=$branchDataFetch['session'];
     $termId=$branchDataFetch['termId'];
