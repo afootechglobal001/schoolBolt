@@ -295,11 +295,19 @@
         <div class="profile-content-div">
             <div class="bg-img">
                 <div class="mini-profile">
-                    <label>
-                        <div class="img-div" id="current_user_passport1">
-                            <img src="<?php echo $websiteUrl ?>/images/portal-logo.jpg" alt="Profile Image">
-                        </div>
-                    </label>
+                    <div class="img-div">
+                        <img id="profileSchoolLogoImg" src="<?php echo $websiteUrl ?>/images/portal-logo.jpg" alt="Profile Image">
+                    </div>
+
+                    <script>
+                        $(document).ready(function () {
+                            const schoolLogo = getEachBranchDetailsSession.schoolLogo;
+                            const logoUrl = schoolLogo ? "<?php echo $websiteUrl ?>/uploaded_files/branchLogo/" + schoolLogo : "<?php echo $websiteUrl ?>/images/portal-logo.jpg";
+
+                            $("#profileSchoolLogoImg").attr("src", logoUrl).attr("alt", getEachBranchDetailsSession.name + " Logo");
+                        });
+                    </script>
+
 
                     <div class="text-back-div">
                         <div class="inner-text">
@@ -2389,6 +2397,8 @@
 <?php } ?>
 
 <?php if ($page == 'branch_other_settings_form') { ?>
+    <script>getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));</script>
+
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
@@ -2407,7 +2417,8 @@
                     <script>
                         textField({
                             id: 'currentSession',
-                            title: 'Current Session'
+                            title: 'Current Session',
+                            value: getEachBranchDetailsSession?.session || ''
                         });
                     </script>
                 </div>
@@ -2416,7 +2427,9 @@
                     <script>
                         selectField({
                             id: 'termId',
-                            title: 'Current Term'
+                            title: 'Current Term',
+                            fieldValue: getEachBranchDetailsSession?.termData[0].termId ?? '',
+                            fieldLabel: getEachBranchDetailsSession?.termData[0].termName ?? ''
                         });
                         _getSelectTermId('termId');
                     </script>
@@ -2426,7 +2439,8 @@
                     <script>
                         textField({
                             id: 'timeSchoolOpened',
-                            title: 'Time School Opened'
+                            title: 'Time School Opened',
+                            value: getEachBranchDetailsSession?.timeSchoolOpened || ''
                         });
                     </script>
                 </div>
@@ -2436,31 +2450,49 @@
                         textField({
                             id: 'schoolResumptionDate',
                             title: 'School Resumption Date',
-                            type: 'date'
+                            type: 'date',
+                            value: getEachBranchDetailsSession?.schoolResumptionDate || ''
                         });
                     </script>
                 </div>
 
                 <div class="title">UPLOAD SCHOOL LOGO: <i>(JPG, PNG FORMAT ONLY) (150 X 150)</i> <span>*</span></div>
                 <label>
-                    <div class="pix-div">
-                        <label>
-                            <img id="schoolLogoPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
-                            <input type="file" id="" style="display:none" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif" onchange="schoolLogoPixPreview.UpdatePreview(this);" />
+                    <div class="pix-div" id="schoolLogoPreviewContainer">
+                        <img id="schoolLogoPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="schoolLogo" style="display:none" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif" onchange="schoolLogoPixPreview.UpdatePreview(this);" />
                     </div>
+
+                    <script>
+                        $(document).ready(function () {
+                            const settingSchoolLogo = getEachBranchDetailsSession.schoolLogo;
+                            const settingLogoUrl = settingSchoolLogo ? "<?php echo $websiteUrl ?>/uploaded_files/branchLogo/" + settingSchoolLogo : "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#schoolLogoPreviewPix").attr("src", settingLogoUrl).attr("alt", getEachBranchDetailsSession.name + " Logo");
+                        });
+                    </script>
                 </label>
+
 
                 <div class="title">UPLOAD PRINCIPAL SIGNATURE: <i>(JPG, PNG FORMAT ONLY)</i> <span>*</span></div>
                 <label>
                     <div class="pix-div">
-                        <label>
-                            <img id="principalSignaturePreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
-                            <input type="file" id="" style="display:none" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif" onchange="principalSignaturePixPreview.UpdatePreview(this);" />
+                        <img id="principalSignaturePreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="principalSignature" style="display:none" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif" onchange="principalSignaturePixPreview.UpdatePreview(this);" />
                     </div>
+
+                    <script>
+                        $(document).ready(function () {
+                            const settingPrincipalSignature = getEachBranchDetailsSession.principalSignature;
+                            const settingSignature = settingPrincipalSignature ? "<?php echo $websiteUrl ?>/uploaded_files/branchPrincipalSignature/" + settingPrincipalSignature : "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#principalSignaturePreviewPix").attr("src", settingSignature).attr("alt", getEachBranchDetailsSession.name + " Principal Signature");
+                        });
+                    </script>
                 </label>
 
                 <div>
-                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i class="bi-check"></i> SUBMIT </button>
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick="_updateBranchConfig();"> <i class="bi-check"></i> SUBMIT </button>
                 </div>
             </div>
         </div>

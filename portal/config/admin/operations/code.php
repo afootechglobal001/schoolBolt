@@ -65,6 +65,27 @@ switch ($action){
 		}
 		file_put_contents('../../../uploaded_files/staffPix/'.$newPassportName, $passport);
 	break;
+
+	case 'uploadFile':
+		$fileType = $_POST['fileType'] ?? '';
+		$oldFile = $_POST['oldFile'] ?? '';
+		$newFile = $_POST['newFile'] ?? '';
+
+		$folders = [
+			'schoolLogo' => "../../../uploaded_files/branchLogo/",
+			'principalSignature' => "../../../uploaded_files/branchPrincipalSignature/"
+		];
+
+		$uploadDir = $folders[$fileType];
+
+		if (!empty($oldFile) && file_exists($uploadDir . $oldFile)) {
+			unlink($uploadDir . $oldFile);
+		}
+
+		if (!empty($newFile) && isset($_FILES[$fileType]) && $_FILES[$fileType]['error'] === UPLOAD_ERR_OK) {
+			move_uploaded_file($_FILES[$fileType]['tmp_name'], $uploadDir . $newFile);
+		}
+    break;
 }
 ?>
 
