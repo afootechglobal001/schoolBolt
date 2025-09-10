@@ -18,8 +18,9 @@
 
             <div class="contacts">
                 <div class="contact no-border"><i class="bi-clock"></i> <span>Monday - Friday (8am - 4pm)</span></div>
-                <div class="contact dsp-none"><i class="bi-envelope"></i> <span>info@arrahmangroupofschools.com</span></div>
-                <div class="contact"><i class="bi-telephone"></i> <span>(+234) 805 020 2261</span></div>
+                <div class="contact dsp-none"><i class="bi-envelope"></i> <span>info@advancebreedgroupofschools.com</span></div>
+                <div class="contact"><i class="bi-telephone"></i> <span>(+234) 805-7070-568
+</span></div>
             </div>
         </div>   
     </div>  
@@ -37,8 +38,8 @@
                     <li id="expand-li" class=" <?php if (strstr($website_auto_url, "$website_url/about")) {?> active <?php }?>">
                         About Us <i class="bi-chevron-down"></i>
                         <ul class="animated fadeIn">
-                            <a href="<?php echo $website_url?>/about" title="About Ar-Rahman Montessori Schools">
-                            <li>About Ar-Rahman Montessori Schools</li></a>
+                            <a href="<?php echo $website_url?>/about" title="About Advanced Breed Group Of Schools">
+                            <li>About Advanced Breed Group Of Schools</li></a>
                             <a href="<?php echo $website_url?>/faq" title="Frequently Asked Questions">
                             <li>Frequently Asked Questions</li></a>
                             <a href="<?php echo $website_url?>/gallery" title="Gallery">

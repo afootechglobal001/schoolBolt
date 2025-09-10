@@ -5,6 +5,7 @@
         <ul>
             <li><img src="slide-property/data/images/1.jpg" alt="1" title=""/></li>
             <li><img src="slide-property/data/images/2.jpg" alt="2" title=""/></li>
+            <li><img src="slide-property/data/images/3.jpg" alt="2" title=""/></li>
         </ul>
     </div>
 

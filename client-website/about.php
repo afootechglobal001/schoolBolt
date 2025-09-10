@@ -45,7 +45,7 @@
                     <div class="about-div">
                         <div class="image-back-div">
                             <div class="img-div" data-aos="fade-up" data-aos-duration="1400">
-                                <img src="<?php echo $website_url?>/all-images/body-pix/director.jpg" alt="About <?php echo $thename?>"/>                   
+                                <img src="<?php echo $website_url?>/all-images/body-pix/about.jpg" alt="About <?php echo $thename?>"/>                   
                             </div>
                             <div class="image-lay-text-div">
                                 <div class="icon-div">
@@ -53,19 +53,19 @@
                                 </div>
 
                                 <div class="text-div">
-                                    <h3>O.R SULAIMON (MRS)</h3>  
-                                    <p>Director of Studies</p>                  
+                                    <h3>DEACONESS ABOSEDE OGUNFOWOKE</h3>  
+                                    <p>Proprietress</p>                 
                                 </div>
                             </div>
                         </div>    
                         
                         <div class="content-div animated fadeInUp">
                             <div><span class="top-text">ABOUT US</span></div>
-                            <h2>Welcome to Ar-Rahman Montessori <span>Schools</span></h2>
-                            <p>At Ar-Rahman Montessori Schools, we believe every child is unique and full of potential. Our goal is to create an environment where children are empowered to explore, discover, and thrive. By embracing the Montessori philosophy, we provide individualized learning experiences that cater to the developmental needs of each child, encouraging independence and a lifelong passion for knowledge.</p>
-                            <p>We are dedicated to cultivating a culture of curiosity and creativity, where children feel safe to express themselves and embrace challenges. Through hands-on activities and collaborative learning, we inspire critical thinking and problem-solving skills, preparing our students for success in an ever-evolving world.</p>
-                         
-                        </div>
+                            <h2>Welcome to <span>Advanced Breed Group Of Schools</span></h2>
+                            <p>Advanced Breed Group of Schools is a one-stop school. We are an academic giant in providing the best in quality education to your child.</p>
+                            <p>We are the theatre of realized dreams and passionately moulding your child to become a dependable and successful leader they are meant to be.</p>
+                            <p>Ours is a school that is very competitive and our records in both external and internal exams and competitions only testify to the sincere hard work of the teachers and sustained determination of the students.</p>
+                    </div>
                     </div>
                 </div>
             </div>
