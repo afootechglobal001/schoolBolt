@@ -129,4 +129,30 @@
         $studentSubjectFetch['averageScore'] = $minMaxAvgFetch['averageScore'] ? number_format($minMaxAvgFetch['averageScore'], 2, '.', '')  : '';
         $response['studentSubjectAssessmentData'][] = $studentSubjectFetch;
     }
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $response['resultSummary'] = array();  
+    //// get all students as at the time of assessment
+    $select="SELECT 
+    totalSubjects,
+    totalMarkObtainable,
+    totalMarkObtained,
+    totalPercentage,
+    position AS positionInClass,
+    principalComment,
+    noOfStudentsInArm,
+    noOfStudentsInClass
+    FROM 
+    BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB
+    WHERE 
+    $clientIds
+    AND branchId = '$branchId' 
+    AND session = '$session' 
+    AND termId = '$termId' 
+    AND departmentId = '$departmentId' 
+    AND classId = '$classId' 
+    AND armId = '$armId'
+    AND studentId = '$studentId'";
+    $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
+    $fetch = mysqli_fetch_assoc($query);    
+    $response['resultSummary'] = $fetch;
 ?>
