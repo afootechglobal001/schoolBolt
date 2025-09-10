@@ -245,7 +245,6 @@ function _fetchBranchSubjects() {
 	}
 }
 
-
 function _fetchSubjectTeacher(departmentId, classId, subjectId) {
 	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
 	try {
@@ -277,7 +276,6 @@ function _fetchSubjectTeacher(departmentId, classId, subjectId) {
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
 }
-
 
 function allocateSubjectTeacher() {
 	try {
