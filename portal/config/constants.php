@@ -57,5 +57,6 @@
 	var adminUrl=websiteUrl+'/admin/login'; /// For Admin Url //
 	var parentLoginUrl=websiteUrl+'/parent/login'; /// For Parent Portal Url //
 	var parentPortalUrl=websiteUrl+'/parent'; /// For Parent Login Url //
-	var studentPixPath=websiteUrl+'/uploaded_files/studentPix'; /// For Product Pix Path //
+	var studentPixPath=websiteUrl+'/uploaded_files/studentPix'; /// For Student Pix Path //
+	var schoolLogoPixPath=websiteUrl+'/uploaded_files/branchLogo'; /// For School Pix Path //
 </script>

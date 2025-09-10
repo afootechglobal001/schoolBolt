@@ -21,9 +21,18 @@
             <div class="header-div">
                 <div class="inner-div">
                     <div class="logo-div">
-                        <img src="<?php echo $websiteUrl ?>/images/report/icon.png"
+                        <img id="profileSchoolLogoImg" src="<?php echo $websiteUrl ?>/images/report/icon.png"
                             alt="<?php echo $clientName ?> Logo" />
                     </div>
+
+                    <script>
+                        $(document).ready(function () {
+                            const schoolLogo = printTerminalBroadSheetsession?.branchData?.schoolLogo;
+                            const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` : "<?php echo $websiteUrl ?>/images/report/icon.png";
+
+                            $("#profileSchoolLogoImg").attr("src", logoUrl).attr("alt", printTerminalBroadSheetsession?.branchData?.branchName + " Logo");
+                        });
+                    </script>
 
                     <div class="text-div">
                         <h3 id="branchName">
