@@ -571,7 +571,7 @@ function _fetchBranchStudents() {
 									<td>${armName}</td>
 									<td>${accommodationName}</td>
 									<td><div class="status-div ${statusName}">${statusName}</div></td>
-									<td><button class="btn view-btn" title="Click to view student profile" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}');">VIEW</button></td>
+									<td><button class="btn view-btn" title="Click to view student profile" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">VIEW</button></td>
 								</tr>
 							</tbody>`;
 					}
@@ -632,12 +632,12 @@ function _calculateAge(dateString) {
     return age;
 }
 
-function _fetchEachBranchStudents(branchId, departmentId, classId, armId, studentId) {
+function _fetchEachBranchStudents(branchId, departmentId, classId, armId, studentId, statusId) {
 	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
 	try {
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/admin/students/fetch-student?branchId=${branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}`,
+			url: `${endPoint}/admin/students/fetch-student?branchId=${branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}&statusId=${statusId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(true),
@@ -1020,6 +1020,7 @@ function _getSearchStudents(success, fetch, message) {
 			const departmentName = fetchDepartmentData.departmentName;
 			const className = fetchClassData.className;
 			const armName = fetchArmData.armName;
+			const statusId = fetchStudentData.statusId;
 			const statusName = fetchStudentData.statusName;
 			const accommodationName = fetchAccommodationData.accommodationName;
 			const age = _calculateAge(fetchStudentData.dateOfBirth);
@@ -1047,7 +1048,7 @@ function _getSearchStudents(success, fetch, message) {
 						<td>${armName}</td>
 						<td>${accommodationName}</td>
 						<td><div class="status-div ${statusName}">${statusName}</div></td>
-						<td><button class="btn view-btn" title="Click to view student profile" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}');">VIEW</button></td>
+						<td><button class="btn view-btn" title="Click to view student profile" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','${statusId}');">VIEW</button></td>
 					</tr>
 				</tbody>`;
 		}
