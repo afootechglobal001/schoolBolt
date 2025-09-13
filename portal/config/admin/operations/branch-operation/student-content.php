@@ -568,7 +568,7 @@
                           <li class="hide-li" id="dotted" title="Account"><i class="bi-credit-card"></i> Account
                             <div class="expand-div animated fadeIn">
                                 <ul class="ul-expand">
-                                    <li title="Current Payable Fees" onclick="_getForm({page: 'studentSelectClassoForm', layer:2, url: adminPortalLocalUrl});"><i class="bi-credit-card"></i>Current Payable Fees</li>
+                                    <li title="Current Payable Fees" onclick="_getForm({page: 'studentSelectClassForm', layer:3, url: adminPortalLocalUrl});"><i class="bi-credit-card"></i>Current Payable Fees</li>
                                     <li title="Payment History"><i class="bi-clock"></i>Payment History</li>
                                 </ul>
                             </div>
@@ -1250,7 +1250,7 @@
 
 
 <!-- For Student Modal -->
-<?php if ($page == 'studentSelectClassoForm') { ?>
+<?php if ($page == 'studentSelectClassForm') { ?>
     <div class="caption-div animated zoomIn">
         <div class="title-div">
             <div class="title"><i class="bi-person-check"></i> VIEW STUDENT</div>

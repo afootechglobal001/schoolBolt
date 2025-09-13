@@ -20,26 +20,31 @@ function _getPage(options) {
 		});
 }
 
+
 function _getForm(options) {
-	const {
+    const {
         page = '',
         id = '',
-		layer=1,
-		action='get_form',
-		url=''
+        layer = 1,
+        action = 'get_form',
+        url = ''
     } = options;
-$(layer===1 ? '#get-form-more-div':'#get-more-div-secondary').css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
-const dataString = "action=" + action + "&page=" + page + "&id=" + id + "&modalLayer=" + layer;
-	$.ajax({
-		type: "POST",
-		url: url,
-		data: dataString,
-		cache: false,
-		success: function (html) {
-			$(layer===1 ? '#get-form-more-div':'#get-more-div-secondary').html(html);
-		},
-	});
+
+    const target = layer === 1 ? '#get-form-more-div' : layer === 2  ? '#get-more-div-secondary' : '#get-more-third-layer';
+    $(target).css({ 'display': 'flex', 'justify-content': 'center', 'align-items': 'center' }).fadeIn(500);
+    const dataString = "action=" + action + "&page=" + page + "&id=" + id + "&modalLayer=" + layer;
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: dataString,
+        cache: false,
+        success: function (html) {
+            $(target).html(html);
+        },
+    });
 }
+
 function _alertClose(layer=1){
 	let text = '';
 	  text +=
@@ -47,7 +52,7 @@ function _alertClose(layer=1){
 		'<div class="icon"><img src="'+ websiteUrl +'/images/loading.gif" width="20px" alt="Loading"/></div>' +
 		'<div class="text"><p>LOADING...</p></div>'+
 		'</div>';
-			$(layer===1 ? '#get-form-more-div':'#get-more-div-secondary').html(text).fadeOut(200);
+			$(layer === 1 ? '#get-form-more-div' : layer === 2  ? '#get-more-div-secondary' : '#get-more-third-layer').html(text).fadeOut(200);
 }
 
 function _actionAlert(message,status ){

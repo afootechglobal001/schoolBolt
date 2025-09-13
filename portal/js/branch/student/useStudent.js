@@ -997,11 +997,7 @@ function _updateBranchStudents() {
 
           if (success === true) {
             _actionAlert(message, true);
-            _getActiveBranchPage({
-              divid: "branch_student_page",
-              page: "branch_student_page",
-              url: adminPortalLocalUrl,
-            });
+           	_proceedFetchBranchStudents(departmentId, classId, armId);
             _alertClose(2);
           } else {
             _actionAlert(message, false);

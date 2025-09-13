@@ -20,7 +20,12 @@
     </div>
 </div>
 
-
+<div id="get-more-third-layer">
+    <div class="alert-loading-div">
+        <div class="icon"><img src="<?php echo $websiteUrl?>/images/loading.gif" width="20px" alt="Loading"/></div> 
+        <div class="text"><p>LOADING...</p></div>
+    </div>
+</div>
 
 <div class="webcam-div">
     <div class="div-in">
