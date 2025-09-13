@@ -2795,6 +2795,5 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
             </div>
         </div>
     </div>
-
 </div>
 <?php } ?>
