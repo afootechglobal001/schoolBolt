@@ -1,3 +1,4 @@
+<!-- Student Registration Form -->
 <?php if ($page == 'branch_student_reg') { ?>
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
@@ -398,88 +399,7 @@
     </div>
 <?php } ?>
 
-<?php if ($page == 'student_select_form') { ?>
-    <div class="caption-div animated zoomIn">
-        <div class="title-div">
-            <div class="title"><i class="bi-person-check"></i> VIEW STUDENT</div>
-            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i class="bi-x-lg"></i></button>
-        </div>
-
-        <div class="div-in animated fadeIn">
-            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, you're about to view students by their <span>Department</span>, <span>Class</span>, and <span>Arm</span>. Please select the <span>Department</span>, <span>Class</span>, and <span>Arm</span> to proceed.</div>
-
-            <div class="text_field_container" id="departmentId_container">
-                <script>
-                    selectField({
-                        id: 'departmentId',
-                        title: 'Select Department'
-                    });
-                    _getSelectDepartment('departmentId');
-                </script>
-            </div>
-
-            <div class="text_field_container" id="classId_container">
-                <script>
-                    selectField({
-                        id: 'classId',
-                        title: 'Select Class'
-                    });
-                </script>
-            </div>
-
-            <div class="text_field_container" id="armId_container">
-                <script>
-                    selectField({
-                        id: 'armId',
-                        title: 'Select Arm'
-                    });
-                </script>
-            </div>
-
-            <button class="btn" id="submit_btn" title="Proceed Request" onclick="_proceedFetchBranchStudents();">PROCEED <i class="bi-arrow-right"></i> </button>
-        </div>
-    </div>
-<?php } ?>
-
-<?php if ($page == 'branch_student_page') { ?>
-    <div class="alert alert-success top-alert-div animated fadeIn">
-        <div><span><i class="bi-person-bounding-box"></i></span> BRANCH STUDENT'S LIST ---- <span id="pageSession">Loading...</span> - <span id="pageTermName">Loading...</span> - <span id="departmentName3">Loading...</span> - <span id="className2">Loading...</span> - <span id="armName2">Loading...</span></div>
-        <div class="btn-container" id="printAndExportButton"></div>
-    </div>
-
-    <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-            <script>
-                _fetchBranchStudents();
-            </script>
-        </table>
-    </div>
-<?php } ?>
-
-<?php if ($page == 'branch_student_search') { ?>
-    <div class="alert alert-success form-alert animated fadeIn">
-        <span>Search student by surname, first name, other name, student Id</span>
-        <div class="long-search-div">
-            <div class="text_field_container search_field_container">
-                <input class="text_field student_text_field" type="text" id="q" placeholder="" title="Type here to search students" />
-                <div class="placeholder dash_placeholder"><i class="bi-search"></i> Type here to search student</div>
-            </div>
-
-            <div>
-                <button class="btn" title="SEARCH STUDENTS" onclick="_searchBranchStudents();">
-                    <i class="bi-search"></i> SEARCH
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-           <script>_getSearchStudents();</script>
-        </table>
-    </div>
-<?php } ?>
-
+<!-- Student Profile Modal -->
 <?php if ($page == 'student_profile') { ?>
     <script>
         getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));
@@ -569,7 +489,7 @@
                             <div class="expand-div animated fadeIn">
                                 <ul class="ul-expand">
                                     <li title="Current Payable Fees" onclick="_getForm({page: 'studentSelectClassForm', layer:3, url: adminPortalLocalUrl});"><i class="bi-credit-card"></i>Current Payable Fees</li>
-                                    <li title="Payment History"><i class="bi-clock"></i>Payment History</li>
+                                    <li title="Payment History" id="paymentHistory" onclick="_getActiveStudentPage({divid:'paymentHistory', page: 'paymentHistory', url: adminPortalLocalUrl});"><i class="bi-clock"></i>Payment History</li>
                                 </ul>
                             </div>
                         </li>
@@ -1147,6 +1067,7 @@
     </div>
 <?php } ?>
 
+<!-- For Student Activities Page -->
 <?php if ($page == 'student_activities') { ?>
     <div class="chart-div-notifications user-details-notf">
         <div class="text"><i class="bi-graph-up-arrow"></i> Showing Notification History for </div>
@@ -1248,6 +1169,163 @@
     </div>
 <?php } ?>
 
+<!-- For Student Department, class, arm select -->
+<?php if ($page == 'student_select_form') { ?>
+    <div class="caption-div animated zoomIn">
+        <div class="title-div">
+            <div class="title"><i class="bi-person-check"></i> VIEW STUDENT</div>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i class="bi-x-lg"></i></button>
+        </div>
+
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, you're about to view students by their <span>Department</span>, <span>Class</span>, and <span>Arm</span>. Please select the <span>Department</span>, <span>Class</span>, and <span>Arm</span> to proceed.</div>
+
+            <div class="text_field_container" id="departmentId_container">
+                <script>
+                    selectField({
+                        id: 'departmentId',
+                        title: 'Select Department'
+                    });
+                    _getSelectDepartment('departmentId');
+                </script>
+            </div>
+
+            <div class="text_field_container" id="classId_container">
+                <script>
+                    selectField({
+                        id: 'classId',
+                        title: 'Select Class'
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container" id="armId_container">
+                <script>
+                    selectField({
+                        id: 'armId',
+                        title: 'Select Arm'
+                    });
+                </script>
+            </div>
+
+            <button class="btn" id="submit_btn" title="Proceed Request" onclick="_proceedFetchBranchStudents();">PROCEED <i class="bi-arrow-right"></i> </button>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- For Student Page Based On Search -->
+<?php if ($page == 'branch_student_page') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div><span><i class="bi-person-bounding-box"></i></span> BRANCH STUDENT'S LIST ---- <span id="pageSession">Loading...</span> - <span id="pageTermName">Loading...</span> - <span id="departmentName3">Loading...</span> - <span id="className2">Loading...</span> - <span id="armName2">Loading...</span></div>
+        <div class="btn-container" id="printAndExportButton"></div>
+    </div>
+
+    <div class="table-div animated fadeIn">
+        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+            <script>
+                _fetchBranchStudents();
+            </script>
+        </table>
+    </div>
+<?php } ?>
+
+<!-- For Student Search Page -->
+<?php if ($page == 'branch_student_search') { ?>
+    <div class="alert alert-success form-alert animated fadeIn">
+        <span>Search student by surname, first name, other name, student Id</span>
+        <div class="long-search-div">
+            <div class="text_field_container search_field_container">
+                <input class="text_field student_text_field" type="text" id="q" placeholder="" title="Type here to search students" />
+                <div class="placeholder dash_placeholder"><i class="bi-search"></i> Type here to search student</div>
+            </div>
+
+            <div>
+                <button class="btn" title="SEARCH STUDENTS" onclick="_searchBranchStudents();">
+                    <i class="bi-search"></i> SEARCH
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-div animated fadeIn">
+        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+           <script>_getSearchStudents();</script>
+        </table>
+    </div>
+<?php } ?>
+
+<!-- For Student Transaction History Page -->
+<?php if ($page == 'paymentHistory') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div><span><i class="bi-clock"></i></span> STUDENT TRANSACTION HISTORY</div>
+        
+        <div class="btn-container">
+            <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
+            <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i> EXPORT</button>
+        </div>
+    </div>
+
+    <div class="chart-div-notifications user-details-notf">
+        <div class="text"><i class="bi-graph-up-arrow"></i> Showing Payment History for </div>
+
+        <div class="text text-right" onclick="select_search()">
+            <span id="srch-text">Last 30 Days</span>
+            <div class="icon-div"><i class="bi-caret-down"></i></div>
+
+            <div class="srch-select alert-srch-select">
+                <div id="srch-today" onclick="_getAlertReport('srch-today', 'view_today_search');">Today</div>
+                <div id="srch-week" onclick="_getAlertReport('srch-week', 'view_thisweek_search');">This Week</div>
+                <div id="srch-7" onclick="_getAlertReport('srch-7', 'view_7days_search');">Last 7 Days</div>
+                <div id="srch-month" onclick="_getAlertReport('srch-month', 'view_thismonth_search');">This Month</div>
+                <div id="srch-30" onclick="_getAlertReport('srch-30', 'view_30days_search');">Last 30 Days</div>
+                <div id="srch-90" onclick="_getAlertReport('srch-90', 'view_90days_search');">Last 90 Days</div>
+                <div id="srch-year" onclick="_getAlertReport('srch-year', 'view_thisyear_search');">This Year</div>
+                <div id="srch-1year" onclick="_getAlertReport('srch-1year', 'view_1year_search');">Last 1 Year</div>
+                <div onclick="srch_custom('Custom Search')">Custom Search</div>
+            </div>
+        </div>
+
+        <div class="text">
+            <div class="custom-srch-div">
+                <div class="custom-srch-div-in">
+                    <div class="text_field_container dash_field_container">
+                        <input class="text_field dash_text_field bar_cust_text_field" type="text" id="datepickers-from" placeholder="" />
+                        <div class="placeholder dash_placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From</div>
+                    </div>
+
+                    <div class="text_field_container dash_field_container">
+                        <input class="text_field dash_text_field bar_cust_text_field" type="text" id="datepickers-to" placeholder="" />
+                        <div class="placeholder dash_placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To</div>
+                    </div>
+                    <button type="button" class="btn">Apply</button>
+                </div>
+            </div>
+        </div>
+
+
+        <script language="javascript">
+            $('#datepickers-from').datetimepicker({
+                lang: 'en',
+                timepicker: false,
+                format: 'Y-m-d',
+                formatDate: 'Y-M-d',
+            });
+
+            $('#datepickers-to').datetimepicker({
+                lang: 'en',
+                timepicker: false,
+                format: 'Y-m-d',
+                formatDate: 'Y-M-d',
+            });
+        </script>
+    </div>
+
+   <div class="table-div animated fadeIn">
+        <table class="table" cellspacing="0" style="width:100%" id="pageContent2">
+            <script>_fetchPaymentHistory();</script>
+        </table>
+    </div>
+<?php } ?>
 
 <!-- For Student Modal -->
 <?php if ($page == 'studentSelectClassForm') { ?>

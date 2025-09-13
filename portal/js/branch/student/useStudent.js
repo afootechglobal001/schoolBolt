@@ -1217,3 +1217,123 @@ function _getSearchStudents(success, fetch, message) {
     $("#pageContent").html(text);
   }
 }
+
+
+
+function _fetchPaymentHistory() {
+   	let getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+
+	try {
+
+		const formData = {
+			"studentId": getEachBranchStudentsSession?.studentData?.studentId,
+			"branchId": getEachBranchDetailsSession?.branchId,
+			"departmentId": getEachBranchStudentsSession?.departmentData?.departmentId,
+			"classId": getEachBranchStudentsSession?.classData?.classId,
+			"armId": getEachBranchStudentsSession?.armData?.armId
+		};
+
+		$.ajax({
+			type: "POST",
+			url: `${endPoint}/parent/payment/fetch-payment-history`,
+			data: JSON.stringify(formData),
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(),
+			processData: false,
+			success: function(info) {
+				const fetch = info.data;
+				const success = info.success;
+
+				let text = '';
+				let no=0;
+				text =`
+				<thead>
+                    <tr class="tb-col">
+                        <th>sn</th>
+                        <th>Date</th>
+                        <th>Payment ID</th>
+                        <th>Term</th>
+                        <th>Class</th>
+                        <th>(₦)Amount</th>
+                        <th>Payment Method</th>
+                        <th>Payment Status</th>
+                    </tr>
+                </thead>`;
+
+				if (success===true) {
+					for (let i = 0; i < fetch.length; i++) {
+						no++;
+						const fetchedPayment = fetch[i];
+						const paymentId = fetchedPayment.paymentId;
+						const studentId = fetchedPayment.studentId;
+						const branchId = fetchedPayment.branchId;
+						const departmentId = fetchedPayment.departmentData.departmentId;
+						const currentTerm = fetchedPayment.termData.currentTerm;
+						const termId = fetchedPayment.termData.termId;
+						const session = fetchedPayment.session;
+						const className = fetchedPayment.classData.className;
+						const classId = fetchedPayment.classData.classId;
+						const armName = fetchedPayment.armData.armName;
+						const armId = fetchedPayment.armData.armId;
+						const totalAmount = thousandSeperator(fetchedPayment.totalAmount);
+						const paymentMethodName = fetchedPayment.paymentMethodData.paymentMethodName;
+						const statusName = fetchedPayment.statusData.statusName;
+						const createdTime = fetchedPayment.createdTime;
+						const paydate = fetchedPayment.paydate ? fetchedPayment.paydate : createdTime;
+
+						text +=`
+						<tbody>
+							<tr class="tb-row">
+								<td>${no}</td>
+								<td>${paydate}</td>
+								<td><span onclick="_viewPaymentDetails('${session}','${termId}','${studentId}','${branchId}','${departmentId}','${classId}','${armId}');">${paymentId}</span></td>
+								<td>
+									<div class="text-div">
+										<div>${session}</div> 
+										<div>${currentTerm}</div>
+									</div>
+								</td>
+								<td>
+									<div class="text-div">
+										<div>${className} ${armName}</div>
+									</div>
+								</td>
+								<td><span><s>N</s>${totalAmount}</span></td>
+								<td>${paymentMethodName}</td>
+								<td><div class="status-div ${statusName}">${statusName}</div></td>
+							</tr>
+						</tbody>`;
+					}
+					$('#pageContent2').html(text);
+				} else {
+					_actionAlert(info.message, false);
+					text += `
+						tbody>
+							<tr>
+								<td colspan="11">
+									<div class="false-notification-div">
+										<p>${info.message}</p>
+									</div>
+								</td>
+							</tr>
+						</tbody>`;
+					$('#pageContent2').html(text);
+
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}
