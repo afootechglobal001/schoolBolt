@@ -488,7 +488,7 @@
                           <li class="hide-li" id="dotted" title="Account"><i class="bi-credit-card"></i> Account
                             <div class="expand-div animated fadeIn">
                                 <ul class="ul-expand">
-                                    <li title="Current Payable Fees" onclick="_getForm({page: 'studentSelectClassForm', layer:3, url: adminPortalLocalUrl});"><i class="bi-credit-card"></i>Current Payable Fees</li>
+                                    <li title="Current Payable Fees" onclick="_getForm({page: 'student_select_form', layer:3, url: adminPortalLocalUrl});"><i class="bi-credit-card"></i>Current Payable Fees</li>
                                     <li title="Payment History" id="paymentHistory" onclick="_getActiveStudentPage({divid:'paymentHistory', page: 'paymentHistory', url: adminPortalLocalUrl});"><i class="bi-clock"></i>Payment History</li>
                                 </ul>
                             </div>
