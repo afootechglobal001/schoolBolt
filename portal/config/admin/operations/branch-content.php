@@ -384,10 +384,9 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                         onclick="_getActiveBranchPage({divid:'branch_staff', page: 'branch_staff', url: adminPortalLocalUrl});">
                         <i class="bi-person-workspace"></i> Staff
                     </li>
-                    <li class="hide-li expand-nav" title="Branch Student"><i class="bi-mortarboard"></i>
+                    <li class="hide-li" title="Branch Student"><i class="bi-mortarboard"></i>
                         Student
-
-                        <ul class="ul-expand animated fadeIn">
+                        <ul class="animated fadeIn">
                             <li id="reg_students" title="Register Students"
                                 onclick="_getForm({page: 'branch_student_reg', layer:2, url: adminPortalLocalUrl});">
                                 <i class="bi-mortarboard"></i>Register Student
@@ -425,8 +424,8 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                         onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});"><i
                             class="bi-journals"></i> Subject</li>
 
-                    <li class="hide-li expand-nav" title="Branch Record"><i class="bi-person-lines-fill"></i> Result
-                        <ul class="ul-expand animated fadeIn">
+                    <li class="hide-li" title="Branch Record"><i class="bi-person-lines-fill"></i> Result
+                        <ul class="animated fadeIn">
                             <li title="Broad/Report Sheet"
                                 onclick="_getForm({page: 'broadsheet_select_form', layer:2, url: adminPortalLocalUrl});">
                                 <i class="bi-person-lines-fill"></i>Broad/Report Sheet
@@ -468,7 +467,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                                 onclick="_getActiveBranchPage({divid:'branch_staff', page: 'branch_staff', url: adminPortalLocalUrl});">
                                 <i class="bi-person-workspace"></i> <span>Staff</span>
                             </li>
-                            <li title="Branch Student" class="expand-nav"><i class="bi-mortarboard"></i>
+                            <li title="Branch Student"><i class="bi-mortarboard"></i>
                                 <span>Student</span>
                                 <ul class="ul-expand animated fadeIn">
                                     <li class="active" id="reg_students" title="Register Students"
@@ -505,7 +504,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             <li title="Branch Subject"
                                 onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});"><i
                                     class="bi-journals"></i> <span>Subject</span></li>
-                            <li title="Branch Report" class="expand-nav"><i class="bi-person-lines-fill"></i>
+                            <li title="Branch Report"><i class="bi-person-lines-fill"></i>
                                 <span>Result</span>
                                 <ul class="ul-expand animated fadeIn">
                                     <li title="Broad/Report Sheet"

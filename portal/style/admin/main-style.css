@@ -4222,15 +4222,15 @@ header
 
 .user-profile-div .profile-content-div .nav-div .div-in ul li ul {
   position: absolute;
-  width: 200px;
   min-width: 200px;
   height: auto;
   padding: 20px;
   background: var(--white-color);
-  margin-top: 5px;
+  margin-top: 10px;
+  margin-left: -20px;
   display: none;
   border-radius: 10px;
-  box-shadow: 0px 0px 5px 2px #f0efef;
+  box-shadow: 0px 5px 10px 5px #f0efef;
   z-index: 800;
 }
 
@@ -4253,7 +4253,21 @@ header
 .user-profile-div .profile-content-div .nav-div .div-in ul li ul li i {
   color: var(--secondary-color);
 }
-
+.ul-expand {
+  display: none !important;
+  position: relative;
+}
+.user-profile-div
+  .profile-content-div
+  .nav-div
+  .div-in
+  ul
+  li
+  ul
+  li:hover
+  .ul-expand {
+  display: block !important;
+}
 @media all and (max-width: 1200px) {
   .user-profile-div {
     width: 100%;

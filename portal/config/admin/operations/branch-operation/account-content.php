@@ -48,19 +48,41 @@
 <?php } ?>
 
 <?php if ($page == 'branch_parent_page') { ?>
-<div class="alert alert-success top-alert-div animated fadeIn">
-    <div><span><i class="bi-person-bounding-box"></i></span> BRANCH PARENT'S LIST ---- <span
-            id="pageSession">Loading...</span> - <span id="pageTermName">Loading...</span> - <span
-            id="departmentName3">Loading...</span> - <span id="className2">Loading...</span> - <span
-            id="armName2">Loading...</span></div>
-    <div class="btn-container" id="printAndExportButton"></div>
+<div class="alert alert-success top-alert-div animated fadeIn" id="pageTitleDiv">
+
 </div>
 
 <div class="table-div animated fadeIn">
-    <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-        <script>
-        _fetchBranchStudents();
-        </script>
+    <table class="table" cellspacing="0" style="width:100%">
+        <thead>
+            <tr class="tb-col">
+                <th>sn</th>
+                <th>Student Info</th>
+                <th>Father Info</th>
+                <th>Mother Info</th>
+                <th>Session</th>
+                <th>Term</th>
+                <th>Department</th>
+                <th>Class</th>
+                <th>Arm</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="pageContent">
+            <!-- CONTENT GOES HERE -->
+            <script>
+            _fetchBranchParents();
+            </script>
+            <tr>
+                <td colspan="20">
+                    <div class="content-loading-div">
+                        <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+
+
     </table>
 </div>
 <?php } ?>

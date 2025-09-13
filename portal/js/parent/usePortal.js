@@ -38,21 +38,19 @@ function getAuthHeaders() {
 }
 
 function _logOut() {
-  sessionStorage.clear();
+  localStorage.clear();
   window.parent.location.href = parentLoginUrl;
 }
 
 window.addEventListener("load", function () {
-  const sessionData = sessionStorage.getItem("parentSessionData");
+  const sessionData = localStorage.getItem("parentSessionData");
   if (!sessionData || sessionData === '""') {
     _logOut();
   }
 });
 
 function _getFetchEachStudent(Id) {
-  let parentSessionData = JSON.parse(
-    sessionStorage.getItem("parentSessionData")
-  );
+  let parentSessionData = JSON.parse(localStorage.getItem("parentSessionData"));
   let parentStudents = parentSessionData.students;
   let student = parentStudents.find((s) => s.studentId === Id);
   if (student) {
@@ -132,7 +130,7 @@ function _getSelectPaymentMethod(fieldId) {
 
 function _fetchFeesToPay() {
   let getEachStudentSession = JSON.parse(
-    sessionStorage.getItem("getEachStudentSession")
+    localStorage.getItem("getEachStudentSession")
   );
   $("#get-more-div-secondary")
     .css({
@@ -190,11 +188,9 @@ function _fetchFeesToPay() {
 
 function _proceedToPayment() {
   let getEachStudentSession = JSON.parse(
-    sessionStorage.getItem("getEachStudentSession")
+    localStorage.getItem("getEachStudentSession")
   );
-  let parentSessionData = JSON.parse(
-    sessionStorage.getItem("parentSessionData")
-  );
+  let parentSessionData = JSON.parse(localStorage.getItem("parentSessionData"));
 
   try {
     const paymentMethodId = $("#paymentMethodId").val().trim();
@@ -314,11 +310,9 @@ function _callPayStack(
   receiverKey
 ) {
   let getEachStudentSession = JSON.parse(
-    sessionStorage.getItem("getEachStudentSession")
+    localStorage.getItem("getEachStudentSession")
   );
-  let parentSessionData = JSON.parse(
-    sessionStorage.getItem("parentSessionData")
-  );
+  let parentSessionData = JSON.parse(localStorage.getItem("parentSessionData"));
   const parentFullname =
     parentSessionData.parentData.titleId +
     " " +
@@ -471,7 +465,7 @@ function _callPaymentCancelled(paymentId) {
 
 function _fetchPaymentHistory() {
   let getEachStudentSession = JSON.parse(
-    sessionStorage.getItem("getEachStudentSession")
+    localStorage.getItem("getEachStudentSession")
   );
   try {
     const formData = {
