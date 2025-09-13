@@ -49,9 +49,6 @@ header .header-div-in .logo-back-div .menu-div {
   cursor: pointer;
   -moz-transition: all 0.2s ease-in 02s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 header .header-div-in .header-nav-div {
@@ -562,9 +559,6 @@ header
   align-items: center;
   justify-content: space-between;
   -moz-transition: all 0.2s ease-in 02s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 .side-nav-bg-sub-div .nav-div .link .num {
   display: flex;
@@ -1472,9 +1466,6 @@ header
   border-bottom: 1px solid rgba(215, 215, 215, 0.6);
   -moz-transition: all 0.2s ease-in 02s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .table-div .table .report-tb-row {
@@ -1501,9 +1492,6 @@ header
   cursor: pointer;
   -moz-transition: all 0.2s ease-in 02s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 .table-div .table .tb-row .clickable-td span {
   font-size: 11px;
@@ -1568,9 +1556,6 @@ header
   color: var(--secondary-color);
   -moz-transition: all 0.2s ease-in 02s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .table-div .table .tb-row .icon-div {
@@ -1594,9 +1579,6 @@ header
   color: #06f;
   -moz-transition: all 0.2s ease-in 02s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .table-div .table .tb-row span.CANCELLED {
@@ -1683,9 +1665,6 @@ header
   cursor: pointer;
   -moz-transition: all 0.2s ease-in 02s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .table-div .table .tb-row .view-btn {
@@ -2300,9 +2279,6 @@ header
   cursor: pointer;
   -moz-transition: all 0.2s ease-in 0.2s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .slide-form-div
@@ -2571,9 +2547,6 @@ header
   cursor: pointer;
   -moz-transition: all 0.2s ease-in 0.2s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 .product-pictures-div .img img {
   width: 100%;
@@ -2649,9 +2622,7 @@ header
   margin-top: 10px;
   transition: all 0.2s ease-in 0.2s;
   -moz-transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
+
   cursor: pointer;
 }
 
@@ -2704,9 +2675,6 @@ header
   cursor: pointer;
   -moz-transition: all 0.2s ease-in 02s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .settings-div .div-in {
@@ -2802,9 +2770,6 @@ header
   cursor: pointer;
   -moz-transition: all 0.2s ease-in 02s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .user-managment-back-div .staff-managment-list {
@@ -2907,9 +2872,6 @@ header
   cursor: pointer;
   -moz-transition: all 0.2s ease-in 02s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .role-list-back-div .role-list-div .div-in {
@@ -3216,7 +3178,8 @@ header
   transform: translate(15px, -50%);
 }
 
-.permission-form-back-div .permission-toggle-div
+.permission-form-back-div
+  .permission-toggle-div
   .fetch-toggle
   .each-toggle-div
   .toggle-label {
@@ -3225,64 +3188,82 @@ header
   color: var(--text-color);
 }
 
-.permission-form-back-div .permission-toggle-div .fetch-toggle .each-toggle-div .sub-back-div{
-	width: calc(100% - 75px);
-	display: flex;
-	flex-direction: column;
+.permission-form-back-div
+  .permission-toggle-div
+  .fetch-toggle
+  .each-toggle-div
+  .sub-back-div {
+  width: calc(100% - 75px);
+  display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-	gap: 2px;
+  gap: 2px;
 }
 
-.permission-form-back-div .permission-toggle-div .fetch-toggle .each-toggle-div .sub-back-div .toggle-title-div{
-	font-family: sub-title-font;
-	font-size: 11px;
-	color: var(--text-color);
+.permission-form-back-div
+  .permission-toggle-div
+  .fetch-toggle
+  .each-toggle-div
+  .sub-back-div
+  .toggle-title-div {
+  font-family: sub-title-font;
+  font-size: 11px;
+  color: var(--text-color);
 }
 
-.permission-form-back-div .permission-toggle-div .fetch-toggle .each-toggle-div .sub-back-div .toggle-title-div span{
-	font-size: 10px;
-	color: var(--sub-text-color);
+.permission-form-back-div
+  .permission-toggle-div
+  .fetch-toggle
+  .each-toggle-div
+  .sub-back-div
+  .toggle-title-div
+  span {
+  font-size: 10px;
+  color: var(--sub-text-color);
 }
 
-.permission-form-back-div .permission-toggle-div .fetch-toggle .each-toggle-div .sub-back-div .sub-title{
-	font-size: 10px;
-	font-family: body-font;
-	color: var(--sub-body-color);
+.permission-form-back-div
+  .permission-toggle-div
+  .fetch-toggle
+  .each-toggle-div
+  .sub-back-div
+  .sub-title {
+  font-size: 10px;
+  font-family: body-font;
+  color: var(--sub-body-color);
 }
 
-.permission-form-back-div .permission-toggle-div .fetch-toggle .each-toggle-div .sub-back-div .green-color{
-	color:rgba(9, 172, 77, 0.9);
+.permission-form-back-div
+  .permission-toggle-div
+  .fetch-toggle
+  .each-toggle-div
+  .sub-back-div
+  .green-color {
+  color: rgba(9, 172, 77, 0.9);
 }
 
-.permission-form-back-div .permission-toggle-div .fetch-toggle .each-toggle-div .sub-back-div .orange-color{
-	color:rgba(218, 90, 31, 0.87);	
+.permission-form-back-div
+  .permission-toggle-div
+  .fetch-toggle
+  .each-toggle-div
+  .sub-back-div
+  .orange-color {
+  color: rgba(218, 90, 31, 0.87);
 }
 
-
-
-.alert .alert-list-div .alert-list .span{
-	display: flex;
+.alert .alert-list-div .alert-list .span {
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
 }
 
-.alert .alert-list-div .alert-list .span i{
-	color: var(--close-color);
+.alert .alert-list-div .alert-list .span i {
+  color: var(--close-color);
   font-size: 10px;
   cursor: pointer;
 }
-
-
-
-
-
-
-
-
-
-
 
 .grid-div {
   background: var(--white-color);
@@ -3295,9 +3276,6 @@ header
   border-radius: 5px;
   -moz-transition: all 0.2s ease-in 02s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .grid-div .btn-div {
@@ -3394,9 +3372,6 @@ header
   font-family: sub-title-font;
   -moz-transition: all 0.2s ease-in 02s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .grid-div:hover .text-div h2 {
@@ -3458,9 +3433,6 @@ header
   border-radius: 5px;
   -moz-transition: all 0.2s ease-in 02s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .pages-creation-panel .side-bar .div-in .grid-div .img-div {
@@ -3509,9 +3481,6 @@ header
   font-family: sub-title-font;
   -moz-transition: all 0.2s ease-in 02s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .pages-creation-panel .side-bar .div-in .grid-div:hover .text-div h2 {
@@ -3628,9 +3597,6 @@ header
   cursor: pointer;
   -moz-transition: all 0.2s ease-in 0.2s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .pages-creation-panel .pages-content-div .title-div ul li:hover,
@@ -3651,9 +3617,6 @@ header
   cursor: pointer;
   -moz-transition: all 0.2s ease-in 0.2s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .pages-creation-panel .pages-content-div .title-div .close-btn:hover {
@@ -3818,9 +3781,6 @@ header
   font-family: sub-title-font;
   -moz-transition: all 0.2s ease-in 0.2s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .pages-creation-panel
@@ -3872,9 +3832,6 @@ header
   cursor: pointer;
   -moz-transition: all 0.2s ease-in 0.2s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .pages-creation-panel
@@ -4200,26 +4157,26 @@ header
   color: #776c6c;
 }
 
-.user-profile-div .profile-content-div .btn-div {
+.user-profile-div .profile-content-div .nav-div {
   width: 100%;
   min-height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f8f8f8;
+  background: rgba(124, 124, 124, 0.1);
 }
 
 .user-profile-div .profile-content-div .branch-btn-div {
   background: var(--white-color);
 }
 
-.user-profile-div .profile-content-div .btn-div .div-in {
+.user-profile-div .profile-content-div .nav-div .div-in {
   width: 90%;
   display: flex;
   align-items: center;
 }
 
-.user-profile-div .profile-content-div .btn-div .div-in ul {
+.user-profile-div .profile-content-div .nav-div .div-in ul {
   position: relative;
   padding: 0px;
   margin: 0px;
@@ -4229,7 +4186,7 @@ header
   gap: 10px;
 }
 
-.user-profile-div .profile-content-div .btn-div .div-in ul li {
+.user-profile-div .profile-content-div .nav-div .div-in ul li {
   padding: 10px 15px;
   list-style: none;
   font-size: 13px;
@@ -4238,19 +4195,17 @@ header
   cursor: pointer;
   transition: all 0.2s ease-in 02s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
+
   white-space: nowrap;
 }
 
-.user-profile-div .profile-content-div .btn-div .div-in ul li i {
+.user-profile-div .profile-content-div .nav-div .div-in ul li i {
   color: var(--secondary-color);
   font-size: 11px;
 }
 
-.user-profile-div .profile-content-div .btn-div .div-in ul li:hover,
-.user-profile-div .profile-content-div .btn-div .div-in ul .active {
+.user-profile-div .profile-content-div .nav-div .div-in ul li:hover,
+.user-profile-div .profile-content-div .nav-div .div-in ul .active {
   background: var(--white-color);
   color: var(--secondary-color);
 }
@@ -4261,80 +4216,17 @@ header
   color: var(--secondary-color);
 }
 
-#dotted .expand-div {
-  position: absolute;
-  display: none;
-  background: var(--white-color);
-  min-width: 150px;
-  border-radius: 10px;
-  margin-top: 10px;
-  box-shadow: 0px 0px 5px 2px #f0efef;
-  transition: all 0.2s ease-in 02s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
-  z-index: 200;
-}
-
-#dotted .expanded {
-  min-width: 250px;
-}
-
-#dotted .expand-div .ul-expand {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  margin: 0px;
-  padding: 12px;
-}
-
-#dotted .expand-div .ul-expand li {
-  width: calc(100% - 20px);
-  padding: 8px 10px;
-  list-style: none;
-  font-size: 12px;
-  border-radius: 5px;
-  color: var(--sub-body-color);
-  font-family: body-font;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease-in 02s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
-  white-space: nowrap;
-}
-
-#dotted .expand-div .ul-expand li i {
-  font-size: 10px;
-  color: var(--secondary-color);
-}
-
-#dotted .expand-div .ul-expand li:hover,
-#dotted .expand-div .ul-expand .active {
-  color: var(--secondary-color);
-  background: #f8f8f8;
-}
-
-#dotted:hover .expand-div {
-  display: block;
-}
-
-.user-profile-div .profile-content-div .btn-div .div-in ul .li {
+.user-profile-div .profile-content-div .nav-div .div-in ul .li {
   display: none;
 }
 
-.user-profile-div .profile-content-div .btn-div .div-in ul li ul {
+.user-profile-div .profile-content-div .nav-div .div-in ul li ul {
   position: absolute;
   width: 200px;
   min-width: 200px;
   height: auto;
   padding: 20px;
   background: var(--white-color);
-  margin-left: -200px;
   margin-top: 5px;
   display: none;
   border-radius: 10px;
@@ -4342,11 +4234,11 @@ header
   z-index: 800;
 }
 
-.user-profile-div .profile-content-div .btn-div .div-in ul li:hover ul {
+.user-profile-div .profile-content-div .nav-div .div-in ul li:hover ul {
   display: block;
 }
 
-.user-profile-div .profile-content-div .btn-div .div-in ul li ul li {
+.user-profile-div .profile-content-div .nav-div .div-in ul li ul li {
   list-style: none;
   width: calc(100% - 30px);
   display: flex;
@@ -4358,7 +4250,7 @@ header
   white-space: nowrap;
 }
 
-.user-profile-div .profile-content-div .btn-div .div-in ul li ul li i {
+.user-profile-div .profile-content-div .nav-div .div-in ul li ul li i {
   color: var(--secondary-color);
 }
 
@@ -4369,15 +4261,15 @@ header
   .user-profile-div .profile-content-div .bg-img .mini-profile {
     width: 96%;
   }
-  .user-profile-div .profile-content-div .btn-div .div-in {
+  .user-profile-div .profile-content-div .nav-div .div-in {
     width: 96%;
   }
 }
 @media all and (max-width: 1040px) {
-  .user-profile-div .profile-content-div .btn-div .div-in ul .hide-li {
+  .user-profile-div .profile-content-div .nav-div .div-in ul .hide-li {
     display: none;
   }
-  .user-profile-div .profile-content-div .btn-div .div-in ul .li {
+  .user-profile-div .profile-content-div .nav-div .div-in ul .li {
     display: block;
   }
   .user-profile-div .top-panel-div {
@@ -4536,9 +4428,6 @@ header
   font-family: sub-title-font;
   -moz-transition: all 0.2s ease-in 0.2s;
   transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .user-profile-div
@@ -5158,9 +5047,6 @@ header
   transition: all 0.2s ease-in 0.2s;
   transition: all 0.2s ease-in 0.2s;
   -moz-transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .caption-div .title-div .close-btn i {
@@ -5281,9 +5167,6 @@ header
   transition: all 0.2s ease-in 0.2s;
   transition: all 0.2s ease-in 0.2s;
   -moz-transition: all 0.2s ease-in 0.2s;
-  -webkit-transition: all 0.2s ease-in 0.2s;
-  -ms-transition: all 0.2s ease-in 0.2s;
-  -o-transition: all 0.2s ease-in 0.2s;
 }
 
 .list-back-div .list-div h4 {

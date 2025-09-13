@@ -271,7 +271,7 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
             </div>
         </div>
 
-        <div class="btn-div">
+        <div class="nav-div">
             <div class="div-in">
                 <ul>
                     <li class="active" title="Dashboard" id="staff_dashboard"
@@ -283,22 +283,21 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
                         <i class="bi-mortarboard"></i> My Students
                     </li>
 
-                    <li class="hide-li" id="dotted" title="Staff Record"><i class="bi-file-spreadsheet"></i> Record
-                        <div class="expand-div expanded animated fadeIn">
-                            <ul class="ul-expand">
-                                <li onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});"
-                                    title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
-                                <li onclick="_getActiveStaffPage({divid:'staff_students_compute_score', page: 'staff_students_compute_score', url: adminPortalLocalUrl});"
-                                    title="Compute Score"><i class="bi-file-spreadsheet"></i>Compute Score</li>
-                                <li onclick="_getActiveStaffPage({divid:'staff_students_cummulative_mark', page: 'staff_students_cummulative_mark', url: adminPortalLocalUrl});"
-                                    title="Cumulative Mark's Score"><i class="bi-file-spreadsheet"></i>Cumulative Mark's
-                                    Book</li>
-                                <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Student Attendance
-                                </li>
-                                <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Class Teacher's
-                                    Commemt</li>
-                            </ul>
-                        </div>
+                    <li class="hide-li" title="Staff Record"><i class="bi-file-spreadsheet"></i> Record
+                        <ul class="ul-expand animated fadeIn">
+                            <li onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});"
+                                title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
+                            <li onclick="_getActiveStaffPage({divid:'staff_students_compute_score', page: 'staff_students_compute_score', url: adminPortalLocalUrl});"
+                                title="Compute Score"><i class="bi-file-spreadsheet"></i>Compute Score</li>
+                            <li onclick="_getActiveStaffPage({divid:'staff_students_cummulative_mark', page: 'staff_students_cummulative_mark', url: adminPortalLocalUrl});"
+                                title="Cumulative Mark's Score"><i class="bi-file-spreadsheet"></i>Cumulative Mark's
+                                Book</li>
+                            <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Student Attendance
+                            </li>
+                            <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Class Teacher's
+                                Commemt</li>
+                        </ul>
+
                     </li>
 
                     <li class="hide-li" title="My Profile" id="staff_profile_details"
@@ -320,7 +319,7 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
                                 onclick="_getActiveStaffPage({divid:'staff_students', page: 'staff_students', url: adminPortalLocalUrl});">
                                 <i class="bi-mortarboard"></i> <span>My Students</span>
                             </li>
-                            <li title="Staff Record" id="dotted"><i class="bi-file-spreadsheet"></i> <span>Record</span>
+                            <li title="Staff Record"><i class="bi-file-spreadsheet"></i> <span>Record</span>
                                 <div class="expand-div expanded animated fadeIn">
                                     <ul class="ul-expand">
                                         <li onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});"
@@ -999,8 +998,8 @@ getComputeScoreRecordDetailsSession = JSON.parse(sessionStorage.getItem("getComp
             <div class="btn-container compute-btn-container">
                 <button class="btn" title="COMPUTE SCORES" id="submitBtn" onclick="_proceedComputeAssessment();"> <i
                         class="bi-check"></i> COMPUTE SCORES </button>
-                <button class="btn print-btn" title="PRINT ASSESSMENT" id="printBtn" onclick="_printAssessmentPerSubject();"> <i
-                        class="bi-printer"></i> PRINT SCORES </button>
+                <button class="btn print-btn" title="PRINT ASSESSMENT" id="printBtn"
+                    onclick="_printAssessmentPerSubject();"> <i class="bi-printer"></i> PRINT SCORES </button>
             </div>
         </div>
     </div>

@@ -288,7 +288,7 @@
 
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<?php if ($page == 'branch_profile') { ?>
+<?php if ($page == 'branch_pages') { ?>
 <script>
 getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
 </script>
@@ -369,7 +369,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
             </div>
         </div>
 
-        <div class="btn-div branch-btn-div">
+        <div class="nav-div">
             <div class="div-in">
                 <ul>
                     <li class="active" title="Dashboard" id="branch_dashboard"
@@ -384,35 +384,36 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                         onclick="_getActiveBranchPage({divid:'branch_staff', page: 'branch_staff', url: adminPortalLocalUrl});">
                         <i class="bi-person-workspace"></i> Staff
                     </li>
-                    <li class="hide-li" id="dotted" title="Branch Student"><i class="bi-mortarboard"></i> Student
-                        <div class="expand-div animated fadeIn">
-                            <ul class="ul-expand">
-                                <li class="active" id="reg_students" title="Register Students"
-                                    onclick="_getForm({page: 'branch_student_reg', layer:2, url: adminPortalLocalUrl});">
-                                    <i class="bi-mortarboard"></i>Register Student
-                                </li>
+                    <li class="hide-li expand-nav" title="Branch Student"><i class="bi-mortarboard"></i>
+                        Student
 
-                                <li id="my_students" title="View Students"
-                                    onclick="_getForm({page: 'student_select_form', layer:2, url: adminPortalLocalUrl});">
-                                    <i class="bi-mortarboard"></i>View Student
-                                </li>
+                        <ul class="ul-expand animated fadeIn">
+                            <li id="reg_students" title="Register Students"
+                                onclick="_getForm({page: 'branch_student_reg', layer:2, url: adminPortalLocalUrl});">
+                                <i class="bi-mortarboard"></i>Register Student
+                            </li>
 
-                                <li id="my_students" title="Search Students"
-                                    onclick="_getActiveBranchPage({divid:'branch_student_search', page: 'branch_student_search', url: adminPortalLocalUrl});">
-                                    <i class="bi-search"></i>Search Student
-                                </li>
+                            <li id="my_students" title="View Students"
+                                onclick="_getForm({page: 'student_select_form', layer:2, url: adminPortalLocalUrl});">
+                                <i class="bi-mortarboard"></i>View Student
+                            </li>
 
-                                <li id="my_students" title="Student Archived"
-                                    onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});">
-                                    <i class="bi-mortarboard"></i>Student Archived
-                                </li>
+                            <li id="my_students" title="Search Students"
+                                onclick="_getActiveBranchPage({divid:'branch_student_search', page: 'branch_student_search', url: adminPortalLocalUrl});">
+                                <i class="bi-search"></i>Search Student
+                            </li>
 
-                                <li id="my_students" title="Student Alumni"
-                                    onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});">
-                                    <i class="bi-mortarboard"></i>Student Alumni
-                                </li>
-                            </ul>
-                        </div>
+                            <li id="my_students" title="Student Archived"
+                                onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});">
+                                <i class="bi-mortarboard"></i>Student Archived
+                            </li>
+
+                            <li id="my_students" title="Student Alumni"
+                                onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});">
+                                <i class="bi-mortarboard"></i>Student Alumni
+                            </li>
+                        </ul>
+
                     </li>
 
                     <li class="hide-li" title="Branch Class" id="branch_department_class"
@@ -420,27 +421,26 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                         <i class="bi-people-fill"></i> Class
                     </li>
 
-                    <li class="hide-li" title="Branch Subject"
+                    <li class="hide-li" title="Branch Subject" id="branch_subjects"
                         onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});"><i
                             class="bi-journals"></i> Subject</li>
 
-                    <li class="hide-li" id="dotted" title="Branch Record"><i class="bi-person-lines-fill"></i> Result
-                        <div class="expand-div animated fadeIn">
-                            <ul class="ul-expand">
-                                <li title="Broad/Report Sheet"
-                                    onclick="_getForm({page: 'broadsheet_select_form', layer:2, url: adminPortalLocalUrl});">
-                                    <i class="bi-person-lines-fill"></i>Broad/Report Sheet
-                                </li>
-                                <li title="Cumulative Broadsheet"><i class="bi-person-lines-fill"></i>Cumulative
-                                    Broadsheet
-                                </li>
-                                <li title="Promotional Panel"><i class="bi-person-lines-fill"></i>Promotion Panel</li>
-                            </ul>
-                        </div>
+                    <li class="hide-li expand-nav" title="Branch Record"><i class="bi-person-lines-fill"></i> Result
+                        <ul class="ul-expand animated fadeIn">
+                            <li title="Broad/Report Sheet"
+                                onclick="_getForm({page: 'broadsheet_select_form', layer:2, url: adminPortalLocalUrl});">
+                                <i class="bi-person-lines-fill"></i>Broad/Report Sheet
+                            </li>
+                            <li title="Cumulative Broadsheet"><i class="bi-person-lines-fill"></i>Cumulative
+                                Broadsheet
+                            </li>
+                            <li title="Promotional Panel"><i class="bi-person-lines-fill"></i>Promotion Panel</li>
+                        </ul>
+
                     </li>
 
-                    <li class="hide-li" title="Branch Profile" title="Branch Profile" id="branch_profile_details"
-                        onclick="_getActiveBranchPage({divid:'branch_profile_details', page: 'branch_profile_details', url: adminPortalLocalUrl});">
+                    <li class="hide-li" title="Branch Profile" title="Branch Profile" id="branch_profile"
+                        onclick="_getActiveBranchPage({divid:'branch_profile', page: 'branch_profile', url: adminPortalLocalUrl});">
                         <i class="bi-diagram-3"></i> Profile
                     </li>
 
@@ -453,7 +453,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                         onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});">
                         <i class="bi-bell"></i> Activities
                     </li>
-
+                    <!-- for mobile view -->
                     <li class="li" title="Other Links"><i class="bi-three-dots-vertical"></i>
                         <ul class="ul">
                             <li title="Dashboard"
@@ -468,35 +468,35 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                                 onclick="_getActiveBranchPage({divid:'branch_staff', page: 'branch_staff', url: adminPortalLocalUrl});">
                                 <i class="bi-person-workspace"></i> <span>Staff</span>
                             </li>
-                            <li title="Branch Student" id="dotted"><i class="bi-mortarboard"></i> <span>Student</span>
-                                <div class="expand-div animated fadeIn">
-                                    <ul class="ul-expand">
-                                        <li class="active" id="reg_students" title="Register Students"
-                                            onclick="_getForm({page: 'branch_student_reg', layer:2, url: adminPortalLocalUrl});">
-                                            <i class="bi-mortarboard"></i>Register Student
-                                        </li>
+                            <li title="Branch Student" class="expand-nav"><i class="bi-mortarboard"></i>
+                                <span>Student</span>
+                                <ul class="ul-expand animated fadeIn">
+                                    <li class="active" id="reg_students" title="Register Students"
+                                        onclick="_getForm({page: 'branch_student_reg', layer:2, url: adminPortalLocalUrl});">
+                                        <i class="bi-mortarboard"></i>Register Student
+                                    </li>
 
-                                        <li id="my_students" title="View Students"
-                                            onclick="_getForm({page: 'student_select_form', layer:2, url: adminPortalLocalUrl});">
-                                            <i class="bi-mortarboard"></i>View Student
-                                        </li>
+                                    <li id="my_students" title="View Students"
+                                        onclick="_getForm({page: 'student_select_form', layer:2, url: adminPortalLocalUrl});">
+                                        <i class="bi-mortarboard"></i>View Student
+                                    </li>
 
-                                        <li id="my_students" title="Search Students"
-                                            onclick="_getActiveBranchPage({divid:'branch_student_search', page: 'branch_student_search', url: adminPortalLocalUrl});">
-                                            <i class="bi-search"></i>Search Student
-                                        </li>
+                                    <li id="my_students" title="Search Students"
+                                        onclick="_getActiveBranchPage({divid:'branch_student_search', page: 'branch_student_search', url: adminPortalLocalUrl});">
+                                        <i class="bi-search"></i>Search Student
+                                    </li>
 
-                                        <li id="my_students" title="Student Archived"
-                                            onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});">
-                                            <i class="bi-mortarboard"></i>Student Archived
-                                        </li>
+                                    <li id="my_students" title="Student Archived"
+                                        onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});">
+                                        <i class="bi-mortarboard"></i>Student Archived
+                                    </li>
 
-                                        <li id="my_students" title="Student Alumni"
-                                            onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});">
-                                            <i class="bi-mortarboard"></i>Student Alumni
-                                        </li>
-                                    </ul>
-                                </div>
+                                    <li id="my_students" title="Student Alumni"
+                                        onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});">
+                                        <i class="bi-mortarboard"></i>Student Alumni
+                                    </li>
+                                </ul>
+
                             </li>
                             <li title="Branch Class"
                                 onclick="_getActiveBranchPage({divid:'branch_department_class', page: 'branch_department_class', url: adminPortalLocalUrl});">
@@ -505,24 +505,22 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             <li title="Branch Subject"
                                 onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});"><i
                                     class="bi-journals"></i> <span>Subject</span></li>
-                            <li title="Branch Report" id="dotted"><i class="bi-person-lines-fill"></i>
+                            <li title="Branch Report" class="expand-nav"><i class="bi-person-lines-fill"></i>
                                 <span>Result</span>
-                                <div class="expand-div animated fadeIn">
-                                    <ul class="ul-expand">
-                                        <li title="Broad/Report Sheet"
-                                            onclick="_getForm({page: 'broadsheet_select_form', layer:2, url: adminPortalLocalUrl});">
-                                            <i class="bi-person-lines-fill"></i>Broad/Report Sheet
-                                        </li>
-                                        <li title="Cumulative Broadsheet"><i class="bi-person-lines-fill"></i>Cumulative
-                                            Broadsheet</li>
-                                        <li title="Promotional Panel"><i class="bi-person-lines-fill"></i>Promotional
-                                            Panel
-                                        </li>
-                                    </ul>
-                                </div>
+                                <ul class="ul-expand animated fadeIn">
+                                    <li title="Broad/Report Sheet"
+                                        onclick="_getForm({page: 'broadsheet_select_form', layer:2, url: adminPortalLocalUrl});">
+                                        <i class="bi-person-lines-fill"></i>Broad/Report Sheet
+                                    </li>
+                                    <li title="Cumulative Broadsheet"><i class="bi-person-lines-fill"></i>Cumulative
+                                        Broadsheet</li>
+                                    <li title="Promotional Panel"><i class="bi-person-lines-fill"></i>Promotional
+                                        Panel
+                                    </li>
+                                </ul>
                             </li>
                             <li title="Branch Profile"
-                                onclick="_getActiveBranchPage({divid:'branch_profile_details', page: 'branch_profile_details', url: adminPortalLocalUrl});">
+                                onclick="_getActiveBranchPage({divid:'branch_profile', page: 'branch_profile', url: adminPortalLocalUrl});">
                                 <i class="bi-diagram-3"></i> <span>Profile</span>
                             </li>
                             <li title="Branch Account"
@@ -1014,7 +1012,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-<?php if ($page == 'branch_profile_details') { ?>
+<?php if ($page == 'branch_profile') { ?>
 <div class="user-in branch-user-in">
     <div class="title">BRANCH BASIC INFORMATION</div>
 
@@ -2758,7 +2756,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
     </div>
 
     <div class="user-managment-list staff-managment-list" title="Parent List"
-        onclick="_getActiveBranchPage({divid:'branch_fees_computaion_page', page: 'branch_fees_computaion_page', url: adminPortalLocalUrl});">
+        onclick="_getForm({page: 'fetch_parent_form', layer:2, url: adminPortalLocalUrl});">
         <div class="inner-div">
             <div class="icon-div">
                 <img src="<?php echo $websiteUrl ?>/images/student-reg.png" alt="Parent List" />
