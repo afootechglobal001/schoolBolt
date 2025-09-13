@@ -2761,7 +2761,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
         onclick="_getActiveBranchPage({divid:'branch_fees_computaion_page', page: 'branch_fees_computaion_page', url: adminPortalLocalUrl});">
         <div class="inner-div">
             <div class="icon-div">
-                <img src="<?php echo $websiteUrl ?>/images/compute.png" alt="Compute Fees" />
+                <img src="<?php echo $websiteUrl ?>/images/student-reg.png" alt="Parent List" />
             </div>
             <div class="text-div">
                 <h3>Parent List</h3>
@@ -2774,7 +2774,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
         onclick="_getActiveBranchPage({divid:'branch_fees_computaion_page', page: 'branch_fees_computaion_page', url: adminPortalLocalUrl});">
         <div class="inner-div">
             <div class="icon-div">
-                <img src="<?php echo $websiteUrl ?>/images/compute.png" alt="Compute Fees" />
+                <img src="<?php echo $websiteUrl ?>/images/payroll.png" alt="Payroll" />
             </div>
             <div class="text-div">
                 <h3>Payroll</h3>
@@ -2787,7 +2787,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
         onclick="_getActiveBranchPage({divid:'branch_fees_computaion_page', page: 'branch_fees_computaion_page', url: adminPortalLocalUrl});">
         <div class="inner-div">
             <div class="icon-div">
-                <img src="<?php echo $websiteUrl ?>/images/compute.png" alt="Compute Fees" />
+                <img src="<?php echo $websiteUrl ?>/images/loan.png" alt="Staff Loan" />
             </div>
             <div class="text-div">
                 <h3>Staff Loan</h3>

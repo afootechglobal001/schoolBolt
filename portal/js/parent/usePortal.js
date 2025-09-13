@@ -1,79 +1,81 @@
 function _getActiveStudentPage(props) {
-	const {
-        page = '',
-        divid = '',
-		pageContainer='getStudentDetails',
-    } = props;
-	_getStudentPageActiveLink(divid);
-	if(page){
-		_getPage({page: page, pageContainer: pageContainer, url: parentPortalLocalUrl});
-	}
+  const { page = "", divid = "", pageContainer = "getStudentDetails" } = props;
+  _getStudentPageActiveLink(divid);
+  if (page) {
+    _getPage({
+      page: page,
+      pageContainer: pageContainer,
+      url: parentPortalLocalUrl,
+    });
+  }
 }
 
-function _getStudentPageActiveLink(divid){
-	$('#studentDashbaord, #paymentHistory, #studentProfile').removeClass('active');
-	$("#"+divid).addClass('active');
+function _getStudentPageActiveLink(divid) {
+  $("#studentDashbaord, #paymentHistory, #studentProfile").removeClass(
+    "active"
+  );
+  $("#" + divid).addClass("active");
 }
 
 function capitalizeFirstLetterOfEachWord(inputText) {
-	const words = inputText.toLowerCase().split(' ');
-	for (let i = 0; i < words.length; i++) {
-		words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
-	}
-	const result = words.join(' ');
-	return result;
+  const words = inputText.toLowerCase().split(" ");
+  for (let i = 0; i < words.length; i++) {
+    words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+  }
+  const result = words.join(" ");
+  return result;
 }
-
 
 function getAuthHeaders() {
-    return {
-        'apiKey': apiKey,
-        'userOsBrowser': userOsBrowser,
-        'userIpAddress': userIpAddress,
-        'userDeviceId': userDeviceId,
-		'clientId': clientId,
-		'clientAddress': clientAddress
-    };
+  return {
+    apiKey: apiKey,
+    userOsBrowser: userOsBrowser,
+    userIpAddress: userIpAddress,
+    userDeviceId: userDeviceId,
+    clientId: clientId,
+    clientAddress: clientAddress,
+  };
 }
 
-function _logOut(){
-	sessionStorage.clear();
-	window.parent.location.href = parentLoginUrl;
+function _logOut() {
+  sessionStorage.clear();
+  window.parent.location.href = parentLoginUrl;
 }
 
 window.addEventListener("load", function () {
-	const sessionData = sessionStorage.getItem("parentSessionData");
-	if (!sessionData || sessionData === '""') {
-		_logOut();
-	}
+  const sessionData = sessionStorage.getItem("parentSessionData");
+  if (!sessionData || sessionData === '""') {
+    _logOut();
+  }
 });
 
-
 function _getFetchEachStudent(Id) {
-	let parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));
-	let parentStudents = parentSessionData.students;
-	let student = parentStudents.find(s => s.studentId === Id);
-	if (student) {
-		sessionStorage.setItem("getEachStudentSession", JSON.stringify(student));
-		_getForm({page: 'studentProfileForm', url: parentPortalLocalUrl});
-	}
+  let parentSessionData = JSON.parse(
+    sessionStorage.getItem("parentSessionData")
+  );
+  let parentStudents = parentSessionData.students;
+  let student = parentStudents.find((s) => s.studentId === Id);
+  if (student) {
+    sessionStorage.setItem("getEachStudentSession", JSON.stringify(student));
+    _getForm({ page: "studentProfileForm", url: parentPortalLocalUrl });
+  }
 }
 
-
-function _toggleCheck(){
-	$('.switch input').on('change', function () {
-		const label = $(this).next().next(); // Grab the toggle-label span
-		label.text($(this).prop('checked') ? 'Yes' : 'No');
-	});
+function _toggleCheck() {
+  $(".switch input").on("change", function () {
+    const label = $(this).next().next(); // Grab the toggle-label span
+    label.text($(this).prop("checked") ? "Yes" : "No");
+  });
 }
 
 function _getPpaymentFormDetails(icon, nextId) {
-	$('#proceedHideDiv').hide();
-	$("#" + nextId).fadeIn(1000);
-	$('#summaryHideDiv').fadeOut(500);
-	$("#panel-title").html($("#" + icon).html() + ' <span>PAYMENT SUMMARY</span>');
+  $("#proceedHideDiv").hide();
+  $("#" + nextId).fadeIn(1000);
+  $("#summaryHideDiv").fadeOut(500);
+  $("#panel-title").html(
+    $("#" + icon).html() + " <span>PAYMENT SUMMARY</span>"
+  );
 }
-
 
 function _prevPage(nextId) {
   $("#proceedHideDiv").hide();
@@ -82,325 +84,419 @@ function _prevPage(nextId) {
 }
 
 function selectSearch() {
-	$(".srch-select").toggle("fast");
+  $(".srch-select").toggle("fast");
 }
-function srchCustom(text){
-	$('#srch-text').html(text);
-	$('.custom-srch-div').fadeIn(500);
-};
-
-
-function _getSelectPaymentMethod(fieldId){
-	try {
-		$.ajax({
-			type: "GET",
-			url: endPoint +'/preset-data/fetch-payment-method',
-			dataType: "json",
-			cache: false,
-			headers: getAuthHeaders(),
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-				
-				if (success === true) {
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].paymentMethodId;
-						const value = data[i].paymentMethodName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
+function srchCustom(text) {
+  $("#srch-text").html(text);
+  $(".custom-srch-div").fadeIn(500);
 }
 
+function _getSelectPaymentMethod(fieldId) {
+  try {
+    $.ajax({
+      type: "GET",
+      url: endPoint + "/preset-data/fetch-payment-method",
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      success: function (info) {
+        const data = info.data;
+        const success = info.success;
+
+        if (success === true) {
+          for (let i = 0; i < data.length; i++) {
+            const id = data[i].paymentMethodId;
+            const value = data[i].paymentMethodName;
+            $("#searchList_" + fieldId).append(
+              "<li onclick=\"_clickOption('searchList_" +
+                fieldId +
+                "', '" +
+                id +
+                "', '" +
+                value +
+                "');\">" +
+                value +
+                "</li>"
+            );
+          }
+        } else {
+          _actionAlert(info.message, false);
+        }
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred. Please try again.", false);
+  }
+}
 
 function _fetchFeesToPay() {
-    let getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));
-	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
-	try {
+  let getEachStudentSession = JSON.parse(
+    sessionStorage.getItem("getEachStudentSession")
+  );
+  $("#get-more-div-secondary")
+    .css({
+      display: "flex",
+      "justify-content": "center",
+      "align-items": "center",
+    })
+    .fadeIn(500);
+  try {
+    const formData = {
+      studentId: getEachStudentSession?.studentData?.studentId,
+      branchId: getEachStudentSession?.branchData?.branchId,
+      departmentId: getEachStudentSession?.departmentData?.departmentId,
+      classId: getEachStudentSession?.classData?.classId,
+      armId: getEachStudentSession?.armData?.armId,
+    };
 
-		const formData = {
-			"studentId": getEachStudentSession?.studentData?.studentId,
-			"branchId": getEachStudentSession?.branchData?.branchId,
-			"departmentId": getEachStudentSession?.departmentData?.departmentId,
-			"classId": getEachStudentSession?.classData?.classId,
-			"armId": getEachStudentSession?.armData?.armId
-		};
-
-		$.ajax({
-			type: "POST",
-			url: `${endPoint}/parent/payment/get-fees-to-pay`,
-			data: JSON.stringify(formData),
-			dataType: "json", 
-			cache: false,
-			headers: getAuthHeaders(),
-			processData: false,
-			success: function(info) {
-				if (info.success && info.data.length > 0) {
-					sessionStorage.setItem("getPayFeesToPaySession", JSON.stringify(info));
-					_getForm({page: 'paymentForm', layer: 2, url: parentPortalLocalUrl});
-				} else {
-					_actionAlert(info.message, false); 
-					_alertClose(2);
-				}
-			},
-			error: function(textStatus, errorThrown) {
-				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred! Please try again.', false);
-	}
+    $.ajax({
+      type: "POST",
+      url: `${endPoint}/parent/payment/get-fees-to-pay`,
+      data: JSON.stringify(formData),
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      processData: false,
+      success: function (info) {
+        if (info.success && info.data.length > 0) {
+          sessionStorage.setItem(
+            "getPayFeesToPaySession",
+            JSON.stringify(info)
+          );
+          _getForm({
+            page: "paymentForm",
+            layer: 2,
+            url: parentPortalLocalUrl,
+          });
+        } else {
+          _actionAlert(info.message, false);
+          _alertClose(2);
+        }
+      },
+      error: function (textStatus, errorThrown) {
+        console.error("AJAX Error: ", textStatus, errorThrown);
+        _actionAlert(
+          "An error occurred while fetching data! Please try again.",
+          false
+        );
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred! Please try again.", false);
+  }
 }
-
-
 
 function _proceedToPayment() {
-	let getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));
-	let parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));
-	
-	try {
-		const paymentMethodId = $('#paymentMethodId').val().trim();
-		$('#paymentMethodId').removeClass("issue");
+  let getEachStudentSession = JSON.parse(
+    sessionStorage.getItem("getEachStudentSession")
+  );
+  let parentSessionData = JSON.parse(
+    sessionStorage.getItem("parentSessionData")
+  );
 
-		let selectedFees = [];
+  try {
+    const paymentMethodId = $("#paymentMethodId").val().trim();
+    $("#paymentMethodId").removeClass("issue");
 
-		$('.child:checked').each(function() {
-			const feesId = $(this).data('value');
-			selectedFees.push({ feesId: feesId });
-		});
+    let selectedFees = [];
 
-		if (selectedFees.length === 0) {
-			_actionAlert('Please select at least one fee to continue.', false);
-			return;
-		}
+    $(".child:checked").each(function () {
+      const feesId = $(this).data("value");
+      selectedFees.push({ feesId: feesId });
+    });
 
-		if (!paymentMethodId) {
-			$('#paymentMethodId').addClass('issue');
-			_actionAlert('Select payment method to continue', false);
-			return;
-		} 
-
-		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
-			const btn_text = $("#submitBtn").html();
-			$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
-			$("#submitBtn").prop("disabled", true);
-
-			const formData = {
-				"session": getEachStudentSession?.branchData?.currentSession,
-				"termId": getEachStudentSession?.branchData?.termId,
-				"studentId": getEachStudentSession?.studentData?.studentId,
-				"branchId": getEachStudentSession?.branchData?.branchId,
-				"departmentId": getEachStudentSession?.departmentData?.departmentId,
-				"classId": getEachStudentSession?.classData?.classId,
-				"armId": getEachStudentSession?.armData?.armId,
-				feesIds: selectedFees,
-				"paymentMethodId": paymentMethodId,
-				"email": parentSessionData?.parentData?.email,
-			};
-			
-			$.ajax({
-				type: "POST",
-				url: `${endPoint}/parent/payment/proceed-to-payment`,
-				data: JSON.stringify(formData),
-				dataType: "json", 
-				cache: false,
-				headers: getAuthHeaders(),
-				processData: false,
-				success: function (data) {
-					if (data.success) {
-						sessionStorage.setItem("studentPaymentSession", JSON.stringify(data));
-						const paymentKey= data.paymentKey;
-						const paymentId= data.paymentId;
-						const email = data.email;
-						const amount = data.amount
-						const paymentMethodId = data.paymentMethodId;
-						const deductCharges = data.deductCharges;
-						const schoolBoltCharges = data.schoolBoltCharges;
-						const receiverKey = data.receiverKey;
-
-						if (paymentMethodId==='PM001'){/// PAYMENT BY CREDIT/DEBIT////
-							_callPayStack(paymentKey, paymentId, email, amount, deductCharges, schoolBoltCharges, receiverKey);
-						}
-						if (paymentMethodId==='PM002'){/// PAYMENT BY BANK TRANSFER////
-							_getForm({page: 'accountTransferForm', layer: 2, url: parentPortalLocalUrl});
-						}
-					} else {
-						_actionAlert(data.message, false);
-					}
-					$("#submitBtn").html(btn_text).prop("disabled", false);
-				},
-				error: function (error) {
-					_actionAlert('An error occurred while processing your request: ' + error, false);
-					$("#submitBtn").html(btn_text).prop("disabled", false);
-				}
-			});
-		}
-	} catch (error) {
-		_actionAlert('An unexpected error occurred: ' + error.message, false);
-		$("#submitBtn").prop("disabled", false);
-	}
-}
-
-
-
-////// CALL PAYSTACK ////////////////
-function _callPayStack(paymentKey, paymentId, email, amount, deductCharges, schoolBoltCharges, receiverKey) {
-    let getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));
-    let parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));
-    const parentFullname = parentSessionData.parentData.titleId + ' ' + parentSessionData.parentData.surName + ' ' + parentSessionData.parentData.otherNames;
-    const parentPhoneNumber = parentSessionData.parentData.mobileNumber;
-    const branchId = getEachStudentSession.branchData.branchId;
-
-    // Create the base options
-    const options = {
-        key: paymentKey,
-        email: email,
-        amount: amount, // Amount in kobo
-        ref: paymentId,
-        currency: 'NGN',
-        metadata: {
-            custom_fields: [
-                {
-                    display_name: parentFullname,
-                    variable_name: "mobile_number",
-                    value: parentPhoneNumber
-                }
-            ]
-        },
-        callback: function () {
-            $("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).html(`<div class="alert-loading-div"><div class="icon"><img src="${websiteUrl}/images/loading.gif" width="20px" alt="Loading"/></div><div class="text"><p>PROCESSING...</p></div></div>`).fadeIn(500);
-            _callPaymentSuccess(paymentId, branchId);
-        },
-        onClose: function () {
-            _callPaymentCancelled(paymentId);
-            return false;
-        }
-    };
-    // Conditionally add the split configuration
-    if (deductCharges) {
-		console.log({deductCharges});
-        options.split = {
-            type: 'flat',
-            bearer_type: 'account',
-            subaccounts: [
-                {
-                    subaccount: receiverKey, // Replace with actual subaccount code
-                    share: schoolBoltCharges // Amount in kobo
-                }
-            ]
-        };
+    if (selectedFees.length === 0) {
+      _actionAlert("Please select at least one fee to continue.", false);
+      return;
     }
 
-    var handler = PaystackPop.setup(options);
-    handler.openIframe();
+    if (!paymentMethodId) {
+      $("#paymentMethodId").addClass("issue");
+      _actionAlert("Select payment method to continue", false);
+      return;
+    }
+
+    if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
+      const btn_text = $("#submitBtn").html();
+      $("#submitBtn").html(
+        '<img src="' +
+          websiteUrl +
+          '/images/loading.gif" width="12px" alt="Loading"/>'
+      );
+      $("#submitBtn").prop("disabled", true);
+
+      const formData = {
+        session: getEachStudentSession?.branchData?.currentSession,
+        termId: getEachStudentSession?.branchData?.termId,
+        studentId: getEachStudentSession?.studentData?.studentId,
+        branchId: getEachStudentSession?.branchData?.branchId,
+        departmentId: getEachStudentSession?.departmentData?.departmentId,
+        classId: getEachStudentSession?.classData?.classId,
+        armId: getEachStudentSession?.armData?.armId,
+        feesIds: selectedFees,
+        paymentMethodId: paymentMethodId,
+        email: parentSessionData?.parentData?.email,
+      };
+
+      $.ajax({
+        type: "POST",
+        url: `${endPoint}/parent/payment/proceed-to-payment`,
+        data: JSON.stringify(formData),
+        dataType: "json",
+        cache: false,
+        headers: getAuthHeaders(),
+        processData: false,
+        success: function (data) {
+          if (data.success) {
+            sessionStorage.setItem(
+              "studentPaymentSession",
+              JSON.stringify(data)
+            );
+            const paymentKey = data.paymentKey;
+            const paymentId = data.paymentId;
+            const email = data.email;
+            const amount = data.amount;
+            const paymentMethodId = data.paymentMethodId;
+            const deductCharges = data.deductCharges;
+            const schoolBoltCharges = data.schoolBoltCharges;
+            const receiverKey = data.receiverKey;
+
+            if (paymentMethodId === "PM001") {
+              /// PAYMENT BY CREDIT/DEBIT////
+              _callPayStack(
+                paymentKey,
+                paymentId,
+                email,
+                amount,
+                deductCharges,
+                schoolBoltCharges,
+                receiverKey
+              );
+            }
+            if (paymentMethodId === "PM002") {
+              /// PAYMENT BY BANK TRANSFER////
+              _getForm({
+                page: "accountTransferForm",
+                layer: 2,
+                url: parentPortalLocalUrl,
+              });
+            }
+          } else {
+            _actionAlert(data.message, false);
+          }
+          $("#submitBtn").html(btn_text).prop("disabled", false);
+        },
+        error: function (error) {
+          _actionAlert(
+            "An error occurred while processing your request: " + error,
+            false
+          );
+          $("#submitBtn").html(btn_text).prop("disabled", false);
+        },
+      });
+    }
+  } catch (error) {
+    _actionAlert("An unexpected error occurred: " + error.message, false);
+    $("#submitBtn").prop("disabled", false);
+  }
 }
 
+////// CALL PAYSTACK ////////////////
+function _callPayStack(
+  paymentKey,
+  paymentId,
+  email,
+  amount,
+  deductCharges,
+  schoolBoltCharges,
+  receiverKey
+) {
+  let getEachStudentSession = JSON.parse(
+    sessionStorage.getItem("getEachStudentSession")
+  );
+  let parentSessionData = JSON.parse(
+    sessionStorage.getItem("parentSessionData")
+  );
+  const parentFullname =
+    parentSessionData.parentData.titleId +
+    " " +
+    parentSessionData.parentData.surName +
+    " " +
+    parentSessionData.parentData.otherNames;
+  const parentPhoneNumber = parentSessionData.parentData.mobileNumber;
+  const branchId = getEachStudentSession.branchData.branchId;
 
+  // Create the base options
+  const options = {
+    key: paymentKey,
+    email: email,
+    amount: amount, // Amount in kobo
+    ref: paymentId,
+    currency: "NGN",
+    channels: ["card", "bank_transfer"],
+    metadata: {
+      custom_fields: [
+        {
+          display_name: parentFullname,
+          variable_name: "mobile_number",
+          value: parentPhoneNumber,
+        },
+      ],
+    },
+    callback: function () {
+      $("#get-more-div-secondary")
+        .css({
+          display: "flex",
+          "justify-content": "center",
+          "align-items": "center",
+        })
+        .html(
+          `<div class="alert-loading-div"><div class="icon"><img src="${websiteUrl}/images/loading.gif" width="20px" alt="Loading"/></div><div class="text"><p>PROCESSING...</p></div></div>`
+        )
+        .fadeIn(500);
+      _callPaymentSuccess(paymentId, branchId);
+    },
+    onClose: function () {
+      _callPaymentCancelled(paymentId);
+      return false;
+    },
+  };
+  // Conditionally add the split configuration
+  if (deductCharges) {
+    options.split = {
+      type: "flat",
+      bearer_type: "account",
+      subaccounts: [
+        {
+          subaccount: receiverKey, // Replace with actual subaccount code
+          share: schoolBoltCharges, // Amount in kobo
+        },
+      ],
+    };
+  }
 
+  var handler = PaystackPop.setup(options);
+  handler.openIframe();
+}
 
-function _callPaymentSuccess(paymentId,branchId) {
-	try {
-		const formData = {
-			"paymentId": paymentId,
-			"branchId": branchId,
-		};
-		
-		$.ajax({
-			type: "POST",
-			url: `${endPoint}/parent/payment/payment-success`,
-			data: JSON.stringify(formData),
-			dataType: "json", 
-			cache: false,
-			headers: getAuthHeaders(),
-			processData: false,
-			success: function (data) {
-				if (data.success) {
-					_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
-				} else {
-					console.log(data);
-					_actionAlert(data.message, false);
-					_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
-				}
-			},
-			error: function (error) {
-				console.log(error);
-				_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
-			}
-		});
-	} catch (error) {
-		console.log(error);
-		_getForm({page: 'payemntSuccessForm', layer: 2, url: parentPortalLocalUrl});
-	}
+function _callPaymentSuccess(paymentId, branchId) {
+  try {
+    const formData = {
+      paymentId: paymentId,
+      branchId: branchId,
+    };
+
+    $.ajax({
+      type: "POST",
+      url: `${endPoint}/parent/payment/payment-success`,
+      data: JSON.stringify(formData),
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      processData: false,
+      success: function (data) {
+        if (data.success) {
+          _getForm({
+            page: "payemntSuccessForm",
+            layer: 2,
+            url: parentPortalLocalUrl,
+          });
+        } else {
+          console.log(data);
+          _actionAlert(data.message, false);
+          _getForm({
+            page: "payemntSuccessForm",
+            layer: 2,
+            url: parentPortalLocalUrl,
+          });
+        }
+      },
+      error: function (error) {
+        console.log(error);
+        _getForm({
+          page: "payemntSuccessForm",
+          layer: 2,
+          url: parentPortalLocalUrl,
+        });
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    _getForm({
+      page: "payemntSuccessForm",
+      layer: 2,
+      url: parentPortalLocalUrl,
+    });
+  }
 }
 
 function _callPaymentCancelled(paymentId) {
-	try {
-		const formData = {
-			"paymentId": paymentId,
-		};
-		
-		$.ajax({
-			type: "POST",
-			url: `${endPoint}/parent/payment/payment-cancelled`,
-			data: JSON.stringify(formData),
-			dataType: "json", 
-			cache: false,
-			headers: getAuthHeaders(),
-			processData: false,
-			success: function () {
-				$('#submitBtn').html('<i class="bi-check"></i> MAKE PAYMENT').prop("disabled", false);
-			},
-			error: function (error) {
-				_actionAlert('An error occurred while processing your request: ' + error, false);
-				$('#submitBtn').html('<i class="bi-check"></i> MAKE PAYMENT').prop("disabled", false);
-			}
-		});
-		
-	} catch (error) {
-		_actionAlert('An unexpected error occurred: ' + error.message, false);
-		$('#submitBtn').html('<i class="bi-check"></i> MAKE PAYMENT').prop("disabled", false);
-	}
+  try {
+    const formData = {
+      paymentId: paymentId,
+    };
+
+    $.ajax({
+      type: "POST",
+      url: `${endPoint}/parent/payment/payment-cancelled`,
+      data: JSON.stringify(formData),
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      processData: false,
+      success: function () {
+        $("#submitBtn")
+          .html('<i class="bi-check"></i> MAKE PAYMENT')
+          .prop("disabled", false);
+      },
+      error: function (error) {
+        _actionAlert(
+          "An error occurred while processing your request: " + error,
+          false
+        );
+        $("#submitBtn")
+          .html('<i class="bi-check"></i> MAKE PAYMENT')
+          .prop("disabled", false);
+      },
+    });
+  } catch (error) {
+    _actionAlert("An unexpected error occurred: " + error.message, false);
+    $("#submitBtn")
+      .html('<i class="bi-check"></i> MAKE PAYMENT')
+      .prop("disabled", false);
+  }
 }
 
-
-
-
 function _fetchPaymentHistory() {
-   let getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));
-	try {
+  let getEachStudentSession = JSON.parse(
+    sessionStorage.getItem("getEachStudentSession")
+  );
+  try {
+    const formData = {
+      studentId: getEachStudentSession?.studentData?.studentId,
+      branchId: getEachStudentSession?.branchData?.branchId,
+      departmentId: getEachStudentSession?.departmentData?.departmentId,
+      classId: getEachStudentSession?.classData?.classId,
+      armId: getEachStudentSession?.armData?.armId,
+    };
 
-		const formData = {
-			"studentId": getEachStudentSession?.studentData?.studentId,
-			"branchId": getEachStudentSession?.branchData?.branchId,
-			"departmentId": getEachStudentSession?.departmentData?.departmentId,
-			"classId": getEachStudentSession?.classData?.classId,
-			"armId": getEachStudentSession?.armData?.armId
-		};
+    $.ajax({
+      type: "POST",
+      url: `${endPoint}/parent/payment/fetch-payment-history`,
+      data: JSON.stringify(formData),
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      processData: false,
+      success: function (info) {
+        const fetch = info.data;
+        const success = info.success;
 
-		$.ajax({
-			type: "POST",
-			url: `${endPoint}/parent/payment/fetch-payment-history`,
-			data: JSON.stringify(formData),
-			dataType: "json", 
-			cache: false,
-			headers: getAuthHeaders(),
-			processData: false,
-			success: function(info) {
-				const fetch = info.data;
-				const success = info.success;
-
-				let text = '';
-				let no=0;
-				text =`
+        let text = "";
+        let no = 0;
+        text = `
 				<thead>
                     <tr class="tb-col">
                         <th>sn</th>
@@ -414,28 +510,31 @@ function _fetchPaymentHistory() {
                     </tr>
                 </thead>`;
 
-				if (success===true) {
-					for (let i = 0; i < fetch.length; i++) {
-						no++;
-						const fetchedPayment = fetch[i];
-						const paymentId = fetchedPayment.paymentId;
-						const studentId = fetchedPayment.studentId;
-						const branchId = fetchedPayment.branchId;
-						const departmentId = fetchedPayment.departmentData.departmentId;
-						const currentTerm = fetchedPayment.termData.currentTerm;
-						const termId = fetchedPayment.termData.termId;
-						const session = fetchedPayment.session;
-						const className = fetchedPayment.classData.className;
-						const classId = fetchedPayment.classData.classId;
-						const armName = fetchedPayment.armData.armName;
-						const armId = fetchedPayment.armData.armId;
-						const totalAmount = thousandSeperator(fetchedPayment.totalAmount);
-						const paymentMethodName = fetchedPayment.paymentMethodData.paymentMethodName;
-						const statusName = fetchedPayment.statusData.statusName;
-						const createdTime = fetchedPayment.createdTime;
-						const paydate = fetchedPayment.paydate ? fetchedPayment.paydate : createdTime;
+        if (success === true) {
+          for (let i = 0; i < fetch.length; i++) {
+            no++;
+            const fetchedPayment = fetch[i];
+            const paymentId = fetchedPayment.paymentId;
+            const studentId = fetchedPayment.studentId;
+            const branchId = fetchedPayment.branchId;
+            const departmentId = fetchedPayment.departmentData.departmentId;
+            const currentTerm = fetchedPayment.termData.currentTerm;
+            const termId = fetchedPayment.termData.termId;
+            const session = fetchedPayment.session;
+            const className = fetchedPayment.classData.className;
+            const classId = fetchedPayment.classData.classId;
+            const armName = fetchedPayment.armData.armName;
+            const armId = fetchedPayment.armData.armId;
+            const totalAmount = thousandSeperator(fetchedPayment.totalAmount);
+            const paymentMethodName =
+              fetchedPayment.paymentMethodData.paymentMethodName;
+            const statusName = fetchedPayment.statusData.statusName;
+            const createdTime = fetchedPayment.createdTime;
+            const paydate = fetchedPayment.paydate
+              ? fetchedPayment.paydate
+              : createdTime;
 
-						text +=`
+            text += `
 						<tbody>
 							<tr class="tb-row">
 								<td>${no}</td>
@@ -459,11 +558,11 @@ function _fetchPaymentHistory() {
 								</td>
 							</tr>
 						</tbody>`;
-					}
-					$('#pageContent').html(text);
-				} else {
-					_actionAlert(info.message, false);
-					text += `
+          }
+          $("#pageContent").html(text);
+        } else {
+          _actionAlert(info.message, false);
+          text += `
 						tbody>
 							<tr>
 								<td colspan="11">
@@ -473,64 +572,89 @@ function _fetchPaymentHistory() {
 								</td>
 							</tr>
 						</tbody>`;
-					$('#pageContent').html(text);
+          $("#pageContent").html(text);
 
-					const response = info.response;
-					if (response < 100) {
-						_logOut();
-					}    
-				}
-			},
-			error: function(textStatus, errorThrown) {
-				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred! Please try again.', false);
-	}
+          const response = info.response;
+          if (response < 100) {
+            _logOut();
+          }
+        }
+      },
+      error: function (textStatus, errorThrown) {
+        console.error("AJAX Error: ", textStatus, errorThrown);
+        _actionAlert(
+          "An error occurred while fetching data! Please try again.",
+          false
+        );
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred! Please try again.", false);
+  }
 }
 
+function _viewPaymentDetails(
+  session,
+  termId,
+  studentId,
+  branchId,
+  departmentId,
+  classId,
+  armId
+) {
+  $("#get-more-div-secondary")
+    .css({
+      display: "flex",
+      "justify-content": "center",
+      "align-items": "center",
+    })
+    .fadeIn(500);
+  try {
+    const formData = {
+      session: session,
+      termId: termId,
+      studentId: studentId,
+      branchId: branchId,
+      departmentId: departmentId,
+      classId: classId,
+      armId: armId,
+    };
 
-function _viewPaymentDetails(session, termId, studentId, branchId, departmentId, classId, armId) {
-	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
-	try {
-
-		const formData = {
-			"session": session,
-			"termId": termId,
-			"studentId": studentId,
-			"branchId": branchId,
-			"departmentId": departmentId,
-			"classId": classId,
-			"armId": armId
-		};
-
-		$.ajax({
-			type: "POST",
-			url: `${endPoint}/parent/payment/view-payment-details`,
-			data: JSON.stringify(formData),
-			dataType: "json", 
-			cache: false,
-			headers: getAuthHeaders(),
-			processData: false,
-			success: function(info) {
-				if (info.success && info.data.length > 0) {
-					sessionStorage.setItem("getPayFeesToPaySession", JSON.stringify(info));
-					_getForm({page: 'paymentForm', layer: 2, url: parentPortalLocalUrl});
-				} else {
-					_actionAlert(info.message, false); 
-					_alertClose(2);
-				}
-			},
-			error: function(textStatus, errorThrown) {
-				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred! Please try again.', false);
-	}
+    $.ajax({
+      type: "POST",
+      url: `${endPoint}/parent/payment/view-payment-details`,
+      data: JSON.stringify(formData),
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      processData: false,
+      success: function (info) {
+        if (info.success && info.data.length > 0) {
+          sessionStorage.setItem(
+            "getPayFeesToPaySession",
+            JSON.stringify(info)
+          );
+          _getForm({
+            page: "paymentForm",
+            layer: 2,
+            url: parentPortalLocalUrl,
+          });
+        } else {
+          _actionAlert(info.message, false);
+          _alertClose(2);
+        }
+      },
+      error: function (textStatus, errorThrown) {
+        console.error("AJAX Error: ", textStatus, errorThrown);
+        _actionAlert(
+          "An error occurred while fetching data! Please try again.",
+          false
+        );
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred! Please try again.", false);
+  }
 }
