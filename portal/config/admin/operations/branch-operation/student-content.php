@@ -565,6 +565,14 @@
                         <li title="Transcript" id="tanscript" onclick="_getActiveStudentPage({divid:'tanscript', page: 'tanscript', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> Transcript</li>
                         <li class="hide-li" title="Student Report" id="student_report" onclick="_getActiveStudentPage({divid:'student_report', page: 'student_report', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> Student Report</li>
                         <li class="hide-li" title="Student Activities" id="student_activities" onclick="_getActiveStudentPage({divid:'student_activities', page: 'student_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> Student Activities</li>
+                          <li class="hide-li" id="dotted" title="Account"><i class="bi-credit-card"></i> Account
+                            <div class="expand-div animated fadeIn">
+                                <ul class="ul-expand">
+                                    <li title="Current Payable Fees" onclick="_getForm({page: 'studentSelectClassForm', layer:3, url: adminPortalLocalUrl});"><i class="bi-credit-card"></i>Current Payable Fees</li>
+                                    <li title="Payment History"><i class="bi-clock"></i>Payment History</li>
+                                </ul>
+                            </div>
+                        </li>
                         <li class="li" title="Other Links"><i class="bi-three-dots-vertical"></i>
                             <ul class="ul">
                                 <li title="Dashboard" onclick="_getActiveStudentPage({divid:'student_profile_details', page: 'student_profile_details', url: adminPortalLocalUrl});"><i class="bi-speedometer2"></i> <span> Dashboard</span></li>
@@ -1236,6 +1244,51 @@
                                                                                             ?>viewed"><i class="bi-check"></i></span></div>
             <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...</div>
             <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
+        </div>
+    </div>
+<?php } ?>
+
+
+<!-- For Student Modal -->
+<?php if ($page == 'studentSelectClassForm') { ?>
+    <div class="caption-div animated zoomIn">
+        <div class="title-div">
+            <div class="title"><i class="bi-person-check"></i> VIEW STUDENT</div>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i class="bi-x-lg"></i></button>
+        </div>
+
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, you're about to view students by their <span>Department</span>, <span>Class</span>, and <span>Arm</span>. Please select the <span>Department</span>, <span>Class</span>, and <span>Arm</span> to proceed.</div>
+
+            <div class="text_field_container" id="departmentId_container">
+                <script>
+                    selectField({
+                        id: 'departmentId',
+                        title: 'Select Department'
+                    });
+                    _getSelectDepartment('departmentId');
+                </script>
+            </div>
+
+            <div class="text_field_container" id="classId_container">
+                <script>
+                    selectField({
+                        id: 'classId',
+                        title: 'Select Class'
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container" id="armId_container">
+                <script>
+                    selectField({
+                        id: 'armId',
+                        title: 'Select Arm'
+                    });
+                </script>
+            </div>
+
+            <button class="btn" id="submit_btn" title="Proceed Request" onclick="_proceedFetchBranchStudents();">PROCEED <i class="bi-arrow-right"></i> </button>
         </div>
     </div>
 <?php } ?>
