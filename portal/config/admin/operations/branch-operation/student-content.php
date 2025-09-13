@@ -485,10 +485,10 @@
                         <li title="Transcript" id="tanscript" onclick="_getActiveStudentPage({divid:'tanscript', page: 'tanscript', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> Transcript</li>
                         <li class="hide-li" title="Student Report" id="student_report" onclick="_getActiveStudentPage({divid:'student_report', page: 'student_report', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> Student Report</li>
                         <li class="hide-li" title="Student Activities" id="student_activities" onclick="_getActiveStudentPage({divid:'student_activities', page: 'student_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> Student Activities</li>
-                          <li class="hide-li" id="dotted" title="Student Account"><i class="bi-credit-card"></i> Student Account
+                        <li class="hide-li" id="dotted" title="Student Account"><i class="bi-credit-card"></i> Student Account
                             <div class="expand-div animated fadeIn">
                                 <ul class="ul-expand">
-                                    <li title="Current Payable Fees" onclick="_getForm({page: '', layer:3, url: adminPortalLocalUrl});"><i class="bi-credit-card"></i>Current Payable Fees</li>
+                                    <li title="Current Payable Fees" onclick="_getForm({page: 'payableFess', layer:3, url: adminPortalLocalUrl});"><i class="bi-credit-card"></i>Current Payable Fees</li>
                                     <li title="Payment History" id="paymentHistory" onclick="_getActiveStudentPage({divid:'paymentHistory', page: 'paymentHistory', url: adminPortalLocalUrl});"><i class="bi-clock"></i>Payment History</li>
                                 </ul>
                             </div>
@@ -500,7 +500,7 @@
                                 <li title="Student Report" id="student_report" onclick="_getActiveStudentPage({divid:'student_report', page: 'student_report', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> Student Report</li>
                                 <li title="Student Activities" onclick="_getActiveStudentPage({divid:'student_activities', page: 'student_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> <span>Student Activities</span></li>
                             </ul>
-                        </li>           
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -1249,7 +1249,9 @@
 
     <div class="table-div animated fadeIn">
         <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-           <script>_getSearchStudents();</script>
+            <script>
+                _getSearchStudents();
+            </script>
         </table>
     </div>
 <?php } ?>
@@ -1258,7 +1260,7 @@
 <?php if ($page == 'paymentHistory') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
         <div><span><i class="bi-clock"></i></span> STUDENT TRANSACTION HISTORY</div>
-        
+
         <div class="btn-container">
             <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
             <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i> EXPORT</button>
@@ -1320,9 +1322,11 @@
         </script>
     </div>
 
-   <div class="table-div animated fadeIn">
+    <div class="table-div animated fadeIn">
         <table class="table" cellspacing="0" style="width:100%" id="pageContent2">
-            <script>_fetchPaymentHistory();</script>
+            <script>
+                _fetchPaymentHistory();
+            </script>
         </table>
     </div>
 <?php } ?>
@@ -1333,7 +1337,7 @@
         <div class="title-panel-div">
             <div class="inner-top">
                 <div class="icon-title-div">
-                    <span id="panel-title"><span><i class="bi-plus-square"></i></span> FEES PAYMENT</span>
+                    <span id="panel-title"><span><i class="bi-plus-square"></i></span> STUDENT FEES CONFIGURATION</span>
                 </div>
                 <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
@@ -1343,47 +1347,60 @@
             <div class="inner-container">
                 <div>
                     <div class="alert alert-success form-alert">
-                        <span>Kindly follow the instructions below to make a payment for;</span>
+                        <span>Student Details;</span>
                         <div class="alert-list-div">
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
-                                    <div>Student Name:</div>
-                                    <div><span id="formSurname"><script>$("#formSurname").html(getEachStudentSession.studentData.surName+' '+getEachStudentSession.studentData.firstName +' '+getEachStudentSession.studentData.otherNames);</script></span></div>
+                                    <div>Student Full Name:</div>
+                                    <div><span id="studentFullName">
+                                            <script>
+                                                $("#studentFullName").html(getEachBranchStudentsSession?.studentData?.surName + ' ' + getEachBranchStudentsSession?.studentData?.firstName + ' ' + getEachBranchStudentsSession?.studentData?.otherNames);
+                                            </script>
+                                        </span></div>
                                 </div>
                             </div>
 
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
-                                    <div>School Name:</div>
-                                    <div><span id="formBranchName"><script>$("#formBranchName").html(getPayFeesToPaySession.branchData.branchName);</script></span></div>
+                                    <div>Student Email:</div>
+                                    <div><span id="studentEmail">
+                                            <script>
+                                                $("#studentEmail").html(getEachBranchStudentsSession?.studentData?.email);
+                                            </script>
+                                        </span></div>
                                 </div>
                             </div>
 
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
                                     <div>Department:</div>
-                                    <div><span id="formDepartment"><script>$("#formDepartment").html(getPayFeesToPaySession.departmentData.departmentName);</script></span></div>
+                                    <div><span id="formDepartmentName">
+                                            <script>
+                                                $("#formDepartmentName").html(getEachBranchStudentsSession?.departmentData?.departmentName);
+                                            </script>
+                                        </span></div>
                                 </div>
                             </div>
 
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
                                     <div>Class:</div>
-                                <div><span id="formClass"><script>$("#formClass").html(getPayFeesToPaySession.classData.className+' '+getEachStudentSession.armData.armName);</script></span></div>
+                                    <div><span id="formClassName">
+                                            <script>
+                                                $("#formClassName").html(getEachBranchStudentsSession?.classData?.className);
+                                            </script>
+                                        </span></div>
                                 </div>
                             </div>
 
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
-                                    <div>Session:</div>
-                                <div><span id="formCurrentSession"><script>$("#formCurrentSession").html(getPayFeesToPaySession.currentSession);</script></span></div>
-                                </div>
-                            </div>
-
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>Term:</div>
-                                    <div><span id="formCurrentTerm"><script>$("#formCurrentTerm").html(getPayFeesToPaySession.termData.currentTerm);</script></span></div>
+                                    <div>Arm:</div>
+                                    <div><span id="formArmName">
+                                            <script>
+                                                $("#formArmName").html(getEachBranchStudentsSession?.armData?.armName);
+                                            </script>
+                                        </span></div>
                                 </div>
                             </div>
                         </div>
@@ -1392,118 +1409,81 @@
 
                 <div class="paid-fee-conatiner">
                     <div class="alert alert-success form-alert">
-                        <span>List of Fees Paid</span>
+                        <span>List of Mandatory Fees</span>
 
                         <div class="alert-list-div" id="paidFees">
-                            No record found!
+                            <div class="alert-list">
+                                <div>Development Fees:</div>
+                                <div class="span"><span id=""><s>N</s>20,000.00</span><div><i class="bi-trash"></i></div></div>
+                            </div>
+
+                            <div class="alert-list">
+                                <div>School Bus Fees:</div>
+                                <div class="span"><span id=""><s>N</s>50,000.00</span><div onclick="_deleteFees(this);"><i class="bi-trash"></i></div></div>
+                            </div>
+
+                            <div class="alert-list">
+                                <div>School Bus Fees:</div>
+                                <div class="span"><span id=""><s>N</s>50,000.00</span><div onclick="_deleteFees(this);"><i class="bi-trash"></i></div></div>
+                            </div>
+
+                            <div class="alert-list">
+                                <div>School Bus Fees:</div>
+                                <div class="span"><span id=""><s>N</s>50,000.00</span><div onclick="_deleteFees(this);"><i class="bi-trash"></i></div></div>
+                            </div>
                         </div>
                     </div>
+                    <script>
+                        function _deleteFees(el) {
+                            $(el).closest(".alert-list").fadeOut(300, function () {
+                                $(this).remove();
+                            });
+                        }
+                    </script>
                 </div>
 
                 <div class="permission-form-back-div">
                     <div class="title-div">
-                        <h4>Select Fees for Payment</h4>
+                        <h4>Select Mandatory Fees for this student</h4>
                         <p>Use the toggles below to select fees applicable to this student. Switching a toggle to "Yes" enables payment for that category.</p>
                     </div>
 
                     <div class="permission-toggle-div">
                         <div class="toggle-title">Fee Categories</div>
                         <div class="fetch-toggle" id="notPaidFees">
+                            <div class="each-toggle-div">
+                                <div class="sub-back-div">
+                                    <div class="toggle-title-div">Development Fees - <span>(<s>N</s>20,000.00)</span></div>
+                                    <div class="sub-title green-color">MANDATORY</div>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" class="child" id="fees_1" name="feesId[]" data-value="1" value="20000">
+                                    <span class="slider"></span>
+                                    <span class="toggle-label">No</span>
+                                </label>
+                            </div>
 
-                            <script>
-                                $(document).ready(function() {
-                                    let notPaidFees = '';
-                                    let paidFees = '';
+                            <div class="each-toggle-div">
+                                <div class="sub-back-div">
+                                    <div class="toggle-title-div">School Bus Fees - <span>(<s>N</s>50,000.00)</span></div>
+                                    <div class="sub-title green-color">MANDATORY</div>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" class="child" id="fees_2" name="feesId[]" data-value="2" value="50000">
+                                    <span class="slider"></span>
+                                    <span class="toggle-label">No</span>
+                                </label>
+                            </div>
 
-                                    if (getPayFeesToPaySession && getPayFeesToPaySession.data) {
-                                        const fetch = getPayFeesToPaySession.data;
-
-                                        for (let i = 0; i < fetch.length; i++) {
-                                            const fetchedFess = fetch[i];
-                                            const feesId = fetchedFess.feesId;
-                                            const feesName = fetchedFess.feesName;
-                                            const feesOption = fetchedFess.feesOption;
-                                            const NewFeesOption = (feesOption === "TRUE") ? "MANDATORY" : "NOT MANDATORY";
-                                            const feesOptionColor = (feesOption === "TRUE") ? "green-color" : "orange-color";       
-                                            const amount = thousandSeperator(fetchedFess.amount);
-                                            const paid = fetchedFess.paid;
-
-                                            if (paid==='FALSE'){
-                                                notPaidFees += `
-                                                <div class="each-toggle-div">
-                                                    <div class="title-back-div">
-                                                        <div class="toggle-title-div">${feesName} - <span>(<s>N</s>${amount})</span></div>
-                                                        <div class="sub-title ${feesOptionColor}">${NewFeesOption}</div>
-                                                    </div>
-                                                    <label for="fees_${feesId}" class="switch">
-                                                        <input type="checkbox" class="child" id="fees_${feesId}" name="feesId[]" data-value="${feesId}" value="${fetchedFess.amount}">
-                                                        <span class="slider"></span>
-                                                        <span class="toggle-label">No</span>
-                                                    </label>
-                                                </div>`;
-                                            } else {
-                                                paidFees += `
-                                                <div class="alert-list-back-div">
-                                                    <div class="alert-list">
-                                                        <div>${feesName}:</div>
-                                                        <div><span id=""><s>N</s>${amount}</span></div>
-                                                    </div>
-                                                </div>`;
-                                            }
-                                        }
-                                        $("#notPaidFees").html(notPaidFees);
-                                        $("#paidFees").html(paidFees!=='' ? paidFees : 'No record found!');
-                                        _toggleCheck();
-                                    }
-                                });
-                            </script>
                         </div>
+                        <script>
+                            _toggleCheck();
+                        </script>
                     </div>
                 </div>
 
                 <div>
-                    <div class="alert alert-success form-alert">
-                        <span>Summary of Fees Chosen by Parent</span>
-                        <div class="alert-list-div">
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>TOTAL FEES:</div>
-                                    <div><span id="totalFee"><s>N</s>0.00</span></div>
-                                </div>
-                            </div>
-
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>SYSTEM CHARGES:</div>
-                                    <div>
-                                        <span id="schoolBoltCharges"></span>
-                                        <script>$("#schoolBoltCharges").html('<s>N</s>'+thousandSeperator(getPayFeesToPaySession.schoolBoltCharges));</script>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>TOTAL AMOUNT:</div>
-                                    <div><span class="total-amount" id="totalAmount"><s>N</s>160,000</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="text_field_container" id="paymentMethodId_container">
-                    <script>
-                        selectField({
-                            id: 'paymentMethodId',
-                            title: 'Select Payment Method'
-                        });
-                        _getSelectPaymentMethod('paymentMethodId');
-                    </script>
-                </div>
-        
-                <div>
-                    <button class="btn" title="Make Payment" id="submitBtn" onclick="_proceedToPayment();"> <i class="bi-check"></i> MAKE PAYMENT </button>
+                    <button class="btn" title="Make Payment" id="submitBtn" onclick="_proceedToPayment();"> <i class="bi-check"></i> SAVE </button>
                 </div>
             </div>
         </div>
