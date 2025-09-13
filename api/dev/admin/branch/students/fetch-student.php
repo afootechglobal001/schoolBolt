@@ -1,5 +1,5 @@
-<?php require_once '../../config/connection.php';?>
-<?php require_once '../../config/staff-session-check.php';?>
+<?php require_once '../../../config/connection.php';?>
+<?php require_once '../../../config/staff-session-check.php';?>
 <?php
 if (!$checkBasicSecurity){/// start if 1
     goto end;

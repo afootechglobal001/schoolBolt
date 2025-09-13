@@ -1,39 +1,54 @@
-#remove php file extension-e.g. https://example.com/file.php will become https://example.com/file
-RewriteEngine on 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^(.*)$ $1.php [NC,L]
-
-
+# Enable Rewrite Engine
 RewriteEngine On
-RewriteCond %{HTTP:Authorization} ^(.*)
-RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
 
-
-ErrorDocument 404 /
-ErrorDocument 500 /
-#RewriteEngine On
+###############################################
+# 1. Force HTTPS and remove "www"
+###############################################
 #RewriteCond %{HTTPS} off [OR]
 #RewriteCond %{HTTP_HOST} ^www\. [NC]
 #RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$ [NC]
 #RewriteRule ^ https://%1%{REQUEST_URI} [L,NE,R=301]
 
+###############################################
+# 2. Internally rewrite extensionless URLs to PHP
+#    Example: /file -> /file.php (if file.php exists)
+###############################################
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [NC,L]
 
-# browser requests PHP
+###############################################
+# 3. Redirect direct .php requests to extensionless
+#    Example: /file.php -> /file
+###############################################
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^\ ]+)\.php
 RewriteRule ^/?(.*)\.php$ /$1 [L,R=301]
 
+###############################################
+# 4. Pass through Authorization headers
+###############################################
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%1]
 
+###############################################
+# 5. Custom Error Pages
+###############################################
+ErrorDocument 404 /
+ErrorDocument 500 /
 
+###############################################
+# 6. CORS headers
+###############################################
 <IfModule mod_headers.c>
-     Header always set Access-Control-Allow-Origin "*"
-     Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS"
-     Header always set Access-Control-Allow-Headers "Authorization, Origin, X-Requested-With, Content-Type, Accept, apiKey, userOsBrowser, userIpAddress, userDeviceId, clientId, clientAddress"
-     Header always set Access-Control-Allow-Credentials "true"
+  Header always set Access-Control-Allow-Origin "*"
+  Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+  Header always set Access-Control-Allow-Headers "Authorization, Origin, X-Requested-With, Content-Type, Accept, apiKey, userOsBrowser, userIpAddress, userDeviceId, clientId, clientAddress"
+  Header always set Access-Control-Allow-Credentials "true"
 </IfModule>
 
-
-#Customize expires caching start - adjust the period according to your needs
+###############################################
+# 7. Expires caching + compression
+###############################################
 <IfModule mod_expires.c>
   FileETag MTime Size
   AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css application/xml application/xhtml+xml application/rss+xml application/javascript application/x-javascript
@@ -50,4 +65,3 @@ RewriteRule ^/?(.*)\.php$ /$1 [L,R=301]
   ExpiresByType image/x-icon "access 1 year"
   ExpiresDefault "access 1 month"
 </IfModule>
-#Expires caching end
