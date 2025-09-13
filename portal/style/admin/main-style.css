@@ -3066,7 +3066,7 @@ header
   display: flex;
   flex-direction: column;
   gap: 15px;
-  margin: 20px 0px;
+  margin: 15px 0px;
 }
 
 .permission-form-back-div .title-div {
@@ -3216,8 +3216,7 @@ header
   transform: translate(15px, -50%);
 }
 
-.permission-form-back-div
-  .permission-toggle-div
+.permission-form-back-div .permission-toggle-div
   .fetch-toggle
   .each-toggle-div
   .toggle-label {
@@ -3225,6 +3224,65 @@ header
   font-family: body-font;
   color: var(--text-color);
 }
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .each-toggle-div .sub-back-div{
+	width: calc(100% - 75px);
+	display: flex;
+	flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+	gap: 2px;
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .each-toggle-div .sub-back-div .toggle-title-div{
+	font-family: sub-title-font;
+	font-size: 11px;
+	color: var(--text-color);
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .each-toggle-div .sub-back-div .toggle-title-div span{
+	font-size: 10px;
+	color: var(--sub-text-color);
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .each-toggle-div .sub-back-div .sub-title{
+	font-size: 10px;
+	font-family: body-font;
+	color: var(--sub-body-color);
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .each-toggle-div .sub-back-div .green-color{
+	color:rgba(9, 172, 77, 0.9);
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .each-toggle-div .sub-back-div .orange-color{
+	color:rgba(218, 90, 31, 0.87);	
+}
+
+
+
+.alert .alert-list-div .alert-list .span{
+	display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.alert .alert-list-div .alert-list .span i{
+	color: var(--close-color);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
 
 .grid-div {
   background: var(--white-color);

@@ -485,10 +485,10 @@
                         <li title="Transcript" id="tanscript" onclick="_getActiveStudentPage({divid:'tanscript', page: 'tanscript', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> Transcript</li>
                         <li class="hide-li" title="Student Report" id="student_report" onclick="_getActiveStudentPage({divid:'student_report', page: 'student_report', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> Student Report</li>
                         <li class="hide-li" title="Student Activities" id="student_activities" onclick="_getActiveStudentPage({divid:'student_activities', page: 'student_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> Student Activities</li>
-                          <li class="hide-li" id="dotted" title="Account"><i class="bi-credit-card"></i> Account
+                        <li class="hide-li" id="dotted" title="Student Account"><i class="bi-credit-card"></i> Student Account
                             <div class="expand-div animated fadeIn">
                                 <ul class="ul-expand">
-                                    <li title="Current Payable Fees" onclick="_getForm({page: 'studentSelectClassForm', layer:3, url: adminPortalLocalUrl});"><i class="bi-credit-card"></i>Current Payable Fees</li>
+                                    <li title="Current Payable Fees" onclick="_getForm({page: 'payableFess', layer:3, url: adminPortalLocalUrl});"><i class="bi-credit-card"></i>Current Payable Fees</li>
                                     <li title="Payment History" id="paymentHistory" onclick="_getActiveStudentPage({divid:'paymentHistory', page: 'paymentHistory', url: adminPortalLocalUrl});"><i class="bi-clock"></i>Payment History</li>
                                 </ul>
                             </div>
@@ -500,7 +500,7 @@
                                 <li title="Student Report" id="student_report" onclick="_getActiveStudentPage({divid:'student_report', page: 'student_report', url: adminPortalLocalUrl});"><i class="bi-mortarboard"></i> Student Report</li>
                                 <li title="Student Activities" onclick="_getActiveStudentPage({divid:'student_activities', page: 'student_activities', url: adminPortalLocalUrl});"><i class="bi-bell"></i> <span>Student Activities</span></li>
                             </ul>
-                        </li>           
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -1249,7 +1249,9 @@
 
     <div class="table-div animated fadeIn">
         <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-           <script>_getSearchStudents();</script>
+            <script>
+                _getSearchStudents();
+            </script>
         </table>
     </div>
 <?php } ?>
@@ -1258,7 +1260,7 @@
 <?php if ($page == 'paymentHistory') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
         <div><span><i class="bi-clock"></i></span> STUDENT TRANSACTION HISTORY</div>
-        
+
         <div class="btn-container">
             <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
             <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i> EXPORT</button>
@@ -1320,53 +1322,170 @@
         </script>
     </div>
 
-   <div class="table-div animated fadeIn">
+    <div class="table-div animated fadeIn">
         <table class="table" cellspacing="0" style="width:100%" id="pageContent2">
-            <script>_fetchPaymentHistory();</script>
+            <script>
+                _fetchPaymentHistory();
+            </script>
         </table>
     </div>
 <?php } ?>
 
 <!-- For Student Modal -->
-<?php if ($page == 'studentSelectClassForm') { ?>
-    <div class="caption-div animated zoomIn">
-        <div class="title-div">
-            <div class="title"><i class="bi-person-check"></i> VIEW STUDENT</div>
-            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i class="bi-x-lg"></i></button>
+<?php if ($page == 'payableFess') { ?>
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <div class="icon-title-div">
+                    <span id="panel-title"><span><i class="bi-plus-square"></i></span> STUDENT FEES CONFIGURATION</span>
+                </div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
         </div>
 
-        <div class="div-in animated fadeIn">
-            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, you're about to view students by their <span>Department</span>, <span>Class</span>, and <span>Arm</span>. Please select the <span>Department</span>, <span>Class</span>, and <span>Arm</span> to proceed.</div>
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Student Details;</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Student Full Name:</div>
+                                    <div><span id="studentFullName">
+                                            <script>
+                                                $("#studentFullName").html(getEachBranchStudentsSession?.studentData?.surName + ' ' + getEachBranchStudentsSession?.studentData?.firstName + ' ' + getEachBranchStudentsSession?.studentData?.otherNames);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
 
-            <div class="text_field_container" id="departmentId_container">
-                <script>
-                    selectField({
-                        id: 'departmentId',
-                        title: 'Select Department'
-                    });
-                    _getSelectDepartment('departmentId');
-                </script>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Student Email:</div>
+                                    <div><span id="studentEmail">
+                                            <script>
+                                                $("#studentEmail").html(getEachBranchStudentsSession?.studentData?.email);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Department:</div>
+                                    <div><span id="formDepartmentName">
+                                            <script>
+                                                $("#formDepartmentName").html(getEachBranchStudentsSession?.departmentData?.departmentName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Class:</div>
+                                    <div><span id="formClassName">
+                                            <script>
+                                                $("#formClassName").html(getEachBranchStudentsSession?.classData?.className);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Arm:</div>
+                                    <div><span id="formArmName">
+                                            <script>
+                                                $("#formArmName").html(getEachBranchStudentsSession?.armData?.armName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="paid-fee-conatiner">
+                    <div class="alert alert-success form-alert">
+                        <span>List of Mandatory Fees</span>
+
+                        <div class="alert-list-div" id="paidFees">
+                            <div class="alert-list">
+                                <div>Development Fees:</div>
+                                <div class="span"><span id=""><s>N</s>20,000.00</span><div><i class="bi-trash"></i></div></div>
+                            </div>
+
+                            <div class="alert-list">
+                                <div>School Bus Fees:</div>
+                                <div class="span"><span id=""><s>N</s>50,000.00</span><div onclick="_deleteFees(this);"><i class="bi-trash"></i></div></div>
+                            </div>
+
+                            <div class="alert-list">
+                                <div>School Bus Fees:</div>
+                                <div class="span"><span id=""><s>N</s>50,000.00</span><div onclick="_deleteFees(this);"><i class="bi-trash"></i></div></div>
+                            </div>
+
+                            <div class="alert-list">
+                                <div>School Bus Fees:</div>
+                                <div class="span"><span id=""><s>N</s>50,000.00</span><div onclick="_deleteFees(this);"><i class="bi-trash"></i></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        function _deleteFees(el) {
+                            $(el).closest(".alert-list").fadeOut(300, function () {
+                                $(this).remove();
+                            });
+                        }
+                    </script>
+                </div>
+
+                <div class="permission-form-back-div">
+                    <div class="title-div">
+                        <h4>Select Mandatory Fees for this student</h4>
+                        <p>Use the toggles below to select fees applicable to this student. Switching a toggle to "Yes" enables payment for that category.</p>
+                    </div>
+
+                    <div class="permission-toggle-div">
+                        <div class="toggle-title">Fee Categories</div>
+                        <div class="fetch-toggle" id="notPaidFees">
+                            <div class="each-toggle-div">
+                                <div class="sub-back-div">
+                                    <div class="toggle-title-div">Development Fees - <span>(<s>N</s>20,000.00)</span></div>
+                                    <div class="sub-title green-color">MANDATORY</div>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" class="child" id="fees_1" name="feesId[]" data-value="1" value="20000">
+                                    <span class="slider"></span>
+                                    <span class="toggle-label">No</span>
+                                </label>
+                            </div>
+
+                            <div class="each-toggle-div">
+                                <div class="sub-back-div">
+                                    <div class="toggle-title-div">School Bus Fees - <span>(<s>N</s>50,000.00)</span></div>
+                                    <div class="sub-title green-color">MANDATORY</div>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" class="child" id="fees_2" name="feesId[]" data-value="2" value="50000">
+                                    <span class="slider"></span>
+                                    <span class="toggle-label">No</span>
+                                </label>
+                            </div>
+
+                        </div>
+                        <script>
+                            _toggleCheck();
+                        </script>
+                    </div>
+                </div>
+
+                <div>
+                    <button class="btn" title="Make Payment" id="submitBtn" onclick="_proceedToPayment();"> <i class="bi-check"></i> SAVE </button>
+                </div>
             </div>
-
-            <div class="text_field_container" id="classId_container">
-                <script>
-                    selectField({
-                        id: 'classId',
-                        title: 'Select Class'
-                    });
-                </script>
-            </div>
-
-            <div class="text_field_container" id="armId_container">
-                <script>
-                    selectField({
-                        id: 'armId',
-                        title: 'Select Arm'
-                    });
-                </script>
-            </div>
-
-            <button class="btn" id="submit_btn" title="Proceed Request" onclick="_proceedFetchBranchStudents();">PROCEED <i class="bi-arrow-right"></i> </button>
         </div>
     </div>
 <?php } ?>
