@@ -1932,6 +1932,61 @@ header
   background: #2daae1;
 }
 
+.slide-form-div
+  .container-back-div
+  .inner-container
+  .new-btn-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 6px 0px;
+}
+
+.slide-form-div .container-back-div .inner-container .new-btn-container .btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+   width: 100%;
+   font-size: 12px;
+   font-family: sub-title-font;
+   gap: 5px;
+}
+
+.slide-form-div .container-back-div .inner-container .new-btn-container .btn i{
+  font-size: 9px;
+}
+
+.slide-form-div
+  .container-back-div
+  .inner-container
+  .new-btn-container
+  .activate {
+  background: var(--active-color);
+}
+
+.slide-form-div
+  .container-back-div
+  .inner-container
+  .new-btn-container
+  .suspend {
+  background: var(--secondary-color);
+}
+
+.slide-form-div
+  .container-back-div
+  .inner-container
+  .new-btn-container
+  .portal {
+  background: var(--text-color2);
+}
+
+.new-btn-container .portal:hover,
+.new-btn-container .activate:hover,
+.new-btn-container .suspend:hover {
+  opacity: .8;
+}
+
+
 .slide-form-div .top-panel-details {
   height: 60px;
   padding-bottom: 5px;

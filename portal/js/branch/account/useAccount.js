@@ -143,7 +143,7 @@ function _fetchBranchParents() {
 											</div>
 										</div>
 									</td>
-                  <td class="clickable-td" title="Click to view father details" onclick="_loginOnbehalfOfParent('${fetchFatherData.recordFor}','${fetchFatherData.email}');">
+                  <td class="clickable-td" title="Click to view father details" onclick="_loginOnbehalfOfParent('${fetchFatherData.email}','${fetchFatherData.recordFor}','${studentId}');">
 										<div class="text-back-div">
 											<div class="text-div">
 												<div class="first-class">${fatherFullname}</div>
@@ -152,7 +152,7 @@ function _fetchBranchParents() {
 											</div>
 										</div>
 									</td>
-                  <td class="clickable-td" title="Click to view mother details" onclick="_loginOnbehalfOfParent('${fetchMotherData.recordFor}','${fetchMotherData.email}');">
+                  <td class="clickable-td" title="Click to view mother details" onclick="_loginOnbehalfOfParent('${fetchMotherData.email}','${fetchMotherData.recordFor}','${studentId}');">
 										<div class="text-back-div">
 											<div class="text-div">
                       <div class="first-class">${motherFullname}</div>
@@ -205,7 +205,7 @@ function _fetchBranchParents() {
   }
 }
 
-function _loginOnbehalfOfParent(parentTypeId, email) {
+function _loginOnbehalfOfParent(email, parentTypeId, studentId) {
   try {
     $("#get-more-div-secondary")
       .css({
@@ -214,15 +214,10 @@ function _loginOnbehalfOfParent(parentTypeId, email) {
         "align-items": "center",
       })
       .fadeIn(500);
-    const formData = {
-      parentTypeId: parentTypeId,
-      email: email,
-    };
 
     $.ajax({
-      type: "POST",
-      url: endPoint + "/admin/branch/account/parentAuth",
-      data: JSON.stringify(formData),
+      type: "GET",
+      url:`${endPoint}/admin/branch/account/parentAuth?email=${email}&parentTypeId=${parentTypeId}`,
       dataType: "json",
       cache: false,
       headers: getAuthHeaders(true),
@@ -230,8 +225,15 @@ function _loginOnbehalfOfParent(parentTypeId, email) {
         if (info.success) {
           localStorage.setItem("parentSessionData", JSON.stringify(info));
 
-          _actionAlert(info.message, true);
-          window.open(parentPortalUrl, "_blank");
+          const studentData = info.students?.find(s => s.studentId === studentId);
+          const parentData = info.parentData;
+
+          const sessionPayload = {
+            student: studentData,
+            parent: parentData
+          };
+          sessionStorage.setItem("studentParentSessionData", JSON.stringify(sessionPayload));
+					_getForm({page: 'parentStudentForm', layer:3, url: adminPortalLocalUrl});
         } else {
           _actionAlert(info.message, false);
         }
