@@ -1,445 +1,482 @@
 <?php if ($page == 'dashboard') { ?>
-        <script>
-            userRoles.canViewSuperAdminDashboard && _getActivePage({page:'superAdminDashboard', divid:'dashboard'});
-            userRoles.canViewAdministratorDashboard && _getActivePage({page:'administratorDashboard', divid:'dashboard'});
-            userRoles.canViewSubjectTeacherDashboard && _getActivePage({page:'subjectTeacherDashboard', divid:'dashboard'});
-            userRoles.canViewClassTeacherDashboard && _getActivePage({page:'subjectTeacherDashboard', divid:'dashboard'});
-            userRoles.canViewIctStaffDashboard && _getActivePage({page:'ICTStaffDashboard', divid:'dashboard'});
-            userRoles.canViewBursaryDashboard && _getActivePage({page:'bursaryDashboard', divid:'dashboard'});
-        </script>	
+<script>
+userRoles.canViewSuperAdminDashboard && _getActivePage({
+    page: 'superAdminDashboard',
+    divid: 'dashboard'
+});
+userRoles.canViewAdministratorDashboard && _getActivePage({
+    page: 'administratorDashboard',
+    divid: 'dashboard'
+});
+userRoles.canViewSubjectTeacherDashboard && _getActivePage({
+    page: 'subjectTeacherDashboard',
+    divid: 'dashboard'
+});
+userRoles.canViewClassTeacherDashboard && _getActivePage({
+    page: 'subjectTeacherDashboard',
+    divid: 'dashboard'
+});
+userRoles.canViewIctStaffDashboard && _getActivePage({
+    page: 'ICTStaffDashboard',
+    divid: 'dashboard'
+});
+userRoles.canViewBursaryDashboard && _getActivePage({
+    page: 'bursaryDashboard',
+    divid: 'dashboard'
+});
+</script>
 <?php } ?>
 
 <?php if ($page == 'superAdminDashboard') { ?>
-    <div class="page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
-        <div class="page-title-div">
-            <div class="top-title"><span id="page-title"><i class="bi-speedometer2"></i> Admin Dashboard Overview</span></div>
-            <div class="main-title">👋 Hi, <span id="loginUserName">
-                    <script>
-                        $("#loginUserName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));
-                    </script>
-                </span></div>
-            <div class="bottom-title"><i class="bi-clock"></i> Last Login Date | <span id="loginUserLastLogin">
-                    <script>
-                        $("#loginUserLastLogin").html(staffLoginData.lastLoginTime);
-                    </script>
-                </span>
-            </div>
+<div class="page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
+    <div class="page-title-div">
+        <div class="top-title"><span id="page-title"><i class="bi-speedometer2"></i> Admin Dashboard Overview</span>
         </div>
-
-        <div class="dashbaord-right-wrapper">
-            <ul>
-                <li title="Department" onclick="_getPage({page: 'department_config', url: adminPortalLocalUrl});"><span><i class="bi-diagram-3"></i> Department</span> <div class="num" id="">150</div>
-                </li>
-                <li title="Classes" onclick="_getPage({page: 'class_config', url: adminPortalLocalUrl});"><span><i class="bi-people"></i> classes</span> <div class="num" id="">700</div>
-                </li>
-                <li title="Subjects" onclick="_getPage({page: 'subject_config', url: adminPortalLocalUrl});"><span><i class="bi-journals"></i> Subjects</span> <div class="num" id="">20</div>
-                </li>
-            </ul>
+        <div class="main-title">👋 Hi, <span id="loginUserName">
+                <script>
+                $("#loginUserName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));
+                </script>
+            </span></div>
+        <div class="bottom-title"><i class="bi-clock"></i> Last Login Date | <span id="loginUserLastLogin">
+                <script>
+                $("#loginUserLastLogin").html(staffLoginData.lastLoginTime);
+                </script>
+            </span>
         </div>
     </div>
 
-    <div class="dashboard-statistics-wrapper" data-aos="fade-in" data-aos-duration="1500">
-        <div class="left-dashbaord-container">
-            <div class="statistics-chart-back-div">
-                <div class="statistics-back-div">
-                    <div class="statistics-div left-border" title="Total Branches" onclick="_getActivePage({page:'branches', divid:'branches'});">
-                        <h2>12</h2>
-                        <span><i class="bi-diagram-3"></i> Branches</span>
-                    </div>
+    <div class="dashbaord-right-wrapper">
+        <ul>
+            <li title="Department" onclick="_getPage({page: 'department_config', url: adminPortalLocalUrl});"><span><i
+                        class="bi-diagram-3"></i> Department</span>
+                <div class="num" id="">150</div>
+            </li>
+            <li title="Classes" onclick="_getPage({page: 'class_config', url: adminPortalLocalUrl});"><span><i
+                        class="bi-people"></i> classes</span>
+                <div class="num" id="">700</div>
+            </li>
+            <li title="Subjects" onclick="_getPage({page: 'subject_config', url: adminPortalLocalUrl});"><span><i
+                        class="bi-journals"></i> Subjects</span>
+                <div class="num" id="">20</div>
+            </li>
+        </ul>
+    </div>
+</div>
 
-                    <div class="statistics-div left-border border-radius" title="Total Staff" onclick="">
-                        <h2>250</h2>
-                        <span><i class="bi-people"></i> Total Staff</span>
-                    </div>
-
-                    <div class="statistics-div" title="Total Students">
-                        <h2>700</h2>
-                        <span><i class="bi-people"></i> Total Students </span>
-                    </div>
-
-                    <div class="statistics-div right-border" title="Total Allumni">
-                        <h2>20</h2>
-                        <span><i class="bi-people"></i> Total Allumni</span>
-                    </div>
+<div class="dashboard-statistics-wrapper" data-aos="fade-in" data-aos-duration="1500">
+    <div class="left-dashbaord-container">
+        <div class="statistics-chart-back-div">
+            <div class="statistics-back-div">
+                <div class="statistics-div left-border" title="Total Branches"
+                    onclick="_getActivePage({page:'branches', divid:'branches'});">
+                    <h2>12</h2>
+                    <span><i class="bi-diagram-3"></i> Branches</span>
                 </div>
 
-                <div class="chart-back-div">
-                    <div class="chart-div-notifications no-border-top">
-                        <div class="text"><i class="bi-graph-up-arrow"></i> Showing Matrix for </div>
+                <div class="statistics-div left-border border-radius" title="Total Staff" onclick="">
+                    <h2>250</h2>
+                    <span><i class="bi-people"></i> Total Staff</span>
+                </div>
 
-                        <div class="text text-right" onclick="select_search()">
-                            <span id="srch-text">Last 30 Days</span>
-                            <div class="icon-div"><i class="bi-caret-down"></i></div>
+                <div class="statistics-div" title="Total Students">
+                    <h2>700</h2>
+                    <span><i class="bi-people"></i> Total Students </span>
+                </div>
 
-                            <div class="srch-select alert-srch-select">
-                                <div id="srch-today" onclick="_getAlertReport('srch-today', 'view_today_search');">Today</div>
-                                <div id="srch-week" onclick="_getAlertReport('srch-week', 'view_thisweek_search');">This Week</div>
-                                <div id="srch-7" onclick="_getAlertReport('srch-7', 'view_7days_search');">Last 7 Days</div>
-                                <div id="srch-month" onclick="_getAlertReport('srch-month', 'view_thismonth_search');">This Month</div>
-                                <div id="srch-30" onclick="_getAlertReport('srch-30', 'view_30days_search');">Last 30 Days</div>
-                                <div id="srch-90" onclick="_getAlertReport('srch-90', 'view_90days_search');">Last 90 Days</div>
-                                <div id="srch-year" onclick="_getAlertReport('srch-year', 'view_thisyear_search');">This Year</div>
-                                <div id="srch-1year" onclick="_getAlertReport('srch-1year', 'view_1year_search');">Last 1 Year</div>
-                                <div onclick="srch_custom('Custom Search')">Custom Search</div>
+                <div class="statistics-div right-border" title="Total Allumni">
+                    <h2>20</h2>
+                    <span><i class="bi-people"></i> Total Allumni</span>
+                </div>
+            </div>
+
+            <div class="chart-back-div">
+                <div class="chart-div-notifications no-border-top">
+                    <div class="text"><i class="bi-graph-up-arrow"></i> Showing Matrix for </div>
+
+                    <div class="text text-right" onclick="select_search()">
+                        <span id="srch-text">Last 30 Days</span>
+                        <div class="icon-div"><i class="bi-caret-down"></i></div>
+
+                        <div class="srch-select alert-srch-select">
+                            <div id="srch-today" onclick="_getAlertReport('srch-today', 'view_today_search');">Today
                             </div>
-                        </div>
-
-                        <div class="text">
-                            <div class="custom-srch-div">
-                                <div class="custom-srch-div-in">
-                                    <div class="text_field_container dash_field_container">
-                                        <input class="text_field bar_cust_text_field" type="text" id="datepickers-from" placeholder="" />
-                                        <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From</div>
-                                    </div>
-
-                                    <div class="text_field_container dash_field_container">
-                                        <input class="text_field bar_cust_text_field" type="text" id="datepickers-to" placeholder="" />
-                                        <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To</div>
-                                    </div>
-                                    <button type="button" class="btn">Apply</button>
-                                </div>
+                            <div id="srch-week" onclick="_getAlertReport('srch-week', 'view_thisweek_search');">This
+                                Week</div>
+                            <div id="srch-7" onclick="_getAlertReport('srch-7', 'view_7days_search');">Last 7 Days</div>
+                            <div id="srch-month" onclick="_getAlertReport('srch-month', 'view_thismonth_search');">This
+                                Month</div>
+                            <div id="srch-30" onclick="_getAlertReport('srch-30', 'view_30days_search');">Last 30 Days
                             </div>
+                            <div id="srch-90" onclick="_getAlertReport('srch-90', 'view_90days_search');">Last 90 Days
+                            </div>
+                            <div id="srch-year" onclick="_getAlertReport('srch-year', 'view_thisyear_search');">This
+                                Year</div>
+                            <div id="srch-1year" onclick="_getAlertReport('srch-1year', 'view_1year_search');">Last 1
+                                Year</div>
+                            <div onclick="srch_custom('Custom Search')">Custom Search</div>
                         </div>
-
-
-                        <script language="javascript">
-                            $('#datepickers-from').datetimepicker({
-                                lang: 'en',
-                                timepicker: false,
-                                format: 'Y-m-d',
-                                formatDate: 'Y-M-d',
-                            });
-
-                            $('#datepickers-to').datetimepicker({
-                                lang: 'en',
-                                timepicker: false,
-                                format: 'Y-m-d',
-                                formatDate: 'Y-M-d',
-                            });
-                        </script>
                     </div>
 
-                    <div class="trending-back-div">
-                        <div class="revenue-back-div">
-                            <div class="top-revenue">Revenue For<span>January 18 2025</span>-<span>February 17 2025</span></div>
-                            <div class="fund-back-div">
-                                <div class="fund-div">
-                                    <h3><span>₦1,343,581.63</span>(SALES)</h3>
-                                </div>-<div class="fund-div">
-                                    <h3><span>₦256,000.00</span>(WALLET)</h3>
+                    <div class="text">
+                        <div class="custom-srch-div">
+                            <div class="custom-srch-div-in">
+                                <div class="text_field_container dash_field_container">
+                                    <input class="text_field bar_cust_text_field" type="text" id="datepickers-from"
+                                        placeholder="" />
+                                    <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From
+                                    </div>
                                 </div>
+
+                                <div class="text_field_container dash_field_container">
+                                    <input class="text_field bar_cust_text_field" type="text" id="datepickers-to"
+                                        placeholder="" />
+                                    <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To</div>
+                                </div>
+                                <button type="button" class="btn">Apply</button>
                             </div>
                         </div>
+                    </div>
 
-                        <div id="chartContainer" style="width:100%; height:300px; margin:auto;"></div>
-                        <script>
-                            $(document).ready(function() {
-                                var chart = new CanvasJS.Chart("chartContainer", {
-                                    animationEnabled: true,
-                                    theme: "light1",
-                                    title: {
-                                        text: ""
-                                    },
-                                    axisX: {
-                                        valueFormatString: "DD MMM",
-                                        crosshair: {
-                                            enabled: true,
-                                            snapToDataPoint: true
-                                        }
-                                    },
-                                    axisY: {
-                                        title: "",
-                                        includeZero: true,
-                                        crosshair: {
-                                            enabled: true
-                                        }
-                                    },
-                                    toolTip: {
-                                        shared: true
-                                    },
-                                    legend: {
-                                        cursor: "pointer",
-                                        verticalAlign: "bottom",
-                                        horizontalAlign: "left",
-                                        dockInsidePlotArea: true,
-                                        itemclick: toogleDataSeries
-                                    },
-                                    data: [{
-                                            type: "line",
-                                            showInLegend: true,
-                                            name: "Sales",
-                                            markerType: "square",
-                                            xValueFormatString: "DD MMM, YYYY",
-                                            color: "#29BA00",
-                                            dataPoints: [{
-                                                    x: new Date(2025, 0, 1),
-                                                    y: 250000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 2),
-                                                    y: 180000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 3),
-                                                    y: 100000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 4),
-                                                    y: 300000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 5),
-                                                    y: 120000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 6),
-                                                    y: 150000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 7),
-                                                    y: 275000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 8),
-                                                    y: 160000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 9),
-                                                    y: 350000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 10),
-                                                    y: 380000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 11),
-                                                    y: 0
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 12),
-                                                    y: 100000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 13),
-                                                    y: 0
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 14),
-                                                    y: 180000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 15),
-                                                    y: 270000
-                                                },
-                                            ]
+
+                    <script language="javascript">
+                    $('#datepickers-from').datetimepicker({
+                        lang: 'en',
+                        timepicker: false,
+                        format: 'Y-m-d',
+                        formatDate: 'Y-M-d',
+                    });
+
+                    $('#datepickers-to').datetimepicker({
+                        lang: 'en',
+                        timepicker: false,
+                        format: 'Y-m-d',
+                        formatDate: 'Y-M-d',
+                    });
+                    </script>
+                </div>
+
+                <div class="trending-back-div">
+                    <div class="revenue-back-div">
+                        <div class="top-revenue">Revenue For<span>January 18 2025</span>-<span>February 17 2025</span>
+                        </div>
+                        <div class="fund-back-div">
+                            <div class="fund-div">
+                                <h3><span>₦1,343,581.63</span>(SALES)</h3>
+                            </div>-<div class="fund-div">
+                                <h3><span>₦256,000.00</span>(WALLET)</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="chartContainer" style="width:100%; height:300px; margin:auto;"></div>
+                    <script>
+                    $(document).ready(function() {
+                        var chart = new CanvasJS.Chart("chartContainer", {
+                            animationEnabled: true,
+                            theme: "light1",
+                            title: {
+                                text: ""
+                            },
+                            axisX: {
+                                valueFormatString: "DD MMM",
+                                crosshair: {
+                                    enabled: true,
+                                    snapToDataPoint: true
+                                }
+                            },
+                            axisY: {
+                                title: "",
+                                includeZero: true,
+                                crosshair: {
+                                    enabled: true
+                                }
+                            },
+                            toolTip: {
+                                shared: true
+                            },
+                            legend: {
+                                cursor: "pointer",
+                                verticalAlign: "bottom",
+                                horizontalAlign: "left",
+                                dockInsidePlotArea: true,
+                                itemclick: toogleDataSeries
+                            },
+                            data: [{
+                                    type: "line",
+                                    showInLegend: true,
+                                    name: "Sales",
+                                    markerType: "square",
+                                    xValueFormatString: "DD MMM, YYYY",
+                                    color: "#29BA00",
+                                    dataPoints: [{
+                                            x: new Date(2025, 0, 1),
+                                            y: 250000
                                         },
                                         {
-                                            type: "line",
-                                            showInLegend: true,
-                                            name: "Wallet",
-                                            lineDashType: "dash",
-                                            dataPoints: [{
-                                                    x: new Date(2025, 0, 1),
-                                                    y: 180000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 2),
-                                                    y: 50000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 3),
-                                                    y: 80000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 4),
-                                                    y: 0
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 5),
-                                                    y: 150000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 6),
-                                                    y: 40000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 7),
-                                                    y: 300000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 8),
-                                                    y: 200000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 9),
-                                                    y: 0
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 10),
-                                                    y: 120000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 11),
-                                                    y: 90000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 12),
-                                                    y: 200000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 13),
-                                                    y: 0
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 14),
-                                                    y: 280000
-                                                },
-                                                {
-                                                    x: new Date(2025, 0, 15),
-                                                    y: 50000
-                                                },
-
-                                            ]
-                                        }
+                                            x: new Date(2025, 0, 2),
+                                            y: 180000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 3),
+                                            y: 100000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 4),
+                                            y: 300000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 5),
+                                            y: 120000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 6),
+                                            y: 150000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 7),
+                                            y: 275000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 8),
+                                            y: 160000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 9),
+                                            y: 350000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 10),
+                                            y: 380000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 11),
+                                            y: 0
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 12),
+                                            y: 100000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 13),
+                                            y: 0
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 14),
+                                            y: 180000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 15),
+                                            y: 270000
+                                        },
                                     ]
+                                },
+                                {
+                                    type: "line",
+                                    showInLegend: true,
+                                    name: "Wallet",
+                                    lineDashType: "dash",
+                                    dataPoints: [{
+                                            x: new Date(2025, 0, 1),
+                                            y: 180000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 2),
+                                            y: 50000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 3),
+                                            y: 80000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 4),
+                                            y: 0
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 5),
+                                            y: 150000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 6),
+                                            y: 40000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 7),
+                                            y: 300000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 8),
+                                            y: 200000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 9),
+                                            y: 0
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 10),
+                                            y: 120000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 11),
+                                            y: 90000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 12),
+                                            y: 200000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 13),
+                                            y: 0
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 14),
+                                            y: 280000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 15),
+                                            y: 50000
+                                        },
 
-                                });
-                                chart.render();
-
-                                function toogleDataSeries(e) {
-                                    if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                                        e.dataSeries.visible = false;
-                                    } else {
-                                        e.dataSeries.visible = true;
-                                    }
-                                    chart.render();
+                                    ]
                                 }
-                            })
-                        </script>
-                    </div>
-                </div>
-            </div>
-        </div>
+                            ]
 
-        <div class="right-dashbaord-container">
+                        });
+                        chart.render();
 
-            <div class="matrix-div">
-                <div class="inner-div">
-                    <div class="title">
-                        <h3>Payment Channel Matrix</h3>
-                    </div>
-                    <div id="chartContainer2" style="width:100%; height:200px; margin:auto;"></div>
-
-                    <script type="text/javascript">
-                        var options = {
-                            title: {
-                                text: "" /*My Performance*/
-                            },
-                            data: [{
-                                type: "pie",
-                                startAngle: 45,
-                                showInLegend: "False",
-                                legendText: "{label}",
-                                indexLabel: "{label} ({y})",
-                                yValueFormatString: "#,##0.#" % "",
-                                dataPoints: [{
-                                        label: "Debit/Credit Card",
-                                        y: 3
-                                    },
-                                    {
-                                        label: "Wallet",
-                                        y: 2
-                                    },
-                                    {
-                                        label: "Bank Transfer",
-                                        y: 11
-                                    },
-                                ]
-                            }]
-                        };
-                        $("#chartContainer2").CanvasJSChart(options);
-                    </script>
-                </div>
-            </div>
-
-            <div class="matrix-div">
-                <div class="inner-div">
-                    <div class="title">
-                        <h3>Staff Role Matrix</h3>
-                    </div>
-                    <div id="chartContainer1" style="width:100%; height:200px; margin:auto;"></div>
-
-                    <script type="text/javascript">
-                        var options = {
-                            title: {
-                                text: "" /*My Performance*/
-                            },
-                            data: [{
-                                type: "pie",
-                                startAngle: 45,
-                                showInLegend: "False",
-                                legendText: "{label}",
-                                indexLabel: "{label} ({y})",
-                                yValueFormatString: "#,##0.#" % "",
-                                dataPoints: [{
-                                        label: "SUPER ADMIN",
-                                        y: 5
-                                    },
-                                    {
-                                        label: "ADMINISTRATOR",
-                                        y: 6
-                                    },
-                                    {
-                                        label: "SUBJECT TEACHERS",
-                                        y: 4
-                                    },
-                                    {
-                                        label: "CLASS TEACHERS",
-                                        y: 5
-                                    },
-                                    {
-                                        label: "ICT STAFF",
-                                        y: 15
-                                    },
-                                     {
-                                        label: "ACCOUNTANTS",
-                                        y: 15
-                                    },
-                                ]
-                            }]
-                        };
-                        $("#chartContainer1").CanvasJSChart(options);
+                        function toogleDataSeries(e) {
+                            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                                e.dataSeries.visible = false;
+                            } else {
+                                e.dataSeries.visible = true;
+                            }
+                            chart.render();
+                        }
+                    })
                     </script>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="right-dashbaord-container">
+
+        <div class="matrix-div">
+            <div class="inner-div">
+                <div class="title">
+                    <h3>Payment Channel Matrix</h3>
+                </div>
+                <div id="chartContainer2" style="width:100%; height:200px; margin:auto;"></div>
+
+                <script type="text/javascript">
+                var options = {
+                    title: {
+                        text: "" /*My Performance*/
+                    },
+                    data: [{
+                        type: "pie",
+                        startAngle: 45,
+                        showInLegend: "False",
+                        legendText: "{label}",
+                        indexLabel: "{label} ({y})",
+                        yValueFormatString: "#,##0.#" % "",
+                        dataPoints: [{
+                                label: "Debit/Credit Card",
+                                y: 3
+                            },
+                            {
+                                label: "Wallet",
+                                y: 2
+                            },
+                            {
+                                label: "Bank Transfer",
+                                y: 11
+                            },
+                        ]
+                    }]
+                };
+                $("#chartContainer2").CanvasJSChart(options);
+                </script>
+            </div>
+        </div>
+
+        <div class="matrix-div">
+            <div class="inner-div">
+                <div class="title">
+                    <h3>Staff Role Matrix</h3>
+                </div>
+                <div id="chartContainer1" style="width:100%; height:200px; margin:auto;"></div>
+
+                <script type="text/javascript">
+                var options = {
+                    title: {
+                        text: "" /*My Performance*/
+                    },
+                    data: [{
+                        type: "pie",
+                        startAngle: 45,
+                        showInLegend: "False",
+                        legendText: "{label}",
+                        indexLabel: "{label} ({y})",
+                        yValueFormatString: "#,##0.#" % "",
+                        dataPoints: [{
+                                label: "SUPER ADMIN",
+                                y: 5
+                            },
+                            {
+                                label: "ADMINISTRATOR",
+                                y: 6
+                            },
+                            {
+                                label: "SUBJECT TEACHERS",
+                                y: 4
+                            },
+                            {
+                                label: "CLASS TEACHERS",
+                                y: 5
+                            },
+                            {
+                                label: "ICT STAFF",
+                                y: 15
+                            },
+                            {
+                                label: "ACCOUNTANTS",
+                                y: 15
+                            },
+                        ]
+                    }]
+                };
+                $("#chartContainer1").CanvasJSChart(options);
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
 <?php } ?>
 
 
 <?php if ($page == 'administratorDashboard') { ?>
-    <div class="page-title-back-div dashbaords-page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
-        <div class="page-title-div">
-            <div class="top-title"><span id="page-title"><i class="bi-speedometer2"></i> Dashboard Overview</span></div>
-            <div class="main-title">👋 Hi, <span id="loginUserName">
-                    <script>
-                        $("#loginUserName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));
-                    </script>
-                </span></div>
-            <div class="bottom-title"><i class="bi-clock"></i> Last Login Date | <span id="loginUserLastLogin">
-                    <script>
-                        $("#loginUserLastLogin").html(staffLoginData.lastLoginTime);
-                    </script>
-                </span>
-            </div>
+<div class="page-title-back-div dashbaords-page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
+    <div class="page-title-div">
+        <div class="top-title"><span id="page-title"><i class="bi-speedometer2"></i> Dashboard Overview</span></div>
+        <div class="main-title">👋 Hi, <span id="loginUserName">
+                <script>
+                $("#loginUserName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));
+                </script>
+            </span></div>
+        <div class="bottom-title"><i class="bi-clock"></i> Last Login Date | <span id="loginUserLastLogin">
+                <script>
+                $("#loginUserLastLogin").html(staffLoginData.lastLoginTime);
+                </script>
+            </span>
         </div>
     </div>
+</div>
 
-    <div class="pages-back-div dashbaords-pg-back-div">
-        <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
-            <div class="user-managment-list" id="MasterCountConfigurations">
-                <script>
-                    $("#MasterCountConfigurations").html(`
+<div class="pages-back-div dashbaords-pg-back-div">
+    <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
+        <div class="user-managment-list" id="MasterCountConfigurations">
+            <script>
+            $("#MasterCountConfigurations").html(`
                         <div class="inner-div"  onclick="_fetchEachBranches('${staffLoginData.branchId}');">
                             <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/branch.png" alt="${staffLoginData.branchName}"/></div>
                             <div class="text-div">
@@ -448,12 +485,12 @@
                             </div>
                         </div>
                     `);
-                </script>
-            </div>
-            
-          <div class="user-managment-list" id="MyProfile">
-                <script>
-                    $("#MyProfile").html(`
+            </script>
+        </div>
+
+        <div class="user-managment-list" id="MyProfile">
+            <script>
+            $("#MyProfile").html(`
                         <div class="inner-div"  onclick="_fetchEachStaff('${staffLoginData.staffId}');">
                             <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/profile.png" alt="MY PROFILE"/></div>
                             <div class="text-div">
@@ -462,47 +499,47 @@
                             </div>
                         </div>
                     `);
-                </script>
-            </div>
+            </script>
+        </div>
 
 
-            <div class="user-managment-list" onclick="_getForm({page: 'change_password', url: adminPortalLocalUrl});">
-                <div class="inner-div">
-                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/status.png" alt="User Status Configurations"/></div>
-                    <div class="text-div">
-                        <h3>CHANGE PASSWORD</h3>
-                        <p>Click here to change and upadate your password</p>
-                    </div>
+        <div class="user-managment-list" onclick="_getForm({page: 'change_password', url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/status.png"
+                        alt="User Status Configurations" /></div>
+                <div class="text-div">
+                    <h3>CHANGE PASSWORD</h3>
+                    <p>Click here to change and upadate your password</p>
                 </div>
             </div>
         </div>
     </div>
+</div>
 <?php } ?>
 
 <?php if ($page == 'subjectTeacherDashboard') { ?>
-    <div class="page-title-back-div dashbaords-page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
-        <div class="page-title-div">
-            <div class="top-title"><span id="page-title"><i class="bi-speedometer2"></i> Dashboard Overview</span></div>
-            <div class="main-title">👋 Hi, <span id="loginUserName">
-                    <script>
-                        $("#loginUserName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));
-                    </script>
-                </span></div>
-            <div class="bottom-title"><i class="bi-clock"></i> Last Login Date | <span id="loginUserLastLogin">
-                    <script>
-                        $("#loginUserLastLogin").html(staffLoginData.lastLoginTime);
-                    </script>
-                </span>
-            </div>
+<div class="page-title-back-div dashbaords-page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
+    <div class="page-title-div">
+        <div class="top-title"><span id="page-title"><i class="bi-speedometer2"></i> Dashboard Overview</span></div>
+        <div class="main-title">👋 Hi, <span id="loginUserName">
+                <script>
+                $("#loginUserName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));
+                </script>
+            </span></div>
+        <div class="bottom-title"><i class="bi-clock"></i> Last Login Date | <span id="loginUserLastLogin">
+                <script>
+                $("#loginUserLastLogin").html(staffLoginData.lastLoginTime);
+                </script>
+            </span>
         </div>
     </div>
+</div>
 
-
-      <div class="pages-back-div dashbaords-pg-back-div">
-        <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
-            <div class="user-managment-list" id="MyProfile">
-                <script>
-                    $("#MyProfile").html(`
+<div class="pages-back-div dashbaords-pg-back-div">
+    <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
+        <div class="user-managment-list" id="MyProfile">
+            <script>
+            $("#MyProfile").html(`
                         <div class="inner-div" onclick="_fetchEachStaff('${staffLoginData.staffId}');">
                             <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/profile.png" alt="Master Count Configurations"/></div>
                             <div class="text-div">
@@ -511,49 +548,48 @@
                             </div>
                         </div>
                     `);
-                </script>
-            </div>
+            </script>
+        </div>
 
-            <div class="user-managment-list" onclick="_getForm({page: 'change_password', url: adminPortalLocalUrl});">
-                <div class="inner-div">
-                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/status.png" alt="User Status Configurations"/></div>
-                    <div class="text-div">
-                        <h3>CHANGE PASSWORD</h3>
-                        <p>Click here to change and upadate your password</p>
-                    </div>
+        <div class="user-managment-list" onclick="_getForm({page: 'change_password', url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/status.png"
+                        alt="User Status Configurations" /></div>
+                <div class="text-div">
+                    <h3>CHANGE PASSWORD</h3>
+                    <p>Click here to change and upadate your password</p>
                 </div>
             </div>
         </div>
     </div>
-
-   
+</div>
 <?php } ?>
 
 
 <?php if ($page == 'ICTStaffDashboard') { ?>
-    <div class="page-title-back-div dashbaords-page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
-        <div class="page-title-div">
-            <div class="top-title"><span id="page-title"><i class="bi-speedometer2"></i> Dashboard Overview</span></div>
-            <div class="main-title">👋 Hi, <span id="loginUserName">
-                    <script>
-                        $("#loginUserName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));
-                    </script>
-                </span></div>
-            <div class="bottom-title"><i class="bi-clock"></i> Last Login Date | <span id="loginUserLastLogin">
-                    <script>
-                        $("#loginUserLastLogin").html(staffLoginData.lastLoginTime);
-                    </script>
-                </span>
-            </div>
+<div class="page-title-back-div dashbaords-page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
+    <div class="page-title-div">
+        <div class="top-title"><span id="page-title"><i class="bi-speedometer2"></i> Dashboard Overview</span></div>
+        <div class="main-title">👋 Hi, <span id="loginUserName">
+                <script>
+                $("#loginUserName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));
+                </script>
+            </span></div>
+        <div class="bottom-title"><i class="bi-clock"></i> Last Login Date | <span id="loginUserLastLogin">
+                <script>
+                $("#loginUserLastLogin").html(staffLoginData.lastLoginTime);
+                </script>
+            </span>
         </div>
     </div>
+</div>
 
-    <div class="pages-back-div dashbaords-pg-back-div">
-        <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
+<div class="pages-back-div dashbaords-pg-back-div">
+    <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
 
-            <div class="user-managment-list" id="MyProfile">
-                <script>
-                    $("#MyProfile").html(`
+        <div class="user-managment-list" id="MyProfile">
+            <script>
+            $("#MyProfile").html(`
                         <div class="inner-div"  onclick="_fetchEachStaff('${staffLoginData.staffId}');">
                             <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/profile.png" alt="Master Count Configurations"/></div>
                             <div class="text-div">
@@ -562,99 +598,171 @@
                             </div>
                         </div>
                     `);
-                </script>
-            </div>
+            </script>
+        </div>
 
-            <div class="user-managment-list" onclick="_getActivePage({page:'branches', divid:'branches'});">
-                <div class="inner-div">
-                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/branch.png" alt="Master Count Configurations"/></div>
-                    <div class="text-div">
-                        <h3>Branches Management</h3>
-                        <p> Manage the administration of a specific school branch, handling staff, student enrollment, schedules, resources, and compliance reporting.</p>
-                    </div>
+        <div class="user-managment-list" onclick="_getActivePage({page:'branches', divid:'branches'});">
+            <div class="inner-div">
+                <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/branch.png"
+                        alt="Master Count Configurations" /></div>
+                <div class="text-div">
+                    <h3>Branches Management</h3>
+                    <p> Manage the administration of a specific school branch, handling staff, student enrollment,
+                        schedules, resources, and compliance reporting.</p>
                 </div>
             </div>
+        </div>
 
-            <div class="user-managment-list" onclick="_getActivePage({page:'staff', divid:'staff'});">
-                <div class="inner-div">
-                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/staff.png" alt="Master Count Configurations"/></div>
-                    <div class="text-div">
-                        <h3>Staff Management</h3>
-                        <p>Manage staff recruitment, roles, attendance, performance, and records of all academic and non-academic staff members.</p>
-                    </div>
+        <div class="user-managment-list" onclick="_getActivePage({page:'staff', divid:'staff'});">
+            <div class="inner-div">
+                <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/staff.png"
+                        alt="Master Count Configurations" /></div>
+                <div class="text-div">
+                    <h3>Staff Management</h3>
+                    <p>Manage staff recruitment, roles, attendance, performance, and records of all academic and
+                        non-academic staff members.</p>
                 </div>
             </div>
+        </div>
 
 
-            <div class="user-managment-list" onclick="_getPage({page: 'user-role-configuration', url: adminPortalLocalUrl});">
-                <div class="inner-div">
-                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/authorization.png" alt="User Role Management"/></div>
-                    <div class="text-div">
-                        <h3>User Role Management</h3>
-                        <p>User role configurations manage permissions, ensuring secure and efficient access to features.</p>
-                    </div>
+        <div class="user-managment-list"
+            onclick="_getPage({page: 'user-role-configuration', url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/authorization.png"
+                        alt="User Role Management" /></div>
+                <div class="text-div">
+                    <h3>User Role Management</h3>
+                    <p>User role configurations manage permissions, ensuring secure and efficient access to features.
+                    </p>
                 </div>
             </div>
+        </div>
 
-            <div class="user-managment-list" onclick="_getPage({page: 'department_config', url: adminPortalLocalUrl});">
-                <div class="inner-div">
-                    <div class="icon-div">
-                        <img src="<?php echo $websiteUrl?>/images/department.png" alt="Department Configuration"/>
-                    </div>
-                    <div class="text-div">
-                        <h3>Departments</h3>
-                        <p>Manage, add, and update school departments efficiently.</p>
-                    </div>
+        <div class="user-managment-list" onclick="_getPage({page: 'department_config', url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl?>/images/department.png" alt="Department Configuration" />
+                </div>
+                <div class="text-div">
+                    <h3>Departments</h3>
+                    <p>Manage, add, and update school departments efficiently.</p>
                 </div>
             </div>
+        </div>
 
-            <div class="user-managment-list" onclick="_getPage({page: 'class_config', url: adminPortalLocalUrl});">
-                <div class="inner-div">
-                    <div class="icon-div">
-                        <img src="<?php echo $websiteUrl?>/images/class.png" alt="Class Configuration"/>
-                    </div>
-                    <div class="text-div">
-                        <h3>Classess</h3>
-                        <p>Create, organize, and manage classes for different levels and departments.</p>
-                    </div>
+        <div class="user-managment-list" onclick="_getPage({page: 'class_config', url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl?>/images/class.png" alt="Class Configuration" />
+                </div>
+                <div class="text-div">
+                    <h3>Classess</h3>
+                    <p>Create, organize, and manage classes for different levels and departments.</p>
                 </div>
             </div>
-            
-            <div class="user-managment-list" onclick="_getPage({page: 'arm_config', url: adminPortalLocalUrl});">
-                <div class="inner-div">
-                    <div class="icon-div">
-                        <img src="<?php echo $websiteUrl?>/images/arms.png" alt="Arms Configuration"/>
-                    </div>
-                    <div class="text-div">
-                        <h3>Arms</h3>
-                        <p>Create, organize, and manage Arms for different Classes.</p>
-                    </div>
+        </div>
+
+        <div class="user-managment-list" onclick="_getPage({page: 'arm_config', url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl?>/images/arms.png" alt="Arms Configuration" />
+                </div>
+                <div class="text-div">
+                    <h3>Arms</h3>
+                    <p>Create, organize, and manage Arms for different Classes.</p>
                 </div>
             </div>
+        </div>
 
-            <div class="user-managment-list" onclick="_getPage({page: 'subject_config', url: adminPortalLocalUrl});">
-                <div class="inner-div">
-                    <div class="icon-div">
-                        <img src="<?php echo $websiteUrl?>/images/subject.png" alt="Subject Configuration"/>
-                    </div>
-                    <div class="text-div">
-                        <h3>Subjects</h3>
-                        <p>Define and manage subjects offered across various classes and departments.</p>
-                    </div>
+        <div class="user-managment-list" onclick="_getPage({page: 'subject_config', url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl?>/images/subject.png" alt="Subject Configuration" />
+                </div>
+                <div class="text-div">
+                    <h3>Subjects</h3>
+                    <p>Define and manage subjects offered across various classes and departments.</p>
                 </div>
             </div>
+        </div>
 
-            <div class="user-managment-list" onclick="_getForm({page: 'change_password', url: adminPortalLocalUrl});">
-                <div class="inner-div">
-                    <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/status.png" alt="User Status Configurations"/></div>
-                    <div class="text-div">
-                        <h3>CHANGE PASSWORD</h3>
-                        <p>Click here to change and upadate your password</p>
-                    </div>
+        <div class="user-managment-list" onclick="_getForm({page: 'change_password', url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/status.png"
+                        alt="User Status Configurations" /></div>
+                <div class="text-div">
+                    <h3>CHANGE PASSWORD</h3>
+                    <p>Click here to change and upadate your password</p>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<?php } ?>
+
+
+<?php if ($page == 'bursaryDashboard') { ?>
+<div class="page-title-back-div dashbaords-page-title-back-div" data-aos="fade-in" data-aos-duration="1500">
+    <div class="page-title-div">
+        <div class="top-title"><span id="page-title"><i class="bi-speedometer2"></i> Dashboard Overview</span></div>
+        <div class="main-title">👋 Hi, <span id="loginUserName">
+                <script>
+                $("#loginUserName").html(capitalizeFirstLetterOfEachWord(staffLoginData.fullName));
+                </script>
+            </span></div>
+        <div class="bottom-title"><i class="bi-clock"></i> Last Login Date | <span id="loginUserLastLogin">
+                <script>
+                $("#loginUserLastLogin").html(staffLoginData.lastLoginTime);
+                </script>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="pages-back-div dashbaords-pg-back-div">
+    <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
+        <div class="user-managment-list" id="MasterCountConfigurations">
+            <script>
+            $("#MasterCountConfigurations").html(`
+                        <div class="inner-div"  onclick="_fetchEachBranches('${staffLoginData.branchId}');">
+                            <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/branch.png" alt="${staffLoginData.branchName}"/></div>
+                            <div class="text-div">
+                                <h3>${staffLoginData.branchName}</h3>
+                                <p>Click here to view your branch details</p>
+                            </div>
+                        </div>
+                    `);
+            </script>
+        </div>
+
+        <div class="user-managment-list" id="MyProfile">
+            <script>
+            $("#MyProfile").html(`
+                        <div class="inner-div"  onclick="_fetchEachStaff('${staffLoginData.staffId}');">
+                            <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/profile.png" alt="MY PROFILE"/></div>
+                            <div class="text-div">
+                                <h3>MY PROFILE</h3>
+                                <p>Manages Subject Lessons, Assignments, Grades, Attendance, And Student Performance Tracking For Their Designated Subject.</p>
+                            </div>
+                        </div>
+                    `);
+            </script>
+        </div>
+
+
+        <div class="user-managment-list" onclick="_getForm({page: 'change_password', url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div"><img src="<?php echo $websiteUrl?>/images/status.png"
+                        alt="User Status Configurations" /></div>
+                <div class="text-div">
+                    <h3>CHANGE PASSWORD</h3>
+                    <p>Click here to change and upadate your password</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <?php } ?>
 
 
@@ -701,15 +809,15 @@
 
 
 <?php if ($page == 'logout_confirm_form') { ?>
-    <div class="caption-success-div animated zoomIn">
-        <div class="div-in">
-            <div class="img"><img src="<?php echo $websiteUrl ?>/images/warning.gif" /></div>
-            <h2>Are you sure to log-out?</h2>
-            Please, confirm your log-out action.
-            <div class="btn-div">
-                <button class="btn" onclick="_logOut();">YES</button>
-                <button class="btn no-btn" onclick="_alertClose(<?php echo $modalLayer ?>);">NO</button>
-            </div>
+<div class="caption-success-div animated zoomIn">
+    <div class="div-in">
+        <div class="img"><img src="<?php echo $websiteUrl ?>/images/warning.gif" /></div>
+        <h2>Are you sure to log-out?</h2>
+        Please, confirm your log-out action.
+        <div class="btn-div">
+            <button class="btn" onclick="_logOut();">YES</button>
+            <button class="btn no-btn" onclick="_alertClose(<?php echo $modalLayer ?>);">NO</button>
         </div>
     </div>
+</div>
 <?php } ?>

@@ -182,7 +182,7 @@ if(!$checkSession){
             
             $allowedRoles = ["R001", "R002"];
             if (in_array($loginRoleId, $allowedRoles)) {//// super admin and ICT
-                mysqli_query($conn,"UPDATE `STAFF_TAB` SET  `branchId`='$branchId', `roleId`='$roleId', `statusId`='$statusId', `createdBy`='$loginStaffId' WHERE $clientIds AND staffId='$staffId'")or die (mysqli_error($conn));
+                mysqli_query($conn,"UPDATE `STAFF_TAB` SET  `branchId`='$branchId', `roleId`='$roleId', `statusId`='$statusId', `updatedBy`='$loginStaffId' WHERE $clientIds AND staffId='$staffId'")or die (mysqli_error($conn));
             }
             if($loginRoleId=="R003"){//// school admin
                 mysqli_query($conn,"UPDATE `STAFF_TAB` SET `roleId`='$roleId', `statusId`='$statusId', `updatedBy`='$loginStaffId' WHERE $clientIds AND staffId='$staffId'")or die (mysqli_error($conn));

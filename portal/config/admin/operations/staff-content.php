@@ -684,7 +684,8 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
 
     <div class="btn-div" id="staffBtn">
         <script>
-        if (userRoles.canModifyStaff) {
+        if ((userRoles.canViewSuperAdminDashboard || userRoles.canViewAdministratorDashboard ||
+                userRoles.canViewIctStaffDashboard)) {
             $("#staffBtn").html(`
                     <button class="btn" title="UPDATE PROFILE" id="updateBtn" onclick="_updateStaff();"> UPDATE PROFILE <i class="bi-check"></i></button>
                 `);
