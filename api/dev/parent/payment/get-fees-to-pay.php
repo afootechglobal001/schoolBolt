@@ -105,11 +105,41 @@ if (!$checkBasicSecurity){/// start if 1
     $response['schoolBoltCharges'] = $previousPaymentCount>0 ? 0 : $schoolBoltCharges;
     $response['data'] = array(); // Initialize the data array
 
-    $select = "SELECT a.feesId, a.feesName, a.feesOption, b.amount 
-    FROM FEES_SETTINGS_TAB a, FEES_COMPUTE_TAB b WHERE 
-    a.clientId=b.clientId AND a.branchId=b.branchId AND a.feesId=b.feesId AND 
-    a.clientId='$clientId' AND a.branchId='$branchId' AND b.session='$session' AND b.termId='$termId' AND b.departmentId='$departmentId' AND b.classId='$classId'";
-    
+    $select = "
+    SELECT 
+        a.feesId, 
+        a.feesName, 
+        CASE 
+            WHEN c.feesId IS NOT NULL THEN 'TRUE' 
+            ELSE a.feesOption 
+        END AS feesOption, 
+        b.amount,
+        CASE 
+            WHEN c.feesId IS NOT NULL THEN 'TRUE' 
+            ELSE 'FALSE' 
+        END AS isDeletable 
+    FROM FEES_SETTINGS_TAB a
+    JOIN FEES_COMPUTE_TAB b 
+        ON a.clientId = b.clientId 
+        AND a.branchId = b.branchId 
+        AND a.feesId = b.feesId
+    LEFT JOIN ACCOUNT_STUDENT_TERMINAL_MANDATORY_FEES_CONFIG_TAB c 
+        ON a.feesId = c.feesId 
+        AND c.studentId = '$studentId'
+        AND a.clientId = c.clientId 
+        AND a.branchId = c.branchId 
+        AND b.session = c.session 
+        AND b.termId = c.termId 
+        AND b.departmentId = c.departmentId 
+        AND b.classId = c.classId
+    WHERE 
+        a.clientId = '$clientId' 
+        AND a.branchId = '$branchId' 
+        AND b.session = '$session' 
+        AND b.termId = '$termId' 
+        AND b.departmentId = '$departmentId' 
+        AND b.classId = '$classId'
+";
     $getFeesToPayQuery=mysqli_query($conn,$select)or die (mysqli_error($conn));
     while ($fetchQuery = mysqli_fetch_assoc($getFeesToPayQuery)) {
         $feesId=$fetchQuery['feesId'];

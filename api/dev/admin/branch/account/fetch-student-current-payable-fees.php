@@ -55,12 +55,6 @@ if(!$checkSession){
     }
 
 
-    /////////////////// get count previous successfull payment
-    $getPaymentIdQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=5");
-    $previousPaymentCount=mysqli_num_rows($getPaymentIdQuery);
-
-
-   
     $response['response']=200; 
     $response['success']=true;
     $response['message']="ACTION SUCCESSFUL!";
@@ -70,22 +64,49 @@ if(!$checkSession){
     $response['departmentData'] = $departmentDataFetch;
     $response['classData'] = $classDataFetch;
     $response['armData'] = $armDataFetch;
-    $response['schoolBoltCharges'] = $previousPaymentCount>0 ? 0 : $schoolBoltCharges;
     $response['data'] = array(); // Initialize the data array
 
-    $select = "SELECT a.feesId, a.feesName, a.feesOption, b.amount 
-    FROM FEES_SETTINGS_TAB a, FEES_COMPUTE_TAB b WHERE 
-    a.clientId=b.clientId AND a.branchId=b.branchId AND a.feesId=b.feesId AND 
-    a.clientId='$clientId' AND a.branchId='$branchId' AND b.session='$session' AND b.termId='$termId' AND b.departmentId='$departmentId' AND b.classId='$classId'";
-    
-    $getFeesToPayQuery=mysqli_query($conn,$select)or die (mysqli_error($conn));
-    while ($fetchQuery = mysqli_fetch_assoc($getFeesToPayQuery)) {
-        $feesId=$fetchQuery['feesId'];
-        $paymentQuery=mysqli_query($conn,"SELECT a.paymentId FROM PAYMENTS_TAB a, PAYMENT_HISTORY_TAB b WHERE a.clientId='$clientId' AND a.branchId='$branchId' AND a.session='$session' AND a.termId='$termId' AND a.paymentId=b.paymentId AND b.studentId='$studentId' AND b.feesId='$feesId'")or die (mysqli_error($conn));
-        $paymentCount = mysqli_num_rows($paymentQuery);
-        $fetchQuery['paid']=$paymentCount>0 ? 'TRUE' : 'FALSE';
-        $response['data'][]= $fetchQuery;
-    }
+ $select = "
+    SELECT 
+        a.feesId, 
+        a.feesName, 
+        CASE 
+            WHEN c.feesId IS NOT NULL THEN 'TRUE' 
+            ELSE a.feesOption 
+        END AS feesOption, 
+        b.amount,
+        CASE 
+            WHEN c.feesId IS NOT NULL THEN 'TRUE' 
+            ELSE 'FALSE' 
+        END AS isDeletable 
+    FROM FEES_SETTINGS_TAB a
+    JOIN FEES_COMPUTE_TAB b 
+        ON a.clientId = b.clientId 
+        AND a.branchId = b.branchId 
+        AND a.feesId = b.feesId
+    LEFT JOIN ACCOUNT_STUDENT_TERMINAL_MANDATORY_FEES_CONFIG_TAB c 
+        ON a.feesId = c.feesId 
+        AND c.studentId = '$studentId'
+        AND a.clientId = c.clientId 
+        AND a.branchId = c.branchId 
+        AND b.session = c.session 
+        AND b.termId = c.termId 
+        AND b.departmentId = c.departmentId 
+        AND b.classId = c.classId
+    WHERE 
+        a.clientId = '$clientId' 
+        AND a.branchId = '$branchId' 
+        AND b.session = '$session' 
+        AND b.termId = '$termId' 
+        AND b.departmentId = '$departmentId' 
+        AND b.classId = '$classId'
+";
+
+$getFeesToPayQuery = mysqli_query($conn, $select) or die(mysqli_error($conn));
+while ($fetchQuery = mysqli_fetch_assoc($getFeesToPayQuery)) {
+    $response['data'][] = $fetchQuery;
+}
+
             
 end:
 echo json_encode($response);
