@@ -81,73 +81,18 @@
                     </div>
 
                     <div class="permission-toggle-div">
+                        <div class="toggle-title">School Permissions</div>
+                        <div class="fetch-toggle" id="school"></div>
+                    </div>
+
+                    <div class="permission-toggle-div">
                         <div class="toggle-title">Branch Permissions</div>
                         <div class="fetch-toggle" id="branch"></div>
                     </div>
 
                     <div class="permission-toggle-div">
-                        <div class="toggle-title">Administrative Permissions</div>
-                        <div class="fetch-toggle" id="staff"></div>
-                    </div>
-
-                    <div class="permission-toggle-div">
-                        <div class="toggle-title">Students Permissions</div>
-                        <div class="fetch-toggle" id="student"></div>
-                    </div>
-
-                    <div class="permission-toggle-div">
-                        <div class="toggle-title">Department Permissions</div>
-                        <div class="fetch-toggle" id="department"></div>
-                    </div>
-
-                    <div class="permission-toggle-div">
-                        <div class="toggle-title">Classes Permissions</div>
-                        <div class="fetch-toggle" id="class"></div>
-                    </div>
-
-                    <div class="permission-toggle-div">
-                        <div class="toggle-title">Arms Permissions</div>
-                        <div class="fetch-toggle" id="arm"></div>
-                    </div>
-
-                    <div class="permission-toggle-div">
-                        <div class="toggle-title">Subjects Permissions</div>
-                        <div class="fetch-toggle" id="subject"></div>
-                    </div>
-
-                    <div class="permission-toggle-div">
-                        <div class="toggle-title">Class Teacher's Permissions</div>
+                        <div class="toggle-title">Class Teacher Permissions</div>
                         <div class="fetch-toggle" id="class_teacher"></div>
-                    </div>
-
-                    <div class="permission-toggle-div">
-                        <div class="toggle-title">Publish Permissions</div>
-                        <div class="fetch-toggle" id="publish"></div>
-                    </div>
-
-                    <div class="permission-toggle-div">
-                        <div class="toggle-title">Account Permissions</div>
-                        <div class="fetch-toggle" id="account"></div>
-                    </div>
-
-                    <div class="permission-toggle-div">
-                        <div class="toggle-title">Role Permissions</div>
-                        <div class="fetch-toggle" id="role"></div>
-                    </div>
-
-                    <div class="permission-toggle-div">
-                        <div class="toggle-title">Fees Permissions</div>
-                        <div class="fetch-toggle" id="fees"></div>
-                    </div>
-
-                    <div class="permission-toggle-div">
-                        <div class="toggle-title">Settings Permissions</div>
-                        <div class="fetch-toggle" id="settings"></div>
-                    </div>
-
-                    <div class="permission-toggle-div">
-                        <div class="toggle-title">Notifications Permissions</div>
-                        <div class="fetch-toggle" id="notifications"></div>
                     </div>
                     <script>_fetchRolePermissions();</script>
                 </div>
