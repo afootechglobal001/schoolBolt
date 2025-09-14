@@ -278,13 +278,13 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
                         onclick="_getActiveStaffPage({divid:'staff_dashboard', page: 'staff_dashboard', url: adminPortalLocalUrl});">
                         <i class="bi-speedometer2"></i> Dashboard
                     </li>
-                    <li title="My Students" id="staff_students"
+                    <li class="hide-li" title="My Students" id="staff_students"
                         onclick="_getActiveStaffPage({divid:'staff_students', page: 'staff_students', url: adminPortalLocalUrl});">
                         <i class="bi-mortarboard"></i> My Students
                     </li>
 
                     <li class="hide-li" title="Staff Record"><i class="bi-file-spreadsheet"></i> Record
-                        <ul class="ul-expand animated fadeIn">
+                        <ul class="animated fadeIn">
                             <li onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});"
                                 title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
                             <li onclick="_getActiveStaffPage({divid:'staff_students_compute_score', page: 'staff_students_compute_score', url: adminPortalLocalUrl});"
@@ -308,7 +308,7 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
                         onclick="_getActiveStaffPage({divid:'staff_activities', page: 'staff_activities', url: adminPortalLocalUrl});">
                         <i class="bi-bell"></i> Staff Activities
                     </li>
-
+                    <!-- ////// for mobile view -->
                     <li class="li" title="Other Links"><i class="bi-three-dots-vertical"></i>
                         <ul class="ul">
                             <li title="Dashboard"
@@ -320,21 +320,30 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
                                 <i class="bi-mortarboard"></i> <span>My Students</span>
                             </li>
                             <li title="Staff Record"><i class="bi-file-spreadsheet"></i> <span>Record</span>
-                                <div class="expand-div expanded animated fadeIn">
-                                    <ul class="ul-expand">
-                                        <li onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});"
-                                            title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
-                                        <li onclick="_getActiveStaffPage({divid:'staff_students_compute_score', page: 'staff_students_compute_score', url: adminPortalLocalUrl});"
-                                            title="Compute Score"><i class="bi-file-spreadsheet"></i>Compute Score</li>
-                                        <li onclick="_getActiveStaffPage({divid:'staff_students_cummulative_mark', page: 'staff_students_cummulative_mark', url: adminPortalLocalUrl});"
-                                            title="Cumulative Mark's Score"><i
-                                                class="bi-file-spreadsheet"></i>Cumulative Mark's Book</li>
-                                        <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Student
-                                            Attendance</li>
-                                        <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Class
-                                            Teacher's Commemt</li>
-                                    </ul>
-                                </div>
+
+                                <ul class="ul-expand animated fadeIn" id="recordExpandUl">
+                                    <li onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});"
+                                        title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
+                                    <li onclick="_getActiveStaffPage({divid:'staff_students_compute_score', page: 'staff_students_compute_score', url: adminPortalLocalUrl});"
+                                        title="Compute Score"><i class="bi-file-spreadsheet"></i>Compute Score</li>
+                                    <li onclick="_getActiveStaffPage({divid:'staff_students_cummulative_mark', page: 'staff_students_cummulative_mark', url: adminPortalLocalUrl});"
+                                        title="Cumulative Mark's Score"><i class="bi-file-spreadsheet"></i>Cumulative
+                                        Mark's Book</li>
+                                    <script>
+                                    if (userRoles.canManageStudentsAttendance) {
+                                        $('#recordExpandUl').append(`
+                                                <li title="Student Attendance" onclick="_getActiveStaffPage({divid:'staff_student_attendance', page: 'staff_student_attendance', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Student Attendance</li>
+                                            `);
+                                    }
+                                    if (userRoles.canManageClassTeachersComments) {
+                                        $('#recordExpandUl').append(`
+                                                <li title="Class Teacher's Comment" onclick="_getActiveStaffPage({divid:'staff_teachers_comment', page: 'staff_teachers_comment', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Class Teacher's Comment</li>
+                                            `);
+                                    }
+                                    </script>
+
+                                </ul>
+
                             </li>
                             <li title="My Profile"
                                 onclick="_getActiveStaffPage({divid:'staff_profile_details', page: 'staff_profile_details', url: adminPortalLocalUrl});">
@@ -432,30 +441,38 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
             </div>
         </div>
     </div>
-
-    <div class="user-managment-list staff-managment-list" onclick="">
-        <div class="inner-div">
-            <div class="icon-div">
-                <img src="<?php echo $websiteUrl ?>/images/timetable.png" alt="Class Teacher's Comment" />
+    <script>
+    if (userRoles.canManageClassTeachersComments) {
+        $('.user-managment-back-div').append(`
+            <div class="user-managment-list staff-managment-list" onclick="_getActiveStaffPage({divid:'staff_teachers_comment', page: 'staff_teachers_comment', url: adminPortalLocalUrl});">
+                <div class="inner-div">
+                    <div class="icon-div">
+                        <img src="<?php echo $websiteUrl ?>/images/timetable.png" alt="Class Teacher's Comment" />
+                    </div>
+                    <div class="text-div">
+                        <h3>Class Teacher's Comment</h3>
+                        <p>Add feedback on student performance.</p>
+                    </div>
+                </div>
             </div>
-            <div class="text-div">
-                <h3>Class Teacher's Comment</h3>
-                <p>Add feedback on student performance.</p>
+        `);
+    }
+    if (userRoles.canManageStudentsAttendance) {
+        $('.user-managment-back-div').append(`
+            <div class="user-managment-list staff-managment-list" onclick="_getActiveStaffPage({divid:'staff_student_attendance', page: 'staff_student_attendance', url: adminPortalLocalUrl});">
+                <div class="inner-div">
+                    <div class="icon-div">
+                        <img src="<?php echo $websiteUrl ?>/images/cbt.png" alt="Student Attendance" />
+                    </div>
+                    <div class="text-div">
+                        <h3>Student Attendance</h3>
+                        <p>Track and manage student attendance.</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div class="user-managment-list staff-managment-list" onclick="">
-        <div class="inner-div">
-            <div class="icon-div">
-                <img src="<?php echo $websiteUrl ?>/images/cbt.png" alt="Student Attendance" />
-            </div>
-            <div class="text-div">
-                <h3>Student Attendance</h3>
-                <p>Track and manage student attendance.</p>
-            </div>
-        </div>
-    </div>
+        `);
+    }
+    </script>
 </div>
 <?php } ?>
 

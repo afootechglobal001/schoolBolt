@@ -371,7 +371,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
 
         <div class="nav-div">
             <div class="div-in">
-                <ul>
+                <ul id="branchNavUl">
                     <li class="active" title="Dashboard" id="branch_dashboard"
                         onclick="_getActiveBranchPage({divid:'branch_dashboard', page: 'branch_dashboard', url: adminPortalLocalUrl});">
                         <i class="bi-speedometer2"></i> Dashboard
@@ -379,7 +379,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
 
                     <script>
                     if (userRoles.canViewBranchSettings) {
-                        document.write(`
+                        $('#branchNavUl').append(`
                                 <li title="Branch Settings" id="branch_settings"
                                     onclick="_getActiveBranchPage({divid:'branch_settings', page: 'branch_settings', url: adminPortalLocalUrl});">
                                     <i class="bi-gear-wide-connected"></i> Settings
@@ -388,7 +388,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                     }
 
                     if (userRoles.canViewBranchStaff) {
-                        document.write(`
+                        $('#branchNavUl').append(`
                                 <li title="Branch Staff" id="branch_staff"
                                     onclick="_getActiveBranchPage({divid:'branch_staff', page: 'branch_staff', url: adminPortalLocalUrl});">
                                     <i class="bi-person-workspace"></i> Staff
@@ -396,7 +396,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                     }
                     if (userRoles.canViewBranchStudents) {
-                        document.write(`
+                        $('#branchNavUl').append(`
                                 <li title="Branch Student"><i class="bi-mortarboard"></i>
                                     Student
                                     <ul class="animated fadeIn">
@@ -430,7 +430,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                     }
                     if (userRoles.canViewBranchClasses) {
-                        document.write(`
+                        $('#branchNavUl').append(`
                                 <li title="Branch Class" id="branch_department_class"
                                     onclick="_getActiveBranchPage({divid:'branch_department_class', page: 'branch_department_class', url: adminPortalLocalUrl});">
                                     <i class="bi-people-fill"></i> Class
@@ -438,13 +438,13 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                     }
                     if (userRoles.canViewBranchSubjects) {
-                        document.write(`
+                        $('#branchNavUl').append(`
                                 <li title="Branch Subject" id="branch_subjects"
                                     onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-journals"></i> Subject</li>
                             `);
                     }
                     if (userRoles.canViewBranchResults) {
-                        document.write(`
+                        $('#branchNavUl').append(`
                                 <li title="Branch Record"><i class="bi-person-lines-fill"></i> Result
                                     <ul class="animated fadeIn">
                                         <li title="Broad/Report Sheet"
@@ -461,7 +461,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                     }
                     if (userRoles.canViewBranchProfile) {
-                        document.write(`
+                        $('#branchNavUl').append(`
                                 <li title="Branch Profile" title="Branch Profile" id="branch_profile"
                                     onclick="_getActiveBranchPage({divid:'branch_profile', page: 'branch_profile', url: adminPortalLocalUrl});">
                                     <i class="bi-diagram-3"></i> Profile
@@ -469,7 +469,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                     }
                     if (userRoles.canViewBranchAccount) {
-                        document.write(`
+                        $('#branchNavUl').append(`
                                 <li title="Branch Account" id="branch_account"
                                     onclick="_getActiveBranchPage({divid:'branch_account', page: 'branch_account', url: adminPortalLocalUrl});">
                                     <i class="bi-wallet2"></i> Account
@@ -477,7 +477,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                     }
                     if (userRoles.canViewBranchActivities) {
-                        document.write(`
+                        $('#branchNavUl').append(`
                                 <li title="Branch Activities" id="branch_activities"
                                     onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});">
                                     <i class="bi-bell"></i> Activities
@@ -488,14 +488,14 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
 
                     <!-- for mobile view -->
                     <li class="li" title="Other Links"><i class="bi-three-dots-vertical"></i>
-                        <ul class="ul">
+                        <ul class="ul" id="branchNavUlMobile">
                             <li title="Dashboard"
                                 onclick="_getActiveBranchPage({divid:'branch_dashboard', page: 'branch_dashboard', url: adminPortalLocalUrl});">
                                 <i class="bi-speedometer2"></i> <span>Dashboard</span>
                             </li>
                             <script>
                             if (userRoles.canViewBranchSettings) {
-                                document.write(`
+                                $('#branchNavUlMobile').append(`
                                 <li title="Branch Settings"
                                     onclick="_getActiveBranchPage({divid:'branch_settings', page: 'branch_settings', url: adminPortalLocalUrl});">
                                     <i class="bi-gear-wide-connected"></i> <span>Settings</span>
@@ -503,7 +503,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                             }
                             if (userRoles.canViewBranchStaff) {
-                                document.write(`
+                                $('#branchNavUlMobile').append(`
                                 <li title="Branch Staff"
                                     onclick="_getActiveBranchPage({divid:'branch_staff', page: 'branch_staff', url: adminPortalLocalUrl});">
                                     <i class="bi-person-workspace"></i> <span>Staff</span>
@@ -511,7 +511,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                             }
                             if (userRoles.canViewBranchStudents) {
-                                document.write(`
+                                $('#branchNavUlMobile').append(`
                                 <li title="Branch Student"><i class="bi-mortarboard"></i>
                                     <span>Student</span>
                                     <ul class="ul-expand animated fadeIn">
@@ -528,7 +528,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                             }
                             if (userRoles.canViewBranchSettings) {
-                                document.write(`
+                                $('#branchNavUlMobile').append(`
                                 <li title="Branch Settings"
                                     onclick="_getActiveBranchPage({divid:'branch_settings', page: 'branch_settings', url: adminPortalLocalUrl});">
                                     <i class="bi-gear-wide-connected"></i> <span>Settings</span>
@@ -536,7 +536,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                             }
                             if (userRoles.canViewBranchStaff) {
-                                document.write(`
+                                $('#branchNavUlMobile').append(`
                                 <li title="Branch Staff"
                                     onclick="_getActiveBranchPage({divid:'branch_staff', page: 'branch_staff', url: adminPortalLocalUrl});">
                                     <i class="bi-person-workspace"></i> <span>Staff</span>
@@ -544,11 +544,11 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                             }
                             if (userRoles.canViewBranchStudents) {
-                                document.write(`
+                                $('#branchNavUlMobile').append(`
                                 <li title="Branch Student"><i class="bi-mortarboard"></i>
                                 <span>Student</span>
                                 <ul class="ul-expand animated fadeIn">
-                                    <li class="active" id="reg_students" title="Register Students"
+                                    <li id="reg_students" title="Register Students"
                                         onclick="_getForm({page: 'branch_student_reg', layer:2, url: adminPortalLocalUrl});">
                                         <i class="bi-mortarboard"></i>Register Student
                                     </li>
@@ -578,7 +578,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                             }
                             if (userRoles.canViewBranchClasses) {
-                                document.write(`
+                                $('#branchNavUlMobile').append(`
                                 <li title="Branch Class"
                                     onclick="_getActiveBranchPage({divid:'branch_department_class', page: 'branch_department_class', url: adminPortalLocalUrl});">
                                     <i class="bi-people-fill"></i> <span>Class</span>
@@ -586,7 +586,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                             }
                             if (userRoles.canViewBranchSubjects) {
-                                document.write(`
+                                $('#branchNavUlMobile').append(`
                                 <li title="Branch Subject"
                                     onclick="_getActiveBranchPage({divid:'branch_department_subject', page: 'branch_department_subject', url: adminPortalLocalUrl});">
                                     <i class="bi-journals"></i> <span>Subject</span>
@@ -594,7 +594,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                             }
                             if (userRoles.canViewBranchResults) {
-                                document.write(`
+                                $('#branchNavUlMobile').append(`
                                 <li title="Branch Record"><i class="bi-person-lines-fill"></i> Result
                                     <ul class="ul-expand animated fadeIn">
                                         <li title="Broad/Report Sheet"
@@ -611,7 +611,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                             }
                             if (userRoles.canViewBranchProfile) {
-                                document.write(`
+                                $('#branchNavUlMobile').append(`
                                 <li title="Branch Profile"
                                     onclick="_getActiveBranchPage({divid:'branch_profile', page: 'branch_profile', url: adminPortalLocalUrl});">
                                     <i class="bi-diagram-3"></i> <span>Profile</span>
@@ -619,7 +619,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                             }
                             if (userRoles.canViewBranchResults) {
-                                document.write(`
+                                $('#branchNavUlMobile').append(`
                                 <li title="Branch Report"><i class="bi-person-lines-fill"></i>
                                     <span>Result</span>
                                     <ul class="ul-expand animated fadeIn">
@@ -637,7 +637,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                             }
                             if (userRoles.canViewBranchProfile) {
-                                document.write(`
+                                $('#branchNavUlMobile').append(`
                                 <li title="Branch Profile"
                                     onclick="_getActiveBranchPage({divid:'branch_profile', page: 'branch_profile', url: adminPortalLocalUrl});">
                                     <i class="bi-diagram-3"></i> <span>Profile</span>
@@ -645,7 +645,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                             }
                             if (userRoles.canViewBranchAccount) {
-                                document.write(`
+                                $('#branchNavUlMobile').append(`
                                 <li title="Branch Account"
                                     onclick="_getActiveBranchPage({divid:'branch_account', page: 'branch_account', url: adminPortalLocalUrl});">
                                     <i class="bi-graph-up-arrow"></i> <span>Account</span>
@@ -653,15 +653,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             `);
                             }
                             if (userRoles.canViewBranchActivities) {
-                                document.write(`
-                                <li title="Branch Activities"
-                                    onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});">
-                                    <i class="bi-bell"></i> <span>Activities</span>
-                                </li>
-                            `);
-                            }
-                            if (userRoles.canViewBranchActivities) {
-                                document.write(`
+                                $('#branchNavUlMobile').append(`
                                 <li title="Branch Activities"
                                     onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});">
                                     <i class="bi-bell"></i> <span>Activities</span>
