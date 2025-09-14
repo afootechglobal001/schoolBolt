@@ -3314,7 +3314,7 @@ header
   gap: 8px;
 }
 
-.alert .alert-list-div .alert-list .span i {
+.alert .alert-list-div .alert-list .span .del-btn {
   color: var(--close-color);
   font-size: 10px;
   cursor: pointer;

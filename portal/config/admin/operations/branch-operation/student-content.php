@@ -506,7 +506,7 @@ getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchS
                         Account
                         <ul class="animated fadeIn">
                             <li title="Current Payable Fees"
-                                onclick="_getForm({page: 'payableFess', layer:3, url: adminPortalLocalUrl});"><i
+                                onclick="_fetchStudentCurrentPayableFees();"><i
                                     class="bi-credit-card"></i>Current Payable Fees</li>
                             <li title="Payment History" id="paymentHistory"
                                 onclick="_getActiveStudentPage({divid:'paymentHistory', page: 'paymentHistory', url: adminPortalLocalUrl});">
@@ -1317,253 +1317,279 @@ getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchS
 
 <!-- For Student Transaction History Page -->
 <?php if ($page == 'paymentHistory') { ?>
-<div class="alert alert-success top-alert-div animated fadeIn">
-    <div><span><i class="bi-clock"></i></span> STUDENT TRANSACTION HISTORY</div>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div><span><i class="bi-clock"></i></span> STUDENT TRANSACTION HISTORY</div>
 
-    <div class="btn-container">
-        <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
-        <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i>
-            EXPORT</button>
-    </div>
-</div>
-
-<div class="chart-div-notifications user-details-notf">
-    <div class="text"><i class="bi-graph-up-arrow"></i> Showing Payment History for </div>
-
-    <div class="text text-right" onclick="select_search()">
-        <span id="srch-text">Last 30 Days</span>
-        <div class="icon-div"><i class="bi-caret-down"></i></div>
-
-        <div class="srch-select alert-srch-select">
-            <div id="srch-today" onclick="_getAlertReport('srch-today', 'view_today_search');">Today</div>
-            <div id="srch-week" onclick="_getAlertReport('srch-week', 'view_thisweek_search');">This Week</div>
-            <div id="srch-7" onclick="_getAlertReport('srch-7', 'view_7days_search');">Last 7 Days</div>
-            <div id="srch-month" onclick="_getAlertReport('srch-month', 'view_thismonth_search');">This Month</div>
-            <div id="srch-30" onclick="_getAlertReport('srch-30', 'view_30days_search');">Last 30 Days</div>
-            <div id="srch-90" onclick="_getAlertReport('srch-90', 'view_90days_search');">Last 90 Days</div>
-            <div id="srch-year" onclick="_getAlertReport('srch-year', 'view_thisyear_search');">This Year</div>
-            <div id="srch-1year" onclick="_getAlertReport('srch-1year', 'view_1year_search');">Last 1 Year</div>
-            <div onclick="srch_custom('Custom Search')">Custom Search</div>
+        <div class="btn-container">
+            <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
+            <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i>
+                EXPORT</button>
         </div>
     </div>
 
-    <div class="text">
-        <div class="custom-srch-div">
-            <div class="custom-srch-div-in">
-                <div class="text_field_container dash_field_container">
-                    <input class="text_field dash_text_field bar_cust_text_field" type="text" id="datepickers-from"
-                        placeholder="" />
-                    <div class="placeholder dash_placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From
-                    </div>
-                </div>
+    <div class="chart-div-notifications user-details-notf">
+        <div class="text"><i class="bi-graph-up-arrow"></i> Showing Payment History for </div>
 
-                <div class="text_field_container dash_field_container">
-                    <input class="text_field dash_text_field bar_cust_text_field" type="text" id="datepickers-to"
-                        placeholder="" />
-                    <div class="placeholder dash_placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To</div>
-                </div>
-                <button type="button" class="btn">Apply</button>
+        <div class="text text-right" onclick="select_search()">
+            <span id="srch-text">Last 30 Days</span>
+            <div class="icon-div"><i class="bi-caret-down"></i></div>
+
+            <div class="srch-select alert-srch-select">
+                <div id="srch-today" onclick="_getAlertReport('srch-today', 'view_today_search');">Today</div>
+                <div id="srch-week" onclick="_getAlertReport('srch-week', 'view_thisweek_search');">This Week</div>
+                <div id="srch-7" onclick="_getAlertReport('srch-7', 'view_7days_search');">Last 7 Days</div>
+                <div id="srch-month" onclick="_getAlertReport('srch-month', 'view_thismonth_search');">This Month</div>
+                <div id="srch-30" onclick="_getAlertReport('srch-30', 'view_30days_search');">Last 30 Days</div>
+                <div id="srch-90" onclick="_getAlertReport('srch-90', 'view_90days_search');">Last 90 Days</div>
+                <div id="srch-year" onclick="_getAlertReport('srch-year', 'view_thisyear_search');">This Year</div>
+                <div id="srch-1year" onclick="_getAlertReport('srch-1year', 'view_1year_search');">Last 1 Year</div>
+                <div onclick="srch_custom('Custom Search')">Custom Search</div>
             </div>
         </div>
+
+        <div class="text">
+            <div class="custom-srch-div">
+                <div class="custom-srch-div-in">
+                    <div class="text_field_container dash_field_container">
+                        <input class="text_field dash_text_field bar_cust_text_field" type="text" id="datepickers-from"
+                            placeholder="" />
+                        <div class="placeholder dash_placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From
+                        </div>
+                    </div>
+
+                    <div class="text_field_container dash_field_container">
+                        <input class="text_field dash_text_field bar_cust_text_field" type="text" id="datepickers-to"
+                            placeholder="" />
+                        <div class="placeholder dash_placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To</div>
+                    </div>
+                    <button type="button" class="btn">Apply</button>
+                </div>
+            </div>
+        </div>
+
+
+        <script language="javascript">
+        $('#datepickers-from').datetimepicker({
+            lang: 'en',
+            timepicker: false,
+            format: 'Y-m-d',
+            formatDate: 'Y-M-d',
+        });
+
+        $('#datepickers-to').datetimepicker({
+            lang: 'en',
+            timepicker: false,
+            format: 'Y-m-d',
+            formatDate: 'Y-M-d',
+        });
+        </script>
     </div>
 
+    <div class="table-div animated fadeIn">
+        <table class="table" cellspacing="0" style="width:100%" id="pageContent2">
+            <thead>
+                <tr class="tb-col">
+                    <th>sn</th>
+                    <th>Date</th>
+                    <th>Payment ID</th>
+                    <th>Term</th>
+                    <th>Class</th>
+                    <th>(₦)Amount</th>
+                    <th>Payment Method</th>
+                    <th>Payment Status</th>
+                </tr>
+            </thead>
 
-    <script language="javascript">
-    $('#datepickers-from').datetimepicker({
-        lang: 'en',
-        timepicker: false,
-        format: 'Y-m-d',
-        formatDate: 'Y-M-d',
-    });
-
-    $('#datepickers-to').datetimepicker({
-        lang: 'en',
-        timepicker: false,
-        format: 'Y-m-d',
-        formatDate: 'Y-M-d',
-    });
-    </script>
-</div>
-
-<div class="table-div animated fadeIn">
-    <table class="table" cellspacing="0" style="width:100%" id="pageContent2">
-        <script>
-        _fetchPaymentHistory();
-        </script>
-    </table>
-</div>
+            <tbody id="pageContent">
+                <!-- CONTENT GOES HERE -->
+                <script>_fetchPaymentHistory();</script>
+                <tr>
+                    <td colspan="20">
+                        <div class="content-loading-div">
+                            <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 <?php } ?>
 
 <!-- For Student Modal -->
 <?php if ($page == 'payableFess') { ?>
-<div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
-    <div class="title-panel-div">
-        <div class="inner-top">
-            <div class="icon-title-div">
-                <span id="panel-title"><span><i class="bi-plus-square"></i></span> STUDENT FEES CONFIGURATION</span>
+    <script>studentCurrentPayableFeesSession = JSON.parse(sessionStorage.getItem("studentCurrentPayableFeesSession"));</script>
+
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <div class="icon-title-div">
+                    <span id="panel-title"><span><i class="bi-plus-square"></i></span> STUDENT FEES CONFIGURATION</span>
+                </div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
-            <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
         </div>
-    </div>
 
-    <div class="container-back-div">
-        <div class="inner-container">
-            <div>
-                <div class="alert alert-success form-alert">
-                    <span>Student Details;</span>
-                    <div class="alert-list-div">
-                        <div class="alert-list-back-div">
-                            <div class="alert-list">
-                                <div>Student Full Name:</div>
-                                <div><span id="studentFullName">
-                                        <script>
-                                        $("#studentFullName").html(getEachBranchStudentsSession?.studentData?.surName +
-                                            ' ' + getEachBranchStudentsSession?.studentData?.firstName + ' ' +
-                                            getEachBranchStudentsSession?.studentData?.otherNames);
-                                        </script>
-                                    </span></div>
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Student Details;</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Student Full Name:</div>
+                                    <div><span id="studentFullName">
+                                            <script>
+                                            $("#studentFullName").html(getEachBranchStudentsSession?.studentData?.surName +
+                                                ' ' + getEachBranchStudentsSession?.studentData?.firstName + ' ' +
+                                                getEachBranchStudentsSession?.studentData?.otherNames);
+                                            </script>
+                                        </span></div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="alert-list-back-div">
-                            <div class="alert-list">
-                                <div>Student Email:</div>
-                                <div><span id="studentEmail">
-                                        <script>
-                                        $("#studentEmail").html(getEachBranchStudentsSession?.studentData?.email);
-                                        </script>
-                                    </span></div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Student Email:</div>
+                                    <div><span id="studentEmail">
+                                            <script>
+                                            $("#studentEmail").html(getEachBranchStudentsSession?.studentData?.email);
+                                            </script>
+                                        </span></div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="alert-list-back-div">
-                            <div class="alert-list">
-                                <div>Department:</div>
-                                <div><span id="formDepartmentName">
-                                        <script>
-                                        $("#formDepartmentName").html(getEachBranchStudentsSession?.departmentData
-                                            ?.departmentName);
-                                        </script>
-                                    </span></div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Department:</div>
+                                    <div><span id="formDepartmentName">
+                                            <script>
+                                            $("#formDepartmentName").html(getEachBranchStudentsSession?.departmentData
+                                                ?.departmentName);
+                                            </script>
+                                        </span></div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="alert-list-back-div">
-                            <div class="alert-list">
-                                <div>Class:</div>
-                                <div><span id="formClassName">
-                                        <script>
-                                        $("#formClassName").html(getEachBranchStudentsSession?.classData?.className);
-                                        </script>
-                                    </span></div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Class:</div>
+                                    <div><span id="formClassName">
+                                            <script>
+                                            $("#formClassName").html(getEachBranchStudentsSession?.classData?.className);
+                                            </script>
+                                        </span></div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="alert-list-back-div">
-                            <div class="alert-list">
-                                <div>Arm:</div>
-                                <div><span id="formArmName">
-                                        <script>
-                                        $("#formArmName").html(getEachBranchStudentsSession?.armData?.armName);
-                                        </script>
-                                    </span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="paid-fee-conatiner">
-                <div class="alert alert-success form-alert">
-                    <span>List of Mandatory Fees</span>
-
-                    <div class="alert-list-div" id="paidFees">
-                        <div class="alert-list">
-                            <div>Development Fees:</div>
-                            <div class="span"><span id=""><s>N</s>20,000.00</span>
-                                <div><i class="bi-trash"></i></div>
-                            </div>
-                        </div>
-
-                        <div class="alert-list">
-                            <div>School Bus Fees:</div>
-                            <div class="span"><span id=""><s>N</s>50,000.00</span>
-                                <div onclick="_deleteFees(this);"><i class="bi-trash"></i></div>
-                            </div>
-                        </div>
-
-                        <div class="alert-list">
-                            <div>School Bus Fees:</div>
-                            <div class="span"><span id=""><s>N</s>50,000.00</span>
-                                <div onclick="_deleteFees(this);"><i class="bi-trash"></i></div>
-                            </div>
-                        </div>
-
-                        <div class="alert-list">
-                            <div>School Bus Fees:</div>
-                            <div class="span"><span id=""><s>N</s>50,000.00</span>
-                                <div onclick="_deleteFees(this);"><i class="bi-trash"></i></div>
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Arm:</div>
+                                    <div><span id="formArmName">
+                                            <script>
+                                            $("#formArmName").html(getEachBranchStudentsSession?.armData?.armName);
+                                            </script>
+                                        </span></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <script>
-                function _deleteFees(el) {
-                    $(el).closest(".alert-list").fadeOut(300, function() {
-                        $(this).remove();
-                    });
-                }
-                </script>
-            </div>
 
-            <div class="permission-form-back-div">
-                <div class="title-div">
-                    <h4>Select Mandatory Fees for this student</h4>
-                    <p>Use the toggles below to select fees applicable to this student. Switching a toggle to "Yes"
-                        enables payment for that category.</p>
-                </div>
+                <div class="paid-fee-conatiner">
+                    <div class="alert alert-success form-alert">
+                        <span>List of Mandatory Fees</span>
 
-                <div class="permission-toggle-div">
-                    <div class="toggle-title">Fee Categories</div>
-                    <div class="fetch-toggle" id="notPaidFees">
-                        <div class="each-toggle-div">
-                            <div class="sub-back-div">
-                                <div class="toggle-title-div">Development Fees - <span>(<s>N</s>20,000.00)</span></div>
-                                <div class="sub-title green-color">MANDATORY</div>
-                            </div>
-                            <label class="switch">
-                                <input type="checkbox" class="child" id="fees_1" name="feesId[]" data-value="1"
-                                    value="20000">
-                                <span class="slider"></span>
-                                <span class="toggle-label">No</span>
-                            </label>
+                        <div class="alert-list-div" id="mandatoryFees">
+                            No record found!
                         </div>
-
-                        <div class="each-toggle-div">
-                            <div class="sub-back-div">
-                                <div class="toggle-title-div">School Bus Fees - <span>(<s>N</s>50,000.00)</span></div>
-                                <div class="sub-title green-color">MANDATORY</div>
-                            </div>
-                            <label class="switch">
-                                <input type="checkbox" class="child" id="fees_2" name="feesId[]" data-value="2"
-                                    value="50000">
-                                <span class="slider"></span>
-                                <span class="toggle-label">No</span>
-                            </label>
-                        </div>
-
                     </div>
                     <script>
-                    _toggleCheck();
+                    function _deleteFees(el) {
+                        $(el).closest(".alert-list").fadeOut(300, function() {
+                            $(this).remove();
+                        });
+                    }
                     </script>
                 </div>
-            </div>
 
-            <div>
-                <button class="btn" title="Make Payment" id="submitBtn" onclick="_proceedToPayment();"> <i
-                        class="bi-check"></i> SAVE </button>
+                <div class="permission-form-back-div">
+                    <div class="title-div">
+                        <h4>Select Mandatory Fees for this student</h4>
+                        <p>Use the toggles below to select fees applicable to this student. Switching a toggle to "Yes"
+                            enables payment for that category.</p>
+                    </div>
+
+                    <div class="permission-toggle-div">
+                        <div class="toggle-title">Fee Categories</div>
+                            <div class="fetch-toggle" id="notMandatoryFees">
+
+                            <script>
+                                $(document).ready(function() {
+                                    let notMandatoryFees = '';
+                                    let mandatoryFees = '';
+
+                                    if (studentCurrentPayableFeesSession && studentCurrentPayableFeesSession.data) {
+                                        const fetch = studentCurrentPayableFeesSession.data;
+
+                                        for (let i = 0; i < fetch.length; i++) {
+                                            const fetchedFess = fetch[i];
+                                            const feesId = fetchedFess.feesId;
+                                            const feesName = fetchedFess.feesName;
+                                            const feesOption = fetchedFess.feesOption;
+                                            const isDeletable = fetchedFess.isDeletable;
+                                            const NewFeesOption = (feesOption === "FALSE") ? "NOT MANDATORY" : "";
+                                            const feesOptionColor = (feesOption === "FALSE") ? "orange-color" : "";       
+                                            const amount = thousandSeperator(fetchedFess.amount);
+
+                                            if (feesOption==='FALSE'){
+                                                notMandatoryFees += `
+                                                <div class="each-toggle-div">
+                                                    <div class="sub-back-div">
+                                                        <div class="toggle-title-div">${feesName} - <span>(<s>N</s>${amount})</span></div>
+                                                        <div class="sub-title ${feesOptionColor}">${NewFeesOption}</div>
+                                                    </div>
+                                                    <label for="fees_${feesId}" class="switch">
+                                                        <input type="checkbox" class="child" id="fees_${feesId}" name="feesId[]" data-value="${feesId}" value="${fetchedFess.amount}">
+                                                        <span class="slider"></span>
+                                                        <span class="toggle-label">No</span>
+                                                    </label>
+                                                </div>`;
+                                            } else {
+
+                                                if (isDeletable==='TRUE'){
+                                                    mandatoryFees += `
+                                                    <div class="alert-list" title="Delete this mandatory fees">
+                                                        <div>${feesName}:</div>
+                                                        <div class="span">
+                                                            <span><s>N</s>${amount}</span>
+                                                            <div class="del-btn" onclick="_deleteMandatoryFees('${feesId}');"><i class="bi-trash"></i></div>
+                                                        </div>
+                                                    </div>`;
+                                                } else{
+                                                    mandatoryFees += `
+                                                    <div class="alert-list">
+                                                        <div>${feesName}:</div>
+                                                        <div class="span">
+                                                        <span><s>N</s>${amount}</span></div>
+                                                    </div>`;
+                                                }
+                                            }
+                                        }
+                                        $("#notMandatoryFees").html(notMandatoryFees);
+                                        $("#mandatoryFees").html(mandatoryFees!=='' ? mandatoryFees : 'No record found!');
+                                        _toggleCheck();
+                                    }
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <button class="btn" title="SAVE FEES" id="submitBtn" onclick="_updateStudentMandatoryFess();"> <i class="bi-check"></i> SAVE </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 <?php } ?>

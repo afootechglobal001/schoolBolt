@@ -236,8 +236,8 @@ function _loginOnbehalfOfParent(email, parentTypeId, studentId) {
 					_getForm({page: 'parentStudentForm', layer:3, url: adminPortalLocalUrl});
         } else {
           _actionAlert(info.message, false);
+          _alertClose(2);
         }
-        _alertClose(2);
       },
       error: function () {
         _actionAlert(

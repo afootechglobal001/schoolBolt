@@ -159,17 +159,6 @@
 
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
-                                    <div>Student Email:</div>
-                                    <div><span id="studentEmail">
-                                            <script>
-                                                $("#studentEmail").html(studentParentSessionData?.student?.studentData?.email);
-                                            </script>
-                                        </span></div>
-                                </div>
-                            </div>
-
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
                                     <div>Department:</div>
                                     <div><span id="formDepartmentName">
                                             <script>
@@ -205,39 +194,33 @@
                     </div>
                 </div>
 
-                <div>
-                    <div class="alert alert-success form-alert">
-                        <span>Parent Management;</span>
+                <div class="new-btn-container"></div>
+                <script>
+                    $(document).ready(function() {
+                        let showButton = '';
+                        const statusId = studentParentSessionData?.parent?.statusId;
 
-                        <div class="new-btn-container"></div>
-                        <script>
-                            $(document).ready(function() {
-                                let showButton = '';
-                                const statusId = studentParentSessionData?.parent?.statusId;
-
-                                if (statusId === "1") {
-                                    showButton += `
-                                        <button class="btn suspend" title="SUSPEND PARENT" onclick="">
-                                            <i class="bi-person-dash"></i> SUSPEND PARENT
-                                        </button>
-                                    `;
-                                } else if (statusId === "2") {
-                                    showButton += `
-                                        <button class="btn activate" title="ACTIVATE PARENT" onclick="">
-                                            <i class="bi-person-check"></i> ACTIVATE PARENT
-                                        </button>
-                                    `;
-                                }
-                                    showButton += `
-                                        <button class="btn portal" title="GO TO PARENT PORTAL" onclick='window.open(parentPortalUrl, "_blank")'>
-                                            <i class="bi-box-arrow-up-right"></i> GO TO PARENT PORTAL
-                                        </button>
-                                        `;
-                                $(".new-btn-container").html(showButton);
-                            });
-                        </script>
-                    </div>
-                </div>
+                        if (statusId === "1") {
+                            showButton += `
+                                <button class="btn suspend" title="SUSPEND PARENT" onclick="">
+                                    <i class="bi-person-dash"></i> SUSPEND PARENT
+                                </button>
+                            `;
+                        } else if (statusId === "2") {
+                            showButton += `
+                                <button class="btn activate" title="ACTIVATE PARENT" onclick="">
+                                    <i class="bi-person-check"></i> ACTIVATE PARENT
+                                </button>
+                            `;
+                        }
+                            showButton += `
+                                <button class="btn portal" title="GO TO PARENT PORTAL" onclick='window.open(parentPortalUrl, "_blank")'>
+                                    <i class="bi-box-arrow-up-right"></i> GO TO PARENT PORTAL
+                                </button>
+                                `;
+                        $(".new-btn-container").html(showButton);
+                    });
+                </script>
             </div>
         </div>
     </div>

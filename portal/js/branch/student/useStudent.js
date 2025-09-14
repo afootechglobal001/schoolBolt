@@ -1218,10 +1218,8 @@ function _getSearchStudents(success, fetch, message) {
   }
 }
 
-
-
 function _fetchPaymentHistory() {
-   	let getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));
+  let getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
 
 	try {
@@ -1248,19 +1246,6 @@ function _fetchPaymentHistory() {
 
 				let text = '';
 				let no=0;
-				text =`
-				<thead>
-                    <tr class="tb-col">
-                        <th>sn</th>
-                        <th>Date</th>
-                        <th>Payment ID</th>
-                        <th>Term</th>
-                        <th>Class</th>
-                        <th>(₦)Amount</th>
-                        <th>Payment Method</th>
-                        <th>Payment Status</th>
-                    </tr>
-                </thead>`;
 
 				if (success===true) {
 					for (let i = 0; i < fetch.length; i++) {
@@ -1336,4 +1321,172 @@ function _fetchPaymentHistory() {
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
+}
+
+function _fetchStudentCurrentPayableFees() {
+  let getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+
+  const departmentId= getEachBranchStudentsSession?.departmentData?.departmentId;
+  const classId= getEachBranchStudentsSession?.classData?.classId;
+  const armId= getEachBranchStudentsSession?.armData?.armId;
+  const studentId= getEachBranchStudentsSession?.studentId;
+
+  try {
+    $("#get-more-third-layer")
+      .css({
+        display: "flex",
+        "justify-content": "center",
+        "align-items": "center",
+      })
+      .fadeIn(500);
+
+    $.ajax({
+      type: "GET",
+      url:`${endPoint}/admin/branch/account/fetch-student-current-payable-fees?branchId=${getEachBranchDetailsSession?.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}`,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(true),
+      success: function (info) {
+        if (info.success) {
+          sessionStorage.setItem("studentCurrentPayableFeesSession", JSON.stringify(info));
+					_getForm({page: 'payableFess', layer:3, url: adminPortalLocalUrl});
+        } else {
+          _actionAlert(info.message, false);
+          _alertClose(3);
+          const response = info.response;
+          if (response < 100) {
+            _logOut();
+          }
+        }
+      },
+      error: function () {
+        _actionAlert(
+          "Unable to reach the server. Please check your connection.",
+          false
+        );
+        _alertClose(3);
+      },
+    });
+  } catch (error) {
+    console.error("Unexpected error:", error);
+    _actionAlert("An unexpected error occurred. Please try again.", false);
+    _alertClose(3);
+  }
+}
+
+
+function _updateStudentMandatoryFess() {
+  let getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+
+  const departmentId= getEachBranchStudentsSession?.departmentData?.departmentId;
+  const classId= getEachBranchStudentsSession?.classData?.classId;
+  const armId= getEachBranchStudentsSession?.armData?.armId;
+  const studentId= getEachBranchStudentsSession?.studentId;
+
+	try {
+    let selectedFees = [];
+
+    $(".child:checked").each(function () {
+      const feesId = $(this).data("value");
+      selectedFees.push({ feesId: feesId });
+    });
+
+    if (selectedFees.length === 0) {
+      _actionAlert("Please select at least one fee to continue.", false);
+      return;
+    }
+
+    if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
+      const btnText = $("#submitBtn").html();
+      $("#submitBtn").html(
+        '<img src="' +
+          websiteUrl +
+          '/images/loading.gif" width="12px" alt="Loading"/>'
+      );
+      $("#submitBtn").prop("disabled", true);
+
+      const formData = {
+        feesIds: selectedFees,
+      };
+
+      $.ajax({
+        type: "POST",
+        url:`${endPoint}/admin/branch/account/update-student-mandatory-fees?branchId=${getEachBranchDetailsSession?.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}`,
+        data: JSON.stringify(formData),
+        dataType: "json",
+        cache: false,
+        headers: getAuthHeaders(true),
+        processData: false,
+        success: function(info) {
+          const success = info.success;
+          const message = info.message;
+
+          if (success === true) {
+            _actionAlert(message, true);
+            _fetchStudentCurrentPayableFees();
+          } else {
+            _actionAlert(message, false);
+          }
+          $("#submitBtn").html(btnText).prop("disabled", false);
+        },
+        error: function(textStatus, errorThrown) {
+          console.error("AJAX Error: ", textStatus, errorThrown);
+          _actionAlert('An error occurred while fetching data! Please try again.', false);
+          $("#submitBtn").html(btnText).prop("disabled", false);
+        }
+      });
+    }
+    } catch (error) {
+      console.error("Error: ", error);
+      _actionAlert('An unexpected error occurred! Please try again.', false);
+      $("#submitBtn").html(btnText).prop("disabled", false);
+    }
+}
+
+function _deleteMandatoryFees(feesId) {
+
+  let getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));
+  let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+
+  const departmentId = getEachBranchStudentsSession?.departmentData?.departmentId;
+  const classId = getEachBranchStudentsSession?.classData?.classId;
+  const armId = getEachBranchStudentsSession?.armData?.armId;
+  const studentId = getEachBranchStudentsSession?.studentId;
+
+  try {
+    if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
+
+      const formData = { feesId: feesId };
+
+      $.ajax({
+        type: "POST",
+        url: `${endPoint}/admin/branch/account/delete-student-mandatory-fees?branchId=${getEachBranchDetailsSession?.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}`,
+        data: JSON.stringify(formData),
+        contentType: "application/json",
+        dataType: "json",
+        cache: false,
+        headers: getAuthHeaders(true),
+        processData: false,
+        success: function(info) {
+          const { success, message } = info;
+
+          if (success === true) {
+            _actionAlert(message, true);
+            _fetchStudentCurrentPayableFees();
+          } else {
+            _actionAlert(message, false);
+          }
+        },
+        error: function(xhr, textStatus, errorThrown) {
+          console.error("AJAX Error: ", textStatus, errorThrown);
+          _actionAlert('An error occurred while sending data! Please try again.', false);
+        }
+      });
+    }
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert('An unexpected error occurred! Please try again.', false);
+  }
 }
