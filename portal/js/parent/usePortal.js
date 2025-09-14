@@ -130,7 +130,7 @@ function _getSelectPaymentMethod(fieldId) {
 
 function _fetchFeesToPay() {
   let getEachStudentSession = JSON.parse(
-    localStorage.getItem("getEachStudentSession")
+    sessionStorage.getItem("getEachStudentSession")
   );
   $("#get-more-div-secondary")
     .css({
@@ -188,9 +188,9 @@ function _fetchFeesToPay() {
 
 function _proceedToPayment() {
   let getEachStudentSession = JSON.parse(
-    localStorage.getItem("getEachStudentSession")
+    sessionStorage.getItem("getEachStudentSession")
   );
-  let parentSessionData = JSON.parse(localStorage.getItem("parentSessionData"));
+  let parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));
 
   try {
     const paymentMethodId = $("#paymentMethodId").val().trim();
@@ -310,9 +310,9 @@ function _callPayStack(
   receiverKey
 ) {
   let getEachStudentSession = JSON.parse(
-    localStorage.getItem("getEachStudentSession")
+    sessionStorage.getItem("getEachStudentSession")
   );
-  let parentSessionData = JSON.parse(localStorage.getItem("parentSessionData"));
+  let parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));
   const parentFullname =
     parentSessionData.parentData.titleId +
     " " +
@@ -465,7 +465,7 @@ function _callPaymentCancelled(paymentId) {
 
 function _fetchPaymentHistory() {
   let getEachStudentSession = JSON.parse(
-    localStorage.getItem("getEachStudentSession")
+    sessionStorage.getItem("getEachStudentSession")
   );
   try {
     const formData = {
