@@ -513,39 +513,6 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             if (userRoles.canViewBranchStudents) {
                                 $('#branchNavUlMobile').append(`
                                 <li title="Branch Student"><i class="bi-mortarboard"></i>
-                                    <span>Student</span>
-                                    <ul class="ul-expand animated fadeIn">
-                                        <li class="active" id="reg_students" title="Register Students"
-                                            onclick="_getForm({page: 'branch_student_reg', layer:2, url: adminPortalLocalUrl});">
-                                            <i class="bi-mortarboard"></i>Register Student
-                                        </li>
-                                        <li id="my_students" title="View Students"
-                                            onclick="_getForm({page: 'student_select_form', layer:2, url: adminPortalLocalUrl});">
-                                            <i class="bi-mortarboard"></i>View Student
-                                        </li>
-                                    </ul>
-                                </li>
-                            `);
-                            }
-                            if (userRoles.canViewBranchSettings) {
-                                $('#branchNavUlMobile').append(`
-                                <li title="Branch Settings"
-                                    onclick="_getActiveBranchPage({divid:'branch_settings', page: 'branch_settings', url: adminPortalLocalUrl});">
-                                    <i class="bi-gear-wide-connected"></i> <span>Settings</span>
-                                </li>
-                            `);
-                            }
-                            if (userRoles.canViewBranchStaff) {
-                                $('#branchNavUlMobile').append(`
-                                <li title="Branch Staff"
-                                    onclick="_getActiveBranchPage({divid:'branch_staff', page: 'branch_staff', url: adminPortalLocalUrl});">
-                                    <i class="bi-person-workspace"></i> <span>Staff</span>
-                                </li>
-                            `);
-                            }
-                            if (userRoles.canViewBranchStudents) {
-                                $('#branchNavUlMobile').append(`
-                                <li title="Branch Student"><i class="bi-mortarboard"></i>
                                 <span>Student</span>
                                 <ul class="ul-expand animated fadeIn">
                                     <li id="reg_students" title="Register Students"
@@ -577,6 +544,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             </li>
                             `);
                             }
+
                             if (userRoles.canViewBranchClasses) {
                                 $('#branchNavUlMobile').append(`
                                 <li title="Branch Class"
@@ -618,32 +586,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                                 </li>
                             `);
                             }
-                            if (userRoles.canViewBranchResults) {
-                                $('#branchNavUlMobile').append(`
-                                <li title="Branch Report"><i class="bi-person-lines-fill"></i>
-                                    <span>Result</span>
-                                    <ul class="ul-expand animated fadeIn">
-                                        <li title="Broad/Report Sheet"
-                                            onclick="_getForm({page: 'broadsheet_select_form', layer:2, url: adminPortalLocalUrl});">
-                                        <i class="bi-person-lines-fill"></i>Broad/Report Sheet
-                                    </li>
-                                    <li title="Cumulative Broadsheet"><i class="bi-person-lines-fill"></i>Cumulative
-                                        Broadsheet</li>
-                                    <li title="Promotional Panel"><i class="bi-person-lines-fill"></i>Promotional
-                                        Panel
-                                    </li>
-                                </ul>
-                            </li>
-                            `);
-                            }
-                            if (userRoles.canViewBranchProfile) {
-                                $('#branchNavUlMobile').append(`
-                                <li title="Branch Profile"
-                                    onclick="_getActiveBranchPage({divid:'branch_profile', page: 'branch_profile', url: adminPortalLocalUrl});">
-                                    <i class="bi-diagram-3"></i> <span>Profile</span>
-                                </li>
-                            `);
-                            }
+
                             if (userRoles.canViewBranchAccount) {
                                 $('#branchNavUlMobile').append(`
                                 <li title="Branch Account"
