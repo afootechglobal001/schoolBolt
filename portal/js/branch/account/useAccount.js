@@ -233,7 +233,7 @@ function _loginOnbehalfOfParent(email, parentTypeId, studentId) {
             parent: parentData
           };
           sessionStorage.setItem("studentParentSessionData", JSON.stringify(sessionPayload));
-					_getForm({page: 'parentStudentForm', layer:3, url: adminPortalLocalUrl});
+					_getForm({page: 'parentStudentForm', layer:2, url: adminPortalLocalUrl});
         } else {
           _actionAlert(info.message, false);
           _alertClose(2);

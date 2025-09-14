@@ -636,7 +636,7 @@ function _fetchBranchStudents() {
 						 	<tbody>
 								<tr class="tb-row">
 									<td>${no}</td>
-									<td>
+									<td class="clickable-td" title="Click to view student details" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
 										<div class="text-back-div">
 											<div class="image-div general-passport">
 												<img src="${studentPixPath}/${passport}" alt="${fullname}"/>
