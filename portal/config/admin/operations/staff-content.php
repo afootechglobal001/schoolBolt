@@ -284,7 +284,7 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
                     </li>
 
                     <li class="hide-li" title="Staff Record"><i class="bi-file-spreadsheet"></i> Record
-                        <ul class="animated fadeIn">
+                        <ul class="animated fadeIn" id="recordExpandTopUl">
                             <li onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});"
                                 title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
                             <li onclick="_getActiveStaffPage({divid:'staff_students_compute_score', page: 'staff_students_compute_score', url: adminPortalLocalUrl});"
@@ -294,12 +294,12 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
                                 Book</li>
                             <script>
                             if (userRoles.canManageStudentsAttendance) {
-                                $('#recordExpandUl').append(`
+                                $('#recordExpandTopUl').append(`
                                                 <li title="Student Attendance" onclick="_getActiveStaffPage({divid:'staff_student_attendance', page: 'staff_student_attendance', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Student Attendance</li>
                                             `);
                             }
                             if (userRoles.canManageClassTeachersComments) {
-                                $('#recordExpandUl').append(`
+                                $('#recordExpandTopUl').append(`
                                                 <li title="Class Teacher's Comment" onclick="_getActiveStaffPage({divid:'staff_teachers_comment', page: 'staff_teachers_comment', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Class Teacher's Comment</li>
                                             `);
                             }
