@@ -22,12 +22,6 @@
 <script>
 let staffLoginData = JSON.parse(sessionStorage.getItem("staffLoginData"));
 let userRoles = JSON.parse(sessionStorage.getItem("userRoles"));
-console.log({
-    staffLoginData
-});
-console.log({
-    userRoles
-});
 const loginStaffId = staffLoginData.staffId;
 const loginAccessKey = staffLoginData.accessKey;
 const loginRoleId = staffLoginData.roleId;
