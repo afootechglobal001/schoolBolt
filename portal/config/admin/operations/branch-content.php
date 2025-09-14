@@ -556,7 +556,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                             if (userRoles.canViewBranchSubjects) {
                                 $('#branchNavUlMobile').append(`
                                 <li title="Branch Subject"
-                                    onclick="_getActiveBranchPage({divid:'branch_department_subject', page: 'branch_department_subject', url: adminPortalLocalUrl});">
+                                     onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});">
                                     <i class="bi-journals"></i> <span>Subject</span>
                                 </li>
                             `);
