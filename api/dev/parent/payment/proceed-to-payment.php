@@ -108,6 +108,19 @@ if (!$checkBasicSecurity){/// start if 1
         goto end;
     }
 
+    if($paymentMethodId=='PM001'){
+        $paymentChannel='card';
+    }else if($paymentMethodId=='PM002'){
+        $paymentChannel='bank_transfer';
+    }else{
+        $response = [
+            'response'=> 101,
+            'success'=> false,
+            'message'=> "INVALID PAYMENT METHOD! Check password fields and try again",
+        ]; 
+        goto end;
+    }
+
 
 
     /////////////////// get paymentId
@@ -177,7 +190,7 @@ if (!$checkBasicSecurity){/// start if 1
         ('$clientId', '$branchId', '$paymentId', '$schoolBoltCharges', 3, NOW())") or die(mysqli_error($conn));
     }
 
-if($paymentMethodId=='PM001'){ /// DEBIT/CREDIT CARD
+   
      $response = [
         'response'=> 200,
         'success'=> true,
@@ -190,22 +203,39 @@ if($paymentMethodId=='PM001'){ /// DEBIT/CREDIT CARD
         'deductCharges'=> $deductCharges,
         'schoolBoltCharges'=> $schoolBoltCharges*100,
         'receiverKey'=> $receiverKey,
+        'paymentChannel'=> $paymentChannel,
     ];
-}
 
-if($paymentMethodId=='PM002'){ /// BANK TRANSFER
-     $response = [
-        'response'=> 200,
-        'success'=> true,
-        'message'=> 'ACOUNT VERIFIED FOR PAYMENT. Proceed to payment.',
-        'amount'=> $totalAmount,
-        'accountName'=> $accountName,
-        'accountNumber'=> $accountNumber,
-        'bankName'=> $bankName,
-        'branchNumber'=> $mobileNumber,
-        'paymentMethodId'=> $paymentMethodId,
-    ];
-}
+
+// if($paymentMethodId=='PM001'){ /// DEBIT/CREDIT CARD
+//      $response = [
+//         'response'=> 200,
+//         'success'=> true,
+//         'message'=> 'ACOUNT VERIFIED FOR PAYMENT. Proceed to payment.',
+//         'paymentKey'=> $paymentKey,
+//         'paymentId'=> $paymentId,
+//         'email'=> $email,
+//         'amount'=> $totalAmount*100,
+//         'paymentMethodId'=> $paymentMethodId,
+//         'deductCharges'=> $deductCharges,
+//         'schoolBoltCharges'=> $schoolBoltCharges*100,
+//         'receiverKey'=> $receiverKey,
+//     ];
+// }
+
+// if($paymentMethodId=='PM002'){ /// BANK TRANSFER
+//      $response = [
+//         'response'=> 200,
+//         'success'=> true,
+//         'message'=> 'ACOUNT VERIFIED FOR PAYMENT. Proceed to payment.',
+//         'amount'=> $totalAmount,
+//         'accountName'=> $accountName,
+//         'accountNumber'=> $accountNumber,
+//         'bankName'=> $bankName,
+//         'branchNumber'=> $mobileNumber,
+//         'paymentMethodId'=> $paymentMethodId,
+//     ];
+// }
 end:
 echo json_encode($response);
 ?>

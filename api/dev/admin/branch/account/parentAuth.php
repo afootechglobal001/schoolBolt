@@ -12,8 +12,8 @@ if(!$checkSession){
 	goto end;
 }
 	//////////////////declaration of variables//////////////////////////////////////
-	$parentTypeId =trim($data['parentTypeId']);
-	$email=trim($data['email']);
+	$parentTypeId =trim($_GET['parentTypeId']);
+	$email=trim($_GET['email']);
         $select=mysqli_query($conn,"SELECT * FROM PARENTS_TAB WHERE $clientIds AND recordFor='$parentTypeId' AND email='$email' LIMIT 1") or die (mysqli_error($conn));
         $fetchQuery=mysqli_fetch_assoc($select);
 

@@ -190,7 +190,7 @@ function _proceedToPayment() {
   let getEachStudentSession = JSON.parse(
     sessionStorage.getItem("getEachStudentSession")
   );
-  let parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));
+  let parentSessionData = JSON.parse(localStorage.getItem("parentSessionData"));
 
   try {
     const paymentMethodId = $("#paymentMethodId").val().trim();
@@ -254,31 +254,43 @@ function _proceedToPayment() {
             const paymentId = data.paymentId;
             const email = data.email;
             const amount = data.amount;
-            const paymentMethodId = data.paymentMethodId;
+            //const paymentMethodId = data.paymentMethodId;
             const deductCharges = data.deductCharges;
             const schoolBoltCharges = data.schoolBoltCharges;
             const receiverKey = data.receiverKey;
+            const paymentChannel = data.paymentChannel;
 
-            if (paymentMethodId === "PM001") {
-              /// PAYMENT BY CREDIT/DEBIT////
-              _callPayStack(
-                paymentKey,
-                paymentId,
-                email,
-                amount,
-                deductCharges,
-                schoolBoltCharges,
-                receiverKey
-              );
-            }
-            if (paymentMethodId === "PM002") {
-              /// PAYMENT BY BANK TRANSFER////
-              _getForm({
-                page: "accountTransferForm",
-                layer: 2,
-                url: parentPortalLocalUrl,
-              });
-            }
+            _callPayStack(
+              paymentKey,
+              paymentId,
+              email,
+              amount,
+              deductCharges,
+              schoolBoltCharges,
+              receiverKey,
+              paymentChannel
+            );
+
+            //  if (paymentMethodId === "PM001") {
+            //   /// PAYMENT BY CREDIT/DEBIT////
+            //   _callPayStack(
+            //     paymentKey,
+            //     paymentId,
+            //     email,
+            //     amount,
+            //     deductCharges,
+            //     schoolBoltCharges,
+            //     receiverKey
+            //   );
+            // }
+            // if (paymentMethodId === "PM002") {
+            //   /// PAYMENT BY BANK TRANSFER////
+            //   _getForm({
+            //     page: "accountTransferForm",
+            //     layer: 2,
+            //     url: parentPortalLocalUrl,
+            //   });
+            // }
           } else {
             _actionAlert(data.message, false);
           }
@@ -307,12 +319,13 @@ function _callPayStack(
   amount,
   deductCharges,
   schoolBoltCharges,
-  receiverKey
+  receiverKey,
+  paymentChannel
 ) {
   let getEachStudentSession = JSON.parse(
     sessionStorage.getItem("getEachStudentSession")
   );
-  let parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));
+  let parentSessionData = JSON.parse(localStorage.getItem("parentSessionData"));
   const parentFullname =
     parentSessionData.parentData.titleId +
     " " +
@@ -329,7 +342,7 @@ function _callPayStack(
     amount: amount, // Amount in kobo
     ref: paymentId,
     currency: "NGN",
-    channels: ["card", "bank_transfer"],
+    channels: paymentChannel ? [paymentChannel] : ["card", "bank_transfer"],
     metadata: {
       custom_fields: [
         {
