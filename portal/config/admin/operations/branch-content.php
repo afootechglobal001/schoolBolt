@@ -629,31 +629,30 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
 <?php if ($page == 'branch_dashboard') { ?>
+<script>
+userRoles.canViewSuperAdminDashboard && _getActiveBranchPage({
+    divid: 'branch_dashboard',
+    page: 'branch_super_admin_dashboard',
+    url: adminPortalLocalUrl
+});
+
+(userRoles.canViewAdministratorDashboard || userRoles.canViewIctStaffDashboard) && _getActiveBranchPage({
+    divid: 'branch_dashboard',
+    page: 'branch_admin_dashboard',
+    url: adminPortalLocalUrl
+});
+userRoles.canViewBursaryDashboard && _getActiveBranchPage({
+    divid: 'branch_dashboard',
+    page: 'branch_bursary_dashboard',
+    url: adminPortalLocalUrl
+});
+</script>
+<?php } ?>
+
+<?php if ($page == 'branch_super_admin_dashboard') { ?>
 <div class="dashboard-statistics-wrapper">
     <div class="left-dashbaord-container">
         <div class="statistics-chart-back-div box-shadow">
-            <div class="statistics-back-div">
-                <div class="statistics-div left-border font-size" title="Staff" onclick="">
-                    <h2>5</h2>
-                    <span><i class="bi-person-workspace"></i> Staff</span>
-                </div>
-
-                <div class="statistics-div left-border border-radius font-size" title="Class" onclick="">
-                    <h2>8</h2>
-                    <span><i class="bi-people-fill"></i> Class</span>
-                </div>
-
-                <div class="statistics-div font-size" title="Student" onclick="">
-                    <h2>10</h2>
-                    <span><i class="bi-mortarboard font-size"></i> Student </span>
-                </div>
-
-                <div class="statistics-div right-border font-size" title="Subject" onclick="">
-                    <h2>100</h2>
-                    <span><i class="bi-journals"></i> Subject</span>
-                </div>
-            </div>
-
             <div class="chart-back-div">
                 <div class="chart-div-notifications no-border-top">
                     <div class="text"><i class="bi-graph-up-arrow"></i> Showing Matrix for </div>
@@ -927,9 +926,9 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
         <div class="matrix-div">
             <div class="inner-div">
                 <div class="title">
-                    <h3>Order Matrix</h3>
+                    <h3>Payment Matrix</h3>
                 </div>
-                <div id="chartContainer1" style="width:100%; height:200px; margin:auto;"></div>
+                <div id="chartContainer2" style="width:100%; height:200px; margin:auto;"></div>
 
                 <script type="text/javascript">
                 var options = {
@@ -944,33 +943,306 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                         indexLabel: "{label} ({y})",
                         yValueFormatString: "#,##0.#" % "",
                         dataPoints: [{
-                                label: "Outstanding",
-                                y: 5
+                                label: "Debit/Credit Card",
+                                y: 3
                             },
                             {
-                                label: "Pending",
-                                y: 6
+                                label: "Wallet",
+                                y: 2
                             },
                             {
-                                label: "Processing",
-                                y: 4
-                            },
-                            {
-                                label: "Ready",
-                                y: 5
-                            },
-                            {
-                                label: "Delivered",
-                                y: 15
+                                label: "Bank Transfer",
+                                y: 11
                             },
                         ]
                     }]
                 };
-                $("#chartContainer1").CanvasJSChart(options);
+                $("#chartContainer2").CanvasJSChart(options);
                 </script>
             </div>
         </div>
+    </div>
+</div>
+<?php } ?>
 
+<?php if ($page == 'branch_admin_dashboard') { ?>
+<div>normal branch dashboard</div>
+<?php } ?>
+
+<?php if ($page == 'branch_bursary_dashboard') { ?>
+<div class="dashboard-statistics-wrapper">
+    <div class="left-dashbaord-container">
+        <div class="statistics-chart-back-div box-shadow">
+            <div class="chart-back-div">
+                <div class="chart-div-notifications no-border-top">
+                    <div class="text"><i class="bi-graph-up-arrow"></i> Showing Matrix for </div>
+
+                    <div class="text text-right" onclick="select_search()">
+                        <span id="srch-text">Last 30 Days</span>
+                        <div class="icon-div"><i class="bi-caret-down"></i></div>
+
+                        <div class="srch-select alert-srch-select">
+                            <div id="srch-today" onclick="_getAlertReport('srch-today', 'view_today_search');">Today
+                            </div>
+                            <div id="srch-week" onclick="_getAlertReport('srch-week', 'view_thisweek_search');">This
+                                Week</div>
+                            <div id="srch-7" onclick="_getAlertReport('srch-7', 'view_7days_search');">Last 7 Days</div>
+                            <div id="srch-month" onclick="_getAlertReport('srch-month', 'view_thismonth_search');">This
+                                Month</div>
+                            <div id="srch-30" onclick="_getAlertReport('srch-30', 'view_30days_search');">Last 30 Days
+                            </div>
+                            <div id="srch-90" onclick="_getAlertReport('srch-90', 'view_90days_search');">Last 90 Days
+                            </div>
+                            <div id="srch-year" onclick="_getAlertReport('srch-year', 'view_thisyear_search');">This
+                                Year</div>
+                            <div id="srch-1year" onclick="_getAlertReport('srch-1year', 'view_1year_search');">Last 1
+                                Year</div>
+                            <div onclick="srch_custom('Custom Search')">Custom Search</div>
+                        </div>
+                    </div>
+
+                    <div class="text">
+                        <div class="custom-srch-div">
+                            <div class="custom-srch-div-in">
+                                <div class="text_field_container dash_field_container">
+                                    <input class="text_field bar_cust_text_field" type="text" id="datepickers-from"
+                                        placeholder="" />
+                                    <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From
+                                    </div>
+                                </div>
+
+                                <div class="text_field_container dash_field_container">
+                                    <input class="text_field bar_cust_text_field" type="text" id="datepickers-to"
+                                        placeholder="" />
+                                    <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To</div>
+                                </div>
+                                <button type="button" class="btn">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <script language="javascript">
+                    $('#datepickers-from').datetimepicker({
+                        lang: 'en',
+                        timepicker: false,
+                        format: 'Y-m-d',
+                        formatDate: 'Y-M-d',
+                    });
+
+                    $('#datepickers-to').datetimepicker({
+                        lang: 'en',
+                        timepicker: false,
+                        format: 'Y-m-d',
+                        formatDate: 'Y-M-d',
+                    });
+                    </script>
+                </div>
+
+                <div class="trending-back-div">
+                    <div class="revenue-back-div">
+                        <div class="top-revenue">Revenue For<span>January 18 2025</span>-<span>February 17 2025</span>
+                        </div>
+                        <div class="fund-back-div">
+                            <div class="fund-div">
+                                <h3><span>₦1,343,581.63</span>(SALES)</h3>
+                            </div>-<div class="fund-div">
+                                <h3><span>₦256,000.00</span>(WALLET)</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="chartContainer" style="width:100%; height:300px; margin:auto;"></div>
+                    <script>
+                    $(document).ready(function() {
+                        var chart = new CanvasJS.Chart("chartContainer", {
+                            animationEnabled: true,
+                            theme: "light1",
+                            title: {
+                                text: ""
+                            },
+                            axisX: {
+                                valueFormatString: "DD MMM",
+                                crosshair: {
+                                    enabled: true,
+                                    snapToDataPoint: true
+                                }
+                            },
+                            axisY: {
+                                title: "",
+                                includeZero: true,
+                                crosshair: {
+                                    enabled: true
+                                }
+                            },
+                            toolTip: {
+                                shared: true
+                            },
+                            legend: {
+                                cursor: "pointer",
+                                verticalAlign: "bottom",
+                                horizontalAlign: "left",
+                                dockInsidePlotArea: true,
+                                itemclick: toogleDataSeries
+                            },
+                            data: [{
+                                    type: "line",
+                                    showInLegend: true,
+                                    name: "Sales",
+                                    markerType: "square",
+                                    xValueFormatString: "DD MMM, YYYY",
+                                    color: "#29BA00",
+                                    dataPoints: [{
+                                            x: new Date(2025, 0, 1),
+                                            y: 250000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 2),
+                                            y: 180000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 3),
+                                            y: 100000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 4),
+                                            y: 300000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 5),
+                                            y: 120000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 6),
+                                            y: 150000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 7),
+                                            y: 275000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 8),
+                                            y: 160000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 9),
+                                            y: 350000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 10),
+                                            y: 380000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 11),
+                                            y: 0
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 12),
+                                            y: 100000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 13),
+                                            y: 0
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 14),
+                                            y: 180000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 15),
+                                            y: 270000
+                                        },
+                                    ]
+                                },
+                                {
+                                    type: "line",
+                                    showInLegend: true,
+                                    name: "Wallet",
+                                    lineDashType: "dash",
+                                    dataPoints: [{
+                                            x: new Date(2025, 0, 1),
+                                            y: 180000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 2),
+                                            y: 50000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 3),
+                                            y: 80000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 4),
+                                            y: 0
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 5),
+                                            y: 150000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 6),
+                                            y: 40000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 7),
+                                            y: 300000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 8),
+                                            y: 200000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 9),
+                                            y: 0
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 10),
+                                            y: 120000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 11),
+                                            y: 90000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 12),
+                                            y: 200000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 13),
+                                            y: 0
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 14),
+                                            y: 280000
+                                        },
+                                        {
+                                            x: new Date(2025, 0, 15),
+                                            y: 50000
+                                        },
+
+                                    ]
+                                }
+                            ]
+
+                        });
+                        chart.render();
+
+                        function toogleDataSeries(e) {
+                            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                                e.dataSeries.visible = false;
+                            } else {
+                                e.dataSeries.visible = true;
+                            }
+                            chart.render();
+                        }
+                    })
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-dashbaord-container">
         <div class="matrix-div">
             <div class="inner-div">
                 <div class="title">
@@ -1012,7 +1284,6 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
     </div>
 </div>
 <?php } ?>
-
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 

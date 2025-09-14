@@ -22,6 +22,15 @@ if(!$checkSession){
         ]; 
         goto end;
 	}
+      $allowedRoles = ["R001", "R002", "R003"];
+        if (!in_array($roleId, $allowedRoles)) {
+            $response = [
+                'response'=> 100,
+                'success'=> false,
+                'message'=> "THIS ROLE CANNOT BE DELETED!",
+            ]; 
+            goto end;
+        }
         //// get number of users
         $userCountQuery = mysqli_query($conn, "SELECT * FROM STAFF_TAB WHERE $clientIds AND roleId='$roleId'");
         $userCount = mysqli_num_rows($userCountQuery);
