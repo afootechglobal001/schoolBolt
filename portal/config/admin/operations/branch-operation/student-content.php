@@ -1504,13 +1504,6 @@ getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchS
                             No record found!
                         </div>
                     </div>
-                    <script>
-                    function _deleteFees(el) {
-                        $(el).closest(".alert-list").fadeOut(300, function() {
-                            $(this).remove();
-                        });
-                    }
-                    </script>
                 </div>
 
                 <div class="permission-form-back-div">
