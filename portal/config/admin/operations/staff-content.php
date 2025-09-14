@@ -292,10 +292,18 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
                             <li onclick="_getActiveStaffPage({divid:'staff_students_cummulative_mark', page: 'staff_students_cummulative_mark', url: adminPortalLocalUrl});"
                                 title="Cumulative Mark's Score"><i class="bi-file-spreadsheet"></i>Cumulative Mark's
                                 Book</li>
-                            <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Student Attendance
-                            </li>
-                            <li title="Student Attendance"><i class="bi-file-spreadsheet"></i>Class Teacher's
-                                Commemt</li>
+                            <script>
+                            if (userRoles.canManageStudentsAttendance) {
+                                $('#recordExpandUl').append(`
+                                                <li title="Student Attendance" onclick="_getActiveStaffPage({divid:'staff_student_attendance', page: 'staff_student_attendance', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Student Attendance</li>
+                                            `);
+                            }
+                            if (userRoles.canManageClassTeachersComments) {
+                                $('#recordExpandUl').append(`
+                                                <li title="Class Teacher's Comment" onclick="_getActiveStaffPage({divid:'staff_teachers_comment', page: 'staff_teachers_comment', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Class Teacher's Comment</li>
+                                            `);
+                            }
+                            </script>
                         </ul>
 
                     </li>
