@@ -380,7 +380,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                     <script>
                     if (userRoles.canViewBranchSettings) {
                         $('#branchNavUl').append(`
-                                <li title="Branch Settings" id="branch_settings"
+                                <li class="hide-li" title="Branch Settings" id="branch_settings"
                                     onclick="_getActiveBranchPage({divid:'branch_settings', page: 'branch_settings', url: adminPortalLocalUrl});">
                                     <i class="bi-gear-wide-connected"></i> Settings
                                 </li>
@@ -389,7 +389,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
 
                     if (userRoles.canViewBranchStaff) {
                         $('#branchNavUl').append(`
-                                <li title="Branch Staff" id="branch_staff"
+                                <li class="hide-li" title="Branch Staff" id="branch_staff"
                                     onclick="_getActiveBranchPage({divid:'branch_staff', page: 'branch_staff', url: adminPortalLocalUrl});">
                                     <i class="bi-person-workspace"></i> Staff
                                 </li>
@@ -397,7 +397,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                     }
                     if (userRoles.canViewBranchStudents) {
                         $('#branchNavUl').append(`
-                                <li title="Branch Student"><i class="bi-mortarboard"></i>
+                                <li class="hide-li" title="Branch Student"><i class="bi-mortarboard"></i>
                                     Student
                                     <ul class="animated fadeIn">
                                         <li id="reg_students" title="Register Students"
@@ -431,7 +431,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                     }
                     if (userRoles.canViewBranchClasses) {
                         $('#branchNavUl').append(`
-                                <li title="Branch Class" id="branch_department_class"
+                                <li class="hide-li" title="Branch Class" id="branch_department_class"
                                     onclick="_getActiveBranchPage({divid:'branch_department_class', page: 'branch_department_class', url: adminPortalLocalUrl});">
                                     <i class="bi-people-fill"></i> Class
                                 </li>
@@ -439,13 +439,13 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                     }
                     if (userRoles.canViewBranchSubjects) {
                         $('#branchNavUl').append(`
-                                <li title="Branch Subject" id="branch_subjects"
+                                <li class="hide-li" title="Branch Subject" id="branch_subjects"
                                     onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-journals"></i> Subject</li>
                             `);
                     }
                     if (userRoles.canViewBranchResults) {
                         $('#branchNavUl').append(`
-                                <li title="Branch Record"><i class="bi-person-lines-fill"></i> Result
+                                <li class="hide-li" title="Branch Record"><i class="bi-person-lines-fill"></i> Result
                                     <ul class="animated fadeIn">
                                         <li title="Broad/Report Sheet"
                                             onclick="_getForm({page: 'broadsheet_select_form', layer:2, url: adminPortalLocalUrl});">
@@ -462,7 +462,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                     }
                     if (userRoles.canViewBranchProfile) {
                         $('#branchNavUl').append(`
-                                <li title="Branch Profile" title="Branch Profile" id="branch_profile"
+                                <li class="hide-li" title="Branch Profile" id="branch_profile"
                                     onclick="_getActiveBranchPage({divid:'branch_profile', page: 'branch_profile', url: adminPortalLocalUrl});">
                                     <i class="bi-diagram-3"></i> Profile
                                 </li>
@@ -470,7 +470,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                     }
                     if (userRoles.canViewBranchAccount) {
                         $('#branchNavUl').append(`
-                                <li title="Branch Account" id="branch_account"
+                                <li class="hide-li" title="Branch Account" id="branch_account"
                                     onclick="_getActiveBranchPage({divid:'branch_account', page: 'branch_account', url: adminPortalLocalUrl});">
                                     <i class="bi-wallet2"></i> Account
                                 </li>
@@ -478,7 +478,7 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                     }
                     if (userRoles.canViewBranchActivities) {
                         $('#branchNavUl').append(`
-                                <li title="Branch Activities" id="branch_activities"
+                                <li class="hide-li" title="Branch Activities" id="branch_activities"
                                     onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});">
                                     <i class="bi-bell"></i> Activities
                                 </li>
