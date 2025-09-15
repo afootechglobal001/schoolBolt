@@ -70,7 +70,15 @@ if(!$checkSession){
             `feesName`='$feesName', `feesOption`='$feesOption', updatedBy='$loginStaffId'
             WHERE $clientIds AND branchId='$branchId' AND feesId='$feesId'")or die (mysqli_error($conn));
 
-            
+             ////////////////// for  $branchId
+            $branchDataQuery = mysqli_query($conn, "SELECT session AS currentSession, termId FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+            $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
+            $session=$branchDataFetch['currentSession'];
+            $termId=$branchDataFetch['termId'];
+            ////update FEES_COMPUTE_TAB
+            mysqli_query($conn,"UPDATE `FEES_COMPUTE_TAB` SET
+            `feesOption`='$feesOption', updatedBy='$loginStaffId'
+            WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND feesId='$feesId'")or die (mysqli_error($conn));
 
             $response['response']=200; 
             $response['success']=true;

@@ -44,7 +44,7 @@ if(!$checkSession){
     $armDataQuery = mysqli_query($conn, "SELECT armId, armName FROM ARMS_TAB WHERE $clientIds AND armId='$armId'");
     $armDataFetch = mysqli_fetch_assoc($armDataQuery);
     ///check FEES_COMPUTE_SUMMARY_TAB where its approved
-    $select = "SELECT * FROM FEES_COMPUTE_SUMMARY_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' AND classId='$classId' AND statusId=9";
+    $select = "SELECT * FROM FEES_COMPUTE_SUMMARY_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' AND classId='$classId'";
     $feesComputeSummaryQuery=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($feesComputeSummaryQuery);
     if($allRecordCount==0){///start if 1
