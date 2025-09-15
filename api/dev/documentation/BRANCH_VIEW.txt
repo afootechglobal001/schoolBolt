@@ -5,6 +5,6 @@ FROM
 BRANCHES_TAB a
 JOIN SETUP_STATES_TAB b ON a.stateId=b.stateId
 JOIN SETUP_STATE_LGA_TAB c ON a.lgaId=c.lgaId
-JOIN STAFF_TAB d ON a.managerId=d.staffId
+JOIN STAFF_TAB d ON a.clientId=d.clientId AND a.managerId=d.staffId
 JOIN SETUP_STATUS_TAB e ON a.statusId=e.statusId
-JOIN SETUP_TERM_TAB f ON a.termId=f.termId
+JOIN SETUP_TERM_TAB f ON a.termId=f.termId;

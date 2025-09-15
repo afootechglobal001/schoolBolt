@@ -1,18 +1,11 @@
 CREATE OR REPLACE VIEW STUDENT_VIEW AS
-SELECT a.*, b.name, c.genderName, d.maritalStatusName, e.countryName, f.stateName, g.lgaName, h.statusName FROM 
-STUDENTS_TAB a, 
-BRANCHES_TAB b, 
-SETUP_GENDER_TAB c, 
-SETUP_MARITAL_STATUS_TAB d, 
-SETUP_COUNTRY_TAB e, 
-SETUP_STATES_TAB f,
-SETUP_STATE_LGA_TAB g, 
-SETUP_STATUS_TAB h
-WHERE
-a.branchId=b.branchId AND 
-a.genderId=c.genderId AND 
-a.maritalStatusId=d.maritalStatusId AND 
-a.countryId=e.countryId AND 
-a.stateId=f.stateId AND 
-a.lgaId=g.lgaId AND
-a.statusId=h.statusId;
+SELECT a.*, b.name, c.genderName, d.maritalStatusName, e.countryName, f.stateName, g.lgaName, h.statusName 
+FROM 
+STUDENTS_TAB a
+JOIN BRANCHES_TAB b ON a.clientId=b.clientId AND a.branchId=b.branchId
+JOIN SETUP_GENDER_TAB c ON a.genderId=c.genderId
+JOIN SETUP_MARITAL_STATUS_TAB d ON a.maritalStatusId=d.maritalStatusId
+JOIN SETUP_COUNTRY_TAB e ON a.countryId=e.countryId
+JOIN SETUP_STATES_TAB f ON a.stateId=f.stateId
+JOIN SETUP_STATE_LGA_TAB g ON a.stateId=g.stateId AND a.lgaId=g.lgaId
+JOIN SETUP_STATUS_TAB h ON a.statusId=h.statusId

@@ -143,6 +143,7 @@ function assignRole(data) {
   permissions.includes(18) ? (userRoles.canViewBranchProfile = true) : false;
   permissions.includes(19) ? (userRoles.canViewBranchAccount = true) : false;
   permissions.includes(22) ? (userRoles.canViewBranchActivities = true) : false;
+  permissions.includes(23) ? (userRoles.canApproveFees = true) : false;
 
   // Store in sessionStorage
   sessionStorage.setItem("userRoles", JSON.stringify(userRoles));

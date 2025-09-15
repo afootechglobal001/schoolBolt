@@ -32,7 +32,7 @@ if(!$checkSession){
         goto end;
     }
     ////////////////// for  $branchId
-    $branchDataQuery = mysqli_query($conn, "SELECT branchId, name AS branchName, session AS currentSession, termId FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+    $branchDataQuery = mysqli_query($conn, "SELECT session AS currentSession, termId FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
     $session=$branchDataFetch['currentSession'];
     $termId=$branchDataFetch['termId'];
