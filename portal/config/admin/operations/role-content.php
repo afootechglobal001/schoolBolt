@@ -94,6 +94,11 @@
                         <div class="toggle-title">Class Teacher Permissions</div>
                         <div class="fetch-toggle" id="class_teacher"></div>
                     </div>
+
+                    <div class="permission-toggle-div">
+                        <div class="toggle-title">Account Permissions</div>
+                        <div class="fetch-toggle" id="account"></div>
+                    </div>
                     <script>_fetchRolePermissions();</script>
                 </div>
                 <div>    

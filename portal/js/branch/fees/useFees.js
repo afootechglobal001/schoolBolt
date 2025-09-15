@@ -423,28 +423,36 @@ function _fetchFeeComputeGeneral() {
                   feesSummaryData === "NULL"
                 ) {
                   text += `
-																<td>
-																	<div class="btn-div">
-																		<button class="btn view-btn" title="Click to compute fees" onclick="_fetchEachFeeComputeGeneral('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">COMPUTE FEES</button>
-																	</div>
-																</td>`;
+                        <td>
+                          <div class="btn-div">
+                            <button class="btn view-btn" title="Click to compute fees" onclick="_fetchEachFeeComputeGeneral('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">COMPUTE FEES</button>
+                          </div>
+                        </td>`;
                 } else if (feeStatus === "8" || feeStatus === "10") {
+                  let approveBtn = "";
+                  if (userRoles.canApproveFees) {
+                    approveBtn = `<button class="btn view-btn approve-btn"  title="Click to approve fees" id="approveBtn_${fcId}"  onclick="_approveFeesCompute('${fcId}');"> APPROVE FEES </button>`;
+                  }
                   text += `
-																<td>
-																	<div class="btn-div">
-																		<button class="btn view-btn print-btn" title="Click to print fees" onclick="_printComputeFee('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">PRINT FEES</button>
-																		<button class="btn view-btn" title="Click to compute fees" onclick="_fetchEachFeeComputeGeneral('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">COMPUTE FEES</button>
-																		<button class="btn view-btn approve-btn" title="Click to approve fees" id="approveBtn_${fcId}" onclick="_approveFeesCompute('${fcId}');">APPROVE FEES</button>
-																	</div>
-																</td>`;
+                          <td>
+                            <div class="btn-div">
+                              <button class="btn view-btn print-btn" title="Click to print fees" onclick="_printComputeFee('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">PRINT FEES</button>
+                              <button class="btn view-btn" title="Click to compute fees" onclick="_fetchEachFeeComputeGeneral('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">COMPUTE FEES</button>
+                              ${approveBtn}
+                            </div>
+                          </td>`;
                 } else {
+                  let declineBtn = "";
+                  if (userRoles.canApproveFees) {
+                    declineBtn = `<button class="btn view-btn decline-btn" title="Click to decline fees" id="declineBtn_${fcId}" onclick="_declineFeesCompute('${fcId}');">DECLINE FEES</button>`;
+                  }
                   text += `
-																<td>
-																	<div class="btn-div">
-																		<button class="btn view-btn print-btn" title="Click to print fees" onclick="_printComputeFee('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">PRINT FEES</button>
-																		<button class="btn view-btn decline-btn" title="Click to decline fees" id="declineBtn_${fcId}" onclick="_declineFeesCompute('${fcId}');">DECLINE FEES</button>
-																	</div>
-																</td>`;
+                        <td>
+                          <div class="btn-div">
+                            <button class="btn view-btn print-btn" title="Click to print fees" onclick="_printComputeFee('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">PRINT FEES</button>
+                          ${declineBtn}
+                          </div>
+                        </td>`;
                 }
                 text += `</tr>`;
               }
