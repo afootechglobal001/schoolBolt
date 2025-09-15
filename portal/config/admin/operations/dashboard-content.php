@@ -66,31 +66,54 @@ userRoles.canViewBursaryDashboard && _getActivePage({
 <div class="dashboard-statistics-wrapper" data-aos="fade-in" data-aos-duration="1500">
     <div class="left-dashbaord-container">
         <div class="statistics-chart-back-div">
-            <div class="statistics-back-div">
-                <div class="statistics-div left-border" title="Total Branches"
-                    onclick="_getActivePage({page:'branches', divid:'branches'});">
-                    <h2>12</h2>
-                    <span><i class="bi-diagram-3"></i> Branches</span>
+            <div class="new-statistics-back-div">
+                <div class="new-statistics-div" title="Branches" onclick="_getActivePage({page:'branches', divid:'branches'});">
+                    <div class="statistics-inner-div">
+                        <div class="statistics-text">
+                            <p>Branches</p>
+                            <span>Statistics of Branches</span>
+                            <h2>12</h2>
+                        </div>
+                        <div class="statistics-icon pending"><i class="bi-diagram-3"></i></div>
+                    </div>
                 </div>
 
-                <div class="statistics-div left-border border-radius" title="Total Staff" onclick="">
-                    <h2>250</h2>
-                    <span><i class="bi-people"></i> Total Staff</span>
+                <div class="new-statistics-div" title="Staff" onclick="_getActivePage({page:'staff', divid:'staff'});">
+                    <div class="statistics-inner-div">
+                        <div class="statistics-text">
+                            <p>Total Staff</p>
+                            <span>Statistics of Staffs</span>
+                            <h2>80</h2>
+                        </div>
+                        <div class="statistics-icon upcoming"><i class="bi-person-bounding-box"></i></div>
+                    </div>
                 </div>
 
-                <div class="statistics-div" title="Total Students">
-                    <h2>700</h2>
-                    <span><i class="bi-people"></i> Total Students </span>
+                <div class="new-statistics-div" title="Students">
+                    <div class="statistics-inner-div">
+                        <div class="statistics-text">
+                            <p>Total Students</p>
+                            <span>Statistics of Students</span>
+                            <h2>250</h2>
+                        </div>
+                        <div class="statistics-icon completed"><i class="bi-people"></i></div>
+                    </div>
                 </div>
 
-                <div class="statistics-div right-border" title="Total Allumni">
-                    <h2>20</h2>
-                    <span><i class="bi-people"></i> Total Allumni</span>
+                <div class="new-statistics-div" title="Alumni">
+                    <div class="statistics-inner-div">
+                        <div class="statistics-text">
+                            <p>Total Alumni</p>
+                            <span>Statistics of Alumni</span>
+                            <h2>40</h2>
+                        </div>
+                        <div class="statistics-icon pending"><i class="bi-people"></i></div>
+                    </div>
                 </div>
             </div>
 
             <div class="chart-back-div">
-                <div class="chart-div-notifications no-border-top">
+                <div class="chart-div-notifications top-border-radius">
                     <div class="text"><i class="bi-graph-up-arrow"></i> Showing Matrix for </div>
 
                     <div class="text text-right" onclick="select_search()">
