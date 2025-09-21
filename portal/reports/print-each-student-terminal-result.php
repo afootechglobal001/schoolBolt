@@ -217,6 +217,7 @@
                         const termId = printEachStudentTerminalResultSession?.termData?.termId;
                         const items = printEachStudentTerminalResultSession?.resultSummary;
                         const branchItems = printEachStudentTerminalResultSession?.branchData;
+                        const attendanceItems = printEachStudentTerminalResultSession?.attendanceData;
 
                         let text='';
                         if(termId==='3'){
@@ -289,17 +290,17 @@
 
                                         <div class="details">
                                             <span>TIMES SCHOOL OPENED</span>
-                                            <div>${branchItems.timeSchoolOpened}</div>
+                                            <div>${attendanceItems.timeSchoolOpened}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>TIMES PRESENT</span>
-                                            <div id="">92</div>
+                                            <div>${attendanceItems.numberOfDaysPresents}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>TIMES ABSENT</span>
-                                            <div id="">24</div>
+                                            <div>${attendanceItems.numberOfDaysAbsents}</div>
                                         </div>
 
                                         <div class="details">
@@ -358,17 +359,17 @@
 
                                         <div class="details">
                                             <span>TIMES SCHOOL OPENED</span>
-                                            <div>${branchItems.timeSchoolOpened}</div>
+                                            <div>${attendanceItems.timeSchoolOpened}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>TIMES PRESENT</span>
-                                            <div id="">92</div>
+                                            <div>${attendanceItems.numberOfDaysPresents}</div>
                                         </div>
 
                                         <div class="details">
                                             <span>TIMES ABSENT</span>
-                                            <div id="">24</div>
+                                            <div>${attendanceItems.numberOfDaysAbsents}</div>
                                         </div>
 
                                         <div class="details">
