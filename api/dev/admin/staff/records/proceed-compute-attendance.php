@@ -33,7 +33,7 @@ if(!$checkSession){
     $response['branchData'] = $branchDataFetch;
     $response['data'] = array();
 
-    $select="SELECT a.*, b.surName, b.firstName FROM STUDENTS_CLASS_TAB a, STUDENTS_TAB b WHERE a.clientId=b.clientId AND a.branchId=b.branchId AND a.studentId=b.studentId  AND  a.clientId='$clientId' AND a.branchId = '$branchId' AND a.departmentId='$departmentId' AND a.classId='$classId' AND a.armId='$armId' AND a.statusId=1 ORDER BY b.surName ASC";
+    $select="SELECT a.*, b.surName, b.firstName, b.passport FROM STUDENTS_CLASS_TAB a, STUDENTS_TAB b WHERE a.clientId=b.clientId AND a.branchId=b.branchId AND a.studentId=b.studentId  AND  a.clientId='$clientId' AND a.branchId = '$branchId' AND a.departmentId='$departmentId' AND a.classId='$classId' AND a.armId='$armId' AND a.statusId=1 ORDER BY b.surName ASC";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     while ($fetchQuery = mysqli_fetch_assoc($query)) {
         $studentId=$fetchQuery['studentId'];

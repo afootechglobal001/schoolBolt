@@ -31,7 +31,7 @@ if (!$checkBasicSecurity){/// start if 1
 
 
     /// get all tableTitles
-    $tableTitles="SN, FULL NAME, NO. OF SUBJECTS, MARK OBTAINABLE, MARK OBTAINED, TOTAL PERCENTAGE (%), POSTN. IN CLASS, OVERALL POSTN., REMARKS, TEACHER'S COMMENT";
+$tableTitles="SN, FULL NAME, NO. OF SUBJECTS, MARK OBTAINABLE, MARK OBTAINED, TOTAL PERCENTAGE (%), POSTN. IN CLASS, OVERALL POSTN., REMARKS, TEACHER'S COMMENT, ATTENDANCE";
 
     $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, schoolLogo, address, smtpUsername, mobileNumber  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
@@ -63,7 +63,7 @@ if (!$checkBasicSecurity){/// start if 1
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     $response['studentData'] = array();  
     //// get all students as at the time of assessment
-    $select="SELECT 
+  $select = "SELECT 
     a.studentId AS studentId,
     b.surName, 
     b.firstName,
@@ -77,21 +77,35 @@ if (!$checkBasicSecurity){/// start if 1
     a.remark,
     a.position AS positionInClass,
     a.overallPosition,
-    a.principalComment
-    FROM 
-    BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB a 
-    JOIN 
-    STUDENTS_TAB b  ON a.studentId = b.studentId AND a.clientId = b.clientId
-    WHERE 
-    a.clientId='$clientId' 
-    AND a.branchId = '$branchId' 
-    AND a.session = '$session' 
-    AND a.termId = '$termId' 
-    AND a.departmentId = '$departmentId' 
-    AND a.classId = '$classId' 
-    AND a.armId = '$armId'
-    ORDER BY 
-    b.surName ASC";
+    a.principalComment,
+    CONCAT(
+        IFNULL(c.numberOfDaysPresents, 0),
+        ' / ',
+        IFNULL(c.timeSchoolOpened, 0)
+    ) AS attendance
+FROM BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB a
+JOIN STUDENTS_TAB b  
+    ON a.studentId = b.studentId 
+   AND a.clientId = b.clientId
+LEFT JOIN BRANCH_STUDENT_ATTENDANCE_TAB c 
+    ON a.studentId = c.studentId 
+   AND a.clientId = c.clientId 
+   AND a.branchId = c.branchId 
+   AND a.session = c.session 
+   AND a.termId = c.termId 
+   AND a.departmentId = c.departmentId 
+   AND a.classId = c.classId 
+   AND a.armId = c.armId
+WHERE a.clientId = '$clientId'
+  AND a.branchId = '$branchId'
+  AND a.session = '$session'
+  AND a.termId = '$termId'
+  AND a.departmentId = '$departmentId'
+  AND a.classId = '$classId'
+  AND a.armId = '$armId'
+ORDER BY b.surName ASC
+";
+
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     while ($fetch = mysqli_fetch_assoc($query)) {    
         $response['studentData'][] = $fetch;

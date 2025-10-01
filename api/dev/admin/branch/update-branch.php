@@ -18,18 +18,8 @@ if(!$checkSession){
 	$stateId=trim($data['stateId']);
     $lgaId=trim($data['lgaId']);
     $address =trim(strtoupper(str_replace("'", "\'", $data['address'])));
-    $smtpHost=trim($data['smtpHost']);
-    $smtpUsername=trim($data['smtpUsername']);
-    $smtpPassword=trim($data['smtpPassword']);
-    $smtpPort=trim($data['smtpPort']);
     $supportEmail=trim($data['supportEmail']);
-
-    $accountNumber=trim($data['accountNumber']);
     $accountName=trim($data['accountName']);
-    $bankName=trim($data['bankName']);
-    $paymentKey=trim($data['paymentKey']);
-    $secretKey=trim($data['secretKey']);
-    $receiverKey=trim($data['receiverKey']);
 
     $staffId=trim($data['managerId']);
     $session=trim($data['session']);
@@ -82,38 +72,7 @@ if(!$checkSession){
         ]; 
         goto end;
 	}
-    if(empty($smtpHost)){
-        $response = [
-            'response'=> 102,
-            'success'=> false,
-            'message'=> "SMTP HOST REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    if(empty($smtpUsername)){
-        $response = [
-            'response'=> 102,
-            'success'=> false,
-            'message'=> "SMTP USERNAME REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    if(empty($smtpPassword)){
-        $response = [
-            'response'=> 102,
-            'success'=> false,
-            'message'=> "SMTP PASSWORD REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    if(empty($smtpPort)){
-        $response = [
-            'response'=> 102,
-            'success'=> false,
-            'message'=> "SMTP PORT REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
+    
     if(empty($supportEmail)){
         $response = [
             'response'=> 102,
@@ -123,14 +82,6 @@ if(!$checkSession){
         goto end;
 	}
 
-    if(empty($accountNumber)){
-        $response = [
-            'response'=> 102,
-            'success'=> false,
-            'message'=> "ACCOUNT NUMBER REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
     if(empty($accountName)){
         $response = [
             'response'=> 102,
@@ -144,30 +95,6 @@ if(!$checkSession){
             'response'=> 102,
             'success'=> false,
             'message'=> "BANK NAME REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    if(empty($paymentKey)){
-        $response = [
-            'response'=> 102,
-            'success'=> false,
-            'message'=> "PAYMENT CHANNEL REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    if(empty($secretKey)){
-        $response = [
-            'response'=> 102,
-            'success'=> false,
-            'message'=> "PAYMENT SECRET KEY REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    if(empty($receiverKey)){
-        $response = [
-            'response'=> 102,
-            'success'=> false,
-            'message'=> "PAYMENT RECEIVERS KEY REQUIRED! Check the fields and try again",
         ]; 
         goto end;
 	}
@@ -249,22 +176,10 @@ if(!$checkSession){
                 ];
                 goto end;
             }
-            $query=mysqli_query($conn,"SELECT * FROM BRANCHES_TAB WHERE $clientIds AND smtpUsername='$smtpUsername' AND branchId!='$branchId'") or die (mysqli_error($conn));
-			$count=mysqli_num_rows($query);
-
-            if ($count>0){ /// start if 4
-                $response = [
-                    'response'=> 103,
-                    'success'=> false,
-                    'message'=> "BRANCH EXIST! Branch already exist by smtpUsername. Check and try again.",
-                ];
-                goto end;
-            }
-
+           
             mysqli_query($conn,"UPDATE `BRANCHES_TAB` SET
-            `name`='$name', `mobileNumber`='$mobileNumber', `stateId`='$stateId', `lgaId`='$lgaId', `address`='$address', `smtpHost`='$smtpHost', `smtpUsername`='$smtpUsername', 
-            `smtpPassword`='$smtpPassword', `smtpPort`='$smtpPort', `supportEmail`='$supportEmail', 
-            `accountNumber`='$accountNumber', `accountName`='$accountName', `bankName`='$bankName', `paymentKey`='$paymentKey', `secretKey`='$secretKey', `receiverKey`='$receiverKey', 
+            `name`='$name', `mobileNumber`='$mobileNumber', `stateId`='$stateId', `lgaId`='$lgaId', `address`='$address', 
+            `supportEmail`='$supportEmail', `accountName`='$accountName',
             `managerId`='$staffId', `session`='$session', `termId`='$termId', `timeSchoolOpened`='$timeSchoolOpened', `schoolResumptionDate`='$schoolResumptionDate',  `statusId`='$statusId', 
             `updatedBy`='$loginStaffId', `updatedTime`=NOW() WHERE $clientIds AND branchId='$branchId'")or die (mysqli_error($conn));
 

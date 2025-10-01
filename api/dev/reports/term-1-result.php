@@ -122,5 +122,14 @@
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $fetch = mysqli_fetch_assoc($query);    
     $response['resultSummary'] = $fetch;
+
+    //// get students attendance
+    $teacherCommentDataQuery = mysqli_query($conn, "SELECT timeSchoolOpened, numberOfDaysPresents, numberOfDaysAbsents FROM BRANCH_STUDENT_ATTENDANCE_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId' AND studentId='$studentId'");
+    $teacherCommentDataFetch = mysqli_fetch_assoc($teacherCommentDataQuery);
+    $response['attendanceData'] = [
+    'timeSchoolOpened'     => $teacherCommentDataFetch['timeSchoolOpened'] ?? 0,
+    'numberOfDaysPresents' => $teacherCommentDataFetch['numberOfDaysPresents'] ?? 0,
+    'numberOfDaysAbsents'  => $teacherCommentDataFetch['numberOfDaysAbsents'] ?? 0,
+    ];
     
 ?>

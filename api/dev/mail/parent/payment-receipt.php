@@ -106,7 +106,7 @@ $message='
     /// copy this emails
     $mail->addAddress($parentEmail, $parentFullname);  // Recipient email and name
     $mail->addAddress($supportEmail, $senderName);  // Support email
-    $mail->addAddress("afootechglobal@gmail.com", "AfooTECH Global");  // Additional recipient
+    $mail->addAddress("schoolboltedusystem@gmail.com", "SchoolBolt Edu System");  // Additional recipient
     
     // Send the email
     if(!$mail->send()){

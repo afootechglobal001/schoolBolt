@@ -40,11 +40,11 @@ if(!$checkSession){
 
         foreach ($attendance as $attendanceRecord) {
 			$studentId = $attendanceRecord['studentId'];
-			$numberOfDaysPresent = $attendanceRecord['numberOfDaysPresent'];
-            $numberOfDaysAbsent = $timeSchoolOpened - $numberOfDaysPresent;
+			$numberOfDaysPresents = $attendanceRecord['numberOfDaysPresents'];
+            $numberOfDaysAbsents = $timeSchoolOpened - $numberOfDaysPresents;
             mysqli_query($conn,"INSERT INTO `BRANCH_STUDENT_ATTENDANCE_TAB`
-            (`clientId`, `branchId`, `session`, `termId`, `departmentId`, `classId`, `armId`, `studentId`, `timeSchoolOpened`, `numberOfDaysPresent`, `numberOfDaysAbsent`, `staffId`, `createdTime`) VALUES 
-            ('$clientId', '$branchId', '$session', '$termId', '$departmentId', '$classId', '$armId', '$studentId', '$timeSchoolOpened', '$numberOfDaysPresent', '$numberOfDaysAbsent','$loginStaffId', NOW())")or die (mysqli_error($conn));
+            (`clientId`, `branchId`, `session`, `termId`, `departmentId`, `classId`, `armId`, `studentId`, `timeSchoolOpened`, `numberOfDaysPresents`, `numberOfDaysAbsents`, `staffId`, `createdTime`) VALUES 
+            ('$clientId', '$branchId', '$session', '$termId', '$departmentId', '$classId', '$armId', '$studentId', '$timeSchoolOpened', '$numberOfDaysPresents', '$numberOfDaysAbsents','$loginStaffId', NOW())")or die (mysqli_error($conn));
 		}
 
     $response['response']=200; 
