@@ -23,7 +23,6 @@ if (!$checkBasicSecurity){/// start if 1
         ];
         goto end;
     }
-
     $query=mysqli_query($conn,"SELECT * FROM STAFF_VIEW WHERE $clientIds AND emailAddress='$email'") or die (mysqli_error($conn));
     $countUser=mysqli_num_rows($query);
 

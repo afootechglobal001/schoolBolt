@@ -136,7 +136,6 @@ function _fetchEachBranchSaff(staffId) {
 	}
 }
 
-
 function _fetchStaffSubjectAllocated() {
 	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
     $('#pageContents').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
@@ -487,7 +486,6 @@ function _fetchStaffSubjectCummulative() {
 	}
 }
 
-
 function _fetchComputeScoreRecordDetails(departmentId, classId, armId, subjectId) {
 	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
 	try {
@@ -520,7 +518,6 @@ function _fetchComputeScoreRecordDetails(departmentId, classId, armId, subjectId
 	}
 }
 
-
 function _getSelectAssessment(fieldId){
 	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
 	try {
@@ -550,7 +547,6 @@ function _getSelectAssessment(fieldId){
 		_actionAlert('An unexpected error occurred. Please try again.', false);
 	}
 }
-
 
 function _proceedComputeAssessment() {
 	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
@@ -612,7 +608,6 @@ function _proceedComputeAssessment() {
 	}
 }
 
-
 function _saveAssessment() {
 	let getComputeScoreStudentDataSession = JSON.parse(sessionStorage.getItem("getComputeScoreStudentDataSession"));
 	try {
@@ -670,6 +665,192 @@ function _saveAssessment() {
 						_actionAlert(info.message, true);
 						_alertClose(2);
 						_getForm({page: 'compute_score_proceed', layer: 2, url: adminPortalLocalUrl});
+					} else {
+						_actionAlert(info.message, false);
+					}
+					$("#submitBtn").html(btn_text).prop("disabled", false);
+				},
+				error: function (error) {
+					_actionAlert('An error occurred while processing your request! Please Try Again', false);
+					$("#submitBtn").html(btn_text).prop("disabled", false);
+				}
+			});
+		}
+	} catch (error) {
+		_actionAlert('An unexpected error occurred! Please Try Again', false);
+		$("#submitBtn").prop("disabled", false);
+	}
+}
+
+function _fetchStaffAssignedClasses() {
+	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
+    $('#classPageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/staff/records/get-class-teacher-assigned-classes?branchId=${getEachStaffDetailsSession.branchId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const fetch = info.data;
+
+				let text = '';
+
+				if (info.success) {
+					for (let i = 0; i < fetch.length; i++) {
+						const fetchClassData = fetch[i].classData;
+						const fetchArmData = fetch[i].armData;
+						const fetchDepartmentData = fetch[i].departmentData;
+						const classId = fetchClassData.classId;
+						const className = fetchClassData.className;
+						const armName = fetchArmData.armName;
+						const armId = fetchArmData.armId;
+						const departmentId = fetchDepartmentData.departmentId
+
+						text +=`
+							<div class="pages-toggle-div">
+								<div class="pages-toggle-title">
+									<h3>${className} ${armName}</h3>
+									<div class="btn-back-div">
+										<button class="btn" title="PRINT STUDENT ATTENDANCE"><i class="bi-printer"></i> PRINT</button>
+										<button class="btn compute-btn" id="proceedBtn_${armId}" title="COMPUTE STUDENT ATTENDANCE" onclick="_proceedComputeAttendance('${departmentId}','${classId}','${armId}');"><i class="bi-check-all"></i> COMPUTE ATTENDANCE</button>
+									</div> 
+								</div>
+							</div>
+						`;
+					}
+					$('#classPageContent').html(text);
+				} else {
+					_actionAlert(info.message, false);
+
+					text +=`
+					<div class="false-notification-div">
+						<p>${info.message}</p>
+					</div>`;
+
+					$('#classPageContent').html(text);
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}
+
+function _proceedComputeAttendance(departmentId, classId, armId) {
+	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
+
+	try {
+		const btnText = $(`#proceedBtn_${armId}`).html();
+		$(`#proceedBtn_${armId}`).html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+		$(`#proceedBtn_${armId}`).prop("disabled", true);
+
+		$.ajax({
+			type: "POST",
+			url: `${endPoint}/admin/staff/records/proceed-compute-attendance?branchId=${getEachStaffDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			processData: false,
+			success: function (info) {
+			if (info.success) {
+				sessionStorage.setItem("getStudentAttendanceDataSession", JSON.stringify(info));
+				_getForm({page: 'computeAttendanceSave', layer: 2, url: adminPortalLocalUrl});
+			} else{
+				const response = info.response;
+				if (response < 100) {
+					_logOut();
+				} 
+			}
+			$(`#proceedBtn_${armId}`).html(btnText).prop("disabled", false);
+		},
+			error: function (error) {
+				_actionAlert('An error occurred while processing your request! Please Try Again', false);
+				$(`#proceedBtn_${armId}`).html(btnText).prop("disabled", false);
+			}
+		});
+	} catch (error) {
+		_actionAlert('An unexpected error occurred! Please Try Again', false);
+		$(`#proceedBtn_${armId}`).prop("disabled", false);
+	}
+}
+
+function _saveAttendance() {
+	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
+	let getStudentAttendanceDataSession = JSON.parse(sessionStorage.getItem("getStudentAttendanceDataSession"));
+	
+	const departmentId = getStudentAttendanceDataSession?.data[0]?.departmentData?.departmentId;
+	const classId = getStudentAttendanceDataSession?.data[0]?.classData?.classId;
+	const armId = getStudentAttendanceDataSession?.data[0]?.armData?.armId;
+
+	try {
+		let issueCount = 0;
+		const attendance = [];
+
+		const maxScore = parseFloat(getStudentAttendanceDataSession?.branchData?.timeSchoolOpened || 0);
+	
+		$('.student-id-holder').each(function () {
+			const studentId = $(this).val();
+			const inputSelector = `#numberOfDaysPresents_${studentId}`;
+			const errorSelector = `#issue_numberOfDaysPresents_${studentId}`;
+			const numberOfDaysPresents = $(inputSelector).val();
+
+			$(inputSelector).removeClass('issue');
+			$(errorSelector).html('');
+
+			const parsedScore = parseFloat(numberOfDaysPresents);
+
+			if (numberOfDaysPresents === "" || isNaN(parsedScore)) {
+				$(inputSelector).addClass('issue');
+				$(errorSelector).html(`Attendance is required (0 - ${maxScore})`);
+				issueCount++;
+			} else if (parsedScore < 0 || parsedScore > maxScore) {
+				$(inputSelector).addClass('issue');
+				$(errorSelector).html(`USER ERROR! Score must be between 0 and ${maxScore}`);
+				issueCount++;
+			} else {
+				attendance.push({
+					studentId: studentId,
+					numberOfDaysPresents: parsedScore
+				});
+			}
+		});
+
+		if (issueCount>0){
+			return;
+		}
+
+		if (confirm("Confirm!!\n\nAre you sure to PERFORM THIS ACTION?")) {
+			const btn_text = $("#submitBtn").html();
+			$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+			$("#submitBtn").prop("disabled", true);
+
+			const formData = {
+				attendance: attendance,
+			};
+
+			$.ajax({
+				type: "POST",
+				url: `${endPoint}/admin/staff/records/save-attendance?branchId=${getEachStaffDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+				data: JSON.stringify(formData),
+				dataType: "json",
+				cache: false,
+				headers: getAuthHeaders(true),
+				processData: false,
+				success: function (info) {
+					if (info.success) {
+						_actionAlert(info.message, true);
+						_proceedComputeAttendance(departmentId, classId, armId)
 					} else {
 						_actionAlert(info.message, false);
 					}
