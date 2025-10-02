@@ -23,9 +23,7 @@ if(!$checkSession){
     $smtpPort=trim($data['smtpPort']);
     $supportEmail=trim($data['supportEmail']);
 
-    $accountNumber=trim($data['accountNumber']);
     $accountName=trim($data['accountName']);
-    $bankName=trim($data['bankName']);
     $paymentKey=trim($data['paymentKey']);
     $secretKey=trim($data['secretKey']);
     $receiverKey=trim($data['receiverKey']);
@@ -120,14 +118,6 @@ if(!$checkSession){
         goto end;
 	}
 
-    if(empty($accountNumber)){
-        $response = [
-            'response'=> 102,
-            'success'=> false,
-            'message'=> "ACCOUNT NUMBER REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
     if(empty($accountName)){
         $response = [
             'response'=> 102,
@@ -144,14 +134,7 @@ if(!$checkSession){
         ]; 
         goto end;
 	}
-    if(empty($paymentKey)){
-        $response = [
-            'response'=> 102,
-            'success'=> false,
-            'message'=> "PAYMENT CHANNEL REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
+   
     if(empty($secretKey)){
         $response = [
             'response'=> 102,
@@ -259,8 +242,8 @@ if(!$checkSession){
 
 
             mysqli_query($conn,"INSERT INTO `BRANCHES_TAB`
-            (`clientId`, `branchId`, `name`, `mobileNumber`, `stateId`, `lgaId`, `address`, `smtpHost`, `smtpUsername`, `smtpPassword`, `smtpPort`, `supportEmail`, `accountNumber`, `accountName`, `bankName`, `paymentKey`, `secretKey`, `receiverKey`, `managerId`, `session`, `termId`, `statusId`, `createdBy`, `createdTime`) VALUES
-            ('$clientId','$branchId','$name', '$mobileNumber', '$stateId', '$lgaId', '$address', '$smtpHost', '$smtpUsername', '$smtpPassword', '$smtpPort', '$supportEmail', '$accountNumber',  '$accountName', '$bankName', '$paymentKey', '$secretKey', '$receiverKey', '$staffId', '$session', '$termId', '$statusId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
+            (`clientId`, `branchId`, `name`, `mobileNumber`, `stateId`, `lgaId`, `address`, `smtpHost`, `smtpUsername`, `smtpPassword`, `smtpPort`, `supportEmail`,  `accountName`,  `paymentKey`, `secretKey`, `receiverKey`, `managerId`, `session`, `termId`, `statusId`, `createdBy`, `createdTime`) VALUES
+            ('$clientId','$branchId','$name', '$mobileNumber', '$stateId', '$lgaId', '$address', '$smtpHost', '$smtpUsername', '$smtpPassword', '$smtpPort', '$supportEmail', '$accountName', '$paymentKey', '$secretKey', '$receiverKey', '$staffId', '$session', '$termId', '$statusId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
 
             foreach ($departmentIds as $eachId) {
                 $departmentId = $eachId['departmentId'];
