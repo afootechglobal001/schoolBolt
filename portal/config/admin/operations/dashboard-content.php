@@ -49,15 +49,15 @@ userRoles.canViewBursaryDashboard && _getActivePage({
         <ul>
             <li title="Department" onclick="_getPage({page: 'department_config', url: adminPortalLocalUrl});"><span><i
                         class="bi-diagram-3"></i> Department</span>
-                <div class="num" id="">150</div>
+                <div class="num" id="totalActiveDepartmentCount">0</div>
             </li>
             <li title="Classes" onclick="_getPage({page: 'class_config', url: adminPortalLocalUrl});"><span><i
                         class="bi-people"></i> classes</span>
-                <div class="num" id="">700</div>
+                <div class="num" id="totalActiveClassCount">0</div>
             </li>
             <li title="Subjects" onclick="_getPage({page: 'subject_config', url: adminPortalLocalUrl});"><span><i
                         class="bi-journals"></i> Subjects</span>
-                <div class="num" id="">20</div>
+                <div class="num" id="totalActiveSubjectCount">0</div>
             </li>
         </ul>
     </div>
@@ -67,45 +67,45 @@ userRoles.canViewBursaryDashboard && _getActivePage({
     <div class="left-dashbaord-container">
         <div class="statistics-chart-back-div">
             <div class="new-statistics-back-div">
-                <div class="new-statistics-div" title="Branches" onclick="_getActivePage({page:'branches', divid:'branches'});">
+                <div class="new-statistics-div" title="Statistics of Branches" onclick="_getActivePage({page:'branches', divid:'branches'});">
                     <div class="statistics-inner-div">
                         <div class="statistics-text">
                             <p>Branches</p>
                             <span>Statistics of Branches</span>
-                            <h2>12</h2>
+                            <h2 id="totalActiveBranchCount">0</h2>
                         </div>
                         <div class="statistics-icon pending"><i class="bi-diagram-3"></i></div>
                     </div>
                 </div>
 
-                <div class="new-statistics-div" title="Staff" onclick="_getActivePage({page:'staff', divid:'staff'});">
+                <div class="new-statistics-div" title="Statistics of Staffs" onclick="_getActivePage({page:'staff', divid:'staff'});">
                     <div class="statistics-inner-div">
                         <div class="statistics-text">
                             <p>Total Staff</p>
                             <span>Statistics of Staffs</span>
-                            <h2>80</h2>
+                            <h2 id="totalActiveStaffCount">0</h2>
                         </div>
                         <div class="statistics-icon upcoming"><i class="bi-person-bounding-box"></i></div>
                     </div>
                 </div>
 
-                <div class="new-statistics-div" title="Students">
+                <div class="new-statistics-div" title="Statistics of Students">
                     <div class="statistics-inner-div">
                         <div class="statistics-text">
                             <p>Total Students</p>
                             <span>Statistics of Students</span>
-                            <h2>250</h2>
+                            <h2 id="totalActiveStudentCount">0</h2>
                         </div>
                         <div class="statistics-icon completed"><i class="bi-people"></i></div>
                     </div>
                 </div>
 
-                <div class="new-statistics-div" title="Alumni">
+                <div class="new-statistics-div" title="Statistics of Alumni Students">
                     <div class="statistics-inner-div">
                         <div class="statistics-text">
                             <p>Total Alumni</p>
                             <span>Statistics of Alumni</span>
-                            <h2>40</h2>
+                            <h2 id="totalAlumniStudentCount">0</h2>
                         </div>
                         <div class="statistics-icon pending"><i class="bi-people"></i></div>
                     </div>
@@ -184,197 +184,127 @@ userRoles.canViewBursaryDashboard && _getActivePage({
                         </div>
                         <div class="fund-back-div">
                             <div class="fund-div">
-                                <h3><span>₦1,343,581.63</span>(SALES)</h3>
-                            </div>-<div class="fund-div">
-                                <h3><span>₦256,000.00</span>(WALLET)</h3>
+                                <h3><span><s>N</s> 1,343,581.63</span>(SALES)</h3>
                             </div>
                         </div>
                     </div>
 
                     <div id="chartContainer" style="width:100%; height:300px; margin:auto;"></div>
                     <script>
-                    $(document).ready(function() {
-                        var chart = new CanvasJS.Chart("chartContainer", {
-                            animationEnabled: true,
-                            theme: "light1",
-                            title: {
-                                text: ""
-                            },
-                            axisX: {
-                                valueFormatString: "DD MMM",
-                                crosshair: {
-                                    enabled: true,
-                                    snapToDataPoint: true
-                                }
-                            },
-                            axisY: {
-                                title: "",
-                                includeZero: true,
-                                crosshair: {
-                                    enabled: true
-                                }
-                            },
-                            toolTip: {
-                                shared: true
-                            },
-                            legend: {
-                                cursor: "pointer",
-                                verticalAlign: "bottom",
-                                horizontalAlign: "left",
-                                dockInsidePlotArea: true,
-                                itemclick: toogleDataSeries
-                            },
-                            data: [{
-                                    type: "line",
-                                    showInLegend: true,
-                                    name: "Sales",
-                                    markerType: "square",
-                                    xValueFormatString: "DD MMM, YYYY",
-                                    color: "#29BA00",
-                                    dataPoints: [{
-                                            x: new Date(2025, 0, 1),
-                                            y: 250000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 2),
-                                            y: 180000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 3),
-                                            y: 100000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 4),
-                                            y: 300000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 5),
-                                            y: 120000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 6),
-                                            y: 150000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 7),
-                                            y: 275000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 8),
-                                            y: 160000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 9),
-                                            y: 350000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 10),
-                                            y: 380000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 11),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 12),
-                                            y: 100000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 13),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 14),
-                                            y: 180000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 15),
-                                            y: 270000
-                                        },
-                                    ]
+                        $(document).ready(function() {
+                            var chart = new CanvasJS.Chart("chartContainer", {
+                                animationEnabled: true,
+                                theme: "light1",
+                                title: {
+                                    text: ""
                                 },
-                                {
-                                    type: "line",
-                                    showInLegend: true,
-                                    name: "Wallet",
-                                    lineDashType: "dash",
-                                    dataPoints: [{
-                                            x: new Date(2025, 0, 1),
-                                            y: 180000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 2),
-                                            y: 50000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 3),
-                                            y: 80000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 4),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 5),
-                                            y: 150000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 6),
-                                            y: 40000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 7),
-                                            y: 300000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 8),
-                                            y: 200000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 9),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 10),
-                                            y: 120000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 11),
-                                            y: 90000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 12),
-                                            y: 200000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 13),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 14),
-                                            y: 280000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 15),
-                                            y: 50000
-                                        },
+                                axisX: {
+                                    valueFormatString: "DD MMM",
+                                    crosshair: {
+                                        enabled: true,
+                                        snapToDataPoint: true
+                                    }
+                                },
+                                axisY: {
+                                    title: "",
+                                    includeZero: true,
+                                    crosshair: {
+                                        enabled: true
+                                    }
+                                },
+                                toolTip: {
+                                    shared: true
+                                },
+                                legend: {
+                                    cursor: "pointer",
+                                    verticalAlign: "bottom",
+                                    horizontalAlign: "left",
+                                    dockInsidePlotArea: true,
+                                    itemclick: toogleDataSeries
+                                },
+                                data: [{
+                                        type: "line",
+                                        showInLegend: true,
+                                        name: "Sales",
+                                        markerType: "square",
+                                        xValueFormatString: "DD MMM, YYYY",
+                                        color: "#29BA00",
+                                        dataPoints: [{
+                                                x: new Date(2025, 0, 1),
+                                                y: 250000
+                                            },
+                                            {
+                                                x: new Date(2025, 0, 2),
+                                                y: 180000
+                                            },
+                                            {
+                                                x: new Date(2025, 0, 3),
+                                                y: 100000
+                                            },
+                                            {
+                                                x: new Date(2025, 0, 4),
+                                                y: 300000
+                                            },
+                                            {
+                                                x: new Date(2025, 0, 5),
+                                                y: 120000
+                                            },
+                                            {
+                                                x: new Date(2025, 0, 6),
+                                                y: 150000
+                                            },
+                                            {
+                                                x: new Date(2025, 0, 7),
+                                                y: 275000
+                                            },
+                                            {
+                                                x: new Date(2025, 0, 8),
+                                                y: 160000
+                                            },
+                                            {
+                                                x: new Date(2025, 0, 9),
+                                                y: 350000
+                                            },
+                                            {
+                                                x: new Date(2025, 0, 10),
+                                                y: 380000
+                                            },
+                                            {
+                                                x: new Date(2025, 0, 11),
+                                                y: 0
+                                            },
+                                            {
+                                                x: new Date(2025, 0, 12),
+                                                y: 100000
+                                            },
+                                            {
+                                                x: new Date(2025, 0, 13),
+                                                y: 0
+                                            },
+                                            {
+                                                x: new Date(2025, 0, 14),
+                                                y: 180000
+                                            },
+                                            {
+                                                x: new Date(2025, 0, 15),
+                                                y: 270000
+                                            },
+                                        ]
+                                    },
+                                ]
 
-                                    ]
-                                }
-                            ]
-
-                        });
-                        chart.render();
-
-                        function toogleDataSeries(e) {
-                            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                                e.dataSeries.visible = false;
-                            } else {
-                                e.dataSeries.visible = true;
-                            }
+                            });
                             chart.render();
-                        }
-                    })
+
+                            function toogleDataSeries(e) {
+                                if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                                    e.dataSeries.visible = false;
+                                } else {
+                                    e.dataSeries.visible = true;
+                                }
+                                chart.render();
+                            }
+                        })
                     </script>
                 </div>
             </div>
@@ -382,7 +312,49 @@ userRoles.canViewBursaryDashboard && _getActivePage({
     </div>
 
     <div class="right-dashbaord-container">
+        <div class="matrix-div">
+            <div class="inner-div">
+                <div class="title">
+                    <h3>Staff Role Matrix</h3>
+                </div>
+                <div id="chartContainer1" style="width:100%; height:200px; margin:auto;"></div>
 
+                <script type="text/javascript">
+                var options = {
+                    title: {
+                        text: "" /*My Performance*/
+                    },
+                    data: [{
+                        type: "pie",
+                        startAngle: 45,
+                        showInLegend: "False",
+                        legendText: "{label}",
+                        indexLabel: "{label} ({y})",
+                        yValueFormatString: "#,##0.#" % "",
+                        dataPoints: [{
+                                label: "SUPER ADMIN",
+                                y: 5
+                            },
+                            {
+                                label: "ADMINISTRATOR",
+                                y: 6
+                            },
+                            {
+                                label: "SUBJECT TEACHER",
+                                y: 4
+                            },
+                            {
+                                label: "CLASS TEACHERS",
+                                y: 5
+                            },
+                        ]
+                    }]
+                };
+                $("#chartContainer1").CanvasJSChart(options);
+                </script>
+            </div>
+        </div>
+        
         <div class="matrix-div">
             <div class="inner-div">
                 <div class="title">
@@ -421,58 +393,12 @@ userRoles.canViewBursaryDashboard && _getActivePage({
                 </script>
             </div>
         </div>
-
-        <div class="matrix-div">
-            <div class="inner-div">
-                <div class="title">
-                    <h3>Staff Role Matrix</h3>
-                </div>
-                <div id="chartContainer1" style="width:100%; height:200px; margin:auto;"></div>
-
-                <script type="text/javascript">
-                var options = {
-                    title: {
-                        text: "" /*My Performance*/
-                    },
-                    data: [{
-                        type: "pie",
-                        startAngle: 45,
-                        showInLegend: "False",
-                        legendText: "{label}",
-                        indexLabel: "{label} ({y})",
-                        yValueFormatString: "#,##0.#" % "",
-                        dataPoints: [{
-                                label: "SUPER ADMIN",
-                                y: 5
-                            },
-                            {
-                                label: "ADMINISTRATOR",
-                                y: 6
-                            },
-                            {
-                                label: "SUBJECT TEACHERS",
-                                y: 4
-                            },
-                            {
-                                label: "CLASS TEACHERS",
-                                y: 5
-                            },
-                            {
-                                label: "ICT STAFF",
-                                y: 15
-                            },
-                            {
-                                label: "ACCOUNTANTS",
-                                y: 15
-                            },
-                        ]
-                    }]
-                };
-                $("#chartContainer1").CanvasJSChart(options);
-                </script>
-            </div>
-        </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            _fetchDashboardStatistics();
+        });
+    </script>
 </div>
 <?php } ?>
 
