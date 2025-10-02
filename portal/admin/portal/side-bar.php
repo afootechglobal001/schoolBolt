@@ -19,8 +19,8 @@ function writeSidebarItems(navId) {
     if (userRoles.canViewAllStaff) {
         document.write(`
                 <div class="nav-div" title="Staff" onclick="_getActivePage({page:'staff', divid:'staff'});" id="${navId}-staff">
-                    <div class="icon"><i class="bi-people"></i> Staff</div> 
-                    <div class="hidden" id="_staff"><i class="bi-people"></i> Active Staff</div>
+                    <div class="icon"><i class="bi-person-bounding-box"></i> Staff</div> 
+                    <div class="hidden" id="_staff"><i class="bi-person-bounding-box"></i> Active Staff</div>
                 </div>
             `);
     }
@@ -32,6 +32,12 @@ function writeSidebarItems(navId) {
                 </div>
             `);
     }
+
+    document.write(`
+        <div class="nav-div" title="Log-Out" onclick="_confirmLogOut();" id="${navId}-logout">        
+            <div class="icon"><i class="bi-power"></i> Log-Out</div> 
+        </div>
+    `);
 }
 </script>
 

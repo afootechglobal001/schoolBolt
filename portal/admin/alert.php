@@ -34,5 +34,6 @@
             <button class="btn" type="button" onClick="snapPicture()"><i class="fa fa-camera"></i> Take Snapshot </button>
         </div>
     </div>
-    
 </div>
+
+<div id="customConfirmModal" class="modal-overlay" style="display:none;"></div>

@@ -142,7 +142,7 @@ function _collapse(divId) {
 
 function _getFormDetails(nextId) {
 	$('#user_form_details').hide();
-	$("#" + nextId).show();
+	$("#" + nextId).fadeIn(500);
 	$('#user_details, #edit_btn').fadeOut(500);
 }
 
@@ -181,3 +181,76 @@ function snapPicture() {
 	 }
 }
 //////////////////////////// end upload image from webcam//////////////////////////
+
+function _confirmLogOut() {
+  _showCustomConfirm({
+    callback: () => {
+      _logOut();
+    },
+    title: "Confirm Logout Action!",
+    message:
+      "Are you sure you want to log out? You may miss important notifications or updates until you sign in again.",
+    alertType: "warning",
+    falseActionBtn: true,
+  });
+}
+
+
+///// Dashbaord Statistics ////////
+function _fetchDashboardStatistics() {
+  $.ajax({
+    type: "GET",
+    url: `${endPoint}/admin/dashboard/fetch-dashboard-statistics`,
+    dataType: "json",
+    cache: false,
+    headers: getAuthHeaders(true),
+    success: function (info) {
+      if (info.success && info.data.length > 0) {
+        const data = info.data[0];
+
+        $('#totalActiveBranchCount').html(data.total_active_branch_count);
+        $('#totalActiveStaffCount').html(data.total_active_staff_count);
+        $('#totalActiveStudentCount').html(data.total_active_student_count);
+        $('#totalAlumniStudentCount').html(data.total_alumni_student_count);
+        $('#totalActiveDepartmentCount').html(data.total_active_department_count);
+        $('#totalActiveClassCount').html(data.total_active_class_count);
+        $('#totalActiveSubjectCount').html(data.total_active_subject_count);
+
+        if (info.staffMatrix && info.staffMatrix.length > 0) {
+          	let dataPoints = [];
+
+			for (let i = 0; i < info.staffMatrix.length; i++) {
+				const fetchedData = info.staffMatrix[i];
+				const roleName = fetchedData.roleName
+				const role_count =  parseInt(fetchedData.role_count);
+
+				dataPoints.push({
+				label: roleName,
+				y: role_count
+				});
+			}
+
+			const options = {
+				data: [{
+					type: "pie",
+					startAngle: 45,
+					showInLegend: "False",
+					legendText: "{label}",
+					indexLabel: "{label} ({y})",
+					yValueFormatString: "#,##0.#" % "",
+					indexLabelFontSize: 9,
+					dataPoints: dataPoints
+				}]
+			};
+
+          	$("#chartContainer1").CanvasJSChart(options);
+        }
+      } else {
+        const response = info.response;
+        if (response < 100) {
+          _logOut();
+        }
+      }
+    }
+  });
+}

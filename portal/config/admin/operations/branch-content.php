@@ -158,30 +158,11 @@
 
             <div class="alert alert-success form-alert"><span>SCHOOL PAYMENT CONFIGURATION</span>
                 <div class="text_field_back_container">
-                    <div class="text_field_container" id="accountNumber_container">
-                        <script>
-                        textField({
-                            id: 'accountNumber',
-                            title: 'ACCOUNT NUMBER',
-                            type: 'number'
-                        });
-                        </script>
-                    </div>
-
                     <div class="text_field_container" id="accountName_container">
                         <script>
                         textField({
                             id: 'accountName',
-                            title: 'ACCOUNT NAME'
-                        });
-                        </script>
-                    </div>
-
-                    <div class="text_field_container" id="bankName_container">
-                        <script>
-                        textField({
-                            id: 'bankName',
-                            title: 'BANK NAME'
+                            title: 'BUSINESS NAME'
                         });
                         </script>
                     </div>
@@ -776,8 +757,6 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                         <div class="fund-back-div">
                             <div class="fund-div">
                                 <h3><span>₦1,343,581.63</span>(SALES)</h3>
-                            </div>-<div class="fund-div">
-                                <h3><span>₦256,000.00</span>(WALLET)</h3>
                             </div>
                         </div>
                     </div>
@@ -884,74 +863,6 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                                         },
                                     ]
                                 },
-                                {
-                                    type: "line",
-                                    showInLegend: true,
-                                    name: "Wallet",
-                                    lineDashType: "dash",
-                                    dataPoints: [{
-                                            x: new Date(2025, 0, 1),
-                                            y: 180000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 2),
-                                            y: 50000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 3),
-                                            y: 80000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 4),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 5),
-                                            y: 150000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 6),
-                                            y: 40000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 7),
-                                            y: 300000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 8),
-                                            y: 200000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 9),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 10),
-                                            y: 120000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 11),
-                                            y: 90000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 12),
-                                            y: 200000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 13),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 14),
-                                            y: 280000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 15),
-                                            y: 50000
-                                        },
-
-                                    ]
-                                }
                             ]
 
                         });
@@ -1144,8 +1055,6 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                         <div class="fund-back-div">
                             <div class="fund-div">
                                 <h3><span>₦1,343,581.63</span>(SALES)</h3>
-                            </div>-<div class="fund-div">
-                                <h3><span>₦256,000.00</span>(WALLET)</h3>
                             </div>
                         </div>
                     </div>
@@ -1523,7 +1432,8 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
             textField({
                 id: 'updateSmtpHost',
                 title: 'SMTP HOST',
-                value: getEachBranchDetailsSession?.smtpHost ?? ''
+                value: getEachBranchDetailsSession?.smtpHost ?? '',
+                readonly: true
             });
             </script>
         </div>
@@ -1533,7 +1443,8 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
             textField({
                 id: 'updateSmtpUsername',
                 title: 'SMTP USERNAME',
-                value: getEachBranchDetailsSession?.smtpUsername ?? ''
+                value: getEachBranchDetailsSession?.smtpUsername ?? '',
+                readonly: true
             });
             </script>
         </div>
@@ -1544,7 +1455,8 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                 id: 'updateSmtpPassword',
                 title: 'SMTP PASSWORD',
                 type: 'password',
-                value: getEachBranchDetailsSession?.smtpPassword ?? ''
+                value: getEachBranchDetailsSession?.smtpPassword ?? '',
+                readonly: true
             });
             </script>
         </div>
@@ -1555,7 +1467,8 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                 id: 'updateSmtpPort',
                 title: 'SMTP PORT',
                 type: 'number',
-                value: getEachBranchDetailsSession?.smtpPort ?? ''
+                value: getEachBranchDetailsSession?.smtpPort ?? '',
+                readonly: true
             });
             </script>
         </div>
@@ -1577,33 +1490,12 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
     <div class="title">SCHOOL PAYMENT CONFIGURATION</div>
 
     <div class="profile-segment-div">
-        <div class="text_field_container col-1" id="updateAccountNumber_container">
-            <script>
-            textField({
-                id: 'updateAccountNumber',
-                title: 'ACCOUNT NUMBER',
-                type: 'number',
-                value: getEachBranchDetailsSession?.accountNumber ?? ''
-            });
-            </script>
-        </div>
-
         <div class="text_field_container col-1" id="updateAccountName_container">
             <script>
             textField({
                 id: 'updateAccountName',
-                title: 'ACCOUNT NAME',
+                title: 'BUSSINESS NAME',
                 value: getEachBranchDetailsSession?.accountName ?? ''
-            });
-            </script>
-        </div>
-
-        <div class="text_field_container col-1" id="updateBankName_container">
-            <script>
-            textField({
-                id: 'updateBankName',
-                title: 'BANK NAME',
-                value: getEachBranchDetailsSession?.bankName ?? ''
             });
             </script>
         </div>
