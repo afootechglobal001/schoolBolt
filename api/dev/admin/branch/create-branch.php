@@ -126,14 +126,6 @@ if(!$checkSession){
         ]; 
         goto end;
 	}
-    if(empty($bankName)){
-        $response = [
-            'response'=> 102,
-            'success'=> false,
-            'message'=> "BANK NAME REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
    
     if(empty($secretKey)){
         $response = [
@@ -221,18 +213,6 @@ if(!$checkSession){
                 ];
                 goto end;
             }
-            $query=mysqli_query($conn,"SELECT * FROM BRANCHES_TAB WHERE $clientIds AND smtpUsername='$smtpUsername'") or die (mysqli_error($conn));
-			$count=mysqli_num_rows($query);
-
-            if ($count>0){ /// start if 4
-                $response = [
-                    'response'=> 103,
-                    'success'=> false,
-                    'message'=> "BRANCH EXIST! Branch already exist by smtpUsername. Check and try again.",
-                ];
-                goto end;
-            }
-
             ///////////////////////geting sequence//////////////////////////
             $countId='BRANCH';
             $sequence=$callclass->_get_sequence_count($conn, $countId);

@@ -90,14 +90,6 @@ if(!$checkSession){
         ]; 
         goto end;
 	}
-    if(empty($bankName)){
-        $response = [
-            'response'=> 102,
-            'success'=> false,
-            'message'=> "BANK NAME REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
     if(empty($staffId)){
         $response = [
             'response'=> 102,
@@ -148,14 +140,6 @@ if(!$checkSession){
         goto end;
 	}
 
-        if(!filter_var($smtpUsername, FILTER_VALIDATE_EMAIL)){
-            $response = [
-                'response'=> 102,
-                'success'=> false,
-                'message'=> "INVALID SMTP USERNAME ADDRESS! Enter a valid email address and try again",
-            ]; 
-            goto end;
-        }
         if(!filter_var($supportEmail, FILTER_VALIDATE_EMAIL)){
             $response = [
                 'response'=> 102,
