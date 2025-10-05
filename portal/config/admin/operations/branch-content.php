@@ -751,13 +751,15 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                 </div>
 
                 <div class="trending-back-div">
-                    <div class="revenue-back-div">
-                        <div class="top-revenue">Revenue For<span>January 18 2025</span>-<span>February 17 2025</span>
-                        </div>
-                        <div class="fund-back-div">
-                            <div class="fund-div">
-                                <h3><span>₦1,343,581.63</span>(SALES)</h3>
-                            </div>
+                    <div class="revenue-div">
+                        <p>Revenue from <span>January 18 2025</span> - <span>February 17 2025</span></p>
+                        <div class="fund-div">
+                            <h3>
+                                <p><s>N</s> 1,343,581.63</p><span>Credit Card</span>
+                            </h3>
+                            <h3>
+                                <p><s>N</s> 1,343,581.63</p><span>Bank Transfer</span>
+                            </h3>
                         </div>
                     </div>
 
@@ -766,7 +768,7 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                     $(document).ready(function() {
                         var chart = new CanvasJS.Chart("chartContainer", {
                             animationEnabled: true,
-                            theme: "light1",
+                            theme: "light2",
                             title: {
                                 text: ""
                             },
@@ -795,75 +797,73 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                                 itemclick: toogleDataSeries
                             },
                             data: [{
-                                    type: "line",
-                                    showInLegend: true,
-                                    name: "Sales",
-                                    markerType: "square",
-                                    xValueFormatString: "DD MMM, YYYY",
-                                    color: "#29BA00",
-                                    dataPoints: [{
-                                            x: new Date(2025, 0, 1),
-                                            y: 250000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 2),
-                                            y: 180000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 3),
-                                            y: 100000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 4),
-                                            y: 300000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 5),
-                                            y: 120000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 6),
-                                            y: 150000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 7),
-                                            y: 275000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 8),
-                                            y: 160000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 9),
-                                            y: 350000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 10),
-                                            y: 380000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 11),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 12),
-                                            y: 100000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 13),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 14),
-                                            y: 180000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 15),
-                                            y: 270000
-                                        },
-                                    ]
-                                },
-                            ]
+                                type: "column",
+                                showInLegend: true,
+                                name: "Revenue",
+                                xValueFormatString: "DD MMM, YYYY",
+                                color: "#328ab3",
+                                dataPoints: [{
+                                        x: new Date(2025, 0, 1),
+                                        y: 250000
+                                    },
+                                    {
+                                        x: new Date(2025, 0, 2),
+                                        y: 180000
+                                    },
+                                    {
+                                        x: new Date(2025, 0, 3),
+                                        y: 100000
+                                    },
+                                    {
+                                        x: new Date(2025, 0, 4),
+                                        y: 300000
+                                    },
+                                    {
+                                        x: new Date(2025, 0, 5),
+                                        y: 120000
+                                    },
+                                    {
+                                        x: new Date(2025, 0, 6),
+                                        y: 150000
+                                    },
+                                    {
+                                        x: new Date(2025, 0, 7),
+                                        y: 275000
+                                    },
+                                    {
+                                        x: new Date(2025, 0, 8),
+                                        y: 160000
+                                    },
+                                    {
+                                        x: new Date(2025, 0, 9),
+                                        y: 350000
+                                    },
+                                    {
+                                        x: new Date(2025, 0, 10),
+                                        y: 380000
+                                    },
+                                    {
+                                        x: new Date(2025, 0, 11),
+                                        y: 0
+                                    },
+                                    {
+                                        x: new Date(2025, 0, 12),
+                                        y: 100000
+                                    },
+                                    {
+                                        x: new Date(2025, 0, 13),
+                                        y: 0
+                                    },
+                                    {
+                                        x: new Date(2025, 0, 14),
+                                        y: 180000
+                                    },
+                                    {
+                                        x: new Date(2025, 0, 15),
+                                        y: 270000
+                                    },
+                                ]
+                            }, ]
 
                         });
                         chart.render();
@@ -1049,13 +1049,15 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                 </div>
 
                 <div class="trending-back-div">
-                    <div class="revenue-back-div">
-                        <div class="top-revenue">Revenue For<span>January 18 2025</span>-<span>February 17 2025</span>
-                        </div>
-                        <div class="fund-back-div">
-                            <div class="fund-div">
-                                <h3><span>₦1,343,581.63</span>(SALES)</h3>
-                            </div>
+                    <div class="revenue-div">
+                        <p>Revenue from <span>January 18 2025</span> - <span>February 17 2025</span></p>
+                        <div class="fund-div">
+                            <h3>
+                                <p><s>N</s> 1,343,581.63</p><span>Credit Card</span>
+                            </h3>
+                            <h3>
+                                <p><s>N</s> 1,343,581.63</p><span>Bank Transfer</span>
+                            </h3>
                         </div>
                     </div>
 
@@ -1064,7 +1066,7 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                     $(document).ready(function() {
                         var chart = new CanvasJS.Chart("chartContainer", {
                             animationEnabled: true,
-                            theme: "light1",
+                            theme: "light2",
                             title: {
                                 text: ""
                             },
@@ -1093,12 +1095,11 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                                 itemclick: toogleDataSeries
                             },
                             data: [{
-                                    type: "line",
+                                    type: "column",
                                     showInLegend: true,
-                                    name: "Sales",
-                                    markerType: "square",
+                                    name: "Revenue",
                                     xValueFormatString: "DD MMM, YYYY",
-                                    color: "#29BA00",
+                                    color: "#328ab3",
                                     dataPoints: [{
                                             x: new Date(2025, 0, 1),
                                             y: 250000
