@@ -324,12 +324,13 @@ userRoles.canViewBursaryDashboard && _getActivePage({
                         text: "" /*My Performance*/
                     },
                     data: [{
-                        type: "pie",
-                        startAngle: 45,
+                        type: "doughnut",
+                        innerRadius: 30,
                         showInLegend: "False",
                         legendText: "{label}",
                         indexLabel: "{label} ({y})",
                         yValueFormatString: "#,##0.#" % "",
+                        indexLabelFontSize: 9,
                         dataPoints: [{
                                 label: "SUPER ADMIN",
                                 y: 5
