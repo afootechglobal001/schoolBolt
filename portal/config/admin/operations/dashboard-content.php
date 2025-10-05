@@ -127,7 +127,8 @@ userRoles.canViewBursaryDashboard && _getActivePage({
                             </div>
                             <div id="srch-week" onclick="_fetchRevenueFiltering('srch-week', 'This Week');">This
                                 Week</div>
-                            <div id="srch-7" onclick="_fetchRevenueFiltering('srch-7', 'Last 7 Days');">Last 7 Days</div>
+                            <div id="srch-7" onclick="_fetchRevenueFiltering('srch-7', 'Last 7 Days');">Last 7 Days
+                            </div>
                             <div id="srch-month" onclick="_fetchRevenueFiltering('srch-month', 'This Month');">This
                                 Month</div>
                             <div id="srch-30" onclick="_fetchRevenueFiltering('srch-30', 'Last 30 Days');">Last 30 Days
@@ -148,7 +149,8 @@ userRoles.canViewBursaryDashboard && _getActivePage({
                                 <div class="text_field_container dash_field_container">
                                     <input class="text_field bar_cust_text_field" type="text" id="datepickers-from"
                                         placeholder="" />
-                                    <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From </div>
+                                    <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From
+                                    </div>
                                     <div class="issueText" id="issue_from"></div>
                                 </div>
 
@@ -158,7 +160,8 @@ userRoles.canViewBursaryDashboard && _getActivePage({
                                     <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To </div>
                                     <div class="issueText" id="issue_to"></div>
                                 </div>
-                                <button type="button" class="btn" id="applyCustomSearchBtn" onclick="_fetchCustomRevenueFiltering();">Apply</button>
+                                <button type="button" class="btn" id="applyCustomSearchBtn"
+                                    onclick="_fetchCustomRevenueFiltering();">Apply</button>
                             </div>
                         </div>
                     </div>
@@ -183,7 +186,8 @@ userRoles.canViewBursaryDashboard && _getActivePage({
 
                 <div class="trending-back-div">
                     <div class="revenue-div">
-                        <p>Revenue from <span id="dateFrom">January 18 2025</span> - <span id="dateTo">February 17 2025</span></p>
+                        <p>Revenue from <span id="dateFrom">January 18 2025</span> - <span id="dateTo">February 17
+                                2025</span></p>
                         <div class="fund-div">
                             <h3>
                                 <p id="sumCreditCardPayments"><s>N</s> 1,343,581.63</p><span>Credit Card</span>
@@ -196,115 +200,116 @@ userRoles.canViewBursaryDashboard && _getActivePage({
 
                     <div id="chartContainer" style="width:100%; height:400px; margin:auto;"></div>
                     <script>
-                        $(document).ready(function() {
-                            var chart = new CanvasJS.Chart("chartContainer", {
-                                animationEnabled: true,
-                                theme: "light2",
-                                axisX: {
-                                    valueFormatString: "DD MMM",
-                                    crosshair: {
-                                        enabled: true,
-                                        snapToDataPoint: true
-                                    }
-                                },
-                                axisY: {
-                                    title: "",
-                                    includeZero: true,
-                                    crosshair: {
-                                        enabled: true
-                                    }
-                                },
-                                toolTip: {
-                                    shared: true
-                                },
-                                legend: {
-                                    cursor: "pointer",
-                                    verticalAlign: "bottom",
-                                    horizontalAlign: "left",
-                                    dockInsidePlotArea: true,
-                                    itemclick: toogleDataSeries
-                                },
-                                data: [{
-                                    type: "column",
-                                    showInLegend: true,
-                                    name: "Revenue",
-                                    xValueFormatString: "DD MMM, YYYY",
-                                    color: "#328ab3",
-                                    dataPoints: [{
-                                            x: new Date(2025, 0, 1),
-                                            y: 250000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 2),
-                                            y: 180000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 3),
-                                            y: 100000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 4),
-                                            y: 300000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 5),
-                                            y: 120000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 6),
-                                            y: 150000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 7),
-                                            y: 275000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 8),
-                                            y: 160000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 9),
-                                            y: 350000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 10),
-                                            y: 380000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 11),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 12),
-                                            y: 100000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 13),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 14),
-                                            y: 180000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 15),
-                                            y: 270000
-                                        },
-                                    ]
-                                }, ]
-
-                            });
-                            chart.render();
-
-                            function toogleDataSeries(e) {
-                                if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                                    e.dataSeries.visible = false;
-                                } else {
-                                    e.dataSeries.visible = true;
+                    $(document).ready(function() {
+                        var chart = new CanvasJS.Chart("chartContainer", {
+                            animationEnabled: true,
+                            theme: "light2",
+                            axisX: {
+                                valueFormatString: "DD MMM",
+                                crosshair: {
+                                    enabled: true,
+                                    snapToDataPoint: true
                                 }
-                                chart.render();
+                            },
+                            axisY: {
+                                title: "",
+                                includeZero: true,
+                                crosshair: {
+                                    enabled: true
+                                }
+                            },
+                            toolTip: {
+                                shared: true
+                            },
+                            legend: {
+                                cursor: "pointer",
+                                verticalAlign: "bottom",
+                                horizontalAlign: "left",
+                                dockInsidePlotArea: true,
+                                itemclick: toogleDataSeries
+                            },
+                            data: [{
+                                type: "column",
+                                showInLegend: true,
+                                name: "Revenue",
+                                xValueFormatString: "DD MMM, YYYY",
+                                color: "#328ab3",
+                                dataPoints: [
+                                    // {
+                                    //         x: new Date(2025, 0, 1),
+                                    //         y: 250000
+                                    //     },
+                                    //     {
+                                    //         x: new Date(2025, 0, 2),
+                                    //         y: 180000
+                                    //     },
+                                    //     {
+                                    //         x: new Date(2025, 0, 3),
+                                    //         y: 100000
+                                    //     },
+                                    //     {
+                                    //         x: new Date(2025, 0, 4),
+                                    //         y: 300000
+                                    //     },
+                                    //     {
+                                    //         x: new Date(2025, 0, 5),
+                                    //         y: 120000
+                                    //     },
+                                    //     {
+                                    //         x: new Date(2025, 0, 6),
+                                    //         y: 150000
+                                    //     },
+                                    //     {
+                                    //         x: new Date(2025, 0, 7),
+                                    //         y: 275000
+                                    //     },
+                                    //     {
+                                    //         x: new Date(2025, 0, 8),
+                                    //         y: 160000
+                                    //     },
+                                    //     {
+                                    //         x: new Date(2025, 0, 9),
+                                    //         y: 350000
+                                    //     },
+                                    //     {
+                                    //         x: new Date(2025, 0, 10),
+                                    //         y: 380000
+                                    //     },
+                                    //     {
+                                    //         x: new Date(2025, 0, 11),
+                                    //         y: 0
+                                    //     },
+                                    //     {
+                                    //         x: new Date(2025, 0, 12),
+                                    //         y: 100000
+                                    //     },
+                                    //     {
+                                    //         x: new Date(2025, 0, 13),
+                                    //         y: 0
+                                    //     },
+                                    //     {
+                                    //         x: new Date(2025, 0, 14),
+                                    //         y: 180000
+                                    //     },
+                                    //     {
+                                    //         x: new Date(2025, 0, 15),
+                                    //         y: 270000
+                                    //     },
+                                ]
+                            }, ]
+
+                        });
+                        chart.render();
+
+                        function toogleDataSeries(e) {
+                            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                                e.dataSeries.visible = false;
+                            } else {
+                                e.dataSeries.visible = true;
                             }
-                        })
+                            chart.render();
+                        }
+                    })
                     </script>
                 </div>
             </div>
@@ -394,6 +399,7 @@ userRoles.canViewBursaryDashboard && _getActivePage({
     <script>
     $(document).ready(function() {
         _fetchDashboardStatistics();
+        _fetchRevenueFiltering('srch-30', 'Last 30 Days');
     });
     </script>
 </div>
