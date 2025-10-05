@@ -832,3 +832,264 @@ function _uploadSchoolLogo(fileType, oldFile, newFile, message) {
     },
   });
 }
+
+
+///// Dashbaord Statistics ////////
+function _fetchBranchDashboardStatistics() {
+  $.ajax({
+    type: "GET",
+    url: `${endPoint}/admin//branch/account/fetch-dashboard-statistics?branchId=${getEachBranchDetailsSession.branchId}`,
+    dataType: "json",
+    cache: false,
+    headers: getAuthHeaders(true),
+    success: function (info) {
+      if (info.success && info.data.length > 0) {
+        const data = info.data[0];
+
+        $("#totalActiveBranchStaffCount, #totalActiveBranchAdminStaffCount").html(data.total_active_staff_count);
+        $("#totalActiveBranchStudentCount, #totalActiveBranchAdminStudentCount").html(data.total_active_student_count);
+        $("#totalAlumniBranchStudentCount, #totalAlumniBranchAdminStudentCount").html(data.total_alumni_student_count);
+        $("#totalActiveBranchDepartmentCount, #totalActiveBranchAdminDepartmentCount").html(
+          data.total_active_department_count
+        );
+
+      } else {
+        const response = info.response;
+        if (response < 100) {
+          _logOut();
+        }
+      }
+    },
+  });
+}
+
+///// Dashbaord Custom Revenue Filtering ////////
+function _fetchBranchRevenueFiltering(filterWith, text) {
+  $("#srch-text").html(text);
+  $(".custom-srch-div").fadeOut(500);
+  let dateFrom;
+  const dateTo = new Date().toISOString().split("T")[0];
+  if (filterWith === "srch-today") {
+    dateFrom = new Date().toISOString().split("T")[0];
+  } else if (filterWith === "srch-week") {
+    const currentDate = new Date();
+    const firstDayOfWeek = new Date(
+      currentDate.setDate(currentDate.getDate() - currentDate.getDay())
+    )
+      .toISOString()
+      .split("T")[0];
+    dateFrom = firstDayOfWeek;
+  } else if (filterWith === "srch-7") {
+    /// for last 7 days
+    const currentDate = new Date();
+    const pastDate = new Date(currentDate.setDate(currentDate.getDate() - 6))
+      .toISOString()
+      .split("T")[0];
+    dateFrom = pastDate;
+  } else if (filterWith === "srch-30") {
+    /// for last 30 days
+    const currentDate = new Date();
+    const pastDate = new Date(currentDate.setDate(currentDate.getDate() - 29))
+      .toISOString()
+      .split("T")[0];
+    dateFrom = pastDate;
+  } else if (filterWith === "srch-90") {
+    /// for last 90 days
+    const currentDate = new Date();
+    const pastDate = new Date(currentDate.setDate(currentDate.getDate() - 89))
+      .toISOString()
+      .split("T")[0];
+    dateFrom = pastDate;
+  } else if (filterWith === "srch-month") {
+    const currentDate = new Date();
+    const firstDayOfMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      2
+    )
+      .toISOString()
+      .split("T")[0];
+    dateFrom = firstDayOfMonth;
+  } else if (filterWith === "srch-year") {
+    const currentDate = new Date();
+    const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 2)
+      .toISOString()
+      .split("T")[0];
+    dateFrom = firstDayOfYear;
+  } else if (filterWith === "srch-1year") {
+    /// for last 1 year
+    const currentDate = new Date();
+    const pastDate = new Date(
+      currentDate.setFullYear(currentDate.getFullYear() - 1)
+    )
+      .toISOString()
+      .split("T")[0];
+    dateFrom = pastDate;
+  }
+
+  _revenueBranchFiltering(dateFrom, dateTo);
+}
+function _fetchBranchCustomRevenueFiltering() {
+  let issueCount = 0;
+
+  const dateFrom = $("#datepickers-from").val();
+  const dateTo = $("#datepickers-to").val();
+
+  $("#datepickers-from, #datepickers-to").removeClass("issue");
+  $("#issue_from, #issue_to").html("");
+
+  if (!dateFrom) {
+    $("#issue_from").html("Kindly Provide Start Date To Continue");
+    issueCount++;
+  }
+
+  if (!dateTo) {
+    $("#issue_to").html("Kindly Provide End Date To Continue");
+    issueCount++;
+  }
+
+  if (issueCount > 0) {
+    return;
+  }
+
+  _revenueBranchFiltering(dateFrom, dateTo);
+}
+
+function _revenueBranchFiltering(dateFrom, dateTo) {
+  $("#get-more-div-secondary")
+    .css({
+      display: "flex",
+      "justify-content": "center",
+      "align-items": "center",
+    })
+    .fadeIn(500);
+  $.ajax({
+    type: "GET",
+    url: `${endPoint}/admin/branch/account/fetch-dashboard-revenue?branchId=${getEachBranchDetailsSession.branchId}&dateFrom=${dateFrom}&dateTo=${dateTo}`,
+    dataType: "json",
+    cache: false,
+    headers: getAuthHeaders(true),
+    success: function (info) {
+      if (info.success && info.statistics.length > 0) {
+        const statistics = info.statistics[0];
+
+        // Update custom date from and date to///
+        $("#branchRevenueFrom, #branchBursarRevenueFrom").html(info.dateFrom);
+        $("#branchRevenueTo, #branchBursarRevenueTo").html(info.dateTo);
+
+        // Update dashboard credit and bank transfer///
+        $("#branchRevenueCreditCard, #branchBursarRevenueCreditCard").html(
+          "<s>N</s>" + thousandSeperator(statistics.sumCreditCardPayments)
+        );
+        $("#branchRevenueBankTransfer, #branchBursarRevenueBankTransfer").html(
+          "<s>N</s>" + thousandSeperator(statistics.sumBankTransferPayments)
+        );
+
+        // Update Pie Chart credit and bank transfer ///
+        const options = {
+          title: {
+            text: "",
+          },
+          data: [
+            {
+              type: "pie",
+              startAngle: 45,
+              showInLegend: "False",
+              legendText: "{label}",
+              indexLabel: "{label} ({y})",
+              yValueFormatString: "#,##0.#" % "",
+              indexLabelFontSize: 9,
+              dataPoints: [
+                {
+                  label: "Debit/Credit Card",
+                  y: parseInt(statistics.countCreditCardPayments),
+                },
+                {
+                  label: "Bank Transfer",
+                  y: parseInt(statistics.countBankTransferPayments),
+                },
+              ],
+            },
+          ],
+        };
+
+        $("#chartContainer2").CanvasJSChart(options);
+        const dataPoints = [];
+        // Update dashboard revenue bar Chart ///
+        if (info.data && info.data.length > 0) {
+          for (let i = 0; i < info.data.length; i++) {
+            const fetchedData = info.data[i];
+            const payDate = new Date(fetchedData.payDate);
+            const totalFeesPaid = parseFloat(fetchedData.totalFeesPaid);
+
+            dataPoints.push({
+              x: payDate,
+              y: totalFeesPaid,
+            });
+          }
+        }
+        var chart = new CanvasJS.Chart("chartContainer", {
+          animationEnabled: true,
+          theme: "light2",
+          axisX: {
+            valueFormatString: "DD MMM",
+            crosshair: {
+              enabled: true,
+              snapToDataPoint: true,
+            },
+          },
+          axisY: {
+            title: "",
+            includeZero: true,
+            crosshair: {
+              enabled: true,
+            },
+          },
+          toolTip: {
+            shared: true,
+          },
+          legend: {
+            cursor: "pointer",
+            verticalAlign: "bottom",
+            horizontalAlign: "left",
+            dockInsidePlotArea: true,
+            itemclick: toogleDataSeries,
+          },
+          data: [
+            {
+              type: "column",
+              showInLegend: true,
+              name: "Revenue",
+              xValueFormatString: "DD MMM, YYYY",
+              color: "#328ab3",
+              dataPoints: dataPoints,
+            },
+          ],
+        });
+
+        chart.render();
+
+        function toogleDataSeries(e) {
+          if (
+            typeof e.dataSeries.visible === "undefined" ||
+            e.dataSeries.visible
+          ) {
+            e.dataSeries.visible = false;
+          } else {
+            e.dataSeries.visible = true;
+          }
+          chart.render();
+        }
+      } else {
+        const response = info.response;
+        if (response < 100) {
+          _logOut();
+        }
+      }
+    },
+    error: function (err) {
+      console.error(err);
+    },
+  });
+  $("#get-more-div-secondary").fadeOut(500);
+}

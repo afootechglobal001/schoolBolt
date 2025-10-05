@@ -773,7 +773,7 @@ p {
   background: linear-gradient(
     90deg,
     var(--primary-color),
-    var(--secondary-color)
+    #07418dce
   );
   background-size: 100%;
   background-position: left;
