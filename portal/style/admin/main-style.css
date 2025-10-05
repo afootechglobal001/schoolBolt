@@ -1109,6 +1109,19 @@ header
   padding-top: 5px;
 }
 
+.dash_field_container .issue {
+  background: #fff;
+  border: #f00 1px solid;
+}
+
+.dash_field_container .issueText {
+  margin-top: 1px;
+  color: #f00;
+  font-family: body-font;
+  font-size: 10px;
+  font-style: italic;
+}
+
 .chart-div-notifications .text .custom-srch-div-in .btn {
   height: 35px;
   border: none;
