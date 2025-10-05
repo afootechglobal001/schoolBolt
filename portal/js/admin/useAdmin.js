@@ -272,6 +272,9 @@ function _fetchRevenueFiltering(filterWith, text) {
 	$("#srch-text").html(text);
 	$(".custom-srch-div").fadeOut(500);
 	let dateFrom, dateto;
+	if(filterWith==='srch-today'){
+		
+	}
 
 	//_revenueFiltering(dateFrom, dateTo) 
 
