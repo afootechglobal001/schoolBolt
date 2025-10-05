@@ -265,3 +265,172 @@ function _fetchDashboardStatistics() {
     },
   });
 }
+
+
+///// Dashbaord Custom Revenue Filtering ////////
+function _fetchRevenueFiltering(filterWith, text) {
+	$("#srch-text").html(text);
+	$(".custom-srch-div").fadeOut(500);
+	let dateFrom, dateto;
+
+	//_revenueFiltering(dateFrom, dateTo) 
+
+}
+function _fetchCustomRevenueFiltering() {
+	let issueCount=0;
+
+	const dateFrom = $('#datepickers-from').val();
+	const dateTo = $('#datepickers-to').val();
+
+	$('#datepickers-from, #datepickers-to').removeClass('issue');
+	$('#issue_from, #issue_to').html('');
+
+	if (!dateFrom) {
+		$('#issue_from').html('Kindly Provide Start Date To Continue');
+		issueCount++;
+	}
+
+	if (!dateTo) {
+		$('#issue_to').html('Kindly Provide End Date To Continue');
+		issueCount++;
+	}
+
+	if (issueCount>0){
+		return;
+	}
+
+	_revenueFiltering(dateFrom, dateTo) 
+
+}
+
+function _revenueFiltering(dateFrom, dateTo) {
+	$("#get-form-more-div")
+    .css({
+      display: "flex",
+      "justify-content": "center",
+      "align-items": "center",
+    })
+    .fadeIn(500);
+	$.ajax({
+		type: "GET",
+		url: `${endPoint}/admin/dashboard/fetch-dashboard-revenue?dateFrom=${dateFrom}&dateTo=${dateTo}`,
+		dataType: "json",
+		cache: false,
+		headers: getAuthHeaders(true),
+		success: function (info) {
+			if (info.success && info.statistics.length > 0) {
+				const statistics = info.statistics[0];
+
+				// Update custom date from and date to///
+				$("#dateFrom").html(info.dateFrom);
+				$("#dateTo").html(info.dateTo);
+
+				// Update dashboard credit and bank transfer///
+				$("#sumCreditCardPayments").html("<s>N</s>" + thousandSeperator(statistics.sumCreditCardPayments));
+				$("#sumBankTransferPayments").html("<s>N</s>" + thousandSeperator(statistics.sumBankTransferPayments));
+
+				// Update Pie Chart credit and bank transfer ///
+				const options = {
+					title: {
+						text: ""
+					},
+					data: [{
+						type: "pie",
+                        startAngle: 45,
+                        showInLegend: "False",
+                        legendText: "{label}",
+                        indexLabel: "{label} ({y})",
+                        yValueFormatString: "#,##0.#" % "",
+						indexLabelFontSize: 9,
+						dataPoints: [
+							{
+								label: "Debit/Credit Card",
+								y: parseInt(statistics.countCreditCardPayments)
+							},
+							{
+								label: "Bank Transfer",
+								y: parseInt(statistics.countBankTransferPayments)
+							}
+						]
+					}]
+				};
+
+				$("#chartContainer2").CanvasJSChart(options);
+
+				// Update dashboard revenue bar Chart ///
+				if (info.data && info.data.length > 0) {
+					let dataPoints = [];
+
+					for (let i = 0; i < info.data.length; i++) {
+						const fetchedData = info.data[i];
+						const payDate = new Date(fetchedData.payDate);
+						const totalFeesPaid = parseFloat(fetchedData.totalFeesPaid);
+
+						dataPoints.push({
+							x: payDate,
+							y: totalFeesPaid
+						});
+					}
+
+					var chart = new CanvasJS.Chart("chartContainer", {
+						animationEnabled: true,
+						theme: "light2",
+						axisX: {
+							valueFormatString: "DD MMM",
+							crosshair: {
+								enabled: true,
+								snapToDataPoint: true
+							}
+						},
+						axisY: {
+							title: "",
+							includeZero: true,
+							crosshair: {
+								enabled: true
+							}
+						},
+						toolTip: {
+							shared: true
+						},
+						legend: {
+							cursor: "pointer",
+							verticalAlign: "bottom",
+							horizontalAlign: "left",
+							dockInsidePlotArea: true,
+							itemclick: toogleDataSeries
+						},
+						data: [{
+							type: "column",
+							showInLegend: true,
+							name: "Revenue",
+							xValueFormatString: "DD MMM, YYYY",
+							color: "#328ab3",
+							dataPoints: dataPoints
+						}]
+					});
+
+					chart.render();
+
+					function toogleDataSeries(e) {
+						if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+							e.dataSeries.visible = false;
+						} else {
+							e.dataSeries.visible = true;
+						}
+						chart.render();
+					}
+				}
+			} else {
+				const response = info.response;
+				if (response < 100) {
+				_logOut();
+				}
+			}
+		},
+		error: function (err) {
+			console.error(err);
+		}
+  });
+  $("#get-form-more-div").fadeOut(500);
+}
+
