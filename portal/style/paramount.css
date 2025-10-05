@@ -51,6 +51,8 @@ h4,
 h5,
 h6 {
   font-family: title-font;
+  margin: 0px;
+  padding: 0px;
 }
 
 body {
@@ -63,6 +65,10 @@ body {
 a {
   text-decoration: none;
   color: inherit;
+}
+p {
+  margin: 0px;
+  padding: 0px;
 }
 
 /*------text field--------------------------------------------------------------------------------------------*/
@@ -680,7 +686,6 @@ a {
   height: 50px;
 }
 
-
 /* Modal Layout */ /* /////////////////////////////////////////////////////////////////////////////////////////////////////// */
 .modal-overlay {
   position: fixed;
@@ -788,7 +793,7 @@ a {
 
 @media all and (max-width: 400px) {
   .modal-overlay .modal-box .btn-div {
-   flex-direction: column;
+    flex-direction: column;
   }
   .modal-overlay .modal-box .btn-div .btn {
     width: 100%;
