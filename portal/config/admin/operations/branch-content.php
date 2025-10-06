@@ -641,7 +641,7 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                         <div class="statistics-text">
                             <p>Staffs</p>
                             <span>Statistics of Staffs</span>
-                            <h2>3</h2>
+                            <h2 id="totalActiveBranchStaffCount">0</h2>
                         </div>
                         <div class="statistics-icon pending"><i class="bi-person-bounding-box"></i></div>
                     </div>
@@ -652,32 +652,32 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                         <div class="statistics-text">
                             <p>Students</p>
                             <span>Statistics of Students</span>
-                            <h2>10</h2>
+                            <h2 id="totalActiveBranchStudentCount">0</h2>
                         </div>
                         <div class="statistics-icon upcoming"><i class="bi-people"></i></div>
                     </div>
                 </div>
 
                 <div class="new-statistics-div" title="Subjects"
-                    onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});">
+                    onclick="_fetchBranchDepartment();">
                     <div class="statistics-inner-div">
                         <div class="statistics-text">
-                            <p>Subjects</p>
-                            <span>Statistics of Subjects</span>
-                            <h2>30</h2>
+                            <p>Department</p>
+                            <span>Statistics of Departments</span>
+                            <h2 id="totalActiveBranchDepartmentCount">0</h2>
                         </div>
                         <div class="statistics-icon completed"><i class="bi-journals"></i></div>
                     </div>
                 </div>
 
                 <div class="new-statistics-div" id="branch_department_class"
-                    onclick="_getActiveBranchPage({divid:'branch_department_class', page: 'branch_department_class', url: adminPortalLocalUrl});"
+                    onclick=""
                     title="Class">
                     <div class="statistics-inner-div">
                         <div class="statistics-text">
-                            <p>Class</p>
-                            <span>Statistics of Class</span>
-                            <h2>5</h2>
+                            <p>Alumni Students</p>
+                            <span>Statistics of Alumni Students</span>
+                            <h2 id="totalAlumniBranchStudentCount">0</h2>
                         </div>
                         <div class="statistics-icon pending"><i class="bi-people"></i></div>
                     </div>
@@ -693,20 +693,21 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                         <div class="icon-div"><i class="bi-caret-down"></i></div>
 
                         <div class="srch-select alert-srch-select">
-                            <div id="srch-today" onclick="_getAlertReport('srch-today', 'view_today_search');">Today
+                            <div id="srch-today" onclick="_fetchBranchRevenueFiltering('srch-today', 'Today');">Today
                             </div>
-                            <div id="srch-week" onclick="_getAlertReport('srch-week', 'view_thisweek_search');">This
+                            <div id="srch-week" onclick="_fetchBranchRevenueFiltering('srch-week', 'This Week');">This
                                 Week</div>
-                            <div id="srch-7" onclick="_getAlertReport('srch-7', 'view_7days_search');">Last 7 Days</div>
-                            <div id="srch-month" onclick="_getAlertReport('srch-month', 'view_thismonth_search');">This
+                            <div id="srch-7" onclick="_fetchBranchRevenueFiltering('srch-7', 'Last 7 Days');">Last 7 Days
+                            </div>
+                            <div id="srch-month" onclick="_fetchBranchRevenueFiltering('srch-month', 'This Month');">This
                                 Month</div>
-                            <div id="srch-30" onclick="_getAlertReport('srch-30', 'view_30days_search');">Last 30 Days
+                            <div id="srch-30" onclick="_fetchBranchRevenueFiltering('srch-30', 'Last 30 Days');">Last 30 Days
                             </div>
-                            <div id="srch-90" onclick="_getAlertReport('srch-90', 'view_90days_search');">Last 90 Days
+                            <div id="srch-90" onclick="_fetchBranchRevenueFiltering('srch-90', 'Last 90 Days');">Last 90 Days
                             </div>
-                            <div id="srch-year" onclick="_getAlertReport('srch-year', 'view_thisyear_search');">This
+                            <div id="srch-year" onclick="_fetchBranchRevenueFiltering('srch-year', 'This Year');">This
                                 Year</div>
-                            <div id="srch-1year" onclick="_getAlertReport('srch-1year', 'view_1year_search');">Last 1
+                            <div id="srch-1year" onclick="_fetchBranchRevenueFiltering('srch-1year', 'Last 1 Year');">Last 1
                                 Year</div>
                             <div onclick="srch_custom('Custom Search')">Custom Search</div>
                         </div>
@@ -720,14 +721,16 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                                         placeholder="" />
                                     <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From
                                     </div>
+                                    <div class="issueText" id="issue_from"></div>
                                 </div>
 
                                 <div class="text_field_container dash_field_container">
                                     <input class="text_field bar_cust_text_field" type="text" id="datepickers-to"
                                         placeholder="" />
                                     <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To</div>
+                                    <div class="issueText" id="issue_to"></div>
                                 </div>
-                                <button type="button" class="btn">Apply</button>
+                                <button type="button" class="btn" onclick="_fetchBranchCustomRevenueFiltering();">Apply</button>
                             </div>
                         </div>
                     </div>
@@ -752,13 +755,13 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
 
                 <div class="trending-back-div">
                     <div class="revenue-div">
-                        <p>Revenue from <span>January 18 2025</span> - <span>February 17 2025</span></p>
+                        <p>Revenue from <span id="branchRevenueFrom">January 18 2025</span> - <span id="branchRevenueTo">February 17 2025</span></p>
                         <div class="fund-div">
                             <h3>
-                                <p><s>N</s> 1,343,581.63</p><span>Credit Card</span>
+                                <p id="branchRevenueCreditCard"><s>N</s> Loading...</p><span>Credit Card</span>
                             </h3>
                             <h3>
-                                <p><s>N</s> 1,343,581.63</p><span>Bank Transfer</span>
+                                <p id="branchRevenueBankTransfer"><s>N</s> Loading...</p><span>Bank Transfer</span>
                             </h3>
                         </div>
                     </div>
@@ -802,66 +805,66 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                                 name: "Revenue",
                                 xValueFormatString: "DD MMM, YYYY",
                                 color: "#328ab3",
-                                dataPoints: [{
-                                        x: new Date(2025, 0, 1),
-                                        y: 250000
-                                    },
-                                    {
-                                        x: new Date(2025, 0, 2),
-                                        y: 180000
-                                    },
-                                    {
-                                        x: new Date(2025, 0, 3),
-                                        y: 100000
-                                    },
-                                    {
-                                        x: new Date(2025, 0, 4),
-                                        y: 300000
-                                    },
-                                    {
-                                        x: new Date(2025, 0, 5),
-                                        y: 120000
-                                    },
-                                    {
-                                        x: new Date(2025, 0, 6),
-                                        y: 150000
-                                    },
-                                    {
-                                        x: new Date(2025, 0, 7),
-                                        y: 275000
-                                    },
-                                    {
-                                        x: new Date(2025, 0, 8),
-                                        y: 160000
-                                    },
-                                    {
-                                        x: new Date(2025, 0, 9),
-                                        y: 350000
-                                    },
-                                    {
-                                        x: new Date(2025, 0, 10),
-                                        y: 380000
-                                    },
-                                    {
-                                        x: new Date(2025, 0, 11),
-                                        y: 0
-                                    },
-                                    {
-                                        x: new Date(2025, 0, 12),
-                                        y: 100000
-                                    },
-                                    {
-                                        x: new Date(2025, 0, 13),
-                                        y: 0
-                                    },
-                                    {
-                                        x: new Date(2025, 0, 14),
-                                        y: 180000
-                                    },
-                                    {
-                                        x: new Date(2025, 0, 15),
-                                        y: 270000
-                                    },
+                                dataPoints: [//{
+                                //         x: new Date(2025, 0, 1),
+                                //         y: 250000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 2),
+                                //         y: 180000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 3),
+                                //         y: 100000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 4),
+                                //         y: 300000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 5),
+                                //         y: 120000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 6),
+                                //         y: 150000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 7),
+                                //         y: 275000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 8),
+                                //         y: 160000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 9),
+                                //         y: 350000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 10),
+                                //         y: 380000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 11),
+                                //         y: 0
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 12),
+                                //         y: 100000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 13),
+                                //         y: 0
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 14),
+                                //         y: 180000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 15),
+                                //         y: 270000
+                                //     },
                                 ]
                             }, ]
 
@@ -923,6 +926,12 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            _fetchBranchDashboardStatistics();
+            _fetchBranchRevenueFiltering('srch-30', 'Last 30 Days');
+        });
+    </script>
 </div>
 <?php } ?>
 
@@ -934,7 +943,7 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
             <div class="statistics-text">
                 <p>Staffs</p>
                 <span>Statistics of Staffs</span>
-                <h2>3</h2>
+                <h2 id="totalActiveBranchAdminStaffCount">0</h2>
             </div>
             <div class="statistics-icon pending"><i class="bi-person-bounding-box"></i></div>
         </div>
@@ -945,7 +954,7 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
             <div class="statistics-text">
                 <p>Students</p>
                 <span>Statistics of Students</span>
-                <h2>10</h2>
+                <h2 id="totalActiveBranchAdminStudentCount">0</h2>
             </div>
             <div class="statistics-icon upcoming"><i class="bi-people"></i></div>
         </div>
@@ -955,9 +964,9 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
         onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});">
         <div class="statistics-inner-div">
             <div class="statistics-text">
-                <p>Subjects</p>
-                <span>Statistics of Subjects</span>
-                <h2>30</h2>
+                <p>Departments</p>
+                <span>Statistics of Departments</span>
+                <h2 id="totalActiveBranchAdminDepartmentCount">0</h2>
             </div>
             <div class="statistics-icon completed"><i class="bi-journals"></i></div>
         </div>
@@ -968,9 +977,9 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
         title="Class">
         <div class="statistics-inner-div">
             <div class="statistics-text">
-                <p>Class</p>
-                <span>Statistics of Class</span>
-                <h2>5</h2>
+                <p>Alumni Students</p>
+                <span>Statistics of Alumni Students</span>
+                <h2 id="totalActiveBranchAdminAlumniCount">0</h2>
             </div>
             <div class="statistics-icon pending"><i class="bi-people"></i></div>
         </div>
@@ -991,20 +1000,21 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                         <div class="icon-div"><i class="bi-caret-down"></i></div>
 
                         <div class="srch-select alert-srch-select">
-                            <div id="srch-today" onclick="_getAlertReport('srch-today', 'view_today_search');">Today
+                            <div id="srch-today" onclick="_fetchBranchRevenueFiltering('srch-today', 'Today');">Today
                             </div>
-                            <div id="srch-week" onclick="_getAlertReport('srch-week', 'view_thisweek_search');">This
+                            <div id="srch-week" onclick="_fetchBranchRevenueFiltering('srch-week', 'This Week');">This
                                 Week</div>
-                            <div id="srch-7" onclick="_getAlertReport('srch-7', 'view_7days_search');">Last 7 Days</div>
-                            <div id="srch-month" onclick="_getAlertReport('srch-month', 'view_thismonth_search');">This
+                            <div id="srch-7" onclick="_fetchBranchRevenueFiltering('srch-7', 'Last 7 Days');">Last 7 Days
+                            </div>
+                            <div id="srch-month" onclick="_fetchBranchRevenueFiltering('srch-month', 'This Month');">This
                                 Month</div>
-                            <div id="srch-30" onclick="_getAlertReport('srch-30', 'view_30days_search');">Last 30 Days
+                            <div id="srch-30" onclick="_fetchBranchRevenueFiltering('srch-30', 'Last 30 Days');">Last 30 Days
                             </div>
-                            <div id="srch-90" onclick="_getAlertReport('srch-90', 'view_90days_search');">Last 90 Days
+                            <div id="srch-90" onclick="_fetchBranchRevenueFiltering('srch-90', 'Last 90 Days');">Last 90 Days
                             </div>
-                            <div id="srch-year" onclick="_getAlertReport('srch-year', 'view_thisyear_search');">This
+                            <div id="srch-year" onclick="_fetchBranchRevenueFiltering('srch-year', 'This Year');">This
                                 Year</div>
-                            <div id="srch-1year" onclick="_getAlertReport('srch-1year', 'view_1year_search');">Last 1
+                            <div id="srch-1year" onclick="_fetchBranchRevenueFiltering('srch-1year', 'Last 1 Year');">Last 1
                                 Year</div>
                             <div onclick="srch_custom('Custom Search')">Custom Search</div>
                         </div>
@@ -1025,7 +1035,7 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                                         placeholder="" />
                                     <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To</div>
                                 </div>
-                                <button type="button" class="btn">Apply</button>
+                                <button type="button" class="btn" onclick="_fetchBranchCustomRevenueFiltering();">Apply</button>
                             </div>
                         </div>
                     </div>
@@ -1050,13 +1060,13 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
 
                 <div class="trending-back-div">
                     <div class="revenue-div">
-                        <p>Revenue from <span>January 18 2025</span> - <span>February 17 2025</span></p>
+                        <p>Revenue from <span id="branchBursarRevenueFrom">January 18 2025</span> - <span id="branchBursarRevenueTo">February 17 2025</span></p>
                         <div class="fund-div">
                             <h3>
-                                <p><s>N</s> 1,343,581.63</p><span>Credit Card</span>
+                                <p id="branchBursarRevenueCreditCard"><s>N</s> Loading...</p><span>Credit Card</span>
                             </h3>
                             <h3>
-                                <p><s>N</s> 1,343,581.63</p><span>Bank Transfer</span>
+                                <p id="branchBursarRevenueBankTransfer"><s>N</s> Loading...</p><span>Bank Transfer</span>
                             </h3>
                         </div>
                     </div>
@@ -1095,142 +1105,73 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
                                 itemclick: toogleDataSeries
                             },
                             data: [{
-                                    type: "column",
-                                    showInLegend: true,
-                                    name: "Revenue",
-                                    xValueFormatString: "DD MMM, YYYY",
-                                    color: "#328ab3",
-                                    dataPoints: [{
-                                            x: new Date(2025, 0, 1),
-                                            y: 250000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 2),
-                                            y: 180000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 3),
-                                            y: 100000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 4),
-                                            y: 300000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 5),
-                                            y: 120000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 6),
-                                            y: 150000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 7),
-                                            y: 275000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 8),
-                                            y: 160000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 9),
-                                            y: 350000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 10),
-                                            y: 380000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 11),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 12),
-                                            y: 100000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 13),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 14),
-                                            y: 180000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 15),
-                                            y: 270000
-                                        },
-                                    ]
-                                },
-                                {
-                                    type: "line",
-                                    showInLegend: true,
-                                    name: "Wallet",
-                                    lineDashType: "dash",
-                                    dataPoints: [{
-                                            x: new Date(2025, 0, 1),
-                                            y: 180000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 2),
-                                            y: 50000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 3),
-                                            y: 80000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 4),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 5),
-                                            y: 150000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 6),
-                                            y: 40000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 7),
-                                            y: 300000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 8),
-                                            y: 200000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 9),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 10),
-                                            y: 120000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 11),
-                                            y: 90000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 12),
-                                            y: 200000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 13),
-                                            y: 0
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 14),
-                                            y: 280000
-                                        },
-                                        {
-                                            x: new Date(2025, 0, 15),
-                                            y: 50000
-                                        },
-
-                                    ]
-                                }
-                            ]
+                                type: "column",
+                                showInLegend: true,
+                                name: "Revenue",
+                                xValueFormatString: "DD MMM, YYYY",
+                                color: "#328ab3",
+                                dataPoints: [//{
+                                //         x: new Date(2025, 0, 1),
+                                //         y: 250000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 2),
+                                //         y: 180000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 3),
+                                //         y: 100000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 4),
+                                //         y: 300000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 5),
+                                //         y: 120000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 6),
+                                //         y: 150000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 7),
+                                //         y: 275000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 8),
+                                //         y: 160000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 9),
+                                //         y: 350000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 10),
+                                //         y: 380000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 11),
+                                //         y: 0
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 12),
+                                //         y: 100000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 13),
+                                //         y: 0
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 14),
+                                //         y: 180000
+                                //     },
+                                //     {
+                                //         x: new Date(2025, 0, 15),
+                                //         y: 270000
+                                //     },
+                                ]
+                            }, ]
 
                         });
                         chart.render();
@@ -1290,6 +1231,12 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            _fetchBranchRevenueFiltering('srch-30', 'Last 30 Days');
+        });
+    </script>
 </div>
 <?php } ?>
 
@@ -1667,14 +1614,14 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
         <div class="icon-div"><i class="bi-caret-down"></i></div>
 
         <div class="srch-select alert-srch-select">
-            <div id="srch-today" onclick="_getAlertReport('srch-today', 'view_today_search');">Today</div>
-            <div id="srch-week" onclick="_getAlertReport('srch-week', 'view_thisweek_search');">This Week</div>
-            <div id="srch-7" onclick="_getAlertReport('srch-7', 'view_7days_search');">Last 7 Days</div>
-            <div id="srch-month" onclick="_getAlertReport('srch-month', 'view_thismonth_search');">This Month</div>
-            <div id="srch-30" onclick="_getAlertReport('srch-30', 'view_30days_search');">Last 30 Days</div>
-            <div id="srch-90" onclick="_getAlertReport('srch-90', 'view_90days_search');">Last 90 Days</div>
-            <div id="srch-year" onclick="_getAlertReport('srch-year', 'view_thisyear_search');">This Year</div>
-            <div id="srch-1year" onclick="_getAlertReport('srch-1year', 'view_1year_search');">Last 1 Year</div>
+            <div id="srch-today" onclick="_fetchBranchRevenueFiltering('srch-today', 'view_today_search');">Today</div>
+            <div id="srch-week" onclick="_fetchBranchRevenueFiltering('srch-week', 'view_thisweek_search');">This Week</div>
+            <div id="srch-7" onclick="_fetchBranchRevenueFiltering('srch-7', 'view_7days_search');">Last 7 Days</div>
+            <div id="srch-month" onclick="_fetchBranchRevenueFiltering('srch-month', 'view_thismonth_search');">This Month</div>
+            <div id="srch-30" onclick="_fetchBranchRevenueFiltering('srch-30', 'view_30days_search');">Last 30 Days</div>
+            <div id="srch-90" onclick="_fetchBranchRevenueFiltering('srch-90', 'view_90days_search');">Last 90 Days</div>
+            <div id="srch-year" onclick="_fetchBranchRevenueFiltering('srch-year', 'view_thisyear_search');">This Year</div>
+            <div id="srch-1year" onclick="_fetchBranchRevenueFiltering('srch-1year', 'view_1year_search');">Last 1 Year</div>
             <div onclick="srch_custom('Custom Search')">Custom Search</div>
         </div>
     </div>
