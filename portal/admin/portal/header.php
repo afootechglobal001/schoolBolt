@@ -12,7 +12,7 @@
             <div class="left-nav">
                 <div class="search-back-div">
                     <div class="search-div">
-                        <input type="text" id="searchContent" onkeyup="filters('Content');" placeholder="Search Here...">
+                        <input type="text" onkeyup="" placeholder="Search Here...">
                         <i class="bi bi-search"></i>
                     </div>
                 </div>
