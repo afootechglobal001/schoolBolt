@@ -947,7 +947,7 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
             <div class="statistics-text">
                 <p>Staffs</p>
                 <span>Statistics of Staffs</span>
-                <h2 id="totalActiveBranchAdminStaffCount">0</h2>
+                <h2 id="totalActiveBranchStaffCount">0</h2>
             </div>
             <div class="statistics-icon pending"><i class="bi-person-bounding-box"></i></div>
         </div>
@@ -958,37 +958,42 @@ userRoles.canViewBursaryDashboard && _getActiveBranchPage({
             <div class="statistics-text">
                 <p>Students</p>
                 <span>Statistics of Students</span>
-                <h2 id="totalActiveBranchAdminStudentCount">0</h2>
+                <h2 id="totalActiveBranchStudentCount">0</h2>
             </div>
             <div class="statistics-icon upcoming"><i class="bi-people"></i></div>
         </div>
     </div>
 
     <div class="new-statistics-div" title="Subjects"
-        onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});">
+        onclick="_fetchBranchDepartment();">
         <div class="statistics-inner-div">
             <div class="statistics-text">
                 <p>Departments</p>
                 <span>Statistics of Departments</span>
-                <h2 id="totalActiveBranchAdminDepartmentCount">0</h2>
+                <h2 id="totalActiveBranchDepartmentCount">0</h2>
             </div>
             <div class="statistics-icon completed"><i class="bi-journals"></i></div>
         </div>
     </div>
 
     <div class="new-statistics-div" id="branch_department_class"
-        onclick="_getActiveBranchPage({divid:'branch_department_class', page: 'branch_department_class', url: adminPortalLocalUrl});"
+        onclick=""
         title="Class">
         <div class="statistics-inner-div">
             <div class="statistics-text">
                 <p>Alumni</p>
                 <span>Statistics of Alumni</span>
-                <h2 id="totalActiveBranchAdminAlumniCount">0</h2>
+                <h2 id="totalAlumniBranchStudentCount">0</h2>
             </div>
             <div class="statistics-icon pending"><i class="bi-people"></i></div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        _fetchBranchDashboardStatistics();
+    });
+    </script>
 <?php } ?>
 
 <?php if ($page == 'branch_bursary_dashboard') { ?>
