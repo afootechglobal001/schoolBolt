@@ -283,7 +283,7 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
                         <i class="bi-mortarboard"></i> My Students
                     </li>
 
-                    <li class="hide-li" title="Staff Record"><i class="bi-file-spreadsheet"></i> Record
+                    <li title="Staff Record"><i class="bi-file-spreadsheet"></i> Record
                         <ul class="animated fadeIn" id="recordExpandTopUl">
                             <li onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});"
                                 title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
