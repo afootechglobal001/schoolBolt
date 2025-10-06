@@ -277,7 +277,6 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
                     <!-- ////// for mobile view -->
                     <li class="li" title="Other Links"><i class="bi-three-dots-vertical"></i>
                         <ul class="ul">
-
                             <li title="My Students"
                                 onclick="_getActiveStaffPage({divid:'staff_students', page: 'staff_students', url: adminPortalLocalUrl});">
                                 <i class="bi-mortarboard"></i> <span>My Students</span>
@@ -306,10 +305,6 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
 
                                 </ul>
 
-                            </li>
-                            <li title="My Profile"
-                                onclick="_getActiveStaffPage({divid:'staff_profile_details', page: 'staff_profile_details', url: adminPortalLocalUrl});">
-                                <i class="bi-person-bounding-box"></i> <span>Staff Profile</span>
                             </li>
                             <li title="Staff Activities"
                                 onclick="_getActiveStaffPage({divid:'staff_activities', page: 'staff_activities', url: adminPortalLocalUrl});">
@@ -352,7 +347,7 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
 
                     </li>
 
-                    <li class="hide-li" title="My Profile" id="staff_profile_details"
+                    <li title="My Profile" id="staff_profile_details"
                         onclick="_getActiveStaffPage({divid:'staff_profile_details', page: 'staff_profile_details', url: adminPortalLocalUrl});">
                         <i class="bi-person-bounding-box"></i> Staff Profile
                     </li>
