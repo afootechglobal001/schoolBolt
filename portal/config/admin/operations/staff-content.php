@@ -295,12 +295,12 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
                             <script>
                             if (userRoles.canManageStudentsAttendance) {
                                 $('#recordExpandTopUl').append(`
-                                                <li title="Student Attendance" onclick="_getActiveStaffPage({divid:'staff_student_attendance', page: 'staff_student_attendance', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Student Attendance</li>
+                                                <li title="Student Attendance" onclick="_getActiveStaffPage({divid:'staffStudentAttendance', page: 'staffStudentAttendance', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Student Attendance</li>
                                             `);
                             }
                             if (userRoles.canManageClassTeachersComments) {
                                 $('#recordExpandTopUl').append(`
-                                                <li title="Class Teacher's Comment" onclick="_getActiveStaffPage({divid:'staff_teachers_comment', page: 'staff_teachers_comment', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Class Teacher's Comment</li>
+                                                <li title="Class Teacher's Comment" onclick="_getActiveStaffPage({divid:'teachersComment', page: 'teachersComment', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Class Teacher's Comment</li>
                                             `);
                             }
                             </script>
@@ -345,7 +345,7 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
                                     }
                                     if (userRoles.canManageClassTeachersComments) {
                                         $('#recordExpandUl').append(`
-                                                <li title="Class Teacher's Comment" onclick="_getActiveStaffPage({divid:'staff_teachers_comment', page: 'staff_teachers_comment', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Class Teacher's Comment</li>
+                                                <li title="Class Teacher's Comment" onclick="_getActiveStaffPage({divid:'teachersComment', page: 'teachersComment', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Class Teacher's Comment</li>
                                             `);
                                     }
                                     </script>
@@ -452,7 +452,7 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
     <script>
     if (userRoles.canManageClassTeachersComments) {
         $('.user-managment-back-div').append(`
-            <div class="user-managment-list staff-managment-list" onclick="_getActiveStaffPage({divid:'staff_teachers_comment', page: 'staff_teachers_comment', url: adminPortalLocalUrl});">
+            <div class="user-managment-list staff-managment-list" onclick="_getActiveStaffPage({divid:'teachersComment', page: 'teachersComment', url: adminPortalLocalUrl});">
                 <div class="inner-div">
                     <div class="icon-div">
                         <img src="<?php echo $websiteUrl ?>/images/timetable.png" alt="Class Teacher's Comment" />
@@ -1068,7 +1068,8 @@ getComputeScoreStudentDataSession = JSON.parse(sessionStorage.getItem("getComput
                                 const dept = fetchData[i].departmentData;
                                 const classInfo = fetchData[i].classData;
                                 const arm = fetchData[i].armData;
-                                const score = fetchData[i].assessmentData ? fetchData[i].assessmentData.markObtained : '';
+                                const score = fetchData[i].assessmentData ? fetchData[i].assessmentData
+                                    .markObtained : '';
 
                                 const fullName =
                                     `${student.surName} ${student.firstName} ${student.otherNames}`;
@@ -1121,60 +1122,72 @@ getComputeScoreStudentDataSession = JSON.parse(sessionStorage.getItem("getComput
 <?php } ?>
 
 <?php if ($page == 'staffStudentAttendance') { ?>
-    <div class="alert alert-success top-alert-div animated fadeIn">
-        <div><span><i class="bi-people-fill"></i> CLASS LIST / </span> CURRENT SESSION -- <span id="attenPageSession"><script>$("#attenPageSession").html(getEachStaffDetailsSession?.branchData?.session);</script>
-        </span> <span>/</span> CURRENT TERM -- <span id="attenPageTermName"><script>$("#attenPageTermName").html(getEachStaffDetailsSession?.termData?.termName);</script></span></div>
-    </div>
+<div class="alert alert-success top-alert-div animated fadeIn">
+    <div><span><i class="bi-people-fill"></i> CLASS LIST / </span> CURRENT SESSION -- <span id="attenPageSession">
+            <script>
+            $("#attenPageSession").html(getEachStaffDetailsSession?.branchData?.session);
+            </script>
+        </span> <span>/</span> CURRENT TERM -- <span id="attenPageTermName">
+            <script>
+            $("#attenPageTermName").html(getEachStaffDetailsSession?.termData?.termName);
+            </script>
+        </span></div>
+</div>
 
-    <div class="pages-toggle-back-div" id="classPageContent">
-        <script> _fetchStaffAssignedClasses();</script>
-    </div>
+<div class="pages-toggle-back-div" id="classPageContent">
+    <script>
+    _fetchStaffAssignedClasses();
+    </script>
+</div>
 <?php } ?>
 
 
 <?php if ($page == 'computeAttendanceSave') { ?>
-    <script>getStudentAttendanceDataSession = JSON.parse(sessionStorage.getItem("getStudentAttendanceDataSession"));</script>
+<script>
+getStudentAttendanceDataSession = JSON.parse(sessionStorage.getItem("getStudentAttendanceDataSession"));
+</script>
 
-    <div class="slide-form-div save-compute-slide-form" data-aos="fade-left" data-aos-duration="900">
-        <div class="title-panel-div">
-            <div class="inner-top">
-                <span id="panel-title"><i class="bi-plus-square"></i> COMPUTE STUDENT ATTENDANCE</span>
-                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
-            </div>
+<div class="slide-form-div save-compute-slide-form" data-aos="fade-left" data-aos-duration="900">
+    <div class="title-panel-div">
+        <div class="inner-top">
+            <span id="panel-title"><i class="bi-plus-square"></i> COMPUTE STUDENT ATTENDANCE</span>
+            <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
         </div>
+    </div>
 
-        <div class="container-back-div">
-            <div class="inner-container">
-                <div>
-                    <div class="alert alert-success form-alert compute-form-alert">
-                        <span>Kindly input score for each student to complete Attendance computation </span>
-                    </div>
+    <div class="container-back-div">
+        <div class="inner-container">
+            <div>
+                <div class="alert alert-success form-alert compute-form-alert">
+                    <span>Kindly input score for each student to complete Attendance computation </span>
                 </div>
+            </div>
 
-                <div class="compute-score-back-div" id="fetchStudents">
-                    <script>
-                    $(document).ready(function() {
-                        let text = '';
+            <div class="compute-score-back-div" id="fetchStudents">
+                <script>
+                $(document).ready(function() {
+                    let text = '';
 
-                        if (getStudentAttendanceDataSession) {
-                            const fetchData = getStudentAttendanceDataSession?.data;
-                            const fetchBranchData = getStudentAttendanceDataSession?.branchData;
-                            const success = getStudentAttendanceDataSession?.success;
+                    if (getStudentAttendanceDataSession) {
+                        const fetchData = getStudentAttendanceDataSession?.data;
+                        const fetchBranchData = getStudentAttendanceDataSession?.branchData;
+                        const success = getStudentAttendanceDataSession?.success;
 
-                            if (success === true && fetchData.length > 0) {
-                                for (let i = 0; i < fetchData.length; i++) {
-                                    const student = fetchData[i];
-                                    const department = fetchData[i].departmentData;
-                                    const classInfo = fetchData[i].classData;
-                                    const arm = fetchData[i].armData;
-                                    const numberOfDaysPresents = fetchData[i].attendanceData ? fetchData[i].attendanceData?.numberOfDaysPresents : '';
+                        if (success === true && fetchData.length > 0) {
+                            for (let i = 0; i < fetchData.length; i++) {
+                                const student = fetchData[i];
+                                const department = fetchData[i].departmentData;
+                                const classInfo = fetchData[i].classData;
+                                const arm = fetchData[i].armData;
+                                const numberOfDaysPresents = fetchData[i].attendanceData ? fetchData[i]
+                                    .attendanceData?.numberOfDaysPresents : '';
 
-                                    const fullName = `${student.surName} ${student.firstName}`;
-                                    const passport = student.passport || 'default.jpg';
-                                    const studentId = student.studentId;
-                                    const fieldId = `numberOfDaysPresents_${studentId}`;
+                                const fullName = `${student.surName} ${student.firstName}`;
+                                const passport = student.passport || 'default.jpg';
+                                const studentId = student.studentId;
+                                const fieldId = `numberOfDaysPresents_${studentId}`;
 
-                                    $("#fetchStudents").append(`
+                                $("#fetchStudents").append(`
                                         <div class="each-compute-score-div">
                                             <div class="inner-score-div">
                                                 <div class="image-div">
@@ -1195,26 +1208,26 @@ getComputeScoreStudentDataSession = JSON.parse(sessionStorage.getItem("getComput
                                         </div>
                                     `);
 
-                                    textField({
-                                        id: fieldId,
-                                        title: 'Enter Score',
-                                        type: 'number',
-                                        onKeyPressFunction: 'isNumberCheck(event);',
-                                        value: numberOfDaysPresents
-                                    });
-                                }
+                                textField({
+                                    id: fieldId,
+                                    title: 'Enter Score',
+                                    type: 'number',
+                                    onKeyPressFunction: 'isNumberCheck(event);',
+                                    value: numberOfDaysPresents
+                                });
                             }
                         }
-                    });
-                    </script>
-                </div>
+                    }
+                });
+                </script>
+            </div>
 
-                <div>
-                    <button class="btn" title="SAVE SCORES" id="submitBtn" onclick="_saveAttendance();">
-                        <i class="bi-save"></i> SAVE
-                    </button>
-                </div>
+            <div>
+                <button class="btn" title="SAVE SCORES" id="submitBtn" onclick="_saveAttendance();">
+                    <i class="bi-save"></i> SAVE
+                </button>
             </div>
         </div>
     </div>
+</div>
 <?php } ?>
