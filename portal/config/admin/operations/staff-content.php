@@ -2,7 +2,7 @@
     <div class="page-title-back-div other-pages-title-back-div" data-aos="fade-in" data-aos-duration="1500">
         <div class="page-title-div other-pages-title-div">
             <div class="main-title title"><i class="bi-people"></i> <strong>Administrators</strong></div>
-            <div class="statistics-container" id="statusContent"></div>
+            <div class="other-pg-statistics-container" id="statusContent"></div>
         </div>
 
         <div class="other-pages-filter-div">
