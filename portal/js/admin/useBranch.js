@@ -846,12 +846,10 @@ function _fetchBranchDashboardStatistics() {
       if (info.success && info.data.length > 0) {
         const data = info.data[0];
 
-        $("#totalActiveBranchStaffCount, #totalActiveBranchAdminStaffCount").html(data.total_active_staff_count);
-        $("#totalActiveBranchStudentCount, #totalActiveBranchAdminStudentCount").html(data.total_active_student_count);
-        $("#totalAlumniBranchStudentCount, #totalAlumniBranchAdminStudentCount").html(data.total_alumni_student_count);
-        $("#totalActiveBranchDepartmentCount, #totalActiveBranchAdminDepartmentCount").html(
-          data.total_active_department_count
-        );
+        $("#totalActiveBranchStaffCount").html(data.total_active_staff_count);
+        $("#totalActiveBranchStudentCount").html(data.total_active_student_count);
+        $("#totalAlumniBranchStudentCount").html(data.total_alumni_student_count);
+        $("#totalActiveBranchDepartmentCount").html(data.total_active_department_count);
 
       } else {
         const response = info.response;
