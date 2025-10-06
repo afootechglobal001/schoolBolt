@@ -45,7 +45,7 @@ userRoles.canViewBursaryDashboard && _getActivePage({
         </div>
     </div>
 
-    <div class="dashbaord-right-wrapper">
+    <div class="statistics-container">
         <ul>
             <li title="Department" onclick="_getPage({page: 'department_config', url: adminPortalLocalUrl});"><span><i
                         class="bi-diagram-3"></i> Department</span>
