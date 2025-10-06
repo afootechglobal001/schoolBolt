@@ -274,61 +274,15 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
         <div class="nav-div">
             <div class="div-in">
                 <ul>
-                    <li class="active" title="Dashboard" id="staff_dashboard"
-                        onclick="_getActiveStaffPage({divid:'staff_dashboard', page: 'staff_dashboard', url: adminPortalLocalUrl});">
-                        <i class="bi-speedometer2"></i> Dashboard
-                    </li>
-                    <li class="hide-li" title="My Students" id="staff_students"
-                        onclick="_getActiveStaffPage({divid:'staff_students', page: 'staff_students', url: adminPortalLocalUrl});">
-                        <i class="bi-mortarboard"></i> My Students
-                    </li>
-
-                    <li title="Staff Record"><i class="bi-file-spreadsheet"></i> Record
-                        <ul class="animated fadeIn" id="recordExpandTopUl">
-                            <li onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});"
-                                title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
-                            <li onclick="_getActiveStaffPage({divid:'staff_students_compute_score', page: 'staff_students_compute_score', url: adminPortalLocalUrl});"
-                                title="Compute Score"><i class="bi-file-spreadsheet"></i>Compute Score</li>
-                            <li onclick="_getActiveStaffPage({divid:'staff_students_cummulative_mark', page: 'staff_students_cummulative_mark', url: adminPortalLocalUrl});"
-                                title="Cumulative Mark's Score"><i class="bi-file-spreadsheet"></i>Cumulative Mark's
-                                Book</li>
-                            <script>
-                            if (userRoles.canManageStudentsAttendance) {
-                                $('#recordExpandTopUl').append(`
-                                                <li title="Student Attendance" onclick="_getActiveStaffPage({divid:'staffStudentAttendance', page: 'staffStudentAttendance', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Student Attendance</li>
-                                            `);
-                            }
-                            if (userRoles.canManageClassTeachersComments) {
-                                $('#recordExpandTopUl').append(`
-                                                <li title="Class Teacher's Comment" onclick="_getActiveStaffPage({divid:'teachersComment', page: 'teachersComment', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Class Teacher's Comment</li>
-                                            `);
-                            }
-                            </script>
-                        </ul>
-
-                    </li>
-
-                    <li class="hide-li" title="My Profile" id="staff_profile_details"
-                        onclick="_getActiveStaffPage({divid:'staff_profile_details', page: 'staff_profile_details', url: adminPortalLocalUrl});">
-                        <i class="bi-person-bounding-box"></i> Staff Profile
-                    </li>
-                    <li class="hide-li" title="Staff Activities" id="staff_activities"
-                        onclick="_getActiveStaffPage({divid:'staff_activities', page: 'staff_activities', url: adminPortalLocalUrl});">
-                        <i class="bi-bell"></i> Staff Activities
-                    </li>
                     <!-- ////// for mobile view -->
                     <li class="li" title="Other Links"><i class="bi-three-dots-vertical"></i>
                         <ul class="ul">
-                            <li title="Dashboard"
-                                onclick="_getActiveStaffPage({divid:'staff_dashboard', page: 'staff_dashboard', url: adminPortalLocalUrl});">
-                                <i class="bi-speedometer2"></i> <span> Dashboard</span>
-                            </li>
+
                             <li title="My Students"
                                 onclick="_getActiveStaffPage({divid:'staff_students', page: 'staff_students', url: adminPortalLocalUrl});">
                                 <i class="bi-mortarboard"></i> <span>My Students</span>
                             </li>
                             <li title="Staff Record"><i class="bi-file-spreadsheet"></i> <span>Record</span>
-
                                 <ul class="ul-expand animated fadeIn" id="recordExpandUl">
                                     <li onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});"
                                         title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
@@ -363,6 +317,50 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
                             </li>
                         </ul>
                     </li>
+                    <!-- ////// end for mobile view -->
+                    <li class="active" title="Dashboard" id="staff_dashboard"
+                        onclick="_getActiveStaffPage({divid:'staff_dashboard', page: 'staff_dashboard', url: adminPortalLocalUrl});">
+                        <i class="bi-speedometer2"></i> Dashboard
+                    </li>
+                    <li class="hide-li" title="My Students" id="staff_students"
+                        onclick="_getActiveStaffPage({divid:'staff_students', page: 'staff_students', url: adminPortalLocalUrl});">
+                        <i class="bi-mortarboard"></i> My Students
+                    </li>
+
+                    <li class="hide-li" title="Staff Record"><i class="bi-file-spreadsheet"></i> Record
+                        <ul class="animated fadeIn" id="recordExpandTopUl">
+                            <li onclick="_getActiveStaffPage({divid:'staff_students_score_sheet', page: 'staff_students_score_sheet', url: adminPortalLocalUrl});"
+                                title="Score Sheet"><i class="bi-file-spreadsheet"></i>Score Sheet</li>
+                            <li onclick="_getActiveStaffPage({divid:'staff_students_compute_score', page: 'staff_students_compute_score', url: adminPortalLocalUrl});"
+                                title="Compute Score"><i class="bi-file-spreadsheet"></i>Compute Score</li>
+                            <li onclick="_getActiveStaffPage({divid:'staff_students_cummulative_mark', page: 'staff_students_cummulative_mark', url: adminPortalLocalUrl});"
+                                title="Cumulative Mark's Score"><i class="bi-file-spreadsheet"></i>Cumulative Mark's
+                                Book</li>
+                            <script>
+                            if (userRoles.canManageStudentsAttendance) {
+                                $('#recordExpandTopUl').append(`
+                                                <li title="Student Attendance" onclick="_getActiveStaffPage({divid:'staffStudentAttendance', page: 'staffStudentAttendance', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Student Attendance</li>
+                                            `);
+                            }
+                            if (userRoles.canManageClassTeachersComments) {
+                                $('#recordExpandTopUl').append(`
+                                                <li title="Class Teacher's Comment" onclick="_getActiveStaffPage({divid:'teachersComment', page: 'teachersComment', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Class Teacher's Comment</li>
+                                            `);
+                            }
+                            </script>
+                        </ul>
+
+                    </li>
+
+                    <li class="hide-li" title="My Profile" id="staff_profile_details"
+                        onclick="_getActiveStaffPage({divid:'staff_profile_details', page: 'staff_profile_details', url: adminPortalLocalUrl});">
+                        <i class="bi-person-bounding-box"></i> Staff Profile
+                    </li>
+                    <li class="hide-li" title="Staff Activities" id="staff_activities"
+                        onclick="_getActiveStaffPage({divid:'staff_activities', page: 'staff_activities', url: adminPortalLocalUrl});">
+                        <i class="bi-bell"></i> Staff Activities
+                    </li>
+
                 </ul>
             </div>
         </div>
