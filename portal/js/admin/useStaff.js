@@ -85,6 +85,20 @@ function _fetchStaffs() {
 			success: function(info) {
 				const fetch = info.data;
 
+				let statusContent = "";
+				statusContent += `
+				<ul>
+					<li title="Department"><span><i
+								class="bi-people"></i> Active</span>
+						<div class="num">${info.activeStaffCount}</div>
+					</li>
+					<li title="Classes"><span><i
+								class="bi-people"></i> Suspended</span>
+						<div class="num">${info.suspendedStaffCount}</div>
+					</li>
+				</ul>`;
+				$("#statusContent").html(statusContent);
+
 				let text = '';
 				let no=0;
 

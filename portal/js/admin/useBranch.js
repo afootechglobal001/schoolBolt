@@ -332,6 +332,22 @@ function _fetchBranches() {
       success: function (info) {
         const fetch = info.data;
         const success = info.success;
+       
+        let statusContent = "";
+        statusContent += `
+          <ul>
+            <li title="Department"><span><i
+                class="bi-diagram-3"></i> Active</span>
+                <div class="num">${info.activeBranchCount}</div>
+            </li>
+            <li title="Classes"><span><i
+                class="bi-diagram-3"></i> Suspended</span>
+                <div class="num">${info.suspendedBranchCount}</div>
+            </li>
+          </ul>`;
+
+        $("#statusContent").html(statusContent);
+
         let text = "";
         let no = 0;
 
@@ -345,7 +361,8 @@ function _fetchBranches() {
                         <th>Phone Number</th>
                         <th>Address</th>
                         <th>Manager</th>
-                        <th>Number of staff</th>
+                        <th>No. of Staff</th>
+                        <th>No. of Students</th>
                         <th>Date of Reg.</th>
                         <th>Status</th>
 						<th>View</th>
@@ -365,6 +382,7 @@ function _fetchBranches() {
             const managerName = fetch[i].managerName;
             const staffId = fetch[i].managerId;
             const totalNumberOfStaff = fetch[i].totalNumberOfStaff;
+            const totalNumberOfStudents = fetch[i].totalNumberOfStudents;
             const createdTime = fetch[i].createdTime;
             const statusName = fetch[i].statusName;
 
@@ -379,6 +397,7 @@ function _fetchBranches() {
 								<td>${address}</td>
 								<td class="clickable-td" onclick="_fetchEachStaff('${staffId}');">${managerName}</td>
 								<td>${totalNumberOfStaff}</td>
+                <td>${totalNumberOfStudents}</td>
 								<td>${createdTime}</td>
 								<td><div class="status-div ${statusName}">${statusName}</div></td>
 								<td><button class="btn view-btn" title="Click to view branch profile" onclick="_fetchEachBranches('${branchId}');">VIEW</button></td>
