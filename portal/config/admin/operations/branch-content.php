@@ -1,7 +1,7 @@
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
 <?php if ($page == 'branches') { ?>
-    <div class="page-title-back-div other-pages-title-back-div" data-aos="fade-in" data-aos-duration="1500">
+    <div class="page-title-back-div other-pages-title-back-div adjusted-title-back-div" data-aos="fade-in" data-aos-duration="1500">
         <div class="page-title-div other-pages-title-div">
             <div class="main-title title"><i class="bi-diagram-3"></i> <strong>Branches</strong></div>
             <div class="other-pg-statistics-container" id="statusContent"></div>

@@ -770,7 +770,7 @@ header
 }
 
 @media all and (max-width: 1090px) {
-  .other-pages-title-back-div {
+  .adjusted-title-back-div {
     width: calc(100% - 40px);
     flex-direction: column;
     align-items: flex-start;
@@ -790,7 +790,7 @@ header
 }
 
 @media all and (max-width: 530px) {
-  .dashbaords-page-title-back-div {
+  .adjusted-title-back-div {
     width: calc(100% - 30px);
     min-height: 120px;
     align-items: center;
