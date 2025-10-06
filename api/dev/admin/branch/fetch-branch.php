@@ -34,10 +34,20 @@ if(!$checkSession){
         goto end;
     }
 
+     //// get number of active branches
+    $activeBranchCountQuery = mysqli_query($conn, "SELECT COUNT(*) AS count FROM BRANCHES_TAB WHERE $clientIds AND statusId=1");
+    $activeBranchCountFetch = mysqli_fetch_assoc($activeBranchCountQuery);
+    //// get number of suspended branches
+    $suspendedBranchCountQuery = mysqli_query($conn, "SELECT COUNT(*) AS count FROM BRANCHES_TAB WHERE $clientIds AND statusId=2");
+    $suspendedBranchCountFetch = mysqli_fetch_assoc($suspendedBranchCountQuery);
+
+
     $response['response']=200; 
     $response['success']=true;
     $response['message']="BRANCH FETCH SUCCESFFULY!";
     $response['allRecordCount']=$allRecordCount;
+    $response['activeBranchCount'] = $activeBranchCountFetch['count'];
+    $response['suspendedBranchCount'] = $suspendedBranchCountFetch['count'];
     $response['data'] = array(); // Initialize the data array
 
     while ($fetchQuery = mysqli_fetch_assoc($query)) {
@@ -72,18 +82,15 @@ if(!$checkSession){
         $fetchQuery['updatedBy']= $updatedByData;
 
       
-        //// get number of staf
-        $userCountQuery = mysqli_query($conn, "SELECT COUNT(*) AS count FROM STAFF_TAB WHERE $clientIds AND branchId='$branchId'");
+        //// get number of active staff
+        $userCountQuery = mysqli_query($conn, "SELECT COUNT(*) AS count FROM STAFF_TAB WHERE $clientIds AND branchId='$branchId' AND statusId=1");
         $userCountFetch = mysqli_fetch_assoc($userCountQuery);
         $fetchQuery['totalNumberOfStaff'] = $userCountFetch['count']; // Assign the actual count value
-        /////////////////// for  $branchDepartmentsData
-        $branchDepartmentsData=array();
-        $branchDepartmentsQuery = mysqli_query($conn, "SELECT * FROM BRANCH_DEPARTMENTS_TAB WHERE $clientIds AND branchId='$branchId'");
-        while ($branchDepartmentsFetch = mysqli_fetch_assoc($branchDepartmentsQuery)) {
-            $branchDepartmentsData[] = $branchDepartmentsFetch;
-        }
-        $fetchQuery['branchDepartmentsData'] = $branchDepartmentsData;
-        
+       //// get number of active students
+        $studentCountQuery = mysqli_query($conn, "SELECT COUNT(*) AS count FROM STUDENTS_TAB WHERE $clientIds AND branchId='$branchId' AND statusId=1");
+        $studentCountFetch = mysqli_fetch_assoc($studentCountQuery);
+        $fetchQuery['totalNumberOfStudents'] = $studentCountFetch['count']; // Assign the actual count value
+
         $response['data'][] = $fetchQuery;
     }
 //////////////////////////////////////////////////////////////////////////////////////////////

@@ -40,11 +40,20 @@ if(!$checkSession){
         $response['message']="No Record found";
         goto end;
     }
+    /// get active staff count
+    $activeStaffCountQuery = mysqli_query($conn, "SELECT COUNT(*) AS count FROM STAFF_TAB WHERE $clientIds AND statusId=1");
+    $activeStaffCountFetch = mysqli_fetch_assoc($activeStaffCountQuery);
+    /// get number of suspended staff
+    $suspendedStaffCountQuery = mysqli_query($conn, "SELECT COUNT(*) AS count FROM STAFF_TAB WHERE $clientIds AND statusId=2");
+    $suspendedStaffCountFetch = mysqli_fetch_assoc($suspendedStaffCountQuery);
+
 
     $response['response']=200; 
     $response['success']=true;
     $response['message']="STAFF FETCH SUCCESFFULY!";
     $response['allRecordCount']=$allRecordCount;
+    $response['activeStaffCount'] = $activeStaffCountFetch['count'];
+    $response['suspendedStaffCount'] = $suspendedStaffCountFetch['count'];
     $response['data'] = array(); // Initialize the data array
 
     while ($fetchQuery = mysqli_fetch_assoc($query)) {
