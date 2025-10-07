@@ -163,6 +163,7 @@
                                 for (let i = 2; i < tableTitles.length; i++) {
                                     const title = tableTitles[i];
                                     const score = scoreMap[title] && scoreMap[title][student.studentId] ? scoreMap[title][student.studentId] : '';
+                                    if (score === null || score === "null" || score === undefined) score = '';
                                     row.append($('<td class="td"></td>').text(score));
                                 }
 
