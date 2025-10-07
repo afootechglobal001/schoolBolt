@@ -131,5 +131,10 @@
     'numberOfDaysPresents' => $teacherCommentDataFetch['numberOfDaysPresents'] ?? 0,
     'numberOfDaysAbsents'  => $teacherCommentDataFetch['numberOfDaysAbsents'] ?? 0,
     ];
+
+    //////////// get student classTeachersComment
+    $classTeachersCommentDataQuery = mysqli_query($conn, "SELECT classTeachersComment FROM BRANCH_TEACHERS_COMMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId' AND studentId='$studentId'");
+    $classTeachersCommentDataFetch = mysqli_fetch_assoc($classTeachersCommentDataQuery);
+    $response['classTeachersComment']= $classTeachersCommentDataFetch['classTeachersComment'] ?? '';
     
 ?>

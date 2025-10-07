@@ -1,5 +1,5 @@
 CREATE OR REPLACE VIEW STUDENT_VIEW AS
-SELECT a.*, b.name, c.genderName, d.maritalStatusName, e.countryName, f.stateName, g.lgaName, h.statusName 
+SELECT a.*, b.name, c.genderName, d.maritalStatusName, e.countryName, f.stateName, g.lgaName, h.statusName, i.officialStudentId 
 FROM 
 STUDENTS_TAB a
 JOIN BRANCHES_TAB b ON a.clientId=b.clientId AND a.branchId=b.branchId
@@ -9,3 +9,4 @@ JOIN SETUP_COUNTRY_TAB e ON a.countryId=e.countryId
 JOIN SETUP_STATES_TAB f ON a.stateId=f.stateId
 JOIN SETUP_STATE_LGA_TAB g ON a.stateId=g.stateId AND a.lgaId=g.lgaId
 JOIN SETUP_STATUS_TAB h ON a.statusId=h.statusId
+JOIN STUDENTS_CLASS_TAB i ON a.studentId=i.studentId

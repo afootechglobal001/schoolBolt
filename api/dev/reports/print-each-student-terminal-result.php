@@ -36,7 +36,7 @@ if (!$checkBasicSecurity){/// start if 1
     $armDataQuery = mysqli_query($conn, "SELECT armId, armName FROM ARMS_TAB WHERE $clientIds AND armId='$armId'");
     $armDataFetch = mysqli_fetch_assoc($armDataQuery);
     
-    $studentDataQuery=mysqli_query($conn,"SELECT studentId, surName, firstName, otherNames, passport, genderName FROM STUDENT_VIEW WHERE $clientIds AND branchId='$branchId' AND studentId='$studentId'")or die (mysqli_error($conn));
+    $studentDataQuery=mysqli_query($conn,"SELECT studentId, officialStudentId, surName, firstName, otherNames, passport, genderName FROM STUDENT_VIEW WHERE $clientIds AND branchId='$branchId' AND studentId='$studentId'")or die (mysqli_error($conn));
     $studentDataFetch = mysqli_fetch_assoc($studentDataQuery);
 
     $response['response']=200; 

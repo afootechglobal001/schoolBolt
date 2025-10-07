@@ -85,11 +85,21 @@ if (!$checkBasicSecurity){/// start if 1
     a.remark,
     a.position AS positionInClass,
     a.overallPosition,
-    a.principalComment
+    a.principalComment,
+    c.classTeachersComment
     FROM 
     BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_ASSESSMENT_TAB a 
     JOIN 
     STUDENTS_TAB b  ON a.studentId = b.studentId AND a.clientId = b.clientId
+    LEFT JOIN BRANCH_TEACHERS_COMMENTS_TAB c 
+    ON a.studentId = c.studentId
+    AND a.clientId = c.clientId
+    AND a.branchId = c.branchId
+    AND a.session = c.session
+    AND a.termId = c.termId
+    AND a.departmentId = c.departmentId
+    AND a.classId = c.classId
+    AND a.armId = c.armId
     WHERE 
     a.clientId='$clientId' 
     AND a.branchId = '$branchId' 

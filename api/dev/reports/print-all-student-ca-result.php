@@ -57,6 +57,7 @@ if (!$checkBasicSecurity){/// start if 1
 
     $select="SELECT 
     a.studentId AS studentId,
+    b.officialStudentId,
     b.surName, 
     b.firstName,
     b.otherNames,
@@ -135,7 +136,11 @@ if (!$checkBasicSecurity){/// start if 1
             $datatFetch['subjectAssessment'] = $eachSubjectAssessmentFetch;
             $studentsInClassFetch['data'][] = $datatFetch;
         }
-
+        //////////// get student classTeachersComment
+        $classTeachersCommentDataQuery = mysqli_query($conn, "SELECT classTeachersComment FROM BRANCH_TEACHERS_COMMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId' AND studentId='$studentId'");
+        $classTeachersCommentDataFetch = mysqli_fetch_assoc($classTeachersCommentDataQuery);
+        $studentsInClassFetch['classTeachersComment']= $classTeachersCommentDataFetch['classTeachersComment'] ?? '';
+        
         $response['eachStudentData'][]=$studentsInClassFetch;
      }
    

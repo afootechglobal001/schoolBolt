@@ -41,8 +41,11 @@ if (!$checkBasicSecurity){/// start if 1
     $assessmentDataQuery = mysqli_query($conn, "SELECT assessmentId, assessmentName FROM BRANCH_ASSESSMENT_SETUP_TAB  WHERE $clientIds AND branchId='$branchId' AND assessmentId='$assessmentId'");
     $assessmentDataFetch = mysqli_fetch_assoc($assessmentDataQuery);
     
-    $studentDataQuery=mysqli_query($conn,"SELECT studentId, surName, firstName, otherNames, passport, genderName FROM STUDENT_VIEW WHERE $clientIds AND branchId='$branchId' AND studentId='$studentId'")or die (mysqli_error($conn));
+    $studentDataQuery=mysqli_query($conn,"SELECT studentId, officialStudentId, surName, firstName, otherNames, passport, genderName FROM STUDENT_VIEW WHERE $clientIds AND branchId='$branchId' AND studentId='$studentId'")or die (mysqli_error($conn));
     $studentDataFetch = mysqli_fetch_assoc($studentDataQuery);
+    //////////// get student classTeachersComment
+    $classTeachersCommentDataQuery = mysqli_query($conn, "SELECT classTeachersComment FROM BRANCH_TEACHERS_COMMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId' AND studentId='$studentId'");
+    $classTeachersCommentDataFetch = mysqli_fetch_assoc($classTeachersCommentDataQuery);
 
     $response['response']=200; 
     $response['success']=true;
@@ -55,6 +58,7 @@ if (!$checkBasicSecurity){/// start if 1
     $response['armData'] = $armDataFetch;
     $response['assessmentData'] = $assessmentDataFetch;
     $response['studentData'] = $studentDataFetch;
+    $response['classTeachersComment']= $classTeachersCommentDataFetch;
     $response['data'] = array();
 
     $select="SELECT 

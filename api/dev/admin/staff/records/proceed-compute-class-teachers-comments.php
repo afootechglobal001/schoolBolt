@@ -22,11 +22,10 @@ if(!$checkSession){
     validateEmptyField($classId, 'CLASS');
     validateEmptyField($armId, 'ARM');
 
-     $branchDataQuery = mysqli_query($conn, "SELECT session, termId, timeSchoolOpened FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+    $branchDataQuery = mysqli_query($conn, "SELECT session, termId FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
     $session=$branchDataFetch['session'];
     $termId=$branchDataFetch['termId'];
-    $timeSchoolOpened= $branchDataFetch['timeSchoolOpened'];
 
     $response['response']=200; 
     $response['success']=true;
@@ -56,10 +55,10 @@ if(!$checkSession){
          $armDataFetch = mysqli_fetch_assoc($armDataQuery);
          $fetchQuery['armData']= $armDataFetch;
 
-         //////////// get student numberOfDaysPresents and numberOfDaysAbsent
-         $attendanceDataQuery = mysqli_query($conn, "SELECT numberOfDaysPresents FROM BRANCH_STUDENT_ATTENDANCE_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId' AND studentId='$studentId'");
-         $attendanceDataFetch = mysqli_fetch_assoc($attendanceDataQuery);
-         $fetchQuery['attendanceData']= $attendanceDataFetch;
+         //////////// get student classTeachersComment
+         $classTeachersCommentDataQuery = mysqli_query($conn, "SELECT classTeachersComment FROM BRANCH_TEACHERS_COMMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId' AND studentId='$studentId'");
+         $classTeachersCommentDataFetch = mysqli_fetch_assoc($classTeachersCommentDataQuery);
+         $fetchQuery['classTeachersCommentData']= $classTeachersCommentDataFetch;
 
         $response['data'][] = $fetchQuery;
     }

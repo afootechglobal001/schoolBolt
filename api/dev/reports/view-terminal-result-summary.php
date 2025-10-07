@@ -82,7 +82,8 @@ $tableTitles="SN, FULL NAME, NO. OF SUBJECTS, MARK OBTAINABLE, MARK OBTAINED, TO
         IFNULL(c.numberOfDaysPresents, 0),
         ' / ',
         IFNULL(c.timeSchoolOpened, 0)
-    ) AS attendance
+    ) AS attendance,
+    d.classTeachersComment
 FROM BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB a
 JOIN STUDENTS_TAB b  
     ON a.studentId = b.studentId 
@@ -96,6 +97,15 @@ LEFT JOIN BRANCH_STUDENT_ATTENDANCE_TAB c
    AND a.departmentId = c.departmentId 
    AND a.classId = c.classId 
    AND a.armId = c.armId
+LEFT JOIN BRANCH_TEACHERS_COMMENTS_TAB d 
+    ON a.studentId = d.studentId
+    AND a.clientId = d.clientId
+    AND a.branchId = d.branchId
+    AND a.session = d.session
+    AND a.termId = d.termId
+    AND a.departmentId = d.departmentId
+    AND a.classId = d.classId
+    AND a.armId = d.armId
 WHERE a.clientId = '$clientId'
   AND a.branchId = '$branchId'
   AND a.session = '$session'
