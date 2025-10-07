@@ -682,13 +682,14 @@ function _saveAssessment() {
 	}
 }
 
+/// Staff Student Attendance Functions //////////////////////////////////
 function _fetchStaffAssignedClasses() {
 	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
     $('#classPageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
 	try {
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/admin/staff/records/get-class-teacher-assigned-classes?branchId=${getEachStaffDetailsSession.branchId}`,
+			url: `${endPoint}/admin/staff/records/get-class-teacher-assigned-classes?branchId=${getEachStaffDetailsSession.branchId}&staffId=${getEachStaffDetailsSession.staffId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(true),
@@ -851,6 +852,186 @@ function _saveAttendance() {
 					if (info.success) {
 						_actionAlert(info.message, true);
 						_proceedComputeAttendance(departmentId, classId, armId)
+					} else {
+						_actionAlert(info.message, false);
+					}
+					$("#submitBtn").html(btn_text).prop("disabled", false);
+				},
+				error: function (error) {
+					_actionAlert('An error occurred while processing your request! Please Try Again', false);
+					$("#submitBtn").html(btn_text).prop("disabled", false);
+				}
+			});
+		}
+	} catch (error) {
+		_actionAlert('An unexpected error occurred! Please Try Again', false);
+		$("#submitBtn").prop("disabled", false);
+	}
+}
+
+/// Class Teacher Comment Functions ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+function _fetchClassTeacherAssignedClasses() {
+	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
+    $('#classPageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/staff/records/get-class-teacher-assigned-classes?branchId=${getEachStaffDetailsSession.branchId}&staffId=${getEachStaffDetailsSession.staffId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const fetch = info.data;
+
+				let text = '';
+
+				if (info.success) {
+					for (let i = 0; i < fetch.length; i++) {
+						const fetchClassData = fetch[i].classData;
+						const fetchArmData = fetch[i].armData;
+						const fetchDepartmentData = fetch[i].departmentData;
+						const classId = fetchClassData.classId;
+						const className = fetchClassData.className;
+						const armName = fetchArmData.armName;
+						const armId = fetchArmData.armId;
+						const departmentId = fetchDepartmentData.departmentId
+
+						text +=`
+							<div class="pages-toggle-div">
+								<div class="pages-toggle-title">
+									<h3>${className} ${armName}</h3>
+									<div class="btn-back-div">
+										<button class="btn" title="PRINT CLASS TEACHER COMMENT"><i class="bi-printer"></i> PRINT</button>
+										<button class="btn compute-btn" id="proceedBtn_${armId}" title="COMPUTE CLASS TEACHER COMMENT" onclick="_proceedComputeClassTeacherComment('${departmentId}','${classId}','${armId}');"><i class="bi-check-all"></i> COMPUTE CLASS TEACHER'S COMMENT</button>
+									</div> 
+								</div>
+							</div>
+						`;
+					}
+					$('#classPageContent').html(text);
+				} else {
+					_actionAlert(info.message, false);
+
+					text +=`
+					<div class="false-notification-div">
+						<p>${info.message}</p>
+					</div>`;
+
+					$('#classPageContent').html(text);
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}
+
+function _proceedComputeClassTeacherComment(departmentId, classId, armId) {
+	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
+
+	try {
+		const btnText = $(`#proceedBtn_${armId}`).html();
+		$(`#proceedBtn_${armId}`).html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+		$(`#proceedBtn_${armId}`).prop("disabled", true);
+
+		$.ajax({
+			type: "POST",
+			url: `${endPoint}/admin/staff/records/proceed-compute-class-teachers-comments?branchId=${getEachStaffDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			processData: false,
+			success: function (info) {
+			if (info.success) {
+				sessionStorage.setItem("getClassTeacherCommentDataSession", JSON.stringify(info));
+				_getForm({page: 'computeClassTeacherCommentSave', layer: 2, url: adminPortalLocalUrl});
+			} else{
+				const response = info.response;
+				if (response < 100) {
+					_logOut();
+				} 
+			}
+			$(`#proceedBtn_${armId}`).html(btnText).prop("disabled", false);
+		},
+			error: function (error) {
+				_actionAlert('An error occurred while processing your request! Please Try Again', false);
+				$(`#proceedBtn_${armId}`).html(btnText).prop("disabled", false);
+			}
+		});
+	} catch (error) {
+		_actionAlert('An unexpected error occurred! Please Try Again', false);
+		$(`#proceedBtn_${armId}`).prop("disabled", false);
+	}
+}
+
+
+function _saveClassTeachersComment() {
+	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
+	let getClassTeacherCommentDataSession = JSON.parse(sessionStorage.getItem("getClassTeacherCommentDataSession"));
+
+	const departmentId = getClassTeacherCommentDataSession?.data[0]?.departmentData?.departmentId;
+	const classId = getClassTeacherCommentDataSession?.data[0]?.classData?.classId;
+	const armId = getClassTeacherCommentDataSession?.data[0]?.armData?.armId;
+
+	try {
+		let issueCount = 0;
+		const allComments = [];
+	
+		$('.student-id-holder').each(function () {
+			const studentId = $(this).val();
+			const inputSelector = `#classTeachersComment_${studentId}`;
+			const errorSelector = `#issue_classTeachersComment_${studentId}`;
+			const classTeachersComment = $(inputSelector).val();
+
+			$(inputSelector).removeClass('issue');
+			$(errorSelector).html('');
+
+			if (classTeachersComment === "" || null) {
+				$(inputSelector).addClass('issue');
+				$(errorSelector).html(`Class teacher's comment is required`);
+				issueCount++;
+			} else {
+				allComments.push({
+					studentId: studentId,
+					classTeachersComment: classTeachersComment
+				});
+			}
+		});
+
+		if (issueCount>0){
+			return;
+		}
+
+		if (confirm("Confirm!!\n\nAre you sure to PERFORM THIS ACTION?")) {
+			const btn_text = $("#submitBtn").html();
+			$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+			$("#submitBtn").prop("disabled", true);
+
+			const formData = {
+				allComments: allComments,
+			};
+
+			$.ajax({
+				type: "POST",
+				url: `${endPoint}/admin/staff/records/save-class-teachers-comments?branchId=${getEachStaffDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+				data: JSON.stringify(formData),
+				dataType: "json",
+				cache: false,
+				headers: getAuthHeaders(true),
+				processData: false,
+				success: function (info) {
+					if (info.success) {
+						_actionAlert(info.message, true);
+						_proceedComputeClassTeacherComment(departmentId, classId, armId)
 					} else {
 						_actionAlert(info.message, false);
 					}

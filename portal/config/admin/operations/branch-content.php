@@ -2532,30 +2532,32 @@
                                             return;
                                         }
 
-                                        // Try fuzzy matching
-                                        const titleWords = normalizeWords(title);
+                                        const titleWords = normalizeWords(title).map(w => w.replace(/['s]+$/g, '').replace(/s$/, '')); // remove plurals & possessives
                                         let bestMatch = null;
                                         let bestMatchScore = 0;
 
                                         summaryFields.forEach(field => {
-                                            const fieldWords = normalizeWords(field);
-                                            const overlapCount = titleWords.filter(word => fieldWords
-                                                .includes(word)).length;
+                                            const fieldWords = normalizeWords(field).map(w => w.replace(/['s]+$/g, '').replace(/s$/, ''));
+                                            const overlapCount = titleWords.filter(word => fieldWords.includes(word)).length;
 
-                                            if (overlapCount > bestMatchScore) {
+                                            // Compute a ratio of overlap instead of a fixed score
+                                            const similarity = overlapCount / Math.max(titleWords.length, fieldWords.length);
+
+                                            if (similarity > bestMatchScore) {
                                                 bestMatch = field;
-                                                bestMatchScore = overlapCount;
+                                                bestMatchScore = similarity;
                                             }
                                         });
 
+                                        // Assign best fuzzy match
                                         if (bestMatch && !scoreMap[title]) {
                                             scoreMap[title] = scoreMap[bestMatch];
                                         } else if (!scoreMap[title]) {
-                                            // Check lowercase direct match (e.g., "remarks" vs "remark")
-                                            const lowerTitle = title.toLowerCase().replace(/s$/,
-                                                ''); // remove trailing 's'
-                                            const fieldMatch = summaryFields.find(field => field
-                                                .toLowerCase() === lowerTitle);
+                                            // lowercase direct match fallback (handles remark vs remarks)
+                                            const lowerTitle = title.toLowerCase().replace(/['s]+$/g, '').replace(/s$/, '');
+                                            const fieldMatch = summaryFields.find(field =>
+                                                field.toLowerCase().replace(/['s]+$/g, '').replace(/s$/, '') === lowerTitle
+                                            );
                                             if (fieldMatch) {
                                                 scoreMap[title] = scoreMap[fieldMatch];
                                             }
@@ -2803,35 +2805,38 @@
                                             return;
                                         }
 
-                                        // Try fuzzy matching
-                                        const titleWords = normalizeWords(title);
+                                        const titleWords = normalizeWords(title).map(w => w.replace(/['s]+$/g, '').replace(/s$/, '')); // remove plurals & possessives
                                         let bestMatch = null;
                                         let bestMatchScore = 0;
 
                                         summaryFields.forEach(field => {
-                                            const fieldWords = normalizeWords(field);
-                                            const overlapCount = titleWords.filter(word => fieldWords
-                                                .includes(word)).length;
+                                            const fieldWords = normalizeWords(field).map(w => w.replace(/['s]+$/g, '').replace(/s$/, ''));
+                                            const overlapCount = titleWords.filter(word => fieldWords.includes(word)).length;
 
-                                            if (overlapCount > bestMatchScore) {
+                                            // Compute a ratio of overlap instead of a fixed score
+                                            const similarity = overlapCount / Math.max(titleWords.length, fieldWords.length);
+
+                                            if (similarity > bestMatchScore) {
                                                 bestMatch = field;
-                                                bestMatchScore = overlapCount;
+                                                bestMatchScore = similarity;
                                             }
                                         });
 
+                                        // Assign best fuzzy match
                                         if (bestMatch && !scoreMap[title]) {
                                             scoreMap[title] = scoreMap[bestMatch];
                                         } else if (!scoreMap[title]) {
-                                            // Check lowercase direct match (e.g., "remarks" vs "remark")
-                                            const lowerTitle = title.toLowerCase().replace(/s$/,
-                                                ''); // remove trailing 's'
-                                            const fieldMatch = summaryFields.find(field => field
-                                                .toLowerCase() === lowerTitle);
+                                            // lowercase direct match fallback (handles remark vs remarks)
+                                            const lowerTitle = title.toLowerCase().replace(/['s]+$/g, '').replace(/s$/, '');
+                                            const fieldMatch = summaryFields.find(field =>
+                                                field.toLowerCase().replace(/['s]+$/g, '').replace(/s$/, '') === lowerTitle
+                                            );
                                             if (fieldMatch) {
                                                 scoreMap[title] = scoreMap[fieldMatch];
                                             }
                                         }
                                     });
+
 
                                     // Build the table
                                     const thead = $('<thead></thead>');

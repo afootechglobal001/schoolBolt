@@ -75,7 +75,7 @@
 
                         <div class="details">
                             <span>STUDENT ID</span>
-                            <div id="studentId"><script>$("#studentId").html(printEachStudentTerminalResultSession?.studentData?.studentId);</script></div>
+                            <div id="studentId"><script>$("#studentId").html(printEachStudentTerminalResultSession?.studentData?.officialStudentId ? printEachStudentTerminalResultSession?.studentData?.officialStudentId : printEachStudentTerminalResultSession?.studentData?.studentId);</script></div>
                         </div>
 
                         <div class="details"><span>CLASS</span>
@@ -218,6 +218,7 @@
                         const items = printEachStudentTerminalResultSession?.resultSummary;
                         const branchItems = printEachStudentTerminalResultSession?.branchData;
                         const attendanceItems = printEachStudentTerminalResultSession?.attendanceData;
+                        const classTeachersComment = printEachStudentTerminalResultSession?.classTeachersComment;
 
                         let text='';
                         if(termId==='3'){
@@ -310,7 +311,7 @@
 
                                         <div class="details">
                                             <span>CLASS TEACHER'S COMMENT</span>
-                                            <div>${items.principalComment}</div>
+                                            <div>${classTeachersComment}</div>
                                         </div>
 
                                         <div class="details">
@@ -374,7 +375,7 @@
 
                                         <div class="details">
                                             <span>CLASS TEACHER'S COMMENT</span>
-                                            <div>${items.principalComment}</div>
+                                            <div>${classTeachersComment}</div>
                                         </div>
 
                                         <div class="details">

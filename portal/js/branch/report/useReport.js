@@ -168,15 +168,6 @@ function _fetchBroadsheetClass() {
                                 </div>
 
                                 <div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
-                                    <div class="alert alert-success top-alert-div class-top-alert-div animated fadeIn">
-                                        <span><i class="bi-people-fill"></i> <span>${departmentName}</span> DEPARTMENT </span>
-
-                                        <div class="btn-container">
-                                            <button class="btn" title="PRINT RECORDS" onclick=""><i class="bi-printer"></i> PRINT</button>
-                                            <button class="btn" title="EXPORT RECORDS" onclick=""><i class="bi-file-earmark-excel"></i> EXPORT</button>
-                                        </div>
-                                    </div>
-
                                     <div class="table-div animated fadeIn">
                                         <table class="table" cellspacing="0" style="width:100%">
                                             <thead>

@@ -297,7 +297,7 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
                                     }
                                     if (userRoles.canManageClassTeachersComments) {
                                         $('#recordExpandUl').append(`
-                                                <li title="Class Teacher's Comment" onclick="_getActiveStaffPage({divid:'teachersComment', page: 'teachersComment', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Class Teacher's Comment</li>
+                                                <li title="Class Teacher's Comment" onclick="_getActiveStaffPage({divid:'classTeachersComment', page: 'classTeachersComment', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Class Teacher's Comment</li>
                                             `);
                                     }
                                     </script>
@@ -339,7 +339,7 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
                             }
                             if (userRoles.canManageClassTeachersComments) {
                                 $('#recordExpandTopUl').append(`
-                                                <li title="Class Teacher's Comment" onclick="_getActiveStaffPage({divid:'teachersComment', page: 'teachersComment', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Class Teacher's Comment</li>
+                                                <li title="Class Teacher's Comment" onclick="_getActiveStaffPage({divid:'classTeachersComment', page: 'classTeachersComment', url: adminPortalLocalUrl});"><i class="bi-file-spreadsheet"></i>Class Teacher's Comment</li>
                                             `);
                             }
                             </script>
@@ -445,7 +445,7 @@ getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDeta
     <script>
     if (userRoles.canManageClassTeachersComments) {
         $('.user-managment-back-div').append(`
-            <div class="user-managment-list staff-managment-list" onclick="_getActiveStaffPage({divid:'teachersComment', page: 'teachersComment', url: adminPortalLocalUrl});">
+            <div class="user-managment-list staff-managment-list" onclick="_getActiveStaffPage({divid:'classTeachersComment', page: 'classTeachersComment', url: adminPortalLocalUrl});">
                 <div class="inner-div">
                     <div class="icon-div">
                         <img src="<?php echo $websiteUrl ?>/images/timetable.png" alt="Class Teacher's Comment" />
@@ -1223,4 +1223,112 @@ getStudentAttendanceDataSession = JSON.parse(sessionStorage.getItem("getStudentA
         </div>
     </div>
 </div>
+<?php } ?>
+
+
+<?php if ($page == 'classTeachersComment') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div><span><i class="bi-people-fill"></i> CLASS LIST / </span> CURRENT SESSION -- <span id="attenPageSession">
+                <script>
+                $("#attenPageSession").html(getEachStaffDetailsSession?.branchData?.session);
+                </script>
+            </span> <span>/</span> CURRENT TERM -- <span id="attenPageTermName">
+                <script>
+                $("#attenPageTermName").html(getEachStaffDetailsSession?.termData?.termName);
+                </script>
+            </span></div>
+    </div>
+
+    <div class="pages-toggle-back-div" id="classPageContent">
+        <script>_fetchClassTeacherAssignedClasses();</script>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'computeClassTeacherCommentSave') { ?>
+    <script> getClassTeacherCommentDataSession = JSON.parse(sessionStorage.getItem("getClassTeacherCommentDataSession"));</script>
+
+    <div class="slide-form-div save-compute-teachers-comment-slide-form" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="panel-title"><i class="bi-plus-square"></i> COMPUTE CLASS TEACHER'S COMMENT</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert compute-form-alert">
+                        <span>Kindly input score for each student to complete Class Teacher's Comment computation </span>
+                    </div>
+                </div>
+
+                <div class="compute-score-back-div" id="fetchStudents">
+                    <script>
+                    $(document).ready(function() {
+                        let text = '';
+
+                        if (getClassTeacherCommentDataSession) {
+                            const fetchData = getClassTeacherCommentDataSession?.data;
+                            const fetchBranchData = getClassTeacherCommentDataSession?.branchData;
+                            const success = getClassTeacherCommentDataSession?.success;
+
+                            if (success === true && fetchData.length > 0) {
+                                for (let i = 0; i < fetchData.length; i++) {
+                                    const student = fetchData[i];
+                                    const department = fetchData[i].departmentData;
+                                    const classInfo = fetchData[i].classData;
+                                    const arm = fetchData[i].armData;
+                                    const classTeachersComment = fetchData[i].classTeachersCommentData ? fetchData[i]
+                                        .classTeachersCommentData?.classTeachersComment : '';
+
+                                    const fullName = `${student.surName} ${student.firstName}`;
+                                    const passport = student.passport || 'default.jpg';
+                                    const studentId = student.studentId;
+                                    const fieldId = `classTeachersComment_${studentId}`;
+
+                                    $("#fetchStudents").append(`
+                                            <div class="each-compute-score-div">
+                                                <div class="inner-score-div">
+                                                    <div class="image-div">
+                                                        <img src="${studentPixPath}/${passport}" alt="${fullName}"/>
+                                                    </div>
+                                                    <div class="text-container">
+                                                        <div class="text-div">
+                                                            <div class="name">${fullName}</div>
+                                                            <div>${department.departmentName} -- ${classInfo.className} ${arm.armName}</div>
+                                                        </div>
+
+                                                        <div>
+                                                            <div class="text_area_container" id="${fieldId}_container"></div>
+                                                            <div class="issueText" id="issue_classTeachersComment"></div>
+                                                            <input type="hidden" class="student-id-holder" value="${studentId}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `);
+
+                                    textField({
+                                        id: fieldId,
+                                        title: 'Class Teacher\'s Comment',
+                                        type: 'textarea',
+                                        rows: 1,
+                                        value: classTeachersComment
+                                    });
+                                }
+                            }
+                        }
+                    });
+                    </script>
+                </div>
+
+                <div>
+                    <button class="btn" title="SAVE CLASS TEACHER'S COMMENT" id="submitBtn" onclick="_saveClassTeachersComment();">
+                        <i class="bi-save"></i> SAVE
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 <?php } ?>
