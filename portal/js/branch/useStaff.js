@@ -714,7 +714,6 @@ function _fetchStaffAssignedClasses() {
 								<div class="pages-toggle-title">
 									<h3>${className} ${armName}</h3>
 									<div class="btn-back-div">
-										<button class="btn" title="PRINT STUDENT ATTENDANCE"><i class="bi-printer"></i> PRINT</button>
 										<button class="btn compute-btn" id="proceedBtn_${armId}" title="COMPUTE STUDENT ATTENDANCE" onclick="_proceedComputeAttendance('${departmentId}','${classId}','${armId}');"><i class="bi-check-all"></i> COMPUTE ATTENDANCE</button>
 									</div> 
 								</div>
@@ -901,7 +900,6 @@ function _fetchClassTeacherAssignedClasses() {
 								<div class="pages-toggle-title">
 									<h3>${className} ${armName}</h3>
 									<div class="btn-back-div">
-										<button class="btn" title="PRINT CLASS TEACHER COMMENT"><i class="bi-printer"></i> PRINT</button>
 										<button class="btn compute-btn" id="proceedBtn_${armId}" title="COMPUTE CLASS TEACHER COMMENT" onclick="_proceedComputeClassTeacherComment('${departmentId}','${classId}','${armId}');"><i class="bi-check-all"></i> COMPUTE CLASS TEACHER'S COMMENT</button>
 									</div> 
 								</div>
