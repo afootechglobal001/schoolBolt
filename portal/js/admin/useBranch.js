@@ -336,8 +336,8 @@ function _fetchBranches() {
         let statusContent = "";
         statusContent += `
           <ul>
-            <li title="Department"><span><i
-                class="bi-diagram-3"></i> Active</span>
+            <li title="Department"><span>
+            <i class="bi-diagram-3"></i> Active</span>
                 <div class="num">${info.activeBranchCount}</div>
             </li>
             <li title="Classes"><span><i
