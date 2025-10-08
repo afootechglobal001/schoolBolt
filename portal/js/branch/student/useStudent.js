@@ -1512,16 +1512,7 @@ function _fetchBranchArchivedStudents() {
       success: function (info) {
         const fetch = info.data;
         const success = info.success;
-
-        let showButtons = `
-					<button class="btn" title="PRINT RECORDS" onclick="_printStudentByClass('${fetch[0].departmentData.departmentId}','${fetch[0].classData.classId}','${fetch[0].armData.armId}');">
-						<i class="bi-printer"></i> PRINT
-					</button>
-					<button class="btn" title="EXPORT RECORDS" onclick="_exportStudents('${fetch[0].session}','${fetch[0].departmentData.departmentName}','${fetch[0].classData.className}','${fetch[0].armData.armName}');">
-						<i class="bi-file-earmark-excel"></i> EXPORT
-					</button>
-				`;
-        $("#printAndExportButton").html(showButtons);
+        const message = info.message;
 
         let text = "";
         let no = 0;
@@ -1543,6 +1534,16 @@ function _fetchBranchArchivedStudents() {
 					</thead>`;
 
         if (success === true) {
+
+          let showButtons = `
+            <button class="btn" title="PRINT RECORDS" onclick="_printStudentByClass('${fetch[0].departmentData.departmentId}','${fetch[0].classData.classId}','${fetch[0].armData.armId}');">
+              <i class="bi-printer"></i> PRINT
+            </button>
+            <button class="btn" title="EXPORT RECORDS" onclick="_exportStudents('${fetch[0].session}','${fetch[0].departmentData.departmentName}','${fetch[0].classData.className}','${fetch[0].armData.armName}');">
+              <i class="bi-file-earmark-excel"></i> EXPORT
+            </button>`;
+          $("#printAndExportButton").html(showButtons);
+
           for (let i = 0; i < fetch.length; i++) {
             no++;
             const branchId = fetch[i].branchId;
@@ -1602,14 +1603,14 @@ function _fetchBranchArchivedStudents() {
           }
           $("#pageContent").html(text);
         } else {
-          _actionAlert(info.message, false);
+          _actionAlert(message, false);
 
           text += `
 						<tbody>
 							<tr>
 								<td colspan="15">
 									<div class="false-notification-div">
-										<p>${info.message}</p>
+										<p>${message}</p>
 									</div>
 								</td>
 							</tr>
