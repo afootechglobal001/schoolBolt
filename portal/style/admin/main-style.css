@@ -1763,6 +1763,10 @@ header
   width: 500px;
 }
 
+.save-compute-teachers-comment-slide-form {
+  width: 600px;
+}
+
 .slide-form-div .title-panel-div {
   width: calc(100% - 60px);
   height: 50px;
@@ -3050,7 +3054,7 @@ header
 
 .text_area_container .placeholder {
   position: absolute;
-  top: 20%;
+  top: 25%;
   transform: translateY(-50%);
   left: 30px;
   color: #999;
@@ -3087,9 +3091,17 @@ header
   border: #f00 1px solid;
 }
 
+.text_area_container .issueText {
+  margin-top: 1px;
+  color: #f00;
+  font-family: body-font;
+  font-size: 10px;
+  font-style: italic;
+}
+
 .text_area_container .text_area:focus + .placeholder,
 .text_area_container .text_area:not(:placeholder-shown) + .placeholder {
-  top: 10%;
+  top: 15%;
   font-size: 11px;
   color: #666;
 }
@@ -5532,4 +5544,15 @@ header
   .new-statistics-back-div .new-statistics-div {
     width: 100%;
   }
+}
+
+
+.alert-top-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.archived-search-div{
+  margin-top: 10px;
 }

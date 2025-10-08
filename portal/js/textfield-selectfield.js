@@ -8,13 +8,14 @@ function textField(options) {
     onKeyUpFunction = null,
     readonly = false,
     maxlength = null,
+    rows = null,
   } = options;
 
   const template =
     type === "textarea"
       ? `
-          <textarea class="text_area" id="${id}" placeholder="" rows=""
-		  ${maxlength ? `maxlength="${maxlength}"` : ""}>${value}</textarea>
+          <textarea class="text_area" id="${id}" placeholder="" rows="${rows}"
+		  ${maxlength ? `maxlength="${maxlength}"` : ""} ${rows ? `rows="${rows}"` : ""}>${value}</textarea>
           <div class="placeholder">${title}</div>
 		  <div class="issueText" id="issue_${id}"></div>
         `

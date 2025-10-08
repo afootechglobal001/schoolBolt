@@ -34,6 +34,7 @@
                         const studentItems = fetchedStudent[i];
                         const fullName = `${studentItems.surName} ${studentItems.firstName} ${studentItems.otherNames}`;
                         const studentId = studentItems.studentId;
+                        const officialStudentId = studentItems.officialStudentId;
                         const genderName = studentItems.genderName;
                         const studentSubjects = studentItems.data;
 
@@ -112,7 +113,7 @@
                                                 </div>
                                                 <div class="details">
                                                     <span>STUDENT ID</span>
-                                                    <div>${studentId}</div>
+                                                    <div>${officialStudentId ? officialStudentId : studentId}</div>
                                                 </div>
                                                 <div class="details">
                                                     <span>CLASS</span>
@@ -163,7 +164,7 @@
                                                 </div>
                                                 <div class="details">
                                                     <span>CLASS TEACHER'S COMMENT</span>
-                                                    <div>${studentItems.principalComment}</div>
+                                                    <div>${studentItems.classTeachersComment}</div>
                                                 </div>
                                                 <div class="details">
                                                     <span>PRINCIPAL'S COMMENT</span>

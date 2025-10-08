@@ -81,39 +81,50 @@ function _exportStudents(session, departmentName, className, armName) {
     exportTableToExcel("pageContent", fileName);
 }
 
-function exportTableToExcel(tableID,filename){
-    var downloadLink;
+function exportTableToExcel(tableID, filename) {
     var dataType = 'application/vnd.ms-excel';
-    var tableSelect = document.getElementById(tableID);
-	
-	// Remove all images before exporting
-    let images = tableSelect.getElementsByTagName("img");
-    while (images.length > 0) {
-        images[0].parentNode.removeChild(images[0]);
+    var $table = $('#' + tableID);
+    var removedImages = [];
+
+    // Temporarily remove all images from the table
+    $table.find('img').each(function () {
+        var $img = $(this);
+        removedImages.push({
+            parent: $img.parent(),
+            nextSibling: $img.next(),
+            element: $img
+        });
+        $img.remove();
+    });
+
+    // Convert table to HTML
+    var tableHTML = $table.prop('outerHTML').replace(/ /g, '%20').replace(/#/g, '%23');
+
+    // Specify file name
+    filename = filename ? filename + '.xls' : 'excel_data.xls';
+
+    // Create download link
+    var $downloadLink = $('<a></a>');
+    $('body').append($downloadLink);
+
+    if (window.navigator.msSaveOrOpenBlob) {
+        var blob = new Blob(['\ufeff', tableHTML], { type: dataType });
+        window.navigator.msSaveOrOpenBlob(blob, filename);
+    } else {
+        $downloadLink.attr('href', 'data:' + dataType + ', ' + tableHTML);
+        $downloadLink.attr('download', filename);
+        $downloadLink[0].click();
     }
 
-    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20').replace(/#/g, '%23');
-    
-    // Specify file name
-    filename = filename?filename+'.xls':'excel_data.xls';
-   
-    // Create download link element
-    downloadLink = document.createElement("a");
-   
-    document.body.appendChild(downloadLink);
-    
-    if(navigator.msSaveOrOpenBlob){
-        var blob = new Blob(['\ufeff', tableHTML], {
-            type: dataType
-        });
-        navigator.msSaveOrOpenBlob( blob, filename);
-    }else{
-        // Create a link to the file
-        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-    
-        // Setting the file name
-        downloadLink.download = filename;
-        //triggering the function
-        downloadLink.click();
-    }
+    // Restore the removed images
+    $.each(removedImages, function (i, item) {
+        if (item.nextSibling.length) {
+            item.element.insertBefore(item.nextSibling);
+        } else {
+            item.parent.append(item.element);
+        }
+    });
+
+    // Clean up
+    $downloadLink.remove();
 }

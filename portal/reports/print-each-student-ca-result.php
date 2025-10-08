@@ -85,7 +85,7 @@
                             <span>STUDENT ID</span>
                             <div id="studentId">
                                 <script>
-                                    $("#studentId").html(printSingleAssessementSession?.studentData?.studentId);
+                                    $("#studentId").html(printSingleAssessementSession?.studentData?.officialStudentId ? printSingleAssessementSession?.studentData?.officialStudentId : printSingleAssessementSession?.studentData?.studentId);
                                 </script>
                             </div>
                         </div>
@@ -170,7 +170,8 @@
                                 $('#totalMarkObtainable').html(summary?.totalMarkObtainable || '-');
                                 $('#totalMarkObtained').html(summary?.totalMarkObtained || '-');
                                 $('#totalPercentage').html(summary?.totalPercentage ? summary.totalPercentage + '%' : '-');
-                                $('#principalsComment, #classTeacherComment').html(summary?.principalComment || '-');
+                                $('#principalsComment').html(summary?.principalComment || '-');
+                                $('#classTeacherComment').html(printSingleAssessementSession?.classTeachersComment?.classTeachersComment || '-');
                                 $('#formatDate').html(formatDate(printSingleAssessementSession?.branchData?.schoolResumptionDate));
                             }
                         });

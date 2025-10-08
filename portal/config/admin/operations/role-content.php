@@ -64,6 +64,7 @@
                             id: 'roleDescription',
                             title: 'Role Description',
                             type: 'textarea',
+                            rows: 3,
                             value: getEachRoleDetails?.roleDescription ?? ''
                         });
                     </script>
