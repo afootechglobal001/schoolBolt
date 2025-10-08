@@ -394,7 +394,7 @@
                                         </li>
 
                                         <li id="my_students" title="Student Archived"
-                                            onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});">
+                                            onclick="_getActiveBranchPage({divid:'branch_archived_students', page: 'branch_archived_students', url: adminPortalLocalUrl});">
                                             <i class="bi-mortarboard"></i>Student Archived
                                         </li>
 
@@ -509,7 +509,7 @@
                                     </li>
 
                                     <li id="my_students" title="Student Archived"
-                                        onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});">
+                                        onclick="_getActiveBranchPage({divid:'branch_archived_students', page: 'branch_archived_students', url: adminPortalLocalUrl});">
                                         <i class="bi-mortarboard"></i>Student Archived
                                     </li>
 

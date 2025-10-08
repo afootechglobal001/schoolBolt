@@ -5545,3 +5545,14 @@ header
     width: 100%;
   }
 }
+
+
+.alert-top-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.archived-search-div{
+  margin-top: 10px;
+}
