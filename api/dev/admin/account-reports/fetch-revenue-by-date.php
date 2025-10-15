@@ -13,7 +13,7 @@ if(!$checkSession){
 
 $date = date('Y-m-d', strtotime(trim($_GET['date'])));
 $dateFormatted = date('F d Y', strtotime($date));
-////get sum total amount paid on that date
+///get sum total amount paid on that date
 $totalAmountQuery = mysqli_query($conn, "
     SELECT IFNULL(SUM(totalFeesPaid), 0) AS totalAmount 
     FROM PAYMENTS_TAB 
@@ -34,7 +34,7 @@ $response = [
 
 
 $dataQuery = mysqli_query($conn, "
-    SELECT paymentId, studentId, email, branchId, session, termId, totalAmount, paymentMethodId, statusId, payDate, departmentId, classId, armId
+    SELECT paymentId, studentId, email, branchId, session, termId, totalFeesPaid, paymentMethodId, statusId, payDate, departmentId, classId, armId
     FROM PAYMENTS_TAB 
     WHERE $clientIds AND DATE(payDate) = '$date'
     AND statusId=5 

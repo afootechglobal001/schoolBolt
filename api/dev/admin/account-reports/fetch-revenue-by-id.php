@@ -22,7 +22,7 @@ $response = [
 
 
 $dataQuery = mysqli_query($conn, "
-    SELECT paymentId, studentId, email, branchId, session, termId, totalAmount, paymentMethodId, statusId, payDate, departmentId, classId, armId
+    SELECT paymentId, studentId, email, branchId, session, termId, totalFeesPaid, paymentMethodId, statusId, payDate, departmentId, classId, armId
     FROM PAYMENTS_TAB 
     WHERE $clientIds AND paymentId='$paymentId'
 ");
