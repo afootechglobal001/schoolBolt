@@ -124,7 +124,7 @@ if (!$checkBasicSecurity){/// start if 1
 
 
     /////////////////// get paymentId
-    $getPaymentIdQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId IN (3,4)");
+    $getPaymentIdQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId IN (3,4)"); //PENDING or CANCELLED
     $getPaymentIdFetch = mysqli_fetch_assoc($getPaymentIdQuery);
     $previousPaymentId=$getPaymentIdFetch['paymentId'];
     if($previousPaymentId){
@@ -163,7 +163,8 @@ if (!$checkBasicSecurity){/// start if 1
     $schoolboltChargesQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=5");
     $previousSchoolboltCharges=mysqli_num_rows($schoolboltChargesQuery);
     $schoolBoltCharges=$previousSchoolboltCharges>0 ? 0 : $schoolBoltCharges;
-    $deductCharges=$schoolBoltCharges>0 ? true: false;
+    //$deductCharges=$schoolBoltCharges>0 ? true: false;
+    $deductCharges=false;
     $totalFeesPaid=$totalMandatoryFees+$totalNotMandatoryFee;
     $totalAmount=$totalFeesPaid+$schoolBoltCharges;
 
