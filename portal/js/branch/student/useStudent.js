@@ -530,12 +530,12 @@ function _proceedFetchBranchStudents() {
     "fetchStudentsParams",
     JSON.stringify(fetchStudentsParams)
   );
+  _alertClose(2);
   _getActiveBranchPage({
     divid: "branch_student_page",
     page: "branch_student_page",
     url: adminPortalLocalUrl,
   });
-  _alertClose(2);
 }
 
 function _fetchBranchStudents() {
@@ -1374,7 +1374,6 @@ function _fetchStudentCurrentPayableFees() {
     _alertClose(3);
   }
 }
-
 
 function _updateStudentMandatoryFess() {
   let getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));

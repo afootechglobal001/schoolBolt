@@ -584,7 +584,7 @@ function saveFees() {
 
       $.ajax({
         type: "POST",
-        url: `${endPoint}/admin/branch/fees/create-fees-compute?branchId=${getEachFeeComputeGeneral.branchData.branchId}&departmentId=${getEachFeeComputeGeneral.departmentData.departmentId}&classId=${getEachFeeComputeGeneral.classData.classId}&session=${getEachFeeComputeGeneral.currentSession}&termId=${getEachFeeComputeGeneral.termData.termId}`,
+        url: `${endPoint}/admin/branch/fees/create-fees-compute?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${getEachFeeComputeGeneral.departmentData.departmentId}&classId=${getEachFeeComputeGeneral.classData.classId}&session=${getEachFeeComputeGeneral.currentSession}&termId=${getEachFeeComputeGeneral.termData.termId}`,
         dataType: "json",
         data: JSON.stringify({ classFees: classFees }),
         contentType: "application/json",
