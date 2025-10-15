@@ -65,8 +65,8 @@ function writeSidebarItems(navId) {
 <div class="side-nav-bg-sub-div">
 
     <div class="nav-div animated fadeInLeft" id="link-reports">
-        <div class="link" title="Product Report" onclick="">- Income Report</div>
-        <div class="hidden" id="_product_report"><i class="bi-boxes"></i> Income Report</div>
+        <div class="link" title="Income Report" onclick="_getActivePage({page:'incomeReport', divid:'reports'});">- Income Report</div>
+        <div class="hidden" id="_income_report"><i class="bi-graph-up-arrow"></i> Income Report</div>
 
         <div class="link" title="Sales Report" onclick="">- Expenses Report</div>
         <div class="hidden" id="_sales_report"><i class="bi-boxes"></i> Expenses Report</div>

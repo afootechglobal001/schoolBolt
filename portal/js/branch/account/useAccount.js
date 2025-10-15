@@ -83,7 +83,7 @@ function _fetchBranchParents() {
 
         let text = "";
         let no = 0;
-        console.log(fetch);
+    
         if (success === true) {
           for (let i = 0; i < fetch.length; i++) {
             no++;

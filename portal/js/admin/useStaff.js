@@ -222,7 +222,7 @@ function _createStaff(view) {
 		const roleId = $('#roleId').val();
 		const statusId = $('#statusId').val();
 
-		$('#titleId, #firstName, #middleName, #lastName, #emailAddress, #mobileNumber, #genderId, #dateOfBirth, #stateId, #lgaId, #address, #branchId, #roleId, #statusId').removeClass('issue');
+		$('#titleId, #firstName, #lastName, #emailAddress, #mobileNumber, #genderId, #dateOfBirth, #stateId, #lgaId, #address, #branchId, #roleId, #statusId').removeClass('issue');
 
 		if (!titleId) {
 			$('#titleId').addClass('issue');
@@ -233,12 +233,6 @@ function _createStaff(view) {
 		if (!firstName) {
 			$('#firstName').addClass('issue');
 			_actionAlert('Provide first name to continue', false);
-			return;
-		}
-
-		if (!middleName) {
-			$('#middleName').addClass("issue");
-			_actionAlert('Provide middle name to continue', false);
 			return;
 		}
 
@@ -451,7 +445,7 @@ function _updateStaff() {
 		const roleId = $('#updateRoleId').val();
 		const statusId = $('#updateStatusId').val();
 
-		$('#updateTitleId, #updateFirstName, #updateMiddleName, #updateLastName, #updateEmailAddress, #updateMobileNumber, #updateGenderId, #updateDateOfBirth, #stateId, #lgaId, #updateAddress, #updateBranchId, #updateRoleId, #updateStatusId').removeClass('issue');
+		$('#updateTitleId, #updateFirstName, #updateLastName, #updateEmailAddress, #updateMobileNumber, #updateGenderId, #updateDateOfBirth, #stateId, #lgaId, #updateAddress, #updateBranchId, #updateRoleId, #updateStatusId').removeClass('issue');
 
 		if (!titleId) {
 			$('#updateTitleId').addClass('issue');
@@ -462,12 +456,6 @@ function _updateStaff() {
 		if (!firstName) {
 			$('#updateFirstName').addClass('issue');
 			_actionAlert('Provide first name to continue', false);
-			return;
-		}
-
-		if (!middleName) {
-			$('#updateMiddleName').addClass("issue");
-			_actionAlert('Provide middle name to continue', false);
 			return;
 		}
 
