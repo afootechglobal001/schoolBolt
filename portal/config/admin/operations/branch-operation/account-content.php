@@ -136,6 +136,17 @@
                                         </span></div>
                                 </div>
                             </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Relationship:</div>
+                                    <div><span id="parentRelationship">
+                                            <script>
+                                                $("#parentRelationship").html(studentParentSessionData?.parent?.recordFor);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

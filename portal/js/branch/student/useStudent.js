@@ -106,7 +106,6 @@ function _getSelectDepartment(fieldId) {
     });
   } catch (error) {
     console.error("Error: ", error);
-    _actionAlert("An unexpected error occurred. Please try again.", false);
   }
 }
 

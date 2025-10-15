@@ -301,7 +301,7 @@
                                             const fetchTermData = fetchedData[i].termData;
                                             const fetchClassData = fetchedData[i].classData;
                                             const fetchArmData = fetchedData[i].armData;
-                                            const totalAmount = fetchedData[i].totalAmount;
+                                            const totalFeesPaid = fetchedData[i].totalFeesPaid;
                                             const fetchedStatusData = fetchedData[i].statusData;
                                             const payDate = fetchedData[i].payDate;
                                             const session = fetchedData[i].session;
@@ -373,7 +373,7 @@
                                                     <td class="clickable-td" title="Click to view branch profile" onclick="_fetchEachBranches('${branchId}');">${branchName}<br /><span>${branchMobile}</span></td>
                                                     <td>${session} - ${termName}</td>
                                                     <td>${className} ${armName}</td>
-                                                    <td><s>N</s>${thousandSeperator(totalAmount)}</td>
+                                                    <td><s>N</s>${thousandSeperator(totalFeesPaid)}</td>
                                                     <td>
                                                         <div class="status-div ${statusName}">${statusName}</div>
                                                     </td>
@@ -399,7 +399,7 @@
         getRevenueBreakdownSessionData = JSON.parse(sessionStorage.getItem("getRevenueBreakdownSessionData"));
     </script>
 
-    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+    <div class="slide-form-div save-compute-slide-form" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
                 <div class="icon-title-div">
@@ -508,6 +508,28 @@
 
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
+                                    <div>Session:</div>
+                                    <div><span id="sessionName">
+                                            <script>
+                                                $("#sessionName").html(getRevenueBreakdownSessionData?.session);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+    
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Term:</div>
+                                    <div><span id="studentTermName">
+                                            <script>
+                                                $("#studentTermName").html(getRevenueBreakdownSessionData?.termData?.termName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
                                     <div>Department:</div>
                                     <div><span id="departmentName">
                                             <script>
@@ -577,7 +599,7 @@
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
                                     <div>TOTAL AMOUNT:</div>
-                                    <div><span class="total-amount" id="formTotalAmount"><s>N</s><script>$("#formTotalAmount").html('<s>N</s>' + thousandSeperator(getRevenueBreakdownSessionData?.totalAmount));</script></span></div>
+                                    <div><span class="total-amount" id="formTotalAmount"><s>N</s><script>$("#formTotalAmount").html('<s>N</s>' + thousandSeperator(getRevenueBreakdownSessionData?.totalFeesPaid));</script></span></div>
                                 </div>
                             </div>
                         </div>
