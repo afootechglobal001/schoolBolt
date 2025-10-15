@@ -50,7 +50,7 @@ while ($fetchDataQuery = mysqli_fetch_assoc($dataQuery)) {
     $studentData = mysqli_fetch_assoc($studentQuery);
     $fetchDataQuery['studentData'] = $studentData;
     //get parent details
-    $parentQuery = mysqli_query($conn, "SELECT email, titleId, surName, otherNames, mobileNumber FROM PARENTS_TAB WHERE $clientIds AND branchId='$branchId' AND studentId='$studentId' AND email='$email' LIMIT 1");
+    $parentQuery = mysqli_query($conn, "SELECT email, titleId, surName, otherNames, mobileNumber, recordFor FROM PARENTS_TAB WHERE $clientIds AND branchId='$branchId' AND studentId='$studentId' AND email='$email' LIMIT 1");
     $parentData = mysqli_fetch_assoc($parentQuery);
     $fetchDataQuery['parentData'] = $parentData;
 
