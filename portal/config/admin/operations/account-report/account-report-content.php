@@ -322,6 +322,7 @@
                                             const parentOtherNames = fetchParentData.otherNames;
                                             const parentFullname = titleId + ' ' + parentSurName + ' ' + parentOtherNames;
                                             const parentEmail = fetchParentData.email;
+                                            const recordFor = fetchParentData.recordFor;
                                             const parentPhone = fetchParentData.mobileNumber;
 
                                             //// Branch Data///
@@ -360,7 +361,7 @@
                                                         </div>
                                                     </td>
 
-                                                    <td class="clickable-td" title="Click to view father details" onclick="_loginOnbehalfOfParent('${parentEmail}','','${studentId}');">
+                                                    <td class="clickable-td" title="Click to view father details" onclick="_loginOnbehalfOfParent('${parentEmail}','${recordFor}','${studentId}');">
                                                         <div class="text-back-div">
                                                             <div class="text-div">
                                                                 <div class="first-class">${parentFullname}</div>
