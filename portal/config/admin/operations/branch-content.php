@@ -3071,15 +3071,14 @@
             </div>
         </div>
 
-        <div class="user-managment-list staff-managment-list" title="Payroll"
-            onclick="">
+        <div class="user-managment-list staff-managment-list" title="Expenses" onclick="">
             <div class="inner-div">
                 <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/payroll.png" alt="Payroll" />
+                    <img src="<?php echo $websiteUrl ?>/images/expenses.png" alt="Expenses" />
                 </div>
                 <div class="text-div">
-                    <h3>Payroll</h3>
-                    <p>View and manage payroll for staff associated with your branch.</p>
+                    <h3>Expenses</h3>
+                    <p>Record and monitor branch expenses to ensure proper financial management.</p>
                 </div>
             </div>
         </div>
@@ -3097,28 +3096,28 @@
             </div>
         </div>
 
-        <div class="user-managment-list staff-managment-list" title="Revenue Report"
+        <div class="user-managment-list staff-managment-list" title="Payroll"
             onclick="">
             <div class="inner-div">
                 <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/revenue-report.png" alt="Revenue Report" />
+                    <img src="<?php echo $websiteUrl ?>/images/payroll.png" alt="Payroll" />
                 </div>
                 <div class="text-div">
-                    <h3>Revenue Report</h3>
-                    <p>View and analyze revenue reports for your branch operations.</p>
+                    <h3>Payroll</h3>
+                    <p>View and manage payroll for staff associated with your branch.</p>
                 </div>
             </div>
         </div>
 
-        <div class="user-managment-list staff-managment-list" title="Branch Account"
+        <div class="user-managment-list staff-managment-list" title="Student Payment Summary"
             onclick="">
             <div class="inner-div">
                 <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/branch-account.png" alt="Branch Account" />
+                    <img src="<?php echo $websiteUrl ?>/images/branch-account.png" alt="Student Payment Summary" />
                 </div>
                 <div class="text-div">
-                    <h3>Branch Account</h3>
-                    <p>View the list of students by class and identify those with outstanding payments.</p>
+                    <h3>Student Payment Summary</h3>
+                    <p>View the list of students by class and identify those with outstanding payment (DEBTORS).</p>
                 </div>
             </div>
         </div>
@@ -3135,14 +3134,15 @@
             </div>
         </div>
 
-        <div class="user-managment-list staff-managment-list" title="Expenses" onclick="">
+        <div class="user-managment-list staff-managment-list" title="Revenue Report"
+            onclick="">
             <div class="inner-div">
                 <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/expenses.png" alt="Expenses" />
+                    <img src="<?php echo $websiteUrl ?>/images/revenue-report.png" alt="Revenue Report" />
                 </div>
                 <div class="text-div">
-                    <h3>Expenses</h3>
-                    <p>Record and monitor branch expenses to ensure proper financial management.</p>
+                    <h3>Revenue Report</h3>
+                    <p>View and analyze revenue reports for your branch operations.</p>
                 </div>
             </div>
         </div>
