@@ -746,10 +746,17 @@ function _fetchEachBranchStudents(
       headers: getAuthHeaders(true),
       success: function (info) {
         if (info.success && info.data.length > 0) {
+
           sessionStorage.setItem(
             "getEachBranchStudentsSession",
             JSON.stringify(info.data[0])
           );
+
+           sessionStorage.setItem(
+            "getEachBranchDetailsSession",
+            JSON.stringify({ branchId: branchId })
+          );
+
           _getForm({
             page: "student_profile",
             layer: 2,
