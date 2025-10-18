@@ -1,0 +1,422 @@
+@charset "utf-8";
+/* CSS Document */
+
+.login-session{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    background: #f4f4f5;
+}
+
+.login-session .graphics-div{
+    position: fixed;
+    width: 50%;
+    height: 100%;
+    right: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-session .graphics-div .content{
+    min-height: 100px;
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.login-session .graphics-div .content .logo-div{
+    width: 200px;
+}
+
+.login-session .graphics-div .content .logo-div img{
+    width: 100%;
+}
+
+.login-session .graphics-div .content .graphics{
+    width: 100%;
+}
+
+.login-session .graphics-div .content .graphics img{
+    width: 100%;
+}
+
+.login-session .graphics-div .content h2{
+    color: #444;
+    text-align: center;
+    font-size: 30px;
+    line-height: 40px;
+}
+
+.login-session .graphics-div .content h2 span{
+    color: var(--secondary-color);
+    font-family: body-font;
+}
+ 
+
+.login-session .login-div{
+    position: fixed;
+    width:50%;
+    height: 100%;
+    left: 0px;
+    display: flex;
+    align-items: center;   
+    flex-direction: column;
+    gap: 30px;
+    background: var(--white-color);
+}
+
+
+
+.login-session .login-div header {
+    display: flex;
+	align-items: center;
+	justify-content: center;
+    position: absolute; 
+    min-height: 50px;
+    width: 100%;
+    z-index: 300;
+}
+
+.login-session .login-div header .header-div-in {
+	width: 85%;
+	min-height: 50px;
+	max-width: 1200px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+    border-bottom: rgba(215, 215, 215, .6) 1px solid;
+}
+
+.login-session .login-div header .header-div-in .logo-div {
+    width:160px;
+	cursor:pointer;
+}
+
+.login-session .login-div header .header-div-in .logo-div img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.login-session .login-div header .header-div-in ul {
+    padding: 0px;
+	margin: 0px;
+}
+
+.login-session .login-div header .header-div-in ul li{
+    list-style: none;
+	font-size: 13px;
+	font-family: body-font;
+	color: var(--sub-body-color);
+	-moz-transition:all 0.2s ease-in 02s;
+	transition:all 0.2s ease-in 0.2s;
+	-webkit-transition:all 0.2s ease-in 0.2s;
+	-ms-transition:all 0.2s ease-in 0.2s;
+	-o-transition:all 0.2s ease-in 0.2s;
+	cursor: pointer;
+}
+
+.login-session .login-div header .header-div-in ul li:hover{
+	color: 	var(--secondary-color);
+}
+
+.login-session .login-div .form-back-div {
+    position: absolute;
+    height: calc(100% - 70px);
+    width: 100%;
+    top:70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+.login-session .login-div .form-back-div .form-div{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    color: var(--body-color);
+}
+
+.login-session .login-div .form-back-div .form-div .top-div{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-session .login-div .form-back-div .form-div .top-div .logo-div{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 75px;
+    height: 75px;
+    background-color: var(--white-color);
+    border-radius: 100%;
+    border: rgba(179, 176, 176, 0.4) 1px solid;
+}
+
+.login-session .login-div .form-back-div .form-div .top-div .logo-div .inner-logo{
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-session .login-div .form-back-div .form-div .top-div .logo-div .inner-logo img{
+    width: 100%;
+}
+
+
+.login-session .login-div .form-back-div .form-div .top-div h1{
+    color: #444;
+    font-size: 35px;
+    line-height: 45px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.login-session .login-div .form-back-div .form-div .top-div h1 span{
+    color: var(--sub-body-color);
+    font-family: body-font;
+    font-size: 20px;
+}
+
+.login-session .login-div .form-back-div .form-div .inner-form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-bottom: var(--sub-body-color) 1px solid;
+    padding-bottom: 25px;
+}
+
+.login-form-alert{
+    margin: 0px auto;
+}
+
+.login-session .login-div .form-back-div .form-div .inner-form .btn{
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    font-family: sub-title-font;
+    font-size: 16px;
+    background: #444444;
+    color: var(--white-color);
+    cursor: pointer;
+    transition: all 0.2s ease-in 0.2s;
+}
+
+.login-session .login-div .form-back-div .form-div .inner-form .btn:hover{
+    background: var(--secondary-color);
+}
+
+.login-session .login-div .form-back-div .form-div p{
+   padding: 0px;
+   margin: 0px;
+   color: var(--sub-body-color);
+}
+
+.login-session .login-div .form-back-div .form-div span{
+    padding: 0px;
+    margin: 0px;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.login-session .login-div .form-back-div .form-div .inner-form .title{
+   font-size: 14px;
+   font-family: body-font;
+}
+
+
+@media all and (max-width:850px) {
+    .login-session{
+        overflow: auto;
+    }
+    .login-session .graphics-div{
+        display: none;
+    }
+    .login-session .login-div{
+        width:100%;
+    }
+    .login-session .login-div .form-back-div .form-div .top-div .logo-div{
+        display: flex;
+    }
+} 
+
+@media (max-height: 700px) {
+    .login-session .login-div {
+        display: block;
+    }
+}
+
+@media all and (max-width:440px) {
+    .login-session .login-div .form-back-div .form-div{
+        width: 90%;    
+    }
+    .login-session .login-div header .header-div-in {
+        width: 90%;
+    }
+}     
+
+                                            
+
+
+
+
+/*--------------------------------------------------------------------------------------------------*/
+.caption-div{
+	width:450px;
+	min-height:200px;
+	background:var(--white-color);
+	border-radius:7px;
+	overflow:hidden;
+}
+.caption-div .title-div{
+    width: calc(100% - 40px);
+    height: 50px;
+  	background:var(--white-color);
+    padding: 0px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  border-bottom: rgba(179, 176, 176, 0.1) 1px solid;
+}
+
+.caption-div .title-div .title{ 
+   	color: var(--sub-body-color);
+    font-family: sub-title-font;
+	font-size: 15px;
+}
+
+.caption-div .title-div .title i{ 
+   	color: var(--secondary-color);
+}
+
+.caption-div .title-div .close-btn{
+    color: var(--sub-body-color);
+    font-family: sub-title-font;
+    border: rgba(179, 176, 176, 0.2) 1px solid;
+    height: 35px;
+    padding: 0px 13px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, .3);
+    cursor: pointer;
+    transition: all 0.2s ease-in 0.2s;
+	transition:all 0.2s ease-in 0.2s;
+	-moz-transition:all 0.2s ease-in 0.2s;
+	-webkit-transition:all 0.2s ease-in 0.2s;
+	-ms-transition:all 0.2s ease-in 0.2s;
+	-o-transition:all 0.2s ease-in 0.2s;
+}
+
+.caption-div .title-div .close-btn i{
+	font-size: 12px;
+     color: var(--sub-body-color);
+}
+
+.caption-div .title-div .close-btn:hover{
+    background: rgba(179, 176, 176, 0.2);
+}
+
+
+
+.caption-div .div-in{
+	padding:25px;
+    display: flex;
+    gap: 15px;
+	flex-direction: column;
+	overflow: auto;
+}
+
+.caption-div .div-in .text{
+	padding: 0px;
+	margin: 0px;
+	font-family: sub-title-font;
+	color: var(--sub-body-color);
+	font-size: 14px;
+}
+
+
+.caption-div .div-in p{
+	padding: 0px;
+	margin: 0px;
+	font-size: 14px;
+	color: var(--sub-body-color);
+}
+
+.caption-div .div-in .btn-div{
+    width: 100%;
+    display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+
+.caption-div .div-in .btn-div .btn{
+	width: 100%;
+    height: 45px;
+	padding: 0px 25px;
+    border: none;
+    border-radius: 5px;
+    font-family: sub-title-font;
+    font-size: 14px;
+    background: var(--sub-body-color);
+    color: var(--white-color);
+    cursor: pointer;
+    transition: all 0.2s ease-in 0.2s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+}
+
+.caption-div .div-in .btn-div .btn:hover{
+    background: var(--secondary-color);
+}
+
+@media all and (max-width:450px) {
+	.caption-div{
+        width:96%;
+    }
+
+    .caption-div .div-in{
+        padding:20px 20px 35px 20px;
+    }
+}
+.caption-div .div-in .resendOtpBtn{
+    cursor: pointer;
+    display: none;
+    background: none;
+    border: none;
+    font-family: body-font;
+    font-size: 15px;
+    color: var(--sub-body-color);
+}
+
+.caption-div .div-in .resendOtpBtn:hover{
+    text-decoration: underline;
+}
+
+.caption-div .div-in #resendCountdown{
+    font-family: body-font;
+    color: var(--sub-body-color);
+}
+
+.form-alert{
+    margin: 0px auto;
+}

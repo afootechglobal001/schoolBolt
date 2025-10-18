@@ -1,20 +1,20 @@
-<?php include '../config/constants.php'; ?>
+<?php include 'config/constants.php'; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http: //www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <?php include 'meta.php' ?>
-    <title><?php echo $appName ?> | School Portal</title>
+    <title><?php echo $appName ?> | <?php echo $clientName ?></title>
     <meta name="keywords" content="<?php echo $appName ?> School portal, <?php echo $appName ?> Student login, <?php echo $appName ?> Parent portal, <?php echo $appName ?> Online school system, <?php echo $appName ?> Staff dashboard, <?php echo $appName ?> School management software, <?php echo $appName ?> Student records access, <?php echo $appName ?> Fee payment system, Academic results portal, <?php echo $appName ?> Secure school login" />
     <meta name="description" content="Access your school's portal for student records, fees, results, and communication. Secure login for administrators, staff, parents, and students. Stay connected easily! - <?php echo $appName ?>" />
 
-    <meta property="og:title" content="<?php echo $appName ?> | School Portal" />
-    <meta property="og:image" content="<?php echo $websiteUrl ?>/all-images/plugin-pix/schoolbolt.jpg" />
+    <meta property="og:title" content="<?php echo $appName ?> | <?php echo $clientName ?>" />
+    <meta property="og:image" content="<?php echo $websiteUrl ?>/images/seo/schoolbolt.jpg" />
     <meta property="og:description" content="Access your school's portal for student records, fees, results, and communication. Secure login for administrators, staff, parents, and students. Stay connected easily!." />
 
-    <meta name="twitter:title" content="<?php echo $appName ?> | School Portal" />
+    <meta name="twitter:title" content="<?php echo $appName ?> | <?php echo $clientName ?>" />
     <meta name="twitter:card" content="<?php echo $appName ?>" />
-    <meta name="twitter:image" content="<?php echo $websiteUrl ?>/all-images/plugin-pix/schoolbolt.jpg" />
+    <meta name="twitter:image" content="<?php echo $websiteUrl ?>/images/seo/schoolbolt.jpg" />
     <meta name="twitter:description" content="Access your school's portal for student records, fees, results, and communication. Secure login for administrators, staff, parents, and students. Stay connected easily!" />
 </head>
 
@@ -25,14 +25,14 @@
             <header>
                 <div class="header-div-in">
                     <div class="logo-div">
-                        <a href="<?php echo $websiteUrl ?>" title="<?php echo $appName ?>">
-                        <img src="<?php echo $websiteUrl ?>/all-images/images/logo.png" alt="<?php echo $appName ?> Logo" class="animated zoomIn" /></a>
+                        <a href="<?php echo $websiteUrl?>" title="<?php echo $appName ?>">
+                        <img src="<?php echo $websiteUrl ?>/images/logo.png" alt="<?php echo $appName ?> Logo" class="animated zoomIn" /></a>
                     </div>
 
-                    <!-- <div class="logo-div icon-div">
-                       <img src="https://schoolbolt.com/all-images/images/icon.png" alt="SchoolBol Icon" class="animated zoomIn"/>
-                    </div> -->
-
+                    <ul>
+                        <a href="<?php echo $clientWebsiteUrl ?>" title="<?php echo $clientName ?>">             
+                        <li>Back to website</li></a>
+                    </ul>
                 </div>
             </header>
 
@@ -52,7 +52,7 @@
                             </div>
 
                             <div class="bottom-div">
-                                <a href="<?php echo $websiteUrl ?>/portal/admin/login" title="<?php echo $appName ?>">
+                                <a href="<?php echo $websiteUrl ?>/admin/login" title="<?php echo $appName ?>">
                                 <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
                             </div>
                         </div>
@@ -67,8 +67,8 @@
                             </div>
 
                             <div class="bottom-div">
-                            <a href="<?php echo $websiteUrl ?>/portal/staff/login" title="<?php echo $appName ?>">
-                            <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
+                                <a href="<?php echo $websiteUrl ?>/admin/login" title="<?php echo $appName ?>">
+                                <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
                             </div>
                         </div>
 
@@ -83,8 +83,8 @@
                             </div>
 
                             <div class="bottom-div">
-                            <a href="<?php echo $websiteUrl ?>/portal/account/login" title="<?php echo $appName ?>">
-                            <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
+                                <a href="<?php echo $websiteUrl ?>/admin/login" title="<?php echo $appName ?>">
+                                <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
                             </div>
                         </div>
 
@@ -99,7 +99,7 @@
                             </div>
 
                             <div class="bottom-div">
-                                <a href="<?php echo $websiteUrl ?>/portal/student/login" title="<?php echo $appName ?>">
+                                <a href="<?php echo $websiteUrl ?>/#" title="<?php echo $appName ?>">
                                 <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
                             </div>
                         </div>
@@ -114,8 +114,8 @@
                             </div>
 
                             <div class="bottom-div">
-                            <a href="<?php echo $websiteUrl ?>/portal/parent/login" title="<?php echo $appName ?>">
-                            <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
+                                <a href="<?php echo $websiteUrl ?>/parent/login" title="<?php echo $appName ?>">
+                                <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
                             </div>
                         </div>
                     </div>

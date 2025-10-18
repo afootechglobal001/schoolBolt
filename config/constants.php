@@ -40,13 +40,15 @@ $userDeviceId=getBrowserId();
 
 <script>
 	var websiteUrl = "<?php echo $websiteUrl;?>";
-	var apiKey='b58b8bf717120383cd5e13d247beb6b9'; /// For API Key //
-	var endPoint='https://schoolbolt.com/api/dev'; /// Server End Point url
+	var apiKey='a7c37b6289b9dd879b2c005118d3ef14'; /// For API Key //
+	var endPoint='https://schoolbolt.com/schoolbolt-api/dev'; /// Server End Point url
 	var userOsBrowser = "<?php echo $userOsBrowser;?>"; /// For User OS Browser //
 	var userIpAddress = "<?php echo $userIpAddress;?>"; /// For User IP Address //
 	var userDeviceId = "<?php echo $userDeviceId;?>"; /// For User Device Id //
 
-	var adminLocalUrl=websiteUrl+'/config/portal/admin/code';
-	var adminPortalLocalUrl=websiteUrl+'/config/portal/admin/operations/code'; 
 </script>
+
+
+
+
 

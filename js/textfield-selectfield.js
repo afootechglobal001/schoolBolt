@@ -5,6 +5,7 @@ function textField(options) {
         type = 'text',
         value = '',
         onKeyPressFunction = null,
+		onKeyUpFunction = null,
 		readonly = false
     } = options;
 
@@ -15,7 +16,9 @@ function textField(options) {
         `
         : `
           <input class="text_field" type="${type}" id="${id}" placeholder="" value="${value}"
-              ${onKeyPressFunction ? `onkeypress="${onKeyPressFunction}"` : ''} ${readonly ? 'readonly' : ''}/>
+              ${onKeyPressFunction ? `onkeypress="${onKeyPressFunction}"` : ''} 
+			  ${onKeyUpFunction ? `onkeyup="${onKeyUpFunction}"` : ''}
+			  ${readonly ? 'readonly' : ''}/>
           <div class="placeholder">${title}:</div>
         `;
     $('#' + id + '_container').html(template);
@@ -42,7 +45,7 @@ function selectField(options) {
         <input class="searchTxt" placeholder="Type here to search"
             id="txtSearchValue_${id}" autocomplete="off"
             onkeyup="filter('${id}')">
-        <ul id="searchList_${id}" data-aos="fade-up" data-aos-duration="200">
+        <ul id="searchList_${id}">
             ${emptyValue ? `<li onclick="_clickOption('searchList_${id}', '', '${emptyValue}');">${emptyValue}</li>` : ''}
         </ul>
     </div>
@@ -88,19 +91,6 @@ function _clickOption(selectedOption, id, value) {
 	$('#'+selectBoxId).html(`<option selected="selected" value="${id}">${value}</option>`);
 	_selectOption(selectBoxId);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -184,6 +174,8 @@ function _getSelectStatusId(fieldId, statusIds){
 				'userOsBrowser': userOsBrowser,
 				'userIpAddress': userIpAddress,
 				'userDeviceId': userDeviceId,
+				'clientId': clientId,
+				'clientAddress': clientAddress,
 				'Authorization': 'Bearer ' + loginAccessKey
 			},
 			success: function(info) {
@@ -205,6 +197,162 @@ function _getSelectStatusId(fieldId, statusIds){
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred. Please try again.', false);
 	}
+}
+
+function _getSelectGender(fieldId){
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+"/preset-data/fetch-gender",
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].genderId;
+						const value = data[i].genderName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+function _getSelectMaritalStatus(fieldId){
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+"/preset-data/fetch-marital-status",
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].maritalStatusId;
+						const value = data[i].maritalStatusName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+function _getSelectTitle(fieldId){
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+'/preset-data/fetch-title',
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].titleId;
+						const value = data[i].titleName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+function _getSelectBirthDay(fieldId) {
+	for (let i = 1; i <= 31; i++) {
+		const id = i;
+		const value = i;
+		$('#searchList_' + fieldId).append(
+			'<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">' + value + '</li>'
+		);
+	}
+}
+
+function _getSelectBirthMonth(fieldId){
+	const data = [
+		{
+			'birthMonthId': 1,
+			'birthMonthName': 'Jan',
+		},
+		{
+			'birthMonthId': 2,
+			'birthMonthName': 'Feb',
+		},
+		{
+			'birthMonthId': 3,
+			'birthMonthName': 'Mar',
+		},
+		{
+			'birthMonthId': 4,
+			'birthMonthName': 'Apr',
+		},
+		{
+			'birthMonthId': 5,
+			'birthMonthName': 'May',
+		},
+		{
+			'birthMonthId': 6,
+			'birthMonthName': 'Jun',
+		},
+		{
+			'birthMonthId': 7,
+			'birthMonthName': 'Jul',
+		},
+		{
+			'birthMonthId': 8,
+			'birthMonthName': 'Aug',
+		},
+		{
+			'birthMonthId': 9,
+			'birthMonthName': 'Sep',
+		},
+		{
+			'birthMonthId': 10,
+			'birthMonthName': 'Oct',
+		},
+		{
+			'birthMonthId': 11,
+			'birthMonthName': 'Nov',
+		},
+		{
+			'birthMonthId': 12,
+			'birthMonthName': 'Dec',
+		}
+	];
+
+	for (let i = 0; i < data.length; i++) {
+		const id = data[i].birthMonthId;
+		const value = data[i].birthMonthName;
+		$('#searchList_' + fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">' + value + '</li>');
+	}	
 }
 
 function _getSelectBlogCategory(fieldId){
@@ -229,3 +377,98 @@ function _getSelectBlogCategory(fieldId){
 		$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
 	}	
 }
+
+function _getSelectNationality(fieldId){
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+'/preset-data/fetch-country',
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].countryId;
+						const value = data[i].countryName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+function _getSelectGeneralState(fieldId){
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+"/preset-data/fetch-states",
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].stateId;
+						const value = data[i].stateName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\'); _fetchGeneralStateLga()">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+function _fetchGeneralStateLga(){
+	_getSelectGeneralLga('lgaId');
+}
+function _getSelectGeneralLga(fieldId){
+	const stateId = $('#stateId').val();
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint+"/preset-data/fetch-lga?stateId="+stateId,
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+
+				if (success === true) {
+					$('#searchList_'+ fieldId).html('');
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].lgaId;
+						const value = data[i].lgaName;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+	
+}
+
+

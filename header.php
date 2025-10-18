@@ -100,7 +100,7 @@
                     </a>
                 </ul>
         
-                <a href="<?php echo $websiteUrl?>" title="REQUEST FOR A DEMO">
+                <a href="<?php echo $websiteUrl?>/portal/" title="REQUEST FOR A DEMO">
                 <button class="btn" title="REQUEST FOR A DEMO"> REQUEST FOR A DEMO</button></a>
                 <button class="mobile-btn" onclick="_open_menu()"><i class="bi-text-right"></i></button>
             </nav>
