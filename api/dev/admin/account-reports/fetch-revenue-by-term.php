@@ -38,6 +38,7 @@ $response = [
     'response'=> 200,
     'success'=> true,
     'message'=> "TERM REVENUE FETCHED SUCCESSFULLY",
+    'session' => $session,
     'termData' => $termData,
     'statistics' => [],
     'data'=>  [],

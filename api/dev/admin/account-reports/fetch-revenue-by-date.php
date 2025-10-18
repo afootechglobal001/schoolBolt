@@ -10,14 +10,15 @@ if(!$checkSession){
     ];
     goto end;
 }
-
+$session=trim($_GET['session']);
+$termId=trim($_GET['termId']);
 $date = date('Y-m-d', strtotime(trim($_GET['date'])));
 $dateFormatted = date('F d Y', strtotime($date));
 ///get sum total amount paid on that date
 $totalAmountQuery = mysqli_query($conn, "
     SELECT IFNULL(SUM(totalFeesPaid), 0) AS totalAmount 
     FROM PAYMENTS_TAB 
-    WHERE $clientIds AND DATE(payDate) = '$date' 
+    WHERE $clientIds AND DATE(payDate) = '$date' AND session LIKE '$session' AND termId LIKE '$termId'
     AND statusId=5
 ");
 $totalAmount = mysqli_fetch_assoc($totalAmountQuery)['totalAmount'];
@@ -36,7 +37,7 @@ $response = [
 $dataQuery = mysqli_query($conn, "
     SELECT paymentId, studentId, email, branchId, session, termId, totalFeesPaid, paymentMethodId, statusId, payDate, departmentId, classId, armId
     FROM PAYMENTS_TAB 
-    WHERE $clientIds AND DATE(payDate) = '$date'
+    WHERE $clientIds AND DATE(payDate) = '$date' AND session LIKE '$session' AND termId LIKE '$termId'
     AND statusId=5 
     ORDER BY DATE(payDate) DESC
 ");
