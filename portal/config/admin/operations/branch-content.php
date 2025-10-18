@@ -3072,7 +3072,7 @@
         </div>
 
         <div class="user-managment-list staff-managment-list" title="Payroll"
-            onclick="_getActiveBranchPage({divid:'branch_fees_computaion_page', page: 'branch_fees_computaion_page', url: adminPortalLocalUrl});">
+            onclick="">
             <div class="inner-div">
                 <div class="icon-div">
                     <img src="<?php echo $websiteUrl ?>/images/payroll.png" alt="Payroll" />
@@ -3085,7 +3085,7 @@
         </div>
 
         <div class="user-managment-list staff-managment-list" title="Staff Loan"
-            onclick="_getActiveBranchPage({divid:'branch_fees_computaion_page', page: 'branch_fees_computaion_page', url: adminPortalLocalUrl});">
+            onclick="">
             <div class="inner-div">
                 <div class="icon-div">
                     <img src="<?php echo $websiteUrl ?>/images/loan.png" alt="Staff Loan" />
@@ -3093,6 +3093,68 @@
                 <div class="text-div">
                     <h3>Staff Loan</h3>
                     <p>View and manage staff loans for employees associated with your branch.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-managment-list staff-managment-list" title="Revenue Report"
+            onclick="">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/revenue-report.png" alt="Revenue Report" />
+                </div>
+                <div class="text-div">
+                    <h3>Revenue Report</h3>
+                    <p>View and analyze revenue reports for your branch operations.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-managment-list staff-managment-list" title="Branch Account"
+            onclick="">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/branch-account.png" alt="Branch Account" />
+                </div>
+                <div class="text-div">
+                    <h3>Branch Account</h3>
+                    <p>View the list of students by class and identify those with outstanding payments.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-managment-list staff-managment-list" title="Each Fees Revenue" onclick="">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/fees-revenue.png" alt="Each Fees Revenue" />
+                </div>
+                <div class="text-div">
+                    <h3>Each Fees Revenue</h3>
+                    <p>Track revenue generated from each fee type and monitor payment performance.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-managment-list staff-managment-list" title="Expenses" onclick="">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/expenses.png" alt="Expenses" />
+                </div>
+                <div class="text-div">
+                    <h3>Expenses</h3>
+                    <p>Record and monitor branch expenses to ensure proper financial management.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-managment-list staff-managment-list" title="Balance Sheet" onclick="">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/balance-sheet.png" alt="Balance Sheet" />
+                </div>
+                <div class="text-div">
+                    <h3>Balance Sheet</h3>
+                    <p>View a detailed summary of assets, liabilities, and equity to assess your branch’s financial position.</p>
                 </div>
             </div>
         </div>
