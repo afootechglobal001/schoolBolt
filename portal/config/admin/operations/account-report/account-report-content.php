@@ -20,7 +20,7 @@
             <div class="nav-div">
                 <ul>
                     <li class="active border" title="Filter Revenue By Date Range" id="filterByDate" onclick="_getActiveReportNav({divid:'filterByDate', page: 'filterByDate', url: adminPortalLocalUrl});"><i class="bi-calendar2-check"></i> Date Range</li>
-                    <li title="Filter Revenue By Session/Term" id="filterBySession" onclick="_getActiveReportNav({divid:'filterBySession', page: 'filterBySession', url: adminPortalLocalUrl});"><i class="bi-funnel"></i> Session/Term</li>
+                    <li title="Filter Revenue By Session/Term" id="filterBySession" onclick="_getActiveReportNav({divid:'filterBySession', page: 'filterBySession', url: adminPortalLocalUrl});"><i class="bi-filter"></i> Session/Term</li>
                 </ul>
             </div>
 
@@ -163,7 +163,7 @@
                             id: 'session',
                             title: 'Select Session'
                         });
-                        _getSelectSession('session');
+                        _getSelectAccountSession('session');
                     </script>
                 </div>
 
@@ -178,24 +178,19 @@
                 </div>
             </div>
 
-            <button type="button" class="btn" id="applyCustomSearchBtn"
-                onclick="_fetchCustomRevenueFiltering();">Filter</button>
+            <button type="button" class="btn" id="filterRevenueBtn"
+                onclick="_fetchRevenueBySessionAndTerm();">Filter</button>
         </div>
     </div>
 
     <div class="fetch-report-back-div">
         <div class="alert alert-success top-alert-div report-alert">
-            <div class="div">
-                <i class="bi-info-circle"></i> You are viewing income revenue report for <span id="">2025/2025</span> -- <span id="">FIRST TERM</span>
-            </div>
-
-            <div class="div">
-                Total Balance: <span class="balance" id=""><s>N</s>200,000.00</span>
-            </div>
+            <div class="div" id="reportTitleContainer"></div>
+            <div class="div" id="reportBalanceContainer"></div>
         </div>
 
         <div class="table-div animated fadeIn">
-            <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+            <table class="table" cellspacing="0" style="width:100%">
                 <thead>
                     <tr class="tb-col">
                         <th>sn</th>
@@ -205,26 +200,15 @@
                     </tr>
                 </thead>
 
-                <tbody>
-                    <tr class="tb-row">
-                        <td>1</td>
-                        <td class="clickable-td" title="Click to view payment breakdown" onclick="">2025-03-24</td>
-                        <td><s>N</s>400,000.00</td>
-                        <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="">VIEW DETAILS</button></td>
-                    </tr>
+                <tbody id="pageContent">
+                    <!-- CONTENT GOES HERE -->
 
-                    <tr class="tb-row">
-                        <td>2</td>
-                        <td class="clickable-td" title="Click to view payment breakdown" onclick="">2025-03-23</td>
-                        <td><s>N</s>300,000.00</td>
-                        <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="">VIEW DETAILS</button></td>
-                    </tr>
-
-                    <tr class="tb-row">
-                        <td>3</td>
-                        <td class="clickable-td" title="Click to view payment breakdown" onclick="">2025-03-24</td>
-                        <td><s>N</s>700,000.00</td>
-                        <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="">VIEW DETAILS</button></td>
+                    <tr>
+                        <td colspan="20">
+                            <div class="false-notification-div">
+                                <p>Select session And term to filter revenue</p>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -516,7 +500,7 @@
                                         </span></div>
                                 </div>
                             </div>
-    
+
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
                                     <div>Term:</div>
@@ -599,7 +583,11 @@
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
                                     <div>TOTAL AMOUNT:</div>
-                                    <div><span class="total-amount" id="formTotalAmount"><s>N</s><script>$("#formTotalAmount").html('<s>N</s>' + thousandSeperator(getRevenueBreakdownSessionData?.totalFeesPaid));</script></span></div>
+                                    <div><span class="total-amount" id="formTotalAmount"><s>N</s>
+                                            <script>
+                                                $("#formTotalAmount").html('<s>N</s>' + thousandSeperator(getRevenueBreakdownSessionData?.totalFeesPaid));
+                                            </script>
+                                        </span></div>
                                 </div>
                             </div>
                         </div>
@@ -617,7 +605,7 @@
                                 const fetchedFess = fetch[i];
                                 const feesName = fetchedFess.feesName;
                                 const amount = thousandSeperator(fetchedFess.amount);
-                                
+
                                 paidFees += `
                                 <div class="alert-list-back-div">
                                     <div class="alert-list">

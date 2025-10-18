@@ -155,9 +155,9 @@ function _reportRevenueFiltering(dateFrom, dateTo) {
             text += `
               <tr class="tb-row">
                 <td>${no}</td>
-                <td class="clickable-td" title="Click to view payment breakdown" onclick="_fetchRevenueByDate('${newpayDate}');">${newpayDate}</td>
+                <td class="clickable-td" title="Click to view payment breakdown" onclick="_fetchRevenueByDate('${newpayDate}', '', '');">${newpayDate}</td>
                 <td><s>N</s>${thousandSeperator(totalFeesPaid)}</td>
-                <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="_fetchRevenueByDate('${newpayDate}');">VIEW DETAILS</button></td>
+                <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="_fetchRevenueByDate('${newpayDate}', '', '');">VIEW DETAILS</button></td>
               </tr>
             `;
           }
@@ -187,12 +187,12 @@ function _reportRevenueFiltering(dateFrom, dateTo) {
   $("#get-form-more-div").fadeOut(500);
 }
 
-function _fetchRevenueByDate(newpayDate) {
+function _fetchRevenueByDate(newpayDate, session = '', termId = '') {
 	$("#get-form-more-div").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
 	try {
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/admin/account-reports/fetch-revenue-by-date?date=${newpayDate}`,
+			url: `${endPoint}/admin/account-reports/fetch-revenue-by-date?date=${newpayDate}&session=${session}&termId=${termId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(true),
@@ -249,4 +249,116 @@ function _fetchRevenueById(paymentId) {
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
+}
+
+function _fetchRevenueBySessionAndTerm() {
+  let issueCount = 0;
+
+  const session = $("#session").val();
+  const termId = $("#termId").val();
+
+  $("#session, #termId").removeClass("issue");
+  $("#issue_session, #issue_termId").html("");
+  
+  if (!session) {
+    $('#session').addClass('issue');
+    $('#issue_session').html('Select Session To Continue');
+    issueCount++;
+  }
+
+  if (!termId) {
+    $('#termId').addClass('issue');
+    $('#issue_termId').html('Select Term To Continue');
+    issueCount++;
+  }
+
+  if (issueCount > 0) {
+    return;
+  }
+
+  const btnText = $("#filterRevenueBtn").html();
+  $("#filterRevenueBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="10px" alt="Loading"/>');
+  $("#filterRevenueBtn").prop("disabled", true);
+
+    $("#pageContent")
+    .html(
+      `<tr>
+          <td colspan="20">
+              <div class="content-loading-div">
+                  <img src="${websiteUrl}/images/spinner.gif" alt="Loading" />
+              </div>
+          </td>
+      </tr>`
+    ).fadeIn("fast");
+
+  $.ajax({
+    type: "GET",
+    url: `${endPoint}/admin/account-reports/fetch-revenue-by-term?session=${session}&termId=${termId}`,
+    dataType: "json",
+    cache: false,
+    headers: getAuthHeaders(true),
+    success: function (info) {
+      if (info.success && info.statistics.length > 0) {
+        const statistic = info.statistics[0];
+        const sumCreditCardPayments = Number(statistic.sumCreditCardPayments) || 0;
+        const sumBankTransferPayments = Number(statistic.sumBankTransferPayments) || 0;
+        const totalRevenue = thousandSeperator(sumCreditCardPayments + sumBankTransferPayments);
+        const termName = info?.termData?.termName;
+        const fetchedSession = info?.session;
+
+        let titleContainer = "";
+        titleContainer += `
+          <i class="bi-info-circle"></i> Revenue report for <span>${fetchedSession}</span> -- <span>${termName}</span>`;
+        $("#reportTitleContainer").html(titleContainer);
+
+        let balanceContainer = "";
+        balanceContainer += `
+          Total Balance: <span class="balance"><s>N</s>${totalRevenue}</span>`;
+        $("#reportBalanceContainer").html(balanceContainer);
+
+        // Update Report revenue Table ///
+        let text = "";
+        let no = 0;
+        if (info.data && info.data.length > 0) {
+          for (let i = 0; i < info.data.length; i++) {
+            no++;
+            const fetchedData = info.data[i];
+            const payDate = new Date(fetchedData.payDate);
+            const newpayDate = payDate.toISOString().split("T")[0];
+            const totalFeesPaid = fetchedData.totalFeesPaid;
+
+            text += `
+              <tr class="tb-row">
+                <td>${no}</td>
+                <td class="clickable-td" title="Click to view payment breakdown" onclick="_fetchRevenueByDate('${newpayDate}', '${session}', '${termId}');">${newpayDate}</td>
+                <td><s>N</s>${thousandSeperator(totalFeesPaid)}</td>
+                <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="_fetchRevenueByDate('${newpayDate}', '${session}', '${termId}');">VIEW DETAILS</button></td>
+              </tr>
+            `;
+          }
+          $("#pageContent").html(text);
+        } else {
+          text += `
+            <tr>
+                <td colspan="20">
+                  <div class="false-notification-div">
+										<p>No payment record found!</p>
+									</div>
+                </td>
+            </tr>`;
+          $("#pageContent").html(text);
+        }
+        $("#filterRevenueBtn").html(btnText).prop("disabled", false);
+      } else {
+        const response = info.response;
+        if (response < 100) {
+          _logOut();
+        }
+      }
+    },
+    error: function (err) {
+      console.error(err);
+      $("#filterRevenueBtn").html(btnText).prop("disabled", false);
+    },
+  });
 }
