@@ -18,29 +18,31 @@ $dateFormatted = date('F d Y', strtotime($date));
 $totalAmountQuery = mysqli_query($conn, "
     SELECT IFNULL(SUM(totalFeesPaid), 0) AS totalAmount 
     FROM PAYMENTS_TAB 
-    WHERE $clientIds AND DATE(payDate) = '$date' AND session LIKE '$session' AND termId LIKE '$termId'
+    WHERE $clientIds AND DATE(payDate) = '$date' AND session LIKE '%$session%' AND termId LIKE '%$termId%'
     AND statusId=5
 ");
 $totalAmount = mysqli_fetch_assoc($totalAmountQuery)['totalAmount'];
 
+$dataQuery = mysqli_query($conn, "
+    SELECT paymentId, studentId, email, branchId, session, termId, totalFeesPaid, paymentMethodId, statusId, payDate, departmentId, classId, armId
+    FROM PAYMENTS_TAB 
+    WHERE $clientIds AND DATE(payDate) = '$date' AND session LIKE '%$session%' AND termId LIKE '%$termId%'
+    AND statusId=5 
+    ORDER BY DATE(payDate) DESC
+");
+ $allRecordCount = mysqli_num_rows($dataQuery);
 
 $response = [
     'response'=> 200,
     'success'=> true,
     'message'=> "REVENUE FETCHED SUCCESSFULLY",
+    'allRecordCount'=> $allRecordCount,
     'date' => $dateFormatted,
     'totalAmount' => $totalAmount,
     'data'=>  [],
 ]; 
 
 
-$dataQuery = mysqli_query($conn, "
-    SELECT paymentId, studentId, email, branchId, session, termId, totalFeesPaid, paymentMethodId, statusId, payDate, departmentId, classId, armId
-    FROM PAYMENTS_TAB 
-    WHERE $clientIds AND DATE(payDate) = '$date' AND session LIKE '$session' AND termId LIKE '$termId'
-    AND statusId=5 
-    ORDER BY DATE(payDate) DESC
-");
 
 while ($fetchDataQuery = mysqli_fetch_assoc($dataQuery)) {
     $studentId = $fetchDataQuery['studentId'];
