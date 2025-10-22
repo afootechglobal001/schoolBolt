@@ -16,6 +16,28 @@ function _getBranchPagesActiveLink(divid) {
   $("#" + divid).addClass("active");
 }
 
+function _getActiveCommentNav(props) {
+  const {
+    page = "",
+    divid = "",
+    pageContainer = "getNavPage",
+  } = props;
+  _getCommentActiveNav(divid);
+  if (page) {
+    _getPage({
+      page: page,
+      pageContainer: pageContainer,
+      url: adminPortalLocalUrl,
+    });
+  }
+}
+function _getCommentActiveNav(divid) {
+  $(
+    "#malePage, #femalePage"
+  ).removeClass("active");
+  $("#" + divid).addClass("active");
+}
+
 $(function () {
   schoolLogoPixPreview = {
     UpdatePreview: function (obj) {

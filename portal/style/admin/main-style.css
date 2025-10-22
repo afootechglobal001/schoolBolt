@@ -5563,13 +5563,13 @@ header
 }
 
 
-.report-content-back-div{
+.nav-content-back-div{
   width: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.report-content-back-div .nav-div{
+.nav-content-back-div .nav-container{
   width: 100%;
   display: flex;
   background: rgba(215, 215, 215, 0.226);
@@ -5578,15 +5578,14 @@ header
   border-radius: 8px 8px 0px 0px;
 }
 
-.report-content-back-div .nav-div ul{
+.nav-content-back-div .nav-container ul{
   padding: 0px;
   margin: 0px;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 5px;
 }
-.report-content-back-div .nav-div ul li{
+.nav-content-back-div .nav-container ul li{
   list-style: none;
   height: 35px;
   padding: 5px 20px;
@@ -5601,18 +5600,18 @@ header
   transition: all 0.2s ease-in 0.2s;
 }
 
-.report-content-back-div .nav-div ul li i{
+.nav-content-back-div .nav-container ul li i{
   color: var(--secondary-color);
   font-size: 11px;
 }
 
-.report-content-back-div .nav-div ul li:hover,
-.report-content-back-div .nav-div ul .active{
+.nav-content-back-div .nav-container ul li:hover,
+.nav-content-back-div .nav-container ul .active{
   background: var(--white-color);
   color: var(--secondary-color);
 }
 
-.report-content-back-div .nav-div ul .border{
+.nav-content-back-div .nav-container ul .border{
   border-top-left-radius: 8px;
 }
 

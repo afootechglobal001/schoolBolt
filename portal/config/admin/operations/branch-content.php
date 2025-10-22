@@ -1296,6 +1296,18 @@
                 </div>
             </div>
         </div>
+
+        <div class="user-managment-list staff-managment-list" onclick="_getActiveBranchPage({divid:'classTeachersCommentPage', page: 'classTeachersCommentPage', url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/timetable.png" alt="Class Teacher's Comment" />
+                </div>
+                <div class="text-div">
+                    <h3>Class Teacher's Comment Configuration</h3>
+                    <p>Add feedback on student performance.</p>
+                </div>
+            </div>
+        </div>
     </div>
 <?php } ?>
 
@@ -3031,7 +3043,6 @@
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-
 <?php if ($page == 'branch_account') { ?>
     <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
         <div class="user-managment-list staff-managment-list" title="Fees Settings"
@@ -3155,6 +3166,219 @@
                 <div class="text-div">
                     <h3>Balance Sheet</h3>
                     <p>View a detailed summary of assets, liabilities, and equity to assess your branch’s financial position.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+<?php if ($page == 'classTeachersCommentPage') { ?>
+    <div class="nav-content-back-div">
+        <div class="nav-container">
+            <ul>
+                <li class="active border" title="Male" id="malePage" onclick="_getActiveCommentNav({divid:'malePage', page: 'malePage', url: adminPortalLocalUrl});"><i class="bi-gender-male"></i> Male</li>
+                <li title="Female" id="femalePage" onclick="_getActiveCommentNav({divid:'femalePage', page: 'femalePage', url: adminPortalLocalUrl});"><i class="bi-gender-female"></i> Female</li>
+            </ul>
+        </div>
+
+        <div id="getNavPage">
+            <script>
+                _getActiveCommentNav({
+                    divid: 'malePage',
+                    page: 'malePage',
+                    url: adminPortalLocalUrl
+                });
+            </script>
+
+        </div>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ///// Male Student Comment Page //// -->
+<?php if ($page == 'malePage') { ?>
+    <div class="fetch-report-back-div">
+        <div class="alert alert-success top-alert-div animated fadeIn">
+            <span><i class="bi-gender-male"></i> MALE CATEGORY</span>
+
+            <div class="btn-container">
+                <button class="btn" title="ADD NEW COMMENT"
+                    onclick="_getForm({page: 'commentRegForm', layer:2, url: adminPortalLocalUrl});"><i
+                        class="bi-plus-square"></i> ADD NEW COMMENT</button>
+            </div>
+        </div>
+
+        <div class="table-div animated fadeIn">
+            <table class="table" cellspacing="0" style="width:100%">
+                <thead>
+                    <tr class="tb-col">
+                        <th>sn</th>
+                        <th>Category</th>
+                        <th>Comment</th>
+                        <th>updated By</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="pageContent">
+                    <tr class="tb-row">
+                        <td>1</td>
+                        <td class="clickable-td" title="Click to view branch profile" onclick=""><span>MALE</span></td>
+                        <td>Well bevhaved, and gentle in class</td>
+                        <td>MR OLUWAGBENGA AFOLABI</td>
+                        <td>2025-03-17 11:05:49</td>
+                        <td><button class="btn view-btn" title="Click to view branch profile" onclick="">VIEW</button></td>
+                    </tr>
+
+                    <tr class="tb-row">
+                        <td>2</td>
+                        <td class="clickable-td" title="Click to view branch profile" onclick=""><span>MALE</span></td>
+                        <td>Well bevhaved, and gentle in class</td>
+                        <td>MR OLUWAGBENGA AFOLABI</td>
+                        <td>2025-03-17 11:05:49</td>
+                        <td><button class="btn view-btn" title="Click to view branch profile" onclick="">VIEW</button></td>
+                    </tr>
+
+                    <tr class="tb-row">
+                        <td>3</td>
+                        <td class="clickable-td" title="Click to view branch profile" onclick=""><span>MALE</span></td>
+                        <td>Well bevhaved, and gentle in class</td>
+                        <td>MR OLUWAGBENGA AFOLABI</td>
+                        <td>2025-03-17 11:05:49</td>
+                        <td><button class="btn view-btn" title="Click to view branch profile" onclick="">VIEW</button></td>
+                    </tr>
+
+                    <tr class="tb-row">
+                        <td>4</td>
+                        <td class="clickable-td" title="Click to view branch profile" onclick=""><span>MALE</span></td>
+                        <td>Well bevhaved, and gentle in class</td>
+                        <td>MR OLUWAGBENGA AFOLABI</td>
+                        <td>2025-03-17 11:05:49</td>
+                        <td><button class="btn view-btn" title="Click to view branch profile" onclick="">VIEW</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ///// Female Student Comment Page //// -->
+<?php if ($page == 'femalePage') { ?>
+    <div class="fetch-report-back-div">
+        <div class="alert alert-success top-alert-div animated fadeIn">
+            <span><i class="bi-gender-female"></i> FEMALE CATEGORY</span>
+
+            <div class="btn-container">
+                <button class="btn" title="ADD NEW COMMENT"
+                    onclick="_getForm({page: 'commentRegForm', layer:2, url: adminPortalLocalUrl});"><i
+                        class="bi-plus-square"></i> ADD NEW COMMENT</button>
+            </div>
+        </div>
+
+        <div class="table-div animated fadeIn">
+            <table class="table" cellspacing="0" style="width:100%">
+                <thead>
+                    <tr class="tb-col">
+                        <th>sn</th>
+                        <th>Category</th>
+                        <th>Comment</th>
+                        <th>updated By</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="pageContent">
+                    <tr class="tb-row">
+                        <td>1</td>
+                        <td class="clickable-td" title="Click to view branch profile" onclick=""><span>FEMALE</span></td>
+                        <td>Well bevhaved, and gentle in class</td>
+                        <td>MR OLUWAGBENGA AFOLABI</td>
+                        <td>2025-03-17 11:05:49</td>
+                        <td><button class="btn view-btn" title="Click to view branch profile" onclick="">VIEW</button></td>
+                    </tr>
+
+                    <tr class="tb-row">
+                        <td>2</td>
+                        <td class="clickable-td" title="Click to view branch profile" onclick=""><span>FEMALE</span></td>
+                        <td>Well bevhaved, and gentle in class</td>
+                        <td>MR OLUWAGBENGA AFOLABI</td>
+                        <td>2025-03-17 11:05:49</td>
+                        <td><button class="btn view-btn" title="Click to view branch profile" onclick="">VIEW</button></td>
+                    </tr>
+
+                    <tr class="tb-row">
+                        <td>3</td>
+                        <td class="clickable-td" title="Click to view branch profile" onclick=""><span>FEMALE</span></td>
+                        <td>Well bevhaved, and gentle in class</td>
+                        <td>MR OLUWAGBENGA AFOLABI</td>
+                        <td>2025-03-17 11:05:49</td>
+                        <td><button class="btn view-btn" title="Click to view branch profile" onclick="">VIEW</button></td>
+                    </tr>
+
+                    <tr class="tb-row">
+                        <td>4</td>
+                        <td class="clickable-td" title="Click to view branch profile" onclick=""><span>FEMALE</span></td>
+                        <td>Well bevhaved, and gentle in class</td>
+                        <td>MR OLUWAGBENGA AFOLABI</td>
+                        <td>2025-03-17 11:05:49</td>
+                        <td><button class="btn view-btn" title="Click to view branch profile" onclick="">VIEW</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ///// Teacher's Comment Form //// -->
+<?php if ($page == 'commentRegForm') { ?>
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="pageTitle"><i class="bi-plus-square"></i> ADD A NEW COMMENT</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert">Kindly fill the form below to <span id="pageTitle2"> ADD A
+                            NEW COMMENT</span></div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Category:</div>
+                                    <div><span id="">MALE</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text_area_container" id="comment_container">
+                    <script>
+                        textField({
+                            id: 'comment',
+                            title: 'Class Teacher\'s Comment',
+                            type: 'textarea',
+                            rows: 1,
+                        });
+                    </script>
+                </div>
+
+                <div>
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i
+                            class="bi-check"></i> SUBMIT </button>
                 </div>
             </div>
         </div>
