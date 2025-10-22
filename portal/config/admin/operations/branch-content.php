@@ -3199,14 +3199,19 @@
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 <!-- ///// Male Student Comment Page //// -->
 <?php if ($page == 'malePage') { ?>
+    <script>
+        getEachTeachersCommentSession = JSON.parse(sessionStorage.getItem("getEachTeachersCommentSession"));
+    </script>
+
     <div class="fetch-report-back-div">
         <div class="alert alert-success top-alert-div animated fadeIn">
             <span><i class="bi-gender-male"></i> MALE CATEGORY</span>
 
             <div class="btn-container">
                 <button class="btn" title="ADD NEW COMMENT"
-                    onclick="_getForm({page: 'commentRegForm', layer:2, url: adminPortalLocalUrl});"><i
-                        class="bi-plus-square"></i> ADD NEW COMMENT</button>
+                    onclick="_setActiveGender('M'); sessionStorage.removeItem('getEachTeachersCommentSession'); _getForm({page: 'commentRegForm', layer:2, url: adminPortalLocalUrl});">
+                    <i class="bi-plus-square"></i> ADD NEW COMMENT
+                </button>
             </div>
         </div>
 
@@ -3224,40 +3229,16 @@
                 </thead>
 
                 <tbody id="pageContent">
-                    <tr class="tb-row">
-                        <td>1</td>
-                        <td class="clickable-td" title="Click to view branch profile" onclick=""><span>MALE</span></td>
-                        <td>Well bevhaved, and gentle in class</td>
-                        <td>MR OLUWAGBENGA AFOLABI</td>
-                        <td>2025-03-17 11:05:49</td>
-                        <td><button class="btn view-btn" title="Click to view branch profile" onclick="">VIEW</button></td>
-                    </tr>
-
-                    <tr class="tb-row">
-                        <td>2</td>
-                        <td class="clickable-td" title="Click to view branch profile" onclick=""><span>MALE</span></td>
-                        <td>Well bevhaved, and gentle in class</td>
-                        <td>MR OLUWAGBENGA AFOLABI</td>
-                        <td>2025-03-17 11:05:49</td>
-                        <td><button class="btn view-btn" title="Click to view branch profile" onclick="">VIEW</button></td>
-                    </tr>
-
-                    <tr class="tb-row">
-                        <td>3</td>
-                        <td class="clickable-td" title="Click to view branch profile" onclick=""><span>MALE</span></td>
-                        <td>Well bevhaved, and gentle in class</td>
-                        <td>MR OLUWAGBENGA AFOLABI</td>
-                        <td>2025-03-17 11:05:49</td>
-                        <td><button class="btn view-btn" title="Click to view branch profile" onclick="">VIEW</button></td>
-                    </tr>
-
-                    <tr class="tb-row">
-                        <td>4</td>
-                        <td class="clickable-td" title="Click to view branch profile" onclick=""><span>MALE</span></td>
-                        <td>Well bevhaved, and gentle in class</td>
-                        <td>MR OLUWAGBENGA AFOLABI</td>
-                        <td>2025-03-17 11:05:49</td>
-                        <td><button class="btn view-btn" title="Click to view branch profile" onclick="">VIEW</button></td>
+                    <!-- CONTENT GOES HERE -->
+                    <script>
+                        _fetchMaleTeachersComment('M');
+                    </script>
+                    <tr>
+                        <td colspan="20">
+                            <div class="content-loading-div">
+                                <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -3265,17 +3246,21 @@
     </div>
 <?php } ?>
 
-<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<!-- ///// Female Student Comment Page //// -->
+    <!-- ///// Female Student Comment Page //// -->
 <?php if ($page == 'femalePage') { ?>
+    <script>
+        getEachTeachersCommentSession = JSON.parse(sessionStorage.getItem("getEachTeachersCommentSession"));
+    </script>
+
     <div class="fetch-report-back-div">
         <div class="alert alert-success top-alert-div animated fadeIn">
-            <span><i class="bi-gender-female"></i> FEMALE CATEGORY</span>
+            <span><i class="bi-gender-female"></i> FEMALE CATEGORY </span>
 
             <div class="btn-container">
                 <button class="btn" title="ADD NEW COMMENT"
-                    onclick="_getForm({page: 'commentRegForm', layer:2, url: adminPortalLocalUrl});"><i
-                        class="bi-plus-square"></i> ADD NEW COMMENT</button>
+                    onclick="_setActiveGender('F'); sessionStorage.removeItem('getEachTeachersCommentSession'); _getForm({page: 'commentRegForm', layer:2, url: adminPortalLocalUrl});">
+                    <i class="bi-plus-square"></i> ADD NEW COMMENT
+                </button>
             </div>
         </div>
 
@@ -3293,40 +3278,16 @@
                 </thead>
 
                 <tbody id="pageContent">
-                    <tr class="tb-row">
-                        <td>1</td>
-                        <td class="clickable-td" title="Click to view branch profile" onclick=""><span>FEMALE</span></td>
-                        <td>Well bevhaved, and gentle in class</td>
-                        <td>MR OLUWAGBENGA AFOLABI</td>
-                        <td>2025-03-17 11:05:49</td>
-                        <td><button class="btn view-btn" title="Click to view branch profile" onclick="">VIEW</button></td>
-                    </tr>
-
-                    <tr class="tb-row">
-                        <td>2</td>
-                        <td class="clickable-td" title="Click to view branch profile" onclick=""><span>FEMALE</span></td>
-                        <td>Well bevhaved, and gentle in class</td>
-                        <td>MR OLUWAGBENGA AFOLABI</td>
-                        <td>2025-03-17 11:05:49</td>
-                        <td><button class="btn view-btn" title="Click to view branch profile" onclick="">VIEW</button></td>
-                    </tr>
-
-                    <tr class="tb-row">
-                        <td>3</td>
-                        <td class="clickable-td" title="Click to view branch profile" onclick=""><span>FEMALE</span></td>
-                        <td>Well bevhaved, and gentle in class</td>
-                        <td>MR OLUWAGBENGA AFOLABI</td>
-                        <td>2025-03-17 11:05:49</td>
-                        <td><button class="btn view-btn" title="Click to view branch profile" onclick="">VIEW</button></td>
-                    </tr>
-
-                    <tr class="tb-row">
-                        <td>4</td>
-                        <td class="clickable-td" title="Click to view branch profile" onclick=""><span>FEMALE</span></td>
-                        <td>Well bevhaved, and gentle in class</td>
-                        <td>MR OLUWAGBENGA AFOLABI</td>
-                        <td>2025-03-17 11:05:49</td>
-                        <td><button class="btn view-btn" title="Click to view branch profile" onclick="">VIEW</button></td>
+                    <!-- CONTENT GOES HERE -->
+                    <script>
+                        _fetchMaleTeachersComment('F');
+                    </script>
+                    <tr>
+                        <td colspan="20">
+                            <div class="content-loading-div">
+                                <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -3334,9 +3295,12 @@
     </div>
 <?php } ?>
 
-<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<!-- ///// Teacher's Comment Form //// -->
+<!-- ///// Male Teacher's Comment Form //// -->
 <?php if ($page == 'commentRegForm') { ?>
+    <script>
+        getEachTeachersCommentSession = JSON.parse(sessionStorage.getItem("getEachTeachersCommentSession"));
+    </script>
+
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
@@ -3349,7 +3313,7 @@
             <div class="inner-container">
                 <div>
                     <div class="alert alert-success form-alert">Kindly fill the form below to <span id="pageTitle2"> ADD A
-                            NEW COMMENT</span></div>
+                        NEW COMMENT</span></div>
                 </div>
 
                 <div>
@@ -3358,7 +3322,7 @@
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
                                     <div>Category:</div>
-                                    <div><span id="">MALE</span></div>
+                                    <div><span id="genderDisplay"></span></div>
                                 </div>
                             </div>
                         </div>
@@ -3371,16 +3335,38 @@
                             id: 'comment',
                             title: 'Class Teacher\'s Comment',
                             type: 'textarea',
-                            rows: 1,
+                            rows: 2,
+                            value: getEachTeachersCommentSession?.comment,
                         });
                     </script>
                 </div>
 
+                <div class="text_field_container" id="statusId_container">
+                    <script>
+                        selectField({
+                            id: 'statusId',
+                            title: 'Select Status',
+                            fieldValue: getEachTeachersCommentSession?.statusData?.statusId ?? '',
+                            fieldLabel: getEachTeachersCommentSession?.statusData?.statusName ?? ''
+                        });
+                        _getSelectStatusId('statusId', '1,2');
+                    </script>
+                </div>
+
                 <div>
-                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i
-                            class="bi-check"></i> SUBMIT </button>
+                    <button class="btn" title="SUBMIT" id="submitBtn"> 
+                        <i class="bi-check"></i> SUBMIT 
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            const gender = sessionStorage.getItem("activeGender");
+            $("#genderDisplay").text(gender === "M" ? "MALE" : "FEMALE");
+
+            $("#submitBtn").attr("onclick", `_createClassTeachersComment('${gender}')`);
+        });
+    </script>
 <?php } ?>

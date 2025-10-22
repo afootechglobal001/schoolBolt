@@ -61,8 +61,8 @@ const rolePermissionIds = staffLoginData.rolePermissionIds;
 <script src="<?php echo $websiteUrl?>/js/reports/print-each-student-ca-result.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/reports/print-all-student-ca-result.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/reports/print-terminal-result-summary.js?v=<?php echo $codeVersion?>"></script>
-<script src="<?php echo $websiteUrl?>/js/reports/print-each-student-terminal-result.js?v=<?php echo $codeVersion?>">
-</script>
+<script src="<?php echo $websiteUrl?>/js/reports/print-each-student-terminal-result.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/reports/print-fees-settings.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/branch/account/useAccount.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/account-report/useAccountReport.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/branch/settings/teachers-comment/useTeacherComment.js?v=<?php echo $codeVersion?>"></script>
