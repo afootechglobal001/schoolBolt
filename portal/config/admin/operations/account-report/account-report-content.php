@@ -16,8 +16,8 @@
     </div>
 
     <div class="pages-back-div revenue-other-pg-back-div" data-aos="fade-in" data-aos-duration="1500">
-        <div class="report-content-back-div">
-            <div class="nav-div">
+        <div class="nav-content-back-div">
+            <div class="nav-container">
                 <ul>
                     <li class="active border" title="Filter Revenue By Date Range" id="filterByDate" onclick="_getActiveReportNav({divid:'filterByDate', page: 'filterByDate', url: adminPortalLocalUrl});"><i class="bi-calendar2-check"></i> Date Range</li>
                     <li title="Filter Revenue By Session/Term" id="filterBySession" onclick="_getActiveReportNav({divid:'filterBySession', page: 'filterBySession', url: adminPortalLocalUrl});"><i class="bi-filter"></i> Session/Term</li>
