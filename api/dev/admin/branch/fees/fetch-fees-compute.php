@@ -64,7 +64,7 @@ if(!$checkSession){
     $termDataFetch = mysqli_fetch_assoc($termDataQuery);
 
     /////////////////// for  $branchId
-    $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, schoolLogo, address, smtpUsername, mobileNumber, session AS currentSession, termName FROM BRANCH_VIEW WHERE $clientIds AND branchId='$branchId'");
+    $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, schoolLogo, address, supportEmail, mobileNumber, session AS currentSession, termName FROM BRANCH_VIEW WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
 
     /////////////////// for  $departmentId

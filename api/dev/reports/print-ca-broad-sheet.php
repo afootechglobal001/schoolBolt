@@ -58,7 +58,7 @@ if (!$checkBasicSecurity){/// start if 1
     }
     $tableTitles .=", NO. OF SUBJECTS, MARK OBTAINABLE, MARK OBTAINED, TOTAL PERCENTAGE (%), POSTN. IN CLASS, REMARKS";
 
-    $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, schoolLogo, address, smtpUsername, mobileNumber  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+    $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, schoolLogo, address, supportEmail, mobileNumber  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
 
     $termDataQuery = mysqli_query($conn, "SELECT * FROM SETUP_TERM_TAB WHERE termId='$termId'");
@@ -113,7 +113,7 @@ if (!$checkBasicSecurity){/// start if 1
     FROM 
     BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_ASSESSMENT_TAB a 
     JOIN 
-    STUDENTS_TAB b  ON a.studentId = b.studentId AND a.clientId = b.clientId
+    STUDENTS_TAB b  ON a.studentId = b.studentId AND a.clientId = b.clientId AND a.branchId=b.branchId
     WHERE 
     a.clientId='$clientId' 
     AND a.branchId = '$branchId' 
