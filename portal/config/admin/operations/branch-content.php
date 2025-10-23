@@ -3231,7 +3231,7 @@
                 <tbody id="pageContent">
                     <!-- CONTENT GOES HERE -->
                     <script>
-                        _fetchMaleTeachersComment('M');
+                        _fetchTeachersComment('M');
                     </script>
                     <tr>
                         <td colspan="20">
@@ -3280,7 +3280,7 @@
                 <tbody id="pageContent">
                     <!-- CONTENT GOES HERE -->
                     <script>
-                        _fetchMaleTeachersComment('F');
+                        _fetchTeachersComment('F');
                     </script>
                     <tr>
                         <td colspan="20">
