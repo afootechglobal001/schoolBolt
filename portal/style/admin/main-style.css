@@ -2634,68 +2634,13 @@ header
   gap: 5px;
 }
 
-.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div .each-radio-div{
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  cursor: pointer;
-}
 
-.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div .each-radio-div span{
-  color: var(--sub-body-color);
-}
-
-.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div .each-radio-div .radio {
-  width: 10px;
-  height: 10px;
-  border-radius: 10px;
-  border: var(--text-color2) 5px solid;
-  margin: 3px 4px 0px 0px;
-  cursor: pointer;
-  display: inline-block;
-	vertical-align: top;
-}
-
-
-.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div .each-radio-div .radio input {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-    opacity: 0;
-	cursor: pointer;
-}
-
-.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div .each-radio-div .radio .border {
-    width: 10px;
-    height: 10px;
-    border-radius: 10px;
-    margin-top: -15px;
-    margin-left: -2px;
-    border: #FFF 2px solid;
-    background: #FFF;
-    -moz-transition: all 0.2s ease-in 02s;
-    transition: all 0.2s ease-in 0.2s;
-    -webkit-transition: all 0.2s ease-in 0.2s;
-    -ms-transition: all 0.2s ease-in 0.2s;
-    -o-transition: all 0.2s ease-in 0.2s;
-}
-
-.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div .each-radio-div .radio:hover .border {
-	background: var(--text-color2);
-}
-
-.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div .each-radio-div .radio input:checked+.border {
-    background: var(--text-color2);
-}
-
-
-/* Highlight the full comment choice when active */
 .slide-form-div .container-back-div .inner-container
 .compute-comment-back-div .new-each-compute-score-div
 .new-inner-score-div .radio-button-back-div .each-radio-div {
     display: flex;
     align-items: center;
-    gap: 3px;
+    gap: 8px;
     padding: 6px 8px;
     border-radius: 6px;
     margin-bottom: 6px;
@@ -2703,18 +2648,68 @@ header
     transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Subtle hover */
+
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div .each-radio-div span{
+  color: var(--sub-body-color);
+}
+
+.slide-form-div .container-back-div .inner-container
+.compute-comment-back-div .new-each-compute-score-div 
+.new-inner-score-div .radio-button-back-div .each-radio-div .radio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 4px solid var(--text-color2);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.slide-form-div .container-back-div .inner-container 
+.compute-comment-back-div .new-each-compute-score-div 
+.new-inner-score-div .radio-button-back-div .each-radio-div .radio input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.slide-form-div .container-back-div .inner-container 
+.compute-comment-back-div .new-each-compute-score-div 
+.new-inner-score-div .radio-button-back-div .each-radio-div .radio .border {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid #FFF;
+  background: #FFF;
+  transition: all 0.2s ease-in;
+}
+
+.slide-form-div .container-back-div .inner-container 
+.compute-comment-back-div .new-each-compute-score-div 
+.new-inner-score-div .radio-button-back-div .each-radio-div .radio:hover .border {
+  background: var(--text-color2);
+}
+
+.slide-form-div .container-back-div .inner-container 
+.compute-comment-back-div .new-each-compute-score-div 
+.new-inner-score-div .radio-button-back-div .each-radio-div .radio input:checked + .border {
+  background: var(--text-color2);
+}
+
+
 .slide-form-div .container-back-div .inner-container
 .compute-comment-back-div .new-each-compute-score-div
 .new-inner-score-div .radio-button-back-div .each-radio-div:hover {
     background: rgba(0, 0, 0, 0.04);
 }
 
-/* Active highlight effect */
 .slide-form-div .container-back-div .inner-container
 .compute-comment-back-div .new-each-compute-score-div
 .new-inner-score-div .radio-button-back-div .each-radio-div.active-radio {
-    background: rgba(var(--text-color2-rgb, 59,130,246), 0.1); /* light tint of your theme color */
+    background: rgba(var(--text-color2-rgb, 59,130,246), 0.1);
     border: 1px solid var(--text-color2);
     box-shadow: 0 0 4px rgba(var(--text-color2-rgb, 59,130,246), 0.3);
 }
@@ -5472,6 +5467,22 @@ header
 .pages-toggle-back-div .toggle-expand-div {
   padding: 30px 15px;
   font-size: 12px;
+}
+
+
+
+@media all and (max-width: 530px) {
+  
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 5px;
+  padding: 8px 20px;
+}
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title h3 {
+  padding:0px;
+}
 }
 
 .list-back-div {
