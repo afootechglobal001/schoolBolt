@@ -1,4 +1,4 @@
-function _fetchMaleTeachersComment(genderId) {
+function _fetchTeachersComment(genderId) {
     let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
     try {
         $.ajax({
@@ -152,11 +152,7 @@ function _createClassTeachersComment(genderId) {
 				if (data.success) {
 					_actionAlert(data.message, true);
                     _alertClose(2);
-					_getActiveBranchPage({
-                        divid:'classTeachersCommentPage', 
-                        page: 'classTeachersCommentPage',
-                        url: adminPortalLocalUrl
-                    });
+					_fetchTeachersComment(genderId);
 				} else {
 					_actionAlert(data.message, false);
 				}
