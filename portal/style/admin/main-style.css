@@ -2406,7 +2406,7 @@ header
   width: 100%;
   min-height: 100px;
   border-radius: 5px;
-  background: var(--white-color);
+  background: rgb(233, 238, 245);
   box-shadow: 0px 0px 12px 2px rgba(86, 86, 86, 0.049);
 }
 
@@ -2562,6 +2562,176 @@ header
     padding: 20px 15px 30px 15px;
   }
 }
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 20px 0px;
+}
+
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div {
+  width: 100%;
+  min-height: 100px;
+  border-radius: 5px;
+  background: rgb(233, 238, 245);
+  box-shadow: 0px 0px 12px 2px rgba(86, 86, 86, 0.049);
+}
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 15px;
+}
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .top-cont-div{
+  display: flex;
+  gap: 10px;
+}
+
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .top-cont-div .image-div{
+  width: 50px;
+  min-height: 1px;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .top-cont-div .image-div img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .text-container {
+  width: calc(100% - 60px);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .text-container .text-div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: sub-title-font;
+  font-size: 13px;
+  color: var(--sub-body-color);
+}
+
+.slide-form-div .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .text-container .text-div .name {
+  font-family: title-font;
+  font-size: 15px;
+}
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div .each-radio-div{
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div .each-radio-div span{
+  color: var(--sub-body-color);
+}
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div .each-radio-div .radio {
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  border: var(--text-color2) 5px solid;
+  margin: 3px 4px 0px 0px;
+  cursor: pointer;
+  display: inline-block;
+	vertical-align: top;
+}
+
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div .each-radio-div .radio input {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    opacity: 0;
+	cursor: pointer;
+}
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div .each-radio-div .radio .border {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    margin-top: -15px;
+    margin-left: -2px;
+    border: #FFF 2px solid;
+    background: #FFF;
+    -moz-transition: all 0.2s ease-in 02s;
+    transition: all 0.2s ease-in 0.2s;
+    -webkit-transition: all 0.2s ease-in 0.2s;
+    -ms-transition: all 0.2s ease-in 0.2s;
+    -o-transition: all 0.2s ease-in 0.2s;
+}
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div .each-radio-div .radio:hover .border {
+	background: var(--text-color2);
+}
+
+.slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div .each-radio-div .radio input:checked+.border {
+    background: var(--text-color2);
+}
+
+
+/* Highlight the full comment choice when active */
+.slide-form-div .container-back-div .inner-container
+.compute-comment-back-div .new-each-compute-score-div
+.new-inner-score-div .radio-button-back-div .each-radio-div {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Subtle hover */
+.slide-form-div .container-back-div .inner-container
+.compute-comment-back-div .new-each-compute-score-div
+.new-inner-score-div .radio-button-back-div .each-radio-div:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+/* Active highlight effect */
+.slide-form-div .container-back-div .inner-container
+.compute-comment-back-div .new-each-compute-score-div
+.new-inner-score-div .radio-button-back-div .each-radio-div.active-radio {
+    background: rgba(var(--text-color2-rgb, 59,130,246), 0.1); /* light tint of your theme color */
+    border: 1px solid var(--text-color2);
+    box-shadow: 0 0 4px rgba(var(--text-color2-rgb, 59,130,246), 0.3);
+}
+
+
+@media all and (max-width: 375px) {
+  .slide-form-div .container-back-div .inner-container .compute-comment-back-div .new-each-compute-score-div .new-inner-score-div .radio-button-back-div .each-radio-div span{
+    font-size: 13px;
+  }
+}
+
+
+
+
+
+
+
 
 .extension_text_field_container .selectSearch {
   width: 100%;

@@ -1265,7 +1265,7 @@
                     </div>
                 </div>
 
-                <div class="compute-score-back-div" id="fetchStudents">
+                <div class="compute-comment-back-div" id="fetchStudents">
                     <script>
                         $(document).ready(function() {
                             let text = '';
@@ -1283,29 +1283,56 @@
                                         const arm = fetchData[i].armData;
                                         const classTeachersComment = fetchData[i].classTeachersCommentData ? fetchData[i]
                                             .classTeachersCommentData?.classTeachersComment : '';
+                                        const suggestedComments = student.suggestedComments || [];
 
                                         const fullName = `${student.surName} ${student.firstName}`;
                                         const passport = student.passport || 'default.jpg';
                                         const studentId = student.studentId;
                                         const fieldId = `classTeachersComment_${studentId}`;
 
-                                        $("#fetchStudents").append(`
-                                            <div class="each-compute-score-div">
-                                                <div class="inner-score-div">
-                                                    <div class="image-div">
-                                                        <img src="${studentPixPath}/${passport}" alt="${fullName}"/>
+                                        // Generate the suggested comment radios dynamically
+                                        let radioContent = '';
+                                        suggestedComments.forEach((comment, index) => {
+                                            radioContent += `
+                                                <div class="each-radio-div">
+                                                    <div class="radio">
+                                                        <input type="radio" 
+                                                            class="comment-radio" 
+                                                            name="suggested_comment_${studentId}" 
+                                                            id="suggested_comment_${studentId}_${index}" 
+                                                            value="${comment}" 
+                                                            data-target="#${fieldId}">
+                                                        <div class="border"></div>
                                                     </div>
-                                                    <div class="text-container">
-                                                        <div class="text-div">
-                                                            <div class="name">${fullName}</div>
-                                                            <div>${department.departmentName} -- ${classInfo.className} ${arm.armName}</div>
+                                                    <span>${comment}</span>
+                                                </div>
+                                            `;
+                                        });
+
+                                        $("#fetchStudents").append(`
+                                            <div class="new-each-compute-score-div">
+                                                <div class="new-inner-score-div">
+                                                    <div class="top-cont-div">
+                                                        <div class="image-div">
+                                                            <img src="${studentPixPath}/${passport}" alt="${fullName}"/>
                                                         </div>
 
-                                                        <div>
-                                                            <div class="text_area_container" id="${fieldId}_container"></div>
-                                                            <div class="issueText" id="issue_classTeachersComment"></div>
-                                                            <input type="hidden" class="student-id-holder" value="${studentId}">
+                                                        <div class="text-container">
+                                                            <div class="text-div">
+                                                                <div class="name">${fullName}</div>
+                                                                <div>${department.departmentName} -- ${classInfo.className} ${arm.armName} (${student.genderId})</div>
+                                                            </div>
                                                         </div>
+                                                    </div>
+
+                                                    <div class="radio-button-back-div">
+                                                        ${radioContent}
+                                                    </div>
+
+                                                    <div>
+                                                        <div class="text_area_container" id="${fieldId}_container"></div>
+                                                        <div class="issueText" id="issue_classTeachersComment"></div>
+                                                        <input type="hidden" class="student-id-holder" value="${studentId}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1315,10 +1342,26 @@
                                             id: fieldId,
                                             title: 'Class Teacher\'s Comment',
                                             type: 'textarea',
-                                            rows: 1,
+                                            rows: 2,
                                             value: classTeachersComment
                                         });
                                     }
+
+                                    $(document).on('change', '.comment-radio', function() {
+                                        const commentText = $(this).val();
+                                        const targetField = $(this).data('target');
+                                        const studentGroupName = $(this).attr('name'); // unique per student
+
+                                        // Remove highlight from other radios in same group
+                                        $(`input[name='${studentGroupName}']`).closest('.each-radio-div').removeClass('active-radio');
+
+                                        // Highlight selected radio
+                                        $(this).closest('.each-radio-div').addClass('active-radio');
+
+                                        // Update textarea text
+                                        $(targetField).val(commentText).trigger('input');
+                                    });
+
                                 }
                             }
                         });
@@ -1331,6 +1374,4 @@
                     </button>
                 </div>
             </div>
-        </div>
-    </div>
-<?php } ?>
+        <?php } ?>
