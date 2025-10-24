@@ -41,7 +41,7 @@
                         let no=0;
                         let subjectTable = `
                             <thead>
-                                <tr class="tb-col font">
+                                <tr class="tb-col">
                                     <th>SN</th>
                                     <th>SUBJECT</th>
                                     <th>MARK OBTAINABLE</th>
@@ -52,7 +52,7 @@
                                     <th>REMARK</th>
                                 </tr>
                             </thead>
-                        `;
+                            <tbody>`;
 
                         for (let j = 0; j < studentSubjects.length; j++) {
                             no++;
@@ -66,20 +66,19 @@
                             const remark= fetchedStudentSubjects.remark;
 
                             subjectTable += `
-                                <tbody>
-                                    <tr class="tb-row report-tb-row">
-                                        <td>${no}</td>
-                                        <td>${subject.subjectName}</td>
-                                        <td>${markObtainable ? markObtainable : '-'}</td>
-                                        <td>${markObtained ? markObtained : '-'}</td>
-                                        <td>${percentage ? percentage + '%' : '-'}</td>
-                                        <td>${positionInClass ? positionInClass : '-'}</td>
-                                        <td>${grade ? grade : '-'}</td>
-                                        <td>${remark ? remark : '-'}</td>
-                                    </tr>
-                                </tbody>
+                                <tr class="tb-row">
+                                    <td>${no}</td>
+                                    <td>${subject.subjectName}</td>
+                                    <td>${markObtainable ? markObtainable : '-'}</td>
+                                    <td>${markObtained ? markObtained : '-'}</td>
+                                    <td>${percentage ? percentage + '%' : '-'}</td>
+                                    <td>${positionInClass ? positionInClass : '-'}</td>
+                                    <td>${grade ? grade : '-'}</td>
+                                    <td>${remark ? remark : '-'}</td>
+                                </tr>
                             `;
                         }
+                        subjectTable += `</tbody>`;
 
                         const schoolLogo = branch.schoolLogo;
                         const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` : `${websiteUrl}/images/report/icon.png`;
@@ -93,35 +92,51 @@
                                                 <img src="${logoUrl}" alt="${branch.branchName} LOGO"/>
                                             </div>
                                             <div class="text-div">
-                                                <h3>${branch.branchName}</h3>
-                                                <div class="text">Address: <strong>${branch.address}</strong></div>
-                                                <div class="text">Phone: <strong>${branch.mobileNumber}</strong> | Official Email: <strong>${branch.smtpUsername}</strong></div> 
+                                                <h1>${branch.branchName}</h1>
+
+                                                <div>
+                                                    <div class="text"><span>Address:</span>: <strong>${branch.address}</strong></div>
+                                                    <div class="text"><span>Phone:</span> <strong>${branch.mobileNumber}</strong> | <span>Official Email:</span> <strong>${branch.supportEmail}</strong></div>
+                                                    <div class="text"><span>Website:</span>: <strong>${printAllStudentCaResultSession.clientWebsite}</strong></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="title-div">
-                                        ${sessionName} ACADEMIC SESSION - ${term.termName} - ${department.departmentName} - ${classData.className} - ${arm.armName} - ${assessment.assessmentName} MID-TERM RESULT
+                                    <div class="title-back-div">
+                                        <div class="title-div">
+                                            <h2>Mid-Term Result</h2>
+                                        </div>
+                                        <div class="title-div grey-title">
+                                            <h3>${term.termName} ${sessionName} ACADEMIC SESSION</h3>
+                                        </div>
                                     </div>
 
                                     <div class="top-containner-back-div">
                                         <div class="inner-div-cont">
                                             <div class="content-div">
-                                                <div class="details">
-                                                    <span>STUDENT NAME</span>
-                                                    <div>${fullName}</div>
+                                                <div>
+                                                    <div class="name">
+                                                        <div>${fullName}</div>
+                                                    </div>
                                                 </div>
-                                                <div class="details">
-                                                    <span>STUDENT ID</span>
-                                                    <div>${officialStudentId ? officialStudentId : studentId}</div>
-                                                </div>
-                                                <div class="details">
-                                                    <span>CLASS</span>
-                                                    <div>${classData.className} ${arm.armName}</div>
-                                                </div>
-                                                <div class="details">
-                                                    <span>GENDER</span>
-                                                    <div>${genderName}</div>
+
+                                                <div class="bottom-details">
+                                                    <div class="details">
+                                                        <p>STUDENT ID: 
+                                                            <span>${officialStudentId ? officialStudentId : studentId}</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="details">
+                                                        <p>CLASS:
+                                                            <span>${classData.className} ${arm.armName}</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="details">
+                                                        <p>GENDER
+                                                            <span>${genderName}</span>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
                                             
@@ -133,50 +148,57 @@
                                 </div>
 
                                 <div class="inner-content">
-                                    <div class="table-div computation-table animated fadeIn">
+                                    <div class="table-div animated fadeIn">
                                         <table class="table" cellspacing="0" style="width:100%">
                                             ${subjectTable}
                                         </table>
                                     </div>
 
-                                    <div class="top-containner-back-div">
-                                        <div class="inner-div-cont">
-                                            <div class="content-div">
-                                                <div class="details">
-                                                    <span>NUMBER ON ROLL</span>
-                                                    <div>${studentItems.numberOfStudents}</div>
+                                    <div class="bottom-content-back-div">
+                                        <div class="inner-container">
+                                            <div class="content-container">
+                                                <div class="list-content">
+                                                    <span>NUMBER ON ROLL:</span>
+                                                    <p>${studentItems.numberOfStudents}</p>
                                                 </div>
-                                                <div class="details">
-                                                    <span>NUMBER OF SUBJECT</span>
-                                                    <div>${studentItems.totalSubjects}</div>
+
+                                                <div class="list-content">
+                                                    <span>NUMBER OF SUBJECT:</span>
+                                                    <p>${studentItems.totalSubjects}</p>
                                                 </div>
-                                                <div class="details">
-                                                    <span>MARKS OBTAINABLE</span>
-                                                    <div>${studentItems.totalMarkObtainable}</div>
+
+                                                <div class="list-content">
+                                                    <span>MARKS OBTAINABLE:</span>
+                                                    <p>${studentItems.totalMarkObtainable}</p>
                                                 </div>
-                                                <div class="details">
-                                                    <span>MARKS OBTAINED</span>
-                                                    <div>${studentItems.totalMarkObtained}</div>
+
+                                                <div class="list-content">
+                                                    <span>MARKS OBTAINED:</span>
+                                                    <p>${studentItems.totalMarkObtained}</p>
                                                 </div>
-                                                <div class="details">
-                                                    <span>PERCENTAGE</span>
-                                                    <div>${studentItems.totalPercentage ? studentItems.totalPercentage + '%' : '-'}</div>
+
+                                                <div class="list-content">
+                                                    <span>PERCENTAGE:</span>
+                                                    <p>${studentItems.totalPercentage ? studentItems.totalPercentage + '%' : '-'}</p>
                                                 </div>
-                                                <div class="details">
-                                                    <span>CLASS TEACHER'S COMMENT</span>
-                                                    <div>${studentItems.classTeachersComment}</div>
+
+                                                <div class="list-content">
+                                                    <span>CLASS TEACHER'S COMMENT:</span>
+                                                    <p>${studentItems.classTeachersComment}</p>
                                                 </div>
-                                                <div class="details">
-                                                    <span>PRINCIPAL'S COMMENT</span>
-                                                    <div>${studentItems.principalComment}</div>
+
+                                                <div class="list-content">
+                                                    <span>PRINCIPAL'S COMMENT:</span>
+                                                    <p>${studentItems.principalComment}</p>
                                                 </div>
-                                                <div class="details">
-                                                    <span>SCHOOL REOPENS ON</span>
-                                                    <div>${formatDate(branch.schoolResumptionDate)}</div>
+
+                                                <div class="list-content">
+                                                    <span>SCHOOL REOPENS ON:</span>
+                                                    <p>${formatDate(branch.schoolResumptionDate)}</p>
                                                 </div>
                                             </div>
 
-                                            <div class="image-div signature">
+                                            <div class="signature">
                                                 <img src="${principalSignaturePixPath}/${branch.principalSignature}" alt="${branch.branchName} PRINCIPAL SIGNATURE"/>
                                             </div>
                                         </div>

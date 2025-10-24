@@ -33,7 +33,7 @@
                     <div class="text-div">
                         <h3 id="branchName"><script>$("#branchName").html(printAssessmentSession?.branchData?.branchName);</script></h3>
                         <div class="text">Address: <strong id="address"><script>$("#address").html(printAssessmentSession?.branchData?.address);</script></strong></div>
-                        <div class="text">Phone: <strong id="mobileNumber"><script>$("#mobileNumber").html(printAssessmentSession?.branchData?.mobileNumber);</script></strong> | Official Email: <strong id="smtpUsername"><script>$("#smtpUsername").html(printAssessmentSession?.branchData?.smtpUsername);</script></strong></div> 
+                        <div class="text">Phone: <strong id="mobileNumber"><script>$("#mobileNumber").html(printAssessmentSession?.branchData?.mobileNumber);</script></strong> | Official Email: <strong id="smtpUsername"><script>$("#smtpUsername").html(printAssessmentSession?.branchData?.supportEmail);</script></strong></div> 
                     </div>
                 </div>
             </div>

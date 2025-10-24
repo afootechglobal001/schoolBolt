@@ -51,7 +51,7 @@
                                 </script>
                             </strong> | Official Email: <strong id="smtpUsername">
                                 <script>
-                                $("#smtpUsername").html(printTerminalBroadSheetsession?.branchData?.smtpUsername);
+                                $("#smtpUsername").html(printTerminalBroadSheetsession?.branchData?.supportEmail);
                                 </script>
                             </strong></div>
                     </div>

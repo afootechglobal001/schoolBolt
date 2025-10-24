@@ -49,7 +49,7 @@
                                 </script>
                             </strong> | Official Email: <strong id="smtpUsername">
                                 <script>
-                                $("#smtpUsername").html(printEachStudentTerminalResultSession?.branchData?.smtpUsername);
+                                $("#smtpUsername").html(printEachStudentTerminalResultSession?.branchData?.supportEmail);
                                 </script>
                             </strong></div>
                     </div>

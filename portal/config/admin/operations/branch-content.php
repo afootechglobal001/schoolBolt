@@ -2428,7 +2428,7 @@
                                     <strong id="resultSmtpUsername">
                                         <script>
                                             $("#resultSmtpUsername").html(getViewResultSummarySession?.branchData
-                                                ?.smtpUsername);
+                                                ?.supportEmail);
                                         </script>
                                     </strong>
 
@@ -2697,7 +2697,7 @@
                                     <strong id="terminalResultSmtpUsername">
                                         <script>
                                             $("#terminalResultSmtpUsername").html(getViewTerminalResultSummarySession
-                                                ?.branchData?.smtpUsername);
+                                                ?.branchData?.supportEmail);
                                         </script>
                                     </strong>
 

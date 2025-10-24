@@ -34,7 +34,7 @@
                     <div class="text-div">
                         <h3 id="branchName"><script>$("#branchName").html(printFeesSettingsSession?.branchData?.branchName);</script></h3>
                         <div class="text">Address: <strong id="address"><script>$("#address").html(printFeesSettingsSession?.branchData?.address);</script></strong></div>
-                        <div class="text">Phone: <strong id="mobileNumber"><script>$("#mobileNumber").html(printFeesSettingsSession?.branchData?.mobileNumber);</script></strong> | Official Email: <strong id="smtpUsername"><script>$("#smtpUsername").html(printFeesSettingsSession?.branchData?.smtpUsername);</script></strong></div> 
+                        <div class="text">Phone: <strong id="mobileNumber"><script>$("#mobileNumber").html(printFeesSettingsSession?.branchData?.mobileNumber);</script></strong> | Official Email: <strong id="smtpUsername"><script>$("#smtpUsername").html(printFeesSettingsSession?.branchData?.supportEmail);</script></strong></div> 
                     </div>
                 </div>
             </div>

@@ -35,41 +35,54 @@
                     </script>
 
                     <div class="text-div">
-                        <h3 id="branchName">
+                        <h1 id="branchName">
                             <script>
-                            $("#branchName").html(printBroadSheetsession?.branchData?.branchName);
+                                $("#branchName").html(printBroadSheetsession?.branchData?.branchName);
                             </script>
-                        </h3>
-                        <div class="text">Address: <strong id="address">
-                                <script>
-                                $("#address").html(printBroadSheetsession?.branchData?.address);
+                        </h1>
+                        <div>
+                            <div class="text"><span>Address:</span> <strong id="address">
+                                    <script>
+                                        $("#address").html(printBroadSheetsession?.branchData?.address);
+                                    </script>
+                                </strong></div>
+                            <div class="text"><span>Phone:</span> <strong id="mobileNumber">
+                                    <script>
+                                        $("#mobileNumber").html(printBroadSheetsession?.branchData?.mobileNumber);
+                                    </script>
+                                </strong> | <span>Official Email:</span> <strong id="smtpUsername">
+                                    <script>
+                                        $("#smtpUsername").html(printBroadSheetsession?.branchData?.supportEmail);
+                                    </script>
+                                </strong></div>
+                            <div class="text"><span>Website:</span> <strong id="clientWebsite">
+                                    <script>
+                                    $("#clientWebsite").html(printBroadSheetsession?.clientWebsite);
                                 </script>
-                            </strong></div>
-                        <div class="text">Phone: <strong id="mobileNumber">
-                                <script>
-                                $("#mobileNumber").html(printBroadSheetsession?.branchData?.mobileNumber);
-                                </script>
-                            </strong> | Official Email: <strong id="smtpUsername">
-                                <script>
-                                $("#smtpUsername").html(printBroadSheetsession?.branchData?.smtpUsername);
-                                </script>
-                            </strong></div>
+                                </strong></div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="title-div"><span id="titleDetails">Loading... </span>BROAD SHEET</div>
-            <script>
-            $("#titleDetails").html(printBroadSheetsession?.session + ' - ' +
-                printBroadSheetsession?.termData?.termName + ' - ' +
-                printBroadSheetsession?.departmentData?.departmentName + ' - ' +
-                printBroadSheetsession?.classData?.className + ' - ' +
-                printBroadSheetsession?.armData?.armName + ' - ' +
-                printBroadSheetsession?.assessmentData?.assessmentName);
-            </script>
+
+            <div class="title-back-div">
+                <div class="title-div">
+                    <h3 id="titleDetails"> BROAD SHEET</h3>
+                   <script>
+                    $("#titleDetails").html(printBroadSheetsession?.session + ' - ' +
+                        printBroadSheetsession?.termData?.termName + ' - ' +
+                        printBroadSheetsession?.departmentData?.departmentName + ' - ' +
+                        printBroadSheetsession?.classData?.className + ' - ' +
+                        printBroadSheetsession?.armData?.armName + ' - ' +
+                        printBroadSheetsession?.assessmentData?.assessmentName +' BROAD SHEET');
+                    </script>
+                </div>
+            </div>
+           
         </div>
 
-        <div class="inner-content broadsheet-inner-content">
-            <div class="table-div computation-table broadsheet-table  animated fadeIn">
+        <div class="inner-content">
+            <div class="table-div">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
                         $(document).ready(function () {
@@ -154,23 +167,23 @@
                             const headerRow = $('<tr class="tb-col"></tr>');
 
                             tableTitles.forEach(title => {
-                                headerRow.append($('<th class="th"></th>').text(title));
+                                headerRow.append($('<th></th>').text(title));
                             });
 
                             thead.append(headerRow);
                             const tbody = $('<tbody></tbody>');
 
                             studentList.forEach((student, index) => {
-                                const row = $('<tr class="tb-row report-tb-row"></tr>');
+                                const row = $('<tr class="tb-row"></tr>');
                                 const fullName = `${student.surName} ${student.firstName} ${student.otherNames || ''}`.trim();
 
-                                row.append($('<td class="td"></td>').text(index + 1));
-                                row.append($('<td class="td"></td>').text(fullName));
+                                row.append($('<td></td>').text(index + 1));
+                                row.append($('<td></td>').text(fullName));
 
                                 for (let i = 2; i < tableTitles.length; i++) {
                                     const columnKey = tableTitles[i];
                                     const score = scoreMap[columnKey] && scoreMap[columnKey][student.studentId] ? scoreMap[columnKey][student.studentId] : '';
-                                    row.append($('<td class="td"></td>').text(score));
+                                    row.append($('<td></td>').text(score));
                                 }
                                 tbody.append(row);
                             });
