@@ -83,6 +83,7 @@ if (!$checkBasicSecurity){/// start if 1
     $response['success']=true;
     $response['message']="BROADSHEET FETCHED SUCCESFFULY!";
     $response['allRecordCount']=$allRecordCount;
+    $response['clientWebsite'] = $dbClientAddress;
     $response['session'] = $session;
     $response['branchData'] = $branchDataFetch;
     $response['termData'] = $termDataFetch;
