@@ -1320,7 +1320,7 @@
                                                         <div class="text-container">
                                                             <div class="text-div">
                                                                 <div class="name">${fullName}</div>
-                                                                <div>${department.departmentName} -- ${classInfo.className} ${arm.armName} (${student.genderId})</div>
+                                                                <div>${department.departmentName} -- ${classInfo.className} ${arm.armName} (${student.genderData.genderName})</div>
                                                             </div>
                                                         </div>
                                                     </div>

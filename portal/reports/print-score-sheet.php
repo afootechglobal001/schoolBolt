@@ -47,7 +47,7 @@
                                 </script>
                             </strong> | Official Email: <strong id="smtpUsername">
                                 <script>
-                                    $("#smtpUsername").html(printStudentScoreSheetSession?.branchData?.smtpUsername);
+                                    $("#smtpUsername").html(printStudentScoreSheetSession?.branchData?.supportEmail);
                                 </script>
                             </strong></div>
                     </div>
