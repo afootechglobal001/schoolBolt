@@ -46,6 +46,7 @@ if (!$checkBasicSecurity){/// start if 1
     $response['response']=200; 
     $response['success']=true;
     $response['message']="ALL CA RESULT FETCHED SUCCESFFULY!";
+    $response['clientWebsite'] = $dbClientAddress;
     $response['session'] = $session;
     $response['branchData'] = $branchDataFetch;
     $response['termData'] = $termDataFetch;
