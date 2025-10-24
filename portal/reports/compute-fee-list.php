@@ -56,7 +56,7 @@
                                 </script>
                             </strong> | Official Email: <strong id="smtpUsername">
                                 <script>
-                                $("#smtpUsername").html(printComputeFeeByClassSession?.branchData?.smtpUsername);
+                                $("#smtpUsername").html(printComputeFeeByClassSession?.branchData?.supportEmail);
                                 </script>
                             </strong></div>
                     </div>

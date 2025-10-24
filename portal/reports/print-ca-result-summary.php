@@ -49,7 +49,7 @@
                                 </script>
                             </strong> | Official Email: <strong id="smtpUsername">
                                 <script>
-                                    $("#smtpUsername").html(printResultSummarySession?.branchData?.smtpUsername);
+                                    $("#smtpUsername").html(printResultSummarySession?.branchData?.supportEmail);
                                 </script>
                             </strong></div>
                     </div>
