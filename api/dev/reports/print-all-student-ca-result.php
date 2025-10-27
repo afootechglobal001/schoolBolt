@@ -23,7 +23,7 @@ if (!$checkBasicSecurity){/// start if 1
     validateEmptyField($assessmentId, 'ASSESSMENT');
 
    
-    $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, schoolLogo, principalSignature, address, smtpUsername, mobileNumber, schoolResumptionDate  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+    $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, schoolLogo, principalSignature, address, supportEmail, mobileNumber, schoolResumptionDate  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
 
     $termDataQuery = mysqli_query($conn, "SELECT * FROM SETUP_TERM_TAB WHERE termId='$termId'");
@@ -46,6 +46,7 @@ if (!$checkBasicSecurity){/// start if 1
     $response['response']=200; 
     $response['success']=true;
     $response['message']="ALL CA RESULT FETCHED SUCCESFFULY!";
+    $response['clientWebsite'] = $dbClientAddress;
     $response['session'] = $session;
     $response['branchData'] = $branchDataFetch;
     $response['termData'] = $termDataFetch;

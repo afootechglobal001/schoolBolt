@@ -11,10 +11,11 @@ if(!$checkSession){
 	goto end;
 }
     //////////////////declaration of variables//////////////////////////////////////
+    $staffId=$_GET['staffId'];
     $branchId = $_GET['branchId'];
 
     //// staff details from CLASS_TEACHER_TAB
-    $select = "SELECT * FROM CLASS_TEACHER_TAB WHERE $clientIds AND branchId='$branchId' AND staffId='$loginStaffId'";
+    $select = "SELECT * FROM CLASS_TEACHER_TAB WHERE $clientIds AND branchId='$branchId' AND staffId='$staffId'";
     $query = mysqli_query($conn, $select) or die (mysqli_error($conn));
     $allRecordCount = mysqli_num_rows($query);
     if ($allRecordCount == 0) {
