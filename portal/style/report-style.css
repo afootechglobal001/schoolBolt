@@ -244,10 +244,6 @@
 	color: var(--body-color);
 }
 
-.table-div .table tbody tr:nth-child(odd) {
-  	background: var(--white-color);
-}
-
 .table-div .table tbody tr:nth-child(even) {
     background-color: rgba(230, 230, 230, 0.8);
 }
@@ -315,12 +311,6 @@
 	height: 100%;
 	object-fit: cover;
 }
-
-
-
-
-
-
 
 
 .table-div .table .green-color{
