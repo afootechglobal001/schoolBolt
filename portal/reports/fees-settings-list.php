@@ -16,33 +16,16 @@
 
     <section class="body-div">
         <div class="header-back-div">
-            <div class="header-div">
-                <div class="inner-div">
-                    <div class="logo-div">
-                        <img id="profileSchoolLogoImg" src="<?php echo $websiteUrl?>/images/report/icon.png" alt="<?php echo $clientName?> Logo"/>   
-                    </div> 
+            <img src="<?php echo $websiteUrl ?>/images/report/mid-term-result-header.png" alt="Report Header"
+                style="width: 100%; height: auto;" />
 
-                    <script>
-                        $(document).ready(function () {
-                            const schoolLogo = printFeesSettingsSession?.branchData?.schoolLogo;
-                            const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` : "<?php echo $websiteUrl ?>/images/report/icon.png";
-
-                            $("#profileSchoolLogoImg").attr("src", logoUrl).attr("alt", printFeesSettingsSession?.branchData?.branchName + " Logo");
-                        });
-                    </script>
-                    
-                    <div class="text-div">
-                        <h3 id="branchName"><script>$("#branchName").html(printFeesSettingsSession?.branchData?.branchName);</script></h3>
-                        <div class="text">Address: <strong id="address"><script>$("#address").html(printFeesSettingsSession?.branchData?.address);</script></strong></div>
-                        <div class="text">Phone: <strong id="mobileNumber"><script>$("#mobileNumber").html(printFeesSettingsSession?.branchData?.mobileNumber);</script></strong> | Official Email: <strong id="smtpUsername"><script>$("#smtpUsername").html(printFeesSettingsSession?.branchData?.supportEmail);</script></strong></div> 
-                    </div>
-                </div>
+            <div class="title-div">
+                <h3 id="titleDetails"></h3>
+                <script>
+                    $("#titleDetails").html(printFeesSettingsSession?.branchData?.termName+ ' ' +
+                        printFeesSettingsSession?.branchData?.session);
+                </script>
             </div>
-            <div class="title-div"><span id="titleDetails">Loading...  </span>FEES LIST</div>
-            <script>
-                $("#titleDetails").html(printFeesSettingsSession?.branchData?.session + ' - ' +
-                printFeesSettingsSession?.branchData?.termName);
-            </script>
         </div>
     
         <div class="inner-content">
@@ -57,11 +40,12 @@
                             text =`
                                 <thead>
                                     <tr class="tb-col">
-                                        <th>sn</th>
-                                        <th>Fees</th>
-                                        <th>Fee Option</th>
+                                        <th>SN</th>
+                                        <th>FEES</th>
+                                        <th>FEES OPTION</th>
                                     </tr>
-                                </thead>`;
+                                </thead>
+                                <tbody>`;
 
                                 if (printFeesSettingsSession && printFeesSettingsSession.success === true) {
                                     const fetchedFees = printFeesSettingsSession.data;
@@ -75,14 +59,13 @@
 	                                    const feesOptionColor = (feesOption === "TRUE") ? "green-color" : "orange-color";
 
                                         text +=`
-                                            <tbody>
-                                                <tr class="tb-row">
-                                                    <td>${no}</td>
-                                                    <td>${feesName}</td>
-                                                    <td class="${feesOptionColor}">${NewFeesOption}</td>
-                                                </tr>                                        
-                                            </tbody>`;
+                                            <tr class="tb-row">
+                                                <td>${no}</td>
+                                                <td>${feesName}</td>
+                                                <td class="${feesOptionColor}">${NewFeesOption}</td>
+                                            </tr>`;
                                     }
+                                    text += `</tbody>`;
                                     $('#pageContent').html(text);
                                 }
                         });

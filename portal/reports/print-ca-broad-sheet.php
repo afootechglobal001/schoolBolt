@@ -18,67 +18,20 @@
 
     <section class="body-div broadsheet-body">
         <div class="header-back-div">
-            <div class="header-div">
-                <div class="inner-div">
-                    <div class="logo-div">
-                        <img id="profileSchoolLogoImg" src="<?php echo $websiteUrl ?>/images/report/icon.png"
-                            alt="<?php echo $clientName ?> Logo" />
-                    </div>
+            <img src="<?php echo $websiteUrl ?>/images/report/ca-broad-sheet-header.png" alt="Report Header"
+                style="width: 100%; height: auto;" />
 
-                    <script>
-                        $(document).ready(function () {
-                            const schoolLogo = printBroadSheetsession?.branchData?.schoolLogo;
-                            const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` : "<?php echo $websiteUrl ?>/images/report/icon.png";
-
-                            $("#profileSchoolLogoImg").attr("src", logoUrl).attr("alt", printBroadSheetsession?.branchData?.branchName + " Logo");
-                        });
-                    </script>
-
-                    <div class="text-div">
-                        <h1 id="branchName">
-                            <script>
-                                $("#branchName").html(printBroadSheetsession?.branchData?.branchName);
-                            </script>
-                        </h1>
-                        <div>
-                            <div class="text"><span>Address:</span> <strong id="address">
-                                    <script>
-                                        $("#address").html(printBroadSheetsession?.branchData?.address);
-                                    </script>
-                                </strong></div>
-                            <div class="text"><span>Phone:</span> <strong id="mobileNumber">
-                                    <script>
-                                        $("#mobileNumber").html(printBroadSheetsession?.branchData?.mobileNumber);
-                                    </script>
-                                </strong> | <span>Official Email:</span> <strong id="smtpUsername">
-                                    <script>
-                                        $("#smtpUsername").html(printBroadSheetsession?.branchData?.supportEmail);
-                                    </script>
-                                </strong></div>
-                            <div class="text"><span>Website:</span> <strong id="clientWebsite">
-                                    <script>
-                                    $("#clientWebsite").html(printBroadSheetsession?.clientWebsite);
-                                </script>
-                                </strong></div>
-                        </div>
-                    </div>
-                </div>
+            <div class="title-div">
+                <h3 id="titleDetails"></h3>
+                <script>
+                $("#titleDetails").html(printBroadSheetsession?.session + ' - ' +
+                    printBroadSheetsession?.termData?.termName + ' - ' +
+                    printBroadSheetsession?.departmentData?.departmentName + ' - ' +
+                    printBroadSheetsession?.classData?.className + ' - ' +
+                    printBroadSheetsession?.armData?.armName + ' - ' +
+                    printBroadSheetsession?.assessmentData?.assessmentName);
+                </script>
             </div>
-
-            <div class="title-back-div">
-                <div class="title-div">
-                    <h3 id="titleDetails"> BROAD SHEET</h3>
-                   <script>
-                    $("#titleDetails").html(printBroadSheetsession?.session + ' - ' +
-                        printBroadSheetsession?.termData?.termName + ' - ' +
-                        printBroadSheetsession?.departmentData?.departmentName + ' - ' +
-                        printBroadSheetsession?.classData?.className + ' - ' +
-                        printBroadSheetsession?.armData?.armName + ' - ' +
-                        printBroadSheetsession?.assessmentData?.assessmentName +' BROAD SHEET');
-                    </script>
-                </div>
-            </div>
-           
         </div>
 
         <div class="inner-content">
@@ -164,7 +117,7 @@
 
                             // Build the table
                             const thead = $('<thead></thead>');
-                            const headerRow = $('<tr class="tb-col"></tr>');
+                            const headerRow = $('<tr class="tb-col table-col"></tr>');
 
                             tableTitles.forEach(title => {
                                 headerRow.append($('<th></th>').text(title));
@@ -174,7 +127,7 @@
                             const tbody = $('<tbody></tbody>');
 
                             studentList.forEach((student, index) => {
-                                const row = $('<tr class="tb-row"></tr>');
+                                const row = $('<tr class="tb-row table-row"></tr>');
                                 const fullName = `${student.surName} ${student.firstName} ${student.otherNames || ''}`.trim();
 
                                 row.append($('<td></td>').text(index + 1));
