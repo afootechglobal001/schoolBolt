@@ -696,32 +696,6 @@ function _fetchBranchStudents() {
   }
 }
 
-function _calculateAge(dateString) {
-  if (!dateString) return "N/A";
-
-  let dob;
-  if (dateString.includes("/")) {
-    let parts = dateString.split("/");
-    dob = `${parts[2]}-${parts[1]}-${parts[0]}`;
-  } else {
-    dob = dateString;
-  }
-
-  let birthDate = new Date(dob);
-  if (isNaN(birthDate)) return "Invalid date";
-
-  let today = new Date();
-  let age = today.getFullYear() - birthDate.getFullYear();
-
-  if (
-    today <
-    new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate())
-  ) {
-    age--;
-  }
-  return age;
-}
-
 function _fetchEachBranchStudents(
   branchId,
   departmentId,

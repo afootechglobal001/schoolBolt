@@ -84,32 +84,12 @@
                         const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` : `${websiteUrl}/images/report/icon.png`;
 
                         sectionHtml += `
-                            <section class="body-div all-terminal-body" style="page-break-after: always;">
+                            <section class="body-div" style="page-break-after: always;">
                                 <div class="header-back-div">
-                                    <div class="header-div">
-                                        <div class="inner-div">
-                                            <div class="logo-div">
-                                                <img src="${logoUrl}" alt="${branch.branchName} LOGO"/>
-                                            </div>
-                                            <div class="text-div">
-                                                <h1>${branch.branchName}</h1>
+                                    <img src="<?php echo $websiteUrl ?>/images/report/mid-term-result-header.png" alt="Report Header" style="width: 100%; height: auto;" />
 
-                                                <div>
-                                                    <div class="text"><span>Address:</span>: <strong>${branch.address}</strong></div>
-                                                    <div class="text"><span>Phone:</span> <strong>${branch.mobileNumber}</strong> | <span>Official Email:</span> <strong>${branch.supportEmail}</strong></div>
-                                                    <div class="text"><span>Website:</span>: <strong>${printAllStudentCaResultSession.clientWebsite}</strong></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="title-back-div">
-                                        <div class="title-div">
-                                            <h2>Mid-Term Result</h2>
-                                        </div>
-                                        <div class="title-div grey-title">
-                                            <h3>${term.termName} ${sessionName} ACADEMIC SESSION</h3>
-                                        </div>
+                                    <div class="title-div">
+                                        <h3>${term.termName} ${sessionName} ACADEMIC SESSION</h3>
                                     </div>
 
                                     <div class="top-containner-back-div">

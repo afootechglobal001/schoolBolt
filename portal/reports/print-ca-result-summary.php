@@ -17,57 +17,24 @@
 
     <section class="body-div all-terminal-body">
         <div class="header-back-div">
-            <div class="header-div">
-                <div class="inner-div">
-                    <div class="logo-div">
-                        <img id="profileSchoolLogoImg" src="<?php echo $websiteUrl ?>/images/report/icon.png" alt="<?php echo $clientName ?> Logo" />
-                    </div>
+            <img src="<?php echo $websiteUrl ?>/images/report/ca-result-summary-header.png" alt="Report Header"
+                style="width: 100%; height: auto;" />
 
-                    <script>
-                        $(document).ready(function() {
-                            const schoolLogo = printResultSummarySession?.branchData?.schoolLogo;
-                            const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` : "<?php echo $websiteUrl ?>/images/report/icon.png";
-
-                            $("#profileSchoolLogoImg").attr("src", logoUrl).attr("alt", printResultSummarySession?.branchData?.branchName + " Logo");
-                        });
-                    </script>
-
-                    <div class="text-div">
-                        <h3 id="branchName">
-                            <script>
-                                $("#branchName").html(printResultSummarySession?.branchData?.branchName);
-                            </script>
-                        </h3>
-                        <div class="text">Address: <strong id="address">
-                                <script>
-                                    $("#address").html(printResultSummarySession?.branchData?.address);
-                                </script>
-                            </strong></div>
-                        <div class="text">Phone: <strong id="mobileNumber">
-                                <script>
-                                    $("#mobileNumber").html(printResultSummarySession?.branchData?.mobileNumber);
-                                </script>
-                            </strong> | Official Email: <strong id="smtpUsername">
-                                <script>
-                                    $("#smtpUsername").html(printResultSummarySession?.branchData?.supportEmail);
-                                </script>
-                            </strong></div>
-                    </div>
-                </div>
+            <div class="title-div">
+                <h3 id="titleDetails"></h3>
+                <script>
+                    $("#titleDetails").html(printResultSummarySession?.session + ' - ' +
+                        printResultSummarySession?.termData?.termName + ' - ' +
+                        printResultSummarySession?.departmentData?.departmentName + ' - ' +
+                        printResultSummarySession?.classData?.className + ' ' +
+                        printResultSummarySession?.armData?.armName + ' - ' +
+                        printResultSummarySession?.assessmentData?.assessmentName);
+                </script>
             </div>
-            <div class="title-div"><span id="titleDetails">Loading...</span>RESULT SUMMARY</div>
-            <script>
-                $("#titleDetails").html(printResultSummarySession?.session + ' - ' +
-                    printResultSummarySession?.termData?.termName + ' - ' +
-                    printResultSummarySession?.departmentData?.departmentName + ' - ' +
-                    printResultSummarySession?.classData?.className + ' ' +
-                    printResultSummarySession?.armData?.armName + ' - ' +
-                    printResultSummarySession?.assessmentData?.assessmentName);
-            </script>
         </div>
 
         <div class="inner-content">
-            <div class="table-div computation-table animated fadeIn">
+            <div class="table-div">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
                         $(document).ready(function() {
@@ -142,11 +109,11 @@
 
                             // Build the table
                             const thead = $('<thead></thead>');
-                            const headerRow = $('<tr class="tb-col"></tr>');
+                            const headerRow = $('<tr class="tb-col table-col"></tr>');
 
 
                             tableTitles.forEach(title => {
-                                headerRow.append($('<th class="font"></th>').text(title));
+                                headerRow.append($('<th></th>').text(title));
                             });
 
                             thead.append(headerRow);
@@ -154,17 +121,17 @@
                             const tbody = $('<tbody></tbody>');
 
                             studentList.forEach((student, index) => {
-                                const row = $('<tr class="tb-row report-tb-row"></tr>');
+                                const row = $('<tr class="tb-row table-row"></tr>');
                                 const fullName = `${student.surName} ${student.otherNames || ''}`.trim();
 
-                                row.append($('<td class="td"></td>').text(index + 1));
-                                row.append($('<td class="td"></td>').text(fullName));
+                                row.append($('<td></td>').text(index + 1));
+                                row.append($('<td></td>').text(fullName));
 
                                 for (let i = 2; i < tableTitles.length; i++) {
                                     const title = tableTitles[i];
                                     const score = scoreMap[title] && scoreMap[title][student.studentId] ? scoreMap[title][student.studentId] : '';
                                     if (score === null || score === "null" || score === undefined) score = '';
-                                    row.append($('<td class="td"></td>').text(score));
+                                    row.append($('<td></td>').text(score));
                                 }
 
                                 tbody.append(row);

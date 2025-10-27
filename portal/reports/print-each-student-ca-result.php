@@ -19,21 +19,21 @@
     printSingleAssessementSession = JSON.parse(sessionStorage.getItem("printSingleAssessementSession"));
     </script>
 
-    <section class="body-div all-terminal-body">
+    <section class="body-div">
         <div class="header-back-div">
             <img src="<?php echo $websiteUrl ?>/images/report/mid-term-result-header.png" alt="Report Header"
                 style="width: 100%; height: auto;" />
-            <div class="title-back-div">
-                <div class="title-div grey-title">
-                    <h3 id="titleDetails"></h3>
-                    <script>
-                    $("#titleDetails").html(
-                        printSingleAssessementSession?.termData?.termName + ' ' +
-                        printSingleAssessementSession?.session + ' ACADEMIC SESSION'
-                    );
-                    </script>
-                </div>
+           
+            <div class="title-div">
+                <h3 id="titleDetails"></h3>
+                <script>
+                $("#titleDetails").html(
+                    printSingleAssessementSession?.termData?.termName + ' ' +
+                    printSingleAssessementSession?.session + ' ACADEMIC SESSION'
+                );
+                </script>
             </div>
+            
             <div class="top-containner-back-div">
                 <div class="inner-div-cont">
                     <div class="content-div">

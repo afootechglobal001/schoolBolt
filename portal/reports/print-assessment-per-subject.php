@@ -15,41 +15,24 @@
 
     <section class="body-div">
         <div class="header-back-div">
-            <div class="header-div">
-                <div class="inner-div">
-                    <div class="logo-div">
-                        <img id="profileSchoolLogoImg" src="<?php echo $websiteUrl?>/images/report/icon.png" alt="<?php echo $clientName?> Logo"/>   
-                    </div>
+            <img src="<?php echo $websiteUrl ?>/images/report/mid-term-result-header.png" alt="Report Header"
+                style="width: 100%; height: auto;" />
 
-                    <script>
-                        $(document).ready(function () {
-                            const schoolLogo = printAssessmentSession?.branchData?.schoolLogo;
-                            const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` : "<?php echo $websiteUrl ?>/images/report/icon.png";
-
-                            $("#profileSchoolLogoImg").attr("src", logoUrl).attr("alt", printAssessmentSession?.branchData?.branchName + " Logo");
-                        });
-                    </script>
-                    
-                    <div class="text-div">
-                        <h3 id="branchName"><script>$("#branchName").html(printAssessmentSession?.branchData?.branchName);</script></h3>
-                        <div class="text">Address: <strong id="address"><script>$("#address").html(printAssessmentSession?.branchData?.address);</script></strong></div>
-                        <div class="text">Phone: <strong id="mobileNumber"><script>$("#mobileNumber").html(printAssessmentSession?.branchData?.mobileNumber);</script></strong> | Official Email: <strong id="smtpUsername"><script>$("#smtpUsername").html(printAssessmentSession?.branchData?.supportEmail);</script></strong></div> 
-                    </div>
-                </div>
+            <div class="title-div">
+                <h3 id="titleDetails"></h3>
+                <script>
+                    $("#titleDetails").html(printAssessmentSession?.session + ' - ' +
+                    printAssessmentSession?.termData?.termName + ' - ' +
+                    printAssessmentSession?.departmentData?.departmentName + ' - ' + 
+                    printAssessmentSession?.classData?.className + ' - ' + 
+                    printAssessmentSession?.armData?.armName + ' - ' +
+                    printAssessmentSession?.subjectData?.subjectName +' - '+printAssessmentSession?.assessmentData?.assessmentName + ' MARK BOOK ');
+                </script>
             </div>
-            <div class="title-div"><span id="titleDetails">Loading... </span>-- <span id="assessmentName"><script>$("#assessmentName").html(printAssessmentSession?.assessmentData?.assessmentName);</script></span> MARK BOOK</div>
-            <script>
-                $("#titleDetails").html(printAssessmentSession?.session + ' - ' +
-                printAssessmentSession?.termData?.termName + ' - ' +
-                printAssessmentSession?.departmentData?.departmentName + ' - ' + 
-                printAssessmentSession?.classData?.className + ' - ' + 
-                printAssessmentSession?.armData?.armName + ' - ' +
-                printAssessmentSession?.subjectData?.subjectName);
-            </script>
         </div>
     
         <div class="inner-content">
-            <div class="table-div computation-table animated fadeIn">
+            <div class="table-div animated fadeIn">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
                         $(document).ready(function() {
@@ -59,15 +42,16 @@
                             text =`
                                 <thead>
                                     <tr class="tb-col">
-                                        <th class="font">sn</th>
-                                        <th class="font">Full Name</th>
-                                        <th class="font">x/${printAssessmentSession?.assessmentData?.assessmentTotalScore}</th>
-                                        <th class="font">Percentage (%)</th>
-                                        <th class="font">Position</th>
-                                        <th class="font">Grade</th>
-                                        <th class="font">Remark</th>
+                                        <th>SN</th>
+                                        <th>FULL NAME</th>
+                                        <th>x/${printAssessmentSession?.assessmentData?.assessmentTotalScore}</th>
+                                        <th>PERCENTAGE (%)</th>
+                                        <th>POSITION</th>
+                                        <th>GRADE</th>
+                                        <th>REMARK</th>
                                     </tr>
-                                </thead>`;
+                                </thead>
+                                <tbody>`;
 
                                 if (printAssessmentSession && printAssessmentSession.success === true) {
                                     const students = printAssessmentSession.studentsData;
@@ -88,18 +72,17 @@
                                         const remark = fetchStudentData.remark;
 
                                         text +=`
-                                            <tbody>
-                                                <tr class="tb-row report-tb-row">
-                                                    <td class="td">${no}</td>
-                                                    <td class="td">${fullname}</td>
-                                                    <td class="td">${markObtained}</td>
-                                                    <td class="td">${percentage}</td>
-                                                    <td class="td">${position}</td>
-                                                    <td class="td">${grade}</td>
-                                                    <td class="td">${remark}</td>
-                                                </tr>                                        
-                                            </tbody>`;
+                                            <tr class="tb-row">
+                                                <td>${no}</td>
+                                                <td>${fullname}</td>
+                                                <td>${markObtained}</td>
+                                                <td>${percentage}</td>
+                                                <td>${position}</td>
+                                                <td>${grade}</td>
+                                                <td>${remark}</td>
+                                            </tr>`;
                                     }
+                                    text += `</tbody>`;
                                     $('#pageContent').html(text);
                                 }
                         });

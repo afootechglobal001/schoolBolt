@@ -18,55 +18,21 @@
 
     <section class="body-div broadsheet-body">
         <div class="header-back-div">
-            <div class="header-div">
-                <div class="inner-div">
-                    <div class="logo-div">
-                        <img id="profileSchoolLogoImg" src="<?php echo $websiteUrl ?>/images/report/icon.png"
-                            alt="<?php echo $clientName ?> Logo" />
-                    </div>
+            <img src="<?php echo $websiteUrl ?>/images/report/ca-broad-sheet-header.png" alt="Report Header"
+                style="width: 100%; height: auto;" />
 
-                    <script>
-                        $(document).ready(function () {
-                            const schoolLogo = printTerminalBroadSheetsession?.branchData?.schoolLogo;
-                            const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` : "<?php echo $websiteUrl ?>/images/report/icon.png";
-
-                            $("#profileSchoolLogoImg").attr("src", logoUrl).attr("alt", printTerminalBroadSheetsession?.branchData?.branchName + " Logo");
-                        });
-                    </script>
-
-                    <div class="text-div">
-                        <h3 id="branchName">
-                            <script>
-                            $("#branchName").html(printTerminalBroadSheetsession?.branchData?.branchName);
-                            </script>
-                        </h3>
-                        <div class="text">Address: <strong id="address">
-                                <script>
-                                $("#address").html(printTerminalBroadSheetsession?.branchData?.address);
-                                </script>
-                            </strong></div>
-                        <div class="text">Phone: <strong id="mobileNumber">
-                                <script>
-                                $("#mobileNumber").html(printTerminalBroadSheetsession?.branchData?.mobileNumber);
-                                </script>
-                            </strong> | Official Email: <strong id="smtpUsername">
-                                <script>
-                                $("#smtpUsername").html(printTerminalBroadSheetsession?.branchData?.supportEmail);
-                                </script>
-                            </strong></div>
-                    </div>
-                </div>
+            <div class="title-div">
+                <h3 id="titleDetails"></h3>
+                <script>
+                $("#titleDetails").html(printTerminalBroadSheetsession?.session + ' - ' +
+                    printTerminalBroadSheetsession?.termData?.termName + ' - ' +
+                    printTerminalBroadSheetsession?.departmentData?.departmentName + ' - ' +
+                    printTerminalBroadSheetsession?.classData?.className + ' - ' +
+                    printTerminalBroadSheetsession?.armData?.armName + ' - '+' TERMINAL BROAD SHEET ');
+                </script>
             </div>
-            <div class="title-div"><span id="titleDetails">Loading... </span>TERMINAL BROAD SHEET</div>
-            <script>
-            $("#titleDetails").html(printTerminalBroadSheetsession?.session + ' - ' +
-                printTerminalBroadSheetsession?.termData?.termName + ' - ' +
-                printTerminalBroadSheetsession?.departmentData?.departmentName + ' - ' +
-                printTerminalBroadSheetsession?.classData?.className + ' - ' +
-                printTerminalBroadSheetsession?.armData?.armName);
-            </script>
         </div>
-
+        
         <div class="inner-content broadsheet-inner-content">
             <div class="table-div computation-table broadsheet-table  animated fadeIn">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
@@ -146,10 +112,10 @@
 
                             // Build the table
                             const thead = $('<thead></thead>');
-                            const headerRow = $('<tr class="tb-col"></tr>');
+                            const headerRow = $('<tr class="tb-col table-col"></tr>');
 
                             tableTitles.forEach(title => {
-                                headerRow.append($('<th class="th"></th>').text(title));
+                                headerRow.append($('<th></th>').text(title));
                             });
 
                             thead.append(headerRow);
@@ -157,16 +123,16 @@
                             const tbody = $('<tbody></tbody>');
 
                             studentList.forEach((student, index) => {
-                                const row = $('<tr class="tb-row report-tb-row"></tr>');
+                                const row = $('<tr class="tb-row table-row"></tr>');
                                 const fullName = `${student.surName} ${student.firstName} ${student.otherNames || ''}`.trim();
 
-                                row.append($('<td class="td"></td>').text(index + 1));
-                                row.append($('<td class="td"></td>').text(fullName));
+                                row.append($('<td></td>').text(index + 1));
+                                row.append($('<td></td>').text(fullName));
 
                                 for (let i = 2; i < tableTitles.length; i++) {
                                     const subjectAbbr = tableTitles[i];
                                     const score = scoreMap[subjectAbbr] && scoreMap[subjectAbbr][student.studentId] ? scoreMap[subjectAbbr][student.studentId] : '';
-                                    row.append($('<td class="td"></td>').text(score));
+                                    row.append($('<td></td>').text(score));
                                 }
                                 tbody.append(row);
                             });
