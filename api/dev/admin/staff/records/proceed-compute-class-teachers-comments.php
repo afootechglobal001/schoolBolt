@@ -27,18 +27,38 @@ if(!$checkSession){
     $session=$branchDataFetch['session'];
     $termId=$branchDataFetch['termId'];
 
+
+
+//// get male comments
+    $mComments ="";
+    $selectMaleComment = "SELECT comment FROM BRANCH_TEACHERS_COMMENT_CONFIG_TAB WHERE $clientIds AND branchId= '$branchId' AND genderId='M' AND statusId=1 ORDER BY comment ASC";
+    $query=mysqli_query($conn,$selectMaleComment)or die (mysqli_error($conn));
+    while ($fetchQuery = mysqli_fetch_assoc($query)) {
+        $mComments .= $fetchQuery['comment'] . ",";
+    }
+     $maleComments = !empty($mComments) ? explode(',', rtrim($mComments, ',')) : [];
+//// get female comments
+    $fComments ="";
+    $selectFemaleComment = "SELECT comment FROM BRANCH_TEACHERS_COMMENT_CONFIG_TAB WHERE $clientIds AND branchId= '$branchId' AND genderId='F' AND statusId=1 ORDER BY comment ASC";
+    $query=mysqli_query($conn,$selectFemaleComment)or die (mysqli_error($conn));
+    while ($fetchQuery = mysqli_fetch_assoc($query)) {
+        $fComments .= $fetchQuery['comment'] . ",";
+    }
+     $femaleComments = !empty($fComments) ? explode(',', rtrim($fComments, ',')) : [];
+
     $response['response']=200; 
     $response['success']=true;
     $response['branchData'] = $branchDataFetch;
     $response['data'] = array();
 
-    $select="SELECT a.*, b.surName, b.firstName, b.passport FROM STUDENTS_CLASS_TAB a, STUDENTS_TAB b WHERE a.clientId=b.clientId AND a.branchId=b.branchId AND a.studentId=b.studentId  AND  a.clientId='$clientId' AND a.branchId = '$branchId' AND a.departmentId='$departmentId' AND a.classId='$classId' AND a.armId='$armId' AND a.statusId=1 ORDER BY b.surName ASC";
+    $select="SELECT a.*, b.surName, b.firstName, b.passport, genderId FROM STUDENTS_CLASS_TAB a, STUDENTS_TAB b WHERE a.clientId=b.clientId AND a.branchId=b.branchId AND a.studentId=b.studentId  AND  a.clientId='$clientId' AND a.branchId = '$branchId' AND a.departmentId='$departmentId' AND a.classId='$classId' AND a.armId='$armId' AND a.statusId=1 ORDER BY b.surName ASC";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     while ($fetchQuery = mysqli_fetch_assoc($query)) {
         $studentId=$fetchQuery['studentId'];
         $departmentId=$fetchQuery['departmentId'];
         $classId=$fetchQuery['classId'];
         $armId=$fetchQuery['armId'];
+        $genderId=$fetchQuery['genderId'];
         
          /////////////////// for  $departmentId
          $departmentDataQuery = mysqli_query($conn, "SELECT departmentId, departmentName FROM DEPARTMENTS_TAB WHERE $clientIds AND departmentId='$departmentId'");
@@ -59,6 +79,17 @@ if(!$checkSession){
          $classTeachersCommentDataQuery = mysqli_query($conn, "SELECT classTeachersComment FROM BRANCH_TEACHERS_COMMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId' AND studentId='$studentId'");
          $classTeachersCommentDataFetch = mysqli_fetch_assoc($classTeachersCommentDataQuery);
          $fetchQuery['classTeachersCommentData']= $classTeachersCommentDataFetch;
+
+         /////// for genderId
+         $genderDataQuery = mysqli_query($conn, "SELECT genderId, genderName FROM SETUP_GENDER_TAB WHERE genderId='$genderId'");
+         $genderDataFetch = mysqli_fetch_assoc($genderDataQuery);
+         $fetchQuery['genderData']= $genderDataFetch;
+
+         if($genderId=='M'){
+            $fetchQuery['suggestedComments']=$maleComments;
+            }else{
+            $fetchQuery['suggestedComments']=$femaleComments;
+        }
 
         $response['data'][] = $fetchQuery;
     }
