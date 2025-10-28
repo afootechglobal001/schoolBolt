@@ -1,6 +1,10 @@
 <?php if ($page=='branch_department_class') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
         <span><i class="bi-people-fill"></i> BRANCH CLASS LIST</span>
+
+        <div class="btn-container">
+            <button class="btn" title="PRINT RECORDS" onclick="_printTeachersByClass();"><i class="bi-printer"></i> PRINT</button>
+        </div>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent">
