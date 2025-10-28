@@ -18,7 +18,7 @@
 
     <section class="body-div broadsheet-body">
         <div class="header-back-div">
-            <img src="<?php echo $websiteUrl ?>/images/report/ca-broad-sheet-header.png" alt="Report Header"
+            <img src="<?php echo $websiteUrl ?>/images/report/terminal-broad-sheet-header.png" alt="Report Header"
                 style="width: 100%; height: auto;" />
 
             <div class="title-div">
@@ -28,7 +28,7 @@
                     printTerminalBroadSheetsession?.termData?.termName + ' - ' +
                     printTerminalBroadSheetsession?.departmentData?.departmentName + ' - ' +
                     printTerminalBroadSheetsession?.classData?.className + ' - ' +
-                    printTerminalBroadSheetsession?.armData?.armName + ' - '+' TERMINAL BROAD SHEET ');
+                    printTerminalBroadSheetsession?.armData?.armName);
                 </script>
             </div>
         </div>

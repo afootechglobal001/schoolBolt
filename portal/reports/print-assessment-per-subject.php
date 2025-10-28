@@ -15,7 +15,7 @@
 
     <section class="body-div">
         <div class="header-back-div">
-            <img src="<?php echo $websiteUrl ?>/images/report/mid-term-result-header.png" alt="Report Header"
+            <img src="<?php echo $websiteUrl ?>/images/report/mark-book-header.png" alt="Report Header"
                 style="width: 100%; height: auto;" />
 
             <div class="title-div">
@@ -26,7 +26,7 @@
                     printAssessmentSession?.departmentData?.departmentName + ' - ' + 
                     printAssessmentSession?.classData?.className + ' - ' + 
                     printAssessmentSession?.armData?.armName + ' - ' +
-                    printAssessmentSession?.subjectData?.subjectName +' - '+printAssessmentSession?.assessmentData?.assessmentName + ' MARK BOOK ');
+                    printAssessmentSession?.subjectData?.subjectName +' - '+printAssessmentSession?.assessmentData?.assessmentName);
                 </script>
             </div>
         </div>
