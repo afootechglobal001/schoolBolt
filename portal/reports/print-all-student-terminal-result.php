@@ -14,8 +14,16 @@
 <body>
     <section class="body-div all-terminal-body">
         <div class="header-back-div">
-            <img src="<?php echo $websiteUrl ?>/images/report/mid-term-result-header.png" alt="Report Header"
+            <div class="header-image">
+                <img src="<?php echo $websiteUrl ?>/images/report/terminal-result-header.png" alt="Report Header"
                 style="width: 100%; height: auto;" />
+            </div>
+
+            <div class="school-info-div">
+                <div class="text">School Address: <strong id="address">12, KOTCO ROAD, ODE REMO, OGUN STATE NIGERIA</strong></div>
+                <div class="text">Phone: <strong id="mobileNumber">08050202261</strong> | Email: <strong id="supportEmail">schoolboltedusystem@gmail.com</strong></div>
+                <div class="text">Website: <strong id="clientWebsite">https://schoolbolt.com</strong></div>
+            </div>
 
             <div class="title-div">
                 <h3 id="titleDetails">THIRD TERM 2023/2024 ACADEMIC SESSION</h3>
@@ -47,7 +55,7 @@
                     </div>
 
                     <div class="image-div" id="studentPix">
-                        <img src="" alt="">
+                        <img src="<?php echo $websiteUrl ?>/uploaded_files/studentPix/default.jpg" alt="">
                     </div>
                 </div>
             </div>
@@ -389,7 +397,7 @@
                     </div>
 
                     <div class="signature">
-                        <img src="images/principal-signature.png" alt="Victory Christian School Principal Signature" />
+                        <img src="<?php echo $websiteUrl ?>/uploaded_files/branchPrincipalSignature/BRANCH001689949a80d3fd.principal_signature.png" alt="Victory Christian School Principal Signature" />
                     </div>
 
                 </div>

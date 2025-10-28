@@ -17,8 +17,17 @@
 
     <section class="body-div all-terminal-body">
         <div class="header-back-div">
-            <img src="<?php echo $websiteUrl ?>/images/report/ca-result-summary-header.png" alt="Report Header"
-                style="width: 100%; height: auto;" />
+            <div class="header-image">
+                <img id="terminalResultSummaryHeader" src="<?php echo $websiteUrl ?>/images/report/ca-result-summary-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
+
+                <script>
+                    $(document).ready(function () {
+                        const schoolHeader = printTerminalResultSummarySession?.branchData?.terminalResultSummaryHeader;
+                        const headerUrl = schoolHeader ? `${terminalResultSummaryHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/ca-result-summary-header.png`;
+                        $("#terminalResultSummaryHeader").attr("src", headerUrl).attr("alt", `${printTerminalResultSummarySession?.branchData?.branchName} Report Header`);
+                    });
+                </script>
+            </div>
 
             <div class="title-div">
                 <h3 id="titleDetails"></h3>

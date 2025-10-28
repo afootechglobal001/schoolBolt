@@ -77,7 +77,21 @@ switch ($action){
 
 		$folders = [
 			'schoolLogo' => "../../../uploaded_files/branchLogo/",
-			'principalSignature' => "../../../uploaded_files/branchPrincipalSignature/"
+			'principalSignature' => "../../../uploaded_files/branchPrincipalSignature/",
+			'midTermResultHeader' => "../../../uploaded_files/schoolResultHeaders/",
+			'caResultSummaryHeader' => "../../../uploaded_files/schoolResultHeaders/",
+			'caBroadSheetHeader' => "../../../uploaded_files/schoolResultHeaders/",
+			'terminalBroadSheetHeader' => "../../../uploaded_files/schoolResultHeaders/",
+			'classListHeader' => "../../../uploaded_files/schoolResultHeaders/",
+			'cummulativeMarkBookHeader' => "../../../uploaded_files/schoolResultHeaders/",
+			'markBookHeader' => "../../../uploaded_files/schoolResultHeaders/",
+			'progressReportHeader' => "../../../uploaded_files/schoolResultHeaders/",
+			'scoreSheetHeader' => "../../../uploaded_files/schoolResultHeaders/",
+			'studentListHeader' => "../../../uploaded_files/schoolResultHeaders/",
+			'subjectListHeader' => "../../../uploaded_files/schoolResultHeaders/",
+			'terminalResultSummaryHeader' => "../../../uploaded_files/schoolResultHeaders/",
+			'terminalResultHeader' => "../../../uploaded_files/schoolResultHeaders/",
+			'watermark' => "../../../uploaded_files/schoolResultHeaders/"
 		];
 
 		$uploadDir = $folders[$fileType];

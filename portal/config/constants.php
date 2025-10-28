@@ -61,4 +61,19 @@ var parentPortalUrl = websiteUrl + '/parent'; /// For Parent Login Url //
 var studentPixPath = websiteUrl + '/uploaded_files/studentPix'; /// For Student Pix Path //
 var schoolLogoPixPath = websiteUrl + '/uploaded_files/branchLogo'; /// For School Pix Path //
 var principalSignaturePixPath = websiteUrl + '/uploaded_files/branchPrincipalSignature'; /// For School Pix Path //
+
+var midTermResultHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Mid-Term Result path //
+var caResultSummaryHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For CA Result Summary path //
+var caBroadSheetHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For CA Broad Sheet path //
+var terminalBroadSheetHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Terminal Broad Sheet path //
+var classListHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Class List Header path //
+var cummulativeMarkBookHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Cummulative Mark Book Header path //
+var markBookHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Mark Book Header path //
+var progressReportHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Progress Report Header path //
+var scoreSheetHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Score Sheet Header path //
+var studentListHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Student List Header path //
+var subjectListHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Subject List Header path //
+var terminalResultSummaryHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Terminal Result Summary Header path //
+var terminalResultHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Terminal Result Header path //
+var watermarkPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Watermark path //
 </script>

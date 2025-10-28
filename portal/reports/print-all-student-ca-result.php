@@ -80,13 +80,21 @@
                         }
                         subjectTable += `</tbody>`;
 
-                        const schoolLogo = branch.schoolLogo;
-                        const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` : `${websiteUrl}/images/report/icon.png`;
+                        const schoolHeader = branch.midTermResultHeader;
+                        const headerUrl = schoolHeader ? `${midTermResultHeaderPixPath}/${schoolHeader}` : `${websiteUrl}/images/report/mid-term-result-header.png`;
 
                         sectionHtml += `
                             <section class="body-div" style="page-break-after: always;">
                                 <div class="header-back-div">
-                                    <img src="<?php echo $websiteUrl ?>/images/report/mid-term-result-header.png" alt="Report Header" style="width: 100%; height: auto;" />
+                                    <div class="header-image">
+                                        <img src="${headerUrl}" alt="${branch.branchName} Report Header" style="width: 100%; height: auto;" />
+                                    </div>
+
+                                    <div class="school-info-div">
+                                        <div class="text">School Address: <strong>${branch.address}</strong></div>
+                                        <div class="text">Phone: <strong>${branch.mobileNumber}</strong> | Email: <strong>${branch.supportEmail}</strong></div>
+                                        <div class="text">Website: <strong>${printAllStudentCaResultSession.clientWebsite}</strong></div>
+                                    </div>
 
                                     <div class="title-div">
                                         <h3>${term.termName} ${sessionName} ACADEMIC SESSION</h3>
@@ -167,11 +175,17 @@
                                                     <p>${studentItems.classTeachersComment}</p>
                                                 </div>
 
-                                                <div class="list-content">
-                                                    <span>PRINCIPAL'S COMMENT:</span>
-                                                    <p>${studentItems.principalComment}</p>
-                                                </div>
-
+                                                ${branch.schoolCategoryId === "BASIC"
+                                                    ? `<div class="list-content">
+                                                        <span>HEAD TEACHER'S COMMENT:</span>
+                                                        <p>${studentItems.principalComment || '-'}</p>
+                                                        </div>`
+                                                    : `<div class="list-content">
+                                                        <span>PRINCIPAL'S COMMENT:</span>
+                                                        <p>${studentItems.principalComment || '-'}</p>
+                                                        </div>`
+                                                }
+                                                
                                                 <div class="list-content">
                                                     <span>SCHOOL REOPENS ON:</span>
                                                     <p>${formatDate(branch.schoolResumptionDate)}</p>
