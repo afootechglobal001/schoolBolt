@@ -28,12 +28,12 @@
                     const sessionName = sessionData.session;
                     const fetchedStudent = sessionData.eachStudentData;
 
-                    const backendWatermark = branch?.watermark;
+                    const backendWatermark = branch.watermark;
                     const defaultWatermark = '../images/report/watermark.jpg';
                     const watermarkUrl = backendWatermark ? backendWatermark : defaultWatermark;
 
-                    $('#backgroundTable').css({
-                        'background': `url(${watermarkUrl}) center no-repeat`,
+                    $('.backgroundTable').css({
+                        'background': `url(${watermarkPixPath}/${watermarkUrl}) center no-repeat`,
                         'background-size': 'cover'
                     });
 
@@ -145,7 +145,7 @@
                                 </div>
 
                                 <div class="inner-content">
-                                    <div class="table-div id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
+                                    <div class="table-div backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
                                         <table class="table" cellspacing="0" style="width:100%">
                                             ${subjectTable}
                                         </table>
