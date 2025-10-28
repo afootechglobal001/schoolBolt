@@ -288,14 +288,14 @@
 }
 
 
-.bottom-content-back-div .inner-container .content-container .signature{ 
+.bottom-content-back-div .inner-container .signature{ 
 	width: 200px;
 	display: flex;
 	align-self: flex-end;
 	overflow: hidden;
 }
 
-.bottom-content-back-div .inner-container .content-container .signature img{ 
+.bottom-content-back-div .inner-container .signature img{ 
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
