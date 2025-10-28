@@ -17,9 +17,40 @@
 
     <section class="body-div terminal-body">
         <div class="header-back-div">
-            <img src="<?php echo $websiteUrl ?>/images/report/terminal-result-header.png" alt="Report Header"
-                style="width: 100%; height: auto;" />
-           
+            <div class="header-image">
+                <img id="terminalResultHeader" src="<?php echo $websiteUrl ?>/images/report/terminal-result-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
+
+                <script>
+                    $(document).ready(function () {
+                        const schoolHeader = printEachStudentTerminalResultSession?.branchData?.terminalResultHeader;
+                        const headerUrl = schoolHeader ? `${terminalResultHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/terminal-result-header.png`;
+                        $("#terminalResultHeader").attr("src", headerUrl).attr("alt", `${printEachStudentTerminalResultSession?.branchData?.branchName} Report Header`);
+                    });
+                </script>
+            </div>
+
+            <div class="school-info-div">
+                <div class="text">School Address: <strong id="address">
+                        <script>
+                            $("#address").html(printEachStudentTerminalResultSession?.branchData?.address);
+                        </script>
+                    </strong></div>
+                <div class="text">Phone: <strong id="mobileNumber">
+                        <script>
+                            $("#mobileNumber").html(printEachStudentTerminalResultSession?.branchData?.mobileNumber);
+                        </script>
+                    </strong> | Email: <strong id="supportEmail">
+                        <script>
+                            $("#supportEmail").html(printEachStudentTerminalResultSession?.branchData?.supportEmail);
+                        </script>
+                    </strong></div>
+                    <div class="text">Website: <strong id="clientWebsite">
+                        <script>
+                            $("#clientWebsite").html(printEachStudentTerminalResultSession?.clientWebsite);
+                        </script>
+                    </strong></div>
+            </div>
+
             <div class="title-div">
                 <h3 id="titlelist-content"></h3>
                 <script>

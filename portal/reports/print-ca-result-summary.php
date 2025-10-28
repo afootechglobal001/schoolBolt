@@ -15,10 +15,19 @@
         printResultSummarySession = JSON.parse(sessionStorage.getItem("printResultSummarySession"));
     </script>
 
-    <section class="body-div all-terminal-body">
+    <section class="body-div ">
         <div class="header-back-div">
-            <img src="<?php echo $websiteUrl ?>/images/report/ca-result-summary-header.png" alt="Report Header"
-                style="width: 100%; height: auto;" />
+            <div class="header-image">
+                <img id="caResultSummaryHeader" src="<?php echo $websiteUrl ?>/images/report/ca-result-summary-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
+
+                <script>
+                    $(document).ready(function () {
+                        const schoolHeader = printResultSummarySession?.branchData?.caResultSummaryHeader;
+                        const headerUrl = schoolHeader ? `${caResultSummaryHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/ca-result-summary-header.png`;
+                        $("#caResultSummaryHeader").attr("src", headerUrl).attr("alt", `${printResultSummarySession?.branchData?.branchName} Report Header`);
+                    });
+                </script>
+            </div>
 
             <div class="title-div">
                 <h3 id="titleDetails"></h3>

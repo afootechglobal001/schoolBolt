@@ -18,8 +18,17 @@
 
     <section class="body-div broadsheet-body">
         <div class="header-back-div">
-            <img src="<?php echo $websiteUrl ?>/images/report/ca-broad-sheet-header.png" alt="Report Header"
-                style="width: 100%; height: auto;" />
+            <div class="header-image">
+                <img id="terminalBroadSheetHeader" src="<?php echo $websiteUrl ?>/images/report/terminal-broad-sheet-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
+
+                <script>
+                    $(document).ready(function () {
+                        const schoolHeader = printTerminalBroadSheetsession?.branchData?.terminalBroadSheetHeader;
+                        const headerUrl = schoolHeader ? `${terminalBroadSheetHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/terminal-broad-sheet-header.png`;
+                        $("#terminalBroadSheetHeader").attr("src", headerUrl).attr("alt", `${printTerminalBroadSheetsession?.branchData?.branchName} Report Header`);
+                    });
+                </script>
+            </div>
 
             <div class="title-div">
                 <h3 id="titleDetails"></h3>
@@ -28,18 +37,27 @@
                     printTerminalBroadSheetsession?.termData?.termName + ' - ' +
                     printTerminalBroadSheetsession?.departmentData?.departmentName + ' - ' +
                     printTerminalBroadSheetsession?.classData?.className + ' - ' +
-                    printTerminalBroadSheetsession?.armData?.armName + ' - '+' TERMINAL BROAD SHEET ');
+                    printTerminalBroadSheetsession?.armData?.armName);
                 </script>
             </div>
         </div>
         
-        <div class="inner-content broadsheet-inner-content">
-            <div class="table-div computation-table broadsheet-table  animated fadeIn">
+        <div class="inner-content">
+            <div class="table-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
                         $(document).ready(function () {
                             const printTerminalBroadSheetsession = JSON.parse(sessionStorage.getItem("printTerminalBroadSheetsession"));
                             if (!printTerminalBroadSheetsession) return;
+
+                            const backendWatermark = printTerminalBroadSheetsession?.branchData?.watermark;
+                            const defaultWatermark = '../images/report/watermark.jpg';
+                            const watermarkUrl = backendWatermark ? backendWatermark : defaultWatermark;
+
+                            $('#backgroundTable').css({
+                                'background': `url(${watermarkUrl}) center no-repeat`,
+                                'background-size': 'cover'
+                            });
 
                             const tableTitles = printTerminalBroadSheetsession?.tableTitles.split(',').map(x => x.trim());
                             const studentList = printTerminalBroadSheetsession?.studentData;

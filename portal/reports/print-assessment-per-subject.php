@@ -15,8 +15,17 @@
 
     <section class="body-div">
         <div class="header-back-div">
-            <img src="<?php echo $websiteUrl ?>/images/report/mid-term-result-header.png" alt="Report Header"
-                style="width: 100%; height: auto;" />
+            <div class="header-image">
+                <img id="markBookHeader" src="<?php echo $websiteUrl ?>/images/report/mark-book-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
+
+                <script>
+                    $(document).ready(function () {
+                        const schoolHeader = printAssessmentSession?.branchData?.markBookHeader;
+                        const headerUrl = schoolHeader ? `${markBookHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/mark-book-header.png`;
+                        $("#markBookHeader").attr("src", headerUrl).attr("alt", `${printAssessmentSession?.branchData?.branchName} Report Header`);
+                    });
+                </script>
+            </div>
 
             <div class="title-div">
                 <h3 id="titleDetails"></h3>
@@ -26,7 +35,7 @@
                     printAssessmentSession?.departmentData?.departmentName + ' - ' + 
                     printAssessmentSession?.classData?.className + ' - ' + 
                     printAssessmentSession?.armData?.armName + ' - ' +
-                    printAssessmentSession?.subjectData?.subjectName +' - '+printAssessmentSession?.assessmentData?.assessmentName + ' MARK BOOK ');
+                    printAssessmentSession?.subjectData?.subjectName +' - '+printAssessmentSession?.assessmentData?.assessmentName);
                 </script>
             </div>
         </div>

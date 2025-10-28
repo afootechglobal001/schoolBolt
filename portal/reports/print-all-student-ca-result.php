@@ -28,6 +28,15 @@
                     const sessionName = sessionData.session;
                     const fetchedStudent = sessionData.eachStudentData;
 
+                    const backendWatermark = branch?.watermark;
+                    const defaultWatermark = '../images/report/watermark.jpg';
+                    const watermarkUrl = backendWatermark ? backendWatermark : defaultWatermark;
+
+                    $('#backgroundTable').css({
+                        'background': `url(${watermarkUrl}) center no-repeat`,
+                        'background-size': 'cover'
+                    });
+
                     let sectionHtml = '';
 
                     for (let i = 0; i < fetchedStudent.length; i++) {
@@ -80,13 +89,21 @@
                         }
                         subjectTable += `</tbody>`;
 
-                        const schoolLogo = branch.schoolLogo;
-                        const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` : `${websiteUrl}/images/report/icon.png`;
+                        const schoolHeader = branch.midTermResultHeader;
+                        const headerUrl = schoolHeader ? `${midTermResultHeaderPixPath}/${schoolHeader}` : `${websiteUrl}/images/report/mid-term-result-header.png`;
 
                         sectionHtml += `
                             <section class="body-div" style="page-break-after: always;">
                                 <div class="header-back-div">
-                                    <img src="<?php echo $websiteUrl ?>/images/report/mid-term-result-header.png" alt="Report Header" style="width: 100%; height: auto;" />
+                                    <div class="header-image">
+                                        <img src="${headerUrl}" alt="${branch.branchName} Report Header" style="width: 100%; height: auto;" />
+                                    </div>
+
+                                    <div class="school-info-div">
+                                        <div class="text">School Address: <strong>${branch.address}</strong></div>
+                                        <div class="text">Phone: <strong>${branch.mobileNumber}</strong> | Email: <strong>${branch.supportEmail}</strong></div>
+                                        <div class="text">Website: <strong>${printAllStudentCaResultSession.clientWebsite}</strong></div>
+                                    </div>
 
                                     <div class="title-div">
                                         <h3>${term.termName} ${sessionName} ACADEMIC SESSION</h3>
@@ -128,7 +145,7 @@
                                 </div>
 
                                 <div class="inner-content">
-                                    <div class="table-div animated fadeIn">
+                                    <div class="table-div id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
                                         <table class="table" cellspacing="0" style="width:100%">
                                             ${subjectTable}
                                         </table>
@@ -167,11 +184,17 @@
                                                     <p>${studentItems.classTeachersComment}</p>
                                                 </div>
 
-                                                <div class="list-content">
-                                                    <span>PRINCIPAL'S COMMENT:</span>
-                                                    <p>${studentItems.principalComment}</p>
-                                                </div>
-
+                                                ${branch.schoolCategoryId === "BASIC"
+                                                    ? `<div class="list-content">
+                                                        <span>HEAD TEACHER'S COMMENT:</span>
+                                                        <p>${studentItems.principalComment || '-'}</p>
+                                                        </div>`
+                                                    : `<div class="list-content">
+                                                        <span>PRINCIPAL'S COMMENT:</span>
+                                                        <p>${studentItems.principalComment || '-'}</p>
+                                                        </div>`
+                                                }
+                                                
                                                 <div class="list-content">
                                                     <span>SCHOOL REOPENS ON:</span>
                                                     <p>${formatDate(branch.schoolResumptionDate)}</p>
