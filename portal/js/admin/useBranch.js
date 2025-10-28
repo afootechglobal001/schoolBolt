@@ -74,6 +74,221 @@ $(function () {
   };
 });
 
+$(function () {
+  midTermResultHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        // Handle browsers that don't support FileReader
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $("#midTermResultHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+});
+
+$(function () {
+  caResultSummaryHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        // Handle browsers that don't support FileReader
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $("#caResultSummaryHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+});
+
+$(function () {
+  caBroadSheetHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        // Handle browsers that don't support FileReader
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $("#caBroadSheetHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+});
+
+$(function () {
+  terminalBroadSheetHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        // Handle browsers that don't support FileReader
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          $("#terminalBroadSheetHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+});
+
+$(function () {
+  classListHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#classListHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+
+  cummulativeMarkBookHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#cummulativeMarkBookHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+
+  markBookHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#markBookHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+
+  progressReportHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#progressReportHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+
+  scoreSheetHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#scoreSheetHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+
+  studentListHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#studentListHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+
+  subjectListHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#subjectListHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+
+  terminalResultSummaryHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#terminalResultSummaryHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+
+  terminalResultHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#terminalResultHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+
+  watermarkPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#watermarkPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+});
+
+
 function _getSelectBranchManagerId(fieldId) {
   let $searchList = $("#searchList_" + fieldId);
   $searchList.html("<li>Loading data...</li>");
@@ -710,18 +925,28 @@ function _updateBranchConfig() {
     const schoolLogo = $("#schoolLogo").prop("files")[0];
     const principalSignature = $("#principalSignature").prop("files")[0];
 
-    $(
-      "#currentSession, #termId, #timeSchoolOpened, #schoolResumptionDate"
-    ).removeClass("issue");
-    $(
-      "#issue_currentSession, #issue_termId, #issue_timeSchoolOpened, #issue_schoolResumptionDate"
-    ).html("");
+    //  Newly added headers
+    const midTermResultHeader = $("#midTermResultHeader").prop("files")[0];
+    const caResultSummaryHeader = $("#caResultSummaryHeader").prop("files")[0];
+    const caBroadSheetHeader = $("#caBroadSheetHeader").prop("files")[0];
+    const terminalBroadSheetHeader = $("#terminalBroadSheetHeader").prop("files")[0];
+    const classListHeader = $("#classListHeader").prop("files")[0];
+    const cummulativeMarkBookHeader = $("#cummulativeMarkBookHeader").prop("files")[0];
+    const markBookHeader = $("#markBookHeader").prop("files")[0];
+    const progressReportHeader = $("#progressReportHeader").prop("files")[0];
+    const scoreSheetHeader = $("#scoreSheetHeader").prop("files")[0];
+    const studentListHeader = $("#studentListHeader").prop("files")[0];
+    const subjectListHeader = $("#subjectListHeader").prop("files")[0];
+    const terminalResultSummaryHeader = $("#terminalResultSummaryHeader").prop("files")[0];
+    const terminalResultHeader = $("#terminalResultHeader").prop("files")[0];
+    const watermark = $("#watermark").prop("files")[0];
+
+    $("#currentSession, #termId, #timeSchoolOpened, #schoolResumptionDate").removeClass("issue");
+    $("#issue_currentSession, #issue_termId, #issue_timeSchoolOpened, #issue_schoolResumptionDate").html("");
 
     if (!session) {
       $("#currentSession").addClass("issue");
-      $("#issue_currentSession").html(
-        "USER ERROR! Kindly Select current session to continue"
-      );
+      $("#issue_currentSession").html("USER ERROR! Kindly Select current session to continue");
       issueCount++;
     }
 
@@ -733,17 +958,13 @@ function _updateBranchConfig() {
 
     if (!timeSchoolOpened) {
       $("#timeSchoolOpened").addClass("issue");
-      $("#issue_timeSchoolOpened").html(
-        "USER ERROR! Kindly Provide time school opened to continue"
-      );
+      $("#issue_timeSchoolOpened").html("USER ERROR! Kindly Provide time school opened to continue");
       issueCount++;
     }
 
     if (!schoolResumptionDate) {
       $("#schoolResumptionDate").addClass("issue");
-      $("#issue_schoolResumptionDate").html(
-        "USER ERROR! Kindly Provide school resumption date to continue"
-      );
+      $("#issue_schoolResumptionDate").html("USER ERROR! Kindly Provide school resumption date to continue");
       issueCount++;
     }
 
@@ -751,11 +972,7 @@ function _updateBranchConfig() {
 
     if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
       const btnText = $("#submitBtn").html();
-      $("#submitBtn").html(
-        '<img src="' +
-          websiteUrl +
-          '/images/loading.gif" width="12px" alt="Loading"/>'
-      );
+      $("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
       $("#submitBtn").prop("disabled", true);
 
       const formData = new FormData();
@@ -764,13 +981,24 @@ function _updateBranchConfig() {
       formData.append("timeSchoolOpened", timeSchoolOpened);
       formData.append("schoolResumptionDate", schoolResumptionDate);
 
-      if (schoolLogo) {
-        formData.append("schoolLogo", schoolLogo);
-      }
-
-      if (principalSignature) {
-        formData.append("principalSignature", principalSignature);
-      }
+      if (schoolLogo) formData.append("schoolLogo", schoolLogo);
+      if (principalSignature) formData.append("principalSignature", principalSignature);
+      
+      // Append new files
+      if (midTermResultHeader) formData.append("midTermResultHeader", midTermResultHeader);
+      if (caResultSummaryHeader) formData.append("caResultSummaryHeader", caResultSummaryHeader);
+      if (caBroadSheetHeader) formData.append("caBroadSheetHeader", caBroadSheetHeader);
+      if (terminalBroadSheetHeader) formData.append("terminalBroadSheetHeader", terminalBroadSheetHeader);
+      if (classListHeader) formData.append("classListHeader", classListHeader);
+      if (cummulativeMarkBookHeader) formData.append("cummulativeMarkBookHeader", cummulativeMarkBookHeader);
+      if (markBookHeader) formData.append("markBookHeader", markBookHeader);
+      if (progressReportHeader) formData.append("progressReportHeader", progressReportHeader);
+      if (scoreSheetHeader) formData.append("scoreSheetHeader", scoreSheetHeader);
+      if (studentListHeader) formData.append("studentListHeader", studentListHeader);
+      if (subjectListHeader) formData.append("subjectListHeader", subjectListHeader);
+      if (terminalResultSummaryHeader) formData.append("terminalResultSummaryHeader", terminalResultSummaryHeader);
+      if (terminalResultHeader) formData.append("terminalResultHeader", terminalResultHeader);
+      if (watermark) formData.append("watermark", watermark);
 
       $.ajax({
         type: "POST",
@@ -787,30 +1015,93 @@ function _updateBranchConfig() {
 
           if (success === true) {
             const data = info.data;
+
             const oldSchoolLogo = data.oldSchoolLogo;
             const newSchoolLogo = data.schoolLogo;
+
             const oldPrincipalSignature = data.oldPrincipalSignature;
             const newPrincipalSignature = data.principalSignature;
 
-            if (newSchoolLogo !== "") {
-              _uploadSchoolLogo(
-                "schoolLogo",
-                oldSchoolLogo,
-                newSchoolLogo,
-                message
-              );
-            }
+            // New upload response variables
+            const oldMidTermResultHeader = data.oldMidTermResultHeader;
+            const newMidTermResultHeader = data.midTermResultHeader;
 
-            if (newPrincipalSignature !== "") {
-              _uploadSchoolLogo(
-                "principalSignature",
-                oldPrincipalSignature,
-                newPrincipalSignature,
-                message
-              );
-            }
+            const oldCaResultSummaryHeader = data.oldCaResultSummaryHeader;
+            const newCaResultSummaryHeader = data.caResultSummaryHeader;
 
-            if (newSchoolLogo === "" && newPrincipalSignature === "") {
+            const oldCaBroadSheetHeader = data.oldCaBroadSheetHeader;
+            const newCaBroadSheetHeader = data.caBroadSheetHeader;
+
+            const oldTerminalBroadSheetHeader = data.oldTerminalBroadSheetHeader;
+            const newTerminalBroadSheetHeader = data.terminalBroadSheetHeader;
+
+            const oldClassListHeader = data.oldClassListHeader;
+            const newClassListHeader = data.classListHeader;
+
+            const oldCummulativeMarkBookHeader = data.oldCummulativeMarkBookHeader;
+            const newCummulativeMarkBookHeader = data.cummulativeMarkBookHeader;
+
+            const oldMarkBookHeader = data.oldMarkBookHeader;
+            const newMarkBookHeader = data.markBookHeader;
+
+            const oldProgressReportHeader = data.oldProgressReportHeader;
+            const newProgressReportHeader = data.progressReportHeader;
+
+            const oldScoreSheetHeader = data.oldScoreSheetHeader;
+            const newScoreSheetHeader = data.scoreSheetHeader;
+
+            const oldStudentListHeader = data.oldStudentListHeader;
+            const newStudentListHeader = data.studentListHeader;
+
+            const oldSubjectListHeader = data.oldSubjectListHeader;
+            const newSubjectListHeader = data.subjectListHeader;
+
+            const oldTerminalResultSummaryHeader = data.oldTerminalResultSummaryHeader;
+            const newTerminalResultSummaryHeader = data.terminalResultSummaryHeader;
+
+            const oldTerminalResultHeader = data.oldTerminalResultHeader;
+            const newTerminalResultHeader = data.terminalResultHeader;
+
+            const oldWatermark = data.oldWatermark;
+            const newWatermark = data.watermark;
+
+            if (newSchoolLogo !== "") _uploadSchoolLogo("schoolLogo", oldSchoolLogo, newSchoolLogo, message);
+            if (newPrincipalSignature !== "") _uploadSchoolLogo("principalSignature", oldPrincipalSignature, newPrincipalSignature, message);
+
+            // New upload checks
+             if (newMidTermResultHeader !== "") _uploadSchoolLogo("midTermResultHeader", oldMidTermResultHeader, newMidTermResultHeader, message);
+            if (newCaResultSummaryHeader !== "") _uploadSchoolLogo("caResultSummaryHeader", oldCaResultSummaryHeader, newCaResultSummaryHeader, message);
+            if (newCaBroadSheetHeader !== "") _uploadSchoolLogo("caBroadSheetHeader", oldCaBroadSheetHeader, newCaBroadSheetHeader, message);
+            if (newTerminalBroadSheetHeader !== "") _uploadSchoolLogo("terminalBroadSheetHeader", oldTerminalBroadSheetHeader, newTerminalBroadSheetHeader, message);
+            if (newClassListHeader !== "") _uploadSchoolLogo("classListHeader", oldClassListHeader, newClassListHeader, message);
+            if (newCummulativeMarkBookHeader !== "") _uploadSchoolLogo("cummulativeMarkBookHeader", oldCummulativeMarkBookHeader, newCummulativeMarkBookHeader, message);
+            if (newMarkBookHeader !== "") _uploadSchoolLogo("markBookHeader", oldMarkBookHeader, newMarkBookHeader, message);
+            if (newProgressReportHeader !== "") _uploadSchoolLogo("progressReportHeader", oldProgressReportHeader, newProgressReportHeader, message);
+            if (newScoreSheetHeader !== "") _uploadSchoolLogo("scoreSheetHeader", oldScoreSheetHeader, newScoreSheetHeader, message);
+            if (newStudentListHeader !== "") _uploadSchoolLogo("studentListHeader", oldStudentListHeader, newStudentListHeader, message);
+            if (newSubjectListHeader !== "") _uploadSchoolLogo("subjectListHeader", oldSubjectListHeader, newSubjectListHeader, message);
+            if (newTerminalResultSummaryHeader !== "") _uploadSchoolLogo("terminalResultSummaryHeader", oldTerminalResultSummaryHeader, newTerminalResultSummaryHeader, message);
+            if (newTerminalResultHeader !== "") _uploadSchoolLogo("terminalResultHeader", oldTerminalResultHeader, newTerminalResultHeader, message);
+            if (newWatermark !== "") _uploadSchoolLogo("watermark", oldWatermark, newWatermark, message);
+
+            if (
+              newSchoolLogo === "" &&
+              newPrincipalSignature === "" &&
+              newMidTermResultHeader === "" &&
+              newCaResultSummaryHeader === "" &&
+              newCaBroadSheetHeader === "" &&
+              newTerminalBroadSheetHeader === "" &&
+              newClassListHeader === "" &&
+              newCummulativeMarkBookHeader === "" &&
+              newMarkBookHeader === "" &&
+              newProgressReportHeader === "" &&
+              newScoreSheetHeader === "" &&
+              newStudentListHeader === "" &&
+              newSubjectListHeader === "" &&
+              newTerminalResultSummaryHeader === "" &&
+              newTerminalResultHeader === "" &&
+              newWatermark === ""
+            ) {
               _actionAlert(message, true);
               _fetchEachBranches(getEachBranchDetailsSession.branchId);
               _getPage({ page: "branches", url: adminPortalLocalUrl });
@@ -822,10 +1113,7 @@ function _updateBranchConfig() {
           $("#submitBtn").html(btnText).prop("disabled", false);
         },
         error: function (error) {
-          _actionAlert(
-            "An error occurred while processing your request! Please Try Again",
-            false
-          );
+          _actionAlert("An error occurred while processing your request! Please Try Again", false);
           $("#submitBtn").html(btnText).prop("disabled", false);
         },
       });
@@ -835,6 +1123,7 @@ function _updateBranchConfig() {
     $("#submitBtn").prop("disabled", false);
   }
 }
+
 
 let _pendingUploads = 0;
 function _uploadSchoolLogo(fileType, oldFile, newFile, message) {

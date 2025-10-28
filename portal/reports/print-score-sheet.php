@@ -15,8 +15,17 @@
 
     <section class="body-div">
         <div class="header-back-div">
-            <img src="<?php echo $websiteUrl ?>/images/report/mid-term-result-header.png" alt="Report Header"
-                style="width: 100%; height: auto;" />
+            <div class="header-image">
+                <img id="scoreSheetHeader" src="<?php echo $websiteUrl ?>/images/report/score-sheet-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
+
+                <script>
+                    $(document).ready(function () {
+                        const schoolHeader = printStudentScoreSheetSession?.branchData?.scoreSheetHeader;
+                        const headerUrl = schoolHeader ? `${scoreSheetHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/score-sheet-header.png`;
+                        $("#scoreSheetHeader").attr("src", headerUrl).attr("alt", `${printStudentScoreSheetSession?.branchData?.branchName} Report Header`);
+                    });
+                </script>
+            </div>
 
             <div class="title-div">
                 <h3 id="titleDetails"></h3>
@@ -26,7 +35,7 @@
                     printStudentScoreSheetSession?.departmentData?.departmentName + ' - ' +
                     printStudentScoreSheetSession?.classData?.className + ' - ' +
                     printStudentScoreSheetSession?.armData?.armName + ' - ' +
-                    printStudentScoreSheetSession?.subjectData?.subjectName +' SCORE SHEET ');
+                    printStudentScoreSheetSession?.subjectData?.subjectName);
                 </script>
             </div>
         </div>

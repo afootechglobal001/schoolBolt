@@ -18,8 +18,17 @@
 
     <section class="body-div broadsheet-body">
         <div class="header-back-div">
-            <img src="<?php echo $websiteUrl ?>/images/report/ca-broad-sheet-header.png" alt="Report Header"
-                style="width: 100%; height: auto;" />
+            <div class="header-image">
+                <img id="caBroadSheetHeader" src="<?php echo $websiteUrl ?>/images/report/ca-broad-sheet-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
+
+                <script>
+                    $(document).ready(function () {
+                        const schoolHeader = printBroadSheetsession?.branchData?.caBroadSheetHeader;
+                        const headerUrl = schoolHeader ? `${caBroadSheetHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/ca-broad-sheet-header.png`;
+                        $("#caBroadSheetHeader").attr("src", headerUrl).attr("alt", `${printBroadSheetsession?.branchData?.branchName} Report Header`);
+                    });
+                </script>
+            </div>
 
             <div class="title-div">
                 <h3 id="titleDetails"></h3>

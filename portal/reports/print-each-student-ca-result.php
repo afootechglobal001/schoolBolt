@@ -16,24 +16,55 @@
 
 <body>
     <script>
-    printSingleAssessementSession = JSON.parse(sessionStorage.getItem("printSingleAssessementSession"));
+        printSingleAssessementSession = JSON.parse(sessionStorage.getItem("printSingleAssessementSession"));
     </script>
 
     <section class="body-div">
         <div class="header-back-div">
-            <img src="<?php echo $websiteUrl ?>/images/report/mid-term-result-header.png" alt="Report Header"
-                style="width: 100%; height: auto;" />
-           
+            <div class="header-image">
+                <img id="midTermResultHeader" src="<?php echo $websiteUrl ?>/images/report/mid-term-result-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
+
+                <script>
+                    $(document).ready(function () {
+                        const schoolHeader = printSingleAssessementSession?.branchData?.midTermResultHeader;
+                        const headerUrl = schoolHeader ? `${midTermResultHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/mid-term-result-header.png`;
+                        $("#midTermResultHeader").attr("src", headerUrl).attr("alt", `${printSingleAssessementSession?.branchData?.branchName} Report Header`);
+                    });
+                </script>
+            </div>
+
+            <div class="school-info-div">
+                <div class="text">School Address: <strong id="address">
+                        <script>
+                            $("#address").html(printSingleAssessementSession?.branchData?.address);
+                        </script>
+                    </strong></div>
+                <div class="text">Phone: <strong id="mobileNumber">
+                        <script>
+                            $("#mobileNumber").html(printSingleAssessementSession?.branchData?.mobileNumber);
+                        </script>
+                    </strong> | Email: <strong id="supportEmail">
+                        <script>
+                            $("#supportEmail").html(printSingleAssessementSession?.branchData?.supportEmail);
+                        </script>
+                    </strong></div>
+                    <div class="text">Website: <strong id="clientWebsite">
+                        <script>
+                            $("#clientWebsite").html(printSingleAssessementSession?.clientWebsite);
+                        </script>
+                    </strong></div>
+            </div>
+
             <div class="title-div">
                 <h3 id="titleDetails"></h3>
                 <script>
-                $("#titleDetails").html(
-                    printSingleAssessementSession?.termData?.termName + ' ' +
-                    printSingleAssessementSession?.session + ' ACADEMIC SESSION'
-                );
+                    $("#titleDetails").html(
+                        printSingleAssessementSession?.termData?.termName + ' ' +
+                        printSingleAssessementSession?.session + ' ACADEMIC SESSION'
+                    );
                 </script>
             </div>
-            
+
             <div class="top-containner-back-div">
                 <div class="inner-div-cont">
                     <div class="content-div">
@@ -41,9 +72,9 @@
                             <div class="name">
                                 <div id="fullName">
                                     <script>
-                                    $("#fullName").html(printSingleAssessementSession?.studentData?.surName + ' ' +
-                                        printSingleAssessementSession?.studentData?.firstName + ' ' +
-                                        printSingleAssessementSession?.studentData?.otherNames);
+                                        $("#fullName").html(printSingleAssessementSession?.studentData?.surName + ' ' +
+                                            printSingleAssessementSession?.studentData?.firstName + ' ' +
+                                            printSingleAssessementSession?.studentData?.otherNames);
                                     </script>
                                 </div>
                             </div>
@@ -53,10 +84,10 @@
                             <div class="details">
                                 <p>STUDENT ID: <span id="studentId">
                                         <script>
-                                        $("#studentId").html(printSingleAssessementSession?.studentData
-                                            ?.officialStudentId ? printSingleAssessementSession?.studentData
-                                            ?.officialStudentId : printSingleAssessementSession?.studentData
-                                            ?.studentId);
+                                            $("#studentId").html(printSingleAssessementSession?.studentData
+                                                ?.officialStudentId ? printSingleAssessementSession?.studentData
+                                                ?.officialStudentId : printSingleAssessementSession?.studentData
+                                                ?.studentId);
                                         </script>
                                     </span></p>
 
@@ -65,8 +96,8 @@
                             <div class="details">
                                 <p>CLASS: <span id="className">
                                         <script>
-                                        $("#className").html(printSingleAssessementSession?.classData?.className + ' ' +
-                                            printSingleAssessementSession?.armData?.armName);
+                                            $("#className").html(printSingleAssessementSession?.classData?.className + ' ' +
+                                                printSingleAssessementSession?.armData?.armName);
                                         </script>
                                     </span></p>
                             </div>
@@ -74,7 +105,7 @@
                             <div class="details">
                                 <p>GENDER: <span id="genderName">
                                         <script>
-                                        $("#genderName").html(printSingleAssessementSession?.studentData?.genderName);
+                                            $("#genderName").html(printSingleAssessementSession?.studentData?.genderName);
                                         </script>
                                     </span></p>
                             </div>
@@ -83,9 +114,9 @@
 
                     <div class="image-div" id="studentPix">
                         <script>
-                        $("#studentPix").html('<img src="' + studentPixPath + '/' + printSingleAssessementSession
-                            ?.studentData?.passport + '" alt="' + printSingleAssessementSession?.studentData
-                            ?.surName + '">');
+                            $("#studentPix").html('<img src="' + studentPixPath + '/' + printSingleAssessementSession
+                                ?.studentData?.passport + '" alt="' + printSingleAssessementSession?.studentData
+                                ?.surName + '">');
                         </script>
                     </div>
                 </div>
@@ -96,11 +127,11 @@
             <div class="table-div animated fadeIn">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
-                    $(document).ready(function() {
-                        const printSingleAssessementSession = JSON.parse(sessionStorage.getItem(
-                            "printSingleAssessementSession"));
+                        $(document).ready(function() {
+                            const printSingleAssessementSession = JSON.parse(sessionStorage.getItem(
+                                "printSingleAssessementSession"));
 
-                        let text = `
+                            let text = `
                             <thead>
                                 <tr class="tb-col">
                                     <th>SN</th>
@@ -115,16 +146,16 @@
                             </thead>
                             <tbody>`;
 
-                        if (printSingleAssessementSession && printSingleAssessementSession.success === true) {
-                            const subjectDataList = printSingleAssessementSession.data?.subjectData || [];
-                            const summary = printSingleAssessementSession?.data?.summary || {};
+                            if (printSingleAssessementSession && printSingleAssessementSession.success === true) {
+                                const subjectDataList = printSingleAssessementSession.data?.subjectData || [];
+                                const summary = printSingleAssessementSession?.data?.summary || {};
 
-                            for (let i = 0; i < subjectDataList.length; i++) {
-                                const no = i + 1;
-                                const subject = subjectDataList[i];
-                                const assessment = subject.subjectAssessment || {};
+                                for (let i = 0; i < subjectDataList.length; i++) {
+                                    const no = i + 1;
+                                    const subject = subjectDataList[i];
+                                    const assessment = subject.subjectAssessment || {};
 
-                                text += `
+                                    text += `
                                     <tr class="tb-row">
                                     <td>${no}</td>
                                     <td>${subject.subjectName || '-'}</td>
@@ -135,26 +166,41 @@
                                     <td>${assessment.grade || '-'}</td>
                                     <td>${assessment.remark || '-'}</td>
                                     </tr>`;
+                                }
+
+                                text += `</tbody>`;
+                                $('#pageContent').html(text);
+
+                                // Example data filling for summary
+                                $('#numberOfStudents').html(printSingleAssessementSession?.data?.numberOfStudents ||
+                                    '-');
+                                $('#numOfSubjects').html(summary.totalSubjects || '-');
+                                $('#totalMarkObtainable').html(summary.totalMarkObtainable || '-');
+                                $('#totalMarkObtained').html(summary.totalMarkObtained || '-');
+                                $('#totalPercentage').html(summary.totalPercentage ? summary.totalPercentage + '%' :
+                                    '-');
+
+                                $('#classTeacherComment').html(printSingleAssessementSession?.classTeachersComment
+                                    ?.classTeachersComment || '-');
+                                $('#formatDate').html(formatDate(printSingleAssessementSession?.branchData
+                                    ?.schoolResumptionDate));
+
+                                let commentContent = "";
+
+                                if (printSingleAssessementSession?.branchData?.schoolCategoryId === "BASIC") {
+                                commentContent = `
+                                    <span>HEAD TEACHER'S COMMENT:</span>
+                                    <p>${summary.principalComment || '-'}</p>
+                                `;
+                                } else {
+                                commentContent = `
+                                    <span>PRINCIPAL'S COMMENT:</span>
+                                    <p>${summary.principalComment || '-'}</p>
+                                `;
+                                }
+                                $('#commentContainer').html(commentContent);
                             }
-
-                            text += `</tbody>`;
-                            $('#pageContent').html(text);
-
-                            // Example data filling for summary
-                            $('#numberOfStudents').html(printSingleAssessementSession?.data?.numberOfStudents ||
-                                '-');
-                            $('#numOfSubjects').html(summary.totalSubjects || '-');
-                            $('#totalMarkObtainable').html(summary.totalMarkObtainable || '-');
-                            $('#totalMarkObtained').html(summary.totalMarkObtained || '-');
-                            $('#totalPercentage').html(summary.totalPercentage ? summary.totalPercentage + '%' :
-                                '-');
-                            $('#principalsComment').html(summary.principalComment || '-');
-                            $('#classTeacherComment').html(printSingleAssessementSession?.classTeachersComment
-                                ?.classTeachersComment || '-');
-                            $('#formatDate').html(formatDate(printSingleAssessementSession?.branchData
-                                ?.schoolResumptionDate));
-                        }
-                    });
+                        });
                     </script>
                 </table>
             </div>
@@ -192,10 +238,7 @@
                             <p id="classTeacherComment"></p>
                         </div>
 
-                        <div class="list-content">
-                            <span>PRINCIPAL'S COMMENT:</span>
-                            <p id="principalsComment"></p>
-                        </div>
+                        <div class="list-content" id="commentContainer"></div>
 
                         <div class="list-content">
                             <span>SCHOOL REOPENS ON:</span>
@@ -205,9 +248,9 @@
 
                     <div class="signature" id="principalSignature">
                         <script>
-                        $("#principalSignature").html('<img src="' + principalSignaturePixPath + '/' +
-                            printSingleAssessementSession?.branchData?.principalSignature + '" alt="' +
-                            printSingleAssessementSession?.branchData?.branchName + ' PRINCIPAL SIGNATURE">');
+                            $("#principalSignature").html('<img src="' + principalSignaturePixPath + '/' +
+                                printSingleAssessementSession?.branchData?.principalSignature + '" alt="' +
+                                printSingleAssessementSession?.branchData?.branchName + ' PRINCIPAL SIGNATURE">');
                         </script>
                     </div>
                 </div>

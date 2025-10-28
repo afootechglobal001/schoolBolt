@@ -2927,7 +2927,7 @@
         getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
     </script>
 
-    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+    <div class="slide-form-div save-compute-teachers-comment-slide-form" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
                 <span id="pageTitle"><i class="bi-gear-wide-connected"></i> SESSION CONFIGURATION</span>
@@ -2985,7 +2985,7 @@
                     </script>
                 </div>
 
-                <div class="title">UPLOAD SCHOOL LOGO: <i>(JPG, PNG FORMAT ONLY) (150 X 150)</i> <span>*</span></div>
+                <div class="title">UPLOAD SCHOOL LOGO: <i>(JPG, PNG FORMAT ONLY)</i> <span>*</span></div>
                 <label>
                     <div class="pix-div" id="schoolLogoPreviewContainer">
                         <img id="schoolLogoPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg"
@@ -3031,6 +3031,323 @@
                         });
                     </script>
                 </label>
+
+                <div class="title">UPLOAD MID-TERM RESULT HEADER: <i>(PNG FORMAT ONLY)</i> <span>*</span></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="midTermResultHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg"
+                            alt="Default Image">
+                        <input type="file" id="midTermResultHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="midTermResultHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+
+                    <script>
+                        $(document).ready(function() {
+                            const resultHeader = getEachBranchDetailsSession.midTermResultHeader;
+                            const resultHeaderUrl = resultHeader ? `${midTermResultHeaderPixPath}/${resultHeader}` : "<?php echo $websiteUrl ?>/images/sample.jpg";
+                            $("#midTermResultHeaderPreviewPix").attr("src", resultHeaderUrl).attr("alt", getEachBranchDetailsSession.name + "Mid Term Header");
+                        });
+                    </script>
+                </label>
+
+                <div class="title">UPLOAD CA RESULT SUMMARY HEADER: <i>(PNG FORMAT ONLY)</i> <span>*</span></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="caResultSummaryHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg"
+                            alt="Default Image">
+                        <input type="file" id="caResultSummaryHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="caResultSummaryHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+
+                    <script>
+                        $(document).ready(function() {
+                            const caResultHeader = getEachBranchDetailsSession.caResultSummaryHeader;
+                            const caResultHeaderUrl = caResultHeader ? `${midTermResultHeaderPixPath}/${caResultHeader}` : "<?php echo $websiteUrl ?>/images/sample.jpg";
+                            $("#caResultSummaryHeaderPreviewPix").attr("src", caResultHeaderUrl).attr("alt", getEachBranchDetailsSession.name + "CA Result Summary");
+                        });
+                    </script>
+                </label>
+
+                <div class="title">UPLOAD CA BROAD SHEET HEADER: <i>(PNG FORMAT ONLY)</i> <span>*</span></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="caBroadSheetHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg"
+                            alt="Default Image">
+                        <input type="file" id="caBroadSheetHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="caBroadSheetHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+
+                    <script>
+                        $(document).ready(function() {
+                            const caBroadSheetHeader = getEachBranchDetailsSession?.caBroadSheetHeader;
+                            const caBroadSheetHeaderUrl = caBroadSheetHeader ?
+                                `${midTermResultHeaderPixPath}/${caBroadSheetHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#caBroadSheetHeaderPreviewPix")
+                                .attr("src", caBroadSheetHeaderUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " CA Broad Sheet Result Summary");
+                        });
+                    </script>
+                </label>
+
+                <div class="title">UPLOAD TERMINAL BROAD SHEET HEADER: <i>(PNG FORMAT ONLY)</i> <span>*</span></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="terminalBroadSheetHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg"
+                            alt="Default Image">
+                        <input type="file" id="terminalBroadSheetHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="terminalBroadSheetHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+
+                    <script>
+                        $(document).ready(function() {
+                            const terminalBroadSheetHeader = getEachBranchDetailsSession?.terminalBroadSheetHeader;
+                            const terminalBroadSheetHeaderUrl = terminalBroadSheetHeader ?
+                                `${terminalBroadSheetHeaderPixPath}/${terminalBroadSheetHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#terminalBroadSheetHeaderPreviewPix")
+                                .attr("src", terminalBroadSheetHeaderUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + "Terminal Broad Sheet Result Summary");
+                        });
+                    </script>
+                </label>
+
+                <!-- CLASS LIST HEADER -->
+                <div class="title">UPLOAD CLASS LIST HEADER: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="classListHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="classListHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="classListHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            const classListHeader = getEachBranchDetailsSession?.classListHeader;
+                            const classListHeaderUrl = classListHeader ?
+                                `${classListHeaderPixPath}/${classListHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#classListHeaderPreviewPix")
+                                .attr("src", classListHeaderUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " Class List Header");
+                        });
+                    </script>
+                </label>
+
+                <!-- CUMMULATIVE MARK BOOK HEADER -->
+                <div class="title">UPLOAD CUMMULATIVE MARK BOOK HEADER: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="cummulativeMarkBookHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="cummulativeMarkBookHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="cummulativeMarkBookHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            const cummulativeMarkBookHeader = getEachBranchDetailsSession?.cummulativeMarkBookHeader;
+                            const cummulativeMarkBookHeaderUrl = cummulativeMarkBookHeader ?
+                                `${cummulativeMarkBookHeaderPixPath}/${cummulativeMarkBookHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#cummulativeMarkBookHeaderPreviewPix")
+                                .attr("src", cummulativeMarkBookHeaderUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " Cummulative Mark Book Header");
+                        });
+                    </script>
+                </label>
+
+                <!-- MARK BOOK HEADER -->
+                <div class="title">UPLOAD MARK BOOK HEADER: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="markBookHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="markBookHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="markBookHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            const markBookHeader = getEachBranchDetailsSession?.markBookHeader;
+                            const markBookHeaderUrl = markBookHeader ?
+                                `${markBookHeaderPixPath}/${markBookHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#markBookHeaderPreviewPix")
+                                .attr("src", markBookHeaderUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " Mark Book Header");
+                        });
+                    </script>
+                </label>
+
+                <!-- PROGRESS REPORT HEADER -->
+                <div class="title">UPLOAD PROGRESS REPORT HEADER: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="progressReportHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="progressReportHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="progressReportHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            const progressReportHeader = getEachBranchDetailsSession?.progressReportHeader;
+                            const progressReportHeaderUrl = progressReportHeader ?
+                                `${progressReportHeaderPixPath}/${progressReportHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#progressReportHeaderPreviewPix")
+                                .attr("src", progressReportHeaderUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " Progress Report Header");
+                        });
+                    </script>
+                </label>
+
+                <!-- SCORE SHEET HEADER -->
+                <div class="title">UPLOAD SCORE SHEET HEADER: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="scoreSheetHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="scoreSheetHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="scoreSheetHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            const scoreSheetHeader = getEachBranchDetailsSession?.scoreSheetHeader;
+                            const scoreSheetHeaderUrl = scoreSheetHeader ?
+                                `${scoreSheetHeaderPixPath}/${scoreSheetHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#scoreSheetHeaderPreviewPix")
+                                .attr("src", scoreSheetHeaderUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " Score Sheet Header");
+                        });
+                    </script>
+                </label>
+
+                <!-- STUDENT LIST HEADER -->
+                <div class="title">UPLOAD STUDENT LIST HEADER: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="studentListHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="studentListHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="studentListHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            const studentListHeader = getEachBranchDetailsSession?.studentListHeader;
+                            const studentListHeaderUrl = studentListHeader ?
+                                `${studentListHeaderPixPath}/${studentListHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#studentListHeaderPreviewPix")
+                                .attr("src", studentListHeaderUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " Student List Header");
+                        });
+                    </script>
+                </label>
+
+                <!-- SUBJECT LIST HEADER -->
+                <div class="title">UPLOAD SUBJECT LIST HEADER: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="subjectListHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="subjectListHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="subjectListHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            const subjectListHeader = getEachBranchDetailsSession?.subjectListHeader;
+                            const subjectListHeaderUrl = subjectListHeader ?
+                                `${subjectListHeaderPixPath}/${subjectListHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#subjectListHeaderPreviewPix")
+                                .attr("src", subjectListHeaderUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " Subject List Header");
+                        });
+                    </script>
+                </label>
+
+                <!-- TERMINAL RESULT SUMMARY HEADER -->
+                <div class="title">UPLOAD TERMINAL RESULT SUMMARY HEADER: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="terminalResultSummaryHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="terminalResultSummaryHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="terminalResultSummaryHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            const terminalResultSummaryHeader = getEachBranchDetailsSession?.terminalResultSummaryHeader;
+                            const terminalResultSummaryHeaderUrl = terminalResultSummaryHeader ?
+                                `${terminalResultSummaryHeaderPixPath}/${terminalResultSummaryHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#terminalResultSummaryHeaderPreviewPix")
+                                .attr("src", terminalResultSummaryHeaderUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " Terminal Result Summary Header");
+                        });
+                    </script>
+                </label>
+
+                <!-- TERMINAL RESULT HEADER -->
+                <div class="title">UPLOAD TERMINAL RESULT HEADER: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="terminalResultHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="terminalResultHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="terminalResultHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            const terminalResultHeader = getEachBranchDetailsSession?.terminalResultHeader;
+                            const terminalResultHeaderUrl = terminalResultHeader ?
+                                `${terminalResultHeaderPixPath}/${terminalResultHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#terminalResultHeaderPreviewPix")
+                                .attr("src", terminalResultHeaderUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " Terminal Result Header");
+                        });
+                    </script>
+                </label>
+
+                <!-- WATERMARK -->
+                <div class="title">UPLOAD WATERMARK: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="watermarkPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="watermark" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="watermarkPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            const watermark = getEachBranchDetailsSession?.watermark;
+                            const watermarkUrl = watermark ?
+                                `${watermarkPixPath}/${watermark}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#watermarkPreviewPix")
+                                .attr("src", watermarkUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " Watermark");
+                        });
+                    </script>
+                </label>
+
 
                 <div>
                     <button class="btn" title="SUBMIT" id="submitBtn" onclick="_updateBranchConfig();"> <i
@@ -3246,7 +3563,7 @@
     </div>
 <?php } ?>
 
-    <!-- ///// Female Student Comment Page //// -->
+<!-- ///// Female Student Comment Page //// -->
 <?php if ($page == 'femalePage') { ?>
     <script>
         getEachTeachersCommentSession = JSON.parse(sessionStorage.getItem("getEachTeachersCommentSession"));
@@ -3313,7 +3630,7 @@
             <div class="inner-container">
                 <div>
                     <div class="alert alert-success form-alert">Kindly fill the form below to <span id="pageTitle2"> ADD A
-                        NEW COMMENT</span></div>
+                            NEW COMMENT</span></div>
                 </div>
 
                 <div>
@@ -3354,15 +3671,15 @@
                 </div>
 
                 <div>
-                    <button class="btn" title="SUBMIT" id="submitBtn"> 
-                        <i class="bi-check"></i> SUBMIT 
+                    <button class="btn" title="SUBMIT" id="submitBtn">
+                        <i class="bi-check"></i> SUBMIT
                     </button>
                 </div>
             </div>
         </div>
     </div>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             const gender = sessionStorage.getItem("activeGender");
             $("#genderDisplay").text(gender === "M" ? "MALE" : "FEMALE");
 
