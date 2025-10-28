@@ -64,12 +64,7 @@ function _fetchBranchDepartmentClass() {
 
                                 <div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
                                     <div class="alert alert-success top-alert-div class-top-alert-div animated fadeIn">
-                                        <span><i class="bi-people-fill"></i> <span>${departmentName}</span> CLASS TEACHERS</span> 
-
-                                        <div class="btn-container">
-                                            <button class="btn" title="PRINT RECORDS" onclick=""><i class="bi-printer"></i> PRINT</button>
-                                            <button class="btn" title="EXPORT RECORDS" onclick=""><i class="bi-file-earmark-excel"></i> EXPORT</button>
-                                        </div>
+                                        <span><i class="bi-people-fill"></i> <span>${departmentName}</span> CLASS TEACHERS</span>       
                                     </div>
 
                                     <div class="table-div animated fadeIn">
