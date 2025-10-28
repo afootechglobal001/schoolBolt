@@ -44,12 +44,21 @@
         </div>
 
         <div class="inner-content">
-            <div class="table-div">
+            <div class="table-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
                         $(document).ready(function () {
                             const printBroadSheetsession = JSON.parse(sessionStorage.getItem("printBroadSheetsession"));
                             if (!printBroadSheetsession) return;
+
+                            const backendWatermark = printBroadSheetsession?.branchData?.watermark;
+                            const defaultWatermark = '../images/report/watermark.jpg';
+                            const watermarkUrl = backendWatermark ? backendWatermark : defaultWatermark;
+
+                            $('#backgroundTable').css({
+                                'background': `url(${watermarkUrl}) center no-repeat`,
+                                'background-size': 'cover'
+                            });
 
                             const tableTitles = printBroadSheetsession?.tableTitles.split(',').map(x => x.trim());
                             const studentList = printBroadSheetsession?.studentData;
