@@ -36,13 +36,21 @@
         </div>
 
         <div class="inner-content">
-            <div class="table-div animated fadeIn">
+            <div class="table-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
                         $(document).ready(function() {
-                            const printComputeFeeByClassSession = JSON.parse(sessionStorage.getItem(
-                                "printComputeFeeByClassSession"));
+                            const printComputeFeeByClassSession = JSON.parse(sessionStorage.getItem("printComputeFeeByClassSession"));
 
+                            const backendWatermark = printComputeFeeByClassSession?.branchData?.watermark;
+                            const defaultWatermark = '../images/report/watermark.jpg';
+                            const watermarkUrl = backendWatermark ? backendWatermark : defaultWatermark;
+
+                            $('#backgroundTable').css({
+                                'background': `url(${watermarkUrl}) center no-repeat`,
+                                'background-size': 'cover'
+                            });
+                                
                             let text = '';
                             let no = 0;
                             text = `

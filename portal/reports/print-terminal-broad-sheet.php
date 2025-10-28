@@ -42,13 +42,22 @@
             </div>
         </div>
         
-        <div class="inner-content broadsheet-inner-content">
-            <div class="table-div computation-table broadsheet-table  animated fadeIn">
+        <div class="inner-content">
+            <div class="table-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
                         $(document).ready(function () {
                             const printTerminalBroadSheetsession = JSON.parse(sessionStorage.getItem("printTerminalBroadSheetsession"));
                             if (!printTerminalBroadSheetsession) return;
+
+                            const backendWatermark = printTerminalBroadSheetsession?.branchData?.watermark;
+                            const defaultWatermark = '../images/report/watermark.jpg';
+                            const watermarkUrl = backendWatermark ? backendWatermark : defaultWatermark;
+
+                            $('#backgroundTable').css({
+                                'background': `url(${watermarkUrl}) center no-repeat`,
+                                'background-size': 'cover'
+                            });
 
                             const tableTitles = printTerminalBroadSheetsession?.tableTitles.split(',').map(x => x.trim());
                             const studentList = printTerminalBroadSheetsession?.studentData;
