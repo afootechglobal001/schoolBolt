@@ -16,8 +16,17 @@
 
     <section class="body-div">
         <div class="header-back-div">
-            <img src="<?php echo $websiteUrl ?>/images/report/mid-term-result-header.png" alt="Report Header"
-                style="width: 100%; height: auto;" />
+            <div class="header-image">
+                <img id="general" src="<?php echo $websiteUrl ?>/images/report/general.png" alt="Report Header" style="width: 100%; height: auto;"/>
+
+                <script>
+                    $(document).ready(function () {
+                        const schoolHeader = printFeesSettingsSession?.branchData?.general;
+                        const headerUrl = schoolHeader ? `${caBroadSheetHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/general.png`;
+                        $("#general").attr("src", headerUrl).attr("alt", `${printFeesSettingsSession?.branchData?.branchName} Report Header`);
+                    });
+                </script>
+            </div>
 
             <div class="title-div">
                 <h3 id="titleDetails"></h3>

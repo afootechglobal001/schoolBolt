@@ -55,7 +55,7 @@
                             const watermarkUrl = backendWatermark ? backendWatermark : defaultWatermark;
 
                             $('#backgroundTable').css({
-                                'background': `url(${watermarkUrl}) center no-repeat`,
+                                'background': `url(${watermarkPixPath}/${watermarkUrl}) center no-repeat`,
                                 'background-size': 'cover'
                             });
 
