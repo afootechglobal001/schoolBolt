@@ -23,7 +23,7 @@ if (!$checkBasicSecurity){/// start if 1
     validateEmptyField($assessmentId, 'ASSESSMENT');
     validateEmptyField($studentId, 'STUDENT');
 
-    $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, schoolLogo, principalSignature, address, supportEmail, mobileNumber, schoolResumptionDate  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+    $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, schoolLogo, principalSignature, address, supportEmail, mobileNumber, schoolResumptionDate, schoolCategoryId, midTermResultHeader, watermark FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
 
     $termDataQuery = mysqli_query($conn, "SELECT * FROM SETUP_TERM_TAB WHERE termId='$termId'");
