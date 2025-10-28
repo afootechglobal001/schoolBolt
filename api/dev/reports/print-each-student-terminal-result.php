@@ -50,8 +50,6 @@ if (!$checkBasicSecurity){/// start if 1
     $response['armData'] = $armDataFetch;
     $response['studentData'] = $studentDataFetch;
 
-
-
     if($termId == 1){
        require_once 'term-1-result.php';
     } elseif($termId == 2){
