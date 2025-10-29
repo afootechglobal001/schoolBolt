@@ -1,45 +1,51 @@
 <?php include '../config/constants.php'; ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http: //www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http: //www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <link href="<?php echo $websiteUrl?>/images/icon.png" rel="shortcut icon" type="image-png"/>
-    <link href="<?php echo $websiteUrl?>/style/report-style.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
-    <link href="<?php echo $websiteUrl?>/style/paramount.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
+    <link href="<?php echo $websiteUrl?>/images/icon.png" rel="shortcut icon" type="image-png" />
+    <link href="<?php echo $websiteUrl?>/style/report-style.css?v=<?php echo $codeVersion?>" type="text/css"
+        rel="stylesheet" />
+    <link href="<?php echo $websiteUrl?>/style/paramount.css?v=<?php echo $codeVersion?>" type="text/css"
+        rel="stylesheet" />
     <script src="<?php echo $websiteUrl?>/js/jquery-v3.6.1.min.js"></script>
     <script src="<?php echo $websiteUrl?>/js/scripts.js?v=<?php echo $codeVersion?>"></script>
     <title>ALL STUDENT CA RESULT | <?php echo $clientName ?></title>
 </head>
 
 <body>
-    <script> printAllStudentCaResultSession = JSON.parse(sessionStorage.getItem("printAllStudentCaResultSession"));</script>
+    <script>
+    printAllStudentCaResultSession = JSON.parse(sessionStorage.getItem("printAllStudentCaResultSession"));
+    </script>
 
     <div id="pageContainer">
         <script>
-            $(document).ready(function() {
-                if (printAllStudentCaResultSession && printAllStudentCaResultSession.success === true) {
-                    const sessionData = printAllStudentCaResultSession;
-                    const branch = sessionData.branchData;
-                    const term = sessionData.termData;
-                    const department = sessionData.departmentData;
-                    const classData = sessionData.classData;
-                    const arm = sessionData.armData;
-                    const assessment = sessionData.assessmentData;
-                    const sessionName = sessionData.session;
-                    const fetchedStudent = sessionData.eachStudentData;
+        $(document).ready(function() {
+            if (printAllStudentCaResultSession && printAllStudentCaResultSession.success === true) {
+                const sessionData = printAllStudentCaResultSession;
+                const branch = sessionData.branchData;
+                const term = sessionData.termData;
+                const department = sessionData.departmentData;
+                const classData = sessionData.classData;
+                const arm = sessionData.armData;
+                const assessment = sessionData.assessmentData;
+                const sessionName = sessionData.session;
+                const fetchedStudent = sessionData.eachStudentData;
 
-                    let sectionHtml = '';
+                let sectionHtml = '';
 
-                    for (let i = 0; i < fetchedStudent.length; i++) {
-                        const studentItems = fetchedStudent[i];
-                        const fullName = `${studentItems.surName} ${studentItems.firstName} ${studentItems.otherNames}`;
-                        const studentId = studentItems.studentId;
-                        const officialStudentId = studentItems.officialStudentId;
-                        const genderName = studentItems.genderName;
-                        const studentSubjects = studentItems.data;
+                for (let i = 0; i < fetchedStudent.length; i++) {
+                    const studentItems = fetchedStudent[i];
+                    const fullName =
+                        `${studentItems.surName} ${studentItems.firstName} ${studentItems.otherNames}`;
+                    const studentId = studentItems.studentId;
+                    const officialStudentId = studentItems.officialStudentId;
+                    const genderName = studentItems.genderName;
+                    const studentSubjects = studentItems.data;
 
-                        let no=0;
-                        let subjectTable = `
+                    let no = 0;
+                    let subjectTable = `
                             <thead>
                                 <tr class="tb-col">
                                     <th>SN</th>
@@ -54,18 +60,18 @@
                             </thead>
                             <tbody>`;
 
-                        for (let j = 0; j < studentSubjects.length; j++) {
-                            no++;
-                            const subject = studentSubjects[j];
-                            const fetchedStudentSubjects= subject.subjectAssessment;
-                            const markObtainable= fetchedStudentSubjects.markObtainable;
-                            const markObtained= fetchedStudentSubjects.markObtained;
-                            const percentage= fetchedStudentSubjects.percentage;
-                            const positionInClass= fetchedStudentSubjects.positionInClass;
-                            const grade= fetchedStudentSubjects.grade;
-                            const remark= fetchedStudentSubjects.remark;
+                    for (let j = 0; j < studentSubjects.length; j++) {
+                        no++;
+                        const subject = studentSubjects[j];
+                        const fetchedStudentSubjects = subject.subjectAssessment;
+                        const markObtainable = fetchedStudentSubjects.markObtainable;
+                        const markObtained = fetchedStudentSubjects.markObtained;
+                        const percentage = fetchedStudentSubjects.percentage;
+                        const positionInClass = fetchedStudentSubjects.positionInClass;
+                        const grade = fetchedStudentSubjects.grade;
+                        const remark = fetchedStudentSubjects.remark;
 
-                            subjectTable += `
+                        subjectTable += `
                                 <tr class="tb-row">
                                     <td>${no}</td>
                                     <td>${subject.subjectName}</td>
@@ -77,13 +83,14 @@
                                     <td>${remark ? remark : '-'}</td>
                                 </tr>
                             `;
-                        }
-                        subjectTable += `</tbody>`;
+                    }
+                    subjectTable += `</tbody>`;
 
-                        const schoolHeader = branch.midTermResultHeader;
-                        const headerUrl = schoolHeader ? `${midTermResultHeaderPixPath}/${schoolHeader}` : `${websiteUrl}/images/report/mid-term-result-header.png`;
+                    const schoolHeader = branch.midTermResultHeader;
+                    const headerUrl = schoolHeader ? `${midTermResultHeaderPixPath}/${schoolHeader}` :
+                        `${websiteUrl}/images/report/mid-term-result-header.png`;
 
-                        sectionHtml += `
+                    sectionHtml += `
                             <section class="body-div" style="page-break-after: always;">
                                 <div class="header-back-div">
                                     <div class="header-image">
@@ -200,20 +207,21 @@
                                 </div>
                             </section>
                         `;
-                    }
-                    $('#pageContainer').html(sectionHtml);
-
-                    const backendWatermark = branch.watermark;
-                    const defaultWatermark = '../images/report/watermark.jpg';
-                    const watermarkUrl = backendWatermark ? backendWatermark : defaultWatermark;
-
-                    $('.backgroundTable').css({
-                        'background': `url(${watermarkPixPath}/${watermarkUrl}) center no-repeat`,
-                        'background-size': 'cover'
-                    });
                 }
-            });
+                $('#pageContainer').html(sectionHtml);
+
+                const backendWatermark = branch.watermark;
+                const defaultWatermark = '../images/report/watermark.jpg';
+                const watermarkUrl = backendWatermark ? backendWatermark : defaultWatermark;
+
+                $('.backgroundTable').css({
+                    'background': `url(${watermarkPixPath}/${watermarkUrl}) center no-repeat`,
+                    'background-size': 'cover'
+                });
+            }
+        });
         </script>
     </div>
 </body>
+
 </html>
