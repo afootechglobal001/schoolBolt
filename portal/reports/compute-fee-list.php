@@ -53,13 +53,13 @@
 
                             const backendWatermark = printComputeFeeByClassSession?.branchData?.watermark;
                             const defaultWatermark = '../images/report/watermark.jpg';
-                            const watermarkUrl = backendWatermark ? backendWatermark : defaultWatermark;
+                            const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
 
                             $('#backgroundTable').css({
                                 'background': `url(${watermarkUrl}) center no-repeat`,
                                 'background-size': 'cover'
                             });
-                                
+
                             let text = '';
                             let no = 0;
                             text = `
