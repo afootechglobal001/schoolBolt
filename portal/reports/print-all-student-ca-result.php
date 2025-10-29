@@ -28,15 +28,6 @@
                     const sessionName = sessionData.session;
                     const fetchedStudent = sessionData.eachStudentData;
 
-                    const backendWatermark = branch.watermark;
-                    const defaultWatermark = '../images/report/watermark.jpg';
-                    const watermarkUrl = backendWatermark ? backendWatermark : defaultWatermark;
-
-                    $('.backgroundTable').css({
-                        'background': `url(${watermarkPixPath}/${watermarkUrl}) center no-repeat`,
-                        'background-size': 'cover'
-                    });
-
                     let sectionHtml = '';
 
                     for (let i = 0; i < fetchedStudent.length; i++) {
@@ -211,6 +202,15 @@
                         `;
                     }
                     $('#pageContainer').html(sectionHtml);
+
+                    const backendWatermark = branch.watermark;
+                    const defaultWatermark = '../images/report/watermark.jpg';
+                    const watermarkUrl = backendWatermark ? backendWatermark : defaultWatermark;
+
+                    $('.backgroundTable').css({
+                        'background': `url(${watermarkPixPath}/${watermarkUrl}) center no-repeat`,
+                        'background-size': 'cover'
+                    });
                 }
             });
         </script>
