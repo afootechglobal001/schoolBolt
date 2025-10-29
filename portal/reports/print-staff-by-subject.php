@@ -50,6 +50,7 @@
         <script>
             $(document).ready(function() {
                 const printStaffBySubjectSession = JSON.parse(sessionStorage.getItem("printStaffBySubjectSession"));
+                
                 const backendWatermark = printStaffBySubjectSession?.branchData?.watermark;
                 const defaultWatermark = '../images/report/watermark.jpg';
                 const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
