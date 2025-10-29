@@ -4,9 +4,9 @@
 	$appName='schoolBolt'; 
 
 	//$websiteUrl='https://schoolbolt.com'; /// For Live Server Url //
-	$websiteUrl='http://localhost/projects/schoolbolt';
+	$websiteUrl='http://localhost/schoolbolt/schoolbolt';
 	//$websitePath = $_SERVER['DOCUMENT_ROOT'];
-	$websitePath = $_SERVER['DOCUMENT_ROOT'].'/projects/schoolbolt'; //dirname(__FILE__);
+	$websitePath = $_SERVER['DOCUMENT_ROOT'].'/schoolbolt/schoolbolt'; //dirname(__FILE__);
 	$codeVersion= date('Ymdhis');
 ?>
 
@@ -39,16 +39,10 @@ $userDeviceId=getBrowserId();
 
 
 <script>
-	var websiteUrl = "<?php echo $websiteUrl;?>";
-	var apiKey='a7c37b6289b9dd879b2c005118d3ef14'; /// For API Key //
-	var endPoint='https://schoolbolt.com/schoolbolt-api/dev'; /// Server End Point url
-	var userOsBrowser = "<?php echo $userOsBrowser;?>"; /// For User OS Browser //
-	var userIpAddress = "<?php echo $userIpAddress;?>"; /// For User IP Address //
-	var userDeviceId = "<?php echo $userDeviceId;?>"; /// For User Device Id //
-
+var websiteUrl = "<?php echo $websiteUrl;?>";
+var apiKey = 'a7c37b6289b9dd879b2c005118d3ef14'; /// For API Key //
+var endPoint = 'https://schoolbolt.com/schoolbolt-api/dev'; /// Server End Point url
+var userOsBrowser = "<?php echo $userOsBrowser;?>"; /// For User OS Browser //
+var userIpAddress = "<?php echo $userIpAddress;?>"; /// For User IP Address //
+var userDeviceId = "<?php echo $userDeviceId;?>"; /// For User Device Id //
 </script>
-
-
-
-
-

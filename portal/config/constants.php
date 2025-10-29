@@ -4,14 +4,14 @@
 	$appName='schoolBolt'; 
 	$clientName='SchoolBolt Edu System';
 	/////////////////////////////////////////////////////////////////////////////////
-	$clientWebsiteUrl='http://localhost/projects/schoolbolt';
+	$clientWebsiteUrl='http://localhost/schoolbolt/schoolbolt';
 	//$clientWebsiteUrl='https://schoolbolt.com';
 	$clientWebsiteContactUsUrl=$clientWebsiteUrl.'/contact-us';
 	/////////////////////////////////////////////////////////////////////////////////
 	//$websiteUrl='https://schoolbolt.com/portal'; /// For Live Server Url //
-	$websiteUrl='http://localhost/projects/schoolbolt/portal';
+	$websiteUrl='http://localhost/schoolbolt/schoolbolt/portal';
 	//$websitePath = $_SERVER['DOCUMENT_ROOT'].'/portal';
-	$websitePath = $_SERVER['DOCUMENT_ROOT'].'/projects/schoolbolt/portal'; //dirname(__FILE__);
+	$websitePath = $_SERVER['DOCUMENT_ROOT'].'/schoolbolt/schoolbolt/portal'; //dirname(__FILE__);
 	$codeVersion= date('Ymdhis');
 	/////////////////////////////////////////////////////////////////////////////////
 	$userOsBrowser = $_SERVER['HTTP_USER_AGENT'];
@@ -65,15 +65,20 @@ var principalSignaturePixPath = websiteUrl + '/uploaded_files/branchPrincipalSig
 var midTermResultHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Mid-Term Result path //
 var caResultSummaryHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For CA Result Summary path //
 var caBroadSheetHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For CA Broad Sheet path //
-var terminalBroadSheetHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Terminal Broad Sheet path //
+var terminalBroadSheetHeaderPixPath = websiteUrl +
+'/uploaded_files/schoolResultHeaders'; /// For Terminal Broad Sheet path //
 var classListHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Class List Header path //
-var cummulativeMarkBookHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Cummulative Mark Book Header path //
+var cummulativeMarkBookHeaderPixPath = websiteUrl +
+'/uploaded_files/schoolResultHeaders'; /// For Cummulative Mark Book Header path //
 var markBookHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Mark Book Header path //
-var progressReportHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Progress Report Header path //
+var progressReportHeaderPixPath = websiteUrl +
+'/uploaded_files/schoolResultHeaders'; /// For Progress Report Header path //
 var scoreSheetHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Score Sheet Header path //
 var studentListHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Student List Header path //
 var subjectListHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Subject List Header path //
-var terminalResultSummaryHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Terminal Result Summary Header path //
-var terminalResultHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Terminal Result Header path //
+var terminalResultSummaryHeaderPixPath = websiteUrl +
+'/uploaded_files/schoolResultHeaders'; /// For Terminal Result Summary Header path //
+var terminalResultHeaderPixPath = websiteUrl +
+'/uploaded_files/schoolResultHeaders'; /// For Terminal Result Header path //
 var watermarkPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Watermark path //
 </script>
