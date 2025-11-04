@@ -23,17 +23,6 @@ if (!$checkBasicSecurity){/// start if 1
     validateEmptyField($assessmentId, 'ASSESSMENT');
 
 
-    require_once 'positioning.php';
-    if(!$recordFound){
-        $response['response']=200;
-        $response['success']=false;
-        $response['message']="No record found!";
-        goto end;
-    }
-    require_once 'ca-summary-and-positioning.php';
-
-
-
     /// get all tableTitles
     $tableTitles="SN, FULL NAME, NO. OF SUBJECTS, MARK OBTAINABLE, MARK OBTAINED, TOTAL PERCENTAGE (%), POSTN. IN CLASS, OVERALL POSTN., REMARKS, TEACHER'S COMMENT";
     
