@@ -46,12 +46,6 @@ ErrorDocument 500 /
   Header always set Access-Control-Allow-Credentials "true"
 </IfModule>
 
-Options -Indexes
-<FilesMatch "\.(pdf|doc|docx|jpg|jpeg|png|gif|mp4|zip)$">
-    Order Deny,Allow
-    Deny from all
-</FilesMatch>
-
 ###############################################
 # 7. Expires caching + compression
 ###############################################
