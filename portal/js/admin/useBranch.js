@@ -334,8 +334,49 @@ function _getSelectBranchManagerId(fieldId) {
   }
 }
 
+function _getSelectSchoolCategory(fieldId) {
+  try {
+    $.ajax({
+      type: "GET",
+      url: endPoint + "/preset-data/fetch-school-category",
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      success: function (info) {
+        const data = info.data;
+        const success = info.success;
+
+        if (success === true) {
+          for (let i = 0; i < data.length; i++) {
+            const id = data[i].schoolCategoryId;
+            const value = data[i].schoolCategoryName;
+            $("#searchList_" + fieldId).append(
+              "<li onclick=\"_clickOption('searchList_" +
+                fieldId +
+                "', '" +
+                id +
+                "', '" +
+                value +
+                "');\">" +
+                value +
+                "</li>"
+            );
+          }
+        } else {
+          _actionAlert(info.message, false);
+        }
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred. Please try again.", false);
+  }
+}
+
+
 function _createBranch() {
   try {
+    const schoolCategoryId = $("#schoolCategoryId").val();
     const name = $("#name").val();
     const mobileNumber = $("#mobileNumber").val();
     const stateId = $("#stateId").val();
@@ -356,7 +397,7 @@ function _createBranch() {
     const statusId = $("#statusId").val();
 
     $(
-      "#name, #mobileNumber, #stateId, #lgaId, #address, #smtpHost, #smtpUsername, #smtpPassword, #smtpPort, #supportEmail, #accountName, #paymentKey, #secretKey, #receiverKey, #session, #staffId, #termId, #statusId"
+      "#schoolCategoryId, #name, #mobileNumber, #stateId, #lgaId, #address, #smtpHost, #smtpUsername, #smtpPassword, #smtpPort, #supportEmail, #accountName, #paymentKey, #secretKey, #receiverKey, #session, #staffId, #termId, #statusId"
     ).removeClass("issue");
 
     let selectedDepartment = [];
@@ -365,6 +406,12 @@ function _createBranch() {
       const departmentId = $(this).data("value");
       selectedDepartment.push({ departmentId: departmentId });
     });
+
+     if (!schoolCategoryId) {
+      $("#schoolCategoryId").addClass("issue");
+      _actionAlert("Select school category to continue", false);
+      return;
+    }
 
     if (!name) {
       $("#name").addClass("issue");
@@ -497,6 +544,7 @@ function _createBranch() {
       $("#submitBtn").prop("disabled", true);
 
       const formData = {
+        schoolCategoryId: schoolCategoryId,
         name: name,
         mobileNumber: mobileNumber,
         stateId: stateId,
@@ -728,6 +776,7 @@ function _updateBranch() {
     sessionStorage.getItem("getEachBranchDetailsSession")
   );
   try {
+    const schoolCategoryId = $("#schoolCategoryId").val();
     const name = $("#updateName").val();
     const mobileNumber = $("#updateMobileNumber").val();
     const stateId = $("#stateId").val();
@@ -746,10 +795,22 @@ function _updateBranch() {
     const statusId = $("#updateStatusId").val();
 
     $(
-      "#updateName, #updateMobileNumber, #stateId, #lgaId, #updateAddress, #updateSupportEmail, #updateAccountName, #updatePaymentKey, #updateSecretKey, #updateReceiverKey, #updateSession, #updateStaffId, #updateTermId, #timeSchoolOpened, #schoolResumptionDate, #updateStatusId"
+      "#schoolCategoryId, #updateName, #updateMobileNumber, #stateId, #lgaId, #updateAddress, #updateSupportEmail, #updateAccountName, #updatePaymentKey, #updateSecretKey, #updateReceiverKey, #updateSession, #updateStaffId, #updateTermId, #timeSchoolOpened, #schoolResumptionDate, #updateStatusId"
     ).removeClass("issue");
 
+    if (!schoolCategoryId) {
+      $("#schoolCategoryId").addClass("issue");
+      _actionAlert("Select school category to continue", false);
+      return;
+    }
+
     if (!name) {
+      $("#updateName").addClass("issue");
+      _actionAlert("Provide branch name to continue", false);
+      return;
+    }
+
+     if (!name) {
       $("#updateName").addClass("issue");
       _actionAlert("Provide branch name to continue", false);
       return;
@@ -858,6 +919,7 @@ function _updateBranch() {
       $("#updateBtn").prop("disabled", true);
 
       const formData = {
+        schoolCategoryId: schoolCategoryId,
         name: name,
         mobileNumber: mobileNumber,
         stateId: stateId,
