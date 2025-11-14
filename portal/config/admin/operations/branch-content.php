@@ -3563,6 +3563,7 @@
                         <th>Comment</th>
                         <th>updated By</th>
                         <th>Date</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -3612,6 +3613,7 @@
                         <th>Comment</th>
                         <th>updated By</th>
                         <th>Date</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>

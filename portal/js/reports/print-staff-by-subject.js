@@ -6,7 +6,7 @@ function _printTeachersBySubject() {
 	try {
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/admin/branch/subject/fetch-branch-class-subjects?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${fetchSubjectsParams.departmentId}&classId=${fetchSubjectsParams.classId}`,
+			url: `${endPoint}/admin/branch/subject/fetch-branch-class-subjects?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${fetchSubjectsParams.departmentId}&classId=${fetchSubjectsParams.classId}&armId=${fetchSubjectsParams.armId}`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(true),

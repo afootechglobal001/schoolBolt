@@ -72,6 +72,7 @@
                                 <th>TERM</th>
                                 <th>DEPARTMENT</th>
                                 <th>CLASS</th>
+                                <th>ARM</th>
                                 <th>SUBJECT</th>
                                 <th>SUBJECT TEACHER</th>
                             </tr>
@@ -83,6 +84,7 @@
                     const termName = fetch.termData?.termName;
                     const departmentName = fetch.departmentData?.departmentName;
                     const className = fetch.classData?.className;
+                    const armName = fetch.armData?.armName;
 
                     if (Array.isArray(data) && data.length > 0) {
                         data.forEach(item => {
@@ -97,6 +99,7 @@
                             <td>${termName}</td>
                             <td>${departmentName}</td>
                             <td>${className}</td>
+                            <td>${armName}</td>
                             <td>${subjectName}</td>`;
 
                             if (teacherData && typeof teacherData === "object") {
