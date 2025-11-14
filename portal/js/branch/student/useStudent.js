@@ -110,10 +110,10 @@ function _getSelectDepartment(fieldId) {
 }
 
 function _fetchSelectDepartmentClass() {
-  _getSelectClass("classId");
+  _getSelectDepartmentClass("classId");
 }
 
-function _getSelectClass(fieldId) {
+function _getSelectDepartmentClass(fieldId) {
   const departmentId = $("#departmentId").val();
   try {
     $.ajax({
@@ -142,7 +142,7 @@ function _getSelectClass(fieldId) {
                 id +
                 "', '" +
                 value +
-                "'); _fetchSelectClassArm();\">" +
+                "'); _fetchSelectDepartmentClassArm();\">" +
                 value +
                 "</li>"
             );
@@ -158,32 +158,29 @@ function _getSelectClass(fieldId) {
   }
 }
 
-function _fetchSelectClassArm() {
-  _getSelectArm("armId");
+function _fetchSelectDepartmentClassArm() {
+  _getSelectDepartmentArm("armId");
 }
 
-function _getSelectArm(fieldId) {
+function _getSelectDepartmentArm(fieldId) {
+  const departmentId = $("#departmentId").val();
   const classId = $("#classId").val();
   try {
     $.ajax({
       type: "GET",
-      url:
-        endPoint +
-        "/admin/settings/classes/fetch-class-arms?classId=" +
-        classId,
+      url: `${endPoint}/admin/branch/students/fetch-department-class-arms?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}`,
       dataType: "json",
       cache: false,
       headers: getAuthHeaders(true),
       success: function (info) {
-        const data = info.data;
+        const data = info.armData;
         const success = info.success;
 
         if (success === true) {
           $("#searchList_" + fieldId).html("");
-          const checkedArms = data.filter((item) => item.checked === true);
-          for (let i = 0; i < checkedArms.length; i++) {
-            const id = checkedArms[i].armId;
-            const value = checkedArms[i].armName;
+          for (let i = 0; i < data.length; i++) {
+            const id = data[i].armId;
+            const value = data[i].armName;
             $("#searchList_" + fieldId).append(
               "<li onclick=\"_clickOption('searchList_" +
                 fieldId +
