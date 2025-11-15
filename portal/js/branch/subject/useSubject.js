@@ -113,7 +113,56 @@ function _getSelectSubjectClass(fieldId) {
                 id +
                 "', '" +
                 value +
-                "'); _fetchSelectClassArm();\">" +
+                "'); _fetchSelectSubjectClassArm();\">" +
+                value +
+                "</li>"
+            );
+          }
+        } else {
+          _actionAlert(info.message, false);
+        }
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred. Please try again.", false);
+  }
+}
+
+function _fetchSelectSubjectClassArm() {
+  _getSelectSubjectArm("armId");
+}
+
+function _getSelectSubjectArm(fieldId) {
+  const classId = $("#classId").val();
+  try {
+    $.ajax({
+      type: "GET",
+      url:
+        endPoint +
+        "/admin/settings/classes/fetch-class-arms?classId=" +
+        classId,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(true),
+      success: function (info) {
+        const data = info.data;
+        const success = info.success;
+
+        if (success === true) {
+          $("#searchList_" + fieldId).html("");
+          const checkedArms = data.filter((item) => item.checked === true);
+          for (let i = 0; i < checkedArms.length; i++) {
+            const id = checkedArms[i].armId;
+            const value = checkedArms[i].armName;
+            $("#searchList_" + fieldId).append(
+              "<li onclick=\"_clickOption('searchList_" +
+                fieldId +
+                "', '" +
+                id +
+                "', '" +
+                value +
+                "');\">" +
                 value +
                 "</li>"
             );
@@ -132,8 +181,10 @@ function _getSelectSubjectClass(fieldId) {
 function _proceedFetchBranchSubject() {
   const departmentId = $("#departmentId").val();
   const classId = $("#classId").val();
+  const armId = $("#armId").val();
 
-  $("#departmentId, #classId").removeClass("issue");
+
+  $("#departmentId, #classId, #armId").removeClass("issue");
 
   if (!departmentId) {
     $("#departmentId").addClass("issue");
@@ -147,9 +198,16 @@ function _proceedFetchBranchSubject() {
     return;
   }
 
+  if (!armId) {
+    $("#armId").addClass("issue");
+    _actionAlert("Select arm to continue", false);
+    return;
+  }
+
   const fetchSubjectsParams = {
     departmentId: departmentId,
     classId: classId,
+    armId: armId,
   };
 
   sessionStorage.setItem(
@@ -181,7 +239,7 @@ function _fetchBranchSubjects() {
   try {
     $.ajax({
       type: "GET",
-      url: `${endPoint}/admin/branch/subject/fetch-branch-class-subjects?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${fetchSubjectsParams.departmentId}&classId=${fetchSubjectsParams.classId}`,
+      url: `${endPoint}/admin/branch/subject/fetch-branch-class-subjects?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${fetchSubjectsParams.departmentId}&classId=${fetchSubjectsParams.classId}&armId=${fetchSubjectsParams.armId}`,
       dataType: "json",
       cache: false,
       headers: getAuthHeaders(true),
@@ -195,6 +253,8 @@ function _fetchBranchSubjects() {
         const departmentId = info.departmentData.departmentId;
         const className = info.classData.className;
         const classId = info.classData.classId;
+        const armName = info.armData.armName;
+        const armId = info.armData.armId;
 
         $("#subjectSession").html(session);
         $("#departmentName3").html(departmentName);
@@ -211,6 +271,7 @@ function _fetchBranchSubjects() {
 							<th>Term</th>
 							<th>Department</th>
 							<th>Class</th>
+							<th>Arm</th>
 							<th>Subject</th>
 							<th>Subject Teacher</th>
 							<th>Edit</th>
@@ -232,6 +293,7 @@ function _fetchBranchSubjects() {
 									<td>${termName}</td>
 									<td>${departmentName}</td>
 									<td>${className}</td>
+                  <td>${armName}</td>
 									<td>${subjectData.subjectName}</td>`;
 
             if (teacherData && typeof teacherData) {
@@ -259,7 +321,7 @@ function _fetchBranchSubjects() {
             }
 
             text += `				
-									<td><button class="btn view-btn" title="Click to edit assign class teacher" onclick="_fetchSubjectTeacher('${departmentId}','${classId}','${subjectData.subjectId}');"><i class="bi-bookmark-check"></i> ALLOCATE</button></td>
+									<td><button class="btn view-btn" title="Click to edit assign class teacher" onclick="_fetchSubjectTeacher('${departmentId}','${classId}','${armId}','${subjectData.subjectId}');"><i class="bi-bookmark-check"></i> ALLOCATE</button></td>
 								</tr>
 							</tbody>`;
           }
@@ -299,7 +361,7 @@ function _fetchBranchSubjects() {
   }
 }
 
-function _fetchSubjectTeacher(departmentId, classId, subjectId) {
+function _fetchSubjectTeacher(departmentId, classId, armId, subjectId) {
   $("#get-more-div-secondary")
     .css({
       display: "flex",
@@ -310,7 +372,7 @@ function _fetchSubjectTeacher(departmentId, classId, subjectId) {
   try {
     $.ajax({
       type: "GET",
-      url: `${endPoint}/admin/branch/subject/fetch-subject-teacher?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&subjectId=${subjectId}`,
+      url: `${endPoint}/admin/branch/subject/fetch-subject-teacher?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&subjectId=${subjectId}`,
       dataType: "json",
       cache: false,
       headers: getAuthHeaders(true),
@@ -374,7 +436,7 @@ function allocateSubjectTeacher() {
 
       $.ajax({
         type: "POST",
-        url: `${endPoint}/admin/branch/subject/subject-teacher-allocation?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${getSubjectTeacherSession.departmentData.departmentId}&classId=${getSubjectTeacherSession.classData.classId}&subjectId=${getSubjectTeacherSession.subjectData.subjectId}`,
+        url: `${endPoint}/admin/branch/subject/subject-teacher-allocation?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${getSubjectTeacherSession.departmentData.departmentId}&classId=${getSubjectTeacherSession.classData.classId}&armId=${getSubjectTeacherSession.armData.armId}&subjectId=${getSubjectTeacherSession.subjectData.subjectId}`,
         data: JSON.stringify(formData),
         dataType: "json",
         cache: false,

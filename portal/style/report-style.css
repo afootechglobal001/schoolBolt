@@ -1,3 +1,7 @@
+:root {
+  --report-text-color: #f7a025;
+}
+
 .body-div{
 	width: 900px;
 	background: var(--white-color);
@@ -47,7 +51,7 @@
     gap: 5px;
     font-size: 13px;
     font-family: sub-title-font;
-    color: var(--secondary-color);
+    color: var(--report-text-color);
 }
 
 .body-div .header-back-div .school-info-div .text strong {

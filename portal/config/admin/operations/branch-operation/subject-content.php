@@ -27,6 +27,15 @@
                 </script>
             </div>
 
+            <div class="text_field_container" id="armId_container">
+                <script>
+                    selectField({
+                        id: 'armId',
+                        title: 'Select Arm'
+                    });
+                </script>
+            </div>
+
             <button class="btn" id="submitBtn" title="Proceed Request" onclick="_proceedFetchBranchSubject();">PROCEED <i class="bi-arrow-right"></i> </button>
         </div>
     </div>
@@ -77,6 +86,10 @@
                         <div class="alert-list">
                             <div>Class:</div>
                             <div><span id="className"><script>$("#className").html(getSubjectTeacherSession.classData.className);</script></span></div>
+                        </div>
+                        <div class="alert-list">
+                            <div>Arm:</div>
+                            <div><span id="armName"><script>$("#armName").html(getSubjectTeacherSession.armData.armName);</script></span></div>
                         </div>
                     </div>
                 </div>

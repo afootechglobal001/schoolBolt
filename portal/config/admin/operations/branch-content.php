@@ -53,6 +53,16 @@
                     </div>
                 </div>
 
+                <div class="text_field_container" id="schoolCategoryId_container">
+                    <script>
+                        selectField({
+                            id: 'schoolCategoryId',
+                            title: 'Select School Category',
+                        });
+                        _getSelectSchoolCategory('schoolCategoryId');
+                    </script>
+                </div>
+
                 <div class="text_field_container" id="name_container">
                     <script>
                         textField({
@@ -1340,6 +1350,18 @@
         <div class="title">BRANCH BASIC INFORMATION</div>
 
         <div class="profile-segment-div">
+            <div class="text_field_container col-1" id="schoolCategoryId_container">
+                <script>
+                    selectField({
+                        id: 'schoolCategoryId',
+                        title: 'Select School Category',
+                        fieldValue: getEachBranchDetailsSession?.schoolCategoryId ?? '',
+                        fieldLabel: getEachBranchDetailsSession?.schoolCategoryName ?? ''
+                    });
+                    _getSelectSchoolCategory('schoolCategoryId');
+                </script>
+            </div>
+
             <div class="text_field_container col-1" id="updateName_container">
                 <script>
                     textField({
@@ -1384,7 +1406,7 @@
                 </script>
             </div>
 
-            <div class="text_field_container col-2" id="updateAddress_container">
+            <div class="text_field_container col-1" id="updateAddress_container">
                 <script>
                     textField({
                         id: 'updateAddress',
@@ -3541,6 +3563,7 @@
                         <th>Comment</th>
                         <th>updated By</th>
                         <th>Date</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -3590,6 +3613,7 @@
                         <th>Comment</th>
                         <th>updated By</th>
                         <th>Date</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
