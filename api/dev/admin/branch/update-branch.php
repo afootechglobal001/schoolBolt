@@ -13,6 +13,7 @@ if(!$checkSession){
 
 	//////////////////declaration of variables//////////////////////////////////////
     $branchId = $_GET['branchId'];
+    $schoolCategoryId=trim($data['schoolCategoryId']);
 	$name=trim(strtoupper($data['name']));
 	$mobileNumber=trim($data['mobileNumber']);
 	$stateId=trim($data['stateId']);
@@ -30,8 +31,16 @@ if(!$checkSession){
 
     $departmentIds=$data['departmentIds'];
 	////////////////////////////////////////////////////////////////////////////////
-
-	if (empty($name)){/// start if 2
+    if (empty($schoolCategoryId)){/// start if 2
+        $response = [
+            'response'=> 100,
+            'success'=> false,
+            'message'=> "SCHOOL CATEGORY REQUIRED! Check the fields and try again",
+        ]; 
+        goto end;
+	}
+	
+    if (empty($name)){/// start if 2
         $response = [
             'response'=> 100,
             'success'=> false,
@@ -161,8 +170,8 @@ if(!$checkSession){
                 goto end;
             }
            
-            mysqli_query($conn,"UPDATE `BRANCHES_TAB` SET
-            `name`='$name', `mobileNumber`='$mobileNumber', `stateId`='$stateId', `lgaId`='$lgaId', `address`='$address', 
+            mysqli_query($conn,"UPDATE `BRANCHES_TAB` SET 
+            `schoolCategoryId`='$schoolCategoryId', `name`='$name', `mobileNumber`='$mobileNumber', `stateId`='$stateId', `lgaId`='$lgaId', `address`='$address', 
             `supportEmail`='$supportEmail', `accountName`='$accountName',
             `managerId`='$staffId', `session`='$session', `termId`='$termId', `timeSchoolOpened`='$timeSchoolOpened', `schoolResumptionDate`='$schoolResumptionDate',  `statusId`='$statusId', 
             `updatedBy`='$loginStaffId', `updatedTime`=NOW() WHERE $clientIds AND branchId='$branchId'")or die (mysqli_error($conn));
