@@ -91,6 +91,10 @@
                             <div>Arm:</div>
                             <div><span id="armName"><script>$("#armName").html(getSubjectTeacherSession.armData.armName);</script></span></div>
                         </div>
+                        <div class="alert-list">
+                            <div>Subject:</div>
+                            <div><span id="subjectName"><script>$("#subjectName").html(getSubjectTeacherSession.subjectData.subjectName);</script></span></div>
+                        </div>
                     </div>
                 </div>
 
