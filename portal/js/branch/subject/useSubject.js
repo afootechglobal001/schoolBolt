@@ -134,27 +134,24 @@ function _fetchSelectSubjectClassArm() {
 }
 
 function _getSelectSubjectArm(fieldId) {
+  const departmentId = $("#departmentId").val();
   const classId = $("#classId").val();
   try {
     $.ajax({
       type: "GET",
-      url:
-        endPoint +
-        "/admin/settings/classes/fetch-class-arms?classId=" +
-        classId,
+      url: `${endPoint}/admin/branch/students/fetch-department-class-arms?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}`,
       dataType: "json",
       cache: false,
       headers: getAuthHeaders(true),
       success: function (info) {
-        const data = info.data;
+        const data = info.armData;
         const success = info.success;
 
         if (success === true) {
           $("#searchList_" + fieldId).html("");
-          const checkedArms = data.filter((item) => item.checked === true);
-          for (let i = 0; i < checkedArms.length; i++) {
-            const id = checkedArms[i].armId;
-            const value = checkedArms[i].armName;
+          for (let i = 0; i < data.length; i++) {
+            const id = data[i].armId;
+            const value = data[i].armName;
             $("#searchList_" + fieldId).append(
               "<li onclick=\"_clickOption('searchList_" +
                 fieldId +
@@ -260,6 +257,7 @@ function _fetchBranchSubjects() {
         $("#departmentName3").html(departmentName);
         $("#className2").html(className);
         $("#subjectTermName").html(termName);
+        $("#armName2").html(armName);
 
         let text = "";
         let no = 0;

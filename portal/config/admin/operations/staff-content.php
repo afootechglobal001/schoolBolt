@@ -137,7 +137,7 @@
                     <script>
                         selectField({
                             id: 'stateId',
-                            title: 'Select Branch State',
+                            title: 'Select State Of Origin',
                         });
                         _getSelectGeneralState('stateId');
                     </script>
@@ -147,7 +147,7 @@
                     <script>
                         selectField({
                             id: 'lgaId',
-                            title: 'Select Branch Local Govt Area'
+                            title: 'Select Local Govt Area'
                         });
                     </script>
                 </div>
@@ -394,7 +394,7 @@
             </span></div>
     </div>
 
-    <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
+    <div class="user-managment-back-div staff-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
         <div class="user-managment-list staff-managment-list"
             onclick="_getActiveStaffPage({divid:'staff_students', page: 'staff_students', url: adminPortalLocalUrl});">
             <div class="inner-div">
@@ -444,7 +444,7 @@
         </div>
         <script>
             if (userRoles.canManageClassTeachersComments) {
-                $('.user-managment-back-div').append(`
+                $('.staff-managment-back-div').append(`
             <div class="user-managment-list staff-managment-list" onclick="_getActiveStaffPage({divid:'classTeachersComment', page: 'classTeachersComment', url: adminPortalLocalUrl});">
                 <div class="inner-div">
                     <div class="icon-div">
@@ -459,7 +459,7 @@
         `);
             }
             if (userRoles.canManageStudentsAttendance) {
-                $('.user-managment-back-div').append(`
+                $('.staff-managment-back-div').append(`
             <div class="user-managment-list staff-managment-list" onclick="_getActiveStaffPage({divid:'staffStudentAttendance', page: 'staffStudentAttendance', url: adminPortalLocalUrl});">
                 <div class="inner-div">
                     <div class="icon-div">
