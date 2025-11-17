@@ -128,7 +128,7 @@ function _fetchBranchDepartmentClass() {
 													text += `
 													<td>
 													 	<div class="btn-div">
-															<button class="btn view-btn decline-btn" title="Click to assign class teacher" id="dischargeClassTeacherBtn" onclick="_dischargeClassTeacher('${departmentId}','${classId}','${armId}');"><i class="bi-x-circle"></i> DISCHARGE</button>
+															<button class="btn view-btn decline-btn" title="Click to discharge class teacher" id="dischargeClassTeacherBtn_${armId}" onclick="_dischargeClassTeacher('${departmentId}','${classId}','${armId}');"><i class="bi-x-circle"></i> DISCHARGE</button>
 														</div>
 													</td>`;
 												} else {
@@ -275,9 +275,9 @@ function addClassTeacher() {
 function _dischargeClassTeacher(departmentId, classId, armId) {
 	try {
 		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
-			const btn_text = $("#dischargeClassTeacherBtn").html();
-			$("#dischargeClassTeacherBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
-			$("#dischargeClassTeacherBtn").prop("disabled", true);
+			const btn_text = $(`#dischargeClassTeacherBtn_${armId}`).html();
+			$(`#dischargeClassTeacherBtn_${armId}`).html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+			$(`#dischargeClassTeacherBtn_${armId}`).prop("disabled", true);
 
 			$.ajax({
 				type: "POST",
@@ -293,11 +293,11 @@ function _dischargeClassTeacher(departmentId, classId, armId) {
 				} else {
 					_actionAlert(data.message, false);
 				}
-				$("#dischargeClassTeacherBtn").html(btn_text).prop("disabled", false);
+				$(`#dischargeClassTeacherBtn_${armId}`).html(btn_text).prop("disabled", false);
 			},
 				error: function (error) {
 					_actionAlert('An error occurred while processing your request! Please Try Again', false);
-					$("#dischargeClassTeacherBtn").html(btn_text).prop("disabled", false);
+					$(`#dischargeClassTeacherBtn_${armId}`).html(btn_text).prop("disabled", false);
 				}
 			});
 		}
