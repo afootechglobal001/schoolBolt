@@ -622,6 +622,43 @@ function _updateStaffPix(){
 		}
 }
 
+function _deleteStaff() {
+	try {
+		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
+			const btnText = $("#deleteBtn").html();
+			$("#deleteBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+			$("#deleteBtn").prop("disabled", true);
+
+			$.ajax({
+				type: "POST",
+				url: `${endPoint}/admin/staff/delete-staff?branchId=${getEachStaffDetailsSession?.branchId}&staffId=${getEachStaffDetailsSession?.staffId}`,
+				dataType: "json", 
+				cache: false,
+				headers: getAuthHeaders(true),
+				processData: false,
+				success: function (data) {
+				if (data.success) {
+					_actionAlert(data.message, true);
+					_alertClose();
+					_getPage({page: 'staff', url: adminPortalLocalUrl});
+				} else {
+					_actionAlert(data.message, false);
+				}
+				$("#deleteBtn").html(btnText).prop("disabled", false);
+			},
+				error: function (error) {
+					_actionAlert('An error occurred while processing your request! Please Try Again', false);
+					$("#deleteBtn").html(btnText).prop("disabled", false);
+				}
+			});
+		}
+	} catch (error) {
+		_alertClose();
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}
+
 
 
 

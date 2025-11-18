@@ -322,7 +322,7 @@ function _fetchBranchSubjects() {
               text += `
               <td>
                 <div class="btn-div">
-                  <button class="btn view-btn decline-btn" title="Click to unallocate Subject Teacher" id="unallocateSubjectTeacherBtn_${subjectData.subjectId}" onclick="_unallocateSubjectTeacher('${departmentId}','${classId}','${armId}','${subjectData.subjectId}');"><i class="bi-x-circle"></i> UNALLOCATE</button>
+                  <button class="btn view-btn decline-btn" title="Click to deallocate Subject Teacher" id="deallocateSubjectTeacherBtn_${subjectData.subjectId}" onclick="_deallocateSubjectTeacher('${departmentId}','${classId}','${armId}','${subjectData.subjectId}');"><i class="bi-x-circle"></i> DEALLOCATE</button>
                 </div>
               </td>`;
             } else {
@@ -489,12 +489,12 @@ function allocateSubjectTeacher() {
   }
 }
 
-function _unallocateSubjectTeacher(departmentId, classId, armId, subjectId) {
+function _deallocateSubjectTeacher(departmentId, classId, armId, subjectId) {
 	try {
 		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
-			const btn_text = $(`#unallocateSubjectTeacherBtn_${subjectId}`).html();
-			$(`#unallocateSubjectTeacherBtn_${subjectId}`).html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
-			$(`#unallocateSubjectTeacherBtn_${subjectId}`).prop("disabled", true);
+			const btn_text = $(`#deallocateSubjectTeacherBtn_${subjectId}`).html();
+			$(`#deallocateSubjectTeacherBtn_${subjectId}`).html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+			$(`#deallocateSubjectTeacherBtn_${subjectId}`).prop("disabled", true);
 
 			$.ajax({
 				type: "POST",
@@ -514,11 +514,11 @@ function _unallocateSubjectTeacher(departmentId, classId, armId, subjectId) {
 				} else {
 					_actionAlert(data.message, false);
 				}
-				$(`#unallocateSubjectTeacherBtn_${subjectId}`).html(btn_text).prop("disabled", false);
+				$(`#deallocateSubjectTeacherBtn_${subjectId}`).html(btn_text).prop("disabled", false);
 			},
 				error: function (error) {
 					_actionAlert('An error occurred while processing your request! Please Try Again', false);
-					$(`#unallocateSubjectTeacherBtn_${subjectId}`).html(btn_text).prop("disabled", false);
+					$(`#deallocateSubjectTeacherBtn_${subjectId}`).html(btn_text).prop("disabled", false);
 				}
 			});
 		}

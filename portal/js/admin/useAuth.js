@@ -145,6 +145,9 @@ function assignRole(data) {
   permissions.includes(22) ? (userRoles.canViewBranchActivities = true) : false;
   permissions.includes(23) ? (userRoles.canApproveFees = true) : false;
 
+  /// Developer Permissions
+  permissions.includes(24) ? (userRoles.canDeleteStaff = true) : false;
+
   // Store in sessionStorage
   sessionStorage.setItem("userRoles", JSON.stringify(userRoles));
   sessionStorage.setItem("staffLoginData", JSON.stringify(staffLoginData));
