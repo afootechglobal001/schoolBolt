@@ -318,10 +318,24 @@ function _fetchBranchSubjects() {
               text += "<td>No Teacher Allocated</td>";
             }
 
-            text += `				
-									<td><button class="btn view-btn" title="Click to edit assign class teacher" onclick="_fetchSubjectTeacher('${departmentId}','${classId}','${armId}','${subjectData.subjectId}');"><i class="bi-bookmark-check"></i> ALLOCATE</button></td>
-								</tr>
-							</tbody>`;
+            if (teacherData && typeof teacherData) {
+              text += `
+              <td>
+                <div class="btn-div">
+                  <button class="btn view-btn decline-btn" title="Click to unallocate Subject Teacher" id="unallocateSubjectTeacherBtn_${subjectData.subjectId}" onclick="_unallocateSubjectTeacher('${departmentId}','${classId}','${armId}','${subjectData.subjectId}');"><i class="bi-x-circle"></i> UNALLOCATE</button>
+                </div>
+              </td>`;
+            } else {
+              text += `
+              <td>
+                <div class="btn-div">
+                  <button class="btn view-btn" title="Click to edit allocate class teacher" onclick="_fetchSubjectTeacher('${departmentId}','${classId}','${armId}','${subjectData.subjectId}');"><i class="bi-bookmark-check"></i> ALLOCATE</button>
+                </div>
+              </td>`;
+            }
+            text += `
+              </tr>
+            </tbody>`;
           }
           $("#pageContent").html(text);
         } else {
@@ -473,4 +487,44 @@ function allocateSubjectTeacher() {
     _actionAlert("An unexpected error occurred! Please Try Again", false);
     $("#submitBtn").prop("disabled", false);
   }
+}
+
+function _unallocateSubjectTeacher(departmentId, classId, armId, subjectId) {
+	try {
+		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
+			const btn_text = $(`#unallocateSubjectTeacherBtn_${subjectId}`).html();
+			$(`#unallocateSubjectTeacherBtn_${subjectId}`).html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+			$(`#unallocateSubjectTeacherBtn_${subjectId}`).prop("disabled", true);
+
+			$.ajax({
+				type: "POST",
+				url: `${endPoint}/admin/branch/subject/subject-teacher-disallocation?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&subjectId=${subjectId}`,
+				dataType: "json", 
+				cache: false,
+				headers: getAuthHeaders(true),
+				processData: false,
+				success: function (data) {
+				if (data.success) {
+					_actionAlert(data.message, true);
+					_getActiveBranchPage({
+            divid: "branch_subject_page",
+            page: "branch_subject_page",
+             url: adminPortalLocalUrl,
+          });
+				} else {
+					_actionAlert(data.message, false);
+				}
+				$(`#unallocateSubjectTeacherBtn_${subjectId}`).html(btn_text).prop("disabled", false);
+			},
+				error: function (error) {
+					_actionAlert('An error occurred while processing your request! Please Try Again', false);
+					$(`#unallocateSubjectTeacherBtn_${subjectId}`).html(btn_text).prop("disabled", false);
+				}
+			});
+		}
+	} catch (error) {
+		_alertClose();
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
 }
