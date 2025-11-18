@@ -124,9 +124,22 @@ function _fetchBranchDepartmentClass() {
 													text += '<td>No Teacher Assigned</td>';
 												}
 
-												text += `
-                                                <td><button class="btn view-btn" title="Click to edit assign class teacher" onclick="_fetchClassTeacher('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> ASSIGN</button></td>
-                                            </tr>`;
+												if (teacherData && typeof teacherData) {
+													text += `
+													<td>
+													 	<div class="btn-div">
+															<button class="btn view-btn decline-btn" title="Click to discharge class teacher" id="dischargeClassTeacherBtn_${armId}" onclick="_dischargeClassTeacher('${departmentId}','${classId}','${armId}');"><i class="bi-x-circle"></i> DISCHARGE</button>
+														</div>
+													</td>`;
+												} else {
+													text += `
+													<td>
+													 	<div class="btn-div">
+															<button class="btn view-btn" title="Click to edit assign class teacher" onclick="_fetchClassTeacher('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> ASSIGN</button>
+														</div>
+													</td>`;
+												}
+												`</tr>`;
                                     }
                                 } else {
                                     sn++;
@@ -256,5 +269,41 @@ function addClassTeacher() {
 	} catch (error) {
 		_actionAlert('An unexpected error occurred! Please Try Again', false);
 		$("#submitBtn").prop("disabled", false);
+	}
+}
+
+function _dischargeClassTeacher(departmentId, classId, armId) {
+	try {
+		if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
+			const btn_text = $(`#dischargeClassTeacherBtn_${armId}`).html();
+			$(`#dischargeClassTeacherBtn_${armId}`).html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+			$(`#dischargeClassTeacherBtn_${armId}`).prop("disabled", true);
+
+			$.ajax({
+				type: "POST",
+				url: `${endPoint}/admin/branch/class/discharge-class-teacher?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+				dataType: "json", 
+				cache: false,
+				headers: getAuthHeaders(true),
+				processData: false,
+				success: function (data) {
+				if (data.success) {
+					_actionAlert(data.message, true);
+					_getActiveBranchPage({divid:'branch_department_class', page: 'branch_department_class', url: adminPortalLocalUrl});
+				} else {
+					_actionAlert(data.message, false);
+				}
+				$(`#dischargeClassTeacherBtn_${armId}`).html(btn_text).prop("disabled", false);
+			},
+				error: function (error) {
+					_actionAlert('An error occurred while processing your request! Please Try Again', false);
+					$(`#dischargeClassTeacherBtn_${armId}`).html(btn_text).prop("disabled", false);
+				}
+			});
+		}
+	} catch (error) {
+		_alertClose();
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
 }

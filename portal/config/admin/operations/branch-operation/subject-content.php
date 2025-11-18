@@ -43,7 +43,7 @@
 
 <?php if ($page == 'branch_subject_page') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <div><span><i class="bi-person-bounding-box"></i></span> BRANCH SUBJECT'S LIST ---- <span id="subjectSession">Loading...</span> - <span id="subjectTermName">Loading...</span> - <span id="departmentName3">Loading...</span> - <span id="className2">Loading...</span></div>
+        <div><span><i class="bi-person-bounding-box"></i></span> BRANCH SUBJECT'S LIST ---- <span id="subjectSession">Loading...</span> - <span id="subjectTermName">Loading...</span> - <span id="departmentName3">Loading...</span> - <span id="className2">Loading...</span> <span id="armName2">Loading...</span></div>
         <div class="btn-container">
             <button class="btn" title="PRINT RECORDS" onclick="_printTeachersBySubject();"><i class="bi-printer"></i> PRINT</button>
         </div>
@@ -90,6 +90,10 @@
                         <div class="alert-list">
                             <div>Arm:</div>
                             <div><span id="armName"><script>$("#armName").html(getSubjectTeacherSession.armData.armName);</script></span></div>
+                        </div>
+                        <div class="alert-list">
+                            <div>Subject:</div>
+                            <div><span id="subjectName"><script>$("#subjectName").html(getSubjectTeacherSession.subjectData.subjectName);</script></span></div>
                         </div>
                     </div>
                 </div>
