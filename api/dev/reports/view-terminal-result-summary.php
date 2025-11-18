@@ -21,15 +21,6 @@ if (!$checkBasicSecurity){/// start if 1
     validateEmptyField($armId, 'ARM');
 
 
-    require_once 'positioning.php';
-    if(!$recordFound){
-        $response['response']=200;
-        $response['success']=false;
-        $response['message']="No record found!";
-        goto end;
-    }
-
-
     /// get all tableTitles
 $tableTitles="SN, FULL NAME, NO. OF SUBJECTS, MARK OBTAINABLE, MARK OBTAINED, TOTAL PERCENTAGE (%), POSTN. IN CLASS, OVERALL POSTN., REMARKS, TEACHER'S COMMENT, ATTENDANCE";
 

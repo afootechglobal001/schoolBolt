@@ -100,6 +100,12 @@
                         <div class="toggle-title">Account Permissions</div>
                         <div class="fetch-toggle" id="account"></div>
                     </div>
+
+                    <div class="permission-toggle-div">
+                        <div class="toggle-title">Developer Permissions</div>
+                        <div class="fetch-toggle" id="developer"></div>
+                    </div>
+
                     <script>_fetchRolePermissions();</script>
                 </div>
                 <div>    
