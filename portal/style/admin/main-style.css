@@ -4685,6 +4685,7 @@ header
   justify-content: flex-end;
   margin-top: 30px;
   background: none;
+  gap: 10px;
 }
 
 .user-profile-div .profile-content-div .field-back-div .user-in .btn-div .btn {
@@ -4699,6 +4700,10 @@ header
   font-family: sub-title-font;
   -moz-transition: all 0.2s ease-in 0.2s;
   transition: all 0.2s ease-in 0.2s;
+}
+
+.user-profile-div .profile-content-div .field-back-div .user-in .btn-div .del-btn {
+  background: var(--close-color);
 }
 
 .user-profile-div

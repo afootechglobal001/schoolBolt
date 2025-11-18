@@ -702,11 +702,16 @@
 
         <div class="btn-div" id="staffBtn">
             <script>
-                if ((userRoles.canViewSuperAdminDashboard || userRoles.canViewAdministratorDashboard ||
-                        userRoles.canViewIctStaffDashboard)) {
-                    $("#staffBtn").html(`
-                    <button class="btn" title="UPDATE PROFILE" id="updateBtn" onclick="_updateStaff();"> UPDATE PROFILE <i class="bi-check"></i></button>
-                `);
+                if ((userRoles.canViewSuperAdminDashboard || userRoles.canViewAdministratorDashboard || userRoles.canViewIctStaffDashboard)) {
+                    let buttonContent = `
+                        <button class="btn" title="UPDATE PROFILE" id="updateBtn" onclick="_updateStaff();"> UPDATE PROFILE <i class="bi-check"></i></button>
+                    `;
+                    if (userRoles.canViewSuperAdminDashboard && getEachStaffDetailsSession?.statusId === '2') {
+                        buttonContent += `
+                            <button class="btn del-btn" title="DELETE STAFF" id="deleteBtn" onclick="_deleteStaff();"> DELETE STAFF <i class="bi-trash"></i></button>
+                        `;
+                    }
+                    $("#staffBtn").html(buttonContent);
                 }
             </script>
         </div>
