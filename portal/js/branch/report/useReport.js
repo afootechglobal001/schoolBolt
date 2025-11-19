@@ -141,14 +141,14 @@ function _fetchBroadsheetClass() {
     try {
         $.ajax({
             type: "GET",
-            url: `${endPoint}/admin/branch/department/fetch-branch-department-classes?branchId=${getEachBranchDetailsSession.branchId}`,
+            url: `${endPoint}/reports/fetch-report-department-classes?branchId=${getEachBranchDetailsSession.branchId}`,
             dataType: "json",
             cache: false,
             headers: getAuthHeaders(true),
             success: function(info) {
                 const fetch = info.data;
                 const success = info.success;
-                
+
                 let text = '';
                 let no = 0;
 
@@ -156,39 +156,39 @@ function _fetchBroadsheetClass() {
                     for (let i = 0; i < fetch.length; i++) {
                         no++;
                         const department = fetch[i];
-                        const departmentName = department.departmentData.departmentName;
-						const departmentId = department.departmentData.departmentId;
-                        const classData = department.classData;
+                       	const departmentName = department.departmentName;
+						const departmentId = department.departmentId;
+						const classesData = department.classesData;
 
-                        text += `
-                            <div class="pages-toggle-div">
-                                <div class="pages-toggle-title" onclick="_collapse('view${no}');" title="Click to view classess">
-                                    <h3>${departmentName}</h3>
-                                    <div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
-                                </div>
+						if (classesData.length > 0) {
+							for (let j = 0; j < classesData.length; j++) {
+								no++;
+								const classInfo = classesData[j];
+								const classId = classInfo.classId;
+								const className = classInfo.className;
+								const armData = classInfo.armData;
+						
+								text += `
+									<div class="pages-toggle-div">
+										<div class="pages-toggle-title" onclick="_collapse('view${no}');" title="Click to view classess">
+											<h3>${departmentName} (${className})</h3>
+											<div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
+										</div>
 
-                                <div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
-                                    <div class="table-div animated fadeIn">
-                                        <table class="table" cellspacing="0" style="width:100%">
-                                            <thead>
-                                                <tr class="tb-col">
-                                                    <th>sn</th>
-                                                    <th>Department</th>
-                                                    <th>Class</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-											
-                                            <tbody>`;
-
-												let sn = 0; 
-												if (classData.length > 0) {
-													for (let j = 0; j < classData.length; j++) {
-														const classInfo = classData[j];
-														const className = classInfo.className;
-														const classId = classInfo.classId;
-														const armData = classInfo.armData;
-
+										<div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
+											<div class="table-div animated fadeIn">
+												<table class="table" cellspacing="0" style="width:100%">
+													<thead>
+														<tr class="tb-col">
+															<th>sn</th>
+															<th>Department</th>
+															<th>Class</th>
+															<th>Action</th>
+														</tr>
+													</thead>
+													
+													<tbody>`;
+														let sn = 0; 
 														if (armData.length > 0) {
 															for (let k = 0; k < armData.length; k++) {
 																sn++;
@@ -231,13 +231,46 @@ function _fetchBroadsheetClass() {
 																<td></td>
 															</tr>`;
 														}
-													}
-												} 
-												text += `</tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>`;
+												text += `
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>`;
+							}
+						} else {
+							no++;
+							text += `
+							<div class="pages-toggle-div">
+								<div class="pages-toggle-title" onclick="_collapse('view${no}');" title="No classes available">
+									<h3>${departmentName} (No Class)</h3>
+									<div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
+								</div>
+
+								<div class="toggle-expand-div" id="view${no}answer" style="display:none;">
+									<div class="table-div animated fadeIn">
+										<table class="table" cellspacing="0" style="width:100%">
+											<thead>
+												<tr class="tb-col">
+													<th>sn</th>
+													<th>Department</th>
+													<th>Class</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="tb-row">
+													<td>1</td>
+													<td>${departmentName}</td>
+													<td>No Class Available</td>
+													<td></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div> 
+							</div>`;
+						}
                     }
                     $('#pageContent').html(text);
                 } else {
