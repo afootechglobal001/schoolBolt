@@ -12,6 +12,7 @@ if(!$checkSession){
 }
 
 	//////////////////declaration of variables//////////////////////////////////////
+    $schoolCategoryId=trim($data['schoolCategoryId']);
 	$name=trim(strtoupper($data['name']));
 	$mobileNumber=trim($data['mobileNumber']);
 	$stateId=trim($data['stateId']);
@@ -36,7 +37,15 @@ if(!$checkSession){
     $departmentIds=$data['departmentIds'];
 	////////////////////////////////////////////////////////////////////////////////
 
-	if (empty($name)){/// start if 2
+	if (empty($schoolCategoryId)){/// start if 2
+        $response = [
+            'response'=> 100,
+            'success'=> false,
+            'message'=> "SCHOOL CATEGORY REQUIRED! Check the fields and try again",
+        ]; 
+        goto end;
+	}
+    if (empty($name)){/// start if 2
         $response = [
             'response'=> 100,
             'success'=> false,
@@ -222,8 +231,8 @@ if(!$checkSession){
 
 
             mysqli_query($conn,"INSERT INTO `BRANCHES_TAB`
-            (`clientId`, `branchId`, `name`, `mobileNumber`, `stateId`, `lgaId`, `address`, `smtpHost`, `smtpUsername`, `smtpPassword`, `smtpPort`, `supportEmail`,  `accountName`,  `paymentKey`, `secretKey`, `receiverKey`, `managerId`, `session`, `termId`, `statusId`, `createdBy`, `createdTime`) VALUES
-            ('$clientId','$branchId','$name', '$mobileNumber', '$stateId', '$lgaId', '$address', '$smtpHost', '$smtpUsername', '$smtpPassword', '$smtpPort', '$supportEmail', '$accountName', '$paymentKey', '$secretKey', '$receiverKey', '$staffId', '$session', '$termId', '$statusId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
+            (`clientId`, `branchId`, `schoolCategoryId`, `name`, `mobileNumber`, `stateId`, `lgaId`, `address`, `smtpHost`, `smtpUsername`, `smtpPassword`, `smtpPort`, `supportEmail`,  `accountName`,  `paymentKey`, `secretKey`, `receiverKey`, `managerId`, `session`, `termId`, `statusId`, `createdBy`, `createdTime`) VALUES
+            ('$clientId','$branchId','$schoolCategoryId','$name', '$mobileNumber', '$stateId', '$lgaId', '$address', '$smtpHost', '$smtpUsername', '$smtpPassword', '$smtpPort', '$supportEmail', '$accountName', '$paymentKey', '$secretKey', '$receiverKey', '$staffId', '$session', '$termId', '$statusId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
 
             foreach ($departmentIds as $eachId) {
                 $departmentId = $eachId['departmentId'];

@@ -1159,38 +1159,7 @@ header .inner-div .mobile-logout:hover{
 	width: 49%;
 }
 
-.slide-form-div .container-back-div .inner-container .pix-div{
-	width: 100%;
-	height: 250px;
-	margin: 20px 0px;
-	border-radius: 5px;
-	overflow: hidden;
-}
 
-.slide-form-div .container-back-div .inner-container .pix-div img{
-    width: 100%;
-	height: 100%;
-	object-fit: cover;
-	border-radius: 5px;
-	cursor: pointer;
-}
-
-.slide-form-div .container-back-div .inner-container .cam-pix{
-	width: 200px;
-	height: 200px;
-	padding: 5px;
-	border: #CCC 1px solid;
-	border-radius: 5px;
-	cursor: pointer;
-	flex-shrink: 0;
-	margin: auto;
-}
-
-.slide-form-div .container-back-div .inner-container .cam-pix img{
-	width:100%;
-	height: 100%;
-	object-fit: cover;
-}
 
 
 

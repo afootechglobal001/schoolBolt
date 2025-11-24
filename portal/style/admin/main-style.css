@@ -1875,18 +1875,39 @@ header
 .slide-form-div .container-back-div .inner-container .cam-pix {
   width: 200px;
   height: 200px;
-  padding: 5px;
   border: #ccc 1px solid;
   border-radius: 5px;
+  margin: auto;
+}
+.slide-form-div .container-back-div .inner-container .cam-pix .cam-pix-inner{
+  width: 200px;
+  height: 200px;
+  padding: 5px;
   cursor: pointer;
   flex-shrink: 0;
   margin: auto;
 }
 
-.slide-form-div .container-back-div .inner-container .cam-pix img {
+.slide-form-div .container-back-div .inner-container .cam-pix .cam-pix-inner img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.slide-form-div .container-back-div .inner-container .cam-pix .btn-div{
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+  opacity: 0;
+  transition: all 0.2s ease-in 0.2s;
+}
+.slide-form-div .container-back-div .inner-container .cam-pix:hover .btn-div{
+  opacity: 1;
 }
 
 .slide-form-div .container-back-div .inner-container .title {

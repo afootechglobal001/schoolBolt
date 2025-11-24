@@ -19,7 +19,7 @@ if (!$checkBasicSecurity){/// start if 1
     validateEmptyField($classId, 'CLASS');
     validateEmptyField($armId, 'ARM');
 
-    require_once 'positioning.php';
+    require_once 'positioning-for-term.php';
     if(!$recordFound){
         $response['response']=200;
         $response['success']=false;

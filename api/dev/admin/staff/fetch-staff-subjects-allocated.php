@@ -21,7 +21,7 @@ if(!$checkSession){
         $staffIds = "AND staffId ='$staffId'";
     }
    
-    $select = "SELECT departmentId, classId, subjectId FROM CLASS_SUBJECT_ALLOCATION_TAB WHERE $clientIds $branchIds $staffIds";
+    $select = "SELECT DISTINCT departmentId, classId, subjectId FROM CLASS_SUBJECT_ALLOCATION_TAB WHERE $clientIds $branchIds $staffIds";
 
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($query);
@@ -53,7 +53,7 @@ if(!$checkSession){
          $classDataFetch = mysqli_fetch_assoc($classDataQuery);
          $fetchQuery['classData']= $classDataFetch;
             $armData=array();
-            $armDataQuery = mysqli_query($conn, "SELECT a.childId AS armId, b.armName FROM CLASS_STRUCTURE_TAB a, ARMS_TAB b WHERE a.clientId='$clientId' AND a.childId=b.armId AND a.parentId='$classId'");
+            $armDataQuery = mysqli_query($conn, "SELECT a.armId, b.armName FROM CLASS_SUBJECT_ALLOCATION_TAB a, ARMS_TAB b WHERE a.clientId='$clientId'  AND departmentId='$departmentId' AND a.classId='$classId' AND a.subjectId = '$subjectId' AND staffId='$staffId' AND a.armId=b.armId ");
             while ($armDataFetch = mysqli_fetch_assoc($armDataQuery)) {
                 $armData[] = $armDataFetch;
             }

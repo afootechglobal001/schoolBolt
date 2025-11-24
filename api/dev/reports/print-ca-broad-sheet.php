@@ -22,7 +22,7 @@ if (!$checkBasicSecurity){/// start if 1
     validateEmptyField($armId, 'ARM');
     validateEmptyField($assessmentId, 'ASSESSMENT');
 
-    require_once 'positioning.php';
+    require_once 'positioning-for-ca.php';
     if(!$recordFound){
         $response['response']=200;
         $response['success']=false;
