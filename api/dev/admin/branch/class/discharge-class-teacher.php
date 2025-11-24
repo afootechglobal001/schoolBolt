@@ -15,16 +15,18 @@ if(!$checkSession){
     $departmentId = $_GET['departmentId'];
     $classId = $_GET['classId'];
     $armId = $_GET['armId'];
-    $subjectId = $_GET['subjectId'];
     validateEmptyField($branchId, 'BRANCH');
     validateEmptyField($departmentId, 'DEPARTMENT');
     validateEmptyField($classId, 'CLASS');
     validateEmptyField($armId, 'ARM');
-    validateEmptyField($subjectId, 'SUBJECT');
+
+    $select = "DELETE FROM CLASS_TEACHER_TAB WHERE $clientIds AND branchId='$branchId' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId'";
+    $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
+  
 
     $response['response']=200; 
     $response['success']=true;
-    $response['message']="SUBJECT TEACHER UPDATED SUCCESFFULY!";
+    $response['message']="CLASS TEACHER DISCHARGED SUCCESFFULY!";
 
         /////////////////// for  $branchId
         $branchDataQuery = mysqli_query($conn, "SELECT branchId, name AS branchName FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
@@ -42,25 +44,7 @@ if(!$checkSession){
         /////////////////// for  $armId
         $armDataQuery = mysqli_query($conn, "SELECT armId, armName FROM ARMS_TAB WHERE $clientIds AND armId='$armId'");
         $armDataFetch = mysqli_fetch_assoc($armDataQuery);
-        $response['armData']= $armDataFetch;
-        /////////////////// for  $subjectId
-        $subjectDataQuery = mysqli_query($conn, "SELECT subjectId, subjectName FROM SUBJECTS_TAB WHERE $clientIds AND subjectId='$subjectId'");
-        $subjectDataFetch = mysqli_fetch_assoc($subjectDataQuery);
-        $response['subjectData'] = $subjectDataFetch;
-    
-    $response['data'] = array(); // Initialize the data array
-    $select = "SELECT * FROM CLASS_SUBJECT_ALLOCATION_TAB WHERE $clientIds AND branchId='$branchId' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId' AND subjectId='$subjectId'";
-    $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
-    while ($fetchQuery = mysqli_fetch_assoc($query)) {
-        $staffId=$fetchQuery['staffId'];
-       
-        /////////////////// for  $staffId
-        $teacherDataQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$staffId'");
-        $teacherDataFetch = mysqli_fetch_assoc($teacherDataQuery);
-        $fetchQuery['teacherData'] = $teacherDataFetch;
-        
-        $response['data'][] = $fetchQuery;
-    }
+        $response['armData'] = $armDataFetch;
 //////////////////////////////////////////////////////////////////////////////////////////////
 end:
 echo json_encode($response);

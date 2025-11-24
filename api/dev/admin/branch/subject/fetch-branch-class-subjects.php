@@ -14,32 +14,13 @@ if(!$checkSession){
     $branchId = $_GET['branchId'];
     $departmentId = $_GET['departmentId'];
     $classId = $_GET['classId'];
+    $armId = $_GET['armId'];
     
-
-    if (empty($branchId)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "BRANCH REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    if (empty($departmentId)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "DEPARTMENT REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    if (empty($classId)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "CLASS REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
+    validateEmptyField($branchId, 'BRANCH');
+    validateEmptyField($departmentId, 'DEPARTMENT');
+    validateEmptyField($classId, 'CLASS');
+    validateEmptyField($armId, 'ARM');
+   
     $select = "SELECT `session`, termId FROM BRANCHES_TAB WHERE $clientIds AND branchId= '$branchId'";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $fetchQuery = mysqli_fetch_assoc($query);
@@ -61,6 +42,11 @@ if(!$checkSession){
     $classDataQuery = mysqli_query($conn, "SELECT classId, className FROM CLASSES_TAB WHERE $clientIds AND classId='$classId'");
     $classDataFetch = mysqli_fetch_assoc($classDataQuery);
     $response['classData'] = $classDataFetch;
+
+    /////////////////// for  $armId
+    $armDataQuery = mysqli_query($conn, "SELECT armId, armName FROM ARMS_TAB WHERE $clientIds AND armId='$armId'");
+    $armDataFetch = mysqli_fetch_assoc($armDataQuery);
+    $response['armData']= $armDataFetch;
 
     $select = "SELECT * FROM SUBJECT_STRUCTURE_TAB WHERE $clientIds AND classId='$classId'";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
@@ -86,11 +72,11 @@ if(!$checkSession){
         $subjectDataFetch = mysqli_fetch_assoc($subjectDataQuery);
         $fetchQuery['subjectData'] = $subjectDataFetch;
 
-/////////////////// for  $staffId
-$teacherDataQuery = mysqli_query($conn, "SELECT b.staffId, CONCAT(b.titleId, ' ', b.firstName, ' ', b.lastName) AS fullname, b.emailAddress, b.profilePix FROM CLASS_SUBJECT_ALLOCATION_TAB a, STAFF_TAB b 
-WHERE a.clientId=b.clientId AND  a.clientId='$clientId' AND a.branchId='$branchId' AND a.departmentId='$departmentId' AND a.classId='$classId' AND a.subjectId='$subjectId' AND a.staffId=b.staffId");
-$teacherDataFetch = mysqli_fetch_assoc($teacherDataQuery);
-$fetchQuery['teacherData'] = $teacherDataFetch;
+        /////////////////// for  $staffId
+        $teacherDataQuery = mysqli_query($conn, "SELECT b.staffId, CONCAT(b.titleId, ' ', b.firstName, ' ', b.lastName) AS fullname, b.emailAddress, b.profilePix FROM CLASS_SUBJECT_ALLOCATION_TAB a, STAFF_TAB b 
+        WHERE a.clientId=b.clientId AND  a.clientId='$clientId' AND a.branchId='$branchId' AND a.departmentId='$departmentId' AND a.classId='$classId' AND a.armId='$armId' AND a.subjectId='$subjectId' AND a.staffId=b.staffId");
+        $teacherDataFetch = mysqli_fetch_assoc($teacherDataQuery);
+        $fetchQuery['teacherData'] = $teacherDataFetch;
 
         $response['data'][] = $fetchQuery;
     }
@@ -98,4 +84,3 @@ $fetchQuery['teacherData'] = $teacherDataFetch;
 end:
 echo json_encode($response);
 ?>
-

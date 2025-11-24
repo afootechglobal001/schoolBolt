@@ -14,64 +14,29 @@ if(!$checkSession){
     $branchId = $_GET['branchId'];
     $departmentId = $_GET['departmentId'];
     $classId = $_GET['classId'];
+    $armId = $_GET['armId'];
     $subjectId = $_GET['subjectId'];
     $staffId=$data['staffId'];
-    if (empty($branchId)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "BRANCH REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    if (empty($departmentId)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "DEPARTMENT REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    if (empty($classId)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "CLASS REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
+    validateEmptyField($branchId, 'BRANCH');
+    validateEmptyField($departmentId, 'DEPARTMENT');
+    validateEmptyField($classId, 'CLASS');
+    validateEmptyField($armId, 'ARM');
+    validateEmptyField($subjectId, 'SUBJECT');
+    validateEmptyField($staffId, 'TEACHER');
     
-    if (empty($subjectId)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "SUBJECT REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    
-    if (empty($staffId)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "BRANCH REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-
-    $select = "SELECT * FROM CLASS_SUBJECT_ALLOCATION_TAB WHERE $clientIds AND branchId='$branchId' AND departmentId='$departmentId' AND classId='$classId' AND subjectId='$subjectId'";
+    $select = "SELECT * FROM CLASS_SUBJECT_ALLOCATION_TAB WHERE $clientIds AND branchId='$branchId' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId' AND subjectId='$subjectId'";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($query);
     if($allRecordCount>0){///start if 1
         /// update CLASS_SUBJECT_ALLOCATION_TAB
         mysqli_query($conn,"UPDATE `CLASS_SUBJECT_ALLOCATION_TAB` 
         SET staffId='$staffId', updatedBy='$loginStaffId' 
-        WHERE $clientIds AND branchId='$branchId' AND departmentId='$departmentId' AND classId='$classId' AND subjectId='$subjectId'")or die (mysqli_error($conn));
+        WHERE $clientIds AND branchId='$branchId' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId' AND subjectId='$subjectId'")or die (mysqli_error($conn));
     }else{
         ///// insert into CLASS_SUBJECT_ALLOCATION_TAB
         mysqli_query($conn,"INSERT INTO `CLASS_SUBJECT_ALLOCATION_TAB`
-        (`clientId`, `branchId`, `departmentId`, `classId`, `subjectId`, `staffId`, `createdBy`, `createdTime`) VALUES 
-        ('$clientId', '$branchId', '$departmentId', '$classId', '$subjectId', '$staffId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
+        (`clientId`, `branchId`, `departmentId`, `classId`, `armId`, `subjectId`, `staffId`, `createdBy`, `createdTime`) VALUES 
+        ('$clientId', '$branchId', '$departmentId', '$classId', '$armId', '$subjectId', '$staffId', '$loginStaffId', NOW())")or die (mysqli_error($conn));
     }
 
     $response['response']=200; 
@@ -91,37 +56,21 @@ if(!$checkSession){
         $classDataQuery = mysqli_query($conn, "SELECT classId, className FROM CLASSES_TAB WHERE $clientIds AND classId='$classId'");
         $classDataFetch = mysqli_fetch_assoc($classDataQuery);
         $response['classData'] = $classDataFetch;
+        /////////////////// for  $armId
+        $armDataQuery = mysqli_query($conn, "SELECT armId, armName FROM ARMS_TAB WHERE $clientIds AND armId='$armId'");
+        $armDataFetch = mysqli_fetch_assoc($armDataQuery);
+        $response['armData']= $armDataFetch;
         /////////////////// for  $subjectId
         $subjectDataQuery = mysqli_query($conn, "SELECT subjectId, subjectName FROM SUBJECTS_TAB WHERE $clientIds AND subjectId='$subjectId'");
         $subjectDataFetch = mysqli_fetch_assoc($subjectDataQuery);
         $response['subjectData'] = $subjectDataFetch;
-    
-    $response['data'] = array(); // Initialize the data array
-    $select = "SELECT * FROM CLASS_SUBJECT_ALLOCATION_TAB WHERE $clientIds AND branchId='$branchId' AND departmentId='$departmentId' AND classId='$classId' AND subjectId='$subjectId' AND staffId='$staffId'";
-    $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
-    while ($fetchQuery = mysqli_fetch_assoc($query)) {
-        $createdBy=$fetchQuery['createdBy'];
-        $updatedBy=$fetchQuery['updatedBy'];
-       
         /////////////////// for  $staffId
         $teacherDataQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$staffId'");
         $teacherDataFetch = mysqli_fetch_assoc($teacherDataQuery);
         $fetchQuery['teacherData'] = $teacherDataFetch;
-
-         /////////////////// for  $createdBy
-         $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
-         $getCreatedByfetch = mysqli_fetch_assoc($getCreatedByQuery);
-         $fetchQuery['createdBy'] = $getCreatedByfetch;
-
-         /////////////////// for  $updatedBy
-         $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
-         $getUpdatedByfetch = mysqli_fetch_assoc($getUpdatedByQuery);
-         $fetchQuery['updatedBy']= $getUpdatedByfetch;
-
-        $response['data'][] = $fetchQuery;
-    }
+    
+   
 //////////////////////////////////////////////////////////////////////////////////////////////
 end:
 echo json_encode($response);
 ?>
-

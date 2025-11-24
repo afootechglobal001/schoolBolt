@@ -77,4 +77,3 @@ if(!$checkSession){
 end:
 echo json_encode($response);
 ?>
-

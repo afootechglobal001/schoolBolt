@@ -56,14 +56,6 @@ if(!$checkSession){
         goto end;
 	}
 
-    if(empty($middleName)){
-        $response = [
-            'response'=> 101,
-            'success'=> false,
-            'message'=> "MIDDLE NAME REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
     if(empty($lastName)){
         $response = [
             'response'=> 102,

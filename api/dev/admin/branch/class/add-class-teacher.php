@@ -16,49 +16,12 @@ if(!$checkSession){
     $classId = $_GET['classId'];
     $armId = $_GET['armId'];
     $staffId=$data['staffId'];
-    if (empty($branchId)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "BRANCH REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    if (empty($departmentId)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "DEPARTMENT REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    if (empty($classId)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "CLASS REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    
-    if (empty($armId)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "ARM REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-    
-    if (empty($staffId)){/// start if 2
-        $response = [
-            'response'=> 100,
-            'success'=> false,
-            'message'=> "BRANCH REQUIRED! Check the fields and try again",
-        ]; 
-        goto end;
-	}
-
+    validateEmptyField($branchId, 'BRANCH');
+    validateEmptyField($departmentId, 'DEPARTMENT');
+    validateEmptyField($classId, 'CLASS');
+    validateEmptyField($armId, 'ARM');
+    validateEmptyField($staffId, 'STAFF');
+  
     $select = "SELECT * FROM CLASS_TEACHER_TAB WHERE $clientIds AND branchId='$branchId' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId'";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $allRecordCount=mysqli_num_rows($query);
@@ -108,15 +71,6 @@ if(!$checkSession){
         $teacherDataFetch = mysqli_fetch_assoc($teacherDataQuery);
         $fetchQuery['teacherData'] = $teacherDataFetch;
 
-         /////////////////// for  $createdBy
-         $getCreatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$createdBy'");
-         $getCreatedByfetch = mysqli_fetch_assoc($getCreatedByQuery);
-         $fetchQuery['createdBy'] = $getCreatedByfetch;
-
-         /////////////////// for  $updatedBy
-         $getUpdatedByQuery = mysqli_query($conn, "SELECT CONCAT(titleId, ' ', firstName, ' ', lastName) AS fullname, emailAddress FROM STAFF_TAB WHERE $clientIds AND staffId='$updatedBy'");
-         $getUpdatedByfetch = mysqli_fetch_assoc($getUpdatedByQuery);
-         $fetchQuery['updatedBy']= $getUpdatedByfetch;
 
         $response['data'][] = $fetchQuery;
     }
@@ -124,4 +78,3 @@ if(!$checkSession){
 end:
 echo json_encode($response);
 ?>
-
