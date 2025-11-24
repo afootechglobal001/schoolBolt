@@ -215,12 +215,7 @@ function _createStudent(view) {
     sessionStorage.getItem("getEachBranchDetailsSession")
   );
   try {
-    if (view == "mobile") {
-      var passport = "mobile";
-    } else {
-      var passport = document.getElementById("passport").src;
-    }
-
+    const passport = document.getElementById("passport").src;
     const surName = $("#surName").val();
     const firstName = $("#firstName").val();
     const otherNames = $("#otherNames").val();

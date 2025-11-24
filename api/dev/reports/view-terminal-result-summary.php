@@ -20,6 +20,32 @@ if (!$checkBasicSecurity){/// start if 1
     validateEmptyField($classId, 'CLASS');
     validateEmptyField($armId, 'ARM');
 
+///// confirm if the session and term is the current session and term
+    $currentSessionTermQuery = mysqli_query($conn, "SELECT session, termId FROM BRANCHES_TAB WHERE $clientIds AND branchId = '$branchId'");
+    $currentSessionTermFetch = mysqli_fetch_assoc($currentSessionTermQuery);
+    $currentSession = $currentSessionTermFetch['session'];
+    $currentTermId = $currentSessionTermFetch['termId'];
+    if (($session == $currentSession) && ($termId == $currentTermId)) {
+
+  //// update students overall position in class
+        $markChecker_Overall=0;
+        $count_Overall=0;
+        $updatePositionSelect = "SELECT studentId, totalPercentage FROM BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' ORDER BY totalPercentage DESC";
+        $updatePositionQuery = mysqli_query($conn, $updatePositionSelect) or die(mysqli_error($conn));
+        $noOfStudents = mysqli_num_rows($updatePositionQuery);
+        while ($updatePositionFetch = mysqli_fetch_assoc($updatePositionQuery)) {
+            $count_Overall++;
+            $updateStudentId=$updatePositionFetch['studentId'];
+            $totalPercentage=$updatePositionFetch['totalPercentage'];
+
+            if($markChecker_Overall!=$totalPercentage){
+                $markChecker_Overall=$totalPercentage;
+                $position=$count_Overall . getOrdinalSuffix($count_Overall)."($noOfStudents)";
+            }
+            mysqli_query($conn, "UPDATE BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB SET noOfStudentsInClass = '$noOfStudents', overallPosition = '$position' WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND studentId = '$updateStudentId'") or die(mysqli_error($conn));
+        }
+    }
+
 
     /// get all tableTitles
 $tableTitles="SN, FULL NAME, NO. OF SUBJECTS, MARK OBTAINABLE, MARK OBTAINED, TOTAL PERCENTAGE (%), POSTN. IN CLASS, OVERALL POSTN., REMARKS, TEACHER'S COMMENT, ATTENDANCE";

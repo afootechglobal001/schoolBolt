@@ -73,24 +73,6 @@
             mysqli_query($conn, "UPDATE BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB SET noOfStudentsInArm = '$noOfStudents', position = '$position' WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND armId = '$armId' AND studentId = '$updateStudentId'") or die(mysqli_error($conn));
         }
 
-
-        //// update students overall position in class
-        $markChecker_Overall=0;
-        $count_Overall=0;
-        $updatePositionSelect = "SELECT studentId, totalPercentage FROM BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' ORDER BY totalPercentage DESC";
-        $updatePositionQuery = mysqli_query($conn, $updatePositionSelect) or die(mysqli_error($conn));
-        $noOfStudents = mysqli_num_rows($updatePositionQuery);
-        while ($updatePositionFetch = mysqli_fetch_assoc($updatePositionQuery)) {
-            $count_Overall++;
-            $updateStudentId=$updatePositionFetch['studentId'];
-            $totalPercentage=$updatePositionFetch['totalPercentage'];
-
-            if($markChecker_Overall!=$totalPercentage){
-                $markChecker_Overall=$totalPercentage;
-                $position=$count_Overall . getOrdinalSuffix($count_Overall)."($noOfStudents)";
-            }
-            mysqli_query($conn, "UPDATE BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB SET noOfStudentsInClass = '$noOfStudents', overallPosition = '$position' WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND studentId = '$updateStudentId'") or die(mysqli_error($conn));
-        }
     }
 end:
 ?>
