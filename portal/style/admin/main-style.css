@@ -1893,6 +1893,22 @@ header
   height: 100%;
   object-fit: cover;
 }
+.slide-form-div .container-back-div .inner-container .cam-pix .btn-div{
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+  opacity: 0;
+  transition: all 0.2s ease-in 0.2s;
+}
+.slide-form-div .container-back-div .inner-container .cam-pix:hover .btn-div{
+  opacity: 1;
+}
 
 .slide-form-div .container-back-div .inner-container .title {
   font-size: 14px;

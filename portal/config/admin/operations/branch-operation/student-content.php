@@ -15,8 +15,17 @@
                         STUDENT</span></div>
             </div>
 
-            <div class="cam-pix" onClick="takeSnapShot()" id="cam-pix">
-                <div class="cam-pix-inner">
+            <div class="cam-pix" id="cam-pix">
+                <div class="btn-div">
+                    <button class="btn" title="Take Student Picture" onClick="takeSnapShot()"> <i
+                            class="bi-camera-fill"></i> TAKE
+                        PICTURE </button>
+                    <label>
+                        <input type="file" accept="image/*" style="display: none;" />
+                        <button class="btn" title="Browse Image">BROWSE IMAGE</button>
+                    </label>
+                </div>
+                <div class=" cam-pix-inner">
                     <img src="<?php echo $websiteUrl ?>/images/sample.jpg" />
                 </div>
             </div>
