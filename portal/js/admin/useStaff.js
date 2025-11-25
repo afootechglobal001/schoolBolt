@@ -14,6 +14,27 @@ function _getStaffPagesActiveLink(divid){
 	$("#"+divid).addClass('active');
 }
 
+$(function () {
+  staffPixPreview = {
+    UpdatePreview: function (obj, action = 'register') {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+        return;
+      }
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        document.getElementById("cam-pix").innerHTML =
+            '<img id="passport" src="' + e.target.result + '"/>';
+
+        if (action === 'updateStaffPix') {
+            _updateStaffPix();
+        }
+      };
+      reader.readAsDataURL(obj.files[0]);
+    },
+  };
+});
 
 function _getSelectBranch(fieldId){
 	try {
@@ -197,7 +218,6 @@ function formatDate(date) {
     const parts = date.split('-');
     return `${parts[2]}/${parts[1]}/${parts[0]}`;
 }
-
 
 function _createStaff(view) {
 	try {

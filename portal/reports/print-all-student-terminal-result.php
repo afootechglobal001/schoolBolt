@@ -12,6 +12,10 @@
 </head>
 
 <body>
+    <script>
+        printAllStudentTerminalResultSession = JSON.parse(sessionStorage.getItem("printAllStudentTerminalResultSession"));
+    </script>
+    
     <section class="body-div all-terminal-body">
         <div class="header-back-div">
             <div class="header-image">
