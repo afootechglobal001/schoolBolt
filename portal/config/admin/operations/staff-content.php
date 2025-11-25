@@ -51,8 +51,24 @@
                     </div>
                 </div>
 
-                <div class="cam-pix" onClick="takeSnapShot()" id="cam-pix">
-                    <img src="<?php echo $websiteUrl ?>/images/sample.jpg" />
+                <div class="cam-pix">
+                    <div class="btn-div">
+                        <button class="btn" title="Take Student Picture" onClick="takeSnapShot()"> <i
+                                class="bi-camera-fill"></i> TAKE
+                            PICTURE </button>
+
+                        <input id="browseImageInput" type="file" style="display:none;"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="studentPixPreview.UpdatePreview(this, 'register');" />
+
+                        <button class="btn" type="button" title="Browse Image"
+                            onclick="document.getElementById('browseImageInput').click()">
+                            BROWSE IMAGE
+                        </button>
+                    </div>
+                    <div class="cam-pix-inner" id="cam-pix">
+                        <img src="<?php echo $websiteUrl ?>/images/sample.jpg" />
+                    </div>
                 </div>
 
                 <div class="text_field_container" id="titleId_container">
@@ -222,15 +238,28 @@
         <div class="profile-content-div">
             <div class="bg-img">
                 <div class="mini-profile">
-                    <label>
-                        <div class="img-div" onClick="takeSnapShot('updateStaffPix')" id="cam-pix">
-                            <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/default.jpg" alt="Profile Image">
-                        </div>
-                        <script>
-                            $("#cam-pix").html('<img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/' +
-                                getEachStaffDetailsSession.profilePix + '" alt="Profile Image">');
-                        </script>
-                    </label>
+                    <div class="btn-div">
+                        <button class="btn" title="Take Staff Picture" onClick="takeSnapShot('updateStaffPix')">
+                             <i class="bi-camera-fill"></i></button>
+
+                        <input id="browseImageInput" type="file" style="display:none;"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="staffPixPreview.UpdatePreview(this, 'updateStaffPix');" />
+
+                        <button class="btn" type="button" title="Browse Image"
+                            onclick="document.getElementById('browseImageInput').click()">
+                            <i class="bi-folder2-open"></i>
+                        </button>
+                    </div>
+
+                    <div class="img-div" id="cam-pix">
+                        <img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/default.jpg" alt="Profile Image">
+                    </div>
+                    
+                    <script>
+                        $("#cam-pix").html('<img src="<?php echo $websiteUrl ?>/uploaded_files/staffPix/' +
+                            getEachStaffDetailsSession.profilePix + '" alt="Profile Image">');
+                    </script>
 
                     <div class="text-back-div">
                         <div class="inner-text">

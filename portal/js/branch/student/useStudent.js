@@ -20,6 +20,45 @@ function _getStudentPagesActiveLink(divid) {
   $("#" + divid).addClass("active");
 }
 
+$(function () {
+  studentPixPreview = {
+    UpdatePreview: function (obj, action = 'register') {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+        return;
+      }
+
+      const file = obj.files[0];
+      const maxSize = 50 * 1024; // 30KB
+
+      if (file.size > maxSize) {
+        if (action === 'updateStudentPix') {
+          document.getElementById("cam-pix").innerHTML =
+          `<img id="passport" src="${websiteUrl}/uploaded_files/studentPix/default.jpg" />`;
+        } else {
+          document.getElementById("cam-pix").innerHTML =
+            `<img id="passport" src="${websiteUrl}/images/sample.jpg" />`;
+        }
+        _actionAlert("Image is too large! Maximum allowed size is 50KB.", false);
+        return;
+      }
+      
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        document.getElementById("cam-pix").innerHTML =
+            '<img id="passport" src="' + e.target.result + '"/>';
+
+        if (action === 'updateStudentPix') {
+            _updateStudentPix();
+        }
+      };
+      reader.readAsDataURL(obj.files[0]);
+    },
+  };
+});
+
+
 function copyTextbox() {
   setTimeout(function () {
     let addressVal = $("#address").val();
