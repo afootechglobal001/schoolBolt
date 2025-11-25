@@ -2779,8 +2779,8 @@
                             <button class="btn" title="TERMINAL RESULT SUMMARY" id="printBtn"
                                 onclick="_printTerminalResultSummary();"><i class="bi-printer"></i>TERMINAL RESULT
                                 SUMMARY</button>
-                            <button class="btn" title="ALL TERMINAL RESULT" id="printAllBtn"
-                                onclick="windowPop('<?php echo $websiteUrl ?>/reports/print-all-student-terminal-result');"><i
+                            <button class="btn" title="PRINT ALL TERMINAL RESULT" id="printAllTerminalBtn"
+                                onclick="_printAllStudentTerminalResult();"><i
                                     class="bi-printer"></i> ALL TERMINAL RESULT</button>
                             <button class="btn" title="PROGRESS REPORT" id="printAllBtn"
                                 onclick="windowPop('<?php echo $websiteUrl ?>/reports/print-all-student-terminal-progress-report-result');"><i
