@@ -330,7 +330,7 @@
 
                                                     <div class="list-content">
                                                         <span>MARKS OBTAINED:</span>
-                                                        <div>${studentResultData.totalMarkObtained}</div>
+                                                        <p>${studentResultData.totalMarkObtained}</p>
                                                     </div>
 
                                                     <div class="list-content">
