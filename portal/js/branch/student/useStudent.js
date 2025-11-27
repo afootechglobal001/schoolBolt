@@ -29,7 +29,7 @@ $(function () {
       }
 
       const file = obj.files[0];
-      const maxSize = 50 * 1024; // 30KB
+      const maxSize = 300 * 1024; // 300KB
 
       if (file.size > maxSize) {
         if (action === 'updateStudentPix') {
@@ -39,7 +39,7 @@ $(function () {
           document.getElementById("cam-pix").innerHTML =
             `<img id="passport" src="${websiteUrl}/images/sample.jpg" />`;
         }
-        _actionAlert("Image is too large! Maximum allowed size is 50KB.", false);
+        _actionAlert("Image is too large! Maximum allowed size is 300KB.", false);
         return;
       }
       

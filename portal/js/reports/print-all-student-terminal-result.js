@@ -13,19 +13,28 @@ function _printAllStudentTerminalResult() {
 		const btnText = $("#printAllTerminalBtn").html();
 		$("#printAllTerminalBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
 		$("#printAllTerminalBtn").prop("disabled", true);
+		
+		let callUrl="";
+		if (termId==='1') {
+			callUrl=`${endPoint}/reports/print-all-student-first-term-result?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`;
+		} else if (termId==='2') {
+			callUrl=`${endPoint}/reports/print-all-student-second-term-result?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`;
+		} else if (termId==='3') {
+			callUrl=`${endPoint}/reports/print-all-student-third-term-result?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`;
+		}
 
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/reports/print-all-student-terminal-result?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+			url: callUrl,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(),
 			success: function(info) {
-				if (info.success > 0) {
+				if (info.success > 0 && info.eachStudentResultData.length > 0) {
 					sessionStorage.setItem("printAllStudentTerminalResultSession", JSON.stringify(info));
 					windowPop(`${websiteUrl}/reports/print-all-student-terminal-result`);
 				} else {
-					_actionAlert(info.message, false);
+					_actionAlert('No data available to print.', false);
 					const response = info.response;
 					if (response < 100) {
 						_logOut();
