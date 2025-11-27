@@ -53,13 +53,13 @@
 
                 <div class="cam-pix">
                     <div class="btn-div">
-                        <button class="btn" title="Take Student Picture" onClick="takeSnapShot()"> <i
+                        <button class="btn" title="Take Staff Picture" onClick="takeSnapShot()"> <i
                                 class="bi-camera-fill"></i> TAKE
                             PICTURE </button>
 
                         <input id="browseImageInput" type="file" style="display:none;"
                             accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
-                            onchange="studentPixPreview.UpdatePreview(this, 'register');" />
+                            onchange="staffPixPreview.UpdatePreview(this, 'register');" />
 
                         <button class="btn" type="button" title="Browse Image"
                             onclick="document.getElementById('browseImageInput').click()">
