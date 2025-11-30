@@ -150,7 +150,7 @@
                         subjectTable += `</tbody>`;
 
                         sectionHtml += `
-                            <section class="body-div all-terminal-body">
+                            <section class="body-div" style="page-break-after: always;">
                                 <div class="header-back-div">
                                     <div class="header-image">
                                         <img src="${headerUrl}" alt="${branch.branchName} Report Header" style="width: 100%; height: auto;" />
@@ -330,7 +330,7 @@
 
                                                     <div class="list-content">
                                                         <span>MARKS OBTAINED:</span>
-                                                        <div>${studentResultData.totalMarkObtained}</div>
+                                                        <p>${studentResultData.totalMarkObtained}</p>
                                                     </div>
 
                                                     <div class="list-content">

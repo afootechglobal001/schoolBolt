@@ -12,6 +12,7 @@
 	align-items: center;
 	justify-content: center;
     flex-direction: column;
+	
 }
 
 .broadsheet-body{
@@ -23,7 +24,7 @@
 }
 
 .all-terminal-body{
-	width: 1200px;
+	min-width: 1200px;
 }
 
 .body-div .header-back-div {
@@ -182,6 +183,10 @@
 	color: var(--body-color);
 }
 
+.table-div .table .tb-col th[colspan] {
+    text-align: center;
+}
+
 .table-div .table .tb-row {
    	height: 45px;
 	text-align: left;
@@ -198,8 +203,8 @@
 
 .table-div .table .table-col th, 
 .table-div .table .table-row td{
-    padding: 5px 7px;
-	font-size: 10px;
+    padding: 5px 6px;
+	font-size: 9px;
 }
 
 .table-div .table tbody tr:nth-child(even) {
@@ -304,4 +309,3 @@
 	height: 100%;
 	object-fit: cover;
 }
-

@@ -373,7 +373,7 @@
 
                                         <div class="list-content">
                                             <span>MARKS OBTAINED:</span>
-                                            <div>${items.totalMarkObtained}</div>
+                                            <p>${items.totalMarkObtained}</p>
                                         </div>
 
                                         <div class="list-content">
