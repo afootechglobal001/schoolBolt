@@ -424,9 +424,11 @@ function _fetchStaffSubjectCummulative() {
 				if (info.success) {
 					for (let i = 0; i < fetch.length; i++) {
 						no++;
+						const fetchDepartmentData = fetch[i].departmentData;
 						const fetchClassData = fetch[i].classData;
 						const fetchSubjectData = fetch[i].subjectData;
 						const departmentId = fetch[i].departmentId;
+						const departmentName = fetchDepartmentData.departmentName;
 						const classId = fetch[i].classId;
 						const fetchArmData = fetchClassData.armData;
 						const className = fetchClassData.className;
@@ -436,7 +438,7 @@ function _fetchStaffSubjectCummulative() {
 						text +=`
 							<div class="pages-toggle-div">
 								<div class="pages-toggle-title" onclick="_collapse('view${no}');" title="Click to view class teacher's students">
-									<h3>${className} (${subjectName})</h3>
+									<h3>${departmentName} - ${className} (${subjectName})</h3>
 									<div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
 								</div>
 
