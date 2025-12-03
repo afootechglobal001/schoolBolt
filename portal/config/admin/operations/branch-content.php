@@ -2776,13 +2776,26 @@
                             </span></div>
 
                         <div class="btn-container">
+                            <script>
+                                $(document).ready(function () {
+                                    const schoolCategoryId = getViewTerminalResultSummarySession?.branchData?.schoolCategoryId;
+                                    // Hide by default
+                                    $("#progressReportBtn").hide();
+
+                                    // Show only if schoolCategory is COLLEGE
+                                    if (schoolCategoryId && schoolCategoryId.toUpperCase() === "COLLEGE") {
+                                        $("#progressReportBtn").show();
+                                    }
+                                });
+                            </script>
+
                             <button class="btn" title="TERMINAL RESULT SUMMARY" id="printBtn"
                                 onclick="_printTerminalResultSummary();"><i class="bi-printer"></i>TERMINAL RESULT
                                 SUMMARY</button>
                             <button class="btn" title="PRINT ALL TERMINAL RESULT" id="printAllTerminalBtn"
                                 onclick="_printAllStudentTerminalResult();"><i
                                     class="bi-printer"></i> ALL TERMINAL RESULT</button>
-                            <button class="btn" title="PROGRESS REPORT" id="printAllBtn"
+                            <button class="btn" title="PROGRESS REPORT" id="progressReportBtn"
                                 onclick="windowPop('<?php echo $websiteUrl ?>/reports/print-all-student-terminal-progress-report-result');"><i
                                     class="bi-printer"></i> PROGRESS REPORT</button>
                         </div>

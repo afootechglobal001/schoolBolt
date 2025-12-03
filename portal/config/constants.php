@@ -81,4 +81,5 @@ var terminalResultSummaryHeaderPixPath = websiteUrl +
 var terminalResultHeaderPixPath = websiteUrl +
 '/uploaded_files/schoolResultHeaders'; /// For Terminal Result Header path //
 var watermarkPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Watermark path //
+var progressReportHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Progress Report Header path //
 </script>

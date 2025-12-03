@@ -4,15 +4,14 @@
 
 .body-div{
 	width: 900px;
+	min-height: 1270px;
 	background: var(--white-color);
 	border-radius: 3px;
     border: rgba(215, 215, 215, .9) 2px solid;
 	margin: 40px auto;
     display: flex;
 	align-items: center;
-	justify-content: center;
     flex-direction: column;
-	
 }
 
 .broadsheet-body{
@@ -100,8 +99,8 @@
 }
 
 .top-containner-back-div .inner-div-cont .image-div{ 
-	width: 130px;
-	height: 130px;
+	width: 120px;
+	height: 120px;
 	overflow: hidden;
 	border-radius: 5px;
 	margin-top: -30px;
@@ -197,14 +196,20 @@
 	padding: 10px 20px;
 	font-size: 12px;
 	font-family: sub-title-font;
+	font-weight: bold;
 	color: var(--sub-body-color);
 	border: 2px solid rgba(215, 215, 215, .9);
 }
 
-.table-div .table .table-col th, 
+.table-div .table .table-col th,
 .table-div .table .table-row td{
-    padding: 5px 6px;
+    padding: 5px;
 	font-size: 9px;
+}
+ 
+.table-div .table .table-row .bold-font{
+    font-family: title-font;
+	font-size: 11px;
 }
 
 .table-div .table tbody tr:nth-child(even) {
@@ -269,7 +274,7 @@
 }
 
 .bottom-content-back-div .inner-container .content-container {
-	width: calc(100% - 220px);
+	width:100%;
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
