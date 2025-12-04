@@ -159,10 +159,10 @@ if (!$checkBasicSecurity){/// start if 1
         $totalNotMandatoryFee +=$feesOption==='FALSE' ? $amount:0;
     }
 
-    /////////////////// get schoolboltCharges
-    $schoolboltChargesQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=5");
+    /////////////////// get previous successfull payment true credit card or bank transfer
+    $schoolboltChargesQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=5 AND (paymentMethodId='PM001' OR paymentMethodId='PM002')") or die (mysqli_error($conn));
     $previousSchoolboltCharges=mysqli_num_rows($schoolboltChargesQuery);
-    $schoolBoltCharges=$previousSchoolboltCharges>0 ? 0 : $schoolBoltCharges;
+    $schoolBoltCharges=$previousSchoolboltCharges>0 ? 0 : ($schoolBoltChargesStatus==1 ? $schoolBoltCharges : 0);
     //$deductCharges=$schoolBoltCharges>0 ? true: false;
     $deductCharges=false;
     $totalFeesPaid=$totalMandatoryFees+$totalNotMandatoryFee;

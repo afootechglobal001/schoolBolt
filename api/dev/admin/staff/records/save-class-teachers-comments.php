@@ -39,7 +39,7 @@ if(!$checkSession){
 
         foreach ($allComments as $comment) {
 			$studentId = $comment['studentId'];
-			$classTeachersComment = strtoupper($comment['classTeachersComment']);
+            $classTeachersComment=trim(strtoupper(str_replace("'", "\'", $comment['classTeachersComment'])));
             
             mysqli_query($conn,"INSERT INTO `BRANCH_TEACHERS_COMMENTS_TAB`
             (`clientId`, `branchId`, `session`, `termId`, `departmentId`, `classId`, `armId`, `studentId`, `classTeachersComment`, `staffId`, `createdTime`) VALUES 

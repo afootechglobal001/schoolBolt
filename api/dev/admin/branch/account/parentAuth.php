@@ -14,6 +14,16 @@ if(!$checkSession){
 	//////////////////declaration of variables//////////////////////////////////////
 	$parentTypeId =trim($_GET['parentTypeId']);
 	$email=trim($_GET['email']);
+    if (empty($email)){/// start if 2
+        $response = [
+            'response'=> 100,
+            'success'=> false,
+            'message'=> "PARENT EMAIL REQUIRED! Check email fields and try again",
+        ]; 
+        goto end;
+	}
+
+    ////////////////////////////////////////////////////////////////////////////////
         $select=mysqli_query($conn,"SELECT * FROM PARENTS_TAB WHERE $clientIds AND recordFor='$parentTypeId' AND email='$email' LIMIT 1") or die (mysqli_error($conn));
         $fetchQuery=mysqli_fetch_assoc($select);
 

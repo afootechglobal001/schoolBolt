@@ -33,7 +33,9 @@ $query=mysqli_query($connAdmin,"SELECT * FROM CLIENTS_TAB WHERE hashId='$clientI
 		$fetchQuery=mysqli_fetch_array($query);
 		$dbClientAddress=$fetchQuery['clientWebsite']; 
 		$schoolBoltCharges=$fetchQuery['charges'];
+		$schoolBoltChargesStatus=$fetchQuery['chargesStatus'];
 		$statusId=$fetchQuery['statusId'];
+
 
 
 		if($statusId!=1){

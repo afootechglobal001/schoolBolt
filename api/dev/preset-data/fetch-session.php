@@ -15,7 +15,7 @@ if(!$checkSession){
     $branchId = $_GET['branchId'];
     ////////////////////////////////////////////////////////////////////////////////
     validateEmptyField($branchId, 'BRANCH ID'); 
-    $select="SELECT DISTINCT session FROM BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB WHERE $clientIds AND branchId='$branchId'";
+    $select="SELECT DISTINCT session FROM BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB WHERE $clientIds AND branchId='$branchId' ORDER BY session DESC";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
 
     $allRecordCount=mysqli_num_rows($query);

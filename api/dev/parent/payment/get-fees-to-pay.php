@@ -87,8 +87,8 @@ if (!$checkBasicSecurity){/// start if 1
     }
 
 
-    /////////////////// get previous successfull payment
-    $getPaymentIdQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=5");
+    /////////////////// get previous successfull payment true credit card or bank transfer
+    $getPaymentIdQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=5 AND (paymentMethodId='PM001' OR paymentMethodId='PM002')") or die (mysqli_error($conn));
     $previousPaymentCount=mysqli_num_rows($getPaymentIdQuery);
 
 
@@ -102,11 +102,10 @@ if (!$checkBasicSecurity){/// start if 1
     $response['departmentData'] = $departmentDataFetch;
     $response['classData'] = $classDataFetch;
     $response['armData'] = $armDataFetch;
-    $response['schoolBoltCharges'] = $previousPaymentCount>0 ? 0 : $schoolBoltCharges;
+    $response['schoolBoltCharges'] = $previousPaymentCount>0 ? 0 : ($schoolBoltChargesStatus==1 ? $schoolBoltCharges : 0);
     $response['data'] = array(); // Initialize the data array
 
-    $select = "
-    SELECT 
+    $select = "SELECT 
         a.feesId, 
         a.feesName, 
         CASE 

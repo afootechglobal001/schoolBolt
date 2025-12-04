@@ -108,8 +108,22 @@ ORDER BY b.surName ASC
 ";
 
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
-    while ($fetch = mysqli_fetch_assoc($query)) {    
+    while ($fetch = mysqli_fetch_assoc($query)) {  
+        $studentId = $fetch['studentId'];
+        //////// check if schoolBoltCharges is to be applied for this client. if no, send all the students broadsheet
+        ///////// else send only those that have paid the schoolBoltCharges
+        $hasPaidSchoolBoltCharges = false;
+        if($schoolBoltChargesStatus!=1){
+           $hasPaidSchoolBoltCharges = true;
+        }else{
+            // Check if the student has paid the schoolBoltCharges
+            $paymentCheckQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=5 AND (paymentMethodId='PM001' OR paymentMethodId='PM002')") or die (mysqli_error($conn));
+            $hasPaidSchoolBoltCharges = mysqli_num_rows($paymentCheckQuery) > 0;
+        } 
+        
+        if($hasPaidSchoolBoltCharges){
         $response['studentData'][] = $fetch;
+        }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////
 end:

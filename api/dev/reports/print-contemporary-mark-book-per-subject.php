@@ -103,7 +103,7 @@ if (!$checkBasicSecurity){/// start if 1
         $remark = getRemark($averageSciore);
 
         mysqli_query($conn,"INSERT INTO `BRANCH_CONTEMPORARY_MARK_BOOK_FOR_EACH_SUBJECT_TAB`
-        (`clientId`, `branchId`, `session`, `departmentId`, `classId`, `armId`, `subjectId`, `studentId`, `firstTermScore`, `secondTermScore`, `thridTermScore`, `average`, `grade`, `remark`, `createdTime`) VALUES 
+        (`clientId`, `branchId`, `session`, `departmentId`, `classId`, `armId`, `subjectId`, `studentId`, `firstTermScore`, `secondTermScore`, `thirdTermScore`, `average`, `grade`, `remark`, `createdTime`) VALUES 
         ('$clientId', '$branchId', '$session', '$departmentId', '$classId', '$armId', '$subjectId', '$studentId', '$firstTermScores', '$secondTermScores', '$thirdTermScores', '$averageSciore', '$grade', '$remark', NOW())")or die (mysqli_error($conn));
        
     }
@@ -149,7 +149,7 @@ if (!$checkBasicSecurity){/// start if 1
     }
 
    
-    $tableTitles .= ", 1ST TERM SCORE, 2ND TERM SCORE, 3RD TERM SCORE, AVERAGE, GRADE, REMARK, OVERALL POSITION";
+    $tableTitles .= ", FIRST TERM SCORE, SECOND TERM SCORE, THIRD TERM SCORE, AVERAGE, GRADE, REMARK, OVERALL POSITION";
     $response['tableTitles'] = $tableTitles;
 ////////////////////// new get mark book data /////////////////////////////////////////
     $response['markBookData'] = array(); // Initialize the data array
