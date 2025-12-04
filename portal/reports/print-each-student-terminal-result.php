@@ -449,7 +449,8 @@
 
     <section class="body-div" id="progressReportSection">
         <div class="header-back-div">
-                    <img id="progressReportHeader" src="<?php echo $websiteUrl ?>/images/report/progress-report-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
+            <div class="header-image">
+                <img id="progressReportHeader" src="<?php echo $websiteUrl ?>/images/report/progress-report-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
 
                 <script>
                     $(document).ready(function () {
@@ -458,8 +459,8 @@
                         $("#progressReportHeader").attr("src", headerUrl).attr("alt", `${printEachStudentTerminalResultSession?.branchData?.branchName} Report Header`);
                     });
                 </script>
-
-           
+            </div>
+            
             <div class="title-div">
                 <h3 id="reportTitlelist-content"></h3>
                 <script>
@@ -638,7 +639,7 @@
         
             <div class="bottom-content-back-div">
                 <div class="inner-container">
-                    <canvas id="progressChart" width="700"  height="300">
+                    <canvas id="progressChart" width="700"  height="250">
                         <script>
                             $(document).ready(function () {
 
@@ -696,12 +697,12 @@
                                     data: {
                                         labels: labels,
                                         datasets: [{
-                                            label: printEachStudentTerminalResultSession?.branchData?.branchName + ' PROGRESS REPORT PERFORMANCE',
+                                            label: printEachStudentTerminalResultSession?.studentData?.surName + ' ' + printEachStudentTerminalResultSession?.studentData?.firstName + ' PROGRESS REPORT PERFORMANCE',
                                             data: chartData,
                                             backgroundColor: backgroundColors,
                                             borderColor: borderColors,
                                             borderWidth: 1,
-                                             barThickness: 85,
+                                            barThickness: 85,
                                             barPercentage: 0.9,
                                             categoryPercentage: 0.8 
                                         }]

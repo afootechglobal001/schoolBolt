@@ -2796,8 +2796,7 @@
                                 onclick="_printAllStudentTerminalResult();"><i
                                     class="bi-printer"></i> ALL TERMINAL RESULT</button>
                             <button class="btn" title="PROGRESS REPORT" id="progressReportBtn"
-                                onclick="windowPop('<?php echo $websiteUrl ?>/reports/print-all-student-terminal-progress-report-result');"><i
-                                    class="bi-printer"></i> PROGRESS REPORT</button>
+                                onclick="_printAllStudentProgressReport();"><i class="bi-printer"></i> PROGRESS REPORT</button>
                         </div>
                     </div>
 
