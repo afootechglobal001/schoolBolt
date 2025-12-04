@@ -424,18 +424,21 @@ function _fetchStaffSubjectCummulative() {
 				if (info.success) {
 					for (let i = 0; i < fetch.length; i++) {
 						no++;
+						const fetchDepartmentData = fetch[i].departmentData;
 						const fetchClassData = fetch[i].classData;
 						const fetchSubjectData = fetch[i].subjectData;
 						const departmentId = fetch[i].departmentId;
+						const departmentName = fetchDepartmentData.departmentName;
 						const classId = fetch[i].classId;
 						const fetchArmData = fetchClassData.armData;
 						const className = fetchClassData.className;
 						const subjectName = fetchSubjectData.subjectName;
+						const subjectId = fetchSubjectData.subjectId;
 
 						text +=`
 							<div class="pages-toggle-div">
 								<div class="pages-toggle-title" onclick="_collapse('view${no}');" title="Click to view class teacher's students">
-									<h3>${className} (${subjectName})</h3>
+									<h3>${departmentName} - ${className} (${subjectName})</h3>
 									<div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
 								</div>
 
@@ -452,8 +455,8 @@ function _fetchStaffSubjectCummulative() {
 												<div class="list-div">
 													<h4>${className} ${armName}</h4>
 													<div class="btn-container">
-														<button class="btn" title="VIEW STUDENTS" onclick="_printStudentByClass('${departmentId}','${classId}','${armId}');">
-															<i class="bi-eye"></i> VIEW STUDENTS
+														<button class="btn" title="PRINT" id="printBtn" onclick="_printContemporaryMarkBookPerSubject('${departmentId}','${classId}','${armId}','${subjectId}');">
+															<i class="bi-printer"></i> PRINT
 														</button>
 													</div>
 												</div>`;

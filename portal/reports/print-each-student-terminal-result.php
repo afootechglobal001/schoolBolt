@@ -14,8 +14,20 @@
 
 <body>
     <script> printEachStudentTerminalResultSession = JSON.parse(sessionStorage.getItem("printEachStudentTerminalResultSession"));</script>
+    <script>
+        $(document).ready(function () {
+            const schoolCategoryId = printEachStudentTerminalResultSession?.branchData?.schoolCategoryId;
+            // Hide by default
+            $("#progressReportSection").hide();
 
-    <section class="body-div terminal-body">
+            // Show only if schoolCategory is COLLEGE
+            if (schoolCategoryId && schoolCategoryId.toUpperCase() === "COLLEGE") {
+                $("#progressReportSection").show();
+            }
+        });
+    </script>
+
+    <section class="body-div">
         <div class="header-back-div">
             <div class="header-image">
                 <img id="terminalResultHeader" src="<?php echo $websiteUrl ?>/images/report/terminal-result-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
@@ -373,7 +385,7 @@
 
                                         <div class="list-content">
                                             <span>MARKS OBTAINED:</span>
-                                            <div>${items.totalMarkObtained}</div>
+                                            <p>${items.totalMarkObtained}</p>
                                         </div>
 
                                         <div class="list-content">
@@ -435,11 +447,20 @@
         </div>
     </section>
 
-    <section class="body-div terminal-body">
+    <section class="body-div" id="progressReportSection">
         <div class="header-back-div">
-            <img src="<?php echo $websiteUrl ?>/images/report/progress-report-header.png" alt="Report Header"
-                style="width: 100%; height: auto;" />
-           
+            <div class="header-image">
+                <img id="progressReportHeader" src="<?php echo $websiteUrl ?>/images/report/progress-report-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
+
+                <script>
+                    $(document).ready(function () {
+                        const schoolHeader = printEachStudentTerminalResultSession?.branchData?.progressReportHeader;
+                        const headerUrl = schoolHeader ? `${progressReportHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/progress-report-header.png`;
+                        $("#progressReportHeader").attr("src", headerUrl).attr("alt", `${printEachStudentTerminalResultSession?.branchData?.branchName} Report Header`);
+                    });
+                </script>
+            </div>
+            
             <div class="title-div">
                 <h3 id="reportTitlelist-content"></h3>
                 <script>
@@ -468,30 +489,29 @@
                          <div class="bottom-details">
                             <div class="details">
                                 <p>STUDENT ID: <span id="reportStudentId">
-                                        <script>
-                                        $("#reportStudentId").html(printEachStudentTerminalResultSession?.studentData
-                                            ?.officialStudentId ? printEachStudentTerminalResultSession?.studentData
-                                            ?.officialStudentId : printEachStudentTerminalResultSession?.studentData
-                                            ?.studentId);
-                                        </script>
-                                    </span></p>
-
+                                    <script>
+                                    $("#reportStudentId").html(printEachStudentTerminalResultSession?.studentData
+                                        ?.officialStudentId ? printEachStudentTerminalResultSession?.studentData
+                                        ?.officialStudentId : printEachStudentTerminalResultSession?.studentData
+                                        ?.studentId);
+                                    </script>
+                                </span></p>
                             </div>
 
                             <div class="details">
                                 <p>CLASS: <span id="reportClassName">
-                                        <script>
-                                        $("#reportClassName").html(printEachStudentTerminalResultSession?.classData?.className + ' ' +
-                                            printEachStudentTerminalResultSession?.armData?.armName);
-                                        </script>
+                                    <script>
+                                    $("#reportClassName").html(printEachStudentTerminalResultSession?.classData?.className + ' ' +
+                                        printEachStudentTerminalResultSession?.armData?.armName);
+                                    </script>
                                     </span></p>
                             </div>
 
                             <div class="details">
                                 <p>GENDER: <span id="reportGenderName">
-                                        <script>
-                                        $("#reportGenderName").html(printEachStudentTerminalResultSession?.studentData?.genderName);
-                                        </script>
+                                    <script>
+                                    $("#reportGenderName").html(printEachStudentTerminalResultSession?.studentData?.genderName);
+                                    </script>
                                     </span></p>
                             </div>
                         </div>
@@ -509,200 +529,111 @@
         </div>
     
         <div class="inner-content">
-            <div class="table-div">
-                <table class="table" cellspacing="0" style="width:100%" id="">
-                    <thead>
-                        <tr class="tb-col">
-                            <th></th>
-                            <th></th>
-                            <th colspan="3">SSS 1 (2023/2024)</th>
-                            <th colspan="3">SSS 2 (NULL)</th>
-                            <th colspan="3">SSS 3 (NULL)</th>
-                        </tr>
+            <div class="table-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
+                <table class="table" cellspacing="0" style="width:100%" id="reportPageContent">
+                    <script>
+                        $(document).ready(function () {
 
-                        <tr class="tb-col">
-                            <th>SN</th>
-                            <th>SUBJECT</th>
-                            <th>1ST TERM SCORE (100)</th>
-                            <th>2ND TERM SCORE (100)</th>
-                            <th>3RD TERM SCORE (100)</th>
-                            <th>1ST TERM SCORE (100)</th>
-                            <th>2ND TERM SCORE (100)</th>
-                            <th>3RD TERM SCORE (100)</th>
-                            <th>1ST TERM SCORE (100)</th>
-                            <th>2ND TERM SCORE (100)</th>
-                            <th>3RD TERM SCORE (100)</th>
-                        </tr>
-                    </thead>
+                            // FETCH DATA FROM SESSION
+                            const data = JSON.parse(sessionStorage.getItem("printEachStudentTerminalResultSession"));
+                            if (!data) return;
 
-                    <tbody>
-                        <tr class="tb-row">
-                            <td>1</td>
-                            <td>AGRICULTURAL SCIENCE</td>
-                            <td>37 %</td>
-                            <td>47.1 %</td>
-                            <td>44%</td>
-                            <td>42.5 %</td>
-                            <td>32.6 %</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>  
-                        
-                        <tr class="tb-row">
-                            <td>2</td>
-                            <td>BASIC SCIENCE</td>
-                            <td>37 %</td>
-                            <td>47.1 %</td>
-                            <td>44%</td>
-                            <td>42.5 %</td>
-                            <td>32.6 %</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>  
+                            const backendWatermark = printEachStudentTerminalResultSession?.branchData?.watermark;
+                            const defaultWatermark = '../images/report/watermark.jpg';
+                            const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
 
-                       <tr class="tb-row">
-                            <td>3</td>
-                            <td>BASIC TECHNOLOGY</td>
-                            <td>37 %</td>
-                            <td>47.1 %</td>
-                            <td>44%</td>
-                            <td>42.5 %</td>
-                            <td>32.6 %</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>  
+                            $('#backgroundTable').css({
+                                'background': `url(${watermarkUrl}) center no-repeat`,
+                                'background-size': 'cover'
+                            });
 
-                        <tr class="tb-row">
-                            <td>4</td>
-                            <td>CIVIC EDUCATION</td>
-                            <td>37 %</td>
-                            <td>47.1 %</td>
-                            <td>44%</td>
-                            <td>42.5 %</td>
-                            <td>32.6 %</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr class="tb-row">
-                            <td>4</td>
-                            <td>CIVIC EDUCATION</td>
-                            <td>37 %</td>
-                            <td>47.1 %</td>
-                            <td>44%</td>
-                            <td>42.5 %</td>
-                            <td>32.6 %</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr> 
-                        
-                        <tr class="tb-row">
-                            <td>5</td>
-                            <td>COMPUTER STUDIES</td>
-                            <td>37 %</td>
-                            <td>47.1 %</td>
-                            <td>44%</td>
-                            <td>42.5 %</td>
-                            <td>32.6 %</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr> 
+                            let tableTitles = data.progressiveReportTableTitles;
+                            const progressiveReportData = data.progressiveReportData || [];
 
-                        <tr class="tb-row">
-                            <td>6</td>
-                            <td>ENGLISH LANGUAGE</td>
-                            <td>37 %</td>
-                            <td>47.1 %</td>
-                            <td>44%</td>
-                            <td>42.5 %</td>
-                            <td>32.6 %</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr> 
+                            // Convert titles if sent as a string
+                            if (typeof tableTitles === "string") {
+                                tableTitles = tableTitles.split(",").map(t => t.trim());
+                            }
 
-                        <tr class="tb-row">
-                            <td>7</td>
-                            <td>FRENCH</td>
-                            <td>37 %</td>
-                            <td>47.1 %</td>
-                            <td>44%</td>
-                            <td>42.5 %</td>
-                            <td>32.6 %</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr> 
+                            // Number of term columns per class
+                            const groupsPerClass = 3; // firstTerm, secondTerm, thirdTerm
 
-                        <tr class="tb-row">
-                            <td>8</td>
-                            <td>MATHEMATICS</td>
-                            <td>37 %</td>
-                            <td>47.1 %</td>
-                            <td>44%</td>
-                            <td>42.5 %</td>
-                            <td>32.6 %</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr> 
+                            // 1. BUILD THEAD → GROUP HEADER ROW
+                            const thead = $('<thead></thead>');
+                            const groupTR = $('<tr class="tb-col table-col"></tr>');
 
-                        <tr class="tb-row">
-                            <td>9</td>
-                            <td>SOCIAL STUDIES</td>
-                            <td>37 %</td>
-                            <td>47.1 %</td>
-                            <td>44%</td>
-                            <td>42.5 %</td>
-                            <td>32.6 %</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr> 
+                            // SN + SUBJECT
+                            groupTR.append("<th></th>");
+                            groupTR.append("<th></th>");
 
-                        <tr class="tb-row">
-                            <td>10</td>
-                            <td>YORUBA LANGUAGE</td>
-                            <td>37 %</td>
-                            <td>47.1 %</td>
-                            <td>44%</td>
-                            <td>42.5 %</td>
-                            <td>42.5 %</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr> 
+                            // Add class group headers dynamically
+                            progressiveReportData.forEach(cls => {
+                                groupTR.append(`
+                                    <th colspan="${groupsPerClass}">
+                                        ${cls.className} (${cls.session || "NULL"})
+                                    </th>
+                                `);
+                            });
 
-                        <tr class="tb-row">
-                            <td>-</td>
-                            <td>TOTAL PERCENTAGE</td>
-                            <td>37 %</td>
-                            <td>47.1 %</td>
-                            <td>44%</td>
-                            <td>42.5 %</td>
-                            <td>42.5 %</td>
-                            <td>0%</td>
-                            <td>0%</td>
-                            <td>0%</td>
-                            <td>0%</td>
-                        </tr> 
-                    </tbody>
+                            thead.append(groupTR);
+
+                            // 2. TITLES ROW (the second TR)
+                            const titleTR = $('<tr class="tb-col table-col"></tr>');
+                            tableTitles.forEach(t => titleTR.append(`<th>${t}</th>`));
+                            thead.append(titleTR);
+
+                            // 3. COLLECT ALL UNIQUE SUBJECT NAMES ACROSS ALL CLASSES
+                            const allSubjects = new Set();
+
+                            progressiveReportData.forEach(cls => {
+                                cls.subjectsScores.forEach(sub => {
+                                    allSubjects.add(sub.subjectName);
+                                });
+                            });
+
+                            const subjectList = Array.from(allSubjects);
+
+                            // 4. BUILD TBODY → SUBJECT ROWS
+                            const tbody = $('<tbody></tbody>');
+                            
+                            function formatScore(score) {
+                                return score ? `${score} %` : "";
+                            }
+
+                            subjectList.forEach((subjectName, idx) => {
+                                const tr = $('<tr class="tb-row table-row"></tr>');
+                                tr.append(`<td>${idx + 1}</td>`);
+                                tr.append(`<td>${subjectName}</td>`);
+
+                                progressiveReportData.forEach(cls => {
+                                    const subObj = cls.subjectsScores.find(s => s.subjectName === subjectName);
+
+                                    if (subObj) {
+                                        tr.append(`<td>${formatScore(subObj.firstTermScores)}</td>`);
+                                        tr.append(`<td>${formatScore(subObj.secondTermScores)}</td>`);
+                                        tr.append(`<td>${formatScore(subObj.thirdTermScores)}</td>`);
+                                    } else {
+                                        tr.append(`<td></td><td></td><td></td>`);
+                                    }
+                                });
+                                tbody.append(tr);
+                            });
+
+                            // 5. ADD TOTAL PERCENTAGE ROW (ALWAYS LAST)
+                            const totalTR = $('<tr class="tb-row table-row"></tr>');
+
+                            totalTR.append(`<td>-</td>`);
+                            totalTR.append(`<td>TOTAL PERCENTAGE</td>`);
+
+                            progressiveReportData.forEach(cls => {
+                                totalTR.append(`<td class="bold-font">${(cls.totalPercentage.firstTermTotalPercentage ?? 0)} %</td>`);
+                                totalTR.append(`<td class="bold-font">${(cls.totalPercentage.secondTermTotalPercentage ?? 0)} %</td>`);
+                                totalTR.append(`<td class="bold-font">${(cls.totalPercentage.thirdTermTotalPercentage ?? 0)} %</td>`);
+                            });
+                            tbody.append(totalTR);
+                            $("#reportPageContent").empty().append(thead).append(tbody);
+                        });
+                    </script>
                 </table>
             </div>
         
@@ -711,29 +642,37 @@
                     <canvas id="progressChart" width="700"  height="250">
                         <script>
                             $(document).ready(function () {
-                                const labels = [
-                                    ['JSS 1', '1ST TERM'],
-                                    ['JSS 1', '2ND TERM'],
-                                    ['JSS 1', '3RD TERM'],
-                                    ['JSS 2', '1ST TERM'],
-                                    ['JSS 2', '2ND TERM'],
-                                    ['JSS 2', '3RD TERM'],
-                                    ['JSS 3', '1ST TERM'],
-                                    ['JSS 3', '2ND TERM'],
-                                    ['JSS 3', '3RD TERM'],
-                                ];
 
-                                const testData = [45.82, 48.78, 47.42, 44.36, 45.1];
+                                const data = JSON.parse(sessionStorage.getItem("printEachStudentTerminalResultSession"));
+                                const progressiveReportData = data.progressiveReportData || [];
 
-                                const backgroundColors = [
+                                // 1. BUILD LABELS DYNAMICALLY
+                                let labels = [];
+                                progressiveReportData.forEach(cls => {
+                                    labels.push([cls.className, "1ST TERM"]);
+                                    labels.push([cls.className, "2ND TERM"]);
+                                    labels.push([cls.className, "3RD TERM"]);
+                                });
+
+                                // 2. BUILD DATA VALUES
+                                let chartData = [];
+                                progressiveReportData.forEach(cls => {
+                                    const t = cls.totalPercentage;
+                                    chartData.push(t.firstTermTotalPercentage ? parseFloat(t.firstTermTotalPercentage) : null);
+                                    chartData.push(t.secondTermTotalPercentage ? parseFloat(t.secondTermTotalPercentage) : null);
+                                    chartData.push(t.thirdTermTotalPercentage ? parseFloat(t.thirdTermTotalPercentage) : null);
+
+                                });
+
+                                // 3. COLORS (REPEAT AUTOMATICALLY)
+                                const bg = [
                                     'rgba(78, 115, 223, 0.7)',
                                     'rgba(231, 74, 59, 0.7)',
                                     'rgba(28, 200, 138, 0.7)',
                                     'rgba(54, 185, 204, 0.7)',
                                     'rgba(111, 66, 193, 0.7)'
                                 ];
-
-                                const borderColors = [
+                                const br = [
                                     'rgb(78, 115, 223)',
                                     'rgb(231, 74, 59)',
                                     'rgb(28, 200, 138)',
@@ -741,72 +680,80 @@
                                     'rgb(111, 66, 193)'
                                 ];
 
+                                let backgroundColors = [];
+                                let borderColors = [];
+
+                                for (let i = 0; i < chartData.length; i++) {
+                                    const index = i % bg.length;
+                                    backgroundColors.push(bg[index]);
+                                    borderColors.push(br[index]);
+                                }
+
+                                // 4. RENDER CHART
                                 const ctx = document.getElementById('progressChart').getContext('2d');
 
                                 new Chart(ctx, {
-                                type: 'bar',
-                                data: {
-                                    labels: labels,
-                                    datasets: [{
-                                        label: 'SchoolBolt Progress Report',
-                                        data: testData,
-                                        backgroundColor: backgroundColors,
-                                        borderColor: borderColors,
-                                        borderWidth: 1
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            display: false
-                                        }
+                                    type: 'bar',
+                                    data: {
+                                        labels: labels,
+                                        datasets: [{
+                                            label: printEachStudentTerminalResultSession?.studentData?.surName + ' ' + printEachStudentTerminalResultSession?.studentData?.firstName + ' PROGRESS REPORT PERFORMANCE',
+                                            data: chartData,
+                                            backgroundColor: backgroundColors,
+                                            borderColor: borderColors,
+                                            borderWidth: 1,
+                                            barThickness: 85,
+                                            barPercentage: 0.9,
+                                            categoryPercentage: 0.8 
+                                        }]
                                     },
-                                    scales: {
-                                        x: {
-                                            ticks: {
-                                                maxRotation: 0,
-                                                minRotation: 0,
-                                                autoSkip: false
+                                    options: {
+                                        responsive: true,
+                                        plugins: { legend: { display: false } },
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true,
+                                                min: 0,
+                                                max: 100,
+                                                ticks: {
+                                                    stepSize: 20,
+                                                    callback: value => value + '%'
+                                                },
+                                                grid: {
+                                                    display: true
+                                                }
+                                            },
+                                            x: {
+                                                grid: {
+                                                    display: false
+                                                },
+                                                ticks: {
+                                                    font: { size: 11 }
+                                                },
                                             }
                                         },
-                                        y: {
-                                            beginAtZero: true,
-                                            ticks: {
-                                                callback: function (value) {
-                                                    return value + '%';
-                                                },
-                                                stepSize: 10,
-                                                min: 0,
-                                                max: 50
-                                            }
-                                        }
-                                    },
-                                    animation: {
-                                        onComplete: function () {
-                                            const chart = this;
-                                            const ctx = chart.ctx;
+                                        animation: {
+                                            onComplete: function () {
+                                                const chart = this;
+                                                const ctx = chart.ctx;
 
-                                            ctx.save();
-                                            ctx.font = 'bold 12px Arial';
-                                            ctx.textAlign = 'center';
-                                            ctx.textBaseline = 'middle';
+                                                ctx.save();
+                                                ctx.font = 'bold 12px Arial';
+                                                ctx.textAlign = 'center';
+                                                ctx.textBaseline = 'middle';
 
-                                            chart.data.datasets.forEach((dataset, i) => {
-                                                const meta = chart.getDatasetMeta(i);
-                                                meta.data.forEach((bar, index) => {
-                                                    const value = dataset.data[index];
-                                                    const x = bar.x;
-                                                    const y = bar.y;
-                                                    const barHeight = bar.base - y;
-
-                                                    ctx.fillStyle = '#fff'; // white inside bar
-                                                    ctx.fillText(value + '%', x, y + barHeight / 2);
+                                                chart.data.datasets.forEach((dataset, i) => {
+                                                    const meta = chart.getDatasetMeta(i);
+                                                    meta.data.forEach((bar, index) => {
+                                                        ctx.fillStyle = '#fff';
+                                                        const value = dataset.data[index];
+                                                        if (value !== null && !isNaN(value)) {
+                                                            ctx.fillText(value + '%', bar.x, bar.y + (bar.base - bar.y) / 2);
+                                                        }
+                                                    });
                                                 });
-                                            });
-
-                                            ctx.restore();
-                                        }
+                                                ctx.restore();
+                                            }
                                         }
                                     }
                                 });
