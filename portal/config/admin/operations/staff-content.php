@@ -732,14 +732,20 @@
         <div class="btn-div" id="staffBtn">
             <script>
                 if ((userRoles.canViewSuperAdminDashboard || userRoles.canViewAdministratorDashboard || userRoles.canViewIctStaffDashboard)) {
-                    let buttonContent = `
-                        <button class="btn" title="UPDATE PROFILE" id="updateBtn" onclick="_updateStaff();"> UPDATE PROFILE <i class="bi-check"></i></button>
-                    `;
+                    let buttonContent = "";
+                    if (userRoles.canChangeStaffPassword) {
+                        buttonContent += `
+                            <button class="btn change-pass-btn" title="CHANGE STAFF PASSWORD" onclick="_getForm({page: 'changeStaffPassword', layer: 2, url: adminPortalLocalUrl});"> CHANGE PASSWORD <i class="bi-shield-lock"></i></button>
+                        `;
+                    }
                     if (userRoles.canViewSuperAdminDashboard && getEachStaffDetailsSession?.statusId === '2') {
                         buttonContent += `
                             <button class="btn del-btn" title="DELETE STAFF" id="deleteBtn" onclick="_deleteStaff();"> DELETE STAFF <i class="bi-trash"></i></button>
                         `;
                     }
+                    buttonContent += `
+                        <button class="btn" title="UPDATE PROFILE" id="updateBtn" onclick="_updateStaff();"> UPDATE PROFILE <i class="bi-check"></i></button>
+                    `;
                     $("#staffBtn").html(buttonContent);
                 }
             </script>
@@ -1284,6 +1290,7 @@
     </script>
 
     <div class="slide-form-div save-compute-teachers-comment-slide-form" data-aos="fade-left" data-aos-duration="900">
+
         <div class="title-panel-div">
             <div class="inner-top">
                 <span id="panel-title"><i class="bi-plus-square"></i> COMPUTE CLASS TEACHER'S COMMENT</span>
@@ -1408,4 +1415,42 @@
                     </button>
                 </div>
             </div>
-        <?php } ?>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page=='changeStaffPassword'){ ?>
+     <div class="caption-div animated zoomIn">
+        <div class="title-div">
+            <div class="title"><i class="bi-shield-lock"></i> CHANGE STAFF PASSWORD</div>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i
+                    class="bi-x-lg"></i></button>
+        </div>
+
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, you're about to change your staff password. Please enter sraff new and confirm password below.</div>
+            <div class="pswd_info" style="color:#8c8d8d"><em>At least 8 charaters required including upper & lower cases and special characters and numbers.</em></div>
+            <div class="text_field_container" id="newPassword_container">
+                <script>
+                    textField({
+                        id: 'newPassword',
+                        title: 'Create New Password',
+                        type: 'password'
+                    });
+                </script> 
+            </div>
+
+            <div class="text_field_container" id="cnewPassword_container">
+                <script>
+                    textField({
+                        id: 'cnewPassword',
+                        title: 'Confirm New Password',
+                        type: 'password'
+                    });
+                </script> 
+            </div>
+
+            <button class="btn" title="CHANGE STAFF PASSWORD" id="changeStaffPasswordBtn" onclick="_changeStaffPassword();"> <i class="bi-check"></i> CHANGE PASSWORD </button>
+        </div>
+    </div>
+<?php } ?>
