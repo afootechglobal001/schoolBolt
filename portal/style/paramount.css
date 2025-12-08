@@ -371,7 +371,7 @@ p {
   margin: 20px auto;
   border-radius: 5px;
   font-family: body-font;
-  color: var(--text-color);
+  color: var(--sub-body-color);
 }
 
 .alert span {

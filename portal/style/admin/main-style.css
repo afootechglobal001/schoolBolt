@@ -4754,6 +4754,10 @@ header
   background: var(--close-color);
 }
 
+.user-profile-div .profile-content-div .field-back-div .user-in .btn-div .change-pass-btn {
+  background: var(--sub-body-color);
+}
+
 .user-profile-div
   .profile-content-div
   .field-back-div
@@ -5387,6 +5391,18 @@ header
   gap: 20px;
   flex-direction: column;
   overflow: auto;
+}
+
+.caption-div .div-in .pswd_info {
+  font-size: 14px;
+  font-family: body-font;
+  color: var(--sub-body-color);
+  line-height: 15px;
+}
+
+.caption-div .div-in .pswd_info em {
+  padding: 0px;
+  margin: 0px;
 }
 
 .caption-div .div-in .btn {

@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http: //www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <?php include 'config/constants.php'; ?>
+
 <head>
     <?php include 'meta.php' ?>
     <title><?php echo $appName ?> | School Database Management System in Nigeria</title>
@@ -33,10 +34,10 @@
                     <p><strong>“SchoolBolt”</strong> is web application software, which aims at providing school management services to basic/secondary schools, selecting the legitimate staff by the school administrator.</p>
 
                     <div class="btn-div">
-                        <a href="<?php echo $websiteUrl?>">
+                        <a href="<?php echo $websiteUrl ?>">
                             <button class="btn" title="Request For A Demo">Request For A Demo <i class="bi-chevron-right"></i></button></a>
-                        <a href="<?php echo $websiteUrl?>">
-                            <button class="btn right-btn" title="Recomend Us And Earn"><strong>Recomend Us  <span>And Earn</span></strong> <i class="bi-chevron-right"></i></button></a>
+                        <a href="<?php echo $websiteUrl ?>">
+                            <button class="btn right-btn" title="Recomend Us And Earn"><strong>Recomend Us <span>And Earn</span></strong> <i class="bi-chevron-right"></i></button></a>
                     </div>
                 </div>
             </div>
@@ -55,7 +56,7 @@
 
                                     <div class="text-div">
                                         <h3>Awesome Teachers</h3>
-                                        <p>Vivamus interdum, mauris interdum quis curdum sodales</p>
+                                        <p>Experienced tutors delivering quality learning.</p>
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +67,7 @@
 
                                     <div class="text-div">
                                         <h3>Global Certificate</h3>
-                                        <p>Vivamus interdum, mauris interdum quis curdum sodales</p>
+                                        <p>Earn certificates recognized worldwide.</p>
                                     </div>
                                 </div>
                             </div>
@@ -77,18 +78,18 @@
 
                                     <div class="text-div">
                                         <h3>Best Programme</h3>
-                                        <p>Vivamus interdum, mauris interdum quis curdum sodales</p>
+                                        <p>Top-notch training designed for success.</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="welcome-div">
                                 <div class="div-in">
-                                    <div class="icon-div"><img src="<?php echo $websiteUrl ?>/all-images/images/icon4.png" alt="Student Support Service" /></div>
+                                    <div class="icon-div"><img src="<?php echo $websiteUrl ?>/all-images/images/icon4.png" alt="Support Service" /></div>
 
                                     <div class="text-div">
                                         <h3>Support Service</h3>
-                                        <p>Vivamus interdum, mauris interdum quis curdum sodales</p>
+                                        <p>Reliable guidance every step of the way.</p>
                                     </div>
                                 </div>
                             </div>
@@ -594,7 +595,7 @@
                             <p>Meet with our dedicated teachers to discuss your child’s progress, ask questions, and explore how we can support their educational journey.</p>
                         </div>
 
-                        <a href="<?php echo $websiteUrl?>/blog/" title="See More Blogs">
+                        <a href="<?php echo $websiteUrl ?>/blog/" title="See More Blogs">
                             <button class="btn" title="See More Blogs">See More Blogs <i class="bi-chevron-right"></i></button></a>
                     </div>
 
@@ -609,7 +610,7 @@
                                     <div class="count"><i class="bi-calendar3"></i> 15 Jan, 2025 <span>|</span> <i class="bi-eye-fill"></i> 250 VIEWS</div>
                                     <h3>Transforming School Management in Nigeria with SchoolBolt</h3>
 
-                                    <a href="<?php echo $websiteUrl?>/blog/transforming-school-management-in-nigeria-with-schoolbolt" title="Read More">
+                                    <a href="<?php echo $websiteUrl ?>/blog/transforming-school-management-in-nigeria-with-schoolbolt" title="Read More">
                                         <button class="btn" title="Read More">Read More <i class="bi-chevron-right"></i></button></a>
                                 </div>
                             </div>
