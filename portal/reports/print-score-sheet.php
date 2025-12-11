@@ -13,7 +13,7 @@
 <body>
     <script> printStudentScoreSheetSession = JSON.parse(sessionStorage.getItem("printStudentScoreSheetSession"));</script>
 
-    <section class="body-div">
+    <section class="body-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
         <div class="header-back-div">
             <div class="header-image">
                 <img id="scoreSheetHeader" src="<?php echo $websiteUrl ?>/images/report/score-sheet-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
@@ -23,6 +23,15 @@
                         const schoolHeader = printStudentScoreSheetSession?.branchData?.scoreSheetHeader;
                         const headerUrl = schoolHeader ? `${scoreSheetHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/score-sheet-header.png`;
                         $("#scoreSheetHeader").attr("src", headerUrl).attr("alt", `${printStudentScoreSheetSession?.branchData?.branchName} Report Header`);
+                    
+                        const backendWatermark = printStudentScoreSheetSession?.branchData?.watermark;
+                        const defaultWatermark = '../images/report/watermark.jpg';
+                        const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
+
+                        $('#backgroundTable').css({
+                            'background': `url(${watermarkUrl}) center no-repeat`,
+                            'background-size': 'cover'
+                        });
                     });
                 </script>
             </div>
@@ -41,22 +50,13 @@
         </div>
 
         <div class="inner-content">
-            <div class="table-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
+            <div class="table-div">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
                         $(document).ready(function () {
                             const printStudentScoreSheetSession = JSON.parse(sessionStorage.getItem("printStudentScoreSheetSession"));
 
                             if (!printStudentScoreSheetSession) return;
-
-                            const backendWatermark = printStudentScoreSheetSession?.branchData?.watermark;
-                            const defaultWatermark = '../images/report/watermark.jpg';
-                            const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
-
-                            $('#backgroundTable').css({
-                                'background': `url(${watermarkUrl}) center no-repeat`,
-                                'background-size': 'cover'
-                            });
                             
                             const tableTitles = printStudentScoreSheetSession.tableTitles.split(',').map(title => title.trim());
                             const students = printStudentScoreSheetSession.studentsData;

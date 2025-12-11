@@ -13,7 +13,7 @@
 <body>
     <script> printAssessmentSession = JSON.parse(sessionStorage.getItem("printAssessmentSession"));</script>
 
-    <section class="body-div">
+    <section class="body-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
         <div class="header-back-div">
             <div class="header-image">
                 <img id="markBookHeader" src="<?php echo $websiteUrl ?>/images/report/mark-book-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
@@ -23,6 +23,15 @@
                         const schoolHeader = printAssessmentSession?.branchData?.markBookHeader;
                         const headerUrl = schoolHeader ? `${markBookHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/mark-book-header.png`;
                         $("#markBookHeader").attr("src", headerUrl).attr("alt", `${printAssessmentSession?.branchData?.branchName} Report Header`);
+
+                        const backendWatermark = printAssessmentSession?.branchData?.watermark;
+                        const defaultWatermark = '../images/report/watermark.jpg';
+                        const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
+
+                        $('#backgroundTable').css({
+                            'background': `url(${watermarkUrl}) center no-repeat`,
+                            'background-size': 'cover'
+                        });
                     });
                 </script>
             </div>
@@ -41,20 +50,11 @@
         </div>
     
         <div class="inner-content">
-            <div class="table-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
+            <div class="table-div">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
                         $(document).ready(function() {
                             const printAssessmentSession = JSON.parse(sessionStorage.getItem("printAssessmentSession"));
-
-                            const backendWatermark = printAssessmentSession?.branchData?.watermark;
-                            const defaultWatermark = '../images/report/watermark.jpg';
-                            const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
-
-                            $('#backgroundTable').css({
-                                'background': `url(${watermarkUrl}) center no-repeat`,
-                                'background-size': 'cover'
-                            });
 
                             let text = '';
                             let no=0;
