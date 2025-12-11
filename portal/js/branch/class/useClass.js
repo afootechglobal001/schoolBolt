@@ -180,7 +180,7 @@ function _fetchBranchDepartmentClass() {
             },
             error: function(textStatus, errorThrown) {
                 console.error("AJAX Error: ", textStatus, errorThrown);
-                _actionAlert('An error occurred while fetching data! Please try again.', false);
+                _actionAlert('Check your internet connection and try again.', false);
             }
         });
     } catch (error) {
@@ -211,7 +211,7 @@ function _fetchClassTeacher(departmentId, classId, armId) {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 			}
 		});
 	} catch (error) {

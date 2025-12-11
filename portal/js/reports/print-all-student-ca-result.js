@@ -18,13 +18,13 @@ function _printAllStudentCaResult() {
 		$.ajax({
 			type: "GET",
 			url: `${endPoint}/reports/print-all-student-ca-result?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&assessmentId=${assessmentId}`,
-			dataType: "json", 
+			dataType: "json",
 			cache: false,
 			headers: getAuthHeaders(),
 			success: function(info) {
 				if (info.success > 0) {
 					sessionStorage.setItem("printAllStudentCaResultSession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/print-all-student-ca-result`);
+					window.open(`${websiteUrl}/reports/print-all-student-ca-result`, '_blank');
 				} else {
 					_actionAlert(info.message, false);
 					const response = info.response;
@@ -36,12 +36,11 @@ function _printAllStudentCaResult() {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 				$("#printAllBtn").html(btnText).prop("disabled", false);
 			}
 		});
 	} catch (error) {
-		_alertClose(2);
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 		$("#printAllBtn").prop("disabled", false);

@@ -47,7 +47,7 @@
                     let no = 0;
                     let subjectTable = `
                             <thead>
-                                <tr class="tb-col">
+                                <tr class="tb-col table-col">
                                     <th>SN</th>
                                     <th>SUBJECT</th>
                                     <th>MARK OBTAINABLE</th>
@@ -72,7 +72,7 @@
                         const remark = fetchedStudentSubjects.remark;
 
                         subjectTable += `
-                                <tr class="tb-row">
+                                <tr class="tb-row table-row">
                                     <td>${no}</td>
                                     <td>${subject.subjectName}</td>
                                     <td>${markObtainable ? markObtainable : '-'}</td>

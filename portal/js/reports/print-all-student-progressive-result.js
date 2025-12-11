@@ -23,7 +23,7 @@ function _printAllStudentProgressReport() {
 			success: function(info) {
 				if (info.success > 0 && info.eachStudentResultData.length > 0) {
 					sessionStorage.setItem("printAllStudentProgressResultSession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/print-all-student-progressive-result`);
+					window.open(`${websiteUrl}/reports/print-all-student-progressive-result`, '_blank');
 				} else {
 					_actionAlert('No data available to print.', false);
 					const response = info.response;
@@ -35,12 +35,11 @@ function _printAllStudentProgressReport() {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 				$("#progressReportBtn").html(btnText).prop("disabled", false);
 			}
 		});
 	} catch (error) {
-		_alertClose(2);
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 		$("#progressReportBtn").prop("disabled", false);

@@ -1,4 +1,4 @@
-<!-- fetch_student_select_form -->
+<!-- fetch student select form -->
 <?php if ($page == 'fetch_parent_form') { ?>
     <div class="caption-div animated zoomIn">
         <div class="title-div">
@@ -47,6 +47,7 @@
     </div>
 <?php } ?>
 
+<!-- ///////////////// Parent Page/////////////////////////////////////////////////////////////////////////////////////// -->
 <?php if ($page == 'branch_parent_page') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn" id="pageTitleDiv"></div>
 
@@ -232,6 +233,138 @@
                         $(".new-btn-container").html(showButton);
                     });
                 </script>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- ///////////////// Account Session and term Select Form /////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'accountSessionSelectForm') { ?>
+    <div class="caption-div animated zoomIn">
+        <div class="title-div">
+            <div class="title"><i class="bi-table"></i> SESSION & TERM SELECTION</div>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i
+                    class="bi-x-lg"></i></button>
+        </div>
+
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, You’re about to continue with this operation.
+                Please choose the required <span>Session</span>, and <span>Term</span>, to proceed.
+            </div>
+
+            <div class="text_field_container" id="sessionId_container">
+                <script>
+                    selectField({
+                        id: 'sessionId',
+                        title: 'Select Session'
+                    });
+                    _getSelectSession('sessionId');
+                </script>
+            </div>
+
+            <div class="text_field_container" id="termId_container">
+                <script>
+                    selectField({
+                        id: 'termId',
+                        title: 'Select Term'
+                    });
+                    _getSelectTermId('termId');
+                </script>
+            </div>
+
+            <button class="btn" id="proceedBtn" title="Proceed Request" onclick="_getActiveBranchPage({divid:'branchDepartmentClass', page: 'branchDepartmentClass', url: adminPortalLocalUrl});">PROCEED <i
+                    class="bi-arrow-right"></i> </button>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- ///////////////// Branch Department Class/////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page=='branchDepartmentClass') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div><span><i class="bi-people-fill"></i> BRANCH DEPARTMENT CLASS LIST /</span> SESSION -- <span id="">2024/2025 /</span> TERM -- <span id="">THIRD TERM</span></span></div>
+    </div>
+
+    <div class="pages-toggle-back-div" id="pageContent">
+        <script>_fetchAccountBranchDepartmentClass();</script>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'viewStudentByClass') { ?>
+    <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="top-panel-div">
+            <div class="inner-top">
+                <span><i class="bi-people-fill"></i> STUDENT'S LIST</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="profile-content-div">
+            <div class="field-back-div">
+                <div class="field-inner-div student-result-field-inner-div">
+                    <div class="alert alert-success top-alert-div animated fadeIn">
+                        <div><i class="bi-graph-up-arrow"></i> Revenue For <span id="date">
+                                <script>
+                                    $("#date").html(getRevenueByDateSessionData?.date);
+                                </script>
+                            </span> -- Total Revenue: <span class="balance" id="totalAmount">
+                                <script>
+                                    $("#totalAmount").html("<s>N</s>" + thousandSeperator(getRevenueByDateSessionData?.totalAmount));
+                                </script>
+                            </span></div>
+                    </div>
+
+                    <div class="table-div animated fadeIn">
+                        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+                            <thead>
+                                <tr class="tb-col">
+                                    <th>sn</th>
+                                    <th>Student Info</th>
+                                    <th>Session/Term</th>
+                                    <th>Class</th>
+                                    <th>Total Mandatory Fees</th>
+                                    <th>Total Non-Mandatory Fees</th>
+                                    <th>Payable Fees</th>
+                                    <th>Mandatory Fees Paid</th>
+                                    <th>Non-Mandatory Fees Paid</th>
+                                    <th>Total Fees Paid</th>
+                                    <th>Wallet Balance</th>
+                                    <th>Action</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr class="tb-row">
+                                    <td>1</td>
+                                    <td class="clickable-td" title="Click to view student details" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
+                                        <div class="text-back-div">
+                                            <div class="image-div general-passport">
+                                                <img src="${studentPixPath}/${passport}" alt="${fullname}" />
+                                            </div>
+
+                                            <div class="text-div">
+                                                <div class="first-class">AFOLBAI MIKE OLUWAGBENGA</div>
+                                                <div class="second-class">STUDENT00220250321124557</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>2024/2025 - THIRD TERM</td>
+                                    <td>KINDERGARTEN (KG 1 A)</td>
+                                    <td><s>N</s>200, 000</td>
+                                    <td><s>N</s>200, 000</td>
+                                    <td><s>N</s>200, 000</td>
+                                    <td><s>N</s>200, 000</td>
+                                    <td><s>N</s>200, 000</td>
+                                    <td><s>N</s>400, 000</td>
+                                    <td><s>N</s>50, 000</td>
+                                    <td><button class="btn view-btn" title="Click to load wallet" onclick="">LOAD WALLET</button></td>
+                                    <td><button class="btn view-btn" title="Click to make payment" onclick="">MAKE PAYMENT</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

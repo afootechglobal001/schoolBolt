@@ -443,6 +443,7 @@
                                             Broadsheet
                                         </li>
                                         <li title="Promotional Panel"><i class="bi-person-lines-fill"></i>Promotion Panel</li>
+                                        <li title="Publish Result" onclick="_getForm({page: 'publishResultSelectForm', layer:2, url: adminPortalLocalUrl});"><i class="bi-file-earmark-ppt-fill"></i>Publish Result</li>
                                     </ul>
 
                                 </li>
@@ -561,6 +562,7 @@
                                             Broadsheet
                                         </li>
                                         <li title="Promotional Panel"><i class="bi-person-lines-fill"></i>Promotion Panel</li>
+                                        <li title="Publish Result" onclick="_getForm({page: 'publishResultSelectForm', layer:2, url: adminPortalLocalUrl});"><i class="bi-file-earmark-ppt-fill"></i>Publish Result</li>
                                     </ul>
 
                                 </li>
@@ -610,7 +612,6 @@
         </div>
     </div>
 <?php } ?>
-
 
 
 <!-- For Branch Modal Pages -->
@@ -1265,7 +1266,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'branch_settings') { ?>
     <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
         <div class="user-managment-list staff-managment-list" title="Edit Branch Department"
@@ -1322,7 +1322,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'branch_staff') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
         <span><i class="bi-person-bounding-box"></i> BRANCH STAFF LIST</span>
@@ -1344,7 +1343,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'branch_profile') { ?>
     <div class="user-in branch-user-in">
         <div class="title">BRANCH BASIC INFORMATION</div>
@@ -1652,7 +1650,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'branch_activities') { ?>
     <div class="chart-div-notifications user-details-notf">
         <div class="text"><i class="bi-graph-up-arrow"></i> Showing Notification History for </div>
@@ -1776,7 +1773,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'edit_branch_department') { ?>
     <script>
         getBranchDepartmentSession = JSON.parse(sessionStorage.getItem("getBranchDepartmentSession"));
@@ -1887,13 +1883,12 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'branch_fees_page') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
         <span><i class="bi-credit-card"></i> BRANCH FEES CATEGORY</span>
 
         <div class="btn-container">
-            <button class="btn" title="PRINT FEES" onclick="_printBranchFeesSettings();"><i class="bi-printer"></i> PRINT
+            <button class="btn" title="PRINT FEES" id="printFeesSettingsBtn" onclick="_printBranchFeesSettings();"><i class="bi-printer"></i> PRINT
                 FEES</button>
             <button class="btn" title="ADD FEES"
                 onclick="sessionStorage.removeItem('getEachEachFeesSettings'); _getForm({page: 'branch_fees_reg', layer:2, url: adminPortalLocalUrl});"><i
@@ -1911,7 +1906,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'branch_fees_reg') { ?>
     <script>
         getEachEachFeesSettings = JSON.parse(sessionStorage.getItem("getEachEachFeesSettings"));
@@ -1968,7 +1962,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'branch_fees_computaion_page') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
         <span><i class="bi-credit-card"></i> FEES LIST</span>
@@ -1982,7 +1975,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'branch_fees_computaion_form') { ?>
     <script>
         getEachFeeComputeGeneral = JSON.parse(sessionStorage.getItem("getEachFeeComputeGeneral"));
@@ -2111,7 +2103,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'branch_assessment_breakdown_page') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
         <span><i class="bi-credit-card"></i> ASSESSMENT SETTINGS</span>
@@ -2133,7 +2124,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'branch_assessment_reg') { ?>
     <script>
         fetchEachAssessmentSession = JSON.parse(sessionStorage.getItem("fetchEachAssessmentSession"));
@@ -2187,7 +2177,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'branch_assessment_breakdown_form') { ?>
     <script>
         fetchAssessmentBreakdownSession = JSON.parse(sessionStorage.getItem("fetchAssessmentBreakdownSession"));
@@ -2302,7 +2291,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'broadsheet_select_form') { ?>
     <div class="caption-div animated zoomIn">
         <div class="title-div">
@@ -2364,7 +2352,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'branch_department_class_broadsheet') { ?>
     <script>
         fetchPresetDataSession = JSON.parse(sessionStorage.getItem("fetchPresetDataSession"));
@@ -2402,7 +2389,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'view_ca_result_summary_form') { ?>
     <script>
         getViewResultSummarySession = JSON.parse(sessionStorage.getItem("getViewResultSummarySession"));
@@ -2670,7 +2656,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'view_terminal_result_summary_form') { ?>
     <script>
         getViewTerminalResultSummarySession = JSON.parse(sessionStorage.getItem("getViewTerminalResultSummarySession"));
@@ -2777,7 +2762,7 @@
 
                         <div class="btn-container">
                             <script>
-                                $(document).ready(function () {
+                                $(document).ready(function() {
                                     const schoolCategoryId = getViewTerminalResultSummarySession?.branchData?.schoolCategoryId;
                                     // Hide by default
                                     $("#progressReportBtn").hide();
@@ -2955,7 +2940,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'branch_session_configuration_form') { ?>
     <script>
         getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
@@ -3393,7 +3377,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'branch_account') { ?>
     <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
         <div class="user-managment-list staff-managment-list" title="Fees Settings"
@@ -3433,6 +3416,45 @@
             </div>
         </div>
 
+        <div class="user-managment-list staff-managment-list" title="Student Payment"
+            onclick="_getForm({page: 'accountSessionSelectForm', layer:2, url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/credit-card.png" alt="Student Payment" />
+                </div>
+                <div class="text-div">
+                    <h3>Student Payment</h3>
+                    <p>View and manage student payments associated with your branch.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-managment-list staff-managment-list" title="View Debtors"
+            onclick="_getForm({page: 'accountSessionSelectForm', layer:2, url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/branch-account.png" alt="View Debtors" />
+                </div>
+                <div class="text-div">
+                    <h3>View Debtors</h3>
+                    <p>View the list of students by class and identify those with outstanding payment (DEBTORS).</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-managment-list staff-managment-list" title="Activate Academic Result" 
+            onclick="_getForm({page: 'accountSessionSelectForm', layer:2, url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/double-check.png" alt="Activate Academic Result" />
+                </div>
+                <div class="text-div">
+                    <h3>Activate Academic Result</h3>
+                    <p>Activate the result for your branch to make it available for viewing and further processing.</p>
+                </div>
+            </div>
+        </div>
+
         <div class="user-managment-list staff-managment-list" title="Expenses" onclick="">
             <div class="inner-div">
                 <div class="icon-div">
@@ -3467,19 +3489,6 @@
                 <div class="text-div">
                     <h3>Payroll</h3>
                     <p>View and manage payroll for staff associated with your branch.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="user-managment-list staff-managment-list" title="Student Payment Summary"
-            onclick="">
-            <div class="inner-div">
-                <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/branch-account.png" alt="Student Payment Summary" />
-                </div>
-                <div class="text-div">
-                    <h3>Student Payment Summary</h3>
-                    <p>View the list of students by class and identify those with outstanding payment (DEBTORS).</p>
                 </div>
             </div>
         </div>
@@ -3524,7 +3533,6 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 <?php if ($page == 'classTeachersCommentPage') { ?>
     <div class="nav-content-back-div">
         <div class="nav-container">
@@ -3722,4 +3730,38 @@
             $("#submitBtn").attr("onclick", `_createClassTeachersComment('${gender}')`);
         });
     </script>
+<?php } ?>
+
+<!-- /////////////// Publish Result Select Form ///////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'publishResultSelectForm') { ?>
+    <div class="caption-div animated zoomIn">
+        <div class="title-div">
+            <div class="title"><i class="bi-file-earmark-ppt-fill"></i> PUBLISH RESULT</div>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i class="bi-x-lg"></i></button>
+        </div>
+
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, you're about to publish results. Please confirm your action below.</div>
+            <div class="text_field_container" id="newSession_container">
+                <script>
+                    textField({
+                        id: 'newSession',
+                        title: 'Provide New Session'
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container" id="newTermId_container">
+                <script>
+                    selectField({
+                        id: 'newTermId',
+                        title: 'Select Term'
+                    });
+                    _getSelectTermId('newTermId');
+                </script>
+            </div>
+
+            <button class="btn" title="PUBLISH RESULT" id="publishResultBtn" onclick="_publishResult();"> <i class="bi-check"></i> PUBLISH RESULT </button>
+        </div>
+    </div>
 <?php } ?>

@@ -3,7 +3,7 @@
         <span><i class="bi-people-fill"></i> BRANCH CLASS LIST</span>
 
         <div class="btn-container">
-            <button class="btn" title="PRINT RECORDS" onclick="_printTeachersByClass();"><i class="bi-printer"></i> PRINT</button>
+            <button class="btn" title="PRINT RECORDS" id="printTeachersByClassBtn" onclick="_printTeachersByClass();"><i class="bi-printer"></i> PRINT</button>
         </div>
     </div>
 
