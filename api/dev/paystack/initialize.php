@@ -261,7 +261,7 @@ function _fetchFeesToPay() {
             error: function(textStatus, errorThrown) {
                 console.error("AJAX Error: ", textStatus, errorThrown);
                 _actionAlert(
-                    "An error occurred while fetching data! Please try again.",
+                    "Check your internet connection and try again.",
                     false
                 );
             },
@@ -681,7 +681,7 @@ function _fetchPaymentHistory() {
             error: function(textStatus, errorThrown) {
                 console.error("AJAX Error: ", textStatus, errorThrown);
                 _actionAlert(
-                    "An error occurred while fetching data! Please try again.",
+                    "Check your internet connection and try again.",
                     false
                 );
             },
@@ -746,7 +746,7 @@ function _viewPaymentDetails(
             error: function(textStatus, errorThrown) {
                 console.error("AJAX Error: ", textStatus, errorThrown);
                 _actionAlert(
-                    "An error occurred while fetching data! Please try again.",
+                    "Check your internet connection and try again.",
                     false
                 );
             },

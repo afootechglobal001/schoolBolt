@@ -67,7 +67,7 @@
                             }
 
                             const thead = $('<thead></thead>');
-                            const headerRow = $('<tr class="tb-col"></tr>');
+                            const headerRow = $('<tr class="tb-col table-col"></tr>');
 
                             tableTitles.forEach(title => {
                                 headerRow.append($('<th></th>').text(title));
@@ -78,7 +78,7 @@
                             const tbody = $('<tbody></tbody>');
 
                             students.forEach((student, index) => {
-                                const row = $('<tr class="tb-row"></tr>');
+                                const row = $('<tr class="tb-row table-row"></tr>');
                                 const fullName = `${student.surName} ${student.firstName} ${student.otherNames || ''}`.trim();
 
                                 row.append($('<td></td>').text(index + 1)); // SN

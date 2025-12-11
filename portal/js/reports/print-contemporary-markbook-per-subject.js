@@ -30,12 +30,14 @@ function _printContemporaryMarkBookPerSubject(departmentId, classId, armId, subj
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_alertClose(2);
+				_actionAlert('Check your internet connection and try again.', false);
 				$("#printBtn").html(btnText).prop("disabled", false);
 			}
 		});
 	} catch (error) {
 		console.error("Error: ", error);
+		_alertClose(2);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 		$("#printBtn").prop("disabled", false);
 	}

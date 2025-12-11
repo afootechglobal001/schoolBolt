@@ -395,7 +395,7 @@
 
                                         <div class="list-content">
                                             <span>STUDENT IN CLASS:</span>
-                                            <p>${items.noOfStudentsInClass}</p>
+                                            <p>${items.noOfStudentsInArm}</p>
                                         </div>
 
                                         <div class="list-content">

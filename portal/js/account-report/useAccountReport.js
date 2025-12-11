@@ -209,7 +209,7 @@ function _fetchRevenueByDate(newpayDate, session = '', termId = '') {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 			}
 		});
 	} catch (error) {
@@ -241,7 +241,7 @@ function _fetchRevenueById(paymentId) {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 			}
 		});
 	} catch (error) {

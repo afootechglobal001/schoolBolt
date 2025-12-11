@@ -1,7 +1,10 @@
 function _printStudentByClass(departmentId, classId, armId) {
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
-	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
 	try {
+		const btnText = $("#printStudentsByClassBtn").html();
+		$("#printStudentsByClassBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+		$("#printStudentsByClassBtn").prop("disabled", true);
+
 		$.ajax({
 			type: "GET",
 			url: `${endPoint}/reports/print-student-by-class?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
@@ -11,26 +14,26 @@ function _printStudentByClass(departmentId, classId, armId) {
 			success: function(info) {
 				if (info.success > 0) {
 					sessionStorage.setItem("printStudentByClassSession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/print-student-by-class`);
-					_alertClose(2);
+					window.open(`${websiteUrl}/reports/print-student-by-class`, '_blank');
 				} else {
 					_actionAlert(info.message, false);
-					_alertClose(2);
 					const response = info.response;
 					if (response < 100) {
 						_logOut();
 					}    
 				}
+				$("#printStudentsByClassBtn").html(btnText).prop("disabled", false);
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
+				$("#printStudentsByClassBtn").html(btnText).prop("disabled", false);
 			}
 		});
 	} catch (error) {
-		_alertClose(2);
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
+		$("#printStudentsByClassBtn").prop("disabled", false);
 	}
 }
 
@@ -60,7 +63,7 @@ function _printAllocatedStudents(departmentId, classId, armId) {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 			}
 		});
 	} catch (error) {

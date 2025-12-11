@@ -151,7 +151,7 @@ function _fetchFeesSettings() {
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
         _actionAlert(
-          "An error occurred while fetching data! Please try again.",
+          "Check your internet connection and try again.",
           false
         );
       },
@@ -201,7 +201,7 @@ function _fetchEachFeesSettings(feesId) {
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
         _actionAlert(
-          "An error occurred while fetching data! Please try again.",
+          "Check your internet connection and try again.",
           false
         );
       },
@@ -436,7 +436,7 @@ function _fetchFeeComputeGeneral() {
                   text += `
                           <td>
                             <div class="btn-div">
-                              <button class="btn view-btn print-btn" title="Click to print fees" onclick="_printComputeFee('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">PRINT FEES</button>
+                              <button class="btn view-btn print-btn" title="Click to print fees" id="printFeesBtn_${classId}" onclick="_printComputeFee('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">PRINT FEES</button>
                               <button class="btn view-btn" title="Click to compute fees" onclick="_fetchEachFeeComputeGeneral('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">COMPUTE FEES</button>
                               ${approveBtn}
                             </div>
@@ -449,7 +449,7 @@ function _fetchFeeComputeGeneral() {
                   text += `
                         <td>
                           <div class="btn-div">
-                            <button class="btn view-btn print-btn" title="Click to print fees" onclick="_printComputeFee('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">PRINT FEES</button>
+                            <button class="btn view-btn print-btn" title="Click to print fees" id="printFeesBtn_${classId}" onclick="_printComputeFee('${branchId}','${departmentId}','${classId}','${currentSession}','${termId}');">PRINT FEES</button>
                           ${declineBtn}
                           </div>
                         </td>`;
@@ -485,7 +485,7 @@ function _fetchFeeComputeGeneral() {
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
         _actionAlert(
-          "An error occurred while fetching data! Please try again.",
+          "Check your internet connection and try again.",
           false
         );
       },
@@ -536,7 +536,7 @@ function _fetchEachFeeComputeGeneral(
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
         _actionAlert(
-          "An error occurred while fetching data! Please try again.",
+          "Check your internet connection and try again.",
           false
         );
       },

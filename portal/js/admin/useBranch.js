@@ -716,7 +716,7 @@ function _fetchBranches() {
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
         _actionAlert(
-          "An error occurred while fetching data! Please try again.",
+          "Check your internet connection and try again.",
           false
         );
       },
@@ -759,7 +759,7 @@ function _fetchEachBranches(branchId) {
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
         _actionAlert(
-          "An error occurred while fetching data! Please try again.",
+          "Check your internet connection and try again.",
           false
         );
       },
@@ -1482,4 +1482,86 @@ function _revenueBranchFiltering(dateFrom, dateTo) {
     },
   });
   $("#get-more-div-secondary").fadeOut(500);
+}
+
+function _publishResult(){
+	try {
+		////////get all needed values////////////
+		let issueCount = 0;
+		const newSession = $('#newSession').val().trim();
+    const newTermId = $('#newTermId').val().trim();
+		
+		///// empty field validation//////////
+    issueCount += _validateEmptyValue("newSession", "SESSION");
+    issueCount += _validateEmptyValue("newTermId", "TERM");
+
+		if (issueCount > 0) return;
+
+		/////Gather form data////
+		const formData = {
+      newSession,
+      newTermId,
+    };
+
+		////// confirm action////
+		_showCustomConfirm({
+		callback: () => {
+			_publishResultCallback(formData);
+		},
+			title: "Are you sure?",
+			message: 'Once you publish this result, the current student result data cannot be updated. Ensure all scores and details are 100% correct before proceeding.',
+			alertType: "warning",
+			falseActionBtn: true,
+      trueActionBtnText: "Yes, Publish",
+      falseActionBtnText: "Cancel",
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _publishResult());
+	}
+}
+
+function _publishResultCallback(formData) {
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+
+	///// get btn text/////
+	const btnText = $("#publishResultBtn").html();
+	_btnDisable("publishResultBtn", btnText, true);
+	
+	//// call endpoint //////
+	 _callRawEndPoints({
+		url: `reports/publish-results?branchId=${getEachBranchDetailsSession.branchId}`,
+		formData,
+		accessKey: true,
+	})
+    .then((response) => {
+		_staffValidationCheck(response.response);
+		if (response.success) {
+      _showCustomConfirm({
+				callback: () => {
+				  _alertClose(2);
+          _fetchEachBranches(getEachBranchDetailsSession.branchId);
+          _getPage({ page: "branches", url: adminPortalLocalUrl });
+				},
+          title: "Success!",
+          message: response.message,
+          alertType: "success",
+          trueActionBtnText: "Okay, Thanks",
+      });
+			_btnDisable("publishResultBtn", btnText, false);
+		} else {
+			_btnDisable("publishResultBtn", btnText, false);
+			_showCustomConfirm({
+				title: "Unable to Publish Result!",
+				message: response.message,
+				alertType: "error",
+				trueActionBtnText: "OK",
+			});
+		}
+    })
+    .catch((error) => {
+		console.error("Error:", error);
+		_callAjaxError(() => _publishResultCallback(formData)); // retry if needed
+		_btnDisable("publishResultBtn", btnText, false);
+    });
 }

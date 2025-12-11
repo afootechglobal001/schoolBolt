@@ -81,16 +81,11 @@ function _logOut() {
   window.parent.location.href = adminUrl;
 }
 
-function getAuthHeaders(includeAuth = false) {
-  return {
-    apiKey: apiKey,
-    userOsBrowser: userOsBrowser,
-    userIpAddress: userIpAddress,
-    userDeviceId: userDeviceId,
-    clientId: clientId,
-    clientAddress: clientAddress,
-    Authorization: includeAuth ? "Bearer " + (loginAccessKey ?? "") : undefined,
-  };
+function _staffValidationCheck(code) {
+  if (code < 100) {
+    _logOut();
+    return;
+  }
 }
 
 function select_search() {

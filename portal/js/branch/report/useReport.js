@@ -206,8 +206,8 @@ function _fetchBroadsheetClass() {
 																		text += `
 																		<td>
 																			<div class="btn-div">
-																				<button class="btn view-btn" title="Click to print broad sheet" id="printBtn" onclick="_printCaBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT CA BROAD SHEET</button>
-																				<button class="btn view-btn print-btn" title="Click to print terminal broad sheet" id="printBtn" onclick="_printTerminalBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT TERMINAL BROAD SHEET</button>
+																				<button class="btn view-btn" title="Click to print broad sheet" id="printCaBtn_${classId}_${armId}" onclick="_printCaBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT CA BROAD SHEET</button>
+																				<button class="btn view-btn print-btn" title="Click to print terminal broad sheet" id="printTerminalBtn_${classId}_${armId}" onclick="_printTerminalBroadSheet('${departmentId}','${classId}','${armId}');"><i class="bi-printer"></i> PRINT TERMINAL BROAD SHEET</button>
 																			</div>
 																		</td>`;
 																	} else {
@@ -293,7 +293,7 @@ function _fetchBroadsheetClass() {
             },
             error: function(textStatus, errorThrown) {
                 console.error("AJAX Error: ", textStatus, errorThrown);
-                _actionAlert('An error occurred while fetching data! Please try again.', false);
+                _actionAlert('Check your internet connection and try again.', false);
             }
         });
     } catch (error) {
@@ -336,7 +336,7 @@ function _viewCaResultSummary(departmentId, classId, armId) {
 			error: function(textStatus, errorThrown) {
 				_alertClose(2);
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 			}
 		});
 	} catch (error) {
@@ -378,7 +378,7 @@ function _viewTerminalResultSummary(departmentId, classId, armId) {
 			error: function(textStatus, errorThrown) {
 				_alertClose(2);
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 			}
 		});
 	} catch (error) {
