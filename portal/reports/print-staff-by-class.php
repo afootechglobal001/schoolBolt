@@ -16,7 +16,7 @@
         printStaffByClassSession = JSON.parse(sessionStorage.getItem("printStaffByClassSession"));
     </script>
 
-    <section class="body-div">
+    <section class="body-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
         <div class="header-back-div">
             <div class="header-image">
                 <img id="classListHeader" src="<?php echo $websiteUrl ?>/images/report/general.png"
@@ -32,6 +32,15 @@
                         $("#classListHeader")
                             .attr("src", headerUrl)
                             .attr("alt", `${printStaffByClassSession?.branchData?.branchName} Report Header`);
+
+                        const backendWatermark = printStaffByClassSession?.branchData?.watermark;
+                        const defaultWatermark = '../images/report/watermark.jpg';
+                        const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
+
+                        $('#backgroundTable').css({
+                            'background': `url(${watermarkUrl}) center no-repeat`,
+                            'background-size': 'cover'
+                        });
                     });
                 </script>
             </div>
@@ -51,15 +60,6 @@
             $(document).ready(function() {
                 const printStaffByClassSession = JSON.parse(sessionStorage.getItem("printStaffByClassSession"));
                 
-                const backendWatermark = printStaffByClassSession?.branchData?.watermark;
-                const defaultWatermark = '../images/report/watermark.jpg';
-                const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
-
-                $('#backgroundTable').css({
-                    'background': `url(${watermarkUrl}) center no-repeat`,
-                    'background-size': 'cover'
-                });
-
                 if (printStaffByClassSession && printStaffByClassSession.success === true) {
                     const data = printStaffByClassSession.data;
                     let html = `

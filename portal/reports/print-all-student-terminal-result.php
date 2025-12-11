@@ -150,7 +150,7 @@
                         subjectTable += `</tbody>`;
 
                         sectionHtml += `
-                            <section class="body-div" style="page-break-after: always;">
+                            <section class="body-div backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat; page-break-after: always;">
                                 <div class="header-back-div">
                                     <div class="header-image">
                                         <img src="${headerUrl}" alt="${branch.branchName} Report Header" style="width: 100%; height: auto;" />
@@ -202,7 +202,7 @@
                                 </div>
 
                                 <div class="inner-content">
-                                    <div class="table-div backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
+                                    <div class="table-div">
                                         <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                                             ${subjectTable}
                                         </table>

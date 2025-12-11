@@ -16,7 +16,7 @@
 <body>
     <script> printBroadSheetsession = JSON.parse(sessionStorage.getItem("printBroadSheetsession"));</script>
 
-    <section class="body-div broadsheet-body">
+    <section class="body-div broadsheet-body" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
         <div class="header-back-div">
             <div class="header-image">
                 <img id="caBroadSheetHeader" src="<?php echo $websiteUrl ?>/images/report/ca-broad-sheet-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
@@ -26,6 +26,15 @@
                         const schoolHeader = printBroadSheetsession?.branchData?.caBroadSheetHeader;
                         const headerUrl = schoolHeader ? `${caBroadSheetHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/ca-broad-sheet-header.png`;
                         $("#caBroadSheetHeader").attr("src", headerUrl).attr("alt", `${printBroadSheetsession?.branchData?.branchName} Report Header`);
+
+                        const backendWatermark = printBroadSheetsession?.branchData?.watermark;
+                        const defaultWatermark = '../images/report/watermark.jpg';
+                        const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
+
+                        $('#backgroundTable').css({
+                            'background': `url(${watermarkUrl}) center no-repeat`,
+                            'background-size': 'cover'
+                        });
                     });
                 </script>
             </div>
@@ -44,21 +53,12 @@
         </div>
 
         <div class="inner-content">
-            <div class="table-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
+            <div class="table-div">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
                         $(document).ready(function () {
                             const printBroadSheetsession = JSON.parse(sessionStorage.getItem("printBroadSheetsession"));
                             if (!printBroadSheetsession) return;
-
-                            const backendWatermark = printBroadSheetsession?.branchData?.watermark;
-                            const defaultWatermark = '../images/report/watermark.jpg';
-                            const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
-
-                            $('#backgroundTable').css({
-                                'background': `url(${watermarkUrl}) center no-repeat`,
-                                'background-size': 'cover'
-                            });
 
                             const tableTitles = printBroadSheetsession?.tableTitles.split(',').map(x => x.trim());
                             const studentList = printBroadSheetsession?.studentData;

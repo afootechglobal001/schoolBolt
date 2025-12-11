@@ -15,7 +15,7 @@
         printResultSummarySession = JSON.parse(sessionStorage.getItem("printResultSummarySession"));
     </script>
 
-    <section class="body-div ">
+    <section class="body-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
         <div class="header-back-div">
             <div class="header-image">
                 <img id="caResultSummaryHeader" src="<?php echo $websiteUrl ?>/images/report/ca-result-summary-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
@@ -25,6 +25,15 @@
                         const schoolHeader = printResultSummarySession?.branchData?.caResultSummaryHeader;
                         const headerUrl = schoolHeader ? `${caResultSummaryHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/ca-result-summary-header.png`;
                         $("#caResultSummaryHeader").attr("src", headerUrl).attr("alt", `${printResultSummarySession?.branchData?.branchName} Report Header`);
+
+                        const backendWatermark = printResultSummarySession?.branchData?.watermark;
+                        const defaultWatermark = '../images/report/watermark.jpg';
+                        const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
+
+                        $('#backgroundTable').css({
+                            'background': `url(${watermarkUrl}) center no-repeat`,
+                            'background-size': 'cover'
+                        });
                     });
                 </script>
             </div>
@@ -43,21 +52,12 @@
         </div>
 
         <div class="inner-content">
-            <div class="table-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
+            <div class="table-div">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
                         $(document).ready(function() {
                             const printResultSummarySession = JSON.parse(sessionStorage.getItem("printResultSummarySession"));
                             if (!printResultSummarySession) return;
-
-                            const backendWatermark = printResultSummarySession?.branchData?.watermark;
-                            const defaultWatermark = '../images/report/watermark.jpg';
-                            const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
-
-                            $('#backgroundTable').css({
-                                'background': `url(${watermarkUrl}) center no-repeat`,
-                                'background-size': 'cover'
-                            });
 
                             const tableTitles = printResultSummarySession?.tableTitles.split(',').map(x => x.trim());
                             const studentList = printResultSummarySession?.studentData;

@@ -14,7 +14,7 @@
 <body>
     <script> printContemporaryMarkBookSession = JSON.parse(sessionStorage.getItem("printContemporaryMarkBookSession"));</script>
 
-    <section class="body-div broadsheet-body">
+    <section class="body-div broadsheet-body" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
         <div class="header-back-div">
             <div class="header-image">
                 <img id="cummulativeMarkBookHeader" src="<?php echo $websiteUrl ?>/images/report/cummulative-mark-book-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
@@ -24,6 +24,15 @@
                         const schoolHeader = printContemporaryMarkBookSession?.branchData?.cummulativeMarkBookHeader;
                         const headerUrl = schoolHeader ? `${cummulativeMarkBookHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/cummulative-mark-book-header.png`;
                         $("#cummulativeMarkBookHeader").attr("src", headerUrl).attr("alt", `${printContemporaryMarkBookSession?.branchData?.branchName} Report Header`);
+
+                        const backendWatermark = printContemporaryMarkBookSession?.branchData?.watermark;
+                        const defaultWatermark = '../images/report/watermark.jpg';
+                        const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
+
+                        $('#backgroundTable').css({
+                            'background': `url(${watermarkUrl}) center no-repeat`,
+                            'background-size': 'cover'
+                        });
                     });
                 </script>
             </div>
@@ -41,7 +50,7 @@
         </div>
     
         <div class="inner-content">
-            <div class="table-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
+            <div class="table-div">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
                         $(document).ready(function () {
