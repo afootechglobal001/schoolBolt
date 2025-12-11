@@ -1,7 +1,10 @@
 function _printTeachersByClass() {
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
-	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
 	try {
+		const btnText = $("#printTeachersByClassBtn").html();
+		$("#printTeachersByClassBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+		$("#printTeachersByClassBtn").prop("disabled", true);
+
 		$.ajax({
 			type: "GET",
 			url: `${endPoint}/admin/branch/department/fetch-branch-department-classes?branchId=${getEachBranchDetailsSession.branchId}`,
@@ -11,26 +14,25 @@ function _printTeachersByClass() {
 			success: function(info) {
 				if (info.success > 0) {
 					sessionStorage.setItem("printStaffByClassSession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/print-staff-by-class`);
-					_alertClose(2);
+					window.open(`${websiteUrl}/reports/print-staff-by-class`, '_blank');
 				} else {
 					_actionAlert(info.message, false);
-					_alertClose(2);
 					const response = info.response;
 					if (response < 100) {
 						_logOut();
 					}    
 				}
+				$("#printTeachersByClassBtn").html(btnText).prop("disabled", false);
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
-				_alertClose(2);
+				_actionAlert('Check your internet connection and try again.', false);
+				$("#printTeachersByClassBtn").html(btnText).prop("disabled", false);
 			}
 		});
 	} catch (error) {
-		_alertClose(2);
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
+		$("#printTeachersByClassBtn").prop("disabled", false);
 	}
 }

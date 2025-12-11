@@ -1,7 +1,10 @@
 function _printBranchFeesSettings() {
   	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
-	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}).fadeIn(500);
 	try {
+		const btnText = $("#printFeesSettingsBtn").html();
+		$("#printFeesSettingsBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+		$("#printFeesSettingsBtn").prop("disabled", true);
+
 		$.ajax({
 			type: "GET",
 			url: `${endPoint}/admin/branch/fees/fetch-fees-settings?branchId=${getEachBranchDetailsSession?.branchId}`,
@@ -11,24 +14,25 @@ function _printBranchFeesSettings() {
 			success: function(info) {
 				if (info.success > 0) {
 					sessionStorage.setItem("printFeesSettingsSession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/fees-settings-list`);
-					_alertClose(2);
+					window.open(`${websiteUrl}/reports/fees-settings-list`, '_blank');
 				} else {
 					_actionAlert(info.message, false);
-					_alertClose(2);
 					const response = info.response;
 					if (response < 100) {
 						_logOut();
 					}    
 				}
+				$("#printFeesSettingsBtn").html(btnText).prop("disabled", false);
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
+				$("#printFeesSettingsBtn").html(btnText).prop("disabled", false);
 			}
 		});
 	} catch (error) {
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
+		$("#printFeesSettingsBtn").html(btnText).prop("disabled", false);
 	}
 }

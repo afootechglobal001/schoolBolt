@@ -95,7 +95,7 @@ function _fetchBranchStaffs() {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 			}
 		});
 	} catch (error) {
@@ -126,7 +126,7 @@ function _fetchEachBranchSaff(staffId) {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 			}
 		});
 	} catch (error) {
@@ -216,7 +216,7 @@ function _fetchStaffSubjectAllocated() {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 			}
 		});
 	} catch (error) {
@@ -275,7 +275,7 @@ function _fetchStaffSubjectScoreSheet() {
 												<div class="list-div">
 													<h4>${className} ${armName}</h4>
 													<div class="btn-container">
-														<button class="btn" title="PRINT SCORE SHEET" onclick="_printScoreSheet('${departmentId}','${classId}','${armId}','${subjectId}');">
+														<button class="btn" title="PRINT SCORE SHEET" id="printScoreSheetBtn_${subjectId}" onclick="_printScoreSheet('${departmentId}','${classId}','${armId}','${subjectId}');">
 															<i class="bi-printer"></i> PRINT SCORE SHEET
 														</button>
 													</div>
@@ -306,7 +306,7 @@ function _fetchStaffSubjectScoreSheet() {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 			}
 		});
 	} catch (error) {
@@ -396,7 +396,7 @@ function _fetchStaffSubjectComputeScores() {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 			}
 		});
 	} catch (error) {
@@ -486,7 +486,7 @@ function _fetchStaffSubjectCummulative() {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 			}
 		});
 	} catch (error) {
@@ -517,7 +517,7 @@ function _fetchComputeScoreRecordDetails(departmentId, classId, armId, subjectId
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 			}
 		});
 	} catch (error) {
@@ -747,7 +747,7 @@ function _fetchStaffAssignedClasses() {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 			}
 		});
 	} catch (error) {
@@ -933,7 +933,7 @@ function _fetchClassTeacherAssignedClasses() {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 			}
 		});
 	} catch (error) {

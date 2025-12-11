@@ -36,8 +36,7 @@ function _printAssessmentPerSubject() {
 			success: function(info) {
 				if (info.success > 0) {
 					sessionStorage.setItem("printAssessmentSession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/print-assessment-per-subject`);
-					_alertClose(2);
+					window.open(`${websiteUrl}/reports/print-assessment-per-subject`, '_blank');
 				} else {
 					_actionAlert(info.message, false);
 					const response = info.response;
@@ -54,7 +53,6 @@ function _printAssessmentPerSubject() {
 			}
 		});
 	} catch (error) {
-		_alertClose(2);
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 		$("#printBtn").prop("disabled", false);

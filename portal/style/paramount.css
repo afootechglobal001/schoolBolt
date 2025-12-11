@@ -747,9 +747,9 @@ p {
 .modal-overlay .modal-box p {
   padding: 0px;
   margin: 0px;
-  font-size: 14px;
-  color: var(--text-color);
-  font-family: body-font;
+  font-size: 15px;
+  color: var(--sub-body-color);
+  font-family: sub-title-font;
 }
 .modal-overlay .modal-box .btn-div {
   width: 100%;

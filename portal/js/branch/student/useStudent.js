@@ -605,7 +605,7 @@ function _fetchBranchStudents() {
         $("#armName2").html(armName);
 
         let showButtons = `
-					<button class="btn" title="PRINT RECORDS" onclick="_printStudentByClass('${info.departmentData.departmentId}','${info.classData.classId}','${info.armData.armId}')">
+					<button class="btn" title="PRINT RECORDS" id="printStudentsByClassBtn" onclick="_printStudentByClass('${info.departmentData.departmentId}','${info.classData.classId}','${info.armData.armId}')">
 						<i class="bi-printer"></i> PRINT
 					</button>
 					<button class="btn" title="EXPORT RECORDS" onclick="_exportStudents('${session}','${departmentName}','${className}','${armName}');">
@@ -716,7 +716,7 @@ function _fetchBranchStudents() {
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
         _actionAlert(
-          "An error occurred while fetching data! Please try again.",
+          "Check your internet connection and try again.",
           false
         );
       },
@@ -777,7 +777,7 @@ function _fetchEachBranchStudents(
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
         _actionAlert(
-          "An error occurred while fetching data! Please try again.",
+          "Check your internet connection and try again.",
           false
         );
       },
@@ -1123,7 +1123,7 @@ function _searchBranchStudents() {
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
         _actionAlert(
-          "An error occurred while fetching data! Please try again.",
+          "Check your internet connection and try again.",
           false
         );
       },
@@ -1325,7 +1325,7 @@ function _fetchPaymentHistory() {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 			}
 		});
 	} catch (error) {
@@ -1443,7 +1443,7 @@ function _updateStudentMandatoryFess() {
         },
         error: function(textStatus, errorThrown) {
           console.error("AJAX Error: ", textStatus, errorThrown);
-          _actionAlert('An error occurred while fetching data! Please try again.', false);
+          _actionAlert('Check your internet connection and try again.', false);
           $("#submitBtn").html(btnText).prop("disabled", false);
         }
       });
@@ -1636,7 +1636,7 @@ function _fetchBranchArchivedStudents() {
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
         _actionAlert(
-          "An error occurred while fetching data! Please try again.",
+          "Check your internet connection and try again.",
           false
         );
       },

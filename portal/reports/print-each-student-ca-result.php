@@ -141,7 +141,7 @@
 
                             let text = `
                             <thead>
-                                <tr class="tb-col">
+                                <tr class="tb-col table-col">
                                     <th>SN</th>
                                     <th>SUBJECT</th>
                                     <th>MARK OBTAINABLE</th>
@@ -164,7 +164,7 @@
                                     const assessment = subject.subjectAssessment || {};
 
                                     text += `
-                                    <tr class="tb-row">
+                                    <tr class="tb-row table-row">
                                     <td>${no}</td>
                                     <td>${subject.subjectName || '-'}</td>
                                     <td>${assessment.markObtainable || '-'}</td>

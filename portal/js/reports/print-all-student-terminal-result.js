@@ -32,7 +32,7 @@ function _printAllStudentTerminalResult() {
 			success: function(info) {
 				if (info.success > 0 && info.eachStudentResultData.length > 0) {
 					sessionStorage.setItem("printAllStudentTerminalResultSession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/print-all-student-terminal-result`);
+					window.open(`${websiteUrl}/reports/print-all-student-terminal-result`, '_blank');
 				} else {
 					_actionAlert('No data available to print.', false);
 					const response = info.response;
@@ -44,12 +44,11 @@ function _printAllStudentTerminalResult() {
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				_actionAlert('Check your internet connection and try again.', false);
 				$("#printAllTerminalBtn").html(btnText).prop("disabled", false);
 			}
 		});
 	} catch (error) {
-		_alertClose(2);
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 		$("#printAllTerminalBtn").prop("disabled", false);
