@@ -21,6 +21,7 @@ if (!$checkBasicSecurity){/// start if 1
     $select = "SELECT `session`, termId FROM BRANCHES_TAB WHERE $clientIds AND branchId= '$branchId'";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     $fetchQuery = mysqli_fetch_assoc($query);
+    $termId=$fetchQuery['termId'];
     $session=$fetchQuery['session'];
   
     /////////////////// for  $branchId
@@ -38,6 +39,31 @@ if (!$checkBasicSecurity){/// start if 1
     /////////////////// for  $subjectId
     $subjectDataQuery = mysqli_query($conn, "SELECT subjectId, subjectName FROM SUBJECTS_TAB WHERE $clientIds AND subjectId='$subjectId'");
     $subjectDataFetch = mysqli_fetch_assoc($subjectDataQuery);
+
+
+
+    /// update students overall position in class per subject in the term
+    $markChecker_Overall=0;
+    $count_Overall=0;
+    $updateOverallPositionSelect = "SELECT studentId, allAssessmentTotalMark FROM BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_SUBJECT_TAB WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND subjectId = '$subjectId' ORDER BY allAssessmentTotalMark DESC";
+    $updateOverallPositionQuery = mysqli_query($conn, $updateOverallPositionSelect) or die(mysqli_error($conn));
+    $allNoOfStudents = mysqli_num_rows($updateOverallPositionQuery);
+    while ($updateOverallPositionFetch = mysqli_fetch_assoc($updateOverallPositionQuery)) {
+        $count_Overall++;
+        $updateStudentId=$updateOverallPositionFetch['studentId'];
+        $allAssessmentTotalMark=$updateOverallPositionFetch['allAssessmentTotalMark'];
+
+        if($markChecker_Overall!=$allAssessmentTotalMark){
+            $markChecker_Overall=$allAssessmentTotalMark;
+            $position=$count_Overall . getOrdinalSuffix($count_Overall)."($allNoOfStudents)";
+        }
+        mysqli_query($conn, "UPDATE BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_SUBJECT_TAB SET overallPosition = '$position' WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND subjectId = '$subjectId' AND studentId = '$updateStudentId'");
+    }
+
+
+
+
+
 
 
     $select = "SELECT 
@@ -109,7 +135,7 @@ if (!$checkBasicSecurity){/// start if 1
     }
 
     ///calculate position
-    $select="SELECT studentId, average FROM BRANCH_CONTEMPORARY_MARK_BOOK_FOR_EACH_SUBJECT_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId' AND subjectId='$subjectId' ORDER BY average DESC";
+    $select="SELECT studentId, average FROM BRANCH_CONTEMPORARY_MARK_BOOK_FOR_EACH_SUBJECT_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND departmentId='$departmentId' AND classId='$classId' AND subjectId='$subjectId' ORDER BY average DESC";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
 
     $markChecker=0;

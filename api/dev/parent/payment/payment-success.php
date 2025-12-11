@@ -26,7 +26,7 @@ if (!$checkBasicSecurity){/// start if 1
    /// confirm payment first
     mysqli_query($conn, "UPDATE PAYMENTS_TAB SET statusId=5, paydate=NOW() WHERE paymentId='$paymentId'")or die (mysqli_error($conn));
     /// confirm payment SCHOOLBOLT_CHARGES_TAB
-    mysqli_query($conn, "UPDATE SCHOOLBOLT_CHARGES_TAB SET statusId=5 WHERE paymentId='$paymentId'")or die (mysqli_error($conn));
+    mysqli_query($conn, "UPDATE SCHOOLBOLT_CHARGES_TAB SET statusId=5 WHERE paymentId='$paymentId'");
 
    
 

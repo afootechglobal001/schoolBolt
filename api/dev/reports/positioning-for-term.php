@@ -29,30 +29,6 @@
     $currentSession = $currentSessionTermFetch['session'];
     $currentTermId = $currentSessionTermFetch['termId'];
     if (($session == $currentSession) && ($termId == $currentTermId)) {
-       
-        while($subjectFetch = mysqli_fetch_assoc($subjectQuery)){
-            $subjectId = $subjectFetch['subjectId'];
-
-            /// update students overall position in class per subject in the term
-            $markChecker_Overall=0;
-            $count_Overall=0;
-            $updateOverallPositionSelect = "SELECT studentId, allAssessmentTotalMark FROM BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_SUBJECT_TAB WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND subjectId = '$subjectId' ORDER BY allAssessmentTotalMark DESC";
-            $updateOverallPositionQuery = mysqli_query($conn, $updateOverallPositionSelect) or die(mysqli_error($conn));
-            $allNoOfStudents = mysqli_num_rows($updateOverallPositionQuery);
-            while ($updateOverallPositionFetch = mysqli_fetch_assoc($updateOverallPositionQuery)) {
-                $count_Overall++;
-                $updateStudentId=$updateOverallPositionFetch['studentId'];
-                $allAssessmentTotalMark=$updateOverallPositionFetch['allAssessmentTotalMark'];
-
-                if($markChecker_Overall!=$allAssessmentTotalMark){
-                    $markChecker_Overall=$allAssessmentTotalMark;
-                    $position=$count_Overall . getOrdinalSuffix($count_Overall)."($allNoOfStudents)";
-                }
-                mysqli_query($conn, "UPDATE BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_SUBJECT_TAB SET overallPosition = '$position' WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND subjectId = '$subjectId' AND studentId = '$updateStudentId'") or die(mysqli_error($conn));
-            }
-        }
-
-
 
         //////////////////////////////////////////////////////////////////////////////////////////////
         //// update students position in class

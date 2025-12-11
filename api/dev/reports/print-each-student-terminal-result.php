@@ -85,23 +85,23 @@ if (!$checkBasicSecurity){/// start if 1
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
      while ($fetchQuery = mysqli_fetch_assoc($query)) {
 
-    $classId = $fetchQuery['classId'];
-    $sessionsData = []; // store all session data
+        $classId = $fetchQuery['classId'];
+        $sessionsData = []; // store all session data
 
-    $sessionSelect="SELECT DISTINCT session 
-                    FROM BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB 
-                    WHERE $clientIds AND branchId='$branchId' 
-                    AND departmentId='$departmentId' 
-                    AND classId='$classId' 
-                    AND studentId='$studentId' 
-                    ORDER BY session ASC";
+        $sessionSelect="SELECT DISTINCT session 
+                        FROM BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB 
+                        WHERE $clientIds AND branchId='$branchId' 
+                        AND departmentId='$departmentId' 
+                        AND classId='$classId' 
+                        AND studentId='$studentId' 
+                        ORDER BY session ASC";
 
-    $sessionQuery = mysqli_query($conn, $sessionSelect);
-    $fetchSession = mysqli_fetch_assoc($sessionQuery);
-    $session = $fetchSession['session'];
-    $fetchQuery['session'] = $session;
+        $sessionQuery = mysqli_query($conn, $sessionSelect);
+        $fetchSession = mysqli_fetch_assoc($sessionQuery);
+        $session = $fetchSession['session'];
+        $fetchQuery['session'] = $session;
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    $fetchQuery['subjectsScores'] = array();
+        $fetchQuery['subjectsScores'] = array();
         $studentSubjectSelect = "SELECT DISTINCT (a.subjectId) AS subjectId, b.subjectName
                                  FROM BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_SUBJECT_TAB a
                                  JOIN SUBJECTS_TAB b ON a.clientId=b.clientId AND a.subjectId=b.subjectId

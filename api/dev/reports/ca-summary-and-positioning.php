@@ -51,12 +51,20 @@
         ") or die (mysqli_error($conn));
         $totalMarkObtainedFetch = mysqli_fetch_assoc($totalMarkObtainedQuery);
         $totalMarkObtained = $totalMarkObtainedFetch['totalMarkObtained'];
-        
-        $totalPercentage = ($totalMarkObtained / $totalMarkObtainable) * 100; // Assuming each subject has a maximum of 100 marks
-        $grade = getGrade($totalPercentage);
-        $remark = getRemark($totalPercentage);
-        // get principal comment
-        $principalComment = getPrincipalComment($totalPercentage);
+        // Prevent division by zero
+        if ($totalSubjects == 0 || $totalMarkObtainable == 0) {
+            $totalMarkObtained = 0;
+            $totalPercentage = 0;
+            $grade = getGrade(0);
+            $remark = getRemark(0);
+            $principalComment = getPrincipalComment(0);
+        } else {
+            $totalPercentage = ($totalMarkObtained / $totalMarkObtainable) * 100;
+            $grade = getGrade($totalPercentage);
+            $remark = getRemark($totalPercentage);
+            // get principal comment
+            $principalComment = getPrincipalComment($totalPercentage);
+        }
         
         mysqli_query($conn,"INSERT INTO `BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_ASSESSMENT_TAB`
         (`clientId`, `branchId`, `session`, `termId`, `departmentId`, `classId`, `armId`, `assessmentId`, `studentId`, `totalSubjects`, `totalMarkObtainable`, `totalMarkObtained`, `totalPercentage`, `grade`, `remark`, `principalComment`) VALUES
