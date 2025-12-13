@@ -1,10 +1,27 @@
 function _printContemporaryMarkBookPerSubject(departmentId, classId, armId, subjectId) {
 	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
 
+	$("#get-more-div-secondary")
+        .css({
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+			flexDirection: "column",
+        })
+	.append(`
+		<div>
+			<div class="alert alert-success" style="text-align: center;">
+				<span>COMPILING CONTEMPORARY MARK BOOK DATA...</span><br>
+				<p>Please DO NOT close this panel as the process may take up to a minute.</p>
+			</div>
+		</div>
+	`)
+	.fadeIn(500);
+
 	try {
-		const btnText = $(`#printMarkBookBtn_${classId}_${armId}_${subjectId}`).html();
-		$(`#printMarkBookBtn_${classId}_${armId}_${subjectId}`).html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
-		$(`#printMarkBookBtn_${classId}_${armId}_${subjectId}`).prop("disabled", true);
+		const btnText = $("#printBtn").html();
+		$("#printBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+		$("#printBtn").prop("disabled", true);
 
 		$.ajax({
 			type: "GET",
@@ -15,25 +32,29 @@ function _printContemporaryMarkBookPerSubject(departmentId, classId, armId, subj
 			success: function(info) {
 				if (info.success > 0) {
 					sessionStorage.setItem("printContemporaryMarkBookSession", JSON.stringify(info));
-					window.open(`${websiteUrl}/reports/print-contemporary-mark-book-per-subject`, '_blank');
+					window.open(`${websiteUrl}/reports/print-contemporary-mark-book-per-subject`, '_blank')
+					_alertClose(2);
 				} else {
 					_actionAlert(info.message, false);
+					_alertClose(2);
 					const response = info.response;
 					if (response < 100) {
 						_logOut();
 					}    
 				}
-				$(`#printMarkBookBtn_${classId}_${armId}_${subjectId}`).html(btnText).prop("disabled", false);
+				$("#printBtn").html(btnText).prop("disabled", false);
 			},
 			error: function(textStatus, errorThrown) {
+				_alertClose(2);
 				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('Check your internet connection and try again.', false);
-				$(`#printMarkBookBtn_${classId}_${armId}_${subjectId}`).html(btnText).prop("disabled", false);
+				_actionAlert('An error occurred while fetching data! Please try again.', false);
+				$("#printBtn").html(btnText).prop("disabled", false);
 			}
 		});
 	} catch (error) {
+		_alertClose(2);
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
-		$(`#printMarkBookBtn_${classId}_${armId}_${subjectId}`).prop("disabled", false);
+		$("#printBtn").prop("disabled", false);
 	}
 }
