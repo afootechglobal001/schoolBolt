@@ -23,7 +23,7 @@ function _printTerminalBroadSheet(departmentId, classId, armId) {
                     window.open(`${websiteUrl}/reports/print-terminal-broad-sheet`, '_blank');
                 } else {
                     _showCustomConfirm({
-                        title: "Print Terminal BroadSheet Failed!",
+                        title: "Access Denied!",
                         message: info.message,
                         alertType: "error",
                         trueActionBtnText: "OK",
