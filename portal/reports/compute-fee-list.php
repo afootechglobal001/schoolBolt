@@ -19,7 +19,7 @@
         printComputeFeeByClassSession = JSON.parse(sessionStorage.getItem("printComputeFeeByClassSession"));
     </script>
 
-    <section class="body-div">
+    <section class="body-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
         <div class="header-back-div">
             <div class="header-image">
                 <img id="general" src="<?php echo $websiteUrl ?>/images/report/general.png" alt="Report Header" style="width: 100%; height: auto;"/>
@@ -29,6 +29,15 @@
                         const schoolHeader = printComputeFeeByClassSession?.branchData?.general;
                         const headerUrl = schoolHeader ? `${caBroadSheetHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/general.png`;
                         $("#general").attr("src", headerUrl).attr("alt", `${printComputeFeeByClassSession?.branchData?.branchName} Report Header`);
+                        
+                        const backendWatermark = printComputeFeeByClassSession?.branchData?.watermark;
+                        const defaultWatermark = '../images/report/watermark.jpg';
+                        const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
+
+                        $('#backgroundTable').css({
+                            'background': `url(${watermarkUrl}) center no-repeat`,
+                            'background-size': 'cover'
+                        });
                     });
                 </script>
             </div>
@@ -45,20 +54,11 @@
         </div>
 
         <div class="inner-content">
-            <div class="table-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
+            <div class="table-div">
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
                         $(document).ready(function() {
                             const printComputeFeeByClassSession = JSON.parse(sessionStorage.getItem("printComputeFeeByClassSession"));
-
-                            const backendWatermark = printComputeFeeByClassSession?.branchData?.watermark;
-                            const defaultWatermark = '../images/report/watermark.jpg';
-                            const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
-
-                            $('#backgroundTable').css({
-                                'background': `url(${watermarkUrl}) center no-repeat`,
-                                'background-size': 'cover'
-                            });
 
                             let text = '';
                             let no = 0;

@@ -455,7 +455,7 @@ function _fetchStaffSubjectCummulative() {
 												<div class="list-div">
 													<h4>${className} ${armName}</h4>
 													<div class="btn-container">
-														<button class="btn" title="PRINT" id="printBtn" onclick="_printContemporaryMarkBookPerSubject('${departmentId}','${classId}','${armId}','${subjectId}');">
+														<button class="btn" title="PRINT" id="printMarkBookBtn_${classId}_${armId}_${subjectId}" onclick="_printContemporaryMarkBookPerSubject('${departmentId}','${classId}','${armId}','${subjectId}');">
 															<i class="bi-printer"></i> PRINT
 														</button>
 													</div>

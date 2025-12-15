@@ -16,7 +16,7 @@
         printStaffBySubjectSession = JSON.parse(sessionStorage.getItem("printStaffBySubjectSession"));
     </script>
 
-    <section class="body-div">
+    <section class="body-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
         <div class="header-back-div">
             <div class="header-image">
                 <img id="classListHeader" src="<?php echo $websiteUrl ?>/images/report/general.png"
@@ -32,6 +32,15 @@
                         $("#classListHeader")
                             .attr("src", headerUrl)
                             .attr("alt", `${printStaffBySubjectSession?.branchData?.branchName} Report Header`);
+
+                        const backendWatermark = printStaffBySubjectSession?.branchData?.watermark;
+                        const defaultWatermark = '../images/report/watermark.jpg';
+                        const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
+
+                        $('#backgroundTable').css({
+                            'background': `url(${watermarkUrl}) center no-repeat`,
+                            'background-size': 'cover'
+                        });
                     });
                 </script>
             </div>
@@ -51,15 +60,6 @@
             $(document).ready(function() {
                 const printStaffBySubjectSession = JSON.parse(sessionStorage.getItem("printStaffBySubjectSession"));
                 
-                const backendWatermark = printStaffBySubjectSession?.branchData?.watermark;
-                const defaultWatermark = '../images/report/watermark.jpg';
-                const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
-
-                $('#backgroundTable').css({
-                    'background': `url(${watermarkUrl}) center no-repeat`,
-                    'background-size': 'cover'
-                });
-
                 if (printStaffBySubjectSession && printStaffBySubjectSession.success === true) {
                     const fetch = printStaffBySubjectSession;
                     const data = fetch.data;

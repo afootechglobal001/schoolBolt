@@ -381,6 +381,10 @@ p {
   font-family: sub-title-font;
 }
 
+.alert p {
+  color: var(--white-color);
+}
+
 .alert span i {
   font-size: 10px;
 }
