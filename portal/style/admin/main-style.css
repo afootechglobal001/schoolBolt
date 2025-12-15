@@ -4500,7 +4500,6 @@ header
   cursor: pointer;
   transition: all 0.2s ease-in 02s;
   transition: all 0.2s ease-in 0.2s;
-
   white-space: nowrap;
 }
 
@@ -4527,7 +4526,7 @@ header
 
 .user-profile-div .profile-content-div .nav-div .div-in ul li ul {
   position: absolute;
-  min-width: 200px;
+  min-width: 300px;
   height: auto;
   padding: 20px;
   background: var(--white-color);
@@ -4573,6 +4572,97 @@ header
   .ul-expand {
   display: block !important;
 }
+
+.user-profile-div .profile-content-div .nav-div .div-in ul .switch-li{
+  display: flex;
+  width: calc(100% - 30px);
+  justify-content: space-between;
+  background: rgba(231, 107, 46, 0.1);
+}
+
+.user-profile-div .profile-content-div .nav-div .div-in ul .switch-li:hover{
+  background: rgba(231, 107, 46, 0.1)
+}
+
+.user-profile-div .profile-content-div .nav-div .div-in ul .switch-li .gap{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-profile-div .profile-content-div .nav-div .div-in ul .switch-li .switch {
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.user-profile-div .profile-content-div .nav-div .div-in ul .switch-li .switch input {
+  display: none;
+}
+
+.user-profile-div .profile-content-div .nav-div .div-in ul .switch-li .slider {
+  position: relative;
+  width: 35px;
+  height: 17px;
+  background: #e0e0e0;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+.user-profile-div .profile-content-div .nav-div .div-in ul .switch-li .slider:before {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: var(--white-color);
+  color: var(--white-color);
+  border-radius: 50%;
+  top: 49%;
+  left: 4px;
+  transform: translateY(-50%);
+  transition: 0.3s;
+}
+
+.user-profile-div .profile-content-div .nav-div .div-in ul .switch-li input:checked + .slider {
+  background: #f1c40f;
+}
+
+.user-profile-div .profile-content-div .nav-div .div-in ul .switch-li input:checked + .slider:before {
+  transform: translate(15px, -50%);
+}
+
+.user-profile-div .profile-content-div .nav-div .div-in ul .switch-li .toggle-label {
+  font-size: 13px;
+  font-family: body-font;
+  color: var(--sub-body-color);
+}
+
+.modal-preloader{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: var(--white-color);
+   font-family: sub-title-font;
+   font-size: 16px;
+}
+
+.spinner{
+    width:35px;
+    height:35px;
+    border:5px solid #dfdfdf;
+    border-top:5px solid var(--primary-color);
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+    margin:0 auto 10px;
+}
+
+@keyframes spin{
+    100%{ transform:rotate(360deg); }
+}
+
+
 @media all and (max-width: 1200px) {
   .user-profile-div {
     width: 100%;

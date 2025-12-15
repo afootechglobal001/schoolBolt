@@ -22,7 +22,13 @@ function _printTerminalBroadSheet(departmentId, classId, armId) {
                     sessionStorage.setItem("printTerminalBroadSheetsession", JSON.stringify(info));
                     window.open(`${websiteUrl}/reports/print-terminal-broad-sheet`, '_blank');
                 } else {
-                    _actionAlert(info.message, false);
+                    _showCustomConfirm({
+                        title: "Print Terminal BroadSheet Failed!",
+                        message: info.message,
+                        alertType: "error",
+                        trueActionBtnText: "OK",
+                        closeOnOverlayClick: true,
+                    });
                     const response = info.response;
 					if (response < 100) {
 						_logOut();

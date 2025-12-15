@@ -1514,6 +1514,7 @@ function _publishResult(){
 			falseActionBtn: true,
       trueActionBtnText: "Yes, Publish",
       falseActionBtnText: "Cancel",
+      closeOnOverlayClick: true,
 		});
 	} catch (error) {
 		console.error("Error:", error);
@@ -1547,6 +1548,7 @@ function _publishResultCallback(formData) {
           message: response.message,
           alertType: "success",
           trueActionBtnText: "Okay, Thanks",
+          closeOnOverlayClick: false,
       });
 			_btnDisable("publishResultBtn", btnText, false);
 		} else {

@@ -432,22 +432,54 @@
                             `);
                             }
                             if (userRoles.canViewBranchResults) {
-                                $('#branchNavUl').append(`
-                                <li class="hide-li" title="Branch Record"><i class="bi-person-lines-fill"></i> Result
-                                    <ul class="animated fadeIn">
-                                        <li title="Broad/Report Sheet"
-                                            onclick="_getForm({page: 'broadsheet_select_form', layer:2, url: adminPortalLocalUrl});">
-                                            <i class="bi-person-lines-fill"></i>Broad/Report Sheet
-                                        </li>
-                                        <li title="Cumulative Broadsheet"><i class="bi-person-lines-fill"></i>Cumulative
-                                            Broadsheet
-                                        </li>
-                                        <li title="Promotional Panel"><i class="bi-person-lines-fill"></i>Promotion Panel</li>
-                                        <li title="Publish Result" onclick="_getForm({page: 'publishResultSelectForm', layer:2, url: adminPortalLocalUrl});"><i class="bi-file-earmark-ppt-fill"></i>Publish Result</li>
-                                    </ul>
+                                const assessmentLockStatus = getEachBranchDetailsSession?.assessmentLock === true;
 
-                                </li>
-                            `);
+                                $('#branchNavUl').append(`
+                                    <li class="hide-li" title="Branch Record">
+                                        <i class="bi-person-lines-fill"></i> Result
+                                        <ul class="animated fadeIn">
+
+                                            <li class="switch-li" title="Lock Assessment Update">
+                                                <div class="gap">
+                                                    <i class="bi-shield-lock-fill"></i> Lock Assessment Update
+                                                </div>
+
+                                                <label for="lockResultToggle" class="switch">
+                                                    <input 
+                                                        type="checkbox"
+                                                        id="lockResultToggle"
+                                                        ${assessmentLockStatus ? 'checked' : ''}
+                                                        onclick="_lockAssessmentRecord(event, this)"
+                                                    >
+                                                    <span class="slider"></span>
+                                                    <span class="toggle-label">
+                                                        ${assessmentLockStatus ? 'Yes' : 'No'}
+                                                    </span>
+                                                </label>
+                                            </li>
+
+                                            <li title="Broad/Report Sheet"
+                                                onclick="_getForm({page: 'broadsheet_select_form', layer:2, url: adminPortalLocalUrl});">
+                                                <i class="bi-table"></i> Broad/Report Sheet
+                                            </li>
+
+                                            <li title="Cumulative Broadsheet">
+                                                <i class="bi-table"></i> Cumulative Broadsheet
+                                            </li>
+
+                                            <li title="Promotional Panel">
+                                                <i class="bi-file-spreadsheet-fill"></i> Promotion Panel
+                                            </li>
+
+                                            <li title="Publish Result"
+                                                onclick="_getForm({page: 'publishResultSelectForm', layer:2, url: adminPortalLocalUrl});">
+                                                <i class="bi-file-earmark-ppt-fill"></i> Publish Result
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                `);
+                                _toggleCheck();
                             }
                             if (userRoles.canViewBranchProfile) {
                                 $('#branchNavUl').append(`

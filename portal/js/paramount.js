@@ -109,6 +109,7 @@ function _showCustomConfirm(options) {
     falseActionBtnText = "NO",
     trueActionCallback = () => {},
     falseActionCallback = () => {},
+    closeOnOverlayClick = false,
   } = options;
 
   // Show modal
@@ -161,15 +162,16 @@ function _showCustomConfirm(options) {
         falseActionCallback();
       });
   }
-  // If mouse enters modal, clear and hide it
-  $("#customConfirmModal")
-    .off("click")
-    .on("click", function (e) {
-      if (e.target === this) {
-        // ensures click is only on the modal, not children
-        $(this).html("").fadeOut(200);
-      }
-    });
+
+  $("#customConfirmModal").off("click");
+
+if (closeOnOverlayClick) {
+  $("#customConfirmModal").on("click", function (e) {
+    if (e.target === this) {
+      _modalClose();
+    }
+  });
+}
 }
 function _modalClose() {
   $("#customConfirmModal").html("").fadeOut(200);
@@ -313,6 +315,7 @@ function _callAjaxError(callback) {
     message: "Check your internet connection and try again.",
     alertType: "error",
     trueActionBtnText: "OK",
+    closeOnOverlayClick: true,
   });
 }
 function _callCatchError(callback) {
@@ -324,6 +327,7 @@ function _callCatchError(callback) {
     message: "An unexpected error occurred! Please try again.",
     alertType: "error",
     trueActionBtnText: "OK, Retry",
+    closeOnOverlayClick: true,
   });
 }
 
@@ -339,4 +343,15 @@ function _btnDisable(btnId, btnText = "SUBMIT", action = true) {
       .prop("disabled", false);
   }
   ////////////////////////////////////////////////
+}
+
+
+ ////////////////////////////////////////////////
+function _showLoader(message = 'Processing, please wait...') {
+  $('#globalLoaderText').html(message);
+  $('#globalLoader').fadeIn(150);
+}
+
+function _hideLoader() {
+  $('#globalLoader').fadeOut(150);
 }
