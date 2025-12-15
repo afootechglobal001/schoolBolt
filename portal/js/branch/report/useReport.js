@@ -367,7 +367,13 @@ function _viewTerminalResultSummary(departmentId, classId, armId) {
 					sessionStorage.setItem("getViewTerminalResultSummarySession", JSON.stringify(info));
 					_getForm({page: 'view_terminal_result_summary_form', layer:2, url: adminPortalLocalUrl});
 				} else {
-					_actionAlert(info.message, false);
+					_showCustomConfirm({
+                        title: "Operation Failed!",
+                        message: info.message,
+                        alertType: "error",
+                        trueActionBtnText: "OK",
+                        closeOnOverlayClick: true,
+                    });
 					_alertClose(2);
 					const response = info.response;
 					if (response < 100) {
@@ -386,4 +392,86 @@ function _viewTerminalResultSummary(departmentId, classId, armId) {
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
+}
+
+
+function _lockAssessmentRecord(e, el) {
+    try {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const assessmentLock = el.checked;
+
+        _showCustomConfirm({
+            callback: () => {
+                _lockAssessmentRecordCallback(assessmentLock);
+            },
+            title: assessmentLock ? "Confirm Lock" : "Confirm Unlock",
+            message: assessmentLock
+                ? "Are you sure you want to lock this assessment records? This action is irreversible."
+                : "Are you sure you want to unlock this assessment record?",
+            alertType: "warning",
+            falseActionBtn: true,
+            trueActionBtnText: assessmentLock ? "Yes, Lock" : "Yes, Unlock",
+			falseActionBtnText: "Cancel",
+			closeOnOverlayClick: true,
+            falseActionCallback: () => {
+                el.closest('.switch')
+                .querySelector('.toggle-label')
+                .textContent = el.checked ? 'Yes' : 'No';
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        _callCatchError(() => _lockAssessmentRecord(e, el));
+    }
+}
+
+
+function _lockAssessmentRecordCallback(assessmentLock) {
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+
+	assessmentLock ? _showLoader('Locking Assessment Records, please wait...') : _showLoader('Unlocking Assessment Records, please wait...');
+
+	//// call endpoint //////
+	 _callFetchEndPoints({
+		url: `reports/lock-assessment-update?branchId=${getEachBranchDetailsSession.branchId}&assessmentLock=${assessmentLock}`,
+		accessKey: true,
+	})
+    .then((response) => {
+		_staffValidationCheck(response.response);
+		if (response.success) {
+			_showCustomConfirm({
+				callback: () => {
+					sessionStorage.setItem(
+						"getEachBranchDetailsSession",
+						JSON.stringify({ branchId: getEachBranchDetailsSession.branchId })
+					);
+
+					_fetchEachBranches(getEachBranchDetailsSession.branchId);
+					_getPage({ page: "branches", url: adminPortalLocalUrl });
+				},
+				title: "Success!",
+				message: response.message,
+				alertType: "success",
+				trueActionBtnText: "Okay, Thanks",
+				closeOnOverlayClick: false,
+			});
+			_hideLoader();
+		} else {
+			_hideLoader();
+			_showCustomConfirm({
+				title: assessmentLock ? "Unable to Lock Result!" : "Unable to Unlock Result!",
+				message: response.message,
+				alertType: "error",
+				trueActionBtnText: "OK",
+				closeOnOverlayClick: true,
+			});
+		}
+    })
+    .catch((error) => {
+		console.error("Error:", error);
+		_callAjaxError(() => _lockAssessmentRecordCallback(assessmentLock)); // retry if needed
+		_hideLoader();
+    });
 }
