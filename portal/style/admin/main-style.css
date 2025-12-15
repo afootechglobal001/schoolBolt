@@ -4639,29 +4639,6 @@ header
   color: var(--sub-body-color);
 }
 
-.modal-preloader{
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   color: var(--white-color);
-   font-family: sub-title-font;
-   font-size: 16px;
-}
-
-.spinner{
-    width:35px;
-    height:35px;
-    border:5px solid #dfdfdf;
-    border-top:5px solid var(--primary-color);
-    border-radius:50%;
-    animation:spin 1s linear infinite;
-    margin:0 auto 10px;
-}
-
-@keyframes spin{
-    100%{ transform:rotate(360deg); }
-}
-
 
 @media all and (max-width: 1200px) {
   .user-profile-div {
