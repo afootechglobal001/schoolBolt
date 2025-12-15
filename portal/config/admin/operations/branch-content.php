@@ -583,9 +583,29 @@
                             `);
                                     }
                                     if (userRoles.canViewBranchResults) {
+                                        const assessmentLockStatus = getEachBranchDetailsSession?.assessmentLock === true;
                                         $('#branchNavUlMobile').append(`
                                 <li title="Branch Record"><i class="bi-person-lines-fill"></i> Result
                                     <ul class="ul-expand animated fadeIn">
+                                        <li class="switch-li" title="Lock Assessment Update">
+                                            <div class="gap">
+                                                <i class="bi-shield-lock-fill"></i> Lock Assessment Update
+                                            </div>
+
+                                            <label for="lockResultToggle" class="switch">
+                                                <input 
+                                                    type="checkbox"
+                                                    id="lockResultToggle"
+                                                    ${assessmentLockStatus ? 'checked' : ''}
+                                                    onclick="_lockAssessmentRecord(event, this)"
+                                                >
+                                                <span class="slider"></span>
+                                                <span class="toggle-label">
+                                                    ${assessmentLockStatus ? 'Yes' : 'No'}
+                                                </span>
+                                            </label>
+                                        </li>
+
                                         <li title="Broad/Report Sheet"
                                             onclick="_getForm({page: 'broadsheet_select_form', layer:2, url: adminPortalLocalUrl});">
                                             <i class="bi-person-lines-fill"></i>Broad/Report Sheet

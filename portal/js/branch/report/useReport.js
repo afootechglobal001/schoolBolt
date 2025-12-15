@@ -368,7 +368,7 @@ function _viewTerminalResultSummary(departmentId, classId, armId) {
 					_getForm({page: 'view_terminal_result_summary_form', layer:2, url: adminPortalLocalUrl});
 				} else {
 					_showCustomConfirm({
-                        title: "Operation Failed!",
+                        title: "Access Denied!",
                         message: info.message,
                         alertType: "error",
                         trueActionBtnText: "OK",
@@ -408,8 +408,8 @@ function _lockAssessmentRecord(e, el) {
             },
             title: assessmentLock ? "Confirm Lock" : "Confirm Unlock",
             message: assessmentLock
-                ? "Are you sure you want to lock this assessment records? This action is irreversible."
-                : "Are you sure you want to unlock this assessment record?",
+                ? "Are you sure you want to lock assessment Updates?"
+                : "Are you sure you want to unlock assessment Updates?",
             alertType: "warning",
             falseActionBtn: true,
             trueActionBtnText: assessmentLock ? "Yes, Lock" : "Yes, Unlock",
@@ -431,7 +431,7 @@ function _lockAssessmentRecord(e, el) {
 function _lockAssessmentRecordCallback(assessmentLock) {
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
 
-	assessmentLock ? _showLoader('Locking Assessment Records, please wait...') : _showLoader('Unlocking Assessment Records, please wait...');
+	assessmentLock ? _showLoader('Locking Assessment Updates, please wait...') : _showLoader('Unlocking Assessment Updates, please wait...');
 
 	//// call endpoint //////
 	 _callFetchEndPoints({
@@ -461,7 +461,7 @@ function _lockAssessmentRecordCallback(assessmentLock) {
 		} else {
 			_hideLoader();
 			_showCustomConfirm({
-				title: assessmentLock ? "Unable to Lock Result!" : "Unable to Unlock Result!",
+				title: assessmentLock ? "Unable to Lock Assessment Updates!" : "Unable to Unlock Assessment Updates!",
 				message: response.message,
 				alertType: "error",
 				trueActionBtnText: "OK",
