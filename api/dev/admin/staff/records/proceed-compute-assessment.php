@@ -26,8 +26,15 @@ if(!$checkSession){
     validateEmptyField($assessmentId, 'ASSESSMENT ID');
 
 
-    $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, address, smtpUsername, mobileNumber, session, termId  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+    $branchDataQuery = mysqli_query($conn, "SELECT assessmentLock, name AS branchName, address, smtpUsername, mobileNumber, session, termId  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
+    $assessmentLock=$branchDataFetch['assessmentLock'];
+    if($assessmentLock>0){
+        $response['response']=403;
+        $response['success']=false;
+        $response['message']="ASSESSMENT UPDATE LOCKED! Contact system administrator for more information.";
+        goto end;
+    }
     $session=$branchDataFetch['session'];
     $termId=$branchDataFetch['termId'];
 

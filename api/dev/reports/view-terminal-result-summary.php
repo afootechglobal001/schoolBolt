@@ -24,8 +24,16 @@ if (!$checkBasicSecurity){/// start if 1
     /// get all tableTitles
     $tableTitles="SN, FULL NAME, NO. OF SUBJECTS, MARK OBTAINABLE, MARK OBTAINED, TOTAL PERCENTAGE (%), POSTN. IN CLASS, OVERALL POSTN., REMARKS, TEACHER'S COMMENT, ATTENDANCE";
 
-    $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, schoolLogo, address, supportEmail, mobileNumber, schoolCategoryId, terminalResultSummaryHeader, watermark  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+    $branchDataQuery = mysqli_query($conn, "SELECT assessmentLock, name AS branchName, schoolLogo, address, supportEmail, mobileNumber, schoolCategoryId, terminalResultSummaryHeader, watermark  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
+    $assessmentLock=$branchDataFetch['assessmentLock'];
+    if($assessmentLock==0){
+        $response['response']=403;
+        $response['success']=false;
+        $response['message']="ASSESSMENT UPDATE LOCK IS REQUIRED! Kindly lock the assessment update before proceeding.";
+        goto end;
+    }
+
 
     $termDataQuery = mysqli_query($conn, "SELECT * FROM SETUP_TERM_TAB WHERE termId='$termId'");
     $termDataFetch = mysqli_fetch_assoc($termDataQuery);
@@ -35,6 +43,23 @@ if (!$checkBasicSecurity){/// start if 1
 
     $classDataQuery = mysqli_query($conn, "SELECT classId, className FROM CLASSES_TAB WHERE $clientIds AND classId='$classId'");
     $classDataFetch = mysqli_fetch_assoc($classDataQuery);
+     $className=$classDataFetch['className'];
+    //// confirm if there is any assessment update
+    $select="SELECT * FROM BRANCH_ASSESSMENT_NEW_UPDATE_ALERT_TAB 
+    WHERE $clientIds 
+    AND branchId = '$branchId'
+    AND session = '$session'
+    AND termId = '$termId'
+    AND departmentId = '$departmentId'
+    AND classId = '$classId'  LIMIT 1";
+    $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
+    $allRecordCount=mysqli_num_rows($query);
+    if ($allRecordCount>0){
+        $response['response']=200;
+        $response['success']=false;
+        $response['message']="Kindly print all the broad sheets for class $className as there is an assessment update that has not been processed.";
+        goto end;
+    }
 
     $armDataQuery = mysqli_query($conn, "SELECT armId, armName FROM ARMS_TAB WHERE $clientIds AND armId='$armId'");
     $armDataFetch = mysqli_fetch_assoc($armDataQuery);
@@ -110,19 +135,19 @@ ORDER BY b.surName ASC
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     while ($fetch = mysqli_fetch_assoc($query)) {  
         $studentId = $fetch['studentId'];
-        //////// check if schoolBoltCharges is to be applied for this client. if no, send all the students broadsheet
+         //////// check if schoolBoltCharges is to be applied for this client. if no, send all the students broadsheet
         ///////// else send only those that have paid the schoolBoltCharges
         $hasPaidSchoolBoltCharges = false;
         if($schoolBoltChargesStatus!=1){
            $hasPaidSchoolBoltCharges = true;
         }else{
             // Check if the student has paid the schoolBoltCharges
-            $paymentCheckQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=5 AND (paymentMethodId='PM001' OR paymentMethodId='PM002')") or die (mysqli_error($conn));
+            $paymentCheckQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=5 AND paymentMethodId IN ('PM001','PM002') LIMIT 1") or die (mysqli_error($conn));
             $hasPaidSchoolBoltCharges = mysqli_num_rows($paymentCheckQuery) > 0;
         } 
         
         if($hasPaidSchoolBoltCharges){
-        $response['studentData'][] = $fetch;
+          $response['studentData'][] = $fetch;
         }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////

@@ -66,27 +66,35 @@ if (!$checkBasicSecurity){/// start if 1
 
     
     $response['eachStudentResultData'] = array();
-    //// get all students as at the time of assessment
+    ///get all assessment counts for this branch
+    $select="SELECT * FROM BRANCH_ASSESSMENT_SETUP_TAB WHERE $clientIds AND branchId = '$branchId' AND (parentId IS NULL OR parentId = '')  AND assessmentTotalScore>0   $assessmentIds";
+    $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
+    $allAssessmentsCount=mysqli_num_rows($query);
+    
+      //// get all students as at the time of assessment
     $select="SELECT 
-    studentId,
-    totalSubjects,
-    totalMarkObtainable,
-    totalMarkObtained,
-    totalPercentage,
-    position AS positionInClass,
-    principalComment,
-    noOfStudentsInArm,
-    noOfStudentsInClass
+    a.studentId,
+    a.totalSubjects,
+    a.totalMarkObtainable,
+    a.totalMarkObtained,
+    a.totalPercentage,
+    a.position AS positionInClass,
+    a.principalComment,
+    a.noOfStudentsInArm,
+    a.noOfStudentsInClass
     FROM 
-    BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB
+    BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB a
+    JOIN
+    STUDENTS_TAB b  ON a.clientId = b.clientId AND a.studentId = b.studentId
     WHERE 
-    $clientIds
-    AND branchId = '$branchId' 
-    AND session = '$session' 
-    AND termId = '$termId' 
-    AND departmentId = '$departmentId' 
-    AND classId = '$classId' 
-    AND armId = '$armId'";
+    a.clientId='$clientId' 
+    AND a.branchId = '$branchId' 
+    AND a.session = '$session' 
+    AND a.termId = '$termId' 
+    AND a.departmentId = '$departmentId' 
+    AND a.classId = '$classId' 
+    AND a.armId = '$armId'
+    ORDER BY b.surName ASC";
     $terminalQuery=mysqli_query($conn,$select)or die (mysqli_error($conn));
     while ($terminalfetch = mysqli_fetch_assoc($terminalQuery)){ 
         $studentId=$terminalfetch['studentId'];
@@ -117,6 +125,7 @@ if (!$checkBasicSecurity){/// start if 1
         AND a.classId='$classId' 
         AND a.armId='$armId'
         AND a.studentId='$studentId'
+        AND a.numberOfSittings=$allAssessmentsCount
         ORDER BY b.subjectName";
         $studentSubjectQuery = mysqli_query($conn, $studentSubjectSelect) or die(mysqli_error($conn));
         while ($studentSubjectFetch = mysqli_fetch_assoc($studentSubjectQuery)) {
@@ -136,7 +145,8 @@ if (!$checkBasicSecurity){/// start if 1
             AND departmentId='$departmentId' 
             AND classId='$classId' 
             AND armId='$armId'
-            AND studentId='$studentId'";
+            AND studentId='$studentId'
+            AND numberOfSittings=$allAssessmentsCount";
             $firstTermScoreQuery = mysqli_query($conn, $firstTermScoreSelect) or die(mysqli_error($conn));
             $firstTermScoreFetch = mysqli_fetch_assoc($firstTermScoreQuery);
             $studentSubjectFetch['firstTermScore'] =$firstTermScoreFetch['firstTermScore'];
@@ -154,7 +164,8 @@ if (!$checkBasicSecurity){/// start if 1
             AND departmentId='$departmentId' 
             AND classId='$classId' 
             AND armId='$armId'
-            AND studentId='$studentId'";
+            AND studentId='$studentId'
+            AND numberOfSittings=$allAssessmentsCount";
             $secondTermScoreQuery = mysqli_query($conn, $secondTermScoreSelect) or die(mysqli_error($conn));
             $secondTermScoreFetch = mysqli_fetch_assoc($secondTermScoreQuery);
             $studentSubjectFetch['secondTermScore'] =$secondTermScoreFetch['secondTermScore'];
@@ -201,7 +212,8 @@ if (!$checkBasicSecurity){/// start if 1
             AND departmentId='$departmentId'
             AND classId='$classId'  
             AND armId='$armId'
-            AND subjectId='$subjectId'";
+            AND subjectId='$subjectId'
+            AND numberOfSittings=$allAssessmentsCount";
             $minMaxAvgQuery = mysqli_query($conn, $minMaxAvgSelect) or die(mysqli_error($conn));
             $minMaxAvgFetch = mysqli_fetch_assoc($minMaxAvgQuery);
             $studentSubjectFetch['minScore'] = $minMaxAvgFetch['minScore'] ? $minMaxAvgFetch['minScore'] : '';
@@ -225,19 +237,19 @@ if (!$checkBasicSecurity){/// start if 1
         $terminalfetch['classTeachersComment']= $classTeachersCommentDataFetch['classTeachersComment'] ?? '';
 
 
-        //////// check if schoolBoltCharges is to be applied for this client. if no, send all the students broadsheet
+         //////// check if schoolBoltCharges is to be applied for this client. if no, send all the students broadsheet
         ///////// else send only those that have paid the schoolBoltCharges
         $hasPaidSchoolBoltCharges = false;
         if($schoolBoltChargesStatus!=1){
            $hasPaidSchoolBoltCharges = true;
         }else{
             // Check if the student has paid the schoolBoltCharges
-            $paymentCheckQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=5 AND (paymentMethodId='PM001' OR paymentMethodId='PM002')") or die (mysqli_error($conn));
+            $paymentCheckQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=5 AND paymentMethodId IN ('PM001','PM002') LIMIT 1") or die (mysqli_error($conn));
             $hasPaidSchoolBoltCharges = mysqli_num_rows($paymentCheckQuery) > 0;
         } 
         
         if($hasPaidSchoolBoltCharges){
-        $response['eachStudentResultData'][] = $terminalfetch;
+          $response['studentData'][] = $fetch;
         }
     }//// end of while loop for all students
      

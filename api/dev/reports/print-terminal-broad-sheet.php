@@ -18,35 +18,44 @@ if (!$checkBasicSecurity){/// start if 1
     validateEmptyField($departmentId, 'DEPARTMENT');
     validateEmptyField($classId, 'CLASS');
     validateEmptyField($armId, 'ARM');
+     /// confirm if there is any subject records for this class and arm
+    $subjectSelect="SELECT
+    DISTINCT (subjectId) AS subjectId
+    FROM
+    BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_SUBJECT_TAB
+    WHERE
+    $clientIds
+    AND branchId = '$branchId'
+    AND session = '$session'
+    AND termId = '$termId'
+    AND departmentId = '$departmentId'
+    AND classId = '$classId'
+    AND armId = '$armId' LIMIT 1";
 
-    require_once 'positioning-for-term.php';
-    if(!$recordFound){
+    $subjectQuery=mysqli_query($conn,$subjectSelect)or die (mysqli_error($conn));
+    $allRecordCount=mysqli_num_rows($subjectQuery);
+    if ($allRecordCount==0){
         $response['response']=200;
         $response['success']=false;
-        $response['message']="No record found!";
+        $response['message']="No Record found";
         goto end;
     }
 
+    require_once 'positioning-for-term.php';
+
    /// get all tableTitles
     $tableTitles="SN, FULL NAME";
-    $select="SELECT DISTINCT(a.subjectId) AS subjectId, 
-    b.subjectName, 
-    b.subjectAbbreviation 
-    FROM 
-    BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB a
-    JOIN
-    SUBJECTS_TAB b ON a.subjectId = b.subjectId AND a.clientId = b.clientId
-    WHERE 
-    a.clientId='$clientId'  
-    AND a.branchId='$branchId' 
-    AND a.session='$session' 
-    AND a.termId='$termId' 
-    AND a.departmentId='$departmentId' 
-    AND a.classId='$classId' 
-    AND a.armId='$armId' 
-    ORDER BY 
-    b.subjectName ASC";
-    $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
+    $subjectsSelect="SELECT 
+   a.subjectId, 
+   b.subjectName, 
+   b.subjectAbbreviation 
+   FROM 
+   SUBJECT_STRUCTURE_TAB a
+   JOIN 
+   SUBJECTS_TAB b ON a.clientId=b.clientId AND a.subjectId=b.subjectId
+    WHERE a.clientId='$clientId' AND a.classId='$classId'
+    ORDER BY b.subjectName ASC";
+    $query=mysqli_query($conn,$subjectsSelect)or die (mysqli_error($conn));
     while ($fetch = mysqli_fetch_assoc($query)) {
         $subjectAbbreviation=$fetch['subjectAbbreviation'];
         $tableTitles .=", $subjectAbbreviation";     
@@ -54,9 +63,16 @@ if (!$checkBasicSecurity){/// start if 1
     $tableTitles .=", NO. OF SUBJECTS, MARK OBTAINABLE, MARK OBTAINED, TOTAL PERCENTAGE (%), POSTN. IN CLASS, OVERALL POSTN., REMARKS";
 
     
-    $branchDataQuery = mysqli_query($conn, "SELECT name AS branchName, schoolLogo, address, supportEmail, mobileNumber, schoolCategoryId, terminalBroadSheetHeader, watermark FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
+    $branchDataQuery = mysqli_query($conn, "SELECT assessmentLock, name AS branchName, schoolLogo, address, supportEmail, mobileNumber, schoolCategoryId, terminalBroadSheetHeader, watermark FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
-
+    $assessmentLock=$branchDataFetch['assessmentLock'];
+    if($assessmentLock==0){
+        $response['response']=403;
+        $response['success']=false;
+        $response['message']="ASSESSMENT UPDATE LOCK IS REQUIRED! Kindly lock the assessment update before proceeding.";
+        goto end;
+    }
+    
     $termDataQuery = mysqli_query($conn, "SELECT * FROM SETUP_TERM_TAB WHERE termId='$termId'");
     $termDataFetch = mysqli_fetch_assoc($termDataQuery);
 
@@ -86,6 +102,10 @@ if (!$checkBasicSecurity){/// start if 1
     $response['tableTitles']=$tableTitles;
     
     $response['studentData'] = array();
+    ///get all assessment counts for this branch
+    $select="SELECT * FROM BRANCH_ASSESSMENT_SETUP_TAB WHERE $clientIds AND branchId = '$branchId' AND (parentId IS NULL OR parentId = '')  AND assessmentTotalScore>0   $assessmentIds";
+    $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
+    $allAssessmentsCount=mysqli_num_rows($query);
     //// get all students as at the time of assessment
     $select="SELECT 
     a.studentId AS studentId, 
@@ -120,6 +140,7 @@ if (!$checkBasicSecurity){/// start if 1
         $studentId = $fetch['studentId'];
         /// get SubjectLists of this student
         $subjectListSelect = "SELECT a.subjectId, 
+        a.numberOfSittings,
         a.allAssessmentTotalMark AS totalMark,
         b.subjectAbbreviation
         FROM 
@@ -135,19 +156,20 @@ if (!$checkBasicSecurity){/// start if 1
         AND a.classId='$classId' 
         AND a.armId='$armId' 
         AND a.studentId='$studentId'
+        AND numberOfSittings=$allAssessmentsCount 
         ORDER BY b.subjectName ASC"; // Order by subject name
         $subjectListQuery = mysqli_query($conn, $subjectListSelect) or die(mysqli_error($conn));
         while($subjectListFetch = mysqli_fetch_assoc($subjectListQuery)) {
             $fetch['studentScorePerSubject'][] = $subjectListFetch;
         }
-        //////// check if schoolBoltCharges is to be applied for this client. if no, send all the students broadsheet
+         //////// check if schoolBoltCharges is to be applied for this client. if no, send all the students broadsheet
         ///////// else send only those that have paid the schoolBoltCharges
         $hasPaidSchoolBoltCharges = false;
         if($schoolBoltChargesStatus!=1){
            $hasPaidSchoolBoltCharges = true;
         }else{
             // Check if the student has paid the schoolBoltCharges
-            $paymentCheckQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=5 AND (paymentMethodId='PM001' OR paymentMethodId='PM002')") or die (mysqli_error($conn));
+            $paymentCheckQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=5 AND paymentMethodId IN ('PM001','PM002') LIMIT 1") or die (mysqli_error($conn));
             $hasPaidSchoolBoltCharges = mysqli_num_rows($paymentCheckQuery) > 0;
         } 
         
@@ -155,6 +177,11 @@ if (!$checkBasicSecurity){/// start if 1
           $response['studentData'][] = $fetch;
         }
     }
+
+
+    //// delete assessment update from BRANCH_ASSESSMENT_NEW_UPDATE_ALERT_TAB
+    $deleteUpdateAlertQuery = "DELETE FROM BRANCH_ASSESSMENT_NEW_UPDATE_ALERT_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId'";
+    mysqli_query($conn, $deleteUpdateAlertQuery) or die(mysqli_error($conn));
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 end:

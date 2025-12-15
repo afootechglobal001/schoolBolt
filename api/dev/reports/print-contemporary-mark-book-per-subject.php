@@ -40,6 +40,30 @@ if (!$checkBasicSecurity){/// start if 1
     $subjectDataQuery = mysqli_query($conn, "SELECT subjectId, subjectName FROM SUBJECTS_TAB WHERE $clientIds AND subjectId='$subjectId'");
     $subjectDataFetch = mysqli_fetch_assoc($subjectDataQuery);
 
+    //// get all assessments for the subject
+    $select="SELECT * FROM BRANCH_ASSESSMENT_SETUP_TAB WHERE $clientIds AND branchId = '$branchId' AND (parentId IS NULL OR parentId = '')  AND assessmentTotalScore>0 ";
+    $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
+    $assessmentCount=mysqli_num_rows($query);
+    //////////////////////////////////////////////////
+    $avaiableAssessmentCount=0;
+    while ( $fetchQuery = mysqli_fetch_assoc($query)){
+        $assessmentId=$fetchQuery['assessmentId'];
+        $assessmentScore=$fetchQuery['assessmentTotalScore'];
+        ///confirm if assessment scores exist for the subject in the term
+        $assessmentScoresSelect="SELECT a.markObtained FROM BRANCH_ASSESSMENT_RECORD_DETAILS_TAB a, BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB b WHERE $clientIds AND b.branchId = '$branchId' AND b.session='$session' AND b.termId='$termId' AND b.departmentId='$departmentId' AND b.classId='$classId' AND b.armId='$armId' AND b.subjectId='$subjectId' AND b.assessmentId='$assessmentId' AND a.recordId=b.recordId LIMIT 1";
+        $assessmentScoresQuery=mysqli_query($conn,$assessmentScoresSelect)or die (mysqli_error($conn));
+        $assessmentScoresCount=mysqli_num_rows($assessmentScoresQuery);
+        $avaiableAssessmentCount+= $assessmentScoresCount > 0 ? 1 : 0;
+    }
+    if($assessmentCount!=$avaiableAssessmentCount){///start if 1
+        $response = [
+            'response'=> 200,
+            'success'=> false,
+            'message'=> "Not all assessments have scores for the selected subject in this term. Please ensure all assessments have scores before generating the mark book.",
+        ]; 
+        goto end;
+    }
+
 
 
     /// update students overall position in class per subject in the term
@@ -60,11 +84,23 @@ if (!$checkBasicSecurity){/// start if 1
         mysqli_query($conn, "UPDATE BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_SUBJECT_TAB SET overallPosition = '$position' WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND subjectId = '$subjectId' AND studentId = '$updateStudentId'");
     }
 
+    
+
+    $response['response']=200; 
+    $response['success']=true;
+    $response['message']="SCORE SHEET FETCH SUCCESFFULY!";
+    $response['allRecordCount']=$allRecordCount;
+    $response['branchData'] = $branchDataFetch;
+    $response['session'] = $session;
+    $response['departmentData'] = $departmentDataFetch;
+    $response['classData'] = $classDataFetch;
+    $response['armData'] = $armDataFetch;
+    $response['subjectData'] = $subjectDataFetch;
 
 
-
-
-
+    
+    /////////////////// clear previous data //////////////////////
+    mysqli_query($conn,"DELETE FROM BRANCH_CONTEMPORARY_MARK_BOOK_FOR_EACH_SUBJECT_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId' AND subjectId='$subjectId'")or die (mysqli_error($conn));
 
     $select = "SELECT 
     DISTINCT studentId AS studentId
@@ -77,30 +113,6 @@ if (!$checkBasicSecurity){/// start if 1
     AND classId='$classId'
     AND armId='$armId'
     AND subjectId='$subjectId'";
-    
-    $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
-    $allRecordCount=mysqli_num_rows($query);
-      if($allRecordCount==0){///start if 1
-        $response['response']=200;
-        $response['success']=false;
-        $response['message']="No Record found";
-        goto end;
-    }
-
-
-    $response['response']=200; 
-    $response['success']=true;
-    $response['message']="SCORE SHEET FETCH SUCCESFFULY!";
-    $response['allRecordCount']=$allRecordCount;
-    $response['branchData'] = $branchDataFetch;
-    $response['session'] = $session;
-    $response['departmentData'] = $departmentDataFetch;
-    $response['classData'] = $classDataFetch;
-    $response['armData'] = $armDataFetch;
-    $response['subjectData'] = $subjectDataFetch;
-    /////////////////// clear previous data //////////////////////
-    mysqli_query($conn,"DELETE FROM BRANCH_CONTEMPORARY_MARK_BOOK_FOR_EACH_SUBJECT_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND departmentId='$departmentId' AND classId='$classId' AND armId='$armId' AND subjectId='$subjectId'")or die (mysqli_error($conn));
-
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     while ($fetchQuery = mysqli_fetch_assoc($query)) {
         $studentId=$fetchQuery['studentId'];
@@ -134,7 +146,7 @@ if (!$checkBasicSecurity){/// start if 1
        
     }
 
-    ///calculate position
+    ///calculate overallPosition
     $select="SELECT studentId, average FROM BRANCH_CONTEMPORARY_MARK_BOOK_FOR_EACH_SUBJECT_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND departmentId='$departmentId' AND classId='$classId' AND subjectId='$subjectId' ORDER BY average DESC";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
 
@@ -190,7 +202,7 @@ if (!$checkBasicSecurity){/// start if 1
     AND a.departmentId='$departmentId'
     AND a.classId='$classId'
     AND a.armId='$armId'
-    AND a.subjectId='$subjectId'";
+    AND a.subjectId='$subjectId' ORDER BY b.surName ASC";
     $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
     while ($fetchQuery = mysqli_fetch_assoc($query)) {
         $studentId = $fetchQuery['studentId'];

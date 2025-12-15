@@ -71,7 +71,10 @@ if (!$checkBasicSecurity){/// start if 1
 
         
 
-
+///get all assessment counts for this branch
+    $select="SELECT * FROM BRANCH_ASSESSMENT_SETUP_TAB WHERE $clientIds AND branchId = '$branchId' AND (parentId IS NULL OR parentId = '')  AND assessmentTotalScore>0   $assessmentIds";
+    $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
+    $allAssessmentsCount=mysqli_num_rows($query);
 
 
     $select = "SELECT 
@@ -111,6 +114,7 @@ if (!$checkBasicSecurity){/// start if 1
                                  AND a.departmentId='$departmentId'
                                  AND a.classId='$classId'
                                  AND a.studentId='$studentId'
+                                 AND a.numberOfSittings=$allAssessmentsCount
                                  ORDER BY b.subjectName ASC";
 
         $studentSubjectQuery = mysqli_query($conn, $studentSubjectSelect);
@@ -125,7 +129,7 @@ if (!$checkBasicSecurity){/// start if 1
                  WHERE $clientIds AND branchId='$branchId' 
                  AND session='$session' AND termId=1 
                  AND departmentId='$departmentId' AND classId='$classId'
-                 AND subjectId='$subjectId' AND studentId='$studentId'");
+                 AND subjectId='$subjectId' AND studentId='$studentId' AND numberOfSittings=$allAssessmentsCount");
 
             $firstFetch = mysqli_fetch_assoc($firstQuery);
             $studentSubjectFetch['firstTermScores'] = $firstFetch['allAssessmentTotalMark'] ?? null;
@@ -136,7 +140,7 @@ if (!$checkBasicSecurity){/// start if 1
                  WHERE $clientIds AND branchId='$branchId' 
                  AND session='$session' AND termId=2 
                  AND departmentId='$departmentId' AND classId='$classId'
-                 AND subjectId='$subjectId' AND studentId='$studentId'");
+                 AND subjectId='$subjectId' AND studentId='$studentId' AND numberOfSittings=$allAssessmentsCount");
 
             $secondFetch = mysqli_fetch_assoc($secondQuery);
             $studentSubjectFetch['secondTermScores'] = $secondFetch['allAssessmentTotalMark'] ?? null;
@@ -147,8 +151,7 @@ if (!$checkBasicSecurity){/// start if 1
                  WHERE $clientIds AND branchId='$branchId' 
                  AND session='$session' AND termId=3 
                  AND departmentId='$departmentId' AND classId='$classId'
-                 AND subjectId='$subjectId' AND studentId='$studentId'");
-
+                 AND subjectId='$subjectId' AND studentId='$studentId' AND numberOfSittings=$allAssessmentsCount");
             $thirdFetch = mysqli_fetch_assoc($thirdQuery);
             $studentSubjectFetch['thirdTermScores'] = $thirdFetch['allAssessmentTotalMark'] ?? null;
 

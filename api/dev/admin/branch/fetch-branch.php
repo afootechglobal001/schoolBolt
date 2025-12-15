@@ -91,6 +91,9 @@ if(!$checkSession){
         $studentCountFetch = mysqli_fetch_assoc($studentCountQuery);
         $fetchQuery['totalNumberOfStudents'] = $studentCountFetch['count']; // Assign the actual count value
 
+        //// confirm is assessment is locked for this branch
+        $fetchQuery['assessmentLock'] = $fetchQuery['assessmentLock'] > 0;
+
         $response['data'][] = $fetchQuery;
     }
 //////////////////////////////////////////////////////////////////////////////////////////////

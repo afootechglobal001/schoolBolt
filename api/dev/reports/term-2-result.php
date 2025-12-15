@@ -15,6 +15,10 @@
     $response['tableTitles'] = $tableTitles;
      //// get student mark per assessment for each subject
     $response['studentSubjectAssessmentData'] = array();
+    ///get all assessment counts for this branch
+    $select="SELECT * FROM BRANCH_ASSESSMENT_SETUP_TAB WHERE $clientIds AND branchId = '$branchId' AND (parentId IS NULL OR parentId = '')  AND assessmentTotalScore>0   $assessmentIds";
+    $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
+    $allAssessmentsCount=mysqli_num_rows($query);
 
     $studentSubjectSelect = "SELECT 
     a.subjectId, 
@@ -37,6 +41,7 @@
     AND a.classId='$classId' 
     AND a.armId='$armId'
     AND a.studentId='$studentId'
+    AND numberOfSittings=$allAssessmentsCount
     ORDER BY b.subjectName";
     $studentSubjectQuery = mysqli_query($conn, $studentSubjectSelect) or die(mysqli_error($conn));
     while ($studentSubjectFetch = mysqli_fetch_assoc($studentSubjectQuery)) {

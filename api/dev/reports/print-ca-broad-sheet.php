@@ -21,37 +21,45 @@ if (!$checkBasicSecurity){/// start if 1
     validateEmptyField($classId, 'CLASS');
     validateEmptyField($armId, 'ARM');
     validateEmptyField($assessmentId, 'ASSESSMENT');
+     /// confirm if there is any subject records for this class and arm
+    $subjectSelect="SELECT
+    DISTINCT (subjectId) AS subjectId
+    FROM
+    BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB
+    WHERE
+    $clientIds
+    AND branchId = '$branchId'
+    AND session = '$session'
+    AND termId = '$termId'
+    AND departmentId = '$departmentId'
+    AND classId = '$classId'
+    AND armId = '$armId'
+    AND assessmentId= '$assessmentId' LIMIT 1";
 
-    require_once 'positioning-for-ca.php';
-    if(!$recordFound){
+    $subjectQuery=mysqli_query($conn,$subjectSelect)or die (mysqli_error($conn));
+    $allRecordCount=mysqli_num_rows($subjectQuery);
+    if ($allRecordCount==0){
         $response['response']=200;
         $response['success']=false;
-        $response['message']="No record found!";
+        $response['message']="No Record found";
         goto end;
     }
+
     require_once 'ca-summary-and-positioning.php';
-
-
 
     /// get all tableTitles
     $tableTitles="SN, FULL NAME";
-    $select="SELECT DISTINCT(a.subjectId) AS subjectId, b.subjectName, b.subjectAbbreviation 
-    FROM 
-    BRANCH_ASSESSMENT_RECORDS_SUMMARY_TAB a
-    JOIN
-    SUBJECTS_TAB b ON a.subjectId = b.subjectId AND a.clientId = b.clientId
-    WHERE 
-    a.clientId='$clientId'  
-    AND a.branchId='$branchId' 
-    AND a.session='$session' 
-    AND a.termId='$termId' 
-    AND a.departmentId='$departmentId' 
-    AND a.classId='$classId' 
-    AND a.armId='$armId' 
-    AND a.assessmentId='$assessmentId'
-    ORDER BY 
-    b.subjectName ASC";
-    $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
+   $subjectsSelect="SELECT 
+   a.subjectId, 
+   b.subjectName, 
+   b.subjectAbbreviation 
+   FROM 
+   SUBJECT_STRUCTURE_TAB a
+   JOIN 
+   SUBJECTS_TAB b ON a.clientId=b.clientId AND a.subjectId=b.subjectId
+    WHERE a.clientId='$clientId' AND a.classId='$classId'
+    ORDER BY b.subjectName ASC";
+    $query=mysqli_query($conn,$subjectsSelect)or die (mysqli_error($conn));
     while ($fetch = mysqli_fetch_assoc($query)) {
         $subjectAbbreviation=$fetch['subjectAbbreviation'];
         $tableTitles .=", $subjectAbbreviation";     
@@ -135,11 +143,8 @@ if (!$checkBasicSecurity){/// start if 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///*** get each student score per subject */
     $response['scoreData'] = array();
-     /// get all class subjects
-    $select="SELECT a.subjectId, b.subjectName, b.subjectAbbreviation FROM SUBJECT_STRUCTURE_TAB a, SUBJECTS_TAB b 
-    WHERE a.clientId=b.clientId AND a.clientId='$clientId'  AND a.subjectId = b.subjectId AND a.classId='$classId'
-    ORDER BY b.subjectName ASC";
-    $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
+
+    $query=mysqli_query($conn,$subjectsSelect)or die (mysqli_error($conn));
     while ($fetch = mysqli_fetch_assoc($query)) {
         $subjectId= $fetch['subjectId'];
         /// get recordId

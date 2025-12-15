@@ -27,7 +27,7 @@ $query=mysqli_query($connAdmin,"SELECT * FROM CLIENTS_TAB WHERE hashId='$clientI
 	if ($countClient==0){ /// start if 4
 		$response['response']=90; 
 		$response['success']=false;
-		$response['message']="ERROR 90! Kindly contact SchoolBolt Admin For help."; 
+		$response['message']="THIS SCHOOL IS UNKNOWN TO SCHOOLBOLT! Kindly contact SchoolBolt Admin For help."; 
 		$checkBasicSecurity=false;
 	}else{
 		$fetchQuery=mysqli_fetch_array($query);
@@ -41,13 +41,13 @@ $query=mysqli_query($connAdmin,"SELECT * FROM CLIENTS_TAB WHERE hashId='$clientI
 		if($statusId!=1){
 			$response['response']=91; 
 			$response['success']=false;
-			$response['message']="ERROR 91! Kindly contact SchoolBolt Admin For help."; 
+			$response['message']="SYSTEM IS INACTIVE ON SCHOOLBOLT! Kindly contact SchoolBolt Admin For help."; 
 			$checkBasicSecurity=false;
 		}else{
 			if (!strstr($clientAddress, $dbClientAddress)){
 				$response['response']=92; 
 				$response['success']=false;
-				$response['message']="ERROR 92! Kindly contact SchoolBolt Admin For help."; 
+				$response['message']="ACCESS DENIED FROM SCHOOLBOLT! Kindly contact SchoolBolt Admin For help."; 
 				$checkBasicSecurity=false;
 			}
 		}
