@@ -57,7 +57,7 @@ if (!$checkBasicSecurity){/// start if 1
     if ($allRecordCount>0){
         $response['response']=200;
         $response['success']=false;
-        $response['message']="Kindly print all the broad sheets for class $className as there is an assessment update that has not been processed.";
+        $response['message']="Kindly print all the broad sheets for $className class as there is an assessment update that has not been processed.";
         goto end;
     }
 
