@@ -602,7 +602,14 @@ function _proceedComputeAssessment() {
 				const response = info.response;
 				if (response < 100) {
 					_logOut();
-				} 
+				}
+				_showCustomConfirm({
+					title: "Compute Assessment Failed!",
+					message: info.message,
+					alertType: "error",
+					trueActionBtnText: "OK",
+					closeOnOverlayClick: true,
+				});
 			}
 			$("#submitBtn").html(btn_text).prop("disabled", false);
 		},
