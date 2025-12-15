@@ -4526,12 +4526,12 @@ header
 
 .user-profile-div .profile-content-div .nav-div .div-in ul li ul {
   position: absolute;
-  min-width: 300px;
+  min-width: 290px;
   height: auto;
   padding: 20px;
   background: var(--white-color);
   margin-top: 10px;
-  margin-left: -20px;
+  /* margin-left: -20px; */
   display: none;
   border-radius: 10px;
   box-shadow: 0px 5px 10px 5px #f0efef;
@@ -4571,6 +4571,7 @@ header
   li:hover
   .ul-expand {
   display: block !important;
+  margin-left: -40px;
 }
 
 .user-profile-div .profile-content-div .nav-div .div-in ul .switch-li{
@@ -4677,6 +4678,11 @@ header
   }
 }
 
+@media all and (max-width: 500px) {
+  .user-profile-div .profile-content-div .nav-div .div-in ul li ul {
+    margin-left: -140px;
+  }
+}
 .user-profile-div .profile-content-div .field-back-div {
   position: relative;
   width: 100%;
