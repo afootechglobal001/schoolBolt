@@ -604,7 +604,7 @@ function _proceedComputeAssessment() {
 					_logOut();
 				}
 				_showCustomConfirm({
-					title: "Compute Assessment Failed!",
+					title: "Access Denied!",
 					message: info.message,
 					alertType: "error",
 					trueActionBtnText: "OK",
