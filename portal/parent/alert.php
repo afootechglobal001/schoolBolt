@@ -20,8 +20,6 @@
     </div>
 </div>
 
-
-
 <div class="webcam-div">
     <div class="div-in">
         <div class="webcam-div-in">
@@ -29,7 +27,13 @@
             <button class="btn" type="button" onClick="snapPicture()"><i class="fa fa-camera"></i> Take Snapshot </button>
         </div>
     </div>
-    
 </div>
 
+<div id="customConfirmModal" class="modal-overlay" style="display:none;"></div>
+<div id="globalLoader" class="modal-preloader modal-overlay" style="display:none;">
+    <div>
+        <div class="spinner"></div>
+        <p id="globalLoaderText">Locking result, please wait...</p>
+    </div>
+</div>
 

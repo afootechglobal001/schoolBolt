@@ -25,3 +25,4 @@ let parentData = parentSessionData.parentData;
 
 <script src="<?php echo $websiteUrl?>/js/admin/jquery.datetimepicker.js"></script>
 <script src="<?php echo $websiteUrl?>/js/parent/usePortal.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/reports/print-each-student-terminal-result.js?v=<?php echo $codeVersion?>"></script>
