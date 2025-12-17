@@ -826,6 +826,7 @@ p {
   color: var(--white-color);
   font-family: sub-title-font;
   font-size: 16px;
+  padding: 0px 40px;
 }
 
 .spinner{
