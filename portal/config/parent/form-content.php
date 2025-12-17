@@ -80,7 +80,7 @@
                         <li title="Payment History" class="hide-li" id="paymentHistory" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-clock-history"></i> Payment History</li>
                         <!-- <li title="Attendance" id="attendance" onclick=""><i class="bi-person-bounding-box"></i> Attendance</li>
                         <li title="Time Table" id="timeTable" onclick=""><i class="bi-bell"></i> Time Table</li> -->
-                        <li title="View Result" id="studentResult" onclick="_getActiveStudentPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});"><i class="bi-printer"></i> View Result</li>
+                        <li title="View Result"  class="hide-li" id="studentResult" onclick="_getActiveStudentPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});"><i class="bi-printer"></i> View Result</li>
                         <!-- <li title="Assignment" id="assignment" onclick=""><i class="bi-bell"></i> Assignment</li> -->
                         <li title="Other Links"><i class="bi-three-dots-vertical"></i>
                             <ul>

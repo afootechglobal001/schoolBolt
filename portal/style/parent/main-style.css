@@ -769,7 +769,7 @@ header .inner-div .mobile-logout:hover{
 }
 
 
-@media all and (max-width:700px) {
+@media all and (max-width:830px) {
 	.user-profile-div .profile-content-div .btn-div .div-in ul .hide-li{
 		display: none;
 	}
