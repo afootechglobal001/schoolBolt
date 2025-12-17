@@ -653,7 +653,7 @@ header .inner-div .mobile-logout:hover{
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: #f8f8f8;
+	background: rgba(124, 124, 124, 0.1);
 }
 
 .user-profile-div .profile-content-div .btn-div .div-in{
@@ -2204,4 +2204,204 @@ header .inner-div .mobile-logout:hover{
 
 .other-pages-ajax-loader {
 	top: 45%;
+}
+
+.top-alert-div {
+  margin: 0px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+.pages-toggle-back-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.pages-toggle-back-div .pages-toggle-div {
+  width: 100%;
+  border-radius: 8px 8px 5px 5px;
+  background: var(--white-color);
+  border: rgba(213, 213, 213, 0.4) 1px solid;
+  cursor: pointer;
+}
+
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title {
+  width: calc(100% - 40px);
+  min-height: 75px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: body-font;
+  font-size: 14px;
+  padding: 0px 20px;
+  background: #f8f8f8;
+}
+
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title h3 {
+  font-size: 16px;
+  padding: 0px 0px 0px 10px;
+  margin: 0px;
+  font-weight: lighter;
+  font-family: title-font;
+  color: #0c2b4b;
+}
+
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title .expand-div {
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  font-size: 25px;
+  color: #0c2b4b;
+  cursor: pointer;
+}
+
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title .expand-div i {
+  font-size: 20px;
+}
+
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title .btn-back-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.pages-toggle-back-div
+  .pages-toggle-div
+  .pages-toggle-title
+  .btn-back-div
+  .btn {
+  height: 35px;
+  padding: 0px 15px;
+  border: none;
+  border-radius: 4px;
+  background: #2daae1;
+  color: var(--white-color);
+  font-size: 11px;
+  cursor: pointer;
+  font-family: sub-title-font;
+  transition: all ease 0.2s;
+  -webkit-transition: all ease 0.2s;
+  -ms-transition: all ease 0.2s;
+  -o-transition: all ease 0.2s;
+  -moz-transition: all ease 0.2s;
+}
+
+.pages-toggle-back-div
+  .pages-toggle-div
+  .pages-toggle-title
+  .btn-back-div
+  .compute-btn {
+  background: #444;
+}
+
+.pages-toggle-back-div
+  .pages-toggle-div
+  .pages-toggle-title
+  .btn-back-div
+  .btn:hover {
+  background: #444;
+}
+
+.pages-toggle-back-div
+  .pages-toggle-div
+  .pages-toggle-title
+  .btn-back-div
+  .compute-btn:hover {
+  background: var(--secondary-color);
+}
+
+.pages-toggle-back-div .toggle-expand-div {
+  padding: 30px 15px;
+  font-size: 12px;
+}
+
+
+
+@media all and (max-width: 530px) {
+  
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 5px;
+  padding: 8px 20px;
+}
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title h3 {
+  padding:0px;
+}
+}
+
+
+.list-back-div {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.list-back-div .list-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(100% - 40px);
+  min-height: 70px;
+  padding: 0px 20px;
+  border-radius: 8px 8px 5px 5px;
+  background: var(--white-color);
+  border-bottom: rgba(213, 213, 213, 0.4) 1px dashed;
+  cursor: pointer;
+  transition: all 0.2s ease-in 0.2s;
+  transition: all 0.2s ease-in 0.2s;
+  -moz-transition: all 0.2s ease-in 0.2s;
+}
+
+.list-back-div .list-div h4 {
+  font-size: 15px;
+  padding: 0px 0px 0px 10px;
+  margin: 0px;
+  font-weight: lighter;
+  font-family: title-font;
+  color: #0c2b4b;
+}
+
+.list-back-div .list-div h4 {
+  font-size: 15px;
+  padding: 0px 0px 0px 10px;
+  margin: 0px;
+  font-weight: lighter;
+  font-family: title-font;
+  color: #0c2b4b;
+}
+
+.list-back-div .list-div .btn-container {
+  display: flex;
+  align-items: center;
+}
+
+.list-back-div .list-div .btn-container .btn {
+  height: 35px;
+  padding: 0px 15px;
+  border: none;
+  border-radius: 4px;
+  background: #2daae1;
+  color: var(--white-color);
+  font-size: 11px;
+  cursor: pointer;
+  font-family: sub-title-font;
+  transition: all ease 0.2s;
+  -webkit-transition: all ease 0.2s;
+  -ms-transition: all ease 0.2s;
+  -o-transition: all ease 0.2s;
+  -moz-transition: all ease 0.2s;
+}
+
+.list-back-div .list-div .btn-container .btn:hover {
+  background: #444;
 }

@@ -11,7 +11,7 @@ function _getActiveStudentPage(props) {
 }
 
 function _getStudentPageActiveLink(divid) {
-  $("#studentDashbaord, #paymentHistory, #studentProfile").removeClass(
+  $("#studentDashbaord, #paymentHistory, #studentProfile, #studentResult").removeClass(
     "active"
   );
   $("#" + divid).addClass("active");
@@ -87,6 +87,16 @@ function selectSearch() {
 function srchCustom(text) {
   $("#srch-text").html(text);
   $(".custom-srch-div").fadeIn(500);
+}
+
+function _collapse(divId) {
+  var x = document.getElementById(divId + "num");
+  if (x.innerHTML === '&nbsp;<i class="bi-plus"></i>&nbsp;') {
+    x.innerHTML = '&nbsp;<i class="bi-dash"></i>&nbsp;';
+  } else {
+    x.innerHTML = '&nbsp;<i class="bi-plus"></i>&nbsp;';
+  }
+  $("#" + divId + "answer").slideToggle("slow");
 }
 
 function _getSelectPaymentMethod(fieldId) {
@@ -580,11 +590,6 @@ function _fetchPaymentHistory() {
 							</tr>
 						</tbody>`;
           $("#pageContent").html(text);
-
-          const response = info.response;
-          if (response < 100) {
-            _logOut();
-          }
         }
       },
       error: function (textStatus, errorThrown) {
@@ -663,5 +668,121 @@ function _viewPaymentDetails(
   } catch (error) {
     console.error("Error: ", error);
     _actionAlert("An unexpected error occurred! Please try again.", false);
+  }
+}
+
+/////// Fetch Student Classes ///////
+function _fetchStudentClasses() {
+  _showLoader('Fetching available result classes, please wait...');
+  let getEachStudentSession = JSON.parse(
+    sessionStorage.getItem("getEachStudentSession")
+  );
+	try {
+	  //// call endpoint //////
+		_callFetchEndPoints({
+			url: `parent/results/fetch-each-student-available-results?branchId=${getEachStudentSession?.branchData?.branchId}&studentId=${getEachStudentSession?.studentData?.studentId}`,
+			accessKey: true,
+		})
+		.then((response) => {
+			if (response.success && response.data?.length > 0) {
+        _initFetchStudentClasses(response.data);
+			} else {
+				_showCustomConfirm({
+					title: "FETCH RESULT",
+					message: response.message,
+					alertType: "warning",
+					trueActionBtnText: "OK",
+          closeOnOverlayClick: true,
+				});
+
+				$('#pageContent').html(`
+					<div class="false-notification-div">
+						<p>${response.message}</p>
+					</div>
+				`);
+			}
+      _hideLoader();
+		 })
+		.catch((error) => {
+       _hideLoader();
+			console.error("Error:", error);
+			_callAjaxError(() => _fetchStudentClasses()); // retry if needed
+		});
+	} catch (error) {
+     _hideLoader();
+		console.error("Error:", error);
+		_callCatchError(() => _fetchStudentClasses());
+  }
+}
+
+function _initFetchStudentClasses(data, start = 0) {
+  const content = data.map((classes, index) => {
+    const resultContent = classes.results.map((resultItems) => `
+      <div class="list-div">
+        <h4>${resultItems.termName}</h4>
+        <div class="btn-container">
+          <button class="btn" title="VIEW RESULT" id="printStudentResultBtn_${classes.classId}_${resultItems.termId}"
+            onclick="printStudentTerminalResult('${getEachStudentSession?.branchData?.branchId}', '${classes.session}', '${resultItems.termId}', '${classes.departmentId}', '${classes.classId}', '${resultItems.armId}', '${getEachStudentSession?.studentData?.studentId}');">
+            <i class="bi-eye"></i> VIEW RESULT
+          </button>
+        </div>
+      </div>
+    `).join("");
+
+    return `
+      <div class="pages-toggle-div">
+        <div class="pages-toggle-title" onclick="_collapse('view${start + index + 1}');" title="EXPAND TO VIEW ${classes.departmentName} (${classes.className}) RESULTS">
+          <h3>${classes.departmentName} (${classes.className}) - ${classes.session}</h3>
+          <div class="expand-div" id="view${start + index + 1}num">&nbsp;<i class="bi-plus"></i>&nbsp;</div> 
+        </div>
+
+        <div class="toggle-expand-div" id="view${start + index + 1}answer" style="display: none;">  
+          <div class="list-back-div">
+            ${resultContent}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  $('#pageContent').html(content);
+}
+
+/////// Fetch Student Result ///////
+function printStudentTerminalResult(branchId, session, termId, departmentId, classId, armId, studentId) {
+	try {
+    ///// get btn text/////
+    const btnText = $(`#printStudentResultBtn_${classId}_${termId}`).html();
+    _btnDisable(`printStudentResultBtn_${classId}_${termId}`, btnText, true);
+
+	  //// call endpoint //////
+		_callFetchEndPoints({
+			url: `reports/print-each-student-terminal-result?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}`,
+			accessKey: true,
+		})
+		.then((response) => {
+			if (response.success) {
+        sessionStorage.setItem("printEachStudentTerminalResultSession", JSON.stringify(response));
+				window.open(`${websiteUrl}/reports/print-each-student-terminal-result`, '_blank');
+			} else {
+				_showCustomConfirm({
+					title: "VIEW STUDENT RESULT",
+					message: response.message,
+					alertType: "warning",
+					trueActionBtnText: "OK",
+          closeOnOverlayClick: true,
+				});
+			}
+      _btnDisable(`printStudentResultBtn_${classId}_${termId}`, btnText, false);
+		 })
+		.catch((error) => {
+			console.error("Error:", error);
+			_callAjaxError(() => printStudentTerminalResult(branchId, session, termId, departmentId, classId, armId, studentId)); // retry if needed
+      _btnDisable(`printStudentResultBtn_${classId}_${termId}`, btnText, false);
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => printStudentTerminalResult(branchId, session, termId, departmentId, classId, armId, studentId));
+    _btnDisable(`printStudentResultBtn_${classId}_${termId}`, btnText, false);
   }
 }
