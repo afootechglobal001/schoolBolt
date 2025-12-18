@@ -214,13 +214,13 @@
 
                         if (statusId === "1") {
                             showButton += `
-                                <button class="btn suspend" title="SUSPEND PARENT" onclick="">
+                                <button class="btn suspend" title="SUSPEND PARENT" id="activateAndSuspend" onclick="_suspendActivateParentAccount();">
                                     <i class="bi-person-dash"></i> SUSPEND PARENT
                                 </button>
                             `;
                         } else if (statusId === "2") {
                             showButton += `
-                                <button class="btn activate" title="ACTIVATE PARENT" onclick="">
+                                <button class="btn activate" title="ACTIVATE PARENT" id="activateAndSuspend" onclick="_suspendActivateParentAccount();">
                                     <i class="bi-person-check"></i> ACTIVATE PARENT
                                 </button>
                             `;
