@@ -42,6 +42,20 @@ function _logOut() {
   window.parent.location.href = parentLoginUrl;
 }
 
+function _confirmLogOut() {
+  _showCustomConfirm({
+    callback: () => {
+      _logOut();
+    },
+    title: "Confirm Logout Action!",
+    message:
+      "Are you sure you want to log out? You may miss important notifications or updates until you sign in again.",
+    alertType: "warning",
+    falseActionBtn: true,
+    closeOnOverlayClick: true,
+  });
+}
+
 window.addEventListener("load", function () {
   const sessionData = localStorage.getItem("parentSessionData");
   if (!sessionData || sessionData === '""') {

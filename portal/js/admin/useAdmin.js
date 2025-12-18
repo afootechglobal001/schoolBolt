@@ -195,6 +195,7 @@ function _confirmLogOut() {
       "Are you sure you want to log out? You may miss important notifications or updates until you sign in again.",
     alertType: "warning",
     falseActionBtn: true,
+    closeOnOverlayClick: true,
   });
 }
 

@@ -219,33 +219,30 @@ function _loginOnbehalfOfParent(email, parentTypeId, studentId) {
 
 		$.ajax({
 		type: "GET",
-		url:`${endPoint}/admin/branch/account/parentAuth?email=${email}&parentTypeId=${parentTypeId}`,
+		url:`${endPoint}/admin/branch/account/parentAuth?email=${email}&parentTypeId=${parentTypeId}&studentId=${studentId}`,
 		dataType: "json",
 		cache: false,
 		headers: getAuthHeaders(true),
 		success: function (info) {
 			if (info.success) {
-			localStorage.setItem("parentSessionData", JSON.stringify(info));
+				localStorage.setItem("parentSessionData", JSON.stringify(info));
 
-			const studentData = info.students?.find(s => s.studentId === studentId);
-			const parentData = info.parentData;
+				const studentData = info.students?.find(s => s.studentId === studentId);
+				const parentData = info.parentData;
 
-			const sessionPayload = {
-				student: studentData,
-				parent: parentData
-			};
-			sessionStorage.setItem("studentParentSessionData", JSON.stringify(sessionPayload));
-						_getForm({page: 'parentStudentForm', layer:2, url: adminPortalLocalUrl});
+				const sessionPayload = {
+					student: studentData,
+					parent: parentData
+				};
+				sessionStorage.setItem("studentParentSessionData", JSON.stringify(sessionPayload));
+				_getForm({page: 'parentStudentForm', layer:2, url: adminPortalLocalUrl});
 			} else {
-			_actionAlert(info.message, false);
-			_alertClose(2);
+				_actionAlert(info.message, false);
+				_alertClose(2);
 			}
 		},
 		error: function () {
-			_actionAlert(
-			"Unable to reach the server. Please check your connection.",
-			false
-			);
+			_actionAlert("Unable to reach the server. Please check your connection.", false);
 			_alertClose(2);
 		},
 		});
@@ -379,4 +376,102 @@ function _fetchAccountBranchDepartmentClass() {
         console.error("Error: ", error);
         _actionAlert('An unexpected error occurred! Please try again.', false);
     }
+}
+
+/////// Suspend and Activate Parent Account ///////
+function _suspendActivateParentAccount() {
+	let studentParentSessionData = JSON.parse(
+		sessionStorage.getItem("studentParentSessionData")
+	);
+	const statusId = studentParentSessionData?.parent?.statusId;
+
+	const activeStatus = statusId === '1';
+
+	const title = activeStatus
+		? 'Suspend Parent Account'
+		: 'Activate Parent Account';
+
+	const message = activeStatus
+		? 'You are about to suspend this Parent Account. Do you want to proceed?'
+		: 'You are about to activate this Parent Account. Do you want to proceed?';
+
+	try {
+		////// confirm action ////
+		_showCustomConfirm({
+			callback: () => {
+				_suspendActivateParentAccountCallback();
+			},
+			title: title,
+			message: message,
+			alertType: "warning",
+			falseActionBtn: true,
+			trueActionBtnText: "Yes, Proceed",
+			falseActionBtnText: "Cancel",
+			closeOnOverlayClick: true,
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _suspendActivateParentAccount());
+	}
+}
+
+	
+function _suspendActivateParentAccountCallback() {
+	let studentParentSessionData = JSON.parse(sessionStorage.getItem("studentParentSessionData"));
+
+	const branchId = studentParentSessionData?.parent?.branchId;
+	const studentId = studentParentSessionData?.student?.studentData?.studentId;
+	const email = studentParentSessionData?.parent?.email;
+	const parentTypeId = studentParentSessionData?.parent?.recordFor;
+	const statusId = studentParentSessionData?.parent?.statusId;
+
+	if (statusId==='1'){
+		//1 means active, so we want to suspend parent //
+		statusIdToSet='2';
+	} else if (statusId==='2'){
+		//2 means suspended, so we want to activate parent //
+		statusIdToSet='1';
+	}
+
+	try {
+		///// get btn text/////
+		const btnText = $("#activateAndSuspend").html();
+		_btnDisable("activateAndSuspend", btnText, true);
+
+		_callFetchEndPoints({
+			url: `/admin/branch/students/update-parent-status?branchId=${branchId}&studentId=${studentId}&parentEmail=${email}&parentTypeId=${parentTypeId}&statusId=${statusIdToSet}`,
+			accessKey: true,
+		})
+		.then((response) => {
+			if (response.success) {
+				_showCustomConfirm({
+					callback: () => {
+						_loginOnbehalfOfParent(email, parentTypeId, studentId)
+					},
+					title: "Success!",
+					message: response.message,
+					alertType: "success",
+					trueActionBtnText: "Okay, Thanks",
+					closeOnOverlayClick: false,
+				});
+			} else {
+				_showCustomConfirm({
+					title: "Unable to Suspend/Activate Parent Account!",
+					message: response.message,
+					alertType: "error",
+					trueActionBtnText: "OK",
+				});
+			}
+			_btnDisable("activateAndSuspend", btnText, false);
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			_callAjaxError(() => _suspendActivateParentAccountCallback()); // retry if needed
+			_btnDisable("activateAndSuspend", btnText, false);
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _suspendActivateParentAccountCallback());
+		_btnDisable("activateAndSuspend", btnText, false);
+	}
 }

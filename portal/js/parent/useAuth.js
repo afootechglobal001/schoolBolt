@@ -68,20 +68,21 @@ function _counDownOtp(timer) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-////// PARENT PROCEED TO LOGIN FUNCTION ////////
-function _confirmLoginEmail() {
-  parentProceedLoginSession = JSON.parse(
+function _confirmLoginEmail(isResend = false) {
+  let parentProceedLoginSession = JSON.parse(
     sessionStorage.getItem("parentProceedLoginSession") || "{}"
   );
+
   try {
     let parentTypeId = $("#parentTypeId").val();
     let email = $("#email").val();
 
     $("#parentTypeId, #email").removeClass("issue");
 
-    if (!parentTypeId || !email) {
-      parentTypeId = parentTypeId || parentProceedLoginSession.parentTypeId;
-      email = email || parentProceedLoginSession.email;
+    // Use session values when resending
+    if (isResend) {
+      parentTypeId = parentProceedLoginSession.parentTypeId;
+      email = parentProceedLoginSession.email;
     }
 
     if (!parentTypeId) {
@@ -96,20 +97,23 @@ function _confirmLoginEmail() {
       return;
     }
 
-    //////////////// get btn text ////////////////
-    const btnText = $("#proceedLoginBtn").html();
-    $("#proceedLoginBtn").html(
-      '<img src="' +
-        websiteUrl +
-        '/images/loading.gif" width="12px" alt="Loading"/>'
-    );
-    $("#proceedLoginBtn").prop("disabled", true);
-    ////////////////////////////////////////////////
+    ////////////////// UI HANDLING //////////////////
+    let btnText = "";
 
-    const formData = {
-      parentTypeId: parentTypeId,
-      email: email,
-    };
+    if (!isResend) {
+      btnText = $("#proceedLoginBtn").html();
+      $("#proceedLoginBtn")
+        .html(
+          `<img src="${websiteUrl}/images/loading.gif" width="12px">`
+        )
+        .prop("disabled", true);
+    } else {
+      // show loader in modal for resend
+      _showLoader("Resending OTP, please wait...");
+    }
+    /////////////////////////////////////////////////
+
+    const formData = { parentTypeId, email };
 
     $.ajax({
       type: "POST",
@@ -118,50 +122,57 @@ function _confirmLoginEmail() {
       dataType: "json",
       cache: false,
       headers: {
-        apiKey: apiKey,
-        userOsBrowser: userOsBrowser,
-        userIpAddress: userIpAddress,
-        userDeviceId: userDeviceId,
-        clientId: clientId,
-        clientAddress: clientAddress,
+        apiKey,
+        userOsBrowser,
+        userIpAddress,
+        userDeviceId,
+        clientId,
+        clientAddress,
       },
+
       success: function (info) {
         if (info.success) {
           sessionStorage.setItem(
             "parentProceedLoginSession",
             JSON.stringify(info)
           );
+
           _actionAlert(info.message, true);
-          _getForm({ page: "otpVerificationForm", url: parentPortalLocalUrl });
+
+          if (!isResend) {
+            _getForm({ page: "otpVerificationForm", url: parentPortalLocalUrl });
+          } else {
+            // restart countdown for resend
+            _counDownOtp(30);
+          }
         } else {
           _actionAlert(info.message, false);
         }
-        $("#proceedLoginBtn").html(btnText).prop("disabled", false);
       },
+
       error: function () {
         _actionAlert(
           "Unable to reach the server. Please check your connection.",
           false
         );
-        $("#proceedLoginBtn").html(btnText).prop("disabled", false);
+      },
+
+      complete: function () {
+        if (!isResend) {
+          $("#proceedLoginBtn").html(btnText).prop("disabled", false);
+        } else {
+          _hideLoader();
+        }
       },
     });
   } catch (error) {
     console.error("Unexpected error:", error);
     _actionAlert("An unexpected error occurred. Please try again.", false);
     $("#proceedLoginBtn").prop("disabled", false);
+    _hideLoader();
   }
 }
 
-function _resendOtp() {
-  $("#resendOtpBtn").html(
-    '<img src="' +
-      websiteUrl +
-      '/images/loading.gif" width="12px" alt="Loading"/>'
-  );
-  $("#resendOtpBtn").prop("disabled", true);
-  _confirmLoginEmail();
-}
 
 ////// PARENT LOGIN FUNCTION ////////
 function _proceedToLogin() {

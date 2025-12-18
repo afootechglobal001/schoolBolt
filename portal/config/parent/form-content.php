@@ -24,7 +24,7 @@
             </div>
             <div id="resendCountdown">Resend in <strong id="timer">30</strong> Sec</div>
             <div>
-                <button class="resendOtpBtn" id="resendOtpBtn" onclick="_confirmLoginEmail();"><strong>Resend OTP</strong></button>
+                <button class="resendOtpBtn" id="resendOtpBtn" onclick="_confirmLoginEmail(true);"><strong>Resend OTP</strong></button>
             </div>
         </div>
     </div>
