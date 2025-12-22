@@ -125,11 +125,12 @@ if (!$checkBasicSecurity){/// start if 1
 
     /////////////////// get paymentId
     $getPaymentIdQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId IN (3,4)"); //PENDING or CANCELLED
-    $getPaymentIdFetch = mysqli_fetch_assoc($getPaymentIdQuery);
-    $previousPaymentId=$getPaymentIdFetch['paymentId'];
-    if($previousPaymentId){
-         mysqli_query($conn, "DELETE FROM PAYMENTS_TAB WHERE paymentId='$previousPaymentId'");
-         mysqli_query($conn, "DELETE FROM PAYMENT_HISTORY_TEMP_TAB WHERE paymentId='$previousPaymentId'");
+    while($getPaymentIdFetch = mysqli_fetch_assoc($getPaymentIdQuery)){
+        $previousPaymentId=$getPaymentIdFetch['paymentId'];
+        if($previousPaymentId){
+            mysqli_query($conn, "DELETE FROM PAYMENTS_TAB WHERE paymentId='$previousPaymentId'");
+            mysqli_query($conn, "DELETE FROM PAYMENT_HISTORY_TEMP_TAB WHERE paymentId='$previousPaymentId'");
+        }
     }
 
     ///////////////////////geting sequence//////////////////////////

@@ -28,8 +28,10 @@ if(!$checkSession){
 
     $branchDataQuery = mysqli_query($conn, "SELECT assessmentLock, name AS branchName, address, smtpUsername, mobileNumber, session, termId  FROM BRANCHES_TAB WHERE $clientIds AND branchId='$branchId'");
     $branchDataFetch = mysqli_fetch_assoc($branchDataQuery);
+    
     $assessmentLock=$branchDataFetch['assessmentLock'];
-    if($assessmentLock>0){
+    $allowedRole=array('R001', 'R002', 'R003'); ////SUPER ADMIN, ADMIN, ICT
+    if($assessmentLock>0 && !in_array($loginRoleId, $allowedRole)){
         $response['response']=403;
         $response['success']=false;
         $response['message']="ASSESSMENT UPDATE LOCKED! Contact system administrator for more information.";

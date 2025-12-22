@@ -13,10 +13,11 @@
         $allAssessmentsCount=mysqli_num_rows($query);
         //////////////////////////////////////////////////////////////////////////////////////////////
         /// get each student totalSubjects and totalMarkObtained for a term
-        $select="SELECT studentId, COUNT(DISTINCT subjectId) AS totalSubjects, SUM(allAssessmentTotalMark) AS totalMarkObtained FROM BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_SUBJECT_TAB WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND numberOfSittings=$allAssessmentsCount GROUP BY studentId";
+        $select="SELECT studentId, armId, COUNT(DISTINCT subjectId) AS totalSubjects, SUM(allAssessmentTotalMark) AS totalMarkObtained FROM BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_SUBJECT_TAB WHERE $clientIds AND branchId = '$branchId' AND session = '$session' AND termId = '$termId' AND departmentId = '$departmentId' AND classId = '$classId' AND numberOfSittings=$allAssessmentsCount GROUP BY studentId, armId";
         $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
         while ($fetch = mysqli_fetch_assoc($query)) {
             $studentId = $fetch['studentId'];
+            $dbArmId = $fetch['armId'];
             $totalSubjects = $fetch['totalSubjects'];
             $totalMarkObtainable = $totalSubjects * 100; // Assuming each subject has a maximum of 100 marks
             $totalMarkObtained = $fetch['totalMarkObtained'];
@@ -29,7 +30,7 @@
 
             mysqli_query($conn,"INSERT INTO `BRANCH_STUDENT_TOTAL_PERCENTAGE_PER_TERM_TAB`
             (`clientId`, `branchId`, `session`, `termId`, `departmentId`, `classId`, `armId`, `studentId`, `totalSubjects`, `totalMarkObtainable`, `totalMarkObtained`, `totalPercentage`, `grade`, `remark`, `principalComment`) VALUES
-            ('$clientId', '$branchId', '$session', '$termId', '$departmentId', '$classId', '$armId', '$studentId', '$totalSubjects', '$totalMarkObtainable', '$totalMarkObtained', '$totalPercentage', '$grade', '$remark', '$principalComment')")or die (mysqli_error($conn));
+            ('$clientId', '$branchId', '$session', '$termId', '$departmentId', '$classId', '$dbArmId', '$studentId', '$totalSubjects', '$totalMarkObtainable', '$totalMarkObtained', '$totalPercentage', '$grade', '$remark', '$principalComment')")or die (mysqli_error($conn));
         }
 
 

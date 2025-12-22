@@ -62,7 +62,7 @@ if (!$checkBasicSecurity){/// start if 1
                 $response['parentData']= $fetchQuery;
                 $response['students'] = array(); // Initialize the data array
 
-			    $select="SELECT branchId, studentId FROM PARENTS_TAB WHERE $clientIds AND recordFor='$parentTypeId' AND email='$email'";
+			    $select="SELECT branchId, studentId FROM PARENTS_TAB WHERE $clientIds AND recordFor='$parentTypeId' AND email='$email' AND statusId=1";
                 $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
                 while ($fetchQuery = mysqli_fetch_assoc($query)) {
                     $branchId=$fetchQuery['branchId'];

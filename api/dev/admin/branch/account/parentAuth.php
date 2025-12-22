@@ -12,6 +12,7 @@ if(!$checkSession){
 	goto end;
 }
 	//////////////////declaration of variables//////////////////////////////////////
+    $studentId=trim($_GET['studentId']);
 	$parentTypeId =trim($_GET['parentTypeId']);
 	$email=trim($_GET['email']);
     if (empty($email)){/// start if 2
@@ -24,7 +25,7 @@ if(!$checkSession){
 	}
 
     ////////////////////////////////////////////////////////////////////////////////
-        $select=mysqli_query($conn,"SELECT * FROM PARENTS_TAB WHERE $clientIds AND recordFor='$parentTypeId' AND email='$email' LIMIT 1") or die (mysqli_error($conn));
+        $select=mysqli_query($conn,"SELECT * FROM PARENTS_TAB WHERE $clientIds AND recordFor='$parentTypeId' AND email='$email' AND studentId='$studentId' LIMIT 1") or die (mysqli_error($conn));
         $fetchQuery=mysqli_fetch_assoc($select);
 
         $response['response']=200; 
@@ -33,7 +34,7 @@ if(!$checkSession){
         $response['parentData']= $fetchQuery;
         $response['students'] = array(); // Initialize the data array
 
-        $select="SELECT branchId, studentId FROM PARENTS_TAB WHERE $clientIds AND recordFor='$parentTypeId' AND email='$email'";
+        $select="SELECT branchId, studentId FROM PARENTS_TAB WHERE $clientIds AND recordFor='$parentTypeId' AND email='$email' AND statusId=1";
         $query=mysqli_query($conn,$select)or die (mysqli_error($conn));
         while ($fetchQuery = mysqli_fetch_assoc($query)) {
             $branchId=$fetchQuery['branchId'];

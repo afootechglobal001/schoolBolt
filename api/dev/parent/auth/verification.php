@@ -35,7 +35,7 @@ if (!$checkBasicSecurity){/// start if 1
         goto end;
 	}
    
-    $select=mysqli_query($conn,"SELECT * FROM PARENTS_TAB WHERE $clientIds AND recordFor='$parentTypeId' AND email='$email' LIMIT 1") or die (mysqli_error($conn));
+    $select=mysqli_query($conn,"SELECT * FROM PARENTS_TAB WHERE $clientIds AND recordFor='$parentTypeId' AND email='$email' AND statusId=1 LIMIT 1") or die (mysqli_error($conn));
 			$countUser=mysqli_num_rows($select);
             if ($countUser==0){ /// start if 4
                 $response = [
