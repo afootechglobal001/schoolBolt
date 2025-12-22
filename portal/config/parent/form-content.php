@@ -24,7 +24,7 @@
             </div>
             <div id="resendCountdown">Resend in <strong id="timer">30</strong> Sec</div>
             <div>
-                <button class="resendOtpBtn" id="resendOtpBtn" onclick="_confirmLoginEmail();"><strong>Resend OTP</strong></button>
+                <button class="resendOtpBtn" id="resendOtpBtn" onclick="_confirmLoginEmail(true);"><strong>Resend OTP</strong></button>
             </div>
         </div>
     </div>
@@ -79,16 +79,16 @@
                         <li title="Pay Fees" class="hide-li" id="payFees" onclick="_fetchFeesToPay();"><i class="bi-credit-card"></i> Pay Fees</li>
                         <li title="Payment History" class="hide-li" id="paymentHistory" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-clock-history"></i> Payment History</li>
                         <!-- <li title="Attendance" id="attendance" onclick=""><i class="bi-person-bounding-box"></i> Attendance</li>
-                        <li title="Time Table" id="timeTable" onclick=""><i class="bi-bell"></i> Time Table</li>
-                        <li title="Print Result" id="printResult" onclick=""><i class="bi-bell"></i> Print Result</li>
-                        <li title="Assignment" id="assignment" onclick=""><i class="bi-bell"></i> Assignment</li> -->
+                        <li title="Time Table" id="timeTable" onclick=""><i class="bi-bell"></i> Time Table</li> -->
+                        <li title="View Result"  class="hide-li" id="studentResult" onclick="_getActiveStudentPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});"><i class="bi-printer"></i> View Result</li>
+                        <!-- <li title="Assignment" id="assignment" onclick=""><i class="bi-bell"></i> Assignment</li> -->
                         <li title="Other Links"><i class="bi-three-dots-vertical"></i>
                             <ul>
                                 <li title="Dashboard" class="active" onclick="_getActiveStudentPage({divid: 'studentDashbaord', page: 'studentDashbaord', url: parentPortalLocalUrl});"><i class="bi-speedometer2"></i> <span>Dashboard</span></li>
                                 <li title="Student Profile" onclick="_getActiveStudentPage({divid: 'studentProfile', page: 'studentProfile', url: parentPortalLocalUrl});"><i class="bi-person-lines-fill"></i> <span>Student Profile</span></li>
                                 <li title="Pay Fees" onclick="_fetchFeesToPay();"><i class="bi-credit-card-2-back"></i> <span>Pay Fees</span></li>
                                 <li title="Payment History" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-clock-history"></i> <span>Payment History</span></li>
-                                <li title="View Result" onclick=""><i class="bi-printer"></i> <span>View Result</span></li>
+                                <li title="View Result" id="studentResult" onclick="_getActiveStudentPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});"><i class="bi-printer"></i> <span>View Result</span></li>
                             </ul>
                         </li>
                     </ul>
@@ -134,7 +134,7 @@
             <div class="text">Assignment</div>
         </div> -->
 
-        <div class="card-div inactive-card-div" title="View Result" onclick="">
+        <div class="card-div" title="View Result" id="studentResult" onclick="_getActiveStudentPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});">
             <div class="pix"><img src="<?php echo $websiteUrl?>/images/print-result.jpg" alt="View Result"></div>
             <div class="text">View Result</div>
         </div>
@@ -551,5 +551,15 @@
                 <button class="btn done-btn" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl}); _alertClose(2)">DONE</button>
             </div>
         </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'studentResult') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <span><i class="bi-person-bounding-box"></i> STUDENT CLASS LIST</span>
+    </div>
+
+    <div class="pages-toggle-back-div" id="pageContent">
+        <script>_fetchStudentClasses()</script>
     </div>
 <?php } ?>
