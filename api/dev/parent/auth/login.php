@@ -5,7 +5,7 @@ if (!$checkBasicSecurity){/// start if 1
 }
 	//////////////////declaration of variables//////////////////////////////////////
 	$parentTypeId =trim($data['parentTypeId']);
-	$email=trim($data['email']);
+	$email=trim(strtolower($data['email']));
 	$otp=trim($data['otp']);
 	////////////////////////////////////////////////////////////////////////////////
 

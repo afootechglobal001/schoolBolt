@@ -164,8 +164,7 @@ if (!$checkBasicSecurity){/// start if 1
     $schoolboltChargesQuery = mysqli_query($conn, "SELECT paymentId FROM PAYMENTS_TAB WHERE $clientIds AND branchId='$branchId' AND session='$session' AND termId='$termId' AND studentId='$studentId'  AND statusId=5 AND (paymentMethodId='PM001' OR paymentMethodId='PM002')") or die (mysqli_error($conn));
     $previousSchoolboltCharges=mysqli_num_rows($schoolboltChargesQuery);
     $schoolBoltCharges=$previousSchoolboltCharges>0 ? 0 : ($schoolBoltChargesStatus==1 ? $schoolBoltCharges : 0);
-    //$deductCharges=$schoolBoltCharges>0 ? true: false;
-    $deductCharges=false;
+    $deductCharges=$schoolBoltCharges>0 ? true: false;
     $totalFeesPaid=$totalMandatoryFees+$totalNotMandatoryFee;
     $totalAmount=$totalFeesPaid+$schoolBoltCharges;
 

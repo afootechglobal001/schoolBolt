@@ -6,19 +6,19 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header('Content-Type: application/json; charset=UTF-8');
 
 ////////////for live connect  
-$_HOST_NAME_ADMIN = "145.239.185.59";  
-$_DB_USERNAME_ADMIN ="schoolbolt_admin";
-$_DB_PASSWORD_ADMIN ="Password@2024"; // ThisIsThePassword
+$_HOST_NAME_ADMIN = "152.53.89.36";  
+$_DB_USERNAME_ADMIN ="schoolbolt_dev";
+$_DB_PASSWORD_ADMIN ="Password@Dec292025";
 
 $connAdmin = mysqli_connect($_HOST_NAME_ADMIN, $_DB_USERNAME_ADMIN, $_DB_PASSWORD_ADMIN)or die("Unable to connect to MySQL1");
 mysqli_select_db($connAdmin,"schoolbolt_administrative_db");
 /////////////////////////////////////////////////////////////////
 
-$_HOST_NAME = "145.239.185.59";  
-$_DB_USERNAME ="schoolbolt_admin";
-$_DB_PASSWORD ="Password@2024"; // ThisIsThePassword
+$_HOST_NAME = "152.53.89.36";  
+$_DB_USERNAME ="schoolbolt_dev";
+$_DB_PASSWORD ="Password@Dec292025"; 
 
-$conn = mysqli_connect($_HOST_NAME, $_DB_USERNAME, $_DB_PASSWORD)or die("Unable to connect to MySQL1");
+$conn = mysqli_connect($_HOST_NAME, $_DB_USERNAME, $_DB_PASSWORD)or die("Unable to connect to MySQL2");
 mysqli_select_db($conn,"schoolbolt_main_db");
 /////////////////////////////////////////////////////////////////
 ?>
