@@ -1,6 +1,0 @@
-CREATE OR REPLACE VIEW PARENT_VIEW AS
-SELECT a.*, b.name, c.statusName 
-FROM 
-PARENTS_TAB a
-JOIN BRANCHES_TAB b ON a.clientId=b.clientId AND a.branchId=b.branchId
-JOIN SETUP_STATUS_TAB c ON a.statusId=c.statusId;
