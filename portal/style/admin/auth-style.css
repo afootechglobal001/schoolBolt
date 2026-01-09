@@ -166,10 +166,6 @@
     color: var(--sub-body-color);
 }
 
-.center-login-div .login-div-in .form-back-div .form-div .inner-form .reset-password.show{
-    display: flex;
-}
-
 .center-login-div .login-div-in .form-back-div .form-div .inner-form .reset-password span{
     font-family: sub-title-font;
     color: var(--secondary-color);

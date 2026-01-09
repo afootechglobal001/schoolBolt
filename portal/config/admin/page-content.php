@@ -27,7 +27,7 @@
             </div>
 
             <button class="btn" id="submit_btn" title="Log In" onclick="_confirmLogin();">Log In <i class="bi-check"></i></button>
-            <div class="reset-password show">
+            <div class="reset-password">
                 Forgot Password? <span onclick="_nextLoginPage({divid:'reset_pass_id', page: 'forget-password'});">RESET PASSWORD</span>
             </div>
         </div>
