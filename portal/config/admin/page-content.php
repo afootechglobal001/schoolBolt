@@ -27,7 +27,7 @@
             </div>
 
             <button class="btn" id="submit_btn" title="Log In" onclick="_confirmLogin();">Log In <i class="bi-check"></i></button>
-            <div class="reset-password">
+            <div class="reset-password show">
                 Forgot Password? <span onclick="_nextLoginPage({divid:'reset_pass_id', page: 'forget-password'});">RESET PASSWORD</span>
             </div>
         </div>
@@ -54,8 +54,8 @@
             </div>
 
             <button class="btn" id="proceedBtn" title="Proceed" onclick="_proceedResetPassword();">Proceed <i class="bi-arrow-right"></i></button>
-            <div class="reset-password">
-                Existing User? <span onclick="_nextLoginPage({divid:'login_id', page: 'login'});">LOG-IN HERE</span>
+            <div class="reset-password show">
+                Already have an account? <span onclick="_nextLoginPage({divid:'login_id', page: 'login'});">LOG-IN HERE</span>
             </div>
         </div>
     </div>

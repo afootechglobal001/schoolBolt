@@ -159,17 +159,23 @@
 
 .center-login-div .login-div-in .form-back-div .form-div .inner-form .reset-password{
     display: none;
+    align-items: center;
     gap: 5px;
     font-family: body-font;
     font-size: 14px;
     color: var(--sub-body-color);
 }
 
+.center-login-div .login-div-in .form-back-div .form-div .inner-form .reset-password.show{
+    display: flex;
+}
+
 .center-login-div .login-div-in .form-back-div .form-div .inner-form .reset-password span{
     font-family: sub-title-font;
     color: var(--secondary-color);
+    font-size: 13px;
     cursor: pointer;
-     transition: all 0.2s ease-in 0.2s;
+    transition: all 0.2s ease-in 0.2s;
 }
 
 .center-login-div .login-div-in .form-back-div .form-div .inner-form .reset-password span:hover{
@@ -341,7 +347,7 @@
         display: none;
     }
     .center-login-div .login-div-in .form-back-div .form-div .inner-form .reset-password{
-        display: flex;
+       display: block;
     }
 } 
 
