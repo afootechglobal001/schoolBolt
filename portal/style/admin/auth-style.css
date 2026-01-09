@@ -157,6 +157,25 @@
     display: none;
 }
 
+.center-login-div .login-div-in .form-back-div .form-div .inner-form .reset-password{
+    display: none;
+    gap: 5px;
+    font-family: body-font;
+    font-size: 14px;
+    color: var(--sub-body-color);
+}
+
+.center-login-div .login-div-in .form-back-div .form-div .inner-form .reset-password span{
+    font-family: sub-title-font;
+    color: var(--secondary-color);
+    cursor: pointer;
+     transition: all 0.2s ease-in 0.2s;
+}
+
+.center-login-div .login-div-in .form-back-div .form-div .inner-form .reset-password span:hover{
+    color: var(--primary-color);
+}
+
 .center-login-div .login-div-in .form-back-div .form-div .inner-form .top-div{
 	display: flex;
     flex-direction: column;
@@ -320,6 +339,9 @@
     }
     #login_id, #reset_pass_id {
         display: none;
+    }
+    .center-login-div .login-div-in .form-back-div .form-div .inner-form .reset-password{
+        display: flex;
     }
 } 
 
