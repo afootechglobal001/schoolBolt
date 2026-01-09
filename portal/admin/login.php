@@ -23,14 +23,6 @@
                     <ul>
                         <li class="active-li" id="login_id" onclick="_nextLoginPage({divid:'login_id', page: 'login'});">Log-In</li>
                         <li id="reset_pass_id" onclick="_nextLoginPage({divid:'reset_pass_id', page: 'forget-password'});">Forgot Password?</li>
-                        <li id="expand_li"><i class="bi-list-nested"></i>
-                            <div class="expand-div animated fadeIn">
-                                <ul class="ul-expand">
-                                    <li id="login_id" onclick="_nextLoginPage({divid:'login_id', page: 'login'});">Log-In</li>
-                                    <li id="reset_pass_id" onclick="_nextLoginPage({divid:'reset_pass_id', page: 'forget-password'});">Forgot Password?</li>
-                                </ul>
-                            </div>
-                        </li>
                     </ul>
                 </div>
                 <div class="form-back-div">
