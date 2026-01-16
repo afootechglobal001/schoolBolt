@@ -11,6 +11,7 @@ function textField(options) {
     rows = null,
   } = options;
 
+  const isPassword = type === "password";
   const template =
     type === "textarea"
       ? `
@@ -27,7 +28,8 @@ function textField(options) {
 			${maxlength ? `maxlength="${maxlength}"` : ""}/>
           <div class="placeholder">${title}:</div>
 		  <div class="issueText" id="issue_${id}"></div>
-        `;
+      ${isPassword ? `<span class="toggle-password" data-target="${id}"><i class='bi bi-eye-fill'></i></span>`: ""}
+    `;
   $("#" + id + "_container").html(template);
 }
 
@@ -109,6 +111,32 @@ function _clickOption(selectedOption, id, value) {
   );
   _selectOption(selectBoxId);
 }
+
+/// Toggle Password Visibility ///
+$(document).on("input", ".text_field[type='password']", function() {
+  const icon = $(".toggle-password[data-target='" + this.id + "']");
+  if (this.value.length > 0) {
+      icon.show();
+  } else {
+      icon.hide();
+      $(this).attr("type", "password");
+      icon.find("i").removeClass("bi-eye-slash-fill").addClass("bi-eye-fill");
+  }
+});
+
+// Click the eye icon to show or hide password
+$(document).on("click", ".toggle-password", function() {
+  const input = $("#" + $(this).data("target"));
+  const icon = $(this).find("i");
+
+  if (input.attr("type") === "password") {
+      input.attr("type", "text"); // show password
+      icon.removeClass("bi-eye-fill").addClass("bi-eye-slash-fill");
+  } else {
+      input.attr("type", "password"); // hide password
+      icon.removeClass("bi-eye-slash-fill").addClass("bi-eye-fill");
+  }
+});
 
 ///// Admin SelectFields ///////////
 function _getSelectStatusId(fieldId, statusIds) {

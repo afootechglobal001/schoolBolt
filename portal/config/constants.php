@@ -58,6 +58,7 @@ var adminPortalUrl = websiteUrl + '/admin'; /// For Portal Url //
 var adminUrl = websiteUrl + '/admin/login'; /// For Admin Url //
 var parentLoginUrl = websiteUrl + '/parent/login'; /// For Parent Portal Url //
 var parentPortalUrl = websiteUrl + '/parent'; /// For Parent Login Url //
+var parentOtpVerificationUrl = websiteUrl + '/parent/verify'; /// For Parent OTP Verification Url //
 var studentPixPath = websiteUrl + '/uploaded_files/studentPix'; /// For Student Pix Path //
 var schoolLogoPixPath = websiteUrl + '/uploaded_files/branchLogo'; /// For School Pix Path //
 var principalSignaturePixPath = websiteUrl + '/uploaded_files/branchPrincipalSignature'; /// For School Pix Path //

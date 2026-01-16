@@ -503,7 +503,7 @@ function _fetchEachFeeComputeGeneral(
   session,
   termId
 ) {
-  $("#get-form-more-div")
+  $("#get-more-div-secondary")
     .css({
       display: "flex",
       "justify-content": "center",
