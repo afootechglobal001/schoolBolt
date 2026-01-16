@@ -1,36 +1,3 @@
-<?php if ($page == 'otpVerificationForm') { ?>
-    <script> parentProceedLoginSession = JSON.parse(sessionStorage.getItem("parentProceedLoginSession"));</script>
-    <div class="caption-div animated zoomIn">
-        <div class="title-div">
-            <div class="title"><i class="bi-person-fill-lock"></i> OTP AUTHENTICATION</div>
-            <button class="close-btn" onclick="_alertClose();" title="Close"><i class="bi-x-lg"></i></button>
-        </div>
-
-        <div class="div-in animated fadeIn">
-            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hi, <span id="parentFullname"><script>$("#parentFullname").html(parentProceedLoginSession.parentFullname);</script></strong></span>, an <span>OTP</span> has been sent to your email address (<span id="email"><script>$("#email").html(parentProceedLoginSession.email);</script></span>) to login. Kindly check your <strong>INBOX</strong> or <strong>SPAM</strong> to confirm.</div>
-            <div class="text_field_container" id="otp_container">
-                <script>
-                    textField({
-                        id: 'otp',
-                        title: 'Enter OTP',
-                        type: 'number',
-                        onKeyPressFunction: 'isNumberCheck(event);'
-                    });
-                </script> 
-            </div>
-
-            <div class="btn-div">
-                <button class="btn" id="submitBtn" title="PROCEED" onclick="_proceedToLogin();"> PROCEED <i class="bi-arrow-right"></i></button>
-            </div>
-            <div id="resendCountdown">Resend in <strong id="timer">30</strong> Sec</div>
-            <div>
-                <button class="resendOtpBtn" id="resendOtpBtn" onclick="_confirmLoginEmail(true);"><strong>Resend OTP</strong></button>
-            </div>
-        </div>
-    </div>
-    <script>_counDownOtp(30)</script>
-<?php } ?>
-
 <?php if ($page == 'studentProfileForm') { ?>
     <script> getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));</script>
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">

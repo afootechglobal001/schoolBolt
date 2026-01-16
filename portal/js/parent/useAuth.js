@@ -4,7 +4,7 @@ $(document).ready(function () {
   }
   $("#viewLogin").keydown(function (e) {
     if (e.keyCode == 13) {
-      _confirmLogin();
+      _confirmLoginEmail();
     }
   });
 });
@@ -67,180 +67,159 @@ function _counDownOtp(timer) {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Confirm Login Email ///
+function _confirmLoginEmail(isResend = false){
+  let parentProceedLoginSession = JSON.parse(localStorage.getItem("parentProceedLoginSession"));
+	try {
+		////////get all needed values////////////
+		let issueCount = 0;
+		let parentTypeId = $("#parentTypeId").val()?.trim();
+    let email = $("#email").val()?.trim();
 
-function _confirmLoginEmail(isResend = false) {
-  let parentProceedLoginSession = JSON.parse(
-    sessionStorage.getItem("parentProceedLoginSession") || "{}"
-  );
-
-  try {
-    let parentTypeId = $("#parentTypeId").val();
-    let email = $("#email").val();
-
-    $("#parentTypeId, #email").removeClass("issue");
-
-    // Use session values when resending
+    // Use session values when resending ///
     if (isResend) {
       parentTypeId = parentProceedLoginSession.parentTypeId;
       email = parentProceedLoginSession.email;
     }
 
-    if (!parentTypeId) {
-      $("#parentTypeId").addClass("issue");
-      _actionAlert("Select parent type to continue", false);
-      return;
+		///// empty field validation//////////
+		if (!isResend) {
+      issueCount += _validateEmptyValue("parentTypeId", "PARENT TYPE");
+      issueCount += _validateEmptyValue("email", "EMAIL ADDRESS");
     }
 
-    if (!email || email.indexOf("@") <= 0) {
-      $("#email").addClass("issue");
-      _actionAlert("Provide correct email address to continue", false);
-      return;
-    }
+		if (issueCount > 0) return;
 
-    ////////////////// UI HANDLING //////////////////
-    let btnText = "";
+		// Gather form data
+		const formData = { parentTypeId, email };
 
-    if (!isResend) {
-      btnText = $("#proceedLoginBtn").html();
-      $("#proceedLoginBtn")
-        .html(
-          `<img src="${websiteUrl}/images/loading.gif" width="12px">`
-        )
-        .prop("disabled", true);
-    } else {
-      // show loader in modal for resend
-      _showLoader("Resending OTP, please wait...");
-    }
-    /////////////////////////////////////////////////
-
-    const formData = { parentTypeId, email };
-
-    $.ajax({
-      type: "POST",
-      url: endPoint + "/parent/auth/verification",
-      data: JSON.stringify(formData),
-      dataType: "json",
-      cache: false,
-      headers: {
-        apiKey,
-        userOsBrowser,
-        userIpAddress,
-        userDeviceId,
-        clientId,
-        clientAddress,
-      },
-
-      success: function (info) {
-        if (info.success) {
-          sessionStorage.setItem(
-            "parentProceedLoginSession",
-            JSON.stringify(info)
-          );
-
-          _actionAlert(info.message, true);
-
-          if (!isResend) {
-            _getForm({ page: "otpVerificationForm", url: parentPortalLocalUrl });
-          } else {
-            // restart countdown for resend
-            _counDownOtp(30);
-          }
-        } else {
-          _actionAlert(info.message, false);
-        }
-      },
-
-      error: function () {
-        _actionAlert(
-          "Unable to reach the server. Please check your connection.",
-          false
-        );
-      },
-
-      complete: function () {
-        if (!isResend) {
-          $("#proceedLoginBtn").html(btnText).prop("disabled", false);
-        } else {
-          _hideLoader();
-        }
-      },
-    });
-  } catch (error) {
-    console.error("Unexpected error:", error);
-    _actionAlert("An unexpected error occurred. Please try again.", false);
-    $("#proceedLoginBtn").prop("disabled", false);
-    _hideLoader();
-  }
+		_confirmLoginCallback(formData, isResend);
+		
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _confirmLoginEmail(isResend = false));
+	}
 }
 
-
-////// PARENT LOGIN FUNCTION ////////
-function _proceedToLogin() {
-  let parentProceedLoginSession = JSON.parse(
-    sessionStorage.getItem("parentProceedLoginSession")
-  );
-  try {
-    const otp = $("#otp").val();
-
-    $("#otp").removeClass("issue");
-
-    if (!otp) {
-      $("#otp").addClass("issue");
-      _actionAlert("Provide Correct OTP To Continue", false);
-      return;
-    }
-
-    //////////////// get btn text ////////////////
-    const btnText = $("#submitBtn").html();
-    $("#submitBtn").html(
-      '<img src="' +
-        websiteUrl +
-        '/images/loading.gif" width="12px" alt="Loading"/>'
-    );
-    $("#submitBtn").prop("disabled", true);
-    ////////////////////////////////////////////////
-
-    const formData = {
-      parentTypeId: parentProceedLoginSession.parentTypeId,
-      email: parentProceedLoginSession.email,
-      otp: otp,
-    };
-
-    $.ajax({
-      type: "POST",
-      url: endPoint + "/parent/auth/login",
-      data: JSON.stringify(formData),
-      dataType: "json",
-      cache: false,
-      headers: {
-        apiKey: apiKey,
-        userOsBrowser: userOsBrowser,
-        userIpAddress: userIpAddress,
-        userDeviceId: userDeviceId,
-        clientId: clientId,
-        clientAddress: clientAddress,
-      },
-      success: function (info) {
-        if (info.success) {
-          localStorage.setItem("parentSessionData", JSON.stringify(info));
-          _actionAlert(info.message, true);
-          window.location.href = parentPortalUrl;
-        } else {
-          _actionAlert(info.message, false);
-        }
-        $("#submitBtn").html(btnText).prop("disabled", false);
-      },
-      error: function () {
-        _actionAlert(
-          "Unable to reach the server. Please check your connection.",
-          false
-        );
-        $("#submitBtn").html(btnText).prop("disabled", false);
-      },
-    });
-  } catch (error) {
-    console.error("Unexpected error:", error);
-    _actionAlert("An unexpected error occurred. Please try again.", false);
-    $("#submitBtn").prop("disabled", false);
+///  Confirm Login Callback ///
+function _confirmLoginCallback(formData, isResend) {
+	///// get btn text/////
+  let btnText = "";
+  if (!isResend) {
+    btnText = $("#proceedLoginBtn").html();
+    _btnDisable("proceedLoginBtn", btnText, true);
+  } else {
+    _showLoader("Resending OTP, please wait...");
   }
+	//// call endpoint //////
+	_callRawEndPoints({
+		url: `parent/auth/verification`,
+		formData,
+	})
+    .then((response) => {
+  if (response.success) {
+    _showCustomConfirm({
+      callback: () => {
+        if (!isResend) {
+          localStorage.setItem("parentProceedLoginSession", JSON.stringify(response));
+          window.location.href = parentOtpVerificationUrl;
+        } else {
+          _hideLoader();
+          _counDownOtp(30);
+        }
+      },
+      title: 'Success!',
+      message: 'Your OTP has been successfully sent to your email. Please proceed to enter the code to continue.',
+      alertType: 'success',
+      trueActionBtnText: 'Proceed.',
+      closeOnOverlayClick: false,
+    });
+
+    if (!isResend) {
+      _btnDisable("proceedLoginBtn", btnText, false);
+    } else {
+      _hideLoader();
+    }
+    
+		} else {
+			_btnDisable("proceedLoginBtn", btnText, false);
+			_showCustomConfirm({
+				title: "PROCEED LOGIN",
+				message: response.message,
+				alertType: "warning",
+				trueActionBtnText: "OK",
+        closeOnOverlayClick: true,
+			});
+		}
+  })
+  .catch((error) => {
+		console.error("Error:", error);
+		_callAjaxError(() => _confirmLoginCallback(formData)); // retry if needed
+    if (!isResend) {
+		  _btnDisable("proceedLoginBtn", btnText, false);
+    } else {
+      _hideLoader();
+    }
+  });
+}
+
+/// Proceed To Login ///
+function _proceedToLogin(){
+  let parentProceedLoginSession = JSON.parse(localStorage.getItem("parentProceedLoginSession"));
+	try {
+		////////get all needed values////////////
+		let issueCount = 0;
+		const otp = $("#otp").val();
+
+		///// empty field validation//////////
+		issueCount += _validateEmptyValue("otp", "OTP");
+
+		if (issueCount > 0) return;
+
+		// Gather form data
+		const formData = { otp, parentTypeId: parentProceedLoginSession.parentTypeId, email: parentProceedLoginSession.email };
+
+		_proceedToLoginCallback(formData);
+		
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _proceedToLogin());
+	}
+}
+
+/// Proceed To Login Callback ///
+function _proceedToLoginCallback(formData) {
+	///// get btn text/////
+	const btnText = $("#submitBtn").html();
+	_btnDisable("submitBtn", btnText, true);
+	
+	//// call endpoint //////
+	_callRawEndPoints({
+		url: `parent/auth/login`,
+		formData,
+	})
+    .then((response) => {
+  if (response.success) {
+      localStorage.setItem("parentSessionData", JSON.stringify(response));
+      _showLoader("Login Successful.. Redirecting, please wait...");
+      window.location.href = parentPortalUrl;
+      _btnDisable("submitBtn", btnText, false);
+		} else {
+			_btnDisable("submitBtn", btnText, false);
+      _hideLoader();
+			_showCustomConfirm({
+				title: "PROCEED LOGIN",
+				message: response.message,
+				alertType: "warning",
+				trueActionBtnText: "OK",
+        closeOnOverlayClick: true,
+			});
+		}
+    })
+    .catch((error) => {
+		console.error("Error:", error);
+		_callAjaxError(() => _proceedToLoginCallback(formData)); // retry if needed
+		_btnDisable("submitBtn", btnText, false);
+    _hideLoader();
+    });
 }
