@@ -1,13 +1,19 @@
 $(document).ready(function () {
-  function trim(s) {
-    return s.replace(/^\s*/, "").replace(/\s*$/, "");
-  }
-  $("#viewLogin").keydown(function (e) {
-    if (e.keyCode == 13) {
-      _confirmLoginEmail();
+  $("#viewLogin input, #viewLogin select").on("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      _confirmLoginEmail(false);
+    }
+  });
+
+  $("#viewOtp input").on("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      _proceedToLogin();
     }
   });
 });
+
 
 function _getSelectParentType(fieldId) {
   const data = [
@@ -122,6 +128,7 @@ function _confirmLoginCallback(formData, isResend) {
       callback: () => {
         if (!isResend) {
           localStorage.setItem("parentProceedLoginSession", JSON.stringify(response));
+          _showLoader("OTP Sent Successfully!. Please wait...");
           window.location.href = parentOtpVerificationUrl;
         } else {
           _hideLoader();
@@ -201,7 +208,7 @@ function _proceedToLoginCallback(formData) {
     .then((response) => {
   if (response.success) {
       localStorage.setItem("parentSessionData", JSON.stringify(response));
-      _showLoader("Login Successful.. Redirecting, please wait...");
+      _showLoader("Login Successful. Redirecting, please wait…");
       window.location.href = parentPortalUrl;
       _btnDisable("submitBtn", btnText, false);
 		} else {

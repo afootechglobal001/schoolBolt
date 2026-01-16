@@ -217,6 +217,30 @@ p {
   padding-left: 30px;
 }
 
+
+/* Password toggle icon */
+.toggle-password {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--text-color);
+  z-index: 200;
+  display: none;
+}
+
+.toggle-password i {
+  font-size: 16px !important;
+}
+
+/* Add space so text doesn't overlap icon */
+.text_field_container .text_field[type="password"],
+.text_field_container .text_field[type="text"] {
+  padding-right: 55px;
+}
+
+
 /*--------------------------------------------------------------------------------------------------*/
 #get-more-div {
   width: 100%;

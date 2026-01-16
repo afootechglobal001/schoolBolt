@@ -42,7 +42,7 @@
                         <h1>🔐 OTP Verification<br><span>Verify your account using the OTP provided</span></h1>
                     </div>
 
-                    <div class="inner-form" id="viewLogin">
+                    <div class="inner-form" id="viewOtp">
                         <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hi, <span id="parentFullname">
 
                             </span>, an <span>OTP</span> has been sent to your email address (<span id="email">
