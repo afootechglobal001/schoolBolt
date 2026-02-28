@@ -218,10 +218,6 @@
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 <?php if ($page == 'revenueBreakdown') { ?>
-    <script>
-        getRevenueByDateSessionData = JSON.parse(sessionStorage.getItem("getRevenueByDateSessionData"));
-    </script>
-
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
         <div class="top-panel-div">
             <div class="inner-top">
@@ -233,148 +229,186 @@
         <div class="profile-content-div">
             <div class="field-back-div">
                 <div class="field-inner-div student-result-field-inner-div">
-                    <div class="alert alert-success top-alert-div animated fadeIn">
-                        <div><i class="bi-graph-up-arrow"></i> Revenue For <span id="date">
-                                <script>
-                                    $("#date").html(getRevenueByDateSessionData?.date);
-                                </script>
-                            </span> -- Total Revenue: <span class="balance" id="totalAmount">
-                                <script>
-                                    $("#totalAmount").html("<s>N</s>" + thousandSeperator(getRevenueByDateSessionData?.totalAmount));
-                                </script>
-                            </span></div>
 
-                        <div class="btn-container">
-                            <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
-                            <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i>
-                                EXPORT</button>
+                    <div class="content-wrapper animated fadeIn">
+                        <div class="header-div">
+                            <div class="title-nav-back-div">
+                                <div class="nav-ul-div">
+                                    <ul>
+                                        <li class="SUCCESSFUL active-li" title="Successful Status" id="successfulPage" onclick="_getPaymentStatusNav({divid:'successfulPage', page: 'successfulPage', url: adminPortalLocalUrl});"><img src="<?php echo $websiteUrl ?>/images/tick-mark.png" alt="Successful Icon" /> SUCCESSFUL</li>
+                                        <li class="PENDING" title="Pending Status" id="pendingPage" onclick="_getPaymentStatusNav({divid:'pendingPage', page: 'pendingPage', url: adminPortalLocalUrl});"><img src="<?php echo $websiteUrl ?>/images/load.png" alt="Pending Icon" /> PENDING</li>
+                                        <li class="CANCELLED" title="Cancel Status" id="cancelledPage" onclick="_getPaymentStatusNav({divid:'cancelledPage', page: 'cancelledPage', url: adminPortalLocalUrl});"><img src="<?php echo $websiteUrl ?>/images/close.png" alt="Cancelled Icon" /></i> CANCELLED</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="table-div animated fadeIn">
-                        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+                        <div class="content-container" id="getPaymentNav">
                             <script>
-                                $(document).ready(function() {
-                                    const getRevenueByDateSessionData = JSON.parse(sessionStorage.getItem("getRevenueByDateSessionData"));
-                                    let text = '';
-                                    let no = 0;
-                                    text = `
-                                       <thead>
-                                            <tr class="tb-col">
-                                                <th>sn</th>
-                                                <th>Student Info</th>
-                                                <th>Parent Info</th>
-                                                <th>Branch</th>
-                                                <th>Session/Term</th>
-                                                <th>Class</th>
-                                                <th>Amount</th>
-                                                <th>Status</th>
-                                                <th>Date</th>
-                                                <th>View</th>
-                                            </tr>
-                                        </thead>`;
-
-                                    if (getRevenueByDateSessionData && getRevenueByDateSessionData.success === true) {
-                                        const fetchedData = getRevenueByDateSessionData?.data;
-
-                                        for (let i = 0; i < fetchedData.length; i++) {
-                                            no++;
-                                            const fetchStudentData = fetchedData[i].studentData;
-                                            const fetchParentData = fetchedData[i].parentData;
-                                            const fetchBranchData = fetchedData[i].branchData;
-                                            const fetchTermData = fetchedData[i].termData;
-                                            const fetchClassData = fetchedData[i].classData;
-                                            const fetchArmData = fetchedData[i].armData;
-                                            const totalFeesPaid = fetchedData[i].totalFeesPaid;
-                                            const fetchedStatusData = fetchedData[i].statusData;
-                                            const payDate = fetchedData[i].payDate;
-                                            const session = fetchedData[i].session;
-                                            const departmentId = fetchedData[i].departmentId;
-                                            const paymentId = fetchedData[i].paymentId;
-
-                                            //// Student Data///
-                                            const studentId = fetchStudentData.studentId;
-                                            const passport = fetchStudentData.passport || 'default.jpg';
-                                            const surName = fetchStudentData.surName;
-                                            const firstName = fetchStudentData.firstName;
-                                            const otherNames = fetchStudentData.otherNames;
-                                            const fullname = surName + ' ' + firstName + ' ' + otherNames;
-
-                                            //// Parent Data///
-                                            const titleId = fetchParentData.titleId;
-                                            const parentSurName = fetchParentData.surName;
-                                            const parentOtherNames = fetchParentData.otherNames;
-                                            const parentFullname = titleId + ' ' + parentSurName + ' ' + parentOtherNames;
-                                            const parentEmail = fetchParentData.email;
-                                            const recordFor = fetchParentData.recordFor;
-                                            const parentPhone = fetchParentData.mobileNumber;
-
-                                            //// Branch Data///
-                                            const branchName = fetchBranchData.branchName;
-                                            const branchMobile = fetchBranchData.mobileNumber;
-                                            const branchId = fetchBranchData.branchId;
-
-                                            /// term Data ///
-                                            const termName = fetchTermData.termName;
-
-                                            /// Class Data ///
-                                            const className = fetchClassData.className;
-                                            const classId = fetchClassData.classId;
-
-                                            /// Arm Data ///
-                                            const armId = fetchArmData.armId;
-                                            const armName = fetchArmData.armName;
-
-                                            /// Status Data ///
-                                            const statusName = fetchedStatusData.statusName;
-
-                                            text += `
-                                            <tbody>
-                                                <tr class="tb-row">
-                                                    <td>${no}</td>
-                                                    <td class="clickable-td" title="Click to view student details" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
-                                                        <div class="text-back-div">
-                                                            <div class="image-div general-passport">
-                                                                <img src="${studentPixPath}/${passport}" alt="${fullname}" />
-                                                            </div>
-
-                                                            <div class="text-div">
-                                                                <div class="first-class">${fullname}</div>
-                                                                <div class="second-class">${studentId}</div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-
-                                                    <td class="clickable-td" title="Click to view father details" onclick="_loginOnbehalfOfParent('${parentEmail}','${recordFor}','${studentId}');">
-                                                        <div class="text-back-div">
-                                                            <div class="text-div">
-                                                                <div class="first-class">${parentFullname}</div>
-                                                                <div class="second-class">${parentEmail}</div>
-                                                                <div class="second-class">${parentPhone}</div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="clickable-td" title="Click to view branch profile" onclick="_fetchEachBranches('${branchId}');">${branchName}<br /><span>${branchMobile}</span></td>
-                                                    <td>${session} - ${termName}</td>
-                                                    <td>${className} ${armName}</td>
-                                                    <td><s>N</s>${thousandSeperator(totalFeesPaid)}</td>
-                                                    <td>
-                                                        <div class="status-div ${statusName}">${statusName}</div>
-                                                    </td>
-                                                    <td>${payDate}</td>
-                                                    <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="_fetchRevenueById('${paymentId}');">VIEW DETAILS</button></td>
-                                                </tr>
-                                            </tbody>`;
-                                        }
-                                        $('#pageContent').html(text);
-                                    }
+                                _getPaymentStatusNav({
+                                    divid: 'successfulPage',
+                                    page: 'successfulPage',
+                                    url: adminPortalLocalUrl
                                 });
                             </script>
-                        </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+<?php } ?>
+
+<!-- ///// Success Page //// -->
+<?php if ($page == 'successfulPage') { ?>
+    <div id="revenueAlert" class="alert top-alert-div animated fadeIn">
+        <div>
+            <i class="bi-graph-up-arrow"></i>
+            Revenue For <span id="date"></span>
+            -- Total Revenue:
+            <span class="balance" id="totalAmount"></span>
+        </div>
+
+        <div class="btn-container">
+            <button class="btn"><i class="bi-printer"></i> PRINT</button>
+            <button class="btn"><i class="bi-file-earmark-excel"></i> EXPORT</button>
+        </div>
+    </div>
+
+    <div class="table-div animated fadeIn">
+        <table class="table" cellspacing="0" style="width:100%">
+            <thead>
+                <tr class="tb-col">
+                    <th>sn</th>
+                    <th>Student Info</th>
+                    <th>Parent Info</th>
+                    <th>Branch</th>
+                    <th>Session/Term</th>
+                    <th>Class</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+
+            <tbody id="pageContent">
+                <script>
+                    $(document).ready(function() {
+                        _loadPaymentsByStatus('5');
+                    });
+                </script>
+                <tr>
+                    <td colspan="20">
+                        <div class="content-loading-div">
+                            <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<?php } ?>
+
+<!-- ///// Pending Page //// -->
+<?php if ($page == 'pendingPage') { ?>
+    <div id="revenueAlert" class="alert top-alert-div animated fadeIn">
+        <div>
+            <i class="bi-graph-up-arrow"></i>
+            Revenue For <span id="date"></span>
+            -- Total Revenue:
+            <span class="balance" id="totalAmount"></span>
+        </div>
+
+        <div class="btn-container">
+            <button class="btn"><i class="bi-printer"></i> PRINT</button>
+            <button class="btn"><i class="bi-file-earmark-excel"></i> EXPORT</button>
+        </div>
+    </div>
+
+    <div class="table-div animated fadeIn">
+        <table class="table" cellspacing="0" style="width:100%">
+            <thead>
+                <tr class="tb-col">
+                    <th>sn</th>
+                    <th>Student Info</th>
+                    <th>Parent Info</th>
+                    <th>Branch</th>
+                    <th>Session/Term</th>
+                    <th>Class</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+
+            <tbody id="pageContent">
+                <script>
+                    $(document).ready(function() {
+                        _loadPaymentsByStatus('6');
+                    });
+                </script>
+                <tr>
+                    <td colspan="20">
+                        <div class="content-loading-div">
+                            <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<?php } ?>
+
+<!-- ///// Cancel Page //// -->
+<?php if ($page == 'cancelledPage') { ?>
+    <div id="revenueAlert" class="alert top-alert-div animated fadeIn">
+        <div>
+            <i class="bi-graph-up-arrow"></i>
+            Revenue For <span id="date"></span>
+            -- Total Revenue:
+            <span class="balance" id="totalAmount"></span>
+        </div>
+
+        <div class="btn-container">
+            <button class="btn"><i class="bi-printer"></i> PRINT</button>
+            <button class="btn"><i class="bi-file-earmark-excel"></i> EXPORT</button>
+        </div>
+    </div>
+
+    <div class="table-div animated fadeIn">
+        <table class="table" cellspacing="0" style="width:100%">
+            <thead>
+                <tr class="tb-col">
+                    <th>sn</th>
+                    <th>Student Info</th>
+                    <th>Parent Info</th>
+                    <th>Branch</th>
+                    <th>Session/Term</th>
+                    <th>Class</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+
+            <tbody id="pageContent">
+                <script>
+                    $(document).ready(function() {
+                        _loadPaymentsByStatus('7');
+                    });
+                </script>
+                <tr>
+                    <td colspan="20">
+                        <div class="content-loading-div">
+                            <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 <?php } ?>
 
