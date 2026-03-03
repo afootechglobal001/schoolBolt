@@ -291,27 +291,6 @@ function _proceedToPayment() {
               receiverKey,
               paymentChannel,
             );
-
-            //  if (paymentMethodId === "PM001") {
-            //   /// PAYMENT BY CREDIT/DEBIT////
-            //   _callPayStack(
-            //     paymentKey,
-            //     paymentId,
-            //     email,
-            //     amount,
-            //     deductCharges,
-            //     schoolBoltCharges,
-            //     receiverKey
-            //   );
-            // }
-            // if (paymentMethodId === "PM002") {
-            //   /// PAYMENT BY BANK TRANSFER////
-            //   _getForm({
-            //     page: "accountTransferForm",
-            //     layer: 2,
-            //     url: parentPortalLocalUrl,
-            //   });
-            // }
           } else {
             _actionAlert(data.message, false);
           }
@@ -497,6 +476,27 @@ function _callPaymentCancelled(paymentId) {
   }
 }
 
+function verifyPaystackTransaction(reference, secretKey) {
+  fetch(`https://api.paystack.co/transaction/verify/${reference}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${secretKey}`,
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status === true && data.data.status === "success") {
+        console.log("Payment verified:", data);
+      } else {
+        console.log("Verification failed:", data);
+      }
+    })
+    .catch((error) => {
+      console.error("Error: ", error);
+      _actionAlert("An unexpected error occurred! Please try again.", false);
+    });
+}
 function _fetchPaymentHistory() {
   let getEachStudentSession = JSON.parse(
     sessionStorage.getItem("getEachStudentSession"),
