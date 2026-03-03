@@ -528,7 +528,7 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
                     <td>
                       <button class="btn view-btn"
                           title="Click to refresh payment"
-                          onclick="">
+                          onclick="verifyPaystackTransaction('${paymentId}');">
                         REFRESH
                       </button>
                     </td>
@@ -632,4 +632,26 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
+}
+
+function verifyPaystackTransaction(reference, secretKey) {
+  fetch(`https://api.paystack.co/transaction/verify/${reference}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${secretKey}`,
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status === true && data.data.status === "success") {
+        console.log("Payment verified:", data);
+      } else {
+        console.log("Verification failed:", data);
+      }
+    })
+    .catch((error) => {
+      console.error("Error: ", error);
+      _actionAlert("An unexpected error occurred! Please try again.", false);
+    });
 }
