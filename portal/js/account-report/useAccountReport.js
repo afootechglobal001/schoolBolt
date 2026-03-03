@@ -25,12 +25,14 @@ function _getPaymentStatusNav(props) {
   const {
     page = "",
     divid = "",
+    id="",
     pageContainer = "getPaymentNav",
   } = props;
   _getActivePaymentStatusNav(divid);
   if (page) {
     _getPage({
       page: page,
+      id: id,
       pageContainer: pageContainer,
       url: adminPortalLocalUrl,
     });
@@ -161,6 +163,67 @@ function _reportRevenueFiltering(dateFrom, dateTo) {
         $("#dateFrom").html(info.dateFrom);
         $("#dateTo").html(info.dateTo);
 
+        // Update Report Statistics info///
+        $("#sumCreditCardPayments").html("<s>N</s>" + thousandSeperator(statistic.sumCreditCardPayments));
+        $("#sumBankTransferPayments").html("<s>N</s>" + thousandSeperator(statistic.sumBankTransferPayments));
+        $("#countCreditCardPayments").html(statistic.countCreditCardPayments);
+        $("#countBankTransferPayments").html(statistic.countBankTransferPayments);
+
+        //// Update Dougnut Chart Revenue ///
+        const dataPoints = [
+          {
+            label: "Credit Card",
+            y: Number(statistic.sumCreditCardPayments) || 0,
+          },
+          {
+            label: "Bank Transfer",
+            y: Number(statistic.sumBankTransferPayments) || 0,
+          },
+        ];
+
+        $("#chartContainer1").CanvasJSChart({
+          data: [
+            {
+              type: "doughnut",
+              innerRadius: 30,
+              indexLabel: "{label} ({y})",
+              yValueFormatString: "₦#,##0.00",
+              indexLabelFontSize: 9,
+              dataPoints: dataPoints,
+            },
+          ],
+        });
+
+        // Update Pie Chart credit and bank transfer ///
+        const options = {
+          title: {
+            text: "",
+          },
+          data: [
+            {
+              type: "pie",
+              startAngle: 45,
+              showInLegend: "False",
+              legendText: "{label}",
+              indexLabel: "{label} ({y})",
+              yValueFormatString: "#,##0.#" % "",
+              indexLabelFontSize: 9,
+              dataPoints: [
+                {
+                  label: "Debit/Credit Card",
+                  y: parseInt(statistic.countCreditCardPayments),
+                },
+                {
+                  label: "Bank Transfer",
+                  y: parseInt(statistic.countBankTransferPayments),
+                },
+              ],
+            },
+          ],
+        };
+
+        $("#chartContainer2").CanvasJSChart(options);
+
         // Update Report revenue Table ///
         let text = "";
         let no = 0;
@@ -170,14 +233,18 @@ function _reportRevenueFiltering(dateFrom, dateTo) {
             const fetchedData = info.data[i];
             const payDate = new Date(fetchedData.payDate);
             const newpayDate = payDate.toISOString().split("T")[0];
-            const totalFeesPaid = fetchedData.totalFeesPaid;
+            const totalSuccessfulFees = fetchedData.totalSuccessfulFees;
+            const totalPendingFees = fetchedData.totalPendingFees;
+            const totalCancelledFees = fetchedData.totalCancelledFees;
 
             text += `
               <tr class="tb-row">
                 <td>${no}</td>
-                <td class="clickable-td" title="Click to view payment breakdown" onclick="_fetchRevenueByDate('${newpayDate}', '', '');">${newpayDate}</td>
-                <td><s>N</s>${thousandSeperator(totalFeesPaid)}</td>
-                <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="_fetchRevenueByDate('${newpayDate}', '', '');">VIEW DETAILS</button></td>
+                <td class="clickable-td" title="Click to view payment breakdown" onclick="_getForm({ page: 'revenueBreakdown', id: '${newpayDate}', url: adminPortalLocalUrl});">${newpayDate}</td>
+                <td class="SUCCESSFULSTATUS"><s>N</s>${thousandSeperator(totalSuccessfulFees)}</td>
+                <td class="PENDINGSTATUS"><s>N</s>${thousandSeperator(totalPendingFees)}</td>
+                <td class="CANCLLEDSTATUS"><s>N</s>${thousandSeperator(totalCancelledFees)}</td>
+                <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="_getForm({ page: 'revenueBreakdown', id: '${newpayDate}', url: adminPortalLocalUrl});">VIEW DETAILS</button></td>
               </tr>
             `;
           }
@@ -205,41 +272,6 @@ function _reportRevenueFiltering(dateFrom, dateTo) {
     },
   });
   $("#get-form-more-div").fadeOut(500);
-}
-
-function _fetchRevenueByDate(newpayDate, session = '', termId = '') {
-	$("#get-form-more-div").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
-	try {
-		$.ajax({
-			type: "GET",
-			url: `${endPoint}/admin/account-reports/fetch-revenue-by-date?date=${newpayDate}&session=${session}&termId=${termId}`,
-			dataType: "json", 
-			cache: false,
-			headers: getAuthHeaders(true),
-			success: function(info) {
-				if (info.success && info.data.length > 0) {
-					//sessionStorage.setItem("getRevenueByDateSessionData", JSON.stringify(info));
-          sessionStorage.setItem("dateData", JSON.stringify({
-            id: newpayDate,
-          }));
-					_getForm({ page: 'revenueBreakdown', url: adminPortalLocalUrl});
-				} else {
-					const response = info.response;
-					if (response < 100) {
-						_logOut();
-					}    
-				}
-			},
-			error: function(textStatus, errorThrown) {
-				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('Check your internet connection and try again.', false);
-			}
-		});
-	} catch (error) {
-		_alertClose();
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred! Please try again.', false);
-	}
 }
 
 function _fetchRevenueById(paymentId) {
@@ -299,6 +331,10 @@ function _fetchRevenueBySessionAndTerm() {
     return;
   }
 
+  // Save to sessionStorage
+  sessionStorage.setItem('selectedSession', session);
+  sessionStorage.setItem('selectedTermId', termId);
+
   const btnText = $("#filterRevenueBtn").html();
   $("#filterRevenueBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="10px" alt="Loading"/>');
   $("#filterRevenueBtn").prop("disabled", true);
@@ -339,6 +375,11 @@ function _fetchRevenueBySessionAndTerm() {
           Total Balance: <span class="balance"><s>N</s>${totalRevenue}</span>`;
         $("#reportBalanceContainer").html(balanceContainer);
 
+        sessionStorage.setItem("sessionTermData", JSON.stringify({
+					session: info.session,
+					termId: info?.termData?.termId
+				}));
+
         // Update Report revenue Table ///
         let text = "";
         let no = 0;
@@ -353,9 +394,9 @@ function _fetchRevenueBySessionAndTerm() {
             text += `
               <tr class="tb-row">
                 <td>${no}</td>
-                <td class="clickable-td" title="Click to view payment breakdown" onclick="_fetchRevenueByDate('${newpayDate}', '${session}', '${termId}');">${newpayDate}</td>
+                <td class="clickable-td" title="Click to view payment breakdown" onclick="_getForm({ page: 'revenueBreakdown', id: '${newpayDate}', url: adminPortalLocalUrl});">${newpayDate}</td>
                 <td><s>N</s>${thousandSeperator(totalFeesPaid)}</td>
-                <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="_fetchRevenueByDate('${newpayDate}', '${session}', '${termId}');">VIEW DETAILS</button></td>
+                <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="_getForm({ page: 'revenueBreakdown', id: '${newpayDate}', url: adminPortalLocalUrl});">VIEW DETAILS</button></td>
               </tr>
             `;
           }
@@ -386,156 +427,184 @@ function _fetchRevenueBySessionAndTerm() {
   });
 }
 
-function _loadPaymentsByStatus(statusId) {
-  let dateData = JSON.parse(
-    sessionStorage.getItem("dateData")
+function _loadPaymentsByStatus(statusId, newpayDate) {
+  let sessionTermData = JSON.parse(
+    sessionStorage.getItem("sessionTermData")
   );
+
+  let url = `${endPoint}/admin/account-reports/fetch-revenue-by-date?date=${newpayDate}&statusId=${statusId}`;
+
+  if (sessionTermData?.session && sessionTermData?.termId) {
+    url= `${endPoint}/admin/account-reports/fetch-revenue-by-date?date=${newpayDate}&statusId=${statusId}&session=${sessionTermData?.session}&termId=${sessionTermData?.termId}`;
+  }
 
   try {
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/admin/account-reports/fetch-revenue-by-date?date=${dateData?.id}&statusId=${statusId}`,
+			url: url,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(true),
 			success: function(info) {
-				if (info.success && info.data.length > 0) {
+				if (info.success) {
+
 					const fetchedData = info.data;
-          let statusName ="";
-          let filteredTotal = 0;
-          let text = "";
-
-          let no = 0;
-
-          for (let i = 0; i < fetchedData.length; i++) {
-              no++;
-              const fetchStudentData = fetchedData[i].studentData;
-              const fetchParentData = fetchedData[i]?.parentData;
-              const fetchBranchData = fetchedData[i].branchData;
-              const fetchTermData = fetchedData[i].termData;
-              const fetchClassData = fetchedData[i].classData;
-              const fetchArmData = fetchedData[i].armData;
-              const totalFeesPaid = fetchedData[i].totalFeesPaid;
-              const fetchedStatusData = fetchedData[i].statusData;
-              const payDate = fetchedData[i].payDate;
-              const session = fetchedData[i].session;
-              const departmentId = fetchedData[i].departmentId;
-              const paymentId = fetchedData[i].paymentId;
-              filteredTotal = parseFloat(totalFeesPaid);
-
-              //// Student Data ////
-              const studentId = fetchStudentData.studentId;
-              const passport = fetchStudentData.passport || 'default.jpg';
-              const surName = fetchStudentData.surName;
-              const firstName = fetchStudentData.firstName;
-              const otherNames = fetchStudentData.otherNames;
-              const fullname = surName + ' ' + firstName + ' ' + otherNames;
-
-              //// Parent Data ////
-              const titleId = fetchParentData?.titleId || '';
-              const parentSurName = fetchParentData?.surName || '';
-              const parentOtherNames = fetchParentData?.otherNames || '';
-              const parentFullname = `${titleId} ${parentSurName} ${parentOtherNames}`.trim();
-              const parentEmail = fetchParentData?.email || '';
-              const recordFor = fetchParentData?.recordFor || '';
-              const parentPhone = fetchParentData?.mobileNumber || '';
-
-              //// Branch Data ////
-              const branchName = fetchBranchData.branchName;
-              const branchMobile = fetchBranchData.mobileNumber;
-              const branchId = fetchBranchData.branchId;
-
-              /// Term Data ///
-              const termName = fetchTermData.termName;
-
-              /// Class Data ///
-              const className = fetchClassData.className;
-              const classId = fetchClassData.classId;
-
-              /// Arm Data ///
-              const armId = fetchArmData.armId;
-              const armName = fetchArmData.armName;
-
-              statusName = fetchedStatusData.statusName;
-              text += `
-                <tr class="tb-row">
-                    <td>${no}</td>
-
-                    <td class="clickable-td"
-                        title="Click to view student details"
-                        onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
-
-                        <div class="text-back-div">
-                            <div class="image-div general-passport">
-                                <img src="${studentPixPath}/${passport}" alt="${fullname}" />
-                            </div>
-
-                            <div class="text-div">
-                                <div class="first-class">${fullname}</div>
-                                <div class="second-class">${studentId}</div>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td class="clickable-td"
-                        title="Click to view father details"
-                        onclick="_loginOnbehalfOfParent('${parentEmail}','${recordFor}','${studentId}');">
-
-                        <div class="text-back-div">
-                            <div class="text-div">
-                                <div class="first-class">${parentFullname}</div>
-                                <div class="second-class">${parentEmail}</div>
-                                <div class="second-class">${parentPhone}</div>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td class="clickable-td"
-                        title="Click to view branch profile"
-                        onclick="_fetchEachBranches('${branchId}');">
-                        ${branchName}<br />
-                        <span>${branchMobile}</span>
-                    </td>
-
-                    <td>${session} - ${termName}</td>
-
-                    <td>${className} ${armName}</td>
-
-                    <td><s>N</s>${thousandSeperator(totalFeesPaid)}</td>
-
-                    <td>
-                        <div class="status-div ${statusName}">
-                            ${statusName}
-                        </div>
-                    </td>
-
-                    <td>${payDate}</td>
-
-                    <td>
-                        <button class="btn view-btn"
-                            title="Click to view payment breakdown"
-                            onclick="_fetchRevenueById('${paymentId}');">
-                            VIEW DETAILS
-                        </button>
-                    </td>
-                </tr>
-            `;
-          }
 
           $('#date').html(info?.date);
-          $('#totalAmount').html("<s>N</s>" + thousandSeperator(filteredTotal));
-
-          $('#revenueAlert').removeClass('alert-success alert-failed');
-
-          if (statusName === 'SUCCESSFUL') {
-            $('#revenueAlert').addClass('alert-success');
+          if (statusId === '5' && fetchedData.length > 0) {
+            $('output').show();
+            $('#totalAmount').html("<s>N</s>" + thousandSeperator(info?.totalAmount));
           } else {
-            $('#revenueAlert').addClass('alert-failed');
+            $('output').hide();
           }
 
-          // If no record found
-          if (no === 0) {
-              text += `
+          let text = "";
+          let no = 0;
+
+          if (fetchedData && fetchedData.length > 0) {
+            for (let i = 0; i < fetchedData.length; i++) {
+                no++;
+                const fetchStudentData = fetchedData[i].studentData;
+                const fetchParentData = fetchedData[i]?.parentData;
+                const fetchBranchData = fetchedData[i].branchData;
+                const fetchTermData = fetchedData[i].termData;
+                const fetchClassData = fetchedData[i].classData;
+                const fetchArmData = fetchedData[i].armData;
+                const totalFeesPaid = fetchedData[i].totalFeesPaid;
+                const fetchedStatusData = fetchedData[i].statusData;
+                const payDate = fetchedData[i].payDate;
+                const session = fetchedData[i].session;
+                const departmentId = fetchedData[i].departmentId;
+                const paymentId = fetchedData[i].paymentId;
+
+                //// Student Data ////
+                const studentId = fetchStudentData.studentId;
+                const passport = fetchStudentData.passport || 'default.jpg';
+                const surName = fetchStudentData.surName;
+                const firstName = fetchStudentData.firstName;
+                const otherNames = fetchStudentData.otherNames;
+                const fullname = surName + ' ' + firstName + ' ' + otherNames;
+
+                //// Parent Data ////
+                const titleId = fetchParentData?.titleId || '';
+                const parentSurName = fetchParentData?.surName || '';
+                const parentOtherNames = fetchParentData?.otherNames || '';
+                const parentFullname = `${titleId} ${parentSurName} ${parentOtherNames}`.trim();
+                const parentEmail = fetchParentData?.email || '';
+                const recordFor = fetchParentData?.recordFor || '';
+                const parentPhone = fetchParentData?.mobileNumber || '';
+
+                //// Branch Data ////
+                const branchName = fetchBranchData.branchName;
+                const branchMobile = fetchBranchData.mobileNumber;
+                const branchId = fetchBranchData.branchId;
+
+                /// Term Data ///
+                const termName = fetchTermData.termName;
+
+                /// Class Data ///
+                const className = fetchClassData.className;
+                const classId = fetchClassData.classId;
+
+                /// Arm Data ///
+                const armId = fetchArmData.armId;
+                const armName = fetchArmData.armName;
+
+                /// Status Data ///
+                const statusName = fetchedStatusData.statusName;
+                const statusId = fetchedStatusData.statusId;
+
+                let buttonHtml = '';
+
+                $('#revenueAlert').removeClass('alert-success alert-failed');
+                if (statusName === 'SUCCESSFUL') {
+                  $('#revenueAlert').addClass('alert-success');
+                } else {
+                  $('#revenueAlert').addClass('alert-failed');
+                }
+
+                if (statusId === '3') {
+                  buttonHtml = `
+                    <td>
+                      <button class="btn view-btn"
+                          title="Click to refresh payment"
+                          onclick="verifyPaystackTransaction('${paymentId}');">
+                        REFRESH
+                      </button>
+                    </td>
+                  `;
+                } else {
+                  buttonHtml = `
+                    <td>
+                      <button class="btn view-btn"
+                          title="Click to view payment breakdown"
+                          onclick="_fetchRevenueById('${paymentId}');">
+                        VIEW DETAILS
+                      </button>
+                    </td>
+                  `;
+                }
+
+                text += `
+                  <tr class="tb-row">
+                      <td>${no}</td>
+
+                      <td class="clickable-td"
+                          title="Click to view student details"
+                          onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
+
+                          <div class="text-back-div">
+                              <div class="image-div general-passport">
+                                  <img src="${studentPixPath}/${passport}" alt="${fullname}" />
+                              </div>
+
+                              <div class="text-div">
+                                  <div class="first-class">${fullname}</div>
+                                  <div class="second-class">${studentId}</div>
+                              </div>
+                          </div>
+                      </td>
+
+                      <td class="clickable-td"
+                          title="Click to view father details"
+                          onclick="_loginOnbehalfOfParent('${parentEmail}','${recordFor}','${studentId}');">
+
+                          <div class="text-back-div">
+                              <div class="text-div">
+                                  <div class="first-class">${parentFullname}</div>
+                                  <div class="second-class">${parentEmail}</div>
+                                  <div class="second-class">${parentPhone}</div>
+                              </div>
+                          </div>
+                      </td>
+
+                      <td class="clickable-td"
+                          title="Click to view branch profile"
+                          onclick="_fetchEachBranches('${branchId}');">
+                          ${branchName}<br />
+                          <span>${branchMobile}</span>
+                      </td>
+
+                      <td>${session} - ${termName}</td>
+
+                      <td>${className} ${armName}</td>
+
+                      <td><s>N</s>${thousandSeperator(totalFeesPaid)}</td>
+
+                      <td>
+                          <div class="status-div ${statusName}">
+                              ${statusName}
+                          </div>
+                      </td>
+
+                      <td>${payDate}</td>
+                      ${buttonHtml} 
+                  </tr>
+              `;
+            }
+            $('#pageContent').html(text);
+          } else {
+            text += `
               <tr>
                   <td colspan="20">
                     <div class="false-notification-div">
@@ -543,8 +612,9 @@ function _loadPaymentsByStatus(statusId) {
                     </div>
                   </td>
               </tr>`;
+            $("#pageContent").html(text);
           }
-          $('#pageContent').html(text);
+
 				} else {
 					const response = info.response;
 					if (response < 100) {
@@ -562,6 +632,26 @@ function _loadPaymentsByStatus(statusId) {
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
+}
 
-    
+function verifyPaystackTransaction(reference, secretKey) {
+  fetch(`https://api.paystack.co/transaction/verify/${reference}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${secretKey}`,
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status === true && data.data.status === "success") {
+        console.log("Payment verified:", data);
+      } else {
+        console.log("Verification failed:", data);
+      }
+    })
+    .catch((error) => {
+      console.error("Error: ", error);
+      _actionAlert("An unexpected error occurred! Please try again.", false);
+    });
 }
