@@ -21,6 +21,26 @@ function _getReportActiveNav(divid) {
 }
 
 
+function _getPaymentStatusNav(props) {
+  const {
+    page = "",
+    divid = "",
+    pageContainer = "getPaymentNav",
+  } = props;
+  _getActivePaymentStatusNav(divid);
+  if (page) {
+    _getPage({
+      page: page,
+      pageContainer: pageContainer,
+      url: adminPortalLocalUrl,
+    });
+  }
+}
+function _getActivePaymentStatusNav(divid) {
+  $(".title-nav-back-div ul li").removeClass("active-li");
+  $("#" + divid).addClass("active-li");
+}
+
 ///// Dashbaord Custom Revenue Filtering ////////
 function _fetchReportRevenueFiltering(filterWith, text) {
   $("#srch-text").html(text);
@@ -198,8 +218,11 @@ function _fetchRevenueByDate(newpayDate, session = '', termId = '') {
 			headers: getAuthHeaders(true),
 			success: function(info) {
 				if (info.success && info.data.length > 0) {
-					sessionStorage.setItem("getRevenueByDateSessionData", JSON.stringify(info));
-					_getForm({ page: 'revenueBreakdown', url: adminPortalLocalUrl });
+					//sessionStorage.setItem("getRevenueByDateSessionData", JSON.stringify(info));
+          sessionStorage.setItem("dateData", JSON.stringify({
+            id: newpayDate,
+          }));
+					_getForm({ page: 'revenueBreakdown', url: adminPortalLocalUrl});
 				} else {
 					const response = info.response;
 					if (response < 100) {
@@ -361,4 +384,184 @@ function _fetchRevenueBySessionAndTerm() {
       $("#filterRevenueBtn").html(btnText).prop("disabled", false);
     },
   });
+}
+
+function _loadPaymentsByStatus(statusId) {
+  let dateData = JSON.parse(
+    sessionStorage.getItem("dateData")
+  );
+
+  try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/account-reports/fetch-revenue-by-date?date=${dateData?.id}&statusId=${statusId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				if (info.success && info.data.length > 0) {
+					const fetchedData = info.data;
+          let statusName ="";
+          let filteredTotal = 0;
+          let text = "";
+
+          let no = 0;
+
+          for (let i = 0; i < fetchedData.length; i++) {
+              no++;
+              const fetchStudentData = fetchedData[i].studentData;
+              const fetchParentData = fetchedData[i]?.parentData;
+              const fetchBranchData = fetchedData[i].branchData;
+              const fetchTermData = fetchedData[i].termData;
+              const fetchClassData = fetchedData[i].classData;
+              const fetchArmData = fetchedData[i].armData;
+              const totalFeesPaid = fetchedData[i].totalFeesPaid;
+              const fetchedStatusData = fetchedData[i].statusData;
+              const payDate = fetchedData[i].payDate;
+              const session = fetchedData[i].session;
+              const departmentId = fetchedData[i].departmentId;
+              const paymentId = fetchedData[i].paymentId;
+              filteredTotal = parseFloat(totalFeesPaid);
+
+              //// Student Data ////
+              const studentId = fetchStudentData.studentId;
+              const passport = fetchStudentData.passport || 'default.jpg';
+              const surName = fetchStudentData.surName;
+              const firstName = fetchStudentData.firstName;
+              const otherNames = fetchStudentData.otherNames;
+              const fullname = surName + ' ' + firstName + ' ' + otherNames;
+
+              //// Parent Data ////
+              const titleId = fetchParentData?.titleId || '';
+              const parentSurName = fetchParentData?.surName || '';
+              const parentOtherNames = fetchParentData?.otherNames || '';
+              const parentFullname = `${titleId} ${parentSurName} ${parentOtherNames}`.trim();
+              const parentEmail = fetchParentData?.email || '';
+              const recordFor = fetchParentData?.recordFor || '';
+              const parentPhone = fetchParentData?.mobileNumber || '';
+
+              //// Branch Data ////
+              const branchName = fetchBranchData.branchName;
+              const branchMobile = fetchBranchData.mobileNumber;
+              const branchId = fetchBranchData.branchId;
+
+              /// Term Data ///
+              const termName = fetchTermData.termName;
+
+              /// Class Data ///
+              const className = fetchClassData.className;
+              const classId = fetchClassData.classId;
+
+              /// Arm Data ///
+              const armId = fetchArmData.armId;
+              const armName = fetchArmData.armName;
+
+              statusName = fetchedStatusData.statusName;
+              text += `
+                <tr class="tb-row">
+                    <td>${no}</td>
+
+                    <td class="clickable-td"
+                        title="Click to view student details"
+                        onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
+
+                        <div class="text-back-div">
+                            <div class="image-div general-passport">
+                                <img src="${studentPixPath}/${passport}" alt="${fullname}" />
+                            </div>
+
+                            <div class="text-div">
+                                <div class="first-class">${fullname}</div>
+                                <div class="second-class">${studentId}</div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td class="clickable-td"
+                        title="Click to view father details"
+                        onclick="_loginOnbehalfOfParent('${parentEmail}','${recordFor}','${studentId}');">
+
+                        <div class="text-back-div">
+                            <div class="text-div">
+                                <div class="first-class">${parentFullname}</div>
+                                <div class="second-class">${parentEmail}</div>
+                                <div class="second-class">${parentPhone}</div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td class="clickable-td"
+                        title="Click to view branch profile"
+                        onclick="_fetchEachBranches('${branchId}');">
+                        ${branchName}<br />
+                        <span>${branchMobile}</span>
+                    </td>
+
+                    <td>${session} - ${termName}</td>
+
+                    <td>${className} ${armName}</td>
+
+                    <td><s>N</s>${thousandSeperator(totalFeesPaid)}</td>
+
+                    <td>
+                        <div class="status-div ${statusName}">
+                            ${statusName}
+                        </div>
+                    </td>
+
+                    <td>${payDate}</td>
+
+                    <td>
+                        <button class="btn view-btn"
+                            title="Click to view payment breakdown"
+                            onclick="_fetchRevenueById('${paymentId}');">
+                            VIEW DETAILS
+                        </button>
+                    </td>
+                </tr>
+            `;
+          }
+
+          $('#date').html(info?.date);
+          $('#totalAmount').html("<s>N</s>" + thousandSeperator(filteredTotal));
+
+          $('#revenueAlert').removeClass('alert-success alert-failed');
+
+          if (statusName === 'SUCCESSFUL') {
+            $('#revenueAlert').addClass('alert-success');
+          } else {
+            $('#revenueAlert').addClass('alert-failed');
+          }
+
+          // If no record found
+          if (no === 0) {
+              text += `
+              <tr>
+                  <td colspan="20">
+                    <div class="false-notification-div">
+                      <p>No payment record found!</p>
+                    </div>
+                  </td>
+              </tr>`;
+          }
+          $('#pageContent').html(text);
+				} else {
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('Check your internet connection and try again.', false);
+			}
+		});
+	} catch (error) {
+		_alertClose();
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+
+    
 }
