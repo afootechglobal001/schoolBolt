@@ -282,6 +282,7 @@
         $(document).ready(function() {
             _fetchReportRevenueFiltering('srch-30', 'Last 30 Days');
         });
+        sessionStorage.removeItem("sessionTermData");
     </script>
 <?php } ?>
 
@@ -399,7 +400,7 @@
     <div id="revenueAlert" class="alert top-alert-div animated fadeIn">
         <div>
             <i class="bi-graph-up-arrow"></i>
-            Successful Revenue On <span id="date"></span>
+            Successful Transactions On <span id="date"></span>
             <output style="display:none;">
                -- Total Revenue:
                 <span class="balance" id="totalAmount"></span>
@@ -453,7 +454,7 @@
     <div id="revenueAlert" class="alert top-alert-div animated fadeIn">
         <div>
             <i class="bi-graph-up-arrow"></i>
-            Pending Revenue On <span id="date"></span>
+            Pending Transactions On <span id="date"></span>
             <output style="display:none;">
                -- Total Revenue:
                 <span class="balance" id="totalAmount"></span>
@@ -507,7 +508,7 @@
     <div id="revenueAlert" class="alert top-alert-div animated fadeIn">
         <div>
             <i class="bi-graph-up-arrow"></i>
-            Cancelled Revenue On <span id="date"></span>
+            Cancelled Transactions On <span id="date"></span>
             <output style="display:none;">
                -- Total Revenue:
                 <span class="balance" id="totalAmount"></span>

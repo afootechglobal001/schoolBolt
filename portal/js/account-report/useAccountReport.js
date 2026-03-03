@@ -331,6 +331,10 @@ function _fetchRevenueBySessionAndTerm() {
     return;
   }
 
+  // Save to sessionStorage
+  sessionStorage.setItem('selectedSession', session);
+  sessionStorage.setItem('selectedTermId', termId);
+
   const btnText = $("#filterRevenueBtn").html();
   $("#filterRevenueBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="10px" alt="Loading"/>');
   $("#filterRevenueBtn").prop("disabled", true);
@@ -370,6 +374,11 @@ function _fetchRevenueBySessionAndTerm() {
         balanceContainer += `
           Total Balance: <span class="balance"><s>N</s>${totalRevenue}</span>`;
         $("#reportBalanceContainer").html(balanceContainer);
+
+        sessionStorage.setItem("sessionTermData", JSON.stringify({
+					session: info.session,
+					termId: info?.termData?.termId
+				}));
 
         // Update Report revenue Table ///
         let text = "";
@@ -419,15 +428,26 @@ function _fetchRevenueBySessionAndTerm() {
 }
 
 function _loadPaymentsByStatus(statusId, newpayDate) {
+  let sessionTermData = JSON.parse(
+    sessionStorage.getItem("sessionTermData")
+  );
+
+  let url = `${endPoint}/admin/account-reports/fetch-revenue-by-date?date=${newpayDate}&statusId=${statusId}`;
+
+  if (sessionTermData?.session && sessionTermData?.termId) {
+    url= `${endPoint}/admin/account-reports/fetch-revenue-by-date?date=${newpayDate}&statusId=${statusId}&session=${sessionTermData?.session}&termId=${sessionTermData?.termId}`;
+  }
+
   try {
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/admin/account-reports/fetch-revenue-by-date?date=${newpayDate}&statusId=${statusId}`,
+			url: url,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(true),
 			success: function(info) {
 				if (info.success) {
+
 					const fetchedData = info.data;
 
           $('#date').html(info?.date);
