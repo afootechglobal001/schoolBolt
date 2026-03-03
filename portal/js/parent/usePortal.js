@@ -11,9 +11,9 @@ function _getActiveStudentPage(props) {
 }
 
 function _getStudentPageActiveLink(divid) {
-  $("#studentDashbaord, #paymentHistory, #studentProfile, #studentResult").removeClass(
-    "active"
-  );
+  $(
+    "#studentDashbaord, #paymentHistory, #studentProfile, #studentResult",
+  ).removeClass("active");
   $("#" + divid).addClass("active");
 }
 
@@ -85,7 +85,7 @@ function _getPpaymentFormDetails(icon, nextId) {
   $("#" + nextId).fadeIn(1000);
   $("#summaryHideDiv").fadeOut(500);
   $("#panel-title").html(
-    $("#" + icon).html() + " <span>PAYMENT SUMMARY</span>"
+    $("#" + icon).html() + " <span>PAYMENT SUMMARY</span>",
   );
 }
 
@@ -138,7 +138,7 @@ function _getSelectPaymentMethod(fieldId) {
                 value +
                 "');\">" +
                 value +
-                "</li>"
+                "</li>",
             );
           }
         } else {
@@ -154,7 +154,7 @@ function _getSelectPaymentMethod(fieldId) {
 
 function _fetchFeesToPay() {
   let getEachStudentSession = JSON.parse(
-    sessionStorage.getItem("getEachStudentSession")
+    sessionStorage.getItem("getEachStudentSession"),
   );
   $("#get-more-div-secondary")
     .css({
@@ -184,7 +184,7 @@ function _fetchFeesToPay() {
         if (info.success && info.data.length > 0) {
           sessionStorage.setItem(
             "getPayFeesToPaySession",
-            JSON.stringify(info)
+            JSON.stringify(info),
           );
           _getForm({
             page: "paymentForm",
@@ -198,10 +198,7 @@ function _fetchFeesToPay() {
       },
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
-        _actionAlert(
-          "Check your internet connection and try again.",
-          false
-        );
+        _actionAlert("Check your internet connection and try again.", false);
       },
     });
   } catch (error) {
@@ -212,7 +209,7 @@ function _fetchFeesToPay() {
 
 function _proceedToPayment() {
   let getEachStudentSession = JSON.parse(
-    sessionStorage.getItem("getEachStudentSession")
+    sessionStorage.getItem("getEachStudentSession"),
   );
   let parentSessionData = JSON.parse(localStorage.getItem("parentSessionData"));
 
@@ -243,7 +240,7 @@ function _proceedToPayment() {
       $("#submitBtn").html(
         '<img src="' +
           websiteUrl +
-          '/images/loading.gif" width="12px" alt="Loading"/>'
+          '/images/loading.gif" width="12px" alt="Loading"/>',
       );
       $("#submitBtn").prop("disabled", true);
 
@@ -272,7 +269,7 @@ function _proceedToPayment() {
           if (data.success) {
             sessionStorage.setItem(
               "studentPaymentSession",
-              JSON.stringify(data)
+              JSON.stringify(data),
             );
             const paymentKey = data.paymentKey;
             const paymentId = data.paymentId;
@@ -292,29 +289,8 @@ function _proceedToPayment() {
               deductCharges,
               schoolBoltCharges,
               receiverKey,
-              paymentChannel
+              paymentChannel,
             );
-
-            //  if (paymentMethodId === "PM001") {
-            //   /// PAYMENT BY CREDIT/DEBIT////
-            //   _callPayStack(
-            //     paymentKey,
-            //     paymentId,
-            //     email,
-            //     amount,
-            //     deductCharges,
-            //     schoolBoltCharges,
-            //     receiverKey
-            //   );
-            // }
-            // if (paymentMethodId === "PM002") {
-            //   /// PAYMENT BY BANK TRANSFER////
-            //   _getForm({
-            //     page: "accountTransferForm",
-            //     layer: 2,
-            //     url: parentPortalLocalUrl,
-            //   });
-            // }
           } else {
             _actionAlert(data.message, false);
           }
@@ -323,7 +299,7 @@ function _proceedToPayment() {
         error: function (error) {
           _actionAlert(
             "An error occurred while processing your request: " + error,
-            false
+            false,
           );
           $("#submitBtn").html(btn_text).prop("disabled", false);
         },
@@ -344,10 +320,10 @@ function _callPayStack(
   deductCharges,
   schoolBoltCharges,
   receiverKey,
-  paymentChannel
+  paymentChannel,
 ) {
   let getEachStudentSession = JSON.parse(
-    sessionStorage.getItem("getEachStudentSession")
+    sessionStorage.getItem("getEachStudentSession"),
   );
   let parentSessionData = JSON.parse(localStorage.getItem("parentSessionData"));
   const parentFullname =
@@ -384,7 +360,7 @@ function _callPayStack(
           "align-items": "center",
         })
         .html(
-          `<div class="alert-loading-div"><div class="icon"><img src="${websiteUrl}/images/loading.gif" width="20px" alt="Loading"/></div><div class="text"><p>PROCESSING...</p></div></div>`
+          `<div class="alert-loading-div"><div class="icon"><img src="${websiteUrl}/images/loading.gif" width="20px" alt="Loading"/></div><div class="text"><p>PROCESSING...</p></div></div>`,
         )
         .fadeIn(500);
       _callPaymentSuccess(paymentId, branchId);
@@ -485,7 +461,7 @@ function _callPaymentCancelled(paymentId) {
       error: function (error) {
         _actionAlert(
           "An error occurred while processing your request: " + error,
-          false
+          false,
         );
         $("#submitBtn")
           .html('<i class="bi-check"></i> MAKE PAYMENT')
@@ -500,9 +476,30 @@ function _callPaymentCancelled(paymentId) {
   }
 }
 
+function verifyPaystackTransaction(reference, secretKey) {
+  fetch(`https://api.paystack.co/transaction/verify/${reference}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${secretKey}`,
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status === true && data.data.status === "success") {
+        console.log("Payment verified:", data);
+      } else {
+        console.log("Verification failed:", data);
+      }
+    })
+    .catch((error) => {
+      console.error("Error: ", error);
+      _actionAlert("An unexpected error occurred! Please try again.", false);
+    });
+}
 function _fetchPaymentHistory() {
   let getEachStudentSession = JSON.parse(
-    sessionStorage.getItem("getEachStudentSession")
+    sessionStorage.getItem("getEachStudentSession"),
   );
   try {
     const formData = {
@@ -608,10 +605,7 @@ function _fetchPaymentHistory() {
       },
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
-        _actionAlert(
-          "Check your internet connection and try again.",
-          false
-        );
+        _actionAlert("Check your internet connection and try again.", false);
       },
     });
   } catch (error) {
@@ -627,7 +621,7 @@ function _viewPaymentDetails(
   branchId,
   departmentId,
   classId,
-  armId
+  armId,
 ) {
   $("#get-more-div-secondary")
     .css({
@@ -659,7 +653,7 @@ function _viewPaymentDetails(
         if (info.success && info.data.length > 0) {
           sessionStorage.setItem(
             "getPayFeesToPaySession",
-            JSON.stringify(info)
+            JSON.stringify(info),
           );
           _getForm({
             page: "paymentForm",
@@ -673,10 +667,7 @@ function _viewPaymentDetails(
       },
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
-        _actionAlert(
-          "Check your internet connection and try again.",
-          false
-        );
+        _actionAlert("Check your internet connection and try again.", false);
       },
     });
   } catch (error) {
@@ -687,51 +678,54 @@ function _viewPaymentDetails(
 
 /////// Fetch Student Classes ///////
 function _fetchStudentClasses() {
-  _showLoader('Fetching available result classes, please wait...');
+  _showLoader("Fetching available result classes, please wait...");
   let getEachStudentSession = JSON.parse(
-    sessionStorage.getItem("getEachStudentSession")
+    sessionStorage.getItem("getEachStudentSession"),
   );
-	try {
-	  //// call endpoint //////
-		_callFetchEndPoints({
-			url: `parent/results/fetch-each-student-available-results?branchId=${getEachStudentSession?.branchData?.branchId}&studentId=${getEachStudentSession?.studentData?.studentId}`,
-			accessKey: true,
-		})
-		.then((response) => {
-			if (response.success && response.data?.length > 0) {
-        _initFetchStudentClasses(response.data);
-			} else {
-				_showCustomConfirm({
-					title: "FETCH RESULT",
-					message: response.message,
-					alertType: "warning",
-					trueActionBtnText: "OK",
-          closeOnOverlayClick: true,
-				});
+  try {
+    //// call endpoint //////
+    _callFetchEndPoints({
+      url: `parent/results/fetch-each-student-available-results?branchId=${getEachStudentSession?.branchData?.branchId}&studentId=${getEachStudentSession?.studentData?.studentId}`,
+      accessKey: true,
+    })
+      .then((response) => {
+        if (response.success && response.data?.length > 0) {
+          _initFetchStudentClasses(response.data);
+        } else {
+          _showCustomConfirm({
+            title: "NO RESULT FOUND",
+            message: response.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
 
-				$('#pageContent').html(`
+          $("#pageContent").html(`
 					<div class="false-notification-div">
 						<p>${response.message}</p>
 					</div>
 				`);
-			}
-      _hideLoader();
-		 })
-		.catch((error) => {
-       _hideLoader();
-			console.error("Error:", error);
-			_callAjaxError(() => _fetchStudentClasses()); // retry if needed
-		});
-	} catch (error) {
-     _hideLoader();
-		console.error("Error:", error);
-		_callCatchError(() => _fetchStudentClasses());
+        }
+        _hideLoader();
+      })
+      .catch((error) => {
+        _hideLoader();
+        console.error("Error:", error);
+        _callAjaxError(() => _fetchStudentClasses()); // retry if needed
+      });
+  } catch (error) {
+    _hideLoader();
+    console.error("Error:", error);
+    _callCatchError(() => _fetchStudentClasses());
   }
 }
 
 function _initFetchStudentClasses(data, start = 0) {
-  const content = data.map((classes, index) => {
-    const resultContent = classes.results.map((resultItems) => `
+  const content = data
+    .map((classes, index) => {
+      const resultContent = classes.results
+        .map(
+          (resultItems) => `
       <div class="list-div">
         <h4>${resultItems.termName}</h4>
         <div class="btn-container">
@@ -741,9 +735,11 @@ function _initFetchStudentClasses(data, start = 0) {
           </button>
         </div>
       </div>
-    `).join("");
+    `,
+        )
+        .join("");
 
-    return `
+      return `
       <div class="pages-toggle-div">
         <div class="pages-toggle-title" onclick="_collapse('view${start + index + 1}');" title="EXPAND TO VIEW ${classes.departmentName} (${classes.className}) RESULTS">
           <h3>${classes.departmentName} (${classes.className}) - ${classes.session}</h3>
@@ -757,46 +753,89 @@ function _initFetchStudentClasses(data, start = 0) {
         </div>
       </div>
     `;
-  }).join("");
+    })
+    .join("");
 
-  $('#pageContent').html(content);
+  $("#pageContent").html(content);
 }
 
 /////// Fetch Student Result ///////
-function printStudentTerminalResult(branchId, session, termId, departmentId, classId, armId, studentId) {
-	try {
+function printStudentTerminalResult(
+  branchId,
+  session,
+  termId,
+  departmentId,
+  classId,
+  armId,
+  studentId,
+) {
+  try {
     ///// get btn text/////
     const btnText = $(`#printStudentResultBtn_${classId}_${termId}`).html();
     _btnDisable(`printStudentResultBtn_${classId}_${termId}`, btnText, true);
 
-	  //// call endpoint //////
-		_callFetchEndPoints({
-			url: `reports/print-each-student-terminal-result?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}`,
-			accessKey: true,
-		})
-		.then((response) => {
-			if (response.success) {
-        sessionStorage.setItem("printEachStudentTerminalResultSession", JSON.stringify(response));
-				window.open(`${websiteUrl}/reports/print-each-student-terminal-result`, '_blank');
-			} else {
-				_showCustomConfirm({
-					title: "VIEW STUDENT RESULT",
-					message: response.message,
-					alertType: "warning",
-					trueActionBtnText: "OK",
-          closeOnOverlayClick: true,
-				});
-			}
-      _btnDisable(`printStudentResultBtn_${classId}_${termId}`, btnText, false);
-		 })
-		.catch((error) => {
-			console.error("Error:", error);
-			_callAjaxError(() => printStudentTerminalResult(branchId, session, termId, departmentId, classId, armId, studentId)); // retry if needed
-      _btnDisable(`printStudentResultBtn_${classId}_${termId}`, btnText, false);
-		});
-	} catch (error) {
-		console.error("Error:", error);
-		_callCatchError(() => printStudentTerminalResult(branchId, session, termId, departmentId, classId, armId, studentId));
+    //// call endpoint //////
+    _callFetchEndPoints({
+      url: `reports/print-each-student-terminal-result?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}`,
+      accessKey: true,
+    })
+      .then((response) => {
+        if (response.success) {
+          sessionStorage.setItem(
+            "printEachStudentTerminalResultSession",
+            JSON.stringify(response),
+          );
+          window.open(
+            `${websiteUrl}/reports/print-each-student-terminal-result`,
+            "_blank",
+          );
+        } else {
+          _showCustomConfirm({
+            title: "VIEW STUDENT RESULT",
+            message: response.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+        }
+        _btnDisable(
+          `printStudentResultBtn_${classId}_${termId}`,
+          btnText,
+          false,
+        );
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() =>
+          printStudentTerminalResult(
+            branchId,
+            session,
+            termId,
+            departmentId,
+            classId,
+            armId,
+            studentId,
+          ),
+        ); // retry if needed
+        _btnDisable(
+          `printStudentResultBtn_${classId}_${termId}`,
+          btnText,
+          false,
+        );
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() =>
+      printStudentTerminalResult(
+        branchId,
+        session,
+        termId,
+        departmentId,
+        classId,
+        armId,
+        studentId,
+      ),
+    );
     _btnDisable(`printStudentResultBtn_${classId}_${termId}`, btnText, false);
   }
 }
