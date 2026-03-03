@@ -119,28 +119,162 @@
             </div>
         </div>
 
-        <div class="table-div animated fadeIn">
-            <table class="table" cellspacing="0" style="width:100%">
-                <thead>
-                    <tr class="tb-col">
-                        <th>sn</th>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>View</th>
-                    </tr>
-                </thead>
+        <div class="report-dashbaord-wrapper animated fadeIn">
+            <div class="dashboard-statistics-wrapper">
+                <div class="left-dashbaord-container left-report-dashbaord-container">
+                    <div class="statistics-chart-back-div">
+                        <div class="new-statistics-back-div">
+                            <div class="new-statistics-div" id="branch" title="Credit Card">
+                                <div class="statistics-inner-div">
+                                    <div class="statistics-text report-statistics-text">
+                                        <p>Credit Card Revenue</p>
+                                        <span>Total Amount Paid via Credit Card</span>
+                                        <h2 id="sumCreditCardPayments">0</h2>
+                                    </div>
 
-                <tbody id="pageContent">
-                    <!-- CONTENT GOES HERE -->
-                    <tr>
-                        <td colspan="20">
-                            <div class="content-loading-div">
-                                <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
+                                </div>
                             </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+
+                            <div class="new-statistics-div" title="Bank Transfer">
+                                <div class="statistics-inner-div">
+                                    <div class="statistics-text report-statistics-text">
+                                        <p>Bank Transfer Revenue</p>
+                                        <span>Total Amount Paid via Bank Transfer</span>
+                                        <h2 id="sumBankTransferPayments">0</h2>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="new-statistics-div" title="Subjects">
+                                <div class="statistics-inner-div">
+                                    <div class="statistics-text report-statistics-text">
+                                        <p>Credit Card Transactions</p>
+                                        <span>Number of Card Payments</span>
+                                        <h2 id="countCreditCardPayments">0</h2>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="new-statistics-div" id="branch_department_class" onclick="" title="Class">
+                                <div class="statistics-inner-div">
+                                    <div class="statistics-text report-statistics-text">
+                                        <p>Bank Transfer Transactions</p>
+                                        <span>Number of Bank Transfer Payments</span>
+                                        <h2 id="countBankTransferPayments">0</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-div animated fadeIn">
+                            <table class="table" cellspacing="0" style="width:100%">
+                                <thead>
+                                    <tr class="tb-col">
+                                        <th>sn</th>
+                                        <th>Date</th>
+                                        <th>Successful(<s>N</s>)</th>
+                                        <th>Pending(<s>N</s>)</th>
+                                        <th>Cancelled(<s>N</s>)</th>
+                                        <th>View</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="pageContent">
+                                    <!-- CONTENT GOES HERE -->
+                                    <tr>
+                                        <td colspan="20">
+                                            <div class="content-loading-div">
+                                                <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-dashbaord-container">
+                    <div class="matrix-div">
+                        <div class="inner-div">
+                            <div class="title">
+                                <h3>Revenue Matrix</h3>
+                            </div>
+                            <div id="chartContainer1" style="width:100%; height:200px; margin:auto;"></div>
+
+                            <script type="text/javascript">
+                                var options = {
+                                    title: {
+                                        text: "" /*My Performance*/
+                                    },
+                                    data: [{
+                                        type: "doughnut",
+                                        innerRadius: 30,
+                                        showInLegend: "False",
+                                        legendText: "{label}",
+                                        indexLabel: "{label} ({y})",
+                                        yValueFormatString: "#,##0.#" % "",
+                                        indexLabelFontSize: 9,
+                                        dataPoints: [{
+                                                label: "SUPER ADMIN",
+                                                y: 5
+                                            },
+                                            {
+                                                label: "ADMINISTRATOR",
+                                                y: 6
+                                            },
+                                            {
+                                                label: "SUBJECT TEACHER",
+                                                y: 4
+                                            },
+                                            {
+                                                label: "CLASS TEACHERS",
+                                                y: 5
+                                            },
+                                        ]
+                                    }]
+                                };
+                                $("#chartContainer1").CanvasJSChart(options);
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="matrix-div">
+                        <div class="inner-div">
+                            <div class="title">
+                                <h3>Payment Channel Matrix</h3>
+                            </div>
+                            <div id="chartContainer2" style="width:100%; height:200px; margin:auto;"></div>
+
+                            <script type="text/javascript">
+                                var options = {
+                                    title: {
+                                        text: "" /*My Performance*/
+                                    },
+                                    data: [{
+                                        type: "pie",
+                                        startAngle: 45,
+                                        showInLegend: "False",
+                                        legendText: "{label}",
+                                        indexLabel: "{label} ({y})",
+                                        yValueFormatString: "#,##0.#" % "",
+                                        dataPoints: [{
+                                                label: "Debit/Credit Card",
+                                                y: 3
+                                            },
+                                            {
+                                                label: "Bank Transfer",
+                                                y: 11
+                                            },
+                                        ]
+                                    }]
+                                };
+                                $("#chartContainer2").CanvasJSChart(options);
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -235,9 +369,9 @@
                             <div class="title-nav-back-div">
                                 <div class="nav-ul-div">
                                     <ul>
-                                        <li class="SUCCESSFUL active-li" title="Successful Status" id="successfulPage" onclick="_getPaymentStatusNav({divid:'successfulPage', page: 'successfulPage', url: adminPortalLocalUrl});"><img src="<?php echo $websiteUrl ?>/images/tick-mark.png" alt="Successful Icon" /> SUCCESSFUL</li>
-                                        <li class="PENDING" title="Pending Status" id="pendingPage" onclick="_getPaymentStatusNav({divid:'pendingPage', page: 'pendingPage', url: adminPortalLocalUrl});"><img src="<?php echo $websiteUrl ?>/images/load.png" alt="Pending Icon" /> PENDING</li>
-                                        <li class="CANCELLED" title="Cancel Status" id="cancelledPage" onclick="_getPaymentStatusNav({divid:'cancelledPage', page: 'cancelledPage', url: adminPortalLocalUrl});"><img src="<?php echo $websiteUrl ?>/images/close.png" alt="Cancelled Icon" /></i> CANCELLED</li>
+                                        <li class="active-li" title="Successful Status" id="successfulPage" onclick="_getPaymentStatusNav({divid:'successfulPage', page: 'successfulPage', id: '<?php echo $id; ?>', url: adminPortalLocalUrl});"><img src="<?php echo $websiteUrl ?>/images/tick-mark.png" alt="Successful Icon" /> SUCCESSFUL</li>
+                                        <li title="Pending Status" id="pendingPage" onclick="_getPaymentStatusNav({divid:'pendingPage', page: 'pendingPage', id: '<?php echo $id; ?>', url: adminPortalLocalUrl});"><img src="<?php echo $websiteUrl ?>/images/load.png" alt="Pending Icon" /> PENDING</li>
+                                        <li title="Cancel Status" id="cancelledPage" onclick="_getPaymentStatusNav({divid:'cancelledPage', page: 'cancelledPage', id: '<?php echo $id; ?>', url: adminPortalLocalUrl});"><img src="<?php echo $websiteUrl ?>/images/close.png" alt="Cancelled Icon" /></i> CANCELLED</li>
                                     </ul>
                                 </div>
                             </div>
@@ -248,6 +382,7 @@
                                 _getPaymentStatusNav({
                                     divid: 'successfulPage',
                                     page: 'successfulPage',
+                                    id: '<?php echo $id; ?>',
                                     url: adminPortalLocalUrl
                                 });
                             </script>
@@ -264,9 +399,11 @@
     <div id="revenueAlert" class="alert top-alert-div animated fadeIn">
         <div>
             <i class="bi-graph-up-arrow"></i>
-            Revenue For <span id="date"></span>
-            -- Total Revenue:
-            <span class="balance" id="totalAmount"></span>
+            Successful Revenue On <span id="date"></span>
+            <output style="display:none;">
+               -- Total Revenue:
+                <span class="balance" id="totalAmount"></span>
+            </output>
         </div>
 
         <div class="btn-container">
@@ -295,7 +432,8 @@
             <tbody id="pageContent">
                 <script>
                     $(document).ready(function() {
-                        _loadPaymentsByStatus('5');
+                        const newpayDate = "<?php echo $id; ?>";
+                        _loadPaymentsByStatus('5', newpayDate);
                     });
                 </script>
                 <tr>
@@ -315,9 +453,11 @@
     <div id="revenueAlert" class="alert top-alert-div animated fadeIn">
         <div>
             <i class="bi-graph-up-arrow"></i>
-            Revenue For <span id="date"></span>
-            -- Total Revenue:
-            <span class="balance" id="totalAmount"></span>
+            Pending Revenue On <span id="date"></span>
+            <output style="display:none;">
+               -- Total Revenue:
+                <span class="balance" id="totalAmount"></span>
+            </output>
         </div>
 
         <div class="btn-container">
@@ -346,7 +486,8 @@
             <tbody id="pageContent">
                 <script>
                     $(document).ready(function() {
-                        _loadPaymentsByStatus('6');
+                        const newpayDate = "<?php echo $id; ?>";
+                        _loadPaymentsByStatus('3', newpayDate);
                     });
                 </script>
                 <tr>
@@ -366,9 +507,11 @@
     <div id="revenueAlert" class="alert top-alert-div animated fadeIn">
         <div>
             <i class="bi-graph-up-arrow"></i>
-            Revenue For <span id="date"></span>
-            -- Total Revenue:
-            <span class="balance" id="totalAmount"></span>
+            Cancelled Revenue On <span id="date"></span>
+            <output style="display:none;">
+               -- Total Revenue:
+                <span class="balance" id="totalAmount"></span>
+            </output>
         </div>
 
         <div class="btn-container">
@@ -397,7 +540,8 @@
             <tbody id="pageContent">
                 <script>
                     $(document).ready(function() {
-                        _loadPaymentsByStatus('7');
+                        const newpayDate = "<?php echo $id; ?>";
+                        _loadPaymentsByStatus('4', newpayDate);
                     });
                 </script>
                 <tr>
@@ -592,6 +736,17 @@
                                     <div><span id="paymentMethodName">
                                             <script>
                                                 $("#paymentMethodName").html(getRevenueBreakdownSessionData?.paymentMethodData?.paymentMethodName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Status:</div>
+                                    <div><span id="statusName">
+                                            <script>
+                                                $("#statusName").html(getRevenueBreakdownSessionData?.statusData?.statusName);
                                             </script>
                                         </span></div>
                                 </div>

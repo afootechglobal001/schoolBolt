@@ -998,6 +998,7 @@ header
 .dashboard-statistics-wrapper {
   position: relative;
   display: flex;
+  align-items: flex-start;
   gap: 20px;
   width: 100%;
 }
@@ -1006,6 +1007,10 @@ header
   display: flex;
   width: calc(100% - 320px);
   min-height: 500px;
+}
+
+.dashboard-statistics-wrapper .left-report-dashbaord-container {
+  min-height: 0px !important;
 }
 
 .statistics-chart-back-div {
@@ -1627,12 +1632,16 @@ header
   color: var(--primary-color);
 }
 
-.table-div .table .tb-row .READY {
-  color: rgba(19, 141, 117);
+.table-div .table .tb-row .SUCCESSFULSTATUS {
+   color: rgba(9, 172, 77, 0.9);
 }
 
-.table-div .table .tb-row .PROCESSING {
-  color: rgba(238, 139, 19);
+.table-div .table .tb-row .PENDINGSTATUS {
+  color: rgba(218, 90, 31, 0.87);
+}
+
+.table-div .table .tb-row .CANCLLEDSTATUS {
+  color: rgba(255, 0, 0);
 }
 
 .table-div .table .tb-row .order-status.PENDING {
@@ -5822,6 +5831,18 @@ header
   color: transparent;
 }
 
+.new-statistics-back-div .new-statistics-div .statistics-inner-div .report-statistics-text h2 {
+  font-size: 17px;
+}
+
+.new-statistics-back-div .new-statistics-div .statistics-inner-div .report-statistics-text p {
+  font-size: 14px;
+}
+
+.new-statistics-back-div .new-statistics-div .statistics-inner-div .report-statistics-text span {
+  font-size: 10px;
+}
+
 .new-statistics-back-div
   .new-statistics-div
   .statistics-inner-div
@@ -5872,6 +5893,29 @@ header
   .new-statistics-back-div .new-statistics-div {
     width: 100%;
   }
+  .new-statistics-back-div
+  .new-statistics-div
+  .statistics-inner-div
+  .statistics-text
+  p {
+  font-size: 3.5vw;
+}
+
+.new-statistics-back-div
+  .new-statistics-div
+  .statistics-inner-div
+  .statistics-text
+  span {
+  font-size: 10px;
+}
+
+.new-statistics-back-div
+  .new-statistics-div
+  .statistics-inner-div
+  .statistics-text
+  h2 {
+  font-size: 4vw;
+}
 }
 
 
@@ -6013,6 +6057,14 @@ header
   background: var(--secondary-color);
 }
 
+.fetch-report-back-div .report-dashbaord-wrapper{
+  width: calc(100% - 40px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 20px;
+}
 
 @media all and (max-width:820px) {
   .report-select-back-div {
@@ -6083,9 +6135,9 @@ header
 
 .content-wrapper .header-div .title-nav-back-div .nav-ul-div ul li{
 	list-style: none;
-	font-size: 12px;
+	font-size: 11px;
 	padding: 0px 25px;
-	min-height: 35px;
+	min-height: 40px;
 	border-radius: 25px;
 	color: var(--sub-body-color);
 	font-family: sub-title-font;
@@ -6093,53 +6145,41 @@ header
 	box-shadow: 0px 0px 110px rgba(0, 0, 0, 0.1);
 	display: flex;
 	align-items: center;
-  justify-content: center;
-	gap: 2px;
-	transition: all 0.3s ease;
+	gap: 5px;
 	cursor: pointer;
+	transition:all 0.2s ease-in 0.2s;
+}
+
+.content-wrapper .header-div .title-nav-back-div .nav-ul-div ul li i{
+	font-size: 9px;
+	color: var(--sub-body-color);
+	transition:all 0.2s ease-in 0.2s;
+}
+
+.content-wrapper .header-div .title-nav-back-div .nav-ul-div ul li:hover, 
+.content-wrapper .header-div .title-nav-back-div .nav-ul-div .active-li{
+	color: var(--secondary-color);
+  background: var(--white-color);
+}
+
+.content-wrapper .header-div .title-nav-back-div .nav-ul-div ul li:hover i,
+.content-wrapper .header-div .title-nav-back-div .nav-ul-div ul .active-li i{
+	color: var(--secondary-color);
+}
+
+.content-wrapper .header-div .title-nav-back-div .nav-ul-div strong{
+	font-family: sub-title-font;
+	color: var(--primary-color);
+	font-size: 16px;
+}
+
+.content-wrapper .header-div .title-nav-back-div .nav-ul-div span{
+	font-family: sub-title-font;
+	color: var(--sub-body-color);
 }
 
 .content-wrapper .header-div .title-nav-back-div .nav-ul-div ul li img{
 	width: 14px;
-}
-
-.content-wrapper .header-div .title-nav-back-div .nav-ul-div ul .SUCCESSFUL {
-	background: rgba(46,204,113,.1);
-	color: rgba(9,172,77,.9);
-	border: rgba(46,204,113,.2) 1px solid;
-}
-
-.content-wrapper .header-div .title-nav-back-div .nav-ul-div ul .PENDING {
-	background: rgba(252,164,57,.1);
-	color: rgba(218,90,31,.87);
-	border: rgba(252,164,57,.2) 1px solid;
-}
-
-.content-wrapper .header-div .title-nav-back-div .nav-ul-div ul .CANCELLED {
-	background: rgba(255,0,0,.1);
-	color: rgba(255,0,0,.8);
-	border: rgba(255,0,0,.2) 1px solid;
-}
-
-.content-wrapper .header-div .title-nav-back-div .nav-ul-div ul .SUCCESSFUL:hover,
-.content-wrapper .header-div .title-nav-back-div .nav-ul-div ul .SUCCESSFUL.active-li {
-	background: rgba(46,204,113,.20);
-	color: rgba(9,172,77,1);
-	border: rgba(46,204,113,.4) 1px solid;
-}
-
-.content-wrapper .header-div .title-nav-back-div .nav-ul-div ul .PENDING:hover,
-.content-wrapper .header-div .title-nav-back-div .nav-ul-div ul .PENDING.active-li {
-	background: rgba(252,164,57,.20);
-	color: rgba(218,90,31,1);
-	border: rgba(252,164,57,.4) 1px solid;
-}
-
-.content-wrapper .header-div .title-nav-back-div .nav-ul-div ul .CANCELLED:hover,
-.content-wrapper .header-div .title-nav-back-div .nav-ul-div ul .CANCELLED.active-li {
-	background: rgba(255,0,0,.20);
-	color: rgba(255,0,0,1);
-	border: rgba(255,0,0,.4) 1px solid;
 }
 
 .content-wrapper .header-div .title-nav-back-div .nav-ul-div strong{
