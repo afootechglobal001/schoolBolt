@@ -166,7 +166,7 @@
                                     text += `
                                     <tr class="tb-row table-row">
                                     <td>${no}</td>
-                                    <td>${subject.subjectName || '-'}</td>
+                                    <td class="name-td">${subject.subjectName || '-'}</td>
                                     <td>${assessment.markObtainable || '-'}</td>
                                     <td>${assessment.markObtained || '-'}</td>
                                     <td>${assessment.percentage ? assessment.percentage + '%' : '-'}</td>

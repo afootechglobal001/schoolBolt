@@ -100,7 +100,7 @@
                             <td>${departmentName}</td>
                             <td>${className}</td>
                             <td>${armName}</td>
-                            <td>${subjectName}</td>`;
+                            <td class="name-td">${subjectName}</td>`;
 
                             if (teacherData && typeof teacherData === "object") {
                                 const fullname = teacherData.fullname;
@@ -108,7 +108,7 @@
                                 const profilePix = teacherData.profilePix ? teacherData.profilePix : "default.jpg";
 
                                 html += `
-                                    <td>
+                                    <td class="name-td">
                                         <div class="text-back-div">
                                             <div class="image-div general-passport">
                                                 <img src="${websiteUrl}/uploaded_files/staffPix/${profilePix}" alt="${fullname}" />

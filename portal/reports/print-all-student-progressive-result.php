@@ -111,7 +111,7 @@
                             subjectTable += `
                                 <tr class="tb-row table-row">
                                 <td>${idx + 1}</td>
-                                <td>${subjectName}</td>
+                                <td class="name-td">${subjectName}</td>
                             `;
                             
                             //// Fill in scores for each class ////

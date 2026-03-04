@@ -239,7 +239,7 @@
                             uniqueSubjects.forEach((subjectName, index) => {
                                 const row = $('<tr class="tb-row table-row"></tr>');
                                 row.append($('<td></td>').text(index + 1));
-                                row.append($('<td></td>').text(subjectName));
+                                row.append($('<td class="name-td"></td>').text(subjectName));
 
                                 for (let i = 2; i < tableTitles.length; i++) {
                                     const title = tableTitles[i];

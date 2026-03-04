@@ -247,7 +247,7 @@
                                 const tr = $('<tr class="tb-row table-row"></tr>');
                                 const name = `${student.surName} ${student.firstName} ${student.otherNames || ""}`.trim();
                                 tr.append(`<td>${idx + 1}</td>`);
-                                tr.append(`<td>${name}</td>`);
+                                tr.append(`<td class="name-td">${name}</td>`);
 
                                 for (let i = 2; i < tableTitles.length; i++) {
                                     const header = tableTitles[i];

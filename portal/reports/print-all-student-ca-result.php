@@ -74,7 +74,7 @@
                         subjectTable += `
                                 <tr class="tb-row table-row">
                                     <td>${no}</td>
-                                    <td>${subject.subjectName}</td>
+                                    <td class="name-td">${subject.subjectName}</td>
                                     <td>${markObtainable ? markObtainable : '-'}</td>
                                     <td>${markObtained ? markObtained : '-'}</td>
                                     <td>${percentage ? percentage + '%' : '-'}</td>

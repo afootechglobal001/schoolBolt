@@ -143,7 +143,7 @@
                                 const fullName = `${student.surName} ${student.otherNames || ''}`.trim();
 
                                 row.append($('<td></td>').text(index + 1));
-                                row.append($('<td></td>').text(fullName));
+                                row.append($('<td class="name-td"></td>').text(fullName));
 
                                 for (let i = 2; i < tableTitles.length; i++) {
                                     const title = tableTitles[i];

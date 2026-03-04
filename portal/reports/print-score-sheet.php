@@ -82,7 +82,7 @@
                                 const fullName = `${student.surName} ${student.firstName} ${student.otherNames || ''}`.trim();
 
                                 row.append($('<td></td>').text(index + 1)); // SN
-                                row.append($('<td></td>').text(fullName));  // Full Name
+                                row.append($('<td class="name-td"></td>').text(fullName));  // Full Name
 
                                 for (let i = 2; i < tableTitles.length; i++) {
                                     row.append($('<td></td>').text('')); // Empty cells
