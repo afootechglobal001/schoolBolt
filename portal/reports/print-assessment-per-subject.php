@@ -93,7 +93,7 @@
                                         text +=`
                                             <tr class="tb-row">
                                                 <td>${no}</td>
-                                                <td>${fullname}</td>
+                                                <td class="name-td">${fullname}</td>
                                                 <td>${markObtained}</td>
                                                 <td>${percentage}</td>
                                                 <td>${position}</td>

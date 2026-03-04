@@ -198,7 +198,6 @@
 	padding: 10px 20px;
 	font-size: 12px;
 	font-family: title-font;
-	font-weight: bold;
 	color: var(--sub-body-color);
 	border: #afafaf 2px solid;
 }
@@ -209,8 +208,13 @@
 }
 
 .table-div .table .table-row td{
-    padding: 5px;
-	font-size: 11px;
+    padding: 4px;
+	text-align: center;
+	font-size: 12px;
+}
+
+.table-div .table .table-row .name-td{
+	text-align: left;
 }
 
 .table-div .table tbody tr:nth-child(even) {

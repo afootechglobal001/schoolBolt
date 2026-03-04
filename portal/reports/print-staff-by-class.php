@@ -93,7 +93,7 @@
                                         html += `
                                             <tr class="tb-row">
                                             <td>${sn}</td>
-                                            <td>${departmentName}</td>
+                                            <td class="name-td">${departmentName}</td>
                                             <td>${className} ${arm}</td>`;
 
                                         if (teacherData && typeof teacherData === "object") {
@@ -102,7 +102,7 @@
                                             const profilePix = teacherData.profilePix ? teacherData.profilePix : "default.jpg";
 
                                             html += `
-                                            <td>
+                                            <td class="name-td">
                                                 <div class="text-back-div">
                                                 <div class="image-div general-passport">
                                                     <img src="${websiteUrl}/uploaded_files/staffPix/${profilePix}" alt="${fullname}" />

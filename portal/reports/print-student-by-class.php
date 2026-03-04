@@ -96,7 +96,7 @@
                                         text +=`
                                             <tr class="tb-row">
                                                 <td>${no}</td>
-                                                <td>
+                                                <td class="name-td">
                                                     <div class="text-back-div">
                                                         <div class="image-div general-passport">
                                                             <img src="${studentPixPath}/${passport}" alt="${fullname}"/>

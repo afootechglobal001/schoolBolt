@@ -137,7 +137,7 @@
                             // SN
                             subjectTable += `<td>${index + 1}</td>`;
                             // SUBJECTS
-                            subjectTable += `<td>${subjectName}</td>`;
+                            subjectTable += `<td class="name-td">${subjectName}</td>`;
 
                             // Remaining dynamic titles (starting from index 2)
                             for (let i = 2; i < tableTitles.length; i++) {

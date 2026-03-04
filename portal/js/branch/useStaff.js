@@ -583,6 +583,9 @@ function _proceedComputeAssessment() {
 			return;
 		}
 
+		// Save to sessionStorage
+  		sessionStorage.setItem('selectedAssessment', assessmentId);
+
 		const btn_text = $("#submitBtn").html();
 		$("#submitBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
 		$("#submitBtn").prop("disabled", true);
@@ -680,21 +683,19 @@ function _saveAssessment() {
 					if (info.success) {
 						_actionAlert(info.message, true);
 						_alertClose(2);
+						_printAssessmentPerSubject();
 						_getForm({page: 'compute_score_proceed', layer: 2, url: adminPortalLocalUrl});
 					} else {
 						_actionAlert(info.message, false);
 					}
-					$("#submitBtn").html(btn_text).prop("disabled", false);
 				},
 				error: function (error) {
 					_actionAlert('An error occurred while processing your request! Please Try Again', false);
-					$("#submitBtn").html(btn_text).prop("disabled", false);
 				}
 			});
 		}
 	} catch (error) {
 		_actionAlert('An unexpected error occurred! Please Try Again', false);
-		$("#submitBtn").prop("disabled", false);
 	}
 }
 
@@ -1060,5 +1061,45 @@ function _saveClassTeachersComment() {
 	} catch (error) {
 		_actionAlert('An unexpected error occurred! Please Try Again', false);
 		$("#submitBtn").prop("disabled", false);
+	}
+}
+
+function _printAssessmentPerSubject() {
+	let getEachStaffDetailsSession = JSON.parse(sessionStorage.getItem("getEachStaffDetailsSession"));
+	let getComputeScoreRecordDetailsSession = JSON.parse(sessionStorage.getItem("getComputeScoreRecordDetailsSession"));
+	let selectedAssessment = sessionStorage.getItem('selectedAssessment');
+
+	const departmentId = getComputeScoreRecordDetailsSession?.departmentData?.departmentId;
+	const classId = getComputeScoreRecordDetailsSession?.classData?.classId;
+	const armId = getComputeScoreRecordDetailsSession?.armData?.armId;
+	const subjectId = getComputeScoreRecordDetailsSession?.subjectData?.subjectId;
+
+	try {		
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/reports/print-assessment-per-subject?branchId=${getEachStaffDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&subjectId=${subjectId}&assessmentId=${selectedAssessment}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(),
+			success: function(info) {
+				if (info.success > 0) {
+					sessionStorage.setItem("printAssessmentSession", JSON.stringify(info));
+					window.open(`${websiteUrl}/reports/print-assessment-per-subject`, '_blank');
+				} else {
+					_actionAlert(info.message, false);
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('Check your internet connection and try again.', false);
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
 }
