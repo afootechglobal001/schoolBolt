@@ -141,7 +141,7 @@
 
                             let text = `
                             <thead>
-                                <tr class="tb-col table-col">
+                                <tr class="tb-col table-col report-col">
                                     <th>SN</th>
                                     <th>SUBJECT</th>
                                     <th>MARK OBTAINABLE</th>
