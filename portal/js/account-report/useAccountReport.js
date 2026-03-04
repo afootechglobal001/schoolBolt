@@ -527,8 +527,9 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
                   buttonHtml = `
                     <td>
                       <button class="btn view-btn"
+                          id="refreshBtn"
                           title="Click to refresh payment"
-                          onclick="verifyPaystackTransaction('${paymentId}');">
+                          onclick="_proceedVerifyPaystackTransaction('${paymentId}');">
                         REFRESH
                       </button>
                     </td>
@@ -634,24 +635,113 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
 	}
 }
 
-function verifyPaystackTransaction(reference, secretKey) {
-  fetch(`https://api.paystack.co/transaction/verify/${reference}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${secretKey}`,
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.status === true && data.data.status === "success") {
-        console.log("Payment verified:", data);
-      } else {
-        console.log("Verification failed:", data);
-      }
-    })
-    .catch((error) => {
-      console.error("Error: ", error);
-      _actionAlert("An unexpected error occurred! Please try again.", false);
+
+function _proceedVerifyPaystackTransaction(paymentId) {
+
+  try {
+    const btnText = $("#refreshBtn").html();
+    $("#refreshBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="10px" alt="Loading"/>');
+    $("#refreshBtn").prop("disabled", true);
+
+    $.ajax({
+      type: "GET",
+      url: `${endPoint}/admin/account-reports/verify-paystack-transaction?paymentId=${paymentId}`,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(true),
+      success: function (info) {
+        if (info.success===true) {
+          const branchId = info.branchId;
+          const paymentId = info.paymentId; 
+          const secretKey = info.secretKey;
+
+          _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText);
+        } else {
+          _actionAlert(data.message, false);
+          $("#refreshBtn").html(btn_text).prop("disabled", false);
+
+          const response = info.response;
+          if (response < 100) {
+            _logOut();
+          }
+        }
+      },
+      error: function(textStatus, errorThrown) {
+        console.error("AJAX Error: ", textStatus, errorThrown);
+        _actionAlert('Check your internet connection and try again.', false);
+        $("#refreshBtn").html(btnText).prop("disabled", false);
+      },
     });
+  } catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+    $("#refreshBtn").html(btnText).prop("disabled", false);
+	}
+}
+
+function _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText) {
+
+  $.ajax({
+    url: `https://api.paystack.co/transaction/verify/${paymentId}`,
+    type: "GET",
+    headers: {
+      "Authorization": "Bearer " + secretKey,
+      "Content-Type": "application/json"
+    },
+    success: function (data) {
+      console.log(data);
+      if (data.status === true && data.data.status === "abandoned") {
+        _callVeifyPaymentSuccess(paymentId, branchId, btnText);
+      } else {
+        _actionAlert('Transaction is still in pending status', false);
+        $("#refreshBtn").html(btnText).prop("disabled", false);
+      }
+
+    },
+    error: function (xhr, status, error) {
+      console.error("Error:", error);
+      _actionAlert("An unexpected error occurred! Please try again.", false);
+      $("#refreshBtn").html(btnText).prop("disabled", false);
+    }
+  });
+
+}
+
+function _callVeifyPaymentSuccess(paymentId, branchId, btnText) {
+ let sessionPayDate = sessionStorage.getItem("sessionPayDate");
+  try {
+    const formData = {
+      paymentId: paymentId,
+      branchId: branchId,
+    };
+
+    $.ajax({
+      type: "POST",
+      url: `${endPoint}/parent/payment/payment-success`,
+      data: JSON.stringify(formData),
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      processData: false,
+      success: function (data) {
+        if (data.success) {
+         _actionAlert(data.message, true);
+          _getPaymentStatusNav({
+            divid: 'successfulPage',
+            page: 'successfulPage',
+            id: sessionPayDate,
+            url: adminPortalLocalUrl
+          });
+        } else {
+          _actionAlert(data.message, false);
+          $("#refreshBtn").html(btnText).prop("disabled", false);
+        }
+      },
+      error: function (error) {
+        console.log(error);
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }

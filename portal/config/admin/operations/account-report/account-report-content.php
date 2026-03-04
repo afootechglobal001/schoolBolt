@@ -386,6 +386,7 @@
                                     id: '<?php echo $id; ?>',
                                     url: adminPortalLocalUrl
                                 });
+                                 sessionStorage.setItem("sessionPayDate", '<?php echo $id; ?>');
                             </script>
                         </div>
                     </div>
