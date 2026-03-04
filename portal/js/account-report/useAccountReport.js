@@ -331,10 +331,6 @@ function _fetchRevenueBySessionAndTerm() {
     return;
   }
 
-  // Save to sessionStorage
-  sessionStorage.setItem('selectedSession', session);
-  sessionStorage.setItem('selectedTermId', termId);
-
   const btnText = $("#filterRevenueBtn").html();
   $("#filterRevenueBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="10px" alt="Loading"/>');
   $("#filterRevenueBtn").prop("disabled", true);
@@ -526,12 +522,20 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
                 if (statusId === '3') {
                   buttonHtml = `
                     <td>
-                      <button class="btn view-btn"
-                          id="refreshBtn"
+                      <div class="btn-div">
+                        <button class="btn view-btn"
+                          title="Click to view payment breakdown"
+                          onclick="_fetchRevenueById('${paymentId}');">
+                          VIEW DETAILS
+                        </button>
+
+                        <button class="btn view-btn print-btn"
+                          id="refreshBtn_${paymentId}"
                           title="Click to refresh payment"
                           onclick="_proceedVerifyPaystackTransaction('${paymentId}');">
-                        REFRESH
-                      </button>
+                          REFRESH
+                        </button>
+                      </div>
                     </td>
                   `;
                 } else {
@@ -639,9 +643,9 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
 function _proceedVerifyPaystackTransaction(paymentId) {
 
   try {
-    const btnText = $("#refreshBtn").html();
-    $("#refreshBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="10px" alt="Loading"/>');
-    $("#refreshBtn").prop("disabled", true);
+    const btnText = $(`#refreshBtn_${paymentId}`).html();
+    $(`#refreshBtn_${paymentId}`).html('<img src="' + websiteUrl + '/images/loading.gif" width="10px" alt="Loading"/>');
+    $(`#refreshBtn_${paymentId}`).prop("disabled", true);
 
     $.ajax({
       type: "GET",
@@ -658,7 +662,7 @@ function _proceedVerifyPaystackTransaction(paymentId) {
           _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText);
         } else {
           _actionAlert(data.message, false);
-          $("#refreshBtn").html(btn_text).prop("disabled", false);
+          $(`#refreshBtn_${paymentId}`).html(btn_text).prop("disabled", false);
 
           const response = info.response;
           if (response < 100) {
@@ -669,13 +673,13 @@ function _proceedVerifyPaystackTransaction(paymentId) {
       error: function(textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
         _actionAlert('Check your internet connection and try again.', false);
-        $("#refreshBtn").html(btnText).prop("disabled", false);
+        $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
       },
     });
   } catch (error) {
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
-    $("#refreshBtn").html(btnText).prop("disabled", false);
+    $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
 	}
 }
 
@@ -694,14 +698,14 @@ function _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText) {
         _callVeifyPaymentSuccess(paymentId, branchId, btnText);
       } else {
         _actionAlert('Transaction is still in pending status', false);
-        $("#refreshBtn").html(btnText).prop("disabled", false);
+        $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
       }
 
     },
     error: function (xhr, status, error) {
       console.error("Error:", error);
       _actionAlert("An unexpected error occurred! Please try again.", false);
-      $("#refreshBtn").html(btnText).prop("disabled", false);
+      $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
     }
   });
 
@@ -734,7 +738,7 @@ function _callVeifyPaymentSuccess(paymentId, branchId, btnText) {
           });
         } else {
           _actionAlert(data.message, false);
-          $("#refreshBtn").html(btnText).prop("disabled", false);
+          $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
         }
       },
       error: function (error) {

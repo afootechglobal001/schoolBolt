@@ -50,13 +50,13 @@
     align-items: center;
     gap: 5px;
     font-size: 13px;
-    font-family: sub-title-font;
+    font-family: title-font;
     color: var(--report-text-color);
 }
 
 .body-div .header-back-div .school-info-div .text strong {
     color: var(--sub-body-color);
-	font-family: body-font;
+	font-family: sub-title-font;
 	font-size: 12px;
 }
 
@@ -124,7 +124,7 @@
 }
 
 .top-containner-back-div .inner-div-cont .content-div .name{
-	font-size: 24px;
+	font-size: 22px;
 	font-family: title-font;
 	padding: 0px 2px;
 	color: var(--sub-body-color);
@@ -133,7 +133,7 @@
 .top-containner-back-div .inner-div-cont .content-div .details {
     height: auto;
     display: flex;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .top-containner-back-div .inner-div-cont .content-div .details span {
@@ -205,6 +205,10 @@
 .table-div .table .table-col th{
 	padding: 5px;
 	font-size: 9px;
+}
+
+.table-div .table .report-col th{
+	font-size: 10.7px;
 }
 
 .table-div .table .table-row td{
@@ -293,15 +297,14 @@
 .bottom-content-back-div .inner-container .content-container .list-content span {
     color: var(--sub-body-color);
     font-size: 12px;
-	font-family: body-font;
+	font-family: sub-title-font;
 	font-weight: 400;
 }
 
 .bottom-content-back-div .inner-container .content-container .list-content p {
     color: var(--sub-body-color);
     font-size: 12px;
-	font-family: sub-title-font;
-	font-weight: 700;
+	font-family: title-font;
 	text-decoration: underline;
 }
 
