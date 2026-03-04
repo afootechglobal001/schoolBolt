@@ -690,7 +690,7 @@ function _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText) {
     },
     success: function (data) {
       console.log(data);
-      if (data.status === true && data.data.status === "abandoned") {
+      if (data.status === true && data.data.status === "success") {
         _callVeifyPaymentSuccess(paymentId, branchId, btnText);
       } else {
         _actionAlert('Transaction is still in pending status', false);
