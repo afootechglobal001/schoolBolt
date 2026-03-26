@@ -57,7 +57,7 @@ function _loadStudentFundCallback(formData) {
   );
 
   const branchId = getEachBranchDetailsSession?.branchId;
-  const session = fetchAccountDepartmentClassParams?.sessionId;
+  const session = fetchAccountDepartmentClassParams?.session;
   const termId = fetchAccountDepartmentClassParams?.termId;
 
   const departmentId =

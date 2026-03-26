@@ -246,7 +246,16 @@
 <?php if ($page == 'accountSessionSelectForm') { ?>
     <div class="caption-div animated zoomIn">
         <div class="title-div">
-            <div class="title"><i class="bi-table"></i> SESSION & TERM SELECTION</div>
+            <?php if ($id=="payment") {
+                $pageTitle = "STUDENT PAYMENT";
+            } else if ($id=="debtors") {
+                $pageTitle = "VIEW DEPTORS";
+            } else if ($id=="activateResult") {
+                $pageTitle = "ACTIVATE ACADEMIC RESULT";
+            }
+            ?>
+
+            <div class="title"><i class="bi-table"></i> <?php echo $pageTitle; ?></div>
             <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i
                     class="bi-x-lg"></i></button>
         </div>
@@ -277,8 +286,13 @@
                 </script>
             </div>
 
-            <button class="btn" id="proceedBtn" title="Proceed Request"
+           <?php if ($id=="activateResult") { ?>
+                <button class="btn" id="proceedActivateResultBtn" title="Proceed Request"
+                onclick="_proceedActivateResult('<?php echo $id ?>');">PROCEED <i class="bi-arrow-right"></i> </button>
+            <?php } else { ?>
+                <button class="btn" id="proceedBtn" title="Proceed Request"
                 onclick="_proceedFetchAcountDepartmentClass('<?php echo $id ?>');">PROCEED <i class="bi-arrow-right"></i> </button>
+            <?php } ?>
         </div>
     </div>
 <?php } ?>
@@ -1189,14 +1203,36 @@
                                                     const passport = student.passport || "default.jpg";
                                                     const advancedBalance = student.advancedBalance;
                                                     const isDebtor = item.isDebtor;
+                                                    const isResultActivated = item.isResultActivated;
                                                     const debtorStatusColor = (isDebtor === "TRUE") ? "red-color" : "green-color";
                                                     const debtorImgStatusColor = (isDebtor === "TRUE") ? '<div class="status-icon debtor"><i class="bi-x"></i></div>' : '<div class="status-icon"><i class="bi-check"></i></div>';
+
+                                                    activateBtn = (isResultActivated === "TRUE")
+                                                        ? `
+                                                            <button class="btn view-btn"
+                                                                title="Click to deactivate student result"
+                                                                onclick="">
+                                                                DEACTIVATE RESULT
+                                                            </button>
+                                                        `
+                                                        : `
+                                                            <button class="btn view-btn"
+                                                                title="Click to activate student result"
+                                                                onclick="">
+                                                                ACTIVATE RESULT
+                                                            </button>
+                                                        `;
 
                                                     html += `
                                                 <tr class="tb-row">
                                                     <td>
                                                         <label class="custom-checkbox">
-                                                            <input type="checkbox" class="child" id="" name="studentId[]" data-value="">
+                                                            <input type="checkbox" 
+                                                                class="child" 
+                                                                name="studentId[]" 
+                                                                value="${studentId}" 
+                                                                data-value="${studentId}"
+                                                                ${isResultActivated === "TRUE" ? "checked" : ""}>
                                                             <span></span>
                                                         </label>
                                                     </td>
@@ -1233,11 +1269,7 @@
                                                     <td><s>N</s>${thousandSeperator(item.totalFeesPaid)}</td>
 
                                                     <td>
-                                                        <button class="btn view-btn"
-                                                            title="Click to make pay fees"
-                                                            onclick="">
-                                                            ACTIVATE RESULT
-                                                        </button>
+                                                        ${activateBtn}
                                                     </td>
                                                 </tr>`;
                                                 });
