@@ -181,7 +181,7 @@ function wallet_srch_custom(text) {
   $(".branch-wallet-custom-srch-div").fadeIn(500);
 }
 
-///// Dashbaord Custom Revenue Filtering ////////
+///// Branch Wallet Filtering ////////
 function _fetchBranchWalletFiltering(filterWith, text) {
   $("#srch-wallet-text").html(text);
   $(".branch-wallet-custom-srch-div").fadeOut(500);
@@ -248,6 +248,7 @@ function _fetchBranchWalletFiltering(filterWith, text) {
   _walletHistoryFiltering(dateFrom, dateTo);
 }
 
+///// Branch Wallet Custom Filtering ////////
 function _fetchCustomWalletHistoryFiltering() {
   let issueCount = 0;
 
@@ -330,6 +331,7 @@ function _walletHistoryFiltering(dateFrom, dateTo) {
 	$("#get-more-third-layer").fadeOut(500);
 }
 
+///// Render Fetch Branch Wallet History ////
 function _renderFetchBranchWalletTransactions(data, start) {
   return data
     .map(
@@ -367,6 +369,7 @@ function _renderFetchBranchWalletTransactions(data, start) {
     .join("");
 }
 
+///// Initialize Fetch Branch Wallet History ////
 function _initFetchBranchWalletTransactions(data) {
   const paginator = new Paginator(
     data,

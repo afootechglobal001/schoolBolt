@@ -3547,7 +3547,7 @@
         </div>
 
         <div class="user-managment-list staff-managment-list" title="Student Payment"
-            onclick="_getForm({page: 'accountSessionSelectForm', layer:2, url: adminPortalLocalUrl});">
+            onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'payment', url: adminPortalLocalUrl});">
             <div class="inner-div">
                 <div class="icon-div">
                     <img src="<?php echo $websiteUrl ?>/images/credit-card.png" alt="Student Payment" />
@@ -3560,7 +3560,7 @@
         </div>
 
         <div class="user-managment-list staff-managment-list" title="View Debtors"
-            onclick="_getForm({page: 'accountSessionSelectForm', layer:2, url: adminPortalLocalUrl});">
+            onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'debtors', url: adminPortalLocalUrl});">
             <div class="inner-div">
                 <div class="icon-div">
                     <img src="<?php echo $websiteUrl ?>/images/branch-account.png" alt="View Debtors" />
@@ -3573,7 +3573,7 @@
         </div>
 
         <div class="user-managment-list staff-managment-list" title="Activate Academic Result"
-            onclick="_getForm({page: 'accountSessionSelectForm', layer:2, url: adminPortalLocalUrl});">
+            onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'activateResult', url: adminPortalLocalUrl});">
             <div class="inner-div">
                 <div class="icon-div">
                     <img src="<?php echo $websiteUrl ?>/images/double-check.png" alt="Activate Academic Result" />

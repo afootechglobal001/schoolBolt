@@ -41,21 +41,21 @@
             <div class="btn-div">
                 <div class="div-in">
                     <ul>
-                        <li class="active" title="Dashboard" id="studentDashbaord" onclick="_getActiveStudentPage({divid: 'studentDashbaord', page: 'studentDashbaord', url: parentPortalLocalUrl});"><i class="bi-speedometer2"></i> Dashboard</li>
-                        <li title="Student Profile" id="studentProfile" onclick="_getActiveStudentPage({divid: 'studentProfile', page: 'studentProfile', url: parentPortalLocalUrl});"><i class="bi-person-lines-fill"></i> Student Profile</li>
+                        <li class="active" title="Dashboard" id="studentDashbaord" onclick="_getActiveStudentPortalPage({divid: 'studentDashbaord', page: 'studentDashbaord', url: parentPortalLocalUrl});"><i class="bi-speedometer2"></i> Dashboard</li>
+                        <li title="Student Profile" id="studentProfile" onclick="_getActiveStudentPortalPage({divid: 'studentProfile', page: 'studentProfile', url: parentPortalLocalUrl});"><i class="bi-person-lines-fill"></i> Student Profile</li>
                         <li title="Pay Fees" class="hide-li" id="payFees" onclick="_fetchFeesToPay();"><i class="bi-credit-card"></i> Pay Fees</li>
-                        <li title="Payment History" class="hide-li" id="paymentHistory" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-clock-history"></i> Payment History</li>
+                        <li title="Payment History" class="hide-li" id="paymentHistory" onclick="_getActiveStudentPortalPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-clock-history"></i> Payment History</li>
                         <!-- <li title="Attendance" id="attendance" onclick=""><i class="bi-person-bounding-box"></i> Attendance</li>
                         <li title="Time Table" id="timeTable" onclick=""><i class="bi-bell"></i> Time Table</li> -->
-                        <li title="View Result"  class="hide-li" id="studentResult" onclick="_getActiveStudentPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});"><i class="bi-printer"></i> View Result</li>
+                        <li title="View Result"  class="hide-li" id="studentResult" onclick="_getActiveStudentPortalPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});"><i class="bi-printer"></i> View Result</li>
                         <!-- <li title="Assignment" id="assignment" onclick=""><i class="bi-bell"></i> Assignment</li> -->
                         <li title="Other Links"><i class="bi-three-dots-vertical"></i>
                             <ul>
-                                <li title="Dashboard" class="active" onclick="_getActiveStudentPage({divid: 'studentDashbaord', page: 'studentDashbaord', url: parentPortalLocalUrl});"><i class="bi-speedometer2"></i> <span>Dashboard</span></li>
-                                <li title="Student Profile" onclick="_getActiveStudentPage({divid: 'studentProfile', page: 'studentProfile', url: parentPortalLocalUrl});"><i class="bi-person-lines-fill"></i> <span>Student Profile</span></li>
+                                <li title="Dashboard" class="active" onclick="_getActiveStudentPortalPage({divid: 'studentDashbaord', page: 'studentDashbaord', url: parentPortalLocalUrl});"><i class="bi-speedometer2"></i> <span>Dashboard</span></li>
+                                <li title="Student Profile" onclick="_getActiveStudentPortalPage({divid: 'studentProfile', page: 'studentProfile', url: parentPortalLocalUrl});"><i class="bi-person-lines-fill"></i> <span>Student Profile</span></li>
                                 <li title="Pay Fees" onclick="_fetchFeesToPay();"><i class="bi-credit-card-2-back"></i> <span>Pay Fees</span></li>
-                                <li title="Payment History" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-clock-history"></i> <span>Payment History</span></li>
-                                <li title="View Result" id="studentResult" onclick="_getActiveStudentPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});"><i class="bi-printer"></i> <span>View Result</span></li>
+                                <li title="Payment History" onclick="_getActiveStudentPortalPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-clock-history"></i> <span>Payment History</span></li>
+                                <li title="View Result" id="studentResult" onclick="_getActiveStudentPortalPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});"><i class="bi-printer"></i> <span>View Result</span></li>
                             </ul>
                         </li>
                     </ul>
@@ -65,7 +65,7 @@
             <div class="field-back-div">
                 <div class="field-inner-div" id="getStudentDetails">
                     <script>
-                        _getActiveStudentPage({
+                        _getActiveStudentPortalPage({
                             divid: 'studentDashbaord',
                             page: 'studentDashbaord',
                             url: parentPortalLocalUrl
@@ -101,7 +101,7 @@
             <div class="text">Assignment</div>
         </div> -->
 
-        <div class="card-div" title="View Result" id="studentResult" onclick="_getActiveStudentPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});">
+        <div class="card-div" title="View Result" id="studentResult" onclick="_getActiveStudentPortalPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});">
             <div class="pix"><img src="<?php echo $websiteUrl?>/images/print-result.jpg" alt="View Result"></div>
             <div class="text">View Result</div>
         </div>
@@ -482,7 +482,7 @@
             <p>Contact the admin on <strong id="branchNumber"><script>$("#branchNumber").html(studentPaymentSession.branchNumber);</script></strong> for payment activation.</p>
 
             <div class="btn-div">
-                <button class="btn" id="submitBtn" title="VIEW PAYMENT HISTORY" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl}); _alertClose(2)"><i class="bi-eye"></i> VIEW PAYMENT HISTORY </button>
+                <button class="btn" id="submitBtn" title="VIEW PAYMENT HISTORY" onclick="_getActiveStudentPortalPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl}); _alertClose(2)"><i class="bi-eye"></i> VIEW PAYMENT HISTORY </button>
                 <a id="callLink" href="tel:" title="Call Customer Care">
                 <button class="btn whatsapp-btn" id="submitBtn" title="PLACE A CALL ON THIS NUMBER" onclick=""><i class="bi-telephone-outbound-fill"></i> </button></a>
             </div>
@@ -515,7 +515,7 @@
             <div class="img"><img src="<?php echo $websiteUrl?>/images/success.gif"/></div>
             <h2>PAYMENT SUCCESSFUL</h2>
             <div class="btn-div">
-                <button class="btn done-btn" onclick="_getActiveStudentPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl}); _alertClose(2)">DONE</button>
+                <button class="btn done-btn" onclick="_getActiveStudentPortalPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl}); _alertClose(2)">DONE</button>
             </div>
         </div>
     </div>

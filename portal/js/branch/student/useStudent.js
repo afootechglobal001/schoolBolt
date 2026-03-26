@@ -1282,7 +1282,7 @@ function _fetchPaymentHistory() {
 							<tr class="tb-row">
 								<td>${no}</td>
 								<td>${paydate}</td>
-								<td><span onclick="_viewPaymentDetails('${session}','${termId}','${studentId}','${branchId}','${departmentId}','${classId}','${armId}');">${paymentId}</span></td>
+								<td><span>${paymentId}</span></td>
 								<td>
 									<div class="text-div">
 										<div>${session}</div> 

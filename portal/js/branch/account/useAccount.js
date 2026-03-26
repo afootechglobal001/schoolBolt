@@ -405,7 +405,7 @@ function _getSelectAccountSession(fieldId) {
 }
 
 //// Proceed Fetch Account Department Classes /////
-function _proceedFetchAcountDepartmentClass() {
+function _proceedFetchAcountDepartmentClass(accountViewMethod) {
   const sessionId = $("#sessionId").val();
   const termId = $("#termId").val();
 
@@ -424,6 +424,7 @@ function _proceedFetchAcountDepartmentClass() {
     sessionName: sessionName,
     termId: termId,
     termName: termName,
+    accountViewMethod: accountViewMethod
   };
 
   sessionStorage.setItem(
@@ -436,6 +437,7 @@ function _proceedFetchAcountDepartmentClass() {
     url: adminPortalLocalUrl,
   });
   _alertClose(2);
+
 }
 
 //////// Branch Department Class ///////////
@@ -481,81 +483,81 @@ function _fetchAccountBranchDepartmentClass() {
             const classData = department.classData;
 
             text += `
-                            <div class="pages-toggle-div">
-                                <div class="pages-toggle-title" onclick="_collapse('view${no}');" title="CLICK TO VIEW ${departmentName} DEPARTMENT CLASSES">
-                                    <h3>${departmentName}</h3>
-                                    <div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
-                                </div>
+                <div class="pages-toggle-div">
+                    <div class="pages-toggle-title" onclick="_collapse('view${no}');" title="CLICK TO VIEW ${departmentName} DEPARTMENT CLASSES">
+                        <h3>${departmentName}</h3>
+                        <div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
+                    </div>
 
-                                <div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
-                                    <div class="alert alert-success top-alert-div class-top-alert-div animated fadeIn">
-                                        <span><i class="bi-people-fill"></i> <span>${departmentName}</span> DEPARTMENT</span>       
-                                    </div>
+                    <div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
+                        <div class="alert alert-success top-alert-div class-top-alert-div animated fadeIn">
+                            <span><i class="bi-people-fill"></i> <span>${departmentName}</span> DEPARTMENT</span>       
+                        </div>
 
-                                    <div class="table-div animated fadeIn">
-                                        <table class="table" cellspacing="0" style="width:100%">
-                                            <thead>
-                                                <tr class="tb-col">
-                                                    <th>sn</th>
-                                                    <th>Department</th>
-                                                    <th>Class</th>
-													<th>Session</th>
-													<th>Term</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>`;
+                        <div class="table-div animated fadeIn">
+                            <table class="table" cellspacing="0" style="width:100%">
+                                <thead>
+                                    <tr class="tb-col">
+                                        <th>sn</th>
+                                        <th>Department</th>
+                                        <th>Class</th>
+                                        <th>Session</th>
+                                        <th>Term</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
 
-            let sn = 0;
-            if (classData.length > 0) {
-              for (let j = 0; j < classData.length; j++) {
-                const classInfo = classData[j];
-                const className = classInfo.className;
-                const classId = classInfo.classId;
-                const armData = classInfo.armData;
+                              let sn = 0;
+                              if (classData.length > 0) {
+                                for (let j = 0; j < classData.length; j++) {
+                                  const classInfo = classData[j];
+                                  const className = classInfo.className;
+                                  const classId = classInfo.classId;
+                                  const armData = classInfo.armData;
 
-                if (armData.length > 0) {
-                  for (let k = 0; k < armData.length; k++) {
-                    sn++;
-                    const armInfo = armData[k];
-                    const arm = armInfo.armName;
-                    const armId = armInfo.armId;
+                                  if (armData.length > 0) {
+                                    for (let k = 0; k < armData.length; k++) {
+                                      sn++;
+                                      const armInfo = armData[k];
+                                      const arm = armInfo.armName;
+                                      const armId = armInfo.armId;
 
-                    text += `
-															<tr class="tb-row">
-															<td>${sn}</td>
-															<td>${departmentName}</td>
-															<td>${className} ${arm}</td>
-															<td>${sessionName}</td>
-															<td>${termName}</td>
-															<td>
-																<div class="btn-div">
-																	<button class="btn view-btn" title="CLICK TO VIEW STUDENT PAYMENT" onclick="_fetchAccountStudentsByClass('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT PAYMENT</button>
-																</div>
-															</td>`;
-                  }
-                }
+                                      text += `
+                                        <tr class="tb-row">
+                                        <td>${sn}</td>
+                                        <td>${departmentName}</td>
+                                        <td>${className} ${arm}</td>
+                                        <td>${sessionName}</td>
+                                        <td>${termName}</td>
+                                        <td>
+                                          <div class="btn-div">
+                                            <button class="btn view-btn" title="CLICK TO VIEW STUDENT" onclick="_fetchAccountStudentsByClass('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT PAYMENT</button>
+                                          </div>
+                                        </td>`;
+                                    }
+                                  }
+                                }
+                              }
+                              text += `</tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>`;
               }
-            }
-            text += `</tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>`;
-          }
-          $("#pageContent").html(text);
-        } else {
-          _actionAlert(info.message, false);
-          $("#pageContent").html(`
-                        <tbody>
-                            <tr>
-                                <td colspan="15">
-                                    <div class="false-notification-div">
-                                        <p>${info.message}</p>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>`);
+              $("#pageContent").html(text);
+            } else {
+              _actionAlert(info.message, false);
+              $("#pageContent").html(`
+            <tbody>
+                <tr>
+                    <td colspan="15">
+                        <div class="false-notification-div">
+                            <p>${info.message}</p>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>`);
 
           if (info.response < 100) {
             _logOut();
@@ -585,6 +587,7 @@ function _fetchAccountStudentsByClass(departmentId, classId, armId) {
   const branchId = getEachBranchDetailsSession?.branchId;
   const session = fetchAccountDepartmentClassParams?.sessionId;
   const termId = fetchAccountDepartmentClassParams?.termId;
+  const accountViewMethod = fetchAccountDepartmentClassParams?.accountViewMethod;
 
   $("#get-more-div-secondary")
     .css({
@@ -606,11 +609,25 @@ function _fetchAccountStudentsByClass(departmentId, classId, armId) {
             "useAccountStudentByClassSession",
             JSON.stringify(response),
           );
-          _getForm({
-            page: "viewAccountStudentByClass",
-            layer: 2,
-            url: adminPortalLocalUrl,
-          });
+          if (accountViewMethod==='payment') {
+            _getForm({
+              page: "viewAccountStudentByClassModal",
+              layer: 2,
+              url: adminPortalLocalUrl,
+            });
+          } else if (accountViewMethod==='debtors'){
+            _getForm({
+              page: "viewStudentDebtorsModal",
+              layer: 2,
+              url: adminPortalLocalUrl,
+            });
+          } else if (accountViewMethod==='activateResult'){
+            _getForm({
+              page: "activateStudentResultModal",
+              layer: 2,
+              url: adminPortalLocalUrl,
+            });
+          }
         } else {
           _alertClose(2);
           _actionAlert(response.message, false);
@@ -694,6 +711,7 @@ function _fetchAccountFeesToPay(
             classId,
             armId,
             studentId,
+            action,
           ),
         ); // retry if needed
       });
@@ -709,6 +727,7 @@ function _fetchAccountFeesToPay(
         classId,
         armId,
         studentId,
+        action,
       ),
     ); // retry if needed
   }
@@ -1060,4 +1079,98 @@ function _schoolBoltChargesPaymentAction(action, branchId, paymentId, btnText) {
     );
     _btnDisable("paymentBtn", btnText, false);
   }
+}
+
+///// Fetch Debtor Details /////
+function _fetchEachSudentDebtors(
+  branchId,
+  session,
+  termId,
+  departmentId,
+  classId,
+  armId,
+  studentId,
+) {
+  $("#get-more-third-layer")
+    .css({
+      display: "flex",
+      "justify-content": "center",
+      "align-items": "center",
+    })
+    .fadeIn(500);
+  try {
+    //// call endpoint //////
+    _callFetchEndPoints({
+      url: `admin/branch/account/get-fees-to-pay?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}`,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success && response.data?.length > 0) {
+          sessionStorage.setItem(
+            "useAccountFessToPaySession",
+            JSON.stringify(response),
+          );
+          _getFetchEachAccountStudent(studentId);
+            _getForm({
+              page: "branchStudentDebtorsForm",
+              layer: 3,
+              url: adminPortalLocalUrl,
+            });
+        } else {
+          _alertClose(3);
+          _actionAlert(response.message, false);
+        }
+      })
+      .catch((error) => {
+        _alertClose(3);
+        console.error("Error:", error);
+        _callAjaxError(() =>
+          _fetchEachSudentDebtors(
+            branchId,
+            session,
+            termId,
+            departmentId,
+            classId,
+            armId,
+            studentId,
+          ),
+        ); // retry if needed
+      });
+  } catch (error) {
+    _alertClose(3);
+    console.error("Error:", error);
+    _callAjaxError(() =>
+      _fetchEachSudentDebtors(
+        branchId,
+        session,
+        termId,
+        departmentId,
+        classId,
+        armId,
+        studentId,
+      ),
+    ); // retry if needed
+  }
+}
+
+/// filter Combo Product Data ///
+function _filtersActivateStudents(value) {
+  $("#accountPageContent .tb-row").each(function () {
+    var text = $(this).text();
+    text.toLowerCase().indexOf(value.toLowerCase()) > -1
+      ? $(this).show()
+      : $(this).hide();
+  });
+}
+
+function _checkAll(){
+  $(document).ready(function() {
+    $('#parent').on('change', function() {
+        $('.child').prop('checked', this.checked);
+    });
+    $('.child').on('change', function() {
+        $('#parent').prop('checked', $('.child:checked').length===$('.child').length);
+    });
+});
 }
