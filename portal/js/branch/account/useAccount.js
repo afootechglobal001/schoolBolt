@@ -406,7 +406,7 @@ function _getSelectAccountSession(fieldId) {
 
 //// Proceed Fetch Account Department Classes /////
 function _proceedFetchAcountDepartmentClass(accountViewMethod) {
-  const sessionId = $("#sessionId").val();
+  const session = $("#sessionId").val();
   const termId = $("#termId").val();
 
   // Get the selected text (name)
@@ -420,7 +420,7 @@ function _proceedFetchAcountDepartmentClass(accountViewMethod) {
   if (issueCount > 0) return;
 
   const fetchAccountDepartmentClassParams = {
-    sessionId: sessionId,
+    session: session,
     sessionName: sessionName,
     termId: termId,
     termName: termName,
@@ -440,6 +440,85 @@ function _proceedFetchAcountDepartmentClass(accountViewMethod) {
 
 }
 
+//// Proceed Fetch Account Department Classes /////
+function _proceedActivateResult(accountViewMethod) {
+  const session = $("#sessionId").val();
+  const termId = $("#termId").val();
+
+  // Get the selected text (name)
+  const sessionName = $("#sessionId option:selected").text();
+  const termName = $("#termId option:selected").text();
+
+  let issueCount = 0;
+  issueCount += _validateEmptyValue("sessionId", "SESSION");
+  issueCount += _validateEmptyValue("termId", "TERM");
+
+  if (issueCount > 0) return;
+
+  const fetchAccountDepartmentClassParams = {
+    session: session,
+    sessionName: sessionName,
+    termId: termId,
+    termName: termName,
+    accountViewMethod: accountViewMethod
+  };
+
+   ///// Gather form data ////
+    const formData = {
+      session: session,
+      termId: termId,
+    };
+
+  sessionStorage.setItem(
+    "fetchAccountDepartmentClassParams",
+    JSON.stringify(fetchAccountDepartmentClassParams),
+  );
+
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+
+  try {
+    const btnText = $("#proceedActivateResultBtn").html();
+    _btnDisable("proceedActivateResultBtn", btnText, true);
+
+    _callRawEndPoints({
+      url: `admin/branch/account/student-result/confirm-result-published?branchId=${getEachBranchDetailsSession?.branchId}`,
+      formData,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success === true) {
+            _alertClose(2);
+            _getActiveBranchPage({
+              divid: "branchDepartmentClass",
+              page: "branchDepartmentClass",
+              url: adminPortalLocalUrl,
+            });
+        } else {
+          _showCustomConfirm({
+            title: "Unable to Proceed",
+            message: response.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+          _btnDisable("proceedActivateResultBtn", btnText, false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() => _proceedActivateResult(accountViewMethod)); // retry if needed
+        _btnDisable("proceedActivateResultBtn", btnText, false);
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _proceedActivateResult(accountViewMethod));
+    _btnDisable("proceedActivateResultBtn", btnText, false);
+  }
+}
+
 //////// Branch Department Class ///////////
 function _fetchAccountBranchDepartmentClass() {
   let getEachBranchDetailsSession = JSON.parse(
@@ -451,6 +530,7 @@ function _fetchAccountBranchDepartmentClass() {
 
   const sessionName = fetchAccountDepartmentClassParams?.sessionName;
   const termName = fetchAccountDepartmentClassParams?.termName;
+  const accountViewMethod = fetchAccountDepartmentClassParams?.accountViewMethod;
 
   $("#pageContent")
     .html(
@@ -523,6 +603,20 @@ function _fetchAccountBranchDepartmentClass() {
                                       const arm = armInfo.armName;
                                       const armId = armInfo.armId;
 
+                                      if (accountViewMethod==="activateResult") {
+                                          showBtn=`
+                                            <div class="btn-div">
+                                              <button class="btn view-btn" title="CLICK TO VIEW STUDENT" onclick="_fetchApprovedStudentBySchoolBolt('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT PAYMENT</button>
+                                            </div>
+                                          `;
+                                      } else {
+                                        showBtn=`
+                                            <div class="btn-div">
+                                              <button class="btn view-btn" title="CLICK TO VIEW STUDENT" onclick="_fetchAccountStudentsByClass('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT PAYMENT</button>
+                                            </div>
+                                          `;
+                                      }
+
                                       text += `
                                         <tr class="tb-row">
                                         <td>${sn}</td>
@@ -531,9 +625,7 @@ function _fetchAccountBranchDepartmentClass() {
                                         <td>${sessionName}</td>
                                         <td>${termName}</td>
                                         <td>
-                                          <div class="btn-div">
-                                            <button class="btn view-btn" title="CLICK TO VIEW STUDENT" onclick="_fetchAccountStudentsByClass('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT PAYMENT</button>
-                                          </div>
+                                          ${showBtn}
                                         </td>`;
                                     }
                                   }
@@ -585,7 +677,7 @@ function _fetchAccountStudentsByClass(departmentId, classId, armId) {
   );
 
   const branchId = getEachBranchDetailsSession?.branchId;
-  const session = fetchAccountDepartmentClassParams?.sessionId;
+  const session = fetchAccountDepartmentClassParams?.session;
   const termId = fetchAccountDepartmentClassParams?.termId;
   const accountViewMethod = fetchAccountDepartmentClassParams?.accountViewMethod;
 
@@ -645,6 +737,65 @@ function _fetchAccountStudentsByClass(departmentId, classId, armId) {
     console.error("Error:", error);
     _callAjaxError(() =>
       _fetchAccountStudentsByClass(depatmentId, classId, armId),
+    ); // retry if needed
+  }
+}
+
+///// Fetch Account Students By Class /////
+function _fetchApprovedStudentBySchoolBolt(departmentId, classId, armId) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+  let fetchAccountDepartmentClassParams = JSON.parse(
+    sessionStorage.getItem("fetchAccountDepartmentClassParams"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+  const session = fetchAccountDepartmentClassParams?.session;
+  const termId = fetchAccountDepartmentClassParams?.termId;
+
+  $("#get-more-div-secondary")
+    .css({
+      display: "flex",
+      "justify-content": "center",
+      "align-items": "center",
+    })
+    .fadeIn(500);
+  try {
+    //// call endpoint //////
+    _callFetchEndPoints({
+      url: `admin/branch/account/student-result/fetch-student-approved-by-schoolbolt?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success && response.data?.length > 0) {
+          sessionStorage.setItem(
+            "useAccountStudentByClassSession",
+            JSON.stringify(response),
+          );
+          _getForm({
+            page: "activateStudentResultModal",
+            layer: 2,
+            url: adminPortalLocalUrl,
+          });
+        } else {
+          _alertClose(2);
+          _actionAlert(response.message, false);
+        }
+      })
+      .catch((error) => {
+        _alertClose(2);
+        console.error("Error:", error);
+        _callAjaxError(() =>
+          _fetchApprovedStudentBySchoolBolt(depatmentId, classId, armId),
+        ); // retry if needed
+      });
+  } catch (error) {
+    _alertClose(2);
+    console.error("Error:", error);
+    _callAjaxError(() =>
+      _fetchApprovedStudentBySchoolBolt(depatmentId, classId, armId),
     ); // retry if needed
   }
 }
@@ -805,7 +956,7 @@ function _proceedToPayment() {
   );
 
   const branchId = getEachBranchDetailsSession?.branchId;
-  const session = fetchAccountDepartmentClassParams?.sessionId;
+  const session = fetchAccountDepartmentClassParams?.session;
   const termId = fetchAccountDepartmentClassParams?.termId;
 
   const departmentId =
@@ -1007,7 +1158,7 @@ function _schoolBoltChargesPaymentAction(action, branchId, paymentId, btnText) {
     sessionStorage.getItem("useAccountStudentByClassSession"),
   );
 
-  const session = fetchAccountDepartmentClassParams?.sessionId;
+  const session = fetchAccountDepartmentClassParams?.session;
   const termId = fetchAccountDepartmentClassParams?.termId;
 
   const departmentId =

@@ -1565,6 +1565,7 @@ header
 }
 
 .table-div .table .tb-row .text-back-div {
+   position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1591,8 +1592,8 @@ header
 .table-div .table .tb-row .text-back-div .status-icon{
 	position: absolute;
 	padding: 1px;
-	margin-top: -34px;
-  margin-left: -5px;
+	top: -4px;
+  left: -2px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
