@@ -277,6 +277,14 @@ function _fetchCustomWalletHistoryFiltering() {
 
 ///// Fetch Branch Wallet History ////
 function _walletHistoryFiltering(dateFrom, dateTo) {
+	$("#get-more-third-layer")
+    .css({
+      display: "flex",
+      "justify-content": "center",
+      "align-items": "center",
+    })
+    .fadeIn(500);
+
   	let getEachBranchDetailsSession = JSON.parse(
 		sessionStorage.getItem("getEachBranchDetailsSession")
 	);
@@ -319,6 +327,7 @@ function _walletHistoryFiltering(dateFrom, dateTo) {
 		console.error("Error:", error);
 		_callCatchError(() => _walletHistoryFiltering(dateFrom, dateTo));
 	}
+	$("#get-more-third-layer").fadeOut(500);
 }
 
 function _renderFetchBranchWalletTransactions(data, start) {
