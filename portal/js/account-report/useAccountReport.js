@@ -166,8 +166,10 @@ function _reportRevenueFiltering(dateFrom, dateTo) {
         // Update Report Statistics info///
         $("#sumCreditCardPayments").html("<s>N</s>" + thousandSeperator(statistic.sumCreditCardPayments));
         $("#sumBankTransferPayments").html("<s>N</s>" + thousandSeperator(statistic.sumBankTransferPayments));
+         $("#sumManualPayments").html("<s>N</s>" + thousandSeperator(statistic.sumManualPayments));
         $("#countCreditCardPayments").html(statistic.countCreditCardPayments);
         $("#countBankTransferPayments").html(statistic.countBankTransferPayments);
+        $("#countManualPayments").html(statistic.countManualPayments);
 
         //// Update Dougnut Chart Revenue ///
         const dataPoints = [
@@ -178,6 +180,10 @@ function _reportRevenueFiltering(dateFrom, dateTo) {
           {
             label: "Bank Transfer",
             y: Number(statistic.sumBankTransferPayments) || 0,
+          },
+          {
+            label: "Manual Payment",
+            y: Number(statistic.sumManualPayments) || 0,
           },
         ];
 
@@ -216,6 +222,10 @@ function _reportRevenueFiltering(dateFrom, dateTo) {
                 {
                   label: "Bank Transfer",
                   y: parseInt(statistic.countBankTransferPayments),
+                },
+                {
+                  label: "Manual Payment",
+                  y: parseInt(statistic.countManualPayments),
                 },
               ],
             },

@@ -822,10 +822,13 @@
                                     id="branchRevenueTo">February 17 2025</span></p>
                             <div class="fund-div">
                                 <h3>
-                                    <p id="branchRevenueCreditCard"><s>N</s> Loading...</p><span>Credit Card</span>
+                                    <p id="branchRevenueCreditCard"><s>N</s> 0.00</p><span>Credit Card</span>
                                 </h3>
                                 <h3>
-                                    <p id="branchRevenueBankTransfer"><s>N</s> Loading...</p><span>Bank Transfer</span>
+                                    <p id="branchRevenueBankTransfer"><s>N</s> 0.00</p><span>Bank Transfer</span>
+                                </h3>
+                                <h3>
+                                    <p id="branchManualPayment"><s>N</s> 0.00</p><span>Manual Payment</span>
                                 </h3>
                             </div>
                         </div>
@@ -954,6 +957,37 @@
             <div class="matrix-div">
                 <div class="inner-div">
                     <div class="title">
+                        <i class="bi bi-wallet-fill"></i>
+                        <h3>SchoolBolt Wallet</h3>
+                    </div>
+
+                    <div class="wallet-wrapper">
+                        <div class="wallet-instruction">
+                            <p>
+                                Click <strong>"Load Wallet"</strong>, enter your amount, and complete the payment. Your wallet will be credited instantly for school use.
+                            </p>
+                        </div>
+
+                        <div class="wallet-container">
+                            <div class="fund-div">
+                                <h3>
+                                    <p id="walletBalance"><s>N</s>0.00</p><span>Wallet Balance</span>
+                                </h3>
+                            </div>
+
+                            <div class="btn-div">
+                                <button class="btn" title="Load Wallet" onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i class="bi bi-wallet-fill"></i> Load Wallet</button>
+                                <button class="btn view-wallet" title="View Wallet History" onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});"><i class="bi bi-eye"></i> View Wallet History</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="matrix-div">
+                <div class="inner-div">
+                    <div class="title">
+                        <i class="bi bi-credit-card-fill"></i>
                         <h3>Payment Matrix</h3>
                     </div>
                     <div id="chartContainer2" style="width:100%; height:200px; margin:auto;"></div>
@@ -1145,6 +1179,9 @@
                                     <p id="branchBursarRevenueBankTransfer"><s>N</s> Loading...</p><span>Bank
                                         Transfer</span>
                                 </h3>
+                                <h3>
+                                    <p id="branchBursarManualPayment"><s>N</s> 0.00</p><span>Manual Payment</span>
+                                </h3>
                             </div>
                         </div>
 
@@ -1272,6 +1309,33 @@
             <div class="matrix-div">
                 <div class="inner-div">
                     <div class="title">
+                        <i class="bi bi-wallet-fill"></i>
+                        <h3>SchoolBolt Wallet</h3>
+                    </div>
+
+                    <div class="wallet-wrapper">
+                        <div class="wallet-instruction">
+                            <p>
+                                Click <strong>"Load Wallet"</strong>, enter your amount, and complete the payment. Your wallet will be credited instantly for school use.
+                            </p>
+                        </div>
+
+                        <div class="wallet-container">
+                            <div class="fund-div">
+                                <h3>
+                                    <p id="walletBalance"><s>N</s>0.00</p><span>Wallet Balance</span>
+                                </h3>
+                            </div>
+
+                            <button class="btn" title="Load Wallet" onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i class="bi bi-wallet-fill"></i> Load Wallet</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="matrix-div">
+                <div class="inner-div">
+                    <div class="title">
                         <h3>Payment Matrix</h3>
                     </div>
                     <div id="chartContainer2" style="width:100%; height:200px; margin:auto;"></div>
@@ -1311,6 +1375,7 @@
 
         <script>
             $(document).ready(function() {
+                _fetchBranchDashboardStatistics();
                 _fetchBranchRevenueFiltering('srch-30', 'Last 30 Days');
             });
         </script>
@@ -3455,6 +3520,19 @@
             </div>
         </div>
 
+        <div class="user-managment-list staff-managment-list" title="Student Profile"
+            onclick="_getForm({page: 'student_select_form', layer:2, url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/student.png" alt="Student Profile" />
+                </div>
+                <div class="text-div">
+                    <h3>Student Profile</h3>
+                    <p>Access and manage detailed student information, including personal, academic, and contact records.</p>
+                </div>
+            </div>
+        </div>
+
         <div class="user-managment-list staff-managment-list" title="Parent List"
             onclick="_getForm({page: 'fetch_parent_form', layer:2, url: adminPortalLocalUrl});">
             <div class="inner-div">
@@ -3494,7 +3572,7 @@
             </div>
         </div>
 
-        <div class="user-managment-list staff-managment-list" title="Activate Academic Result" 
+        <div class="user-managment-list staff-managment-list" title="Activate Academic Result"
             onclick="_getForm({page: 'accountSessionSelectForm', layer:2, url: adminPortalLocalUrl});">
             <div class="inner-div">
                 <div class="icon-div">
@@ -3578,6 +3656,18 @@
                 <div class="text-div">
                     <h3>Balance Sheet</h3>
                     <p>View a detailed summary of assets, liabilities, and equity to assess your branch’s financial position.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-managment-list staff-managment-list" title="SchoolBolt Wallet" onclick="">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/wallet.png" alt="SchoolBolt Wallet" />
+                </div>
+                <div class="text-div">
+                    <h3>SchoolBolt Wallet</h3>
+                    <p>View your wallet transaction history and keep track of all deposits, payments, and wallet activity.</p>
                 </div>
             </div>
         </div>

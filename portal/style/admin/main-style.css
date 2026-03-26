@@ -1049,7 +1049,7 @@ header
   min-height: 40px;
   color: var(--sub-body-color);
   font-size: 12px;
-  border: #f0f0f0 1px solid;
+  border: 1px solid rgba(215, 215, 215, 0.6);
   font-family: body-font;
   display: flex;
   align-items: center;
@@ -1065,8 +1065,20 @@ header
 }
 
 .user-details-notf {
+  width: calc(100% - 42px);
   border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+
+.user-details-notf .text-back-div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
 
 .chart-div-notifications .text {
   font-size: 11px;
@@ -1082,7 +1094,7 @@ header
   font-size: 10px;
   padding: 0px 15px;
   border-radius: 20px;
-  background-color: #f8f8f8;
+  background-color: rgba(215, 215, 215, 0.4);
   cursor: pointer;
 }
 
@@ -1149,6 +1161,13 @@ header
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+
+.user-details-notf .wallet-balance span.balance {
+    font-size: 17px;
+    font-family: title-font;
+    color: #3498db;
 }
 
 .search_field_container {
@@ -1326,7 +1345,7 @@ header
   min-height: 300px;
   background: var(--white-color);
   border-radius: 10px;
-  border: #f0f0f0 1px solid;
+  border: 1px solid rgba(215, 215, 215, 0.4);
 }
 
 .dashboard-statistics-wrapper
@@ -1346,8 +1365,19 @@ header
   .inner-div
   .title {
   width: 100%;
-  border-bottom: #f0f0f0 1px solid;
+  border-bottom: 1px solid rgba(215, 215, 215, 0.4);
   padding-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dashboard-statistics-wrapper
+  .right-dashbaord-container
+  .matrix-div
+  .inner-div
+  .title i{
+   color: var(--secondary-color);
 }
 
 .dashboard-statistics-wrapper
@@ -1460,7 +1490,9 @@ header
 .table-div {
   width: 100%;
   border-radius: 8px;
-  display: flex;
+  width:100%;
+	display: flex;
+	flex-direction: column;
   border: #e7ecec 1px solid;
   background: var(--white-color);
   overflow: auto;
@@ -1698,7 +1730,8 @@ header
   font-size: 11px;
   font-family: body-font;
   min-width: 30px;
-  padding: 5px 8px;
+  padding: 7px 9px;
+  white-space: nowrap;
   border-radius: 4px;
   cursor: pointer;
   -moz-transition: all 0.2s ease-in 02s;
@@ -1707,8 +1740,7 @@ header
 
 .table-div .table .tb-row .view-btn {
   min-width: 28px;
-  padding: 5px 8px;
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .table-div .table .tb-row .min-width-btn {
@@ -3318,6 +3350,10 @@ header
   margin: 15px 0px;
 }
 
+.account-permission-form-back-div {
+  margin: 5px 0px;
+}
+
 .permission-form-back-div .title-div {
   display: flex;
   flex-direction: column;
@@ -3391,8 +3427,42 @@ header
   .each-toggle-div
   span {
   font-family: body-font;
-  font-size: 13px;
+  font-size: 11px;
   color: var(--text-color);
+}
+
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .payment-each-toggle-div .title-back-div{
+	width: calc(100% - 75px);
+	display: flex;
+  align-items: flex-start;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .payment-each-toggle-div .title-back-div .toggle-title-div{
+	font-family: sub-title-font;
+	font-size: 11px;
+	color: var(--text-color);
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .payment-each-toggle-div .title-back-div .toggle-title-div span{
+	font-size: 10px;
+	color: var(--sub-text-color);
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .payment-each-toggle-div .title-back-div .sub-title{
+	font-size: 10px;
+	font-family: body-font;
+	color: var(--sub-body-color);
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .payment-each-toggle-div .title-back-div .green-color{
+	color:rgba(9, 172, 77, 0.9);
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .payment-each-toggle-div .title-back-div .orange-color{
+	color:rgba(218, 90, 31, 0.87);	
 }
 
 .permission-form-back-div
@@ -6241,4 +6311,95 @@ header
   display: flex;
   flex-direction: column;
   gap: 13px;
+}
+
+
+
+
+.wallet-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 8px;
+}
+
+.wallet-wrapper .wallet-instruction{
+   width: calc(100% - 16px);
+  font-family: body-font;
+  font-size: 11px;
+  background: rgba(250, 245, 229, 0.2);
+  color: var(--text-color);
+  padding: 8px;
+  border: 1px solid rgba(215, 215, 215, 0.4);
+  border-radius: 8px;
+}
+
+.wallet-wrapper .wallet-instruction p{
+  text-align: justify;
+}
+
+.wallet-wrapper .wallet-container {
+  width: calc(100% - 16px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 8px;
+  border: 1px solid rgba(215, 215, 215, 0.4);
+  border-radius: 8px;
+}
+
+.wallet-wrapper .wallet-container .fund-div h3 {
+  color: var(--sub-body-color);
+  font-size: 20px;
+  font-family: title-font;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(215, 215, 215, 0.4);
+  padding: 10px 15px;
+  border-radius: 7px;
+  white-space: nowrap;
+}
+
+.wallet-wrapper .wallet-container .fund-div h3 span {
+  color: var(--secondary-color);
+  font-family: body-font;
+  color: var(--text-color);
+  font-size: 12px;
+  font-weight: lighter;
+}
+
+.wallet-wrapper .wallet-container .btn-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.wallet-wrapper .wallet-container .btn-div .btn {
+  border: none;
+  height: 45px;
+  width: 100%;
+  background: var(--primary-color);
+  color: var(--white-color);
+  border-radius: 5px;
+  font-family: sub-title-font;
+  font-size: 15px;
+  transition: all 0.2s ease-in 0.2s;
+  cursor: pointer;
+}
+
+.wallet-wrapper .wallet-container .btn-div .view-wallet {
+  background: rgba(215, 215, 215, 0.8);
+  color: var(--sub-body-color);
+}
+
+.wallet-wrapper .wallet-container .btn-div .btn:hover {
+  background: var(--sub-body-color);
+}
+
+.wallet-wrapper .wallet-container .btn-div .view-wallet:hover {
+  background: rgba(215, 215, 215, 0.6);
 }

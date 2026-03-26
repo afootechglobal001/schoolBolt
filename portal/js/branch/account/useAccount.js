@@ -253,131 +253,6 @@ function _loginOnbehalfOfParent(email, parentTypeId, studentId) {
 	}
 }
 
-//////// Branch Department Class ///////////
-function _fetchAccountBranchDepartmentClass() {
-    let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
-    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");
-
-    try {
-        $.ajax({
-            type: "GET",
-            url: `${endPoint}/admin/branch/department/fetch-branch-department-classes?branchId=${getEachBranchDetailsSession.branchId}`,
-            dataType: "json",
-            cache: false,
-            headers: getAuthHeaders(true),
-            success: function(info) {
-                const fetch = info.data;
-                const success = info.success;
-                
-                let text = '';
-                let no = 0;
-
-                if (success === true) {
-                    for (let i = 0; i < fetch.length; i++) {
-                        no++;
-                        const department = fetch[i];
-                        const departmentName = department.departmentData.departmentName;
-						const departmentId = department.departmentData.departmentId;
-                        const classData = department.classData;
-
-                        text += `
-                            <div class="pages-toggle-div">
-                                <div class="pages-toggle-title" onclick="_collapse('view${no}');" title="CLICK TO VIEW ${departmentName} DEPARTMENT CLASSES">
-                                    <h3>${departmentName}</h3>
-                                    <div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
-                                </div>
-
-                                <div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
-                                    <div class="alert alert-success top-alert-div class-top-alert-div animated fadeIn">
-                                        <span><i class="bi-people-fill"></i> <span>${departmentName}</span> DEPARTMENT</span>       
-                                    </div>
-
-                                    <div class="table-div animated fadeIn">
-                                        <table class="table" cellspacing="0" style="width:100%">
-                                            <thead>
-                                                <tr class="tb-col">
-                                                    <th>sn</th>
-                                                    <th>Department</th>
-                                                    <th>Class</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>`;
-
-											let sn = 0; 
-											if (classData.length > 0) {
-												for (let j = 0; j < classData.length; j++) {
-													const classInfo = classData[j];
-													const className = classInfo.className;
-													const classId = classInfo.classId;
-													const armData = classInfo.armData;
-
-													if (armData.length > 0) {
-														for (let k = 0; k < armData.length; k++) {
-															sn++;
-															const armInfo = armData[k];
-															const arm = armInfo.armName;
-															const armId = armInfo.armId;
-
-															text += `
-															<tr class="tb-row">
-															<td>${sn}</td>
-															<td>${departmentName}</td>
-															<td>${className} ${arm}</td>
-															<td>
-																<div class="btn-div">
-																	<button class="btn view-btn" title="CLICK TO VIEW STUDENT PAYMENT" onclick="_getForm({page: 'viewStudentByClass', layer:2, url: adminPortalLocalUrl});"><i class="bi-bookmark-check"></i> VIEW STUDENT PAYMENT</button>
-																</div>
-															</td>`;
-														}
-													} else {
-														sn++;
-													text += `
-														<tr class="tb-row">
-															<td>${sn}</td>
-															<td>${departmentName}</td>
-															<td>${className} (No Arm)</td>
-															<td></td>
-														</tr>`;
-													}
-												}
-											} 
-											text += `</tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>`;
-                    }
-                    $('#pageContent').html(text);
-                } else {
-                    _actionAlert(info.message, false);
-                    $('#pageContent').html(`
-                        <tbody>
-                            <tr>
-                                <td colspan="15">
-                                    <div class="false-notification-div">
-                                        <p>${info.message}</p>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>`);
-
-                    if (info.response < 100) {
-                        _logOut();
-                    }
-                }
-            },
-            error: function(textStatus, errorThrown) {
-                console.error("AJAX Error: ", textStatus, errorThrown);
-                _actionAlert('Check your internet connection and try again.', false);
-            }
-        });
-    } catch (error) {
-        console.error("Error: ", error);
-        _actionAlert('An unexpected error occurred! Please try again.', false);
-    }
-}
-
 /////// Suspend and Activate Parent Account ///////
 function _suspendActivateParentAccount() {
 	let studentParentSessionData = JSON.parse(
@@ -414,7 +289,6 @@ function _suspendActivateParentAccount() {
 		_callCatchError(() => _suspendActivateParentAccount());
 	}
 }
-
 	
 function _suspendActivateParentAccountCallback() {
 	let studentParentSessionData = JSON.parse(sessionStorage.getItem("studentParentSessionData"));
@@ -473,5 +347,556 @@ function _suspendActivateParentAccountCallback() {
 		console.error("Error:", error);
 		_callCatchError(() => _suspendActivateParentAccountCallback());
 		_btnDisable("activateAndSuspend", btnText, false);
+	}
+}
+
+////// Select Session For Account //////
+function _getSelectAccountSession(fieldId){
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/preset-data/fetch-session-for-account?branchId=${getEachBranchDetailsSession.branchId}`,
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].session;
+						const value = data[i].session;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+//// Proceed Fetch Account Department Classes /////
+function _proceedFetchAcountDepartmentClass() {
+	const sessionId = $("#sessionId").val();
+	const termId = $("#termId").val();
+
+	// Get the selected text (name)
+	const sessionName = $("#sessionId option:selected").text();
+	const termName = $("#termId option:selected").text();
+
+	let issueCount = 0;
+	issueCount += _validateEmptyValue("sessionId", "SESSION");
+	issueCount += _validateEmptyValue("termId", "TERM");
+
+	if (issueCount > 0) return;
+
+	const fetchAccountDepartmentClassParams = {
+		sessionId: sessionId,
+		sessionName: sessionName,
+		termId: termId,
+		termName: termName
+	};
+
+	sessionStorage.setItem(
+		"fetchAccountDepartmentClassParams",
+		JSON.stringify(fetchAccountDepartmentClassParams)
+	);
+	_getActiveBranchPage({
+		divid:'branchDepartmentClass', 
+		page: 'branchDepartmentClass', 
+		url: adminPortalLocalUrl
+	});
+	_alertClose(2);
+}
+
+
+//////// Branch Department Class ///////////
+function _fetchAccountBranchDepartmentClass() {
+    let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+	let fetchAccountDepartmentClassParams = JSON.parse(sessionStorage.getItem("fetchAccountDepartmentClassParams"));
+
+	const sessionName= fetchAccountDepartmentClassParams?.sessionName;
+	const termName= fetchAccountDepartmentClassParams?.termName;
+
+    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");
+
+    try {
+        $.ajax({
+            type: "GET",
+            url: `${endPoint}/admin/branch/account/fetch-department-classes?branchId=${getEachBranchDetailsSession.branchId}`,
+            dataType: "json",
+            cache: false,
+            headers: getAuthHeaders(true),
+            success: function(info) {
+                const fetch = info.data;
+                const success = info.success;
+                
+                let text = '';
+                let no = 0;
+
+                if (success === true) {
+                    for (let i = 0; i < fetch.length; i++) {
+                        no++;
+                        const department = fetch[i];
+                        const departmentName = department.departmentData.departmentName;
+						const departmentId = department.departmentData.departmentId;
+                        const classData = department.classData;
+
+                        text += `
+                            <div class="pages-toggle-div">
+                                <div class="pages-toggle-title" onclick="_collapse('view${no}');" title="CLICK TO VIEW ${departmentName} DEPARTMENT CLASSES">
+                                    <h3>${departmentName}</h3>
+                                    <div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
+                                </div>
+
+                                <div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
+                                    <div class="alert alert-success top-alert-div class-top-alert-div animated fadeIn">
+                                        <span><i class="bi-people-fill"></i> <span>${departmentName}</span> DEPARTMENT</span>       
+                                    </div>
+
+                                    <div class="table-div animated fadeIn">
+                                        <table class="table" cellspacing="0" style="width:100%">
+                                            <thead>
+                                                <tr class="tb-col">
+                                                    <th>sn</th>
+                                                    <th>Department</th>
+                                                    <th>Class</th>
+													<th>Session</th>
+													<th>Term</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>`;
+
+											let sn = 0; 
+											if (classData.length > 0) {
+												for (let j = 0; j < classData.length; j++) {
+													const classInfo = classData[j];
+													const className = classInfo.className;
+													const classId = classInfo.classId;
+													const armData = classInfo.armData;
+
+													if (armData.length > 0) {
+														for (let k = 0; k < armData.length; k++) {
+															sn++;
+															const armInfo = armData[k];
+															const arm = armInfo.armName;
+															const armId = armInfo.armId;
+
+															text += `
+															<tr class="tb-row">
+															<td>${sn}</td>
+															<td>${departmentName}</td>
+															<td>${className} ${arm}</td>
+															<td>${sessionName}</td>
+															<td>${termName}</td>
+															<td>
+																<div class="btn-div">
+																	<button class="btn view-btn" title="CLICK TO VIEW STUDENT PAYMENT" onclick="_fetchAccountStudentsByClass('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT PAYMENT</button>
+																</div>
+															</td>`;
+														}
+													}
+												}
+											} 
+											text += `</tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>`;
+                    }
+                    $('#pageContent').html(text);
+                } else {
+                    _actionAlert(info.message, false);
+                    $('#pageContent').html(`
+                        <tbody>
+                            <tr>
+                                <td colspan="15">
+                                    <div class="false-notification-div">
+                                        <p>${info.message}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>`);
+
+                    if (info.response < 100) {
+                        _logOut();
+                    }
+                }
+            },
+            error: function(textStatus, errorThrown) {
+                console.error("AJAX Error: ", textStatus, errorThrown);
+                _actionAlert('Check your internet connection and try again.', false);
+            }
+        });
+    } catch (error) {
+        console.error("Error: ", error);
+        _actionAlert('An unexpected error occurred! Please try again.', false);
+    }
+}
+
+///// Fetch Account Students By Class /////
+function _fetchAccountStudentsByClass(departmentId, classId, armId) {
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+	let fetchAccountDepartmentClassParams = JSON.parse(sessionStorage.getItem("fetchAccountDepartmentClassParams"));
+
+	const branchId = getEachBranchDetailsSession?.branchId;
+	const session = fetchAccountDepartmentClassParams?.sessionId;
+	const termId = fetchAccountDepartmentClassParams?.termId;
+
+	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
+	try {
+		//// call endpoint //////
+		_callFetchEndPoints({
+			url: `admin/branch/account/fetch-student?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+			accessKey: true,
+		})
+		.then((response) => {
+        	_staffValidationCheck(response.response);
+			if (response.success && response.data?.length > 0) {
+    			sessionStorage.setItem("useAccountStudentByClassSession", JSON.stringify(response));
+          		_getForm({page: 'viewAccountStudentByClass', layer:2, url: adminPortalLocalUrl});
+			} else {
+				_alertClose(2);
+				_actionAlert(response.message, false);
+			} 
+		 })
+		.catch((error) => {
+			_alertClose(2);
+			console.error("Error:", error);
+			_callAjaxError(() => _fetchAccountStudentsByClass(depatmentId, classId, armId)); // retry if needed
+		});
+	} catch (error) {
+		_alertClose(2);
+		console.error("Error:", error);
+		_callAjaxError(() => _fetchAccountStudentsByClass(depatmentId, classId, armId)); // retry if needed
+  	}
+}
+
+///// Fetch Account Fees To Pay /////
+function _fetchAccountFeesToPay(branchId, session, termId,  departmentId, classId, armId, studentId, action) {
+	$("#get-more-third-layer").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
+	try {
+		//// call endpoint //////
+		_callFetchEndPoints({
+			url: `admin/branch/account/get-fees-to-pay?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}`,
+			accessKey: true,
+		})
+		.then((response) => {
+        	_staffValidationCheck(response.response);
+			if (response.success && response.data?.length > 0) {
+				sessionStorage.setItem("useAccountFessToPaySession", JSON.stringify(response));
+				_getFetchEachAccountStudent(studentId);
+				if (action==='loadFund') {
+					_getForm({ page: 'branchLoadStudentFundForm', layer: 3, url: adminPortalLocalUrl });
+				} else {
+					_getForm({ page: 'branchStudentPayFeesForm', layer: 3, url: adminPortalLocalUrl });
+				}
+			} else {
+				_alertClose(3);
+				_actionAlert(response.message, false);
+			} 
+		 })
+		.catch((error) => {
+			_alertClose(3);
+			console.error("Error:", error);
+			_callAjaxError(() => _fetchAccountFeesToPay(branchId, session, termId,  departmentId, classId, armId, studentId)); // retry if needed
+		});
+	} catch (error) {
+		_alertClose(3);
+		console.error("Error:", error);
+		_callAjaxError(() => _fetchAccountFeesToPay(branchId, session, termId,  departmentId, classId, armId, studentId)); // retry if needed
+  	}
+}
+
+function _getFetchEachAccountStudent(Id) {
+	let storedData = JSON.parse(sessionStorage.getItem("useAccountStudentByClassSession"));
+
+	let students = storedData.data;
+
+	let student = students.find((s) => s.studentId === Id);
+
+	if (student) {
+		sessionStorage.setItem("getEachAccountStudentSession", JSON.stringify(student));
+	}
+}
+
+function _getSelectAccountPaymentMethod(fieldId) {
+  try {
+    $.ajax({
+      type: "GET",
+      url: endPoint + "/preset-data/fetch-payment-method?fetchBy=admin",
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      success: function (info) {
+        const data = info.data;
+        const success = info.success;
+
+        if (success === true) {
+          for (let i = 0; i < data.length; i++) {
+            const id = data[i].paymentMethodId;
+            const value = data[i].paymentMethodName;
+            $("#searchList_" + fieldId).append(
+              "<li onclick=\"_clickOption('searchList_" +
+                fieldId +
+                "', '" +
+                id +
+                "', '" +
+                value +
+                "');\">" +
+                value +
+                "</li>",
+            );
+          }
+        } else {
+          _actionAlert(info.message, false);
+        }
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred. Please try again.", false);
+  }
+}
+
+//// Proceed To Payment /////
+function _proceedToPayment(){
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+	let fetchAccountDepartmentClassParams = JSON.parse(sessionStorage.getItem("fetchAccountDepartmentClassParams"));
+	let getEachAccountStudentSession = JSON.parse(sessionStorage.getItem("getEachAccountStudentSession"));
+	let useAccountStudentByClassSession = JSON.parse(sessionStorage.getItem("useAccountStudentByClassSession"));
+
+	const branchId = getEachBranchDetailsSession?.branchId;
+	const session = fetchAccountDepartmentClassParams?.sessionId;
+	const termId = fetchAccountDepartmentClassParams?.termId;
+
+	const departmentId = useAccountStudentByClassSession?.departmentData?.departmentId;
+	const classId = useAccountStudentByClassSession?.classData?.classId;
+	const armId = useAccountStudentByClassSession?.armData?.armId;
+	const studentId = getEachAccountStudentSession?.studentId;
+	const advancedBalance = getEachAccountStudentSession?.studentData?.advancedBalance;
+
+	try {
+		const paymentMethodId = $('#paymentMethodId').val().trim();
+		let selectedFees = [];
+		let totalFees = 0;
+
+		$(".child:checked").each(function () {
+			const feesId = $(this).data("value");
+			const amount = parseFloat($(this).val()) || 0;
+
+			selectedFees.push({ feesId: feesId });
+			totalFees += amount;
+		});
+
+		if (selectedFees.length === 0) {
+			_actionAlert("Please select at least one fee to continue.", false);
+			return;
+		}
+
+		let previousBalance = parseFloat(advancedBalance) || 0;
+		let newBalance = previousBalance - totalFees;
+
+		if (newBalance < 0) {
+			_showCustomConfirm({
+				title: "Insufficient Balance!",
+				message: `You have Insufficient balance of <strong style="color:red;"> ${'-<s>N</s>' + thousandSeperator(Math.abs(newBalance))}</strong>. Kindly load fund for this student before proceeding.`,
+				alertType: "warning",
+				trueActionBtnText: "OK",
+				closeOnOverlayClick: true,
+			});
+			return;
+		}
+
+		///// Gather form data ////
+		const formData = {
+			branchId: branchId,
+			session: session,
+			termId: termId,
+			departmentId: departmentId,
+			classId: classId,
+			armId: armId,
+			studentId: studentId,
+			paymentMethodId: paymentMethodId,
+			feesIds: selectedFees,
+		};
+
+		////// confirm action ////
+		_showCustomConfirm({
+			callback: () => {
+				_proceedToPaymentCallback(formData);
+			},
+			title: "Are you sure?",
+			message: 'Are you sure you want to proceed? This action is irreversible.',
+			alertType: "warning",
+			falseActionBtn: true,
+			closeOnOverlayClick: true,
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _proceedToPayment());
+	}
+}
+
+//// Proceed To Payment CallBack /////
+function _proceedToPaymentCallback(formData) {
+	try {
+		const btnText = $("#paymentBtn").html();
+		_btnDisable("paymentBtn", btnText, true);
+
+		_callRawEndPoints({
+		url: `admin/branch/account/proceed-to-payment`,
+		formData,
+		accessKey: true,
+		})
+		.then((response) => {
+			_staffValidationCheck(response.response);
+			if (response.success) {
+				if (response.paymentMethodId==='PM001' || response.paymentMethodId==='PM002') {
+					_payWithPaystackSchoolBoltCharges(
+						response.branchId,
+						response.branchName,
+						response.mobileNumber,
+						response.paymentKey,
+						response.paymentId,
+						response.email,
+						response.amount,
+						response.currency,
+						response.paymentChannel,
+						btnText
+					);
+				} else {
+					_alertClose(3);
+					_showCustomConfirm({
+						callback: () => {
+							_fetchAccountStudentsByClass(formData.departmentId, formData.classId, formData.armId, formData.branchId, formData.session, formData.termId)				
+						},
+						title: 'Success!',
+						message: response.message,
+						alertType: 'success',
+						trueActionBtnText: 'OK, Thanks.',
+            		});
+				}
+			} else {
+				_showCustomConfirm({
+					title: "Unable to Process Payment",
+					message: response.message,
+					alertType: "warning",
+					trueActionBtnText: "OK",
+					closeOnOverlayClick: true,
+				});
+				_btnDisable("paymentBtn", btnText, false);
+			}
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			_callAjaxError(() => _proceedToPaymentCallback(formData)); // retry if needed
+			_btnDisable("paymentBtn", btnText, false);
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _proceedToPaymentCallback(formData));
+		_btnDisable("paymentBtn", btnText, false);
+	}
+}
+
+////// CALL SCHOOLBOLT CHARGES PAYSTACK ////////////////
+function _payWithPaystackSchoolBoltCharges(branchId, branchName, mobileNumber, paymentKey, paymentId, email, amount, currency, paymentChannel, btnText) {
+
+  // Create the base options
+  const options = {
+    key: paymentKey,
+    email: email,
+    amount: amount, // Amount in kobo
+    ref: paymentId,
+    currency: currency,
+    channels: paymentChannel ? [paymentChannel] : ["card", "bank_transfer"],
+    metadata: {
+      custom_fields: [
+        {
+          display_name: branchName,
+          variable_name: "mobile_number",
+          value: mobileNumber,
+        },
+      ],
+    },
+    callback: function () {
+      _schoolBoltChargesPaymentAction("success", branchId, paymentId, btnText);
+    },
+    onClose: function () {
+      _schoolBoltChargesPaymentAction("cancelled", branchId, paymentId, btnText);
+      return false;
+    },
+  };
+  
+  var handler = PaystackPop.setup(options);
+  handler.openIframe();
+}
+
+////////////////////// END SCHOOLBOLT CHARGES PAYSTACK /////////////////////////////
+function _schoolBoltChargesPaymentAction(action, branchId, paymentId, btnText) {
+	let fetchAccountDepartmentClassParams = JSON.parse(sessionStorage.getItem("fetchAccountDepartmentClassParams"));
+	let useAccountStudentByClassSession = JSON.parse(sessionStorage.getItem("useAccountStudentByClassSession"));
+
+	const session = fetchAccountDepartmentClassParams?.sessionId;
+	const termId = fetchAccountDepartmentClassParams?.termId;
+
+	const departmentId = useAccountStudentByClassSession?.departmentData?.departmentId;
+	const classId = useAccountStudentByClassSession?.classData?.classId;
+	const armId = useAccountStudentByClassSession?.armData?.armId;
+
+	try {
+		const formData = {
+			branchId: branchId,
+			paymentId: paymentId,
+		};
+
+		_callRawEndPoints({
+		url: `parent/payment/payment-${action}`,
+		formData,
+		accessKey: true,
+		})
+		.then((response) => {
+			_staffValidationCheck(response.response);
+			if (response.success) {
+				if (action==='success'){
+					_alertClose(3);
+					_showCustomConfirm({
+						callback: () => _fetchAccountStudentsByClass(departmentId, classId, armId, branchId, session, termId),
+						title: "PAYMENT SUCCESSFUL",
+						message: "Student fees has been logged successfully",
+						alertType: "success",
+						trueActionBtnText: "OK",
+						closeOnOverlayClick: false,
+					});
+				}
+				_btnDisable("paymentBtn", btnText, false);
+			} else {
+				_showCustomConfirm({
+					title: "Unable to Process Payment",
+					message: response.message,
+					alertType: "warning",
+					trueActionBtnText: "OK",
+					closeOnOverlayClick: true,
+				});
+				_btnDisable("paymentBtn", btnText, false);
+			}
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			_callAjaxError(() => __schoolBoltChargesPaymentAction(action, branchId, paymentId, btnText)); // retry if needed
+			_btnDisable("paymentBtn", btnText, false);
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _schoolBoltChargesPaymentAction(action, branchId, paymentId, btnText));
+		_btnDisable("paymentBtn", btnText, false);
 	}
 }

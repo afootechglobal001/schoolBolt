@@ -113,44 +113,7 @@ function _collapse(divId) {
   $("#" + divId + "answer").slideToggle("slow");
 }
 
-function _getSelectPaymentMethod(fieldId) {
-  try {
-    $.ajax({
-      type: "GET",
-      url: endPoint + "/preset-data/fetch-payment-method",
-      dataType: "json",
-      cache: false,
-      headers: getAuthHeaders(),
-      success: function (info) {
-        const data = info.data;
-        const success = info.success;
 
-        if (success === true) {
-          for (let i = 0; i < data.length; i++) {
-            const id = data[i].paymentMethodId;
-            const value = data[i].paymentMethodName;
-            $("#searchList_" + fieldId).append(
-              "<li onclick=\"_clickOption('searchList_" +
-                fieldId +
-                "', '" +
-                id +
-                "', '" +
-                value +
-                "');\">" +
-                value +
-                "</li>",
-            );
-          }
-        } else {
-          _actionAlert(info.message, false);
-        }
-      },
-    });
-  } catch (error) {
-    console.error("Error: ", error);
-    _actionAlert("An unexpected error occurred. Please try again.", false);
-  }
-}
 
 function _fetchFeesToPay() {
   let getEachStudentSession = JSON.parse(
@@ -411,7 +374,6 @@ function _callPaymentSuccess(paymentId, branchId) {
             url: parentPortalLocalUrl,
           });
         } else {
-          console.log(data);
           _actionAlert(data.message, false);
           _getForm({
             page: "payemntSuccessForm",

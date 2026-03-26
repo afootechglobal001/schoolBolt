@@ -420,7 +420,7 @@ p {
 }
 
 .alert .alert-list-div {
-  width: calc(100% - 10px);
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 5px;

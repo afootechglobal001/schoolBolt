@@ -7,7 +7,7 @@
     <?php include 'meta.php'?>
     <title>Administrative Portal | <?php echo $appName;?></title>
 </head>
-
+<script src="https://js.paystack.co/v1/inline.js"></script>
 <body>
     <?php include 'header.php'?>
     <?php include 'side-bar.php'?>

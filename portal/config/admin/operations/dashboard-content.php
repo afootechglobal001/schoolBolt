@@ -190,10 +190,13 @@ userRoles.canViewBursaryDashboard && _getActivePage({
                                 2025</span></p>
                         <div class="fund-div">
                             <h3>
-                                <p id="sumCreditCardPayments"><s>N</s> Loading...</p><span>Credit Card</span>
+                                <p id="sumCreditCardPayments"><s>N</s> 0.00</p><span>Credit Card</span>
                             </h3>
                             <h3>
-                                <p id="sumBankTransferPayments"><s>N</s> Loading...</p><span>Bank Transfer</span>
+                                <p id="sumBankTransferPayments"><s>N</s> 0.00</p><span>Bank Transfer</span>
+                            </h3>
+                            <h3>
+                                <p id="sumManualPayments"><s>N</s> 0.00</p><span>Manual Payment</span>
                             </h3>
                         </div>
                     </div>

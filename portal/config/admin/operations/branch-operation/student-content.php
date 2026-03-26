@@ -536,9 +536,15 @@
                             <ul class="animated fadeIn">
                                 <li title="Current Payable Fees" onclick="_fetchStudentCurrentPayableFees();"><i
                                         class="bi-credit-card"></i>Current Payable Fees</li>
+
                                 <li title="Payment History" id="paymentHistory"
                                     onclick="_getActiveStudentPage({divid:'paymentHistory', page: 'paymentHistory', url: adminPortalLocalUrl});">
                                     <i class="bi-clock"></i>Payment History
+                                </li>
+
+                                <li title="Fund Wallet History" id="fundWalletHistory"
+                                    onclick="_getActiveStudentPage({divid:'fundWalletHistory', page: 'fundWalletHistory', url: adminPortalLocalUrl});">
+                                    <i class="bi-clock"></i>Fund Wallet History
                                 </li>
                             </ul>
 
@@ -1356,61 +1362,63 @@
     </div>
 
     <div class="chart-div-notifications user-details-notf">
-        <div class="text"><i class="bi-graph-up-arrow"></i> Showing Payment History for </div>
+        <div class="text-back-div">
+            <div class="text"><i class="bi-graph-up-arrow"></i> Showing Payment History for </div>
 
-        <div class="text text-right" onclick="select_search()">
-            <span id="srch-text">Last 30 Days</span>
-            <div class="icon-div"><i class="bi-caret-down"></i></div>
+            <div class="text text-right" onclick="select_search()">
+                <span id="srch-text">Last 30 Days</span>
+                <div class="icon-div"><i class="bi-caret-down"></i></div>
 
-            <div class="srch-select alert-srch-select">
-                <div id="srch-today" onclick="_getAlertReport('srch-today', 'view_today_search');">Today</div>
-                <div id="srch-week" onclick="_getAlertReport('srch-week', 'view_thisweek_search');">This Week</div>
-                <div id="srch-7" onclick="_getAlertReport('srch-7', 'view_7days_search');">Last 7 Days</div>
-                <div id="srch-month" onclick="_getAlertReport('srch-month', 'view_thismonth_search');">This Month</div>
-                <div id="srch-30" onclick="_getAlertReport('srch-30', 'view_30days_search');">Last 30 Days</div>
-                <div id="srch-90" onclick="_getAlertReport('srch-90', 'view_90days_search');">Last 90 Days</div>
-                <div id="srch-year" onclick="_getAlertReport('srch-year', 'view_thisyear_search');">This Year</div>
-                <div id="srch-1year" onclick="_getAlertReport('srch-1year', 'view_1year_search');">Last 1 Year</div>
-                <div onclick="srch_custom('Custom Search')">Custom Search</div>
-            </div>
-        </div>
-
-        <div class="text">
-            <div class="custom-srch-div">
-                <div class="custom-srch-div-in">
-                    <div class="text_field_container dash_field_container">
-                        <input class="text_field dash_text_field bar_cust_text_field" type="text" id="datepickers-from"
-                            placeholder="" />
-                        <div class="placeholder dash_placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From
-                        </div>
-                    </div>
-
-                    <div class="text_field_container dash_field_container">
-                        <input class="text_field dash_text_field bar_cust_text_field" type="text" id="datepickers-to"
-                            placeholder="" />
-                        <div class="placeholder dash_placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To</div>
-                    </div>
-                    <button type="button" class="btn">Apply</button>
+                <div class="srch-select alert-srch-select">
+                    <div id="srch-today" onclick="_getAlertReport('srch-today', 'view_today_search');">Today</div>
+                    <div id="srch-week" onclick="_getAlertReport('srch-week', 'view_thisweek_search');">This Week</div>
+                    <div id="srch-7" onclick="_getAlertReport('srch-7', 'view_7days_search');">Last 7 Days</div>
+                    <div id="srch-month" onclick="_getAlertReport('srch-month', 'view_thismonth_search');">This Month</div>
+                    <div id="srch-30" onclick="_getAlertReport('srch-30', 'view_30days_search');">Last 30 Days</div>
+                    <div id="srch-90" onclick="_getAlertReport('srch-90', 'view_90days_search');">Last 90 Days</div>
+                    <div id="srch-year" onclick="_getAlertReport('srch-year', 'view_thisyear_search');">This Year</div>
+                    <div id="srch-1year" onclick="_getAlertReport('srch-1year', 'view_1year_search');">Last 1 Year</div>
+                    <div onclick="srch_custom('Custom Search')">Custom Search</div>
                 </div>
             </div>
+
+            <div class="text">
+                <div class="custom-srch-div">
+                    <div class="custom-srch-div-in">
+                        <div class="text_field_container dash_field_container">
+                            <input class="text_field dash_text_field bar_cust_text_field" type="text" id="datepickers-from"
+                                placeholder="" />
+                            <div class="placeholder dash_placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From
+                            </div>
+                        </div>
+
+                        <div class="text_field_container dash_field_container">
+                            <input class="text_field dash_text_field bar_cust_text_field" type="text" id="datepickers-to"
+                                placeholder="" />
+                            <div class="placeholder dash_placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To</div>
+                        </div>
+                        <button type="button" class="btn">Apply</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <script language="javascript">
+                $('#datepickers-from').datetimepicker({
+                    lang: 'en',
+                    timepicker: false,
+                    format: 'Y-m-d',
+                    formatDate: 'Y-M-d',
+                });
+
+                $('#datepickers-to').datetimepicker({
+                    lang: 'en',
+                    timepicker: false,
+                    format: 'Y-m-d',
+                    formatDate: 'Y-M-d',
+                });
+            </script>
         </div>
-
-
-        <script language="javascript">
-            $('#datepickers-from').datetimepicker({
-                lang: 'en',
-                timepicker: false,
-                format: 'Y-m-d',
-                formatDate: 'Y-M-d',
-            });
-
-            $('#datepickers-to').datetimepicker({
-                lang: 'en',
-                timepicker: false,
-                format: 'Y-m-d',
-                formatDate: 'Y-M-d',
-            });
-        </script>
     </div>
 
     <div class="table-div animated fadeIn">
