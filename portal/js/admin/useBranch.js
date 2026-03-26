@@ -1242,6 +1242,7 @@ function _fetchBranchDashboardStatistics() {
         $("#totalActiveBranchStudentCount").html(data.total_active_student_count);
         $("#totalAlumniBranchStudentCount").html(data.total_alumni_student_count);
         $("#totalActiveBranchDepartmentCount").html(data.total_active_department_count);
+        $("#walletBalance").html('<s>N</s>' + thousandSeperator(data.wallet_balance));
 
       } else {
         const response = info.response;
@@ -1374,6 +1375,9 @@ function _revenueBranchFiltering(dateFrom, dateTo) {
         $("#branchRevenueBankTransfer, #branchBursarRevenueBankTransfer").html(
           "<s>N</s>" + thousandSeperator(statistics.sumBankTransferPayments)
         );
+        $("#branchManualPayment, #branchBursarManualPayment").html(
+          "<s>N</s>" + thousandSeperator(statistics.sumManualPayments)
+        );
 
         // Update Pie Chart credit and bank transfer ///
         const options = {
@@ -1397,6 +1401,10 @@ function _revenueBranchFiltering(dateFrom, dateTo) {
                 {
                   label: "Bank Transfer",
                   y: parseInt(statistics.countBankTransferPayments),
+                },
+                {
+                  label: "Manual Payment",
+                  y: parseInt(statistics.countManualPayments),
                 },
               ],
             },

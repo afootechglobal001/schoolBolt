@@ -135,7 +135,7 @@
                                 </div>
                             </div>
 
-                            <div class="new-statistics-div" title="Bank Transfer">
+                            <div class="new-statistics-div" title="Bank Transfer Revenue">
                                 <div class="statistics-inner-div">
                                     <div class="statistics-text report-statistics-text">
                                         <p>Bank Transfer Revenue</p>
@@ -145,7 +145,17 @@
                                 </div>
                             </div>
 
-                            <div class="new-statistics-div" title="Subjects">
+                            <div class="new-statistics-div" title="Manual Payment Revenue">
+                                <div class="statistics-inner-div">
+                                    <div class="statistics-text report-statistics-text">
+                                        <p>Manual Payment Revenue</p>
+                                        <span>Total Amount Paid via Manual Payment</span>
+                                        <h2 id="sumManualPayments">0.00</h2>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="new-statistics-div" title="Number of Card Payments">
                                 <div class="statistics-inner-div">
                                     <div class="statistics-text report-statistics-text">
                                         <p>Credit Card Transactions</p>
@@ -155,12 +165,22 @@
                                 </div>
                             </div>
 
-                            <div class="new-statistics-div" id="branch_department_class" onclick="" title="Class">
+                            <div class="new-statistics-div" title="Bank Transfer Transactions">
                                 <div class="statistics-inner-div">
                                     <div class="statistics-text report-statistics-text">
                                         <p>Bank Transfer Transactions</p>
                                         <span>Number of Bank Transfer Payments</span>
                                         <h2 id="countBankTransferPayments">0</h2>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="new-statistics-div" title="Manual Payment Transactions">
+                                <div class="statistics-inner-div">
+                                    <div class="statistics-text report-statistics-text">
+                                        <p>Manual Payment Transactions</p>
+                                        <span>Number of Manual Payments</span>
+                                        <h2 id="countManualPayments">0</h2>
                                     </div>
                                 </div>
                             </div>
@@ -756,6 +776,39 @@
                         </div>
                     </div>
                 </div>
+
+                <script>
+                    $(document).ready(function () {
+                        const paymentComputedBy = getRevenueBreakdownSessionData?.paymentComputedBy;
+
+                        let content = "";
+                        if (paymentComputedBy) {
+                            content += `
+                                <div class="alert alert-success form-alert">
+                                <span>Manual Payment Processed By:</span>
+                                <div class="alert-list-div">
+                                    <div class="alert-list-back-div">
+                                        <div class="alert-list">
+                                            <div>Staff Id:</div>
+                                            <div><span>${paymentComputedBy?.staffId}</span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert-list-back-div">
+                                        <div class="alert-list">
+                                            <div>Staff FullName:</div>
+                                            <div><span>${paymentComputedBy?.fullName}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+                        }
+                        $('#showPaymentComputedBy').html(content);
+                    });
+                </script>
+
+                <div id="showPaymentComputedBy"></div>
 
                 <div class="paid-fee-conatiner">
                     <div class="alert alert-success form-alert">

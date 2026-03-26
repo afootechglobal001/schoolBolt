@@ -91,6 +91,7 @@ function _staffValidationCheck(code) {
 function select_search() {
   $(".srch-select").toggle("fast");
 }
+
 function srch_custom(text) {
   $("#srch-text").html(text);
   $(".custom-srch-div").fadeIn(500);
@@ -383,6 +384,9 @@ function _revenueFiltering(dateFrom, dateTo) {
         $("#sumBankTransferPayments").html(
           "<s>N</s>" + thousandSeperator(statistics.sumBankTransferPayments)
         );
+        $("#sumManualPayments").html(
+          "<s>N</s>" + thousandSeperator(statistics.sumManualPayments)
+        );
 
         // Update Pie Chart credit and bank transfer ///
         const options = {
@@ -406,6 +410,10 @@ function _revenueFiltering(dateFrom, dateTo) {
                 {
                   label: "Bank Transfer",
                   y: parseInt(statistics.countBankTransferPayments),
+                },
+                {
+                  label: "Manual Payment",
+                  y: parseInt(statistics.countManualPayments),
                 },
               ],
             },

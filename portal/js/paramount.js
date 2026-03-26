@@ -1,3 +1,5 @@
+let allowOverlayClose = false;
+
 function _getPage(options) {
 	const {
         page = '',
@@ -6,6 +8,8 @@ function _getPage(options) {
 		pageContainer='page-content',
 		id=''
     } = options;
+
+    // allowOverlayClose = false;
 
 		$("#"+pageContainer).html('<div class="ajax-loader"><img src="'+ websiteUrl +'/images/spinner.gif"/></div>').css({'display': 'flex','flex-direction': 'column','gap': '20px','align-items': 'center','align-items': 'center'}).fadeIn(500);
 		const dataString = "action=" + action + "&page=" + page + "&id=" + id;
@@ -54,6 +58,12 @@ function _alertClose(layer=1){
 		'</div>';
 			$(layer === 1 ? '#get-form-more-div' : layer === 2  ? '#get-more-div-secondary' : '#get-more-third-layer').html(text).fadeOut(200);
 }
+
+$(document).on('click', '#get-form-more-div', function () {
+  if (allowOverlayClose) {
+    _alertClose(1);
+  }
+});
 
 function _actionAlert(message,status ){
 	let text = '';

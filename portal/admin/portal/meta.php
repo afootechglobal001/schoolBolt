@@ -10,12 +10,14 @@
 <link href="<?php echo $websiteUrl?>/style/aos.css" type="text/css" rel="stylesheet" />
 <link href="<?php echo $websiteUrl?>/style/paramount.css?v=<?php echo $codeVersion?>" type="text/css"
     rel="stylesheet" />
+<link href="<?php echo $websiteUrl?>/style/tablePaginator.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
 <link href="<?php echo $websiteUrl?>/style/admin/main-style.css?v=<?php echo $codeVersion?>" type="text/css"
     rel="stylesheet" />
 <link href="<?php echo $websiteUrl?>/style/admin/jquery.datetimepicker.css" type="text/css" rel="stylesheet" />
 
 <script src="<?php echo $websiteUrl?>/js/jquery-v3.6.1.min.js"></script>
 <script src="<?php echo $websiteUrl?>/js/paramount.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/tablePaginator.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/scripts.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/textfield-selectfield.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/webcam_library.js"></script>
@@ -70,3 +72,5 @@ const rolePermissionIds = staffLoginData.rolePermissionIds;
 <script src="<?php echo $websiteUrl?>/js/reports/print-all-student-terminal-result.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/reports/print-contemporary-markbook-per-subject.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/reports/print-all-student-progressive-result.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/branch/schoolbolt-wallet/useSchoolBoltWallet.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/branch/account/useStudentFunds.js?v=<?php echo $codeVersion?>"></script>
