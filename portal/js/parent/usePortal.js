@@ -1,6 +1,6 @@
-function _getActiveStudentPage(props) {
+function _getActiveStudentPortalPage(props) {
   const { page = "", divid = "", pageContainer = "getStudentDetails" } = props;
-  _getStudentPageActiveLink(divid);
+  _getStudentPortalPageActiveLink(divid);
   if (page) {
     _getPage({
       page: page,
@@ -10,7 +10,7 @@ function _getActiveStudentPage(props) {
   }
 }
 
-function _getStudentPageActiveLink(divid) {
+function _getStudentPortalPageActiveLink(divid) {
   $(
     "#studentDashbaord, #paymentHistory, #studentProfile, #studentResult",
   ).removeClass("active");
