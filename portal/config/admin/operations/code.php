@@ -23,7 +23,6 @@ switch ($action){
 		require_once('branch-operation/account-content.php');
 		require_once('account-report/account-report-content.php');
 		require_once('branch-operation/schooBolt-wallet-content.php');
-		require_once('branch-operation/student-funds-content.php');
 	break;
 
 	case 'get_form':
@@ -45,7 +44,6 @@ switch ($action){
 		require_once('branch-operation/account-content.php');
 		require_once('account-report/account-report-content.php');
 		require_once('branch-operation/schooBolt-wallet-content.php');
-		require_once('branch-operation/student-funds-content.php');
 	break;
 
 	case 'upload_student_pix':

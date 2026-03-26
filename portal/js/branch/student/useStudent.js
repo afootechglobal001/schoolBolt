@@ -15,13 +15,14 @@ function _getActiveStudentPage(props) {
 }
 function _getStudentPagesActiveLink(divid) {
   $(
-    "#student_profile_details, #tanscript, #student_activities, #student_report").removeClass("active");
+    "#student_profile_details, #tanscript, #student_activities, #student_report, #studentPaymentHistory, #studentFundHistory",
+  ).removeClass("active");
   $("#" + divid).addClass("active");
 }
 
 $(function () {
   studentPixPreview = {
-    UpdatePreview: function (obj, action = 'register') {
+    UpdatePreview: function (obj, action = "register") {
       if (!window.FileReader) {
         console.error("FileReader is not supported.");
         return;
@@ -31,32 +32,34 @@ $(function () {
       const maxSize = 300 * 1024; // 300KB
 
       if (file.size > maxSize) {
-        if (action === 'updateStudentPix') {
+        if (action === "updateStudentPix") {
           document.getElementById("cam-pix").innerHTML =
-          `<img id="passport" src="${websiteUrl}/uploaded_files/studentPix/default.jpg" />`;
+            `<img id="passport" src="${websiteUrl}/uploaded_files/studentPix/default.jpg" />`;
         } else {
           document.getElementById("cam-pix").innerHTML =
             `<img id="passport" src="${websiteUrl}/images/sample.jpg" />`;
         }
-        _actionAlert("Image is too large! Maximum allowed size is 300KB.", false);
+        _actionAlert(
+          "Image is too large! Maximum allowed size is 300KB.",
+          false,
+        );
         return;
       }
-      
+
       var reader = new FileReader();
 
       reader.onload = function (e) {
         document.getElementById("cam-pix").innerHTML =
-            '<img id="passport" src="' + e.target.result + '"/>';
+          '<img id="passport" src="' + e.target.result + '"/>';
 
-        if (action === 'updateStudentPix') {
-            _updateStudentPix();
+        if (action === "updateStudentPix") {
+          _updateStudentPix();
         }
       };
       reader.readAsDataURL(obj.files[0]);
     },
   };
 });
-
 
 function copyTextbox() {
   setTimeout(function () {
@@ -93,7 +96,7 @@ function _getSelectAccomodation(fieldId) {
                 value +
                 "');\">" +
                 value +
-                "</li>"
+                "</li>",
             );
           }
         } else {
@@ -133,7 +136,7 @@ function _getSelectDepartment(fieldId) {
                   value +
                   "'); _fetchSelectDepartmentClass();\">" +
                   value +
-                  "</li>"
+                  "</li>",
               );
             }
           }
@@ -182,7 +185,7 @@ function _getSelectDepartmentClass(fieldId) {
                 value +
                 "'); _fetchSelectDepartmentClassArm();\">" +
                 value +
-                "</li>"
+                "</li>",
             );
           }
         } else {
@@ -228,7 +231,7 @@ function _getSelectDepartmentArm(fieldId) {
                 value +
                 "');\">" +
                 value +
-                "</li>"
+                "</li>",
             );
           }
         } else {
@@ -250,7 +253,7 @@ function formatDate(date) {
 
 function _createStudent(view) {
   let getEachBranchDetailsSession = JSON.parse(
-    sessionStorage.getItem("getEachBranchDetailsSession")
+    sessionStorage.getItem("getEachBranchDetailsSession"),
   );
   try {
     const passport = document.getElementById("passport").src;
@@ -292,7 +295,7 @@ function _createStudent(view) {
     const statusId = $("#statusId").val();
 
     $(
-      "#surName, #firstName, #genderId, #maritalStatusId, #dateOfBirth, #countryId, #stateId, #lgaId, #address, #email, #mobileNumber, #fatherEmail, #motherEmail, #departmentId, #classId, #armId, #accommodationId, #statusId"
+      "#surName, #firstName, #genderId, #maritalStatusId, #dateOfBirth, #countryId, #stateId, #lgaId, #address, #email, #mobileNumber, #fatherEmail, #motherEmail, #departmentId, #classId, #armId, #accommodationId, #statusId",
     ).removeClass("issue");
 
     if (!surName) {
@@ -411,7 +414,7 @@ function _createStudent(view) {
       $("#submitBtn").html(
         '<img src="' +
           websiteUrl +
-          '/images/loading.gif" width="12px" alt="Loading"/>'
+          '/images/loading.gif" width="12px" alt="Loading"/>',
       );
       $("#submitBtn").prop("disabled", true);
 
@@ -486,7 +489,7 @@ function _createStudent(view) {
         error: function () {
           _actionAlert(
             "An error occurred while processing your request! Please Try Again",
-            false
+            false,
           );
           $("#submitBtn").html(btn_text).prop("disabled", false);
         },
@@ -557,7 +560,7 @@ function _proceedFetchBranchStudents() {
 
   sessionStorage.setItem(
     "fetchStudentsParams",
-    JSON.stringify(fetchStudentsParams)
+    JSON.stringify(fetchStudentsParams),
   );
   _alertClose(2);
   _getActiveBranchPage({
@@ -569,16 +572,16 @@ function _proceedFetchBranchStudents() {
 
 function _fetchBranchStudents() {
   let fetchStudentsParams = JSON.parse(
-    sessionStorage.getItem("fetchStudentsParams")
+    sessionStorage.getItem("fetchStudentsParams"),
   );
   let getEachBranchDetailsSession = JSON.parse(
-    sessionStorage.getItem("getEachBranchDetailsSession")
+    sessionStorage.getItem("getEachBranchDetailsSession"),
   );
   $("#pageContent")
     .html(
       '<div class="ajax-loader pages-ajax-loader"><img src="' +
         websiteUrl +
-        '/images/spinner.gif" alt="Loading"/></div>'
+        '/images/spinner.gif" alt="Loading"/></div>',
     )
     .fadeIn("fast");
   try {
@@ -714,10 +717,7 @@ function _fetchBranchStudents() {
       },
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
-        _actionAlert(
-          "Check your internet connection and try again.",
-          false
-        );
+        _actionAlert("Check your internet connection and try again.", false);
       },
     });
   } catch (error) {
@@ -732,7 +732,7 @@ function _fetchEachBranchStudents(
   classId,
   armId,
   studentId,
-  statusId
+  statusId,
 ) {
   $("#get-more-div-secondary")
     .css({
@@ -750,15 +750,14 @@ function _fetchEachBranchStudents(
       headers: getAuthHeaders(true),
       success: function (info) {
         if (info.success && info.data.length > 0) {
-
           sessionStorage.setItem(
             "getEachBranchStudentsSession",
-            JSON.stringify(info.data[0])
+            JSON.stringify(info.data[0]),
           );
 
-           sessionStorage.setItem(
+          sessionStorage.setItem(
             "getEachBranchDetailsSession",
-            JSON.stringify({ branchId: branchId })
+            JSON.stringify({ branchId: branchId }),
           );
 
           _getForm({
@@ -775,10 +774,7 @@ function _fetchEachBranchStudents(
       },
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
-        _actionAlert(
-          "Check your internet connection and try again.",
-          false
-        );
+        _actionAlert("Check your internet connection and try again.", false);
       },
     });
   } catch (error) {
@@ -790,7 +786,7 @@ function _fetchEachBranchStudents(
 
 function _updateBranchStudents() {
   let getEachBranchStudentsSession = JSON.parse(
-    sessionStorage.getItem("getEachBranchStudentsSession")
+    sessionStorage.getItem("getEachBranchStudentsSession"),
   );
   try {
     const surName = $("#surName").val();
@@ -831,7 +827,7 @@ function _updateBranchStudents() {
     const statusId = $("#statusId").val();
 
     $(
-      "#surName, #firstName, #genderId, #maritalStatusId, #dateOfBirth, #countryId, #stateId, #lgaId, #address, #email, #mobileNumber, #fatherEmail, #motherEmail, #departmentId, #classId, #armId, #accommodationId, #statusId"
+      "#surName, #firstName, #genderId, #maritalStatusId, #dateOfBirth, #countryId, #stateId, #lgaId, #address, #email, #mobileNumber, #fatherEmail, #motherEmail, #departmentId, #classId, #armId, #accommodationId, #statusId",
     ).removeClass("issue");
 
     if (!surName) {
@@ -950,7 +946,7 @@ function _updateBranchStudents() {
       $("#updateBtn").html(
         '<img src="' +
           websiteUrl +
-          '/images/loading.gif" width="12px" alt="Loading"/>'
+          '/images/loading.gif" width="12px" alt="Loading"/>',
       );
       $("#updateBtn").prop("disabled", true);
 
@@ -1007,7 +1003,7 @@ function _updateBranchStudents() {
 
           if (success === true) {
             _actionAlert(message, true);
-           	_proceedFetchBranchStudents(departmentId, classId, armId);
+            _proceedFetchBranchStudents(departmentId, classId, armId);
             _alertClose(2);
           } else {
             _actionAlert(message, false);
@@ -1017,7 +1013,7 @@ function _updateBranchStudents() {
         error: function () {
           _actionAlert(
             "An error occurred while processing your request! Please Try Again",
-            false
+            false,
           );
           $("#updateBtn").html(btn_text).prop("disabled", false);
         },
@@ -1031,7 +1027,7 @@ function _updateBranchStudents() {
 
 function _updateStudentPix() {
   getEachBranchStudentsSession = JSON.parse(
-    sessionStorage.getItem("getEachBranchStudentsSession")
+    sessionStorage.getItem("getEachBranchStudentsSession"),
   );
   try {
     var passport = document.getElementById("passport").src;
@@ -1066,7 +1062,7 @@ function _updateStudentPix() {
       error: function (error) {
         _actionAlert(
           "An error occurred while processing your request! Please Try Again",
-          false
+          false,
         );
       },
     });
@@ -1077,7 +1073,7 @@ function _updateStudentPix() {
 
 function _searchBranchStudents() {
   let getEachBranchDetailsSession = JSON.parse(
-    sessionStorage.getItem("getEachBranchDetailsSession")
+    sessionStorage.getItem("getEachBranchDetailsSession"),
   );
 
   const q = $("#q").val();
@@ -1093,7 +1089,7 @@ function _searchBranchStudents() {
     .html(
       '<div class="ajax-loader pages-ajax-loader student-ajax-loader"><img src="' +
         websiteUrl +
-        '/images/spinner.gif" alt="Loading"/></div>'
+        '/images/spinner.gif" alt="Loading"/></div>',
     )
     .fadeIn("fast");
 
@@ -1121,10 +1117,7 @@ function _searchBranchStudents() {
       },
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
-        _actionAlert(
-          "Check your internet connection and try again.",
-          false
-        );
+        _actionAlert("Check your internet connection and try again.", false);
       },
     });
   } catch (error) {
@@ -1229,56 +1222,62 @@ function _getSearchStudents(success, fetch, message) {
 }
 
 function _fetchPaymentHistory() {
-  let getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));
-	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+  let getEachBranchStudentsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchStudentsSession"),
+  );
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
 
-	try {
+  try {
+    const formData = {
+      studentId: getEachBranchStudentsSession?.studentData?.studentId,
+      branchId: getEachBranchDetailsSession?.branchId,
+      departmentId: getEachBranchStudentsSession?.departmentData?.departmentId,
+      classId: getEachBranchStudentsSession?.classData?.classId,
+      armId: getEachBranchStudentsSession?.armData?.armId,
+    };
 
-		const formData = {
-			"studentId": getEachBranchStudentsSession?.studentData?.studentId,
-			"branchId": getEachBranchDetailsSession?.branchId,
-			"departmentId": getEachBranchStudentsSession?.departmentData?.departmentId,
-			"classId": getEachBranchStudentsSession?.classData?.classId,
-			"armId": getEachBranchStudentsSession?.armData?.armId
-		};
+    $.ajax({
+      type: "POST",
+      url: `${endPoint}/parent/payment/fetch-payment-history`,
+      data: JSON.stringify(formData),
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      processData: false,
+      success: function (info) {
+        const fetch = info.data;
+        const success = info.success;
 
-		$.ajax({
-			type: "POST",
-			url: `${endPoint}/parent/payment/fetch-payment-history`,
-			data: JSON.stringify(formData),
-			dataType: "json", 
-			cache: false,
-			headers: getAuthHeaders(),
-			processData: false,
-			success: function(info) {
-				const fetch = info.data;
-				const success = info.success;
+        let text = "";
+        let no = 0;
 
-				let text = '';
-				let no=0;
+        if (success === true) {
+          for (let i = 0; i < fetch.length; i++) {
+            no++;
+            const fetchedPayment = fetch[i];
+            const paymentId = fetchedPayment.paymentId;
+            const studentId = fetchedPayment.studentId;
+            const branchId = fetchedPayment.branchId;
+            const departmentId = fetchedPayment.departmentData.departmentId;
+            const currentTerm = fetchedPayment.termData.currentTerm;
+            const termId = fetchedPayment.termData.termId;
+            const session = fetchedPayment.session;
+            const className = fetchedPayment.classData.className;
+            const classId = fetchedPayment.classData.classId;
+            const armName = fetchedPayment.armData.armName;
+            const armId = fetchedPayment.armData.armId;
+            const totalAmount = thousandSeperator(fetchedPayment.totalAmount);
+            const paymentMethodName =
+              fetchedPayment.paymentMethodData.paymentMethodName;
+            const statusName = fetchedPayment.statusData.statusName;
+            const createdTime = fetchedPayment.createdTime;
+            const paydate = fetchedPayment.paydate
+              ? fetchedPayment.paydate
+              : createdTime;
 
-				if (success===true) {
-					for (let i = 0; i < fetch.length; i++) {
-						no++;
-						const fetchedPayment = fetch[i];
-						const paymentId = fetchedPayment.paymentId;
-						const studentId = fetchedPayment.studentId;
-						const branchId = fetchedPayment.branchId;
-						const departmentId = fetchedPayment.departmentData.departmentId;
-						const currentTerm = fetchedPayment.termData.currentTerm;
-						const termId = fetchedPayment.termData.termId;
-						const session = fetchedPayment.session;
-						const className = fetchedPayment.classData.className;
-						const classId = fetchedPayment.classData.classId;
-						const armName = fetchedPayment.armData.armName;
-						const armId = fetchedPayment.armData.armId;
-						const totalAmount = thousandSeperator(fetchedPayment.totalAmount);
-						const paymentMethodName = fetchedPayment.paymentMethodData.paymentMethodName;
-						const statusName = fetchedPayment.statusData.statusName;
-						const createdTime = fetchedPayment.createdTime;
-						const paydate = fetchedPayment.paydate ? fetchedPayment.paydate : createdTime;
-
-						text +=`
+            text += `
 						<tbody>
 							<tr class="tb-row">
 								<td>${no}</td>
@@ -1300,11 +1299,11 @@ function _fetchPaymentHistory() {
 								<td><div class="status-div ${statusName}">${statusName}</div></td>
 							</tr>
 						</tbody>`;
-					}
-					$('#pageContent2').html(text);
-				} else {
-					_actionAlert(info.message, false);
-					text += `
+          }
+          $("#pageContent2").html(text);
+        } else {
+          _actionAlert(info.message, false);
+          text += `
 						tbody>
 							<tr>
 								<td colspan="11">
@@ -1314,33 +1313,38 @@ function _fetchPaymentHistory() {
 								</td>
 							</tr>
 						</tbody>`;
-					$('#pageContent2').html(text);
+          $("#pageContent2").html(text);
 
-					const response = info.response;
-					if (response < 100) {
-						_logOut();
-					}    
-				}
-			},
-			error: function(textStatus, errorThrown) {
-				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('Check your internet connection and try again.', false);
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred! Please try again.', false);
-	}
+          const response = info.response;
+          if (response < 100) {
+            _logOut();
+          }
+        }
+      },
+      error: function (textStatus, errorThrown) {
+        console.error("AJAX Error: ", textStatus, errorThrown);
+        _actionAlert("Check your internet connection and try again.", false);
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred! Please try again.", false);
+  }
 }
 
 function _fetchStudentCurrentPayableFees() {
-  let getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));
-	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+  let getEachBranchStudentsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchStudentsSession"),
+  );
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
 
-  const departmentId= getEachBranchStudentsSession?.departmentData?.departmentId;
-  const classId= getEachBranchStudentsSession?.classData?.classId;
-  const armId= getEachBranchStudentsSession?.armData?.armId;
-  const studentId= getEachBranchStudentsSession?.studentId;
+  const departmentId =
+    getEachBranchStudentsSession?.departmentData?.departmentId;
+  const classId = getEachBranchStudentsSession?.classData?.classId;
+  const armId = getEachBranchStudentsSession?.armData?.armId;
+  const studentId = getEachBranchStudentsSession?.studentId;
 
   try {
     $("#get-more-third-layer")
@@ -1353,14 +1357,17 @@ function _fetchStudentCurrentPayableFees() {
 
     $.ajax({
       type: "GET",
-      url:`${endPoint}/admin/branch/account/fetch-student-current-payable-fees?branchId=${getEachBranchDetailsSession?.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}`,
+      url: `${endPoint}/admin/branch/account/fetch-student-current-payable-fees?branchId=${getEachBranchDetailsSession?.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}`,
       dataType: "json",
       cache: false,
       headers: getAuthHeaders(true),
       success: function (info) {
         if (info.success) {
-          sessionStorage.setItem("studentCurrentPayableFeesSession", JSON.stringify(info));
-					_getForm({page: 'payableFess', layer:3, url: adminPortalLocalUrl});
+          sessionStorage.setItem(
+            "studentCurrentPayableFeesSession",
+            JSON.stringify(info),
+          );
+          _getForm({ page: "payableFess", layer: 3, url: adminPortalLocalUrl });
         } else {
           _actionAlert(info.message, false);
           _alertClose(3);
@@ -1373,7 +1380,7 @@ function _fetchStudentCurrentPayableFees() {
       error: function () {
         _actionAlert(
           "Unable to reach the server. Please check your connection.",
-          false
+          false,
         );
         _alertClose(3);
       },
@@ -1386,15 +1393,20 @@ function _fetchStudentCurrentPayableFees() {
 }
 
 function _updateStudentMandatoryFess() {
-  let getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));
-	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+  let getEachBranchStudentsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchStudentsSession"),
+  );
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
 
-  const departmentId= getEachBranchStudentsSession?.departmentData?.departmentId;
-  const classId= getEachBranchStudentsSession?.classData?.classId;
-  const armId= getEachBranchStudentsSession?.armData?.armId;
-  const studentId= getEachBranchStudentsSession?.studentId;
+  const departmentId =
+    getEachBranchStudentsSession?.departmentData?.departmentId;
+  const classId = getEachBranchStudentsSession?.classData?.classId;
+  const armId = getEachBranchStudentsSession?.armData?.armId;
+  const studentId = getEachBranchStudentsSession?.studentId;
 
-	try {
+  try {
     let selectedFees = [];
 
     $(".child:checked").each(function () {
@@ -1412,7 +1424,7 @@ function _updateStudentMandatoryFess() {
       $("#submitBtn").html(
         '<img src="' +
           websiteUrl +
-          '/images/loading.gif" width="12px" alt="Loading"/>'
+          '/images/loading.gif" width="12px" alt="Loading"/>',
       );
       $("#submitBtn").prop("disabled", true);
 
@@ -1422,13 +1434,13 @@ function _updateStudentMandatoryFess() {
 
       $.ajax({
         type: "POST",
-        url:`${endPoint}/admin/branch/account/update-student-mandatory-fees?branchId=${getEachBranchDetailsSession?.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}`,
+        url: `${endPoint}/admin/branch/account/update-student-mandatory-fees?branchId=${getEachBranchDetailsSession?.branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}`,
         data: JSON.stringify(formData),
         dataType: "json",
         cache: false,
         headers: getAuthHeaders(true),
         processData: false,
-        success: function(info) {
+        success: function (info) {
           const success = info.success;
           const message = info.message;
 
@@ -1440,33 +1452,36 @@ function _updateStudentMandatoryFess() {
           }
           $("#submitBtn").html(btnText).prop("disabled", false);
         },
-        error: function(textStatus, errorThrown) {
+        error: function (textStatus, errorThrown) {
           console.error("AJAX Error: ", textStatus, errorThrown);
-          _actionAlert('Check your internet connection and try again.', false);
+          _actionAlert("Check your internet connection and try again.", false);
           $("#submitBtn").html(btnText).prop("disabled", false);
-        }
+        },
       });
     }
-    } catch (error) {
-      console.error("Error: ", error);
-      _actionAlert('An unexpected error occurred! Please try again.', false);
-      $("#submitBtn").html(btnText).prop("disabled", false);
-    }
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred! Please try again.", false);
+    $("#submitBtn").html(btnText).prop("disabled", false);
+  }
 }
 
 function _deleteMandatoryFees(feesId) {
+  let getEachBranchStudentsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchStudentsSession"),
+  );
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
 
-  let getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchStudentsSession"));
-  let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
-
-  const departmentId = getEachBranchStudentsSession?.departmentData?.departmentId;
+  const departmentId =
+    getEachBranchStudentsSession?.departmentData?.departmentId;
   const classId = getEachBranchStudentsSession?.classData?.classId;
   const armId = getEachBranchStudentsSession?.armData?.armId;
   const studentId = getEachBranchStudentsSession?.studentId;
 
   try {
     if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
-
       const formData = { feesId: feesId };
 
       $.ajax({
@@ -1478,7 +1493,7 @@ function _deleteMandatoryFees(feesId) {
         cache: false,
         headers: getAuthHeaders(true),
         processData: false,
-        success: function(info) {
+        success: function (info) {
           const { success, message } = info;
 
           if (success === true) {
@@ -1488,27 +1503,30 @@ function _deleteMandatoryFees(feesId) {
             _actionAlert(message, false);
           }
         },
-        error: function(xhr, textStatus, errorThrown) {
+        error: function (xhr, textStatus, errorThrown) {
           console.error("AJAX Error: ", textStatus, errorThrown);
-          _actionAlert('An error occurred while sending data! Please try again.', false);
-        }
+          _actionAlert(
+            "An error occurred while sending data! Please try again.",
+            false,
+          );
+        },
       });
     }
   } catch (error) {
     console.error("Error: ", error);
-    _actionAlert('An unexpected error occurred! Please try again.', false);
+    _actionAlert("An unexpected error occurred! Please try again.", false);
   }
 }
 
 function _fetchBranchArchivedStudents() {
   let getEachBranchDetailsSession = JSON.parse(
-    sessionStorage.getItem("getEachBranchDetailsSession")
+    sessionStorage.getItem("getEachBranchDetailsSession"),
   );
   $("#pageContent")
     .html(
       '<div class="ajax-loader pages-ajax-loader"><img src="' +
         websiteUrl +
-        '/images/spinner.gif" alt="Loading"/></div>'
+        '/images/spinner.gif" alt="Loading"/></div>',
     )
     .fadeIn("fast");
   try {
@@ -1543,7 +1561,6 @@ function _fetchBranchArchivedStudents() {
 					</thead>`;
 
         if (success === true) {
-
           let showButtons = `
             <button class="btn" title="PRINT RECORDS" onclick="_printStudentByClass('${fetch[0].departmentData.departmentId}','${fetch[0].classData.classId}','${fetch[0].armData.armId}');">
               <i class="bi-printer"></i> PRINT
@@ -1634,10 +1651,7 @@ function _fetchBranchArchivedStudents() {
       },
       error: function (textStatus, errorThrown) {
         console.error("AJAX Error: ", textStatus, errorThrown);
-        _actionAlert(
-          "Check your internet connection and try again.",
-          false
-        );
+        _actionAlert("Check your internet connection and try again.", false);
       },
     });
   } catch (error) {
