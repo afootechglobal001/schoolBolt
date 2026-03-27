@@ -523,7 +523,7 @@
 
 <?php if ($page == 'studentResult') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <span><i class="bi-person-bounding-box"></i> STUDENT CLASS LIST</span>
+        <span><i class="bi-person-bounding-box"></i> STUDENT RESULT</span>
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent">

@@ -68,11 +68,11 @@ function writeSidebarItems(navId) {
         <div class="link" title="Income Report" onclick="_getActivePage({page:'incomeReport', divid:'reports'});">- Income Report</div>
         <div class="hidden" id="_income_report"><i class="bi-graph-up-arrow"></i> Income Report</div>
 
-        <div class="link" title="Sales Report" onclick="">- Expenses Report</div>
+        <!-- <div class="link" title="Sales Report" onclick="">- Expenses Report</div>
         <div class="hidden" id="_sales_report"><i class="bi-boxes"></i> Expenses Report</div>
 
         <div class="link" title="Wallet Report" onclick="">- Staff Loans</div>
-        <div class="hidden" id="_wallet_report"><i class="bi-credit-card"></i> Staff Loans</div>
+        <div class="hidden" id="_wallet_report"><i class="bi-credit-card"></i> Staff Loans</div> -->
     </div>
 
     <div class="nav-back-container" onclick="_closeNav();"></div>

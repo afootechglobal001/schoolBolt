@@ -362,7 +362,7 @@ function _suspendActivateParentAccountCallback() {
 }
 
 ////// Select Session For Account //////
-function _getSelectAccountSession(fieldId) {
+function _getSelectBranchAccountSession(fieldId) {
   let getEachBranchDetailsSession = JSON.parse(
     sessionStorage.getItem("getEachBranchDetailsSession"),
   );
@@ -1076,6 +1076,7 @@ function _proceedToPaymentCallback(formData) {
               message: response.message,
               alertType: "success",
               trueActionBtnText: "OK, Thanks.",
+              closeOnOverlayClick: false,
             });
           }
         } else {
@@ -1324,4 +1325,195 @@ function _checkAll(){
         $('#parent').prop('checked', $('.child:checked').length===$('.child').length);
     });
 });
+}
+
+/// Activate All Student Result ////
+function _activateAllStudentResult(){
+	try {
+		////////get all needed values////////////
+		let selectedStudents = [];
+		$('.child:checked').each(function() {
+			selectedStudents.push({ studentId: $(this).data('value') });
+		});
+
+		const checked = $('input[name="studentId[]"]:checked').length;
+		$("#studentId").removeClass("issue");
+
+		if (checked < 1) {
+			$("#studentId").addClass("issue");
+			_actionAlert('Select at least a student to continue', false);
+			return;
+		}
+
+		// Gather form data
+		const formData = {
+			studentIds: selectedStudents,
+		};
+
+		////// confirm action////
+		_showCustomConfirm({
+		callback: () => {
+			_activateAllStudentResultCallback(formData);
+		},
+			title: "Are you sure?",
+			message: 'Are you sure you want to proceed? This action is irreversible.',
+			alertType: "warning",
+			falseActionBtn: true,
+			closeOnOverlayClick: true,
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _activateAllStudentResult());
+	}
+}
+
+//// Proceed To Activation of student result CallBack /////
+function _activateAllStudentResultCallback(formData) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+  let fetchAccountDepartmentClassParams = JSON.parse(
+    sessionStorage.getItem("fetchAccountDepartmentClassParams"),
+  );
+  let useAccountStudentByClassSession = JSON.parse(
+    sessionStorage.getItem("useAccountStudentByClassSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+  const session = fetchAccountDepartmentClassParams?.session;
+  const termId = fetchAccountDepartmentClassParams?.termId;
+
+  const departmentId =
+    useAccountStudentByClassSession?.departmentData?.departmentId;
+  const classId = useAccountStudentByClassSession?.classData?.classId;
+  const armId = useAccountStudentByClassSession?.armData?.armId;
+
+  try {
+    const btnText = $("#activateAllBtn").html();
+    _btnDisable("activateAllBtn", btnText, true);
+
+    _callRawEndPoints({
+      url: `admin/branch/account/student-result/activate-all-result?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+      formData,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success) {
+           _showCustomConfirm({
+              callback: () => {
+                _fetchApprovedStudentBySchoolBolt(departmentId, classId, armId, branchId, session, termId);
+              },
+              title: "Success!",
+              message: response.message,
+              alertType: "success",
+              trueActionBtnText: "OK, Thanks.",
+              closeOnOverlayClick: false,
+            });
+        } else {
+          _showCustomConfirm({
+            title: "Unable To Activate Result",
+            message: response.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+          _btnDisable("activateAllBtn", btnText, false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() => _activateAllStudentResultCallback(formData)); // retry if needed
+        _btnDisable("activateAllBtn", btnText, false);
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _activateAllStudentResultCallback(formData));
+    _btnDisable("activateAllBtn", btnText, false);
+  }
+}
+
+/// Deactivate All Student Result ////
+function _deActivateAllStudentResult(){
+	try {
+		////// confirm action////
+		_showCustomConfirm({
+		callback: () => {
+			_deActivateAllStudentResultCallback();
+		},
+			title: "Are you sure?",
+			message: 'Are you sure you want to proceed? This action is irreversible.',
+			alertType: "warning",
+			falseActionBtn: true,
+			closeOnOverlayClick: true,
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _deActivateAllStudentResult());
+	}
+}
+
+//// Proceed To Activation of student result CallBack /////
+function _deActivateAllStudentResultCallback() {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+  let fetchAccountDepartmentClassParams = JSON.parse(
+    sessionStorage.getItem("fetchAccountDepartmentClassParams"),
+  );
+  let useAccountStudentByClassSession = JSON.parse(
+    sessionStorage.getItem("useAccountStudentByClassSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+  const session = fetchAccountDepartmentClassParams?.session;
+  const termId = fetchAccountDepartmentClassParams?.termId;
+
+  const departmentId =
+    useAccountStudentByClassSession?.departmentData?.departmentId;
+  const classId = useAccountStudentByClassSession?.classData?.classId;
+  const armId = useAccountStudentByClassSession?.armData?.armId;
+
+  try {
+    const btnText = $("#deActivateAllBtn").html();
+    _btnDisable("deActivateAllBtn", btnText, true);
+
+    _callRawEndPoints({
+      url: `admin/branch/account/student-result/deactivate-all-result?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success) {
+           _showCustomConfirm({
+              callback: () => {
+                _fetchApprovedStudentBySchoolBolt(departmentId, classId, armId, branchId, session, termId);
+              },
+              title: "Success!",
+              message: response.message,
+              alertType: "success",
+              trueActionBtnText: "OK, Thanks.",
+              closeOnOverlayClick: false,
+            });
+        } else {
+          _showCustomConfirm({
+            title: "Unable To Dactivate Result",
+            message: response.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+          _btnDisable("deActivateAllBtn", btnText, false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() => _deActivateAllStudentResultCallback(formData)); // retry if needed
+        _btnDisable("deActivateAllBtn", btnText, false);
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _deActivateAllStudentResultCallback(formData));
+    _btnDisable("deActivateAllBtn", btnText, false);
+  }
 }

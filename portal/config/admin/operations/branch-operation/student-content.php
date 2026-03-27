@@ -1777,6 +1777,7 @@
                                 textField({
                                     id: 'amountReceivedFromParent',
                                     title: 'Amount Recieved (#)',
+                                    type: 'number',
                                     onKeyPressFunction: 'isNumberCheck(event);',
                                 });
                             </script>

@@ -17,6 +17,7 @@
                     textField({
                         id: 'amount',
                         title: 'Enter Amount',
+                        type: 'number',
                         onKeyPressFunction: 'isNumberCheck(event);'
                     });
                 </script>
