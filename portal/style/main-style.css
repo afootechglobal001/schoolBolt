@@ -118,8 +118,13 @@
 	gap: 20px 1.5%;
 }
 
+.portal-list-back-div a{
+    display: block;
+    width: 32%;
+}
+
 .portal-list-back-div .portal-list-div{
-	width:32%;
+	width: 100%;
 	display: flex;
     justify-content: space-between;
 	flex-direction: column;
@@ -207,9 +212,10 @@
 
 
 @media all and (max-width: 1080px) {
-    .portal-list-back-div .portal-list-div{
-        width:48%;
-    }
+	.portal-list-back-div a{
+		display: block;
+		 width:48%;
+	}
 } 
 
 

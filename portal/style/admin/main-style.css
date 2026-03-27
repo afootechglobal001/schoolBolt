@@ -1253,6 +1253,13 @@ header
   background: var(--secondary-color);
 }
 
+@media all and (max-width: 750px) {
+  .user-details-notf .text-back-div{
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+}
 
 @media all and (max-width: 600px) {
   .chart-div-notifications {
@@ -1731,7 +1738,8 @@ header
 }
 
 .table-div .table .SUCCESSFUL,
-.table-div .table .ACTIVE {
+.table-div .table .ACTIVE,
+.table-div .table .ACTIVATE {
   background: rgba(46, 204, 113, 0.1);
   color: rgba(9, 172, 77, 0.9);
 }
@@ -1742,7 +1750,9 @@ header
   color: rgba(218, 90, 31, 0.87);
 }
 
-.table-div .table .CANCELLED {
+.table-div .table .CANCELLED,
+.table-div .table .DEACTIVATE
+ {
   background: rgba(255, 0, 0, 0.1);
   color: rgba(255, 0, 0);
 }
@@ -6296,13 +6306,20 @@ header
 }
 
 
-.content-wrapper .header-div .btn-div {
+
+.content-wrapper .header-div .search-btn-div {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-.content-wrapper .header-div .btn-div .btn {
+.content-wrapper .header-div .search-btn-div .btn-div{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.content-wrapper .header-div .search-btn-div .btn-div .btn {
 	border: none;
 	height: 40px;
 	font-size: 13px;
@@ -6317,32 +6334,38 @@ header
 	color: var(--white-color);
 	background:var(--primary-color);
 	background-size: 100%;
-	background-position: left;
+  white-space: nowrap;
 	transition: background-position 0.4s ease-in-out, transform 0.2s ease-in-out;
 	box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
 }
 
-.content-wrapper .header-div .btn-div .btn i{
-	font-size: 10px;
+.content-wrapper .header-div .search-btn-div .btn-div .deactivate-btn {
+	background:var(--sub-text-color);
 }
 
-.content-wrapper .header-div .btn-div .btn:hover {
+.content-wrapper .header-div .search-btn-div .btn-div .btn i{
+	font-size: 13px;
+}
+
+.content-wrapper .header-div .search-btn-div .btn-div .btn:hover {
 	background-size: 200% 100%;
 	background-position: right;
 	transform: scale(1.05); /* subtle hover grow */
 }
 
-.content-wrapper .header-div .btn-div .search-div {
+.content-wrapper .header-div .search-btn-div .search-div {
 	display: flex;
 	align-items: center;
 	background: var(--white-color);
 	padding: 0px 20px;
+  box-sizing: border-box;
 	border-radius: 25px;
 	height: 40px;
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
 
-.content-wrapper .header-div .btn-div .search-div input {
+.content-wrapper .header-div .search-btn-div .search-div input {
+  width: 100%;
 	border: none;
 	background: none;
 	outline: none;
@@ -6350,7 +6373,7 @@ header
 	font-family: body-font;
 }
 
-.content-wrapper .header-div .btn-div .btn-div .search-div i {
+.content-wrapper .header-div .search-btn-div .search-div i {
 	color: var(--text-color);
 	font-size: 14px;
 }
@@ -6408,7 +6431,37 @@ header
 }
 
 
+@media all and (max-width:920px) {
+  .content-wrapper .header-div{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 15px 20px;
+  }
+} 
 
+@media all and (max-width:720px) {
+  .content-wrapper .header-div .search-btn-div {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+} 
+
+@media all and (max-width:460px) {
+  .content-wrapper .header-div .search-btn-div .btn-div{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .content-wrapper .header-div .search-btn-div .btn-div .btn {
+    width: 100%;
+  }
+  .content-wrapper .header-div .search-btn-div .search-div {
+    width: 100%;
+  }
+}
 
 .wallet-wrapper {
   display: flex;

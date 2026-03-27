@@ -223,3 +223,62 @@ function _proceedToLoginCallback(formData) {
       _hideLoader();
     });
 }
+
+
+/// Proceed To Login ///
+function _proceedViewStudentResult() {
+  try {
+    ////////get all needed values////////////
+    let issueCount = 0;
+    const studentId = $("#studentId").val();
+
+    ///// empty field validation//////////
+    issueCount += _validateEmptyValue("studentId", "STUDENT ID");
+
+    if (issueCount > 0) return;
+
+    // Gather form data
+    const formData = {
+      studentId,
+    };
+
+    _proceedViewStudentCallback(formData);
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _proceedViewStudentResult());
+  }
+}
+
+/// Proceed To Login Callback ///
+function _proceedViewStudentCallback(formData) {
+  ///// get btn text/////
+  const btnText = $("#proceedResult").html();
+  _btnDisable("proceedResult", btnText, true);
+
+  //// call endpoint //////
+  _callRawEndPoints({
+    url: `parent/auth/view-student-result-verification`,
+    formData,
+  })
+    .then((response) => {
+      if (response.success) {
+        localStorage.setItem("proceedViewResultSessionData", JSON.stringify(response));
+        window.location.href = parentViewResultUrl;
+        _btnDisable("proceedResult", btnText, false);
+      } else {
+        _btnDisable("proceedResult", btnText, false);
+        _showCustomConfirm({
+          title: "Unable To View Result",
+          message: response.message,
+          alertType: "error",
+          trueActionBtnText: "OK",
+          closeOnOverlayClick: true,
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      _callAjaxError(() => _proceedViewStudentCallback(formData)); // retry if needed
+      _btnDisable("proceedResult", btnText, false);
+    });
+}

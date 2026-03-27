@@ -246,11 +246,11 @@
 <?php if ($page == 'accountSessionSelectForm') { ?>
     <div class="caption-div animated zoomIn">
         <div class="title-div">
-            <?php if ($id=="payment") {
+            <?php if ($id == "payment") {
                 $pageTitle = "STUDENT PAYMENT";
-            } else if ($id=="debtors") {
+            } else if ($id == "debtors") {
                 $pageTitle = "VIEW DEPTORS";
-            } else if ($id=="activateResult") {
+            } else if ($id == "activateResult") {
                 $pageTitle = "ACTIVATE ACADEMIC RESULT";
             }
             ?>
@@ -272,7 +272,7 @@
                         id: 'sessionId',
                         title: 'Select Session'
                     });
-                    _getSelectAccountSession('sessionId');
+                    _getSelectBranchAccountSession('sessionId');
                 </script>
             </div>
 
@@ -286,12 +286,12 @@
                 </script>
             </div>
 
-           <?php if ($id=="activateResult") { ?>
+            <?php if ($id == "activateResult") { ?>
                 <button class="btn" id="proceedActivateResultBtn" title="Proceed Request"
-                onclick="_proceedActivateResult('<?php echo $id ?>');">PROCEED <i class="bi-arrow-right"></i> </button>
+                    onclick="_proceedActivateResult('<?php echo $id ?>');">PROCEED <i class="bi-arrow-right"></i> </button>
             <?php } else { ?>
                 <button class="btn" id="proceedBtn" title="Proceed Request"
-                onclick="_proceedFetchAcountDepartmentClass('<?php echo $id ?>');">PROCEED <i class="bi-arrow-right"></i> </button>
+                    onclick="_proceedFetchAcountDepartmentClass('<?php echo $id ?>');">PROCEED <i class="bi-arrow-right"></i> </button>
             <?php } ?>
         </div>
     </div>
@@ -1114,21 +1114,27 @@
                                 </div>
                             </div>
 
-                            <div class="btn-div">
+                            <div class="search-btn-div">
                                 <div class="search-div">
                                     <input type="text" onkeyup="_filtersActivateStudents(this.value);" placeholder="Search Student Here...">
                                     <i class="bi bi-search"></i>
                                 </div>
-                                <button class="btn" title="ACTIVATE RESULT" id="addProductsBtn" onclick="">
-                                    <i class="bi-check"></i> ACTIVATE RESULT
-                                </button>
+
+                                <div class="btn-div">
+                                    <button class="btn" title="ACTIVATE RESULT" id="activateAllBtn" onclick="_activateAllStudentResult();">
+                                        <i class="bi-check"></i> ACTIVATE RESULT
+                                    </button>
+                                    <button class="btn deactivate-btn" title="DEACTIVATE ALL RESULT" id="deActivateAllBtn" onclick="_deActivateAllStudentResult();">
+                                        <i class="bi-x"></i> DEACTIVATE ALL RESULT
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
                         <div class="content-container" id="getPaymentNav">
                             <div class="alert alert-success top-alert-div animated fadeIn">
                                 <div>
-                                    <span><i class="bi-people-fill"></i> STUDENT DEBTORS LIST /</span> SESSION -- <span id="accountSession">
+                                    <span><i class="bi-people-fill"></i> STUDENT RESULT ACTIVATION LIST /</span> SESSION -- <span id="accountSession">
                                         <script>
                                             $("#accountSession").html(useAccountStudentByClassSession?.session);
                                         </script>
@@ -1186,7 +1192,7 @@
                                                     <th>Mandatory Fees Paid</th>
                                                     <th>Non-Mandatory Fees Paid</th>
                                                     <th>Total Fees Paid</th>
-                                                    <th>View</th>
+                                                    <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>`;
@@ -1207,20 +1213,16 @@
                                                     const debtorStatusColor = (isDebtor === "TRUE") ? "red-color" : "green-color";
                                                     const debtorImgStatusColor = (isDebtor === "TRUE") ? '<div class="status-icon debtor"><i class="bi-x"></i></div>' : '<div class="status-icon"><i class="bi-check"></i></div>';
 
-                                                    activateBtn = (isResultActivated === "TRUE")
-                                                        ? `
-                                                            <button class="btn view-btn"
-                                                                title="Click to deactivate student result"
-                                                                onclick="">
-                                                                DEACTIVATE RESULT
-                                                            </button>
+                                                    viewStatus = (isResultActivated === "TRUE") ?
                                                         `
-                                                        : `
-                                                            <button class="btn view-btn"
-                                                                title="Click to activate student result"
-                                                                onclick="">
-                                                                ACTIVATE RESULT
-                                                            </button>
+                                                            <div class="status-div ACTIVATE">
+                                                                ACTIVATED
+                                                            </div>
+                                                        ` :
+                                                        `
+                                                            <div class="status-div DEACTIVATE">
+                                                                DEACTIVATED
+                                                            </div>
                                                         `;
 
                                                     html += `
@@ -1228,7 +1230,8 @@
                                                     <td>
                                                         <label class="custom-checkbox">
                                                             <input type="checkbox" 
-                                                                class="child" 
+                                                                class="child"
+                                                                id="student_${studentId}"
                                                                 name="studentId[]" 
                                                                 value="${studentId}" 
                                                                 data-value="${studentId}"
@@ -1269,7 +1272,7 @@
                                                     <td><s>N</s>${thousandSeperator(item.totalFeesPaid)}</td>
 
                                                     <td>
-                                                        ${activateBtn}
+                                                        ${viewStatus}
                                                     </td>
                                                 </tr>`;
                                                 });

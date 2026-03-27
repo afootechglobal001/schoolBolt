@@ -41,7 +41,7 @@
                     <h1> Welcome to School Database Management System 😊</h1>
 
                     <div class="portal-list-back-div">
-                        
+                        <a href="<?php echo $websiteUrl ?>/admin/login" title="Admin Portal">
                         <div class="portal-list-div">
                             <div class="div-in">
                                 <div class="icon-div"><i class="bi-person-vcard"></i></div>
@@ -52,11 +52,11 @@
                             </div>
 
                             <div class="bottom-div">
-                                <a href="<?php echo $websiteUrl ?>/admin/login" title="<?php echo $appName ?>">
-                                <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
+                                <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div>
                             </div>
-                        </div>
+                        </div></a>
 
+                        <a href="<?php echo $websiteUrl ?>/admin/login" title="Staff Portal">
                         <div class="portal-list-div">
                             <div class="div-in">
                                 <div class="icon-div"><i class="bi-arrow-right-circle-fill"></i></div>
@@ -67,12 +67,11 @@
                             </div>
 
                             <div class="bottom-div">
-                                <a href="<?php echo $websiteUrl ?>/admin/login" title="<?php echo $appName ?>">
-                                <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
+                                <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div>
                             </div>
-                        </div>
+                        </div></a>
 
-                        
+                        <a href="<?php echo $websiteUrl ?>/admin/login" title="Bursary Portal">
                         <div class="portal-list-div">
                             <div class="div-in">
                                 <div class="icon-div"><i class="bi-credit-card-fill"></i></div>
@@ -83,12 +82,11 @@
                             </div>
 
                             <div class="bottom-div">
-                                <a href="<?php echo $websiteUrl ?>/admin/login" title="<?php echo $appName ?>">
-                                <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
+                                <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div>
                             </div>
-                        </div>
+                        </div></a>
 
-
+                        <a href="<?php echo $websiteUrl ?>/#" title="Student Portal">
                         <div class="portal-list-div">
                             <div class="div-in">
                                 <div class="icon-div"><i class="bi-mortarboard-fill"></i></div>
@@ -99,11 +97,11 @@
                             </div>
 
                             <div class="bottom-div">
-                                <a href="<?php echo $websiteUrl ?>/#" title="<?php echo $appName ?>">
-                                <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
+                                <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div>
                             </div>
-                        </div>
+                        </div></a>
 
+                        <a href="<?php echo $websiteUrl ?>/parent/auth" title="Parent Portal">
                         <div class="portal-list-div">
                             <div class="div-in">
                                 <div class="icon-div"><i class="bi-people-fill"></i></div>
@@ -114,10 +112,9 @@
                             </div>
 
                             <div class="bottom-div">
-                                <a href="<?php echo $websiteUrl ?>/parent/login" title="<?php echo $appName ?>">
-                                <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div></a>
+                                <div class="count-div"><i class="bi-arrow-right-circle-fill"></i>&nbsp; Login Here</div>
                             </div>
-                        </div>
+                        </div></a>
                     </div>
                 </div>
             </div>

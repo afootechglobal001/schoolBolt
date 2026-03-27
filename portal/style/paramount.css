@@ -491,6 +491,7 @@ p {
   align-items: center;
   justify-content: center;
   gap: 5px;
+  white-space: nowrap;
   font-family: sub-title-font;
   transition: all ease 0.2s;
   -webkit-transition: all ease 0.2s;
@@ -825,6 +826,12 @@ p {
   }
   .modal-overlay .modal-box .btn-div .btn {
     width: 100%;
+  }
+  .modal-overlay .modal-box h3 {
+    font-size: 5vw;
+  }
+  .modal-overlay .modal-box p {
+    font-size: 13px;
   }
 }
 
