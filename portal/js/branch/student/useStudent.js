@@ -483,8 +483,8 @@ function _createStudent(view) {
             }
           } else {
             _actionAlert(message, false);
+            $("#submitBtn").html(btn_text).prop("disabled", false);
           }
-          $("#submitBtn").html(btn_text).prop("disabled", false);
         },
         error: function () {
           _actionAlert(
@@ -502,6 +502,24 @@ function _createStudent(view) {
 }
 
 function _uploadStudentPicture(oldPassportName, newPassportName, message) {
+  $("#get-more-third-layer")
+    .html(`
+      <div class="alert-loading-div">
+          <div class="icon">
+              <img src="${websiteUrl}/images/loading.gif" width="20px" alt="Uploading"/>
+          </div> 
+          <div class="text">
+              <p>UPLOADING STUDENT PICTURE! PLEASE WAIT...</p>
+          </div>
+      </div>
+    `)
+    .css({
+      display: "flex",
+      "justify-content": "center",
+      "align-items": "center",
+    })
+  .fadeIn(500);
+
   const action = "upload_student_pix";
 
   const formData = new FormData();
@@ -524,8 +542,10 @@ function _uploadStudentPicture(oldPassportName, newPassportName, message) {
     },
     error: function () {
       _actionAlert("Upload failed! Please try again.", false);
+      $("#get-more-third-layer").fadeOut();
     },
   });
+  $("#get-more-third-layer").fadeOut();
 }
 
 function _proceedFetchBranchStudents() {

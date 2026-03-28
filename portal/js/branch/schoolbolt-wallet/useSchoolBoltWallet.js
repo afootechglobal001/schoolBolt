@@ -297,17 +297,17 @@ function _walletHistoryFiltering(dateFrom, dateTo) {
 		})
 		.then((response) => {
 			_staffValidationCheck(response.response);
+			// Update custom date from and date to///
+			$("#dateFrom").html(response.dateFrom);
+			$("#dateTo").html(response.dateTo);
+
+			// Update Wallet Balance///
+			$("#branchWalletBalance").html(
+			"<s>N</s>" + thousandSeperator(response.walletBalance)
+			);
+
 			if (response.success && response.data?.length > 0) {
 				_initFetchBranchWalletTransactions(response.data);
-
-				// Update custom date from and date to///
-				$("#dateFrom").html(response.dateFrom);
-				$("#dateTo").html(response.dateTo);
-
-				// Update Wallet Balance///
-				$("#branchWalletBalance").html(
-				"<s>N</s>" + thousandSeperator(response.walletBalance)
-				);
 			} else {
 			$("#fetchBranchWalletTransactions").html(`
 				<tr>
