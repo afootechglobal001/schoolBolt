@@ -155,7 +155,13 @@ function _fetchFeesToPay() {
             url: parentPortalLocalUrl,
           });
         } else {
-          _actionAlert(info.message, false);
+          _showCustomConfirm({
+            title: "Cannot Proceed!",
+            message: info.message,
+            alertType: "error",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
           _alertClose(2);
         }
       },

@@ -1326,7 +1326,10 @@
                                 </h3>
                             </div>
 
-                            <button class="btn" title="Load Wallet" onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i class="bi bi-wallet-fill"></i> Load Wallet</button>
+                            <div class="btn-div">
+                                <button class="btn" title="Load Wallet" onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i class="bi bi-wallet-fill"></i> Load Wallet</button>
+                                <button class="btn view-wallet" title="View Wallet History" onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});"><i class="bi bi-eye"></i> View Wallet History</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1335,6 +1338,7 @@
             <div class="matrix-div">
                 <div class="inner-div">
                     <div class="title">
+                        <i class="bi bi-credit-card-fill"></i>
                         <h3>Payment Matrix</h3>
                     </div>
                     <div id="chartContainer2" style="width:100%; height:200px; margin:auto;"></div>
