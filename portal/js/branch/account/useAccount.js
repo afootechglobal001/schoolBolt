@@ -606,13 +606,19 @@ function _fetchAccountBranchDepartmentClass() {
                                       if (accountViewMethod==="activateResult") {
                                           showBtn=`
                                             <div class="btn-div">
-                                              <button class="btn view-btn" title="CLICK TO VIEW STUDENT" onclick="_fetchApprovedStudentBySchoolBolt('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT PAYMENT</button>
+                                              <button class="btn view-btn" title="CLICK TO ACTIVATE STUDENT RESULT" onclick="_fetchApprovedStudentBySchoolBolt('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT RESULT</button>
+                                            </div>
+                                          `;
+                                      } else if (accountViewMethod==="debtors"){
+                                        showBtn=`
+                                            <div class="btn-div">
+                                              <button class="btn view-btn" title="CLICK TO VIEW STUDENT DEBTORS" onclick="_fetchAccountStudentsByClass('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT DEBTORS</button>
                                             </div>
                                           `;
                                       } else {
                                         showBtn=`
                                             <div class="btn-div">
-                                              <button class="btn view-btn" title="CLICK TO VIEW STUDENT" onclick="_fetchAccountStudentsByClass('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT PAYMENT</button>
+                                              <button class="btn view-btn" title="CLICK TO VIEW STUDENT PAYMENT" onclick="_fetchAccountStudentsByClass('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT PAYMENT</button>
                                             </div>
                                           `;
                                       }

@@ -380,6 +380,7 @@
 
                                         const session = response.session;
                                         const term = response?.termData?.termName;
+                                        const termId = response?.termData?.termId;
                                         const departmentId = response?.departmentData?.departmentId;
                                         const department = response?.departmentData?.departmentName;
                                         const classId = response?.classData?.classId;
@@ -455,7 +456,7 @@
                                                     <td>
                                                         <button class="btn view-btn"
                                                             title="Click to load fund"
-                                                            onclick="_fetchAccountFeesToPay('${item.branchId}','${item.session}','${item.termId}','${item.departmentId}','${item.classId}','${item.armId}','${item.studentId}', 'loadFund');">
+                                                            onclick="_fetchAccountFeesToPay('${item.branchId}','${session}','${termId}','${departmentId}','${classId}','${armId}','${item.studentId}', 'loadFund');">
                                                             LOAD FUND
                                                         </button>
                                                     </td>
@@ -463,7 +464,7 @@
                                                     <td>
                                                         <button class="btn view-btn"
                                                             title="Click to make pay fees"
-                                                            onclick="_fetchAccountFeesToPay('${item.branchId}','${item.session}','${item.termId}','${item.departmentId}','${item.classId}','${item.armId}','${item.studentId}', 'payFees');">
+                                                            onclick="_fetchAccountFeesToPay('${item.branchId}','${session}','${termId}','${departmentId}','${classId}','${armId}','${item.studentId}', 'payFees');">
                                                             PAY FEES
                                                         </button>
                                                     </td>
@@ -845,6 +846,7 @@
 
                                         const session = response.session;
                                         const term = response?.termData?.termName;
+                                        const termId = response?.termData?.termId;
                                         const departmentId = response?.departmentData?.departmentId;
                                         const department = response?.departmentData?.departmentName;
                                         const classId = response?.classData?.classId;
@@ -864,6 +866,7 @@
                                                     <th>Mandatory Fees Paid</th>
                                                     <th>Non-Mandatory Fees Paid</th>
                                                     <th>Total Fees Paid</th>
+                                                    <th>Oustanding Mandatory Fees</th>
                                                     <th>View</th>
                                                 </tr>
                                             </thead>
@@ -883,6 +886,8 @@
                                             const isDebtor = item.isDebtor;
                                             const debtorStatusColor = (isDebtor === "TRUE") ? "red-color" : "green-color";
                                             const debtorImgStatusColor = (isDebtor === "TRUE") ? '<div class="status-icon debtor"><i class="bi-x"></i></div>' : '<div class="status-icon"><i class="bi-check"></i></div>';
+                                            const outstandingBalance = item.outstandingBalance;
+                                            const outstandingStatus=  outstandingBalance > 0 ? "red-color" : "green-color";
 
                                             html += `
                                                 <tr class="tb-row">
@@ -917,11 +922,17 @@
                                                     </td>
                                                     <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmountPaid)}</td>
                                                     <td><s>N</s>${thousandSeperator(item.totalFeesPaid)}</td>
-
+                                                    <td>
+                                                        <div class="text-back-div">
+                                                            <div class="text-div">
+                                                                <div class="first-class ${outstandingStatus}"><s>N</s>${thousandSeperator(item.outstandingBalance)}</div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                     <td>
                                                         <button class="btn view-btn"
                                                             title="Click to make pay fees"
-                                                            onclick="_fetchEachSudentDebtors('${item.branchId}','${item.session}','${item.termId}','${item.departmentId}','${item.classId}','${item.armId}','${item.studentId}');">
+                                                            onclick="_fetchEachSudentDebtors('${item.branchId}','${session}','${termId}','${departmentId}','${classId}','${armId}','${item.studentId}');">
                                                             VIEW FEES PAID
                                                         </button>
                                                     </td>
