@@ -1221,7 +1221,7 @@ function _schoolBoltChargesPaymentAction(action, branchId, paymentId, btnText) {
       .catch((error) => {
         console.error("Error:", error);
         _callAjaxError(() =>
-          __schoolBoltChargesPaymentAction(
+          _schoolBoltChargesPaymentAction(
             action,
             branchId,
             paymentId,
