@@ -118,37 +118,43 @@ function _loadBranchWalletAction(action, transactionId, btnText, layer) {
 
 		if (response.success) {
 			if (layer===2) {
-				_alertClose(2);
-				_showCustomConfirm({
-					callback: () => {
-						_fetchBranchDashboardStatistics();
-					},
-					title: action === "success" ? "TRANSACTION SUCCESSFUL" : "TRANSACTION CANCELLED",
-					message: response.message,
-					alertType: action === "success" ? "success" : "error",
-					trueActionBtnText: "OK",
-					closeOnOverlayClick: false,
-				});
+				if (action === "success") {
+					_alertClose(2);
+					_showCustomConfirm({
+						callback: () => {
+							_fetchBranchDashboardStatistics();
+						},
+						title: "TRANSACTION SUCCESSFUL",
+						message: response.message,
+						alertType: "success",
+						trueActionBtnText: "OK",
+						closeOnOverlayClick: false,
+					});
+				}
+				_btnDisable("loadWalletBtn", btnText, false);
 			} else {
-				_alertClose(3);
-				_showCustomConfirm({
-					callback: () => {
-						// Reload history
-						_getForm({
-							page: 'branchWalletHistory',
-							layer: 2,
-							url: adminPortalLocalUrl
-						});
-						
-						//// Update Dashboard Wallet Balance
-						_fetchBranchDashboardStatistics();
-					},
-					title: action === "success" ? "TRANSACTION SUCCESSFUL" : "TRANSACTION CANCELLED",
-					message: response.message,
-					alertType: action === "success" ? "success" : "error",
-					trueActionBtnText: "OK",
-					closeOnOverlayClick: false,
-				});
+				if (action === "success") {
+					_alertClose(3);
+					_showCustomConfirm({
+						callback: () => {
+							// Reload history
+							_getForm({
+								page: 'branchWalletHistory',
+								layer: 2,
+								url: adminPortalLocalUrl
+							});
+							
+							//// Update Dashboard Wallet Balance
+							_fetchBranchDashboardStatistics();
+						},
+						title: "TRANSACTION SUCCESSFUL",
+						message: response.message,
+						alertType: "success",
+						trueActionBtnText: "OK",
+						closeOnOverlayClick: false,
+					});
+				}
+				_btnDisable("loadWalletBtn", btnText, false);
 			}
 		} else {
 			_showCustomConfirm({
