@@ -67,7 +67,7 @@
                                         <th>TERM</th>
                                         <th>GENDER</th>
                                         <th>AGE</th>
-                                        <th>ACCOMODATION</th>
+                                        <th>ACCOMMODATION</th>
                                     </tr>
                                 </thead>
                                 <tbody>`;

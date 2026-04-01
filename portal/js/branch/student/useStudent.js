@@ -650,7 +650,7 @@ function _fetchBranchStudents() {
 							<th>Department</th>
 							<th>Class</th>
 							<th>Arm</th>
-							<th>Accomodation</th>
+							<th>Accommodation</th>
 							<th>Status</th>
 							<th>View</th>
 						</tr>
@@ -659,30 +659,31 @@ function _fetchBranchStudents() {
         if (success === true) {
           for (let i = 0; i < fetch.length; i++) {
             no++;
-            const branchId = fetch[i].branchId;
-            const departmentId = fetch[i].departmentId;
-            const classId = fetch[i].classId;
-            const armId = fetch[i].armId;
+            const branchId = fetch[i]?.branchId;
+            const departmentId = fetch[i]?.departmentId;
+            const classId = fetch[i]?.classId;
+            const armId = fetch[i]?.armId;
 
-            const fetchStudentData = fetch[i].studentData;
-            const fetchDepartmentData = fetch[i].departmentData;
-            const fetchClassData = fetch[i].classData;
-            const fetchArmData = fetch[i].armData;
-            const fetchAccommodationData = fetch[i].accommodationData;
+            const fetchStudentData = fetch[i]?.studentData;
+            if (!fetchStudentData) continue;
+            const fetchDepartmentData = fetch[i]?.departmentData;
+            const fetchClassData = fetch[i]?.classData;
+            const fetchArmData = fetch[i]?.armData;
+            const fetchAccommodationData = fetch[i]?.accommodationData;
 
-            const studentId = fetchStudentData.studentId;
-            const passport = fetchStudentData.passport || "default.jpg";
-            const surName = fetchStudentData.surName;
-            const firstName = fetchStudentData.firstName;
-            const otherNames = fetchStudentData.otherNames;
+            const studentId = fetchStudentData?.studentId;
+            const passport = fetchStudentData?.passport || "default.jpg";
+            const surName = fetchStudentData?.surName;
+            const firstName = fetchStudentData?.firstName;
+            const otherNames = fetchStudentData?.otherNames;
             const fullname = surName + " " + firstName + " " + otherNames;
-            const genderName = fetchStudentData.genderName;
-            const departmentName = fetchDepartmentData.departmentName;
-            const className = fetchClassData.className;
-            const armName = fetchArmData.armName;
-            const statusName = fetchStudentData.statusName;
-            const accommodationName = fetchAccommodationData.accommodationName;
-            const age = _calculateAge(fetchStudentData.dateOfBirth);
+            const genderName = fetchStudentData?.genderName;
+            const departmentName = fetchDepartmentData?.departmentName;
+            const className = fetchClassData?.className;
+            const armName = fetchArmData?.armName;
+            const statusName = fetchStudentData?.statusName;
+            const accommodationName = fetchAccommodationData?.accommodationName;
+            const age = _calculateAge(fetchStudentData?.dateOfBirth);
 
             text += `
 						 	<tbody>
@@ -1159,7 +1160,7 @@ function _getSearchStudents(success, fetch, message) {
 				<th>Department</th>
 				<th>Class</th>
 				<th>Arm</th>
-				<th>Accomodation</th>
+				<th>Accommodation</th>
 				<th>Status</th>
 				<th>View</th>
 			</tr>
@@ -1574,7 +1575,7 @@ function _fetchBranchArchivedStudents() {
 							<th>Department</th>
 							<th>Class</th>
 							<th>Arm</th>
-							<th>Accomodation</th>
+							<th>Accommodation</th>
 							<th>Status</th>
 							<th>View</th>
 						</tr>
@@ -1592,32 +1593,32 @@ function _fetchBranchArchivedStudents() {
 
           for (let i = 0; i < fetch.length; i++) {
             no++;
-            const branchId = fetch[i].branchId;
-            const departmentId = fetch[i].departmentId;
-            const classId = fetch[i].classId;
-            const armId = fetch[i].armId;
-            const session = fetch[i].session;
-            const statusId = fetch[i].statusId;
+            const branchId = fetch[i]?.branchId;
+            const departmentId = fetch[i]?.departmentId;
+            const classId = fetch[i]?.classId;
+            const armId = fetch[i]?.armId;
+            const session = fetch[i]?.session;
+            const statusId = fetch[i]?.statusId;
 
-            const fetchStudentData = fetch[i].studentData;
-            const fetchDepartmentData = fetch[i].departmentData;
-            const fetchClassData = fetch[i].classData;
-            const fetchArmData = fetch[i].armData;
-            const fetchAccommodationData = fetch[i].accommodationData;
+            const fetchStudentData = fetch[i]?.studentData;
+            const fetchDepartmentData = fetch[i]?.departmentData;
+            const fetchClassData = fetch[i]?.classData;
+            const fetchArmData = fetch[i]?.armData;
+            const fetchAccommodationData = fetch[i]?.accommodationData;
 
-            const studentId = fetchStudentData.studentId;
-            const passport = fetchStudentData.passport || "default.jpg";
-            const surName = fetchStudentData.surName;
-            const firstName = fetchStudentData.firstName;
-            const otherNames = fetchStudentData.otherNames;
+            const studentId = fetchStudentData?.studentId;
+            const passport = fetchStudentData?.passport || "default.jpg";
+            const surName = fetchStudentData?.surName;
+            const firstName = fetchStudentData?.firstName;
+            const otherNames = fetchStudentData?.otherNames;
             const fullname = surName + " " + firstName + " " + otherNames;
-            const genderName = fetchStudentData.genderName;
-            const departmentName = fetchDepartmentData.departmentName;
-            const className = fetchClassData.className;
-            const armName = fetchArmData.armName;
-            const statusName = fetchStudentData.statusName;
-            const accommodationName = fetchAccommodationData.accommodationName;
-            const age = _calculateAge(fetchStudentData.dateOfBirth);
+            const genderName = fetchStudentData?.genderName;
+            const departmentName = fetchDepartmentData?.departmentName;
+            const className = fetchClassData?.className;
+            const armName = fetchArmData?.armName;
+            const statusName = fetchStudentData?.statusName;
+            const accommodationName = fetchAccommodationData?.accommodationName;
+            const age = _calculateAge(fetchStudentData?.dateOfBirth);
 
             text += `
 						 	<tbody>

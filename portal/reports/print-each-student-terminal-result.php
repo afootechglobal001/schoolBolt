@@ -264,6 +264,24 @@
                         const classTeachersComment = printEachStudentTerminalResultSession?.classTeachersComment;
 
                         let text='';
+                        let showComment = '';
+
+                        const schoolCategoryId = branchItems.schoolCategoryId;
+                        if (schoolCategoryId==='BASIC') {
+                            showComment=`
+                                <div class="list-content">
+                                    <span>HEAD TEACHER'S COMMENT:</span>
+                                    <p>${items.principalComment}</p>
+                                </div>
+                            `;
+                        } else {
+                            showComment=`
+                                <div class="list-content">
+                                    <span>PRINCIPAL'S COMMENT:</span>
+                                    <p>${items.principalComment}</p>
+                                </div>
+                            `;
+                        }
                         if(termId==='3'){
                             text +=`
                                 <div class="inner-container">
@@ -358,10 +376,7 @@
                                             <p>${classTeachersComment}</p>
                                         </div>
 
-                                        <div class="list-content">
-                                            <span>PRINCIPAL'S COMMENT:</span>
-                                            <p>${items.principalComment}</p>
-                                        </div>
+                                        ${showComment}
                                     </div>
 
                                     <div class="signature">
@@ -423,10 +438,7 @@
                                             <p>${classTeachersComment}</p>
                                         </div>
 
-                                        <div class="list-content">
-                                            <span>PRINCIPAL'S COMMENT:</span>
-                                            <p>${items.principalComment}</p>
-                                        </div>
+                                        ${showComment}
 
                                         <div class="list-content">
                                             <span>SCHOOL REOPENS ON:</span>

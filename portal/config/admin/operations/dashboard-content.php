@@ -91,7 +91,7 @@ userRoles.canViewBursaryDashboard && _getActivePage({
                     </div>
                 </div>
 
-                <div class="new-statistics-div" title="Statistics of Students">
+                <div class="new-statistics-div" title="Statistics of Students" onclick="">
                     <div class="statistics-inner-div">
                         <div class="statistics-text">
                             <p>Total Students</p>
