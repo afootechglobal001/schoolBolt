@@ -975,20 +975,38 @@ function _proceedToPayment() {
 
   try {
     const paymentMethodId = $("#paymentMethodId").val().trim();
-    let selectedFees = [];
+    let inputFees = [];
     let totalFees = 0;
+    let hasFeeInput = false;
 
-    $(".child:checked").each(function () {
-      const feesId = $(this).data("value");
-      const amount = parseFloat($(this).val()) || 0;
+    $('.fees-id-holder').each(function () {
+      const feesId = $(this).val();
+      const inputSelector = `#fees_${feesId}`;
+      const amount = $(inputSelector).val().trim();
 
-      selectedFees.push({ feesId: feesId });
-      totalFees += amount;
+      const parsedAmount = parseFloat(amount) || 0;
+
+      if (parsedAmount > 0) {
+        hasFeeInput = true;
+
+        inputFees.push({
+          feesId: feesId,
+          amount: parsedAmount
+        });
+
+        totalFees += parsedAmount;
+      }
     });
 
-    if (selectedFees.length === 0) {
-      _actionAlert("Please select at least one fee to continue.", false);
-      return;
+    if (!hasFeeInput) {
+      _showCustomConfirm({
+        title: "Nothing to Pay Yet!",
+        message: "You haven’t added any fees. Please enter a fee amount to continue.",
+        alertType: "warning",
+        trueActionBtnText: "Got it",
+        closeOnOverlayClick: true,
+      });
+      return false;
     }
 
     let previousBalance = parseFloat(advancedBalance) || 0;
@@ -1015,7 +1033,7 @@ function _proceedToPayment() {
       armId: armId,
       studentId: studentId,
       paymentMethodId: paymentMethodId,
-      feesIds: selectedFees,
+      feesIds: inputFees,
     };
 
     ////// confirm action ////

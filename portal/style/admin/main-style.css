@@ -1855,6 +1855,10 @@ header
   width: 600px;
 }
 
+.fee-payment-slide {
+  width: 700px;
+}
+
 .slide-form-div .title-panel-div {
   width: calc(100% - 60px);
   height: 50px;
@@ -2493,6 +2497,20 @@ header
   font-size: 20px;
   font-family: title-font;
 }
+
+.slide-form-div .container-back-div .inner-container .paid-fees-back-div .alert-value{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+} 
+
+.slide-form-div .container-back-div .inner-container .paid-fees-back-div .paid-fees-list{
+  align-items: center;
+} 
+
+.slide-form-div .container-back-div .inner-container .paid-fees-back-div .alert-value .alert-percentage{
+  font-size: 10px;
+} 
 
 .slide-form-div .container-back-div .inner-container .compute-score-back-div {
   width: 100%;
@@ -3431,6 +3449,10 @@ header
   overflow: hidden;
 }
 
+.permission-form-back-div .payment-permission-toggle-div {
+  border: none;
+}
+
 .permission-form-back-div .permission-toggle-div .toggle-title {
   display: flex;
   align-items: center;
@@ -3458,7 +3480,6 @@ header
   display: flex;
   align-items: center;
   justify-content: space-between;
-  text-align: center;
   border-bottom: 1px solid rgba(215, 215, 215, 0.6);
   background: #fff;
 }
@@ -3475,7 +3496,7 @@ header
 
 
 .permission-form-back-div .permission-toggle-div .fetch-toggle .payment-each-toggle-div .title-back-div{
-	width: calc(100% - 75px);
+	width:100%;
 	display: flex;
   align-items: flex-start;
 	flex-direction: column;
@@ -3485,6 +3506,9 @@ header
 .permission-form-back-div .permission-toggle-div .fetch-toggle .payment-each-toggle-div .title-back-div .toggle-title-div{
 	font-family: sub-title-font;
 	font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 	color: var(--text-color);
 }
 
@@ -3506,6 +3530,73 @@ header
 .permission-form-back-div .permission-toggle-div .fetch-toggle .payment-each-toggle-div .title-back-div .orange-color{
 	color:rgba(218, 90, 31, 0.87);	
 }
+
+.permission-form-back-div .permission-toggle-div .pay-fetch-toggle{
+  gap: 18px;
+  border: none;
+  padding: 0px 10px;
+  width: calc(100% - 20px);
+  margin-top: 8px;
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .new-pay-toggle-div{
+  width: calc(100% - 40px);
+  border: 1px solid rgba(215, 215, 215, 0.6);
+  background:var(--white-color);
+  box-shadow: 0px 0px 14px 4px rgba(0, 0, 0, 0.07);
+  border-radius: 8px;
+  padding: 18px 20px;
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .new-pay-toggle-div .new-toggle-title{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.permission-form-back-div .permission-toggle-div #fetchedFeeTextbox .success-msg{
+  color:rgba(9, 172, 77, 0.9);
+  padding: 18px 0px;
+  font-family:body-font;
+	font-size: 14px;
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .new-pay-toggle-div .new-toggle-title h5{
+	font-family:body-font;
+	font-size: 12px;
+  font-weight: 500;
+  color: var(--sub-body-color);
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .new-pay-toggle-div .new-toggle-title span{
+	font-family: sub-title-font !important;
+	font-size: 13px !important;
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .new-pay-toggle-div .new-toggle-title span.green-color{
+	color:rgba(9, 172, 77, 0.9);
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .new-pay-toggle-div .new-toggle-title span.orange-color{
+	color:rgba(218, 90, 31, 0.87);	
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .new-pay-toggle-div{
+	width: calc(100% - 40px);
+	display: flex;
+  align-items: flex-start !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+
+.permission-form-back-div .permission-toggle-div .fetch-toggle .new-pay-toggle-div .text-box-wrapper{
+  width: 100%;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+} 
+
 
 .permission-form-back-div
   .permission-toggle-div

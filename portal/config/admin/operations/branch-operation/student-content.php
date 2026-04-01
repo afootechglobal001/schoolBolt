@@ -390,7 +390,7 @@
                             <script>
                                 selectField({
                                     id: 'accommodationId',
-                                    title: 'Select Accomodation'
+                                    title: 'Select Accommodation'
                                 });
                                 _getSelectAccomodation('accommodationId');
                             </script>
@@ -1045,7 +1045,7 @@
                 <script>
                     selectField({
                         id: 'accommodationId',
-                        title: 'Select Accomodation',
+                        title: 'Select Accommodation',
                         fieldValue: getEachBranchStudentsSession.accommodationData?.accommodationId ?? '',
                         fieldLabel: getEachBranchStudentsSession.accommodationData?.accommodationName ?? ''
                     });

@@ -50,7 +50,7 @@ function _printAllocatedStudents(departmentId, classId, armId) {
 			success: function(info) {
 				if (info.success > 0) {
 					sessionStorage.setItem("printStudentByClassSession", JSON.stringify(info));
-					windowPop(`${websiteUrl}/reports/print-student-by-class`);
+					window.open(`${websiteUrl}/reports/print-student-by-class`, '_blank');
 					_alertClose(2);
 				} else {
 					_actionAlert(info.message, false);

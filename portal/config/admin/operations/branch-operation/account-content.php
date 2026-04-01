@@ -400,6 +400,7 @@
                                                     <th>Mandatory Fees Paid</th>
                                                     <th>Non-Mandatory Fees Paid</th>
                                                     <th>Total Fees Paid</th>
+                                                    <th>Outstanding Balance</th>
                                                     <th>Fund Balance</th>
                                                     <th>Load Funds</th>
                                                     <th>Pay Fees</th>
@@ -418,6 +419,8 @@
                                             const branchId = item.branchId;
                                             const passport = student.passport || "default.jpg";
                                             const advancedBalance = student.advancedBalance;
+                                            const outstandingBalance = item.outstandingBalance;
+                                            const outstandingStatus = outstandingBalance > 0 ? "red-color" : "green-color";
 
                                             html += `
                                                 <tr class="tb-row">
@@ -444,15 +447,21 @@
                                                     <td>
                                                     <div class="text-back-div">
                                                             <div class="text-div">
-                                                                <div class="first-class"><s>N</s>${thousandSeperator(item.totalMandatoryAmountPaid)}</div>
+                                                                <div class="first-class ${outstandingStatus}"><s>N</s>${thousandSeperator(item.totalMandatoryAmountPaid)}</div>
                                                                 <div class="second-class">(${item.totalPercentageForMandatoryFees}%)</div>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmountPaid)}</td>
                                                     <td><s>N</s>${thousandSeperator(item.totalFeesPaid)}</td>
+                                                    <td>
+                                                        <div class="text-back-div">
+                                                            <div class="text-div">
+                                                                <div class="first-class ${outstandingStatus}"><s>N</s>${thousandSeperator(item.outstandingBalance)}</div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                     <td><s>N</s>${thousandSeperator(advancedBalance)}</td>
-
                                                     <td>
                                                         <button class="btn view-btn"
                                                             title="Click to load fund"
@@ -491,7 +500,7 @@
         getEachAccountStudentSession = JSON.parse(sessionStorage.getItem("getEachAccountStudentSession"));
     </script>
 
-    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+    <div class="slide-form-div fee-payment-slide" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
                 <div class="icon-title-div">
@@ -598,27 +607,25 @@
                     <div class="alert alert-success form-alert">
                         <span>List of Fees Paid</span>
 
-                        <div class="alert-list-div" id="paidFees">
-                            No record found!
-                        </div>
+                        <div class="alert-list-div" id="paidFees"></div>
                     </div>
                 </div>
 
                 <div class="permission-form-back-div account-permission-form-back-div">
                     <div class="title-div">
-                        <h4>Select Fees for Payment</h4>
-                        <p>Use the toggles below to select fees applicable to this student. Switching a toggle to "Yes"
-                            enables payment for that category.</p>
+                        <h4>Enter Fees Amount for Payment</h4>
+                        <p>Type the amount or percentage for each fee below. The system will automatically calculate the corresponding percentage or amount and update the total balance in real-time.</p>
                     </div>
 
-                    <div class="permission-toggle-div">
-                        <div class="toggle-title">Fee Categories</div>
-                        <div class="fetch-toggle" id="notPaidFees">
+                    <div class="permission-toggle-div payment-permission-toggle-div">
+                        <div class="fetch-toggle pay-fetch-toggle" id="fetchedFeeTextbox">
 
                             <script>
                                 $(document).ready(function() {
                                     let notPaidFees = '';
                                     let paidFees = '';
+                                    let hasPaidFees = false;
+                                    let upPaidFees = false;
 
                                     if (useAccountFessToPaySession && useAccountFessToPaySession.data) {
                                         const fetch = useAccountFessToPaySession.data;
@@ -626,6 +633,8 @@
                                         for (let i = 0; i < fetch.length; i++) {
                                             const fetchedFess = fetch[i];
                                             const feesId = fetchedFess.feesId;
+                                            const percentage = feesId + "_percent";
+
                                             const feesName = fetchedFess.feesName;
                                             const feesOption = fetchedFess.feesOption;
                                             const NewFeesOption = (feesOption === "TRUE") ? "MANDATORY" :
@@ -635,32 +644,64 @@
                                             const amount = thousandSeperator(fetchedFess.amount);
                                             const paid = fetchedFess.paid;
 
+                                            const fieldId = `fees_${feesId}`;
+                                            
                                             if (paid === 'FALSE') {
-                                                notPaidFees += `
-                                                    <div class="each-toggle-div payment-each-toggle-div">
-                                                        <div class="title-back-div">
-                                                            <div class="toggle-title-div">${feesName} - <span>(<s>N</s>${amount})</span></div>
-                                                            <div class="sub-title ${feesOptionColor}">${NewFeesOption}</div>
+                                                upPaidFees = true;
+                                                notPaidFees +=
+
+                                                $("#fetchedFeeTextbox").append(`
+                                                <div class="each-toggle-div payment-each-toggle-div new-pay-toggle-div">
+                                                    <div class="title-back-div">
+                                                        <div class="toggle-title-div new-toggle-title">
+                                                            <h5>${feesName}</h5> 
+                                                            <span class="${feesOptionColor}">(<s>N</s>${amount})</span>
                                                         </div>
-                                                        <label for="fees_${feesId}" class="switch">
-                                                            <input type="checkbox" class="child" id="fees_${feesId}" name="feesId[]" data-value="${feesId}" value="${fetchedFess.amount}">
-                                                            <span class="slider"></span>
-                                                            <span class="toggle-label">No</span>
-                                                        </label>
-                                                    </div>`;
+                                                        <div class="sub-title ${feesOptionColor}">${NewFeesOption}</div>
+                                                    </div>
+
+                                                    <div class="text-box-wrapper">
+                                                        <div class="text_field_container" id="${fieldId}_container"></div>
+                                                        <input type="hidden" class="fees-id-holder" value="${feesId}">
+                                                        <div class="text_field_container" id="${percentage}_container"></div>
+                                                    </div>
+                                                </div>`);
+
+                                                textField({
+                                                    id: fieldId,
+                                                    title: 'AMOUNT(<s>N</s>)',
+                                                    type: 'number',
+                                                    value: amount,
+                                                    onKeyUpFunction: `_convertAmountToPercentage('${feesId}')`
+                                                });
+
+                                                textField({
+                                                    id: percentage,
+                                                    title: 'Percentage(%)',
+                                                    type: 'number',
+                                                    onKeyUpFunction: `_convertPercentageToAmount('${feesId}')`
+                                                });
                                             } else {
-                                                paidFees += `
-                                                    <div class="alert-list-back-div">
-                                                        <div class="alert-list">
-                                                            <div>${feesName}:</div>
-                                                            <div><span id=""><s>N</s>${amount}</span></div>
+                                                hasPaidFees = true;
+                                                paidFees += 
+                                                $("#paidFees").append(`
+                                                <div class="alert-list-back-div paid-fees-back-div">
+                                                    <div class="alert-list paid-fees-list">
+                                                        <div>${feesName}:</div>
+                                                        <div class="alert-value">
+                                                            <span><s>N</s>${amount}</span>
+                                                            <span class="alert-percentage">(100.00%)</span>
                                                         </div>
-                                                    </div>`;
+                                                    </div>
+                                                </div>`);
                                             }
                                         }
-                                        $("#notPaidFees").html(notPaidFees);
-                                        $("#paidFees").html(paidFees !== '' ? paidFees : 'No record found!');
-                                        _toggleCheck();
+                                        if (!hasPaidFees) {
+                                            $("#paidFees").html('No record found!');
+                                        }
+                                        if (!upPaidFees) {
+                                            $("#fetchedFeeTextbox").html('<div class="success-msg">Fees Payment Completed for this session and term!</div>');
+                                        }
                                     }
                                 });
                             </script>
@@ -749,13 +790,60 @@
     </div>
 
     <script>
-        function _calculatePaymentSummary() {
-            let previousBalance = parseFloat(getEachAccountStudentSession?.studentData?.advancedBalance);
+        function _convertAmountToPercentage(feesId) {
+            const feeData = useAccountFessToPaySession.data.find(f => f.feesId == feesId);
 
-            // Sum selected fees
+            const fieldId = `fees_${feesId}`;
+            const percentageId = feesId + "_percent";
+
+            let totalFee = parseFloat(feeData.amount) || 0;
+            let amount = parseFloat($("#" + fieldId).val()) || 0;
+
+            if (amount > totalFee) {
+                amount = totalFee;
+                $("#" + fieldId).val(amount);
+            }
+
+            let percentage = totalFee > 0 ? (amount / totalFee) * 100 : 0;
+
+            $("#" + percentageId).val(percentage.toFixed(2));
+
+            _calculatePaymentSummary();
+        }
+
+        function _convertPercentageToAmount(feesId) {
+            const feeData = useAccountFessToPaySession.data.find(f => f.feesId == feesId);
+
+            const fieldId = `fees_${feesId}`;
+            const percentageId = feesId + "_percent";
+
+            let totalFee = parseFloat(feeData.amount) || 0;
+            let percentage = parseFloat($("#" + percentageId).val()) || 0;
+
+            if (percentage > 100) {
+                percentage = 100;
+                $("#" + percentageId).val(100);
+            }
+
+            let amount = (percentage / 100) * totalFee;
+
+            $("#" + fieldId).val(amount.toFixed(2));
+
+            _calculatePaymentSummary();
+        }
+
+        function _calculatePaymentSummary() {
+            let previousBalance = parseFloat(getEachAccountStudentSession?.studentData?.advancedBalance) || 0;
+
             let totalFees = 0;
-            $('.child:checked').each(function() {
-                totalFees += parseFloat($(this).val()) || 0;
+
+            $('#fetchedFeeTextbox input[type="number"]').each(function() {
+                let id = $(this).attr('id');
+
+                // Only amount fields
+                if (!id.includes('_percent')) {
+                    totalFees += parseFloat($(this).val()) || 0;
+                }
             });
 
             $("#formAdvancedBalance").html('<s>N</s>' + thousandSeperator(previousBalance));
@@ -767,17 +855,15 @@
                 $("#newAdvancedBalance").html('<s>N</s>' + thousandSeperator(newBalance));
             } else {
                 $("#newAdvancedBalance").html(
-                    '<span style="color:red;">- <s>N</s>' + thousandSeperator(Math.abs(newBalance)) +
-                    ' (Insufficent Funds)</span>'
+                    '<span style="color:red;">- <s>N</s>' +
+                    thousandSeperator(Math.abs(newBalance)) +
+                    ' (Insufficient Funds)</span>'
                 );
             }
         }
 
         $(document).ready(function() {
             _calculatePaymentSummary();
-            $(document).on('change', '.child', function() {
-                _calculatePaymentSummary();
-            });
 
             ///// SHOW / HIDE SCHOOL BOLT CHARGES ////
             if (useAccountFessToPaySession?.schoolBoltCharges > 0) {
@@ -887,7 +973,7 @@
                                             const debtorStatusColor = (isDebtor === "TRUE") ? "red-color" : "green-color";
                                             const debtorImgStatusColor = (isDebtor === "TRUE") ? '<div class="status-icon debtor"><i class="bi-x"></i></div>' : '<div class="status-icon"><i class="bi-check"></i></div>';
                                             const outstandingBalance = item.outstandingBalance;
-                                            const outstandingStatus=  outstandingBalance > 0 ? "red-color" : "green-color";
+                                            const outstandingStatus = outstandingBalance > 0 ? "red-color" : "green-color";
 
                                             html += `
                                                 <tr class="tb-row">
