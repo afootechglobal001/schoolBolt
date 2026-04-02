@@ -1279,16 +1279,10 @@ function _fetchPaymentHistory() {
             no++;
             const fetchedPayment = fetch[i];
             const paymentId = fetchedPayment.paymentId;
-            const studentId = fetchedPayment.studentId;
-            const branchId = fetchedPayment.branchId;
-            const departmentId = fetchedPayment.departmentData.departmentId;
             const currentTerm = fetchedPayment.termData.currentTerm;
-            const termId = fetchedPayment.termData.termId;
             const session = fetchedPayment.session;
             const className = fetchedPayment.classData.className;
-            const classId = fetchedPayment.classData.classId;
             const armName = fetchedPayment.armData.armName;
-            const armId = fetchedPayment.armData.armId;
             const totalAmount = thousandSeperator(fetchedPayment.totalAmount);
             const paymentMethodName =
               fetchedPayment.paymentMethodData.paymentMethodName;
@@ -1299,7 +1293,6 @@ function _fetchPaymentHistory() {
               : createdTime;
 
             text += `
-						<tbody>
 							<tr class="tb-row">
 								<td>${no}</td>
 								<td>${paydate}</td>
@@ -1318,23 +1311,20 @@ function _fetchPaymentHistory() {
 								<td><span><s>N</s>${totalAmount}</span></td>
 								<td>${paymentMethodName}</td>
 								<td><div class="status-div ${statusName}">${statusName}</div></td>
-							</tr>
-						</tbody>`;
+							</tr>`;
           }
-          $("#pageContent2").html(text);
+          $("#transactionHistoryContent").html(text);
         } else {
           _actionAlert(info.message, false);
           text += `
-						tbody>
 							<tr>
 								<td colspan="11">
 									<div class="false-notification-div">
 										<p>${info.message}</p>
 									</div>
 								</td>
-							</tr>
-						</tbody>`;
-          $("#pageContent2").html(text);
+							</tr>`;
+          $("#transactionHistoryContent").html(text);
 
           const response = info.response;
           if (response < 100) {
