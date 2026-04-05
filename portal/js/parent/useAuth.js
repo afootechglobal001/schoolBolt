@@ -58,16 +58,34 @@ function isNumberCheck(e) {
 function _counDownOtp(timer) {
   $("#resendOtpBtn").hide();
   $("#resendCountdown").fadeIn(500);
+
   const countdown = setInterval(() => {
     if (timer > 0) {
-      timer = timer - 1;
-      $("#timer").html(timer);
+      timer--;
+
+      let minutes = Math.floor(timer / 60);
+      let seconds = timer % 60;
+
+      if (timer >= 60) {
+        // Show MM:SS when 1 min or more
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        $("#resendCountdown").html(
+          'Resend in <strong id="timer">' + minutes + ":" + seconds + '</strong> min'
+        );
+      } else {
+        // Show seconds only when below 1 minute
+        $("#resendCountdown").html(
+          'Resend in <strong id="timer">' + seconds + '</strong> sec'
+        );
+      }
+
     } else {
+      clearInterval(countdown);
       $("#resendCountdown").hide();
       $("#resendOtpBtn").fadeIn(500);
-      clearInterval(countdown);
     }
   }, 1000);
+
   return () => clearInterval(countdown);
 }
 
@@ -134,7 +152,7 @@ function _confirmLoginCallback(formData, isResend) {
           window.location.href = parentOtpVerificationUrl;
         } else {
           _hideLoader();
-          _counDownOtp(30);
+          _counDownOtp(180);
         }
       } else {
         _btnDisable("proceedLoginBtn", btnText, false);
@@ -221,5 +239,64 @@ function _proceedToLoginCallback(formData) {
       _callAjaxError(() => _proceedToLoginCallback(formData)); // retry if needed
       _btnDisable("submitBtn", btnText, false);
       _hideLoader();
+    });
+}
+
+
+/// Proceed To Login ///
+function _proceedViewStudentResult() {
+  try {
+    ////////get all needed values////////////
+    let issueCount = 0;
+    const studentId = $("#studentId").val();
+
+    ///// empty field validation//////////
+    issueCount += _validateEmptyValue("studentId", "STUDENT ID");
+
+    if (issueCount > 0) return;
+
+    // Gather form data
+    const formData = {
+      studentId,
+    };
+
+    _proceedViewStudentCallback(formData);
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _proceedViewStudentResult());
+  }
+}
+
+/// Proceed To Login Callback ///
+function _proceedViewStudentCallback(formData) {
+  ///// get btn text/////
+  const btnText = $("#proceedResult").html();
+  _btnDisable("proceedResult", btnText, true);
+
+  //// call endpoint //////
+  _callRawEndPoints({
+    url: `parent/auth/view-student-result-verification`,
+    formData,
+  })
+    .then((response) => {
+      if (response.success) {
+        localStorage.setItem("proceedViewResultSessionData", JSON.stringify(response));
+        window.location.href = parentViewResultUrl;
+        _btnDisable("proceedResult", btnText, false);
+      } else {
+        _btnDisable("proceedResult", btnText, false);
+        _showCustomConfirm({
+          title: "Unable To View Result",
+          message: response.message,
+          alertType: "error",
+          trueActionBtnText: "OK",
+          closeOnOverlayClick: true,
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      _callAjaxError(() => _proceedViewStudentCallback(formData)); // retry if needed
+      _btnDisable("proceedResult", btnText, false);
     });
 }

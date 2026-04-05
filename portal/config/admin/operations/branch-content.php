@@ -497,14 +497,14 @@
                                 </li>
                             `);
                             }
-                            if (userRoles.canViewBranchActivities) {
-                                $('#branchNavUl').append(`
-                                <li class="hide-li" title="Branch Activities" id="branch_activities"
-                                    onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});">
-                                    <i class="bi-bell"></i> Activities
-                                </li>
-                            `);
-                            }
+                            // if (userRoles.canViewBranchActivities) {
+                            //     $('#branchNavUl').append(`
+                            //     <li class="hide-li" title="Branch Activities" id="branch_activities"
+                            //         onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});">
+                            //         <i class="bi-bell"></i> Activities
+                            //     </li>
+                            // `);
+                            // }
                         </script>
 
                         <!-- for mobile view -->
@@ -637,14 +637,14 @@
                                 </li>
                             `);
                                     }
-                                    if (userRoles.canViewBranchActivities) {
-                                        $('#branchNavUlMobile').append(`
-                                <li title="Branch Activities"
-                                    onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});">
-                                    <i class="bi-bell"></i> <span>Activities</span>
-                                </li>
-                            `);
-                                    }
+                            //         if (userRoles.canViewBranchActivities) {
+                            //             $('#branchNavUlMobile').append(`
+                            //     <li title="Branch Activities"
+                            //         onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});">
+                            //         <i class="bi-bell"></i> <span>Activities</span>
+                            //     </li>
+                            // `);
+                            //         }
                                 </script>
                             </ul>
                 </div>
@@ -797,7 +797,6 @@
                                 </div>
                             </div>
                         </div>
-
 
                         <script language="javascript">
                             $('#datepickers-from').datetimepicker({
@@ -1327,7 +1326,10 @@
                                 </h3>
                             </div>
 
-                            <button class="btn" title="Load Wallet" onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i class="bi bi-wallet-fill"></i> Load Wallet</button>
+                            <div class="btn-div">
+                                <button class="btn" title="Load Wallet" onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i class="bi bi-wallet-fill"></i> Load Wallet</button>
+                                <button class="btn view-wallet" title="View Wallet History" onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});"><i class="bi bi-eye"></i> View Wallet History</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1336,6 +1338,7 @@
             <div class="matrix-div">
                 <div class="inner-div">
                     <div class="title">
+                        <i class="bi bi-credit-card-fill"></i>
                         <h3>Payment Matrix</h3>
                     </div>
                     <div id="chartContainer2" style="width:100%; height:200px; margin:auto;"></div>
@@ -3585,7 +3588,7 @@
             </div>
         </div>
 
-        <div class="user-managment-list staff-managment-list" title="Expenses" onclick="">
+        <!-- <div class="user-managment-list staff-managment-list" title="Expenses" onclick="">
             <div class="inner-div">
                 <div class="icon-div">
                     <img src="<?php echo $websiteUrl ?>/images/expenses.png" alt="Expenses" />
@@ -3595,9 +3598,9 @@
                     <p>Record and monitor branch expenses to ensure proper financial management.</p>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <div class="user-managment-list staff-managment-list" title="Staff Loan"
+        <!-- <div class="user-managment-list staff-managment-list" title="Staff Loan"
             onclick="">
             <div class="inner-div">
                 <div class="icon-div">
@@ -3608,9 +3611,9 @@
                     <p>View and manage staff loans for employees associated with your branch.</p>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <div class="user-managment-list staff-managment-list" title="Payroll"
+        <!-- <div class="user-managment-list staff-managment-list" title="Payroll"
             onclick="">
             <div class="inner-div">
                 <div class="icon-div">
@@ -3621,9 +3624,9 @@
                     <p>View and manage payroll for staff associated with your branch.</p>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <div class="user-managment-list staff-managment-list" title="Each Fees Revenue" onclick="">
+        <!-- <div class="user-managment-list staff-managment-list" title="Each Fees Revenue" onclick="">
             <div class="inner-div">
                 <div class="icon-div">
                     <img src="<?php echo $websiteUrl ?>/images/fees-revenue.png" alt="Each Fees Revenue" />
@@ -3633,22 +3636,22 @@
                     <p>Track revenue generated from each fee type and monitor payment performance.</p>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <div class="user-managment-list staff-managment-list" title="Revenue Report"
+        <!-- <div class="user-managment-list staff-managment-list" title="All Revenue Report"
             onclick="">
             <div class="inner-div">
                 <div class="icon-div">
                     <img src="<?php echo $websiteUrl ?>/images/revenue-report.png" alt="Revenue Report" />
                 </div>
                 <div class="text-div">
-                    <h3>Revenue Report</h3>
+                    <h3>All Revenue Report</h3>
                     <p>View and analyze revenue reports for your branch operations.</p>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <div class="user-managment-list staff-managment-list" title="Balance Sheet" onclick="">
+        <!-- <div class="user-managment-list staff-managment-list" title="Balance Sheet" onclick="">
             <div class="inner-div">
                 <div class="icon-div">
                     <img src="<?php echo $websiteUrl ?>/images/balance-sheet.png" alt="Balance Sheet" />
@@ -3658,15 +3661,15 @@
                     <p>View a detailed summary of assets, liabilities, and equity to assess your branch’s financial position.</p>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <div class="user-managment-list staff-managment-list" title="SchoolBolt Wallet" onclick="">
+        <div class="user-managment-list staff-managment-list" title="SchoolBolt Wallet History" onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});">
             <div class="inner-div">
                 <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/wallet.png" alt="SchoolBolt Wallet" />
+                    <img src="<?php echo $websiteUrl ?>/images/wallet.png" alt="SchoolBolt Wallet History" />
                 </div>
                 <div class="text-div">
-                    <h3>SchoolBolt Wallet</h3>
+                    <h3>SchoolBolt Wallet History</h3>
                     <p>View your wallet transaction history and keep track of all deposits, payments, and wallet activity.</p>
                 </div>
             </div>

@@ -390,7 +390,7 @@
                             <script>
                                 selectField({
                                     id: 'accommodationId',
-                                    title: 'Select Accomodation'
+                                    title: 'Select Accommodation'
                                 });
                                 _getSelectAccomodation('accommodationId');
                             </script>
@@ -1045,7 +1045,7 @@
                 <script>
                     selectField({
                         id: 'accommodationId',
-                        title: 'Select Accomodation',
+                        title: 'Select Accommodation',
                         fieldValue: getEachBranchStudentsSession.accommodationData?.accommodationId ?? '',
                         fieldLabel: getEachBranchStudentsSession.accommodationData?.accommodationName ?? ''
                     });
@@ -1423,7 +1423,7 @@
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%" id="pageContent2">
+        <table class="table" cellspacing="0" style="width:100%">
             <thead>
                 <tr class="tb-col">
                     <th>sn</th>
@@ -1431,13 +1431,13 @@
                     <th>Payment ID</th>
                     <th>Term</th>
                     <th>Class</th>
-                    <th>(₦)Amount</th>
+                    <th>Amount(<s>N</s>)</th>
                     <th>Payment Method</th>
                     <th>Payment Status</th>
                 </tr>
             </thead>
 
-            <tbody id="pageContent">
+            <tbody id="transactionHistoryContent">
                 <!-- CONTENT GOES HERE -->
                 <script>
                     _fetchPaymentHistory();
@@ -1777,6 +1777,7 @@
                                 textField({
                                     id: 'amountReceivedFromParent',
                                     title: 'Amount Recieved (#)',
+                                    type: 'number',
                                     onKeyPressFunction: 'isNumberCheck(event);',
                                 });
                             </script>

@@ -4,9 +4,9 @@
 
 <head>
     <?php include 'auth-meta.php' ?>
-    <title><?php echo $appName ?> | Parent Login</title>
-    <meta name="keywords" content="Parent Login  - <?php echo $appName ?>" />
-    <meta name="description" content="Parent Login - <?php echo $appName ?>" />
+    <title><?php echo $appName ?> | Parent View Result</title>
+    <meta name="keywords" content="Parent View Result  - <?php echo $appName ?>" />
+    <meta name="description" content="Parent View Result - <?php echo $appName ?>" />
 </head>
 
 <body>
@@ -35,29 +35,19 @@
 
                     <div class="inner-form" id="viewLogin">
                         <div class="alert alert-success login-form-alert">
-                            Kindly, provide your <span>Login Details</span> to Proceed
+                            Kindly, provide your <span>Student ID</span> to Proceed
                         </div>
 
-                        <div class="text_field_container" id="parentTypeId_container">
-                            <script>
-                                selectField({
-                                    id: 'parentTypeId',
-                                    title: 'Select Parent Type'
-                                });
-                                _getSelectParentType('parentTypeId');
-                            </script>
-                        </div>
-
-                        <div class="text_field_container" id="email_container">
+                        <div class="text_field_container" id="studentId_container">
                             <script>
                                 textField({
-                                    id: 'email',
-                                    title: 'Parent Email'
+                                    id: 'studentId',
+                                    title: 'Student ID'
                                 });
                             </script> 
                         </div>
 
-                        <button class="btn" title="Proceed" id="proceedLoginBtn" onclick="_confirmLoginEmail();">Proceed <i class="bi-arrow-right"></i></button>                                                                                                                    
+                        <button class="btn" title="Proceed" id="proceedResult" onclick="_proceedViewStudentResult();">Proceed <i class="bi-arrow-right"></i></button>                                                                                                                    
                     </div>
                     <p><a href="<?php echo $websiteUrl ?>/parent/auth" title="Go Back" title="Go Back"><span><i class="bi-arrow-left"></i> Go Back</span></a></p>
                 </div>

@@ -4,9 +4,9 @@
 
 <head>
     <?php include 'auth-meta.php' ?>
-    <title><?php echo $appName ?> | Parent Login</title>
-    <meta name="keywords" content="Parent Login  - <?php echo $appName ?>" />
-    <meta name="description" content="Parent Login - <?php echo $appName ?>" />
+    <title><?php echo $appName ?> | Parent Authentication</title>
+    <meta name="keywords" content="Parent Authentication  - <?php echo $appName ?>" />
+    <meta name="description" content="Parent Authentication - <?php echo $appName ?>" />
 </head>
 
 <body>
@@ -34,32 +34,21 @@
                     </div>
 
                     <div class="inner-form" id="viewLogin">
-                        <div class="alert alert-success login-form-alert">
-                            Kindly, provide your <span>Login Details</span> to Proceed
-                        </div>
+                        <div class="login-action-wrapper">
+                            <a href="<?php echo $websiteUrl ?>/parent/login" title="<?php echo $appName ?>">
+                            <div class="login-action-div" title="Login To Parent Portal">
+                                <h3>Login To Parent Portal</h3>
+                                <i class="bi bi-arrow-right"></i>
+                            </div></a>
 
-                        <div class="text_field_container" id="parentTypeId_container">
-                            <script>
-                                selectField({
-                                    id: 'parentTypeId',
-                                    title: 'Select Parent Type'
-                                });
-                                _getSelectParentType('parentTypeId');
-                            </script>
-                        </div>
-
-                        <div class="text_field_container" id="email_container">
-                            <script>
-                                textField({
-                                    id: 'email',
-                                    title: 'Parent Email'
-                                });
-                            </script> 
-                        </div>
-
-                        <button class="btn" title="Proceed" id="proceedLoginBtn" onclick="_confirmLoginEmail();">Proceed <i class="bi-arrow-right"></i></button>                                                                                                                    
+                            <a href="<?php echo $websiteUrl ?>/parent/verify-result" title="<?php echo $appName ?>">
+                            <div class="login-action-div" title="View Student Result">
+                                <h3>View Student Result</h3>
+                                <i class="bi bi-arrow-right"></i>
+                            </div></a>
+                        </div>                                                                                                                 
                     </div>
-                    <p><a href="<?php echo $websiteUrl ?>/parent/auth" title="Go Back" title="Go Back"><span><i class="bi-arrow-left"></i> Go Back</span></a></p>
+                    <p>Need Help? <a href="<?php echo $clientWebsiteContactUsUrl ?>" title="Contact Us"><span>Contact Us</span></a></p>
                 </div>
             </div>
         </div>

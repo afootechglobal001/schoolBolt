@@ -210,110 +210,127 @@
 
                                     <div class="bottom-content-back-div" id="bottomContainer">`;
                                         let content='';
+                                        let showComment = '';
+
+                                        const schoolCategoryId = branch.schoolCategoryId;
+                                        if (schoolCategoryId==='BASIC') {
+                                            showComment=`
+                                                <div class="list-content">
+                                                    <span>HEAD TEACHER'S COMMENT:</span>
+                                                    <p>${studentResultData?.principalComment}</p>
+                                                </div>
+                                            `;
+                                        } else {
+                                            showComment=`
+                                                <div class="list-content">
+                                                    <span>PRINCIPAL'S COMMENT:</span>
+                                                    <p>${studentResultData?.principalComment}</p>
+                                                </div>
+                                            `;
+                                        }
+
                                         if (term.termId==='3') {
+                                            
                                             content += `
                                                 <div class="inner-container">
-                                                <div class="content-container">
-                                                    <div class="list-content">
-                                                        <span>NUMBER OF SUBJECTS:</span>
-                                                        <p>${studentResultData.totalSubjects}</p>
+                                                    <div class="content-container">
+                                                        <div class="list-content">
+                                                            <span>NUMBER OF SUBJECTS:</span>
+                                                            <p>${studentResultData.totalSubjects}</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>STUDENTS IN CLASS:</span>
+                                                            <p>${studentResultData.noOfStudentsInArm}</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>MARKS OBTAINABLE:</span>
+                                                            <p>${studentResultData.totalMarkObtainable}</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>MARKS OBTAINED:</span>
+                                                            <p>${studentResultData.totalMarkObtained}</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>PERCENTAGE:</span>
+                                                            <p>${studentResultData.totalPercentage + '%'}</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>POSITION IN CLASS:</span>
+                                                            <p>${studentResultData.positionInClass}</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>NUMBER OF SITTING(S):</span>
+                                                            <p>${studentResultData.noOfStudentsInClass}</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>1ST TERM OVERALL (%):</span>
+                                                            <p id="">45.82 %</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>2ND TERM OVERALL (%):</span>
+                                                            <p id="">48.78</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>3RD TERM OVERALL (%):</span>
+                                                            <p id="">47.42 %</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>AVERAGE (%):</span>
+                                                            <p id="">48.78</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>ANNUAL POSITION IN CLASS:</span>
+                                                            <p id="">33RD</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>ANNUAL OVERALL POSITION:</span>
+                                                            <p id="">143RD(166)</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>TIMES SCHOOL OPENED:</span>
+                                                            <p>${studentResultData?.attendanceData?.timeSchoolOpened}</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>TIMES PRESENT:</span>
+                                                            <p>${studentResultData?.attendanceData?.numberOfDaysPresents}</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>TIMES ABSENT:</span>
+                                                            <p>${studentResultData?.attendanceData?.numberOfDaysAbsents}</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>SCHOOL REOPENS ON:</span>
+                                                            <p>${formatDate(branch.schoolResumptionDate)}</p>
+                                                        </div>
+
+                                                        <div class="list-content">
+                                                            <span>CLASS TEACHER'S COMMENT:</span>
+                                                            <p>${studentResultData?.classTeachersComment}</p>
+                                                        </div>
+
+                                                        ${showComment}
                                                     </div>
 
-                                                    <div class="list-content">
-                                                        <span>STUDENTS IN CLASS:</span>
-                                                        <p>${studentResultData.noOfStudentsInArm}</p>
+                                                    <div class="signature">
+                                                        <img src="${principalSignaturePixPath}/${branch.principalSignature}" alt="${branch.branchName} PRINCIPAL SIGNATURE"/>
                                                     </div>
-
-                                                    <div class="list-content">
-                                                        <span>MARKS OBTAINABLE:</span>
-                                                        <p>${studentResultData.totalMarkObtainable}</p>
-                                                    </div>
-
-                                                    <div class="list-content">
-                                                        <span>MARKS OBTAINED:</span>
-                                                        <p>${studentResultData.totalMarkObtained}</p>
-                                                    </div>
-
-                                                    <div class="list-content">
-                                                        <span>PERCENTAGE:</span>
-                                                        <p>${studentResultData.totalPercentage + '%'}</p>
-                                                    </div>
-
-                                                    <div class="list-content">
-                                                        <span>POSITION IN CLASS:</span>
-                                                        <p>${studentResultData.positionInClass}</p>
-                                                    </div>
-
-                                                    <div class="list-content">
-                                                        <span>NUMBER OF SITTING(S):</span>
-                                                        <p>${studentResultData.noOfStudentsInClass}</p>
-                                                    </div>
-
-                                                    <div class="list-content">
-                                                        <span>1ST TERM OVERALL (%):</span>
-                                                        <p id="">45.82 %</p>
-                                                    </div>
-
-                                                    <div class="list-content">
-                                                        <span>2ND TERM OVERALL (%):</span>
-                                                        <p id="">48.78</p>
-                                                    </div>
-
-                                                    <div class="list-content">
-                                                        <span>3RD TERM OVERALL (%):</span>
-                                                        <p id="">47.42 %</p>
-                                                    </div>
-
-                                                    <div class="list-content">
-                                                        <span>AVERAGE (%):</span>
-                                                        <p id="">48.78</p>
-                                                    </div>
-
-                                                    <div class="list-content">
-                                                        <span>ANNUAL POSITION IN CLASS:</span>
-                                                        <p id="">33RD</p>
-                                                    </div>
-
-                                                    <div class="list-content">
-                                                        <span>ANNUAL OVERALL POSITION:</span>
-                                                        <p id="">143RD(166)</p>
-                                                    </div>
-
-                                                    <div class="list-content">
-                                                        <span>TIMES SCHOOL OPENED:</span>
-                                                        <p>${studentResultData?.attendanceData?.timeSchoolOpened}</p>
-                                                    </div>
-
-                                                    <div class="list-content">
-                                                        <span>TIMES PRESENT:</span>
-                                                        <p>${studentResultData?.attendanceData?.numberOfDaysPresents}</p>
-                                                    </div>
-
-                                                    <div class="list-content">
-                                                        <span>TIMES ABSENT:</span>
-                                                        <p>${studentResultData?.attendanceData?.numberOfDaysAbsents}</p>
-                                                    </div>
-
-                                                    <div class="list-content">
-                                                        <span>SCHOOL REOPENS ON:</span>
-                                                        <p>${formatDate(branch.schoolResumptionDate)}</p>
-                                                    </div>
-
-                                                    <div class="list-content">
-                                                        <span>CLASS TEACHER'S COMMENT:</span>
-                                                        <p>${studentResultData?.classTeachersComment}</p>
-                                                    </div>
-
-                                                    <div class="list-content">
-                                                        <span>PRINCIPAL'S COMMENT:</span>
-                                                        <p>${studentResultData?.principalComment}</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="signature">
-                                                    <img src="${principalSignaturePixPath}/${branch.principalSignature}" alt="${branch.branchName} PRINCIPAL SIGNATURE"/>
-                                                </div>
-                                            </div>`;
+                                                </div>`;
                                         } else{
                                             content += `
                                                 <div class="inner-container">
@@ -368,10 +385,7 @@
                                                         <p>${studentResultData?.classTeachersComment}</p>
                                                     </div>
 
-                                                    <div class="list-content">
-                                                        <span>PRINCIPAL'S COMMENT:</span>
-                                                        <p>${studentResultData?.principalComment}</p>
-                                                    </div>
+                                                    ${showComment}
 
                                                     <div class="list-content">
                                                         <span>SCHOOL REOPENS ON:</span>

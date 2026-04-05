@@ -146,6 +146,10 @@
     color: var(--body-color);
 }
 
+.login-session .login-div .form-back-div .view-result-form-div{
+    width: 600px;
+}
+
 .login-session .login-div .form-back-div .form-div .top-div{
     width: 100%;
     display: flex;
@@ -260,6 +264,246 @@
     color: var(--sub-body-color);
 }
 
+.login-session .login-div .form-back-div .form-div .inner-form .login-action-wrapper{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.login-session .login-div .form-back-div .form-div .inner-form .login-action-wrapper a{
+     width: 100%;
+}
+
+.login-session .login-div .form-back-div .form-div .inner-form .login-action-wrapper .login-action-div{
+    width: calc(100% - 40px);
+    padding: 15px 20px;
+    min-height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--sub-body-color);
+    font-size: 15px;
+    font-family: sub-body-font;
+    border: rgba(215, 215, 215, .6) 1px solid;
+    border-radius: 10px;
+    box-shadow: 0px 0px 12px 3px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: all 0.2s ease-in 0.2s;
+}
+
+.login-session .login-div .form-back-div .form-div .inner-form .login-action-wrapper .login-action-div:hover{
+    border: #fac376 1px solid;
+    box-shadow: 0px 0px 12px 3px rgba(0, 0, 0, 0.08);
+    -webkit-transform: scale(1.02);
+	-moz-transform: scale(1.02);
+	transform: scale(1.02);
+}
+
+
+
+.pages-toggle-back-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.pages-toggle-back-div .pages-toggle-div {
+    width: 100%;
+    border-radius: 8px 8px 5px 5px;
+    background: var(--white-color);
+    border: rgba(213, 213, 213, 0.7) 1px solid;
+    box-shadow: 0px 0px 12px 3px rgba(0, 0, 0, 0.07);
+    cursor: pointer;
+    transition: all 0.2s ease-in 0.2s;
+    box-sizing: border-box;
+}
+
+.pages-toggle-back-div .pages-toggle-div:hover {
+    box-shadow: 0px 0px 12px 3px rgba(0, 0, 0, 0.09);
+    transform: translateY(-2px);
+}
+
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title {
+  width: calc(100% - 40px);
+  min-height: 75px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: body-font;
+  font-size: 14px;
+  border-radius: 8px 8px 0px 0px;
+  padding: 0px 20px;
+  background-color: rgba(230, 230, 230, 0.5);
+}
+
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title h3 {
+  font-size: 16px;
+  padding: 0px 0px 0px 10px;
+  margin: 0px;
+  font-weight: lighter;
+  font-family: title-font;
+  color: #0c2b4b;
+}
+
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title .expand-div {
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  font-size: 25px;
+  color: #0c2b4b;
+  cursor: pointer;
+}
+
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title .expand-div i {
+  font-size: 20px;
+}
+
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title .btn-back-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.pages-toggle-back-div
+  .pages-toggle-div
+  .pages-toggle-title
+  .btn-back-div
+  .btn {
+  height: 35px;
+  padding: 0px 15px;
+  border: none;
+  border-radius: 4px;
+  background: #2daae1;
+  color: var(--white-color);
+  font-size: 11px;
+  cursor: pointer;
+  font-family: sub-title-font;
+  transition: all ease 0.2s;
+  -webkit-transition: all ease 0.2s;
+  -ms-transition: all ease 0.2s;
+  -o-transition: all ease 0.2s;
+  -moz-transition: all ease 0.2s;
+}
+
+.pages-toggle-back-div
+  .pages-toggle-div
+  .pages-toggle-title
+  .btn-back-div
+  .compute-btn {
+  background: #444;
+}
+
+.pages-toggle-back-div
+  .pages-toggle-div
+  .pages-toggle-title
+  .btn-back-div
+  .btn:hover {
+  background: #444;
+}
+
+.pages-toggle-back-div
+  .pages-toggle-div
+  .pages-toggle-title
+  .btn-back-div
+  .compute-btn:hover {
+  background: var(--secondary-color);
+}
+
+.pages-toggle-back-div .toggle-expand-div {
+  padding: 30px 15px;
+  font-size: 12px;
+}
+
+
+
+@media all and (max-width: 530px) {
+  
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 5px;
+  padding: 8px 20px;
+}
+.pages-toggle-back-div .pages-toggle-div .pages-toggle-title h3 {
+  padding:0px;
+}
+}
+
+
+.list-back-div {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.list-back-div .list-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(100% - 40px);
+  min-height: 70px;
+  padding: 0px 20px;
+  border-radius: 8px 8px 5px 5px;
+  background: var(--white-color);
+  border-bottom: rgba(213, 213, 213, 0.4) 1px dashed;
+  cursor: pointer;
+  transition: all 0.2s ease-in 0.2s;
+  transition: all 0.2s ease-in 0.2s;
+  -moz-transition: all 0.2s ease-in 0.2s;
+}
+
+.list-back-div .list-div h4 {
+  font-size: 15px;
+  padding: 0px 0px 0px 10px;
+  margin: 0px;
+  font-weight: lighter;
+  font-family: title-font;
+  color: #0c2b4b;
+}
+
+.list-back-div .list-div h4 {
+  font-size: 15px;
+  padding: 0px 0px 0px 10px;
+  margin: 0px;
+  font-weight: lighter;
+  font-family: title-font;
+  color: #0c2b4b;
+}
+
+.list-back-div .list-div .btn-div {
+  display: flex;
+  align-items: center;
+}
+
+.list-back-div .list-div .btn-div .view-btn {
+  height: 35px;
+  padding: 0px 15px;
+  border: none;
+  border-radius: 4px;
+  background: #2daae1;
+  color: var(--white-color);
+  font-size: 11px;
+  cursor: pointer;
+  font-family: sub-title-font;
+  transition: all ease 0.2s;
+}
+
+.list-back-div .list-div .btn-div .view-btn:hover {
+  background: #444;
+}
+
+@media all and (max-width:1300px) {
+    .login-session .login-div .form-back-div .view-result-form-div{
+        width: 90%;    
+    }
+}  
 
 @media all and (max-width:850px) {
     .login-session{
@@ -282,6 +526,11 @@
     }
 }
 
+@media all and (max-width:490px) {
+    .login-session .login-div .form-back-div .form-div .result-title{
+        font-size: 6vw !important;
+    }
+}
 
 @media all and (max-width:440px) {
     .login-session .login-div .form-back-div .form-div{

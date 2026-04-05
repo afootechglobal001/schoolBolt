@@ -70,17 +70,17 @@
                                 class="bi-arrow-right"></i></button>
 
                         <div class="bottom-div">
-                            <div id="resendCountdown">Resend in <strong id="timer">30</strong> Sec</div>
                             <div>
                                 <button class="resendOtpBtn" id="resendOtpBtn"
                                     onclick="_confirmLoginEmail(true);"><strong>Resend OTP</strong></button>
                             </div>
+                            <div id="resendCountdown"></div>
                         </div>
                     </div>
 
                 </div>
                 <script>
-                _counDownOtp(30)
+                _counDownOtp(180)
                 </script>
             </div>
         </div>
