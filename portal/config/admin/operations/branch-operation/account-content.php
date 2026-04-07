@@ -665,7 +665,6 @@
                                                 id: fieldId,
                                                 title: 'AMOUNT(<s>N</s>)',
                                                 type: 'number',
-                                                value: amount,
                                                 onKeyUpFunction: `_convertAmountToPercentage('${feesId}')`
                                             });
 
