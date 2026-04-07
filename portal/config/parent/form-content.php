@@ -260,9 +260,7 @@
                     <div class="alert alert-success form-alert">
                         <span>List of Fees Paid</span>
 
-                        <div class="alert-list-div" id="paidFees">
-                            No record found!
-                        </div>
+                        <div class="alert-list-div" id="paidFees"></div>
                     </div>
                 </div>
 
@@ -280,46 +278,70 @@
                                 $(document).ready(function() {
                                     let notPaidFees = '';
                                     let paidFees = '';
+                                    let unPaidFees = false;
+                                    let completedFees= false;
 
-                                    if (getPayFeesToPaySession && getPayFeesToPaySession.data) {
-                                        const fetch = getPayFeesToPaySession.data;
+                                    if (getPayFeesToPaySession && getPayFeesToPaySession?.listOfFeesNotPaidData) {
+                                        const fetch = getPayFeesToPaySession.listOfFeesNotPaidData;
 
                                         for (let i = 0; i < fetch.length; i++) {
                                             const fetchedFess = fetch[i];
                                             const feesId = fetchedFess.feesId;
                                             const feesName = fetchedFess.feesName;
                                             const feesOption = fetchedFess.feesOption;
-                                            const NewFeesOption = (feesOption === "TRUE") ? "MANDATORY" : "NOT MANDATORY";
+                                            const newFeesOption = (feesOption === "TRUE") ? "MANDATORY" : "NOT MANDATORY";
                                             const feesOptionColor = (feesOption === "TRUE") ? "green-color" : "orange-color";       
                                             const amount = thousandSeperator(fetchedFess.amount);
-                                            const paid = fetchedFess.paid;
 
-                                            if (paid==='FALSE'){
-                                                notPaidFees += `
-                                                <div class="each-toggle-div">
-                                                    <div class="title-back-div">
-                                                        <div class="toggle-title-div">${feesName} - <span>(<s>N</s>${amount})</span></div>
-                                                        <div class="sub-title ${feesOptionColor}">${NewFeesOption}</div>
-                                                    </div>
-                                                    <label for="fees_${feesId}" class="switch">
-                                                        <input type="checkbox" class="child" id="fees_${feesId}" name="feesId[]" data-value="${feesId}" value="${fetchedFess.amount}">
-                                                        <span class="slider"></span>
-                                                        <span class="toggle-label">No</span>
-                                                    </label>
-                                                </div>`;
-                                            } else {
-                                                paidFees += `
-                                                <div class="alert-list-back-div">
-                                                    <div class="alert-list">
-                                                        <div>${feesName}:</div>
-                                                        <div><span id=""><s>N</s>${amount}</span></div>
-                                                    </div>
-                                                </div>`;
-                                            }
+                                            unPaidFees = true;
+                                            notPaidFees += `
+                                            <div class="each-toggle-div">
+                                                <div class="title-back-div">
+                                                    <div class="toggle-title-div">${feesName} - <span>(<s>N</s>${amount})</span></div>
+                                                    <div class="sub-title ${feesOptionColor}">${newFeesOption}</div>
+                                                </div>
+                                                <label for="fees_${feesId}" class="switch">
+                                                    <input type="checkbox" class="child" id="fees_${feesId}" name="feesId[]" data-value="${feesId}" value="${fetchedFess.amount}">
+                                                    <span class="slider"></span>
+                                                    <span class="toggle-label">No</span>
+                                                </label>
+                                            </div>`;
+                                           
                                         }
                                         $("#notPaidFees").html(notPaidFees);
-                                        $("#paidFees").html(paidFees!=='' ? paidFees : 'No record found!');
+                                        if (!unPaidFees) {
+                                            $("#notPaidFees").html('<div class="success-msg">Fees Payment Completed for this session and term!</div>');
+                                        }
                                         _toggleCheck();
+                                    }
+
+                                    if (getPayFeesToPaySession && getPayFeesToPaySession?.listOfFeesPaidData) {
+                                        const feesPaidData = getPayFeesToPaySession?.listOfFeesPaidData;
+                                       
+                                        for (let i = 0; i < feesPaidData.length; i++) {
+                                            const fetchFeesPaid = feesPaidData[i];
+                                            const totalAmountPaid = thousandSeperator(fetchFeesPaid.totalAmountPaid);
+                                            const totalFeesPercentage = fetchFeesPaid.totalFeesPercentage;
+                                            const feesName = fetchFeesPaid.feesName;
+                                            const percentageColor = totalFeesPercentage >= 100 ? "green-color" : "orange-color";
+                                            
+                                            paidFees +=
+                                            completedFees = true;
+                                            $("#paidFees").append(`
+                                            <div class="alert-list-back-div paid-fees-back-div">
+                                                <div class="alert-list paid-fees-list">
+                                                    <div>${feesName}:</div>
+                                                    <div class="alert-value">
+                                                        <span class="alert-percentage ${percentageColor}">${totalFeesPercentage}%</span>
+                                                        <span><s>N</s>${totalAmountPaid}</span>
+                                                    </div>
+                                                </div>
+                                            </div>`);
+                                           
+                                        }
+                                        if (!completedFees) {
+                                            $("#paidFees").html('No record found!');
+                                        }
                                     }
                                 });
                             </script>

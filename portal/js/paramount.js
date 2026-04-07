@@ -148,10 +148,10 @@ function _showCustomConfirm(options) {
 			<div class="btn-div">
 				${
           falseActionBtn
-            ? `<button id="confirmCancelBtn" class="btn false-btn">${falseActionBtnText}</button>`
+            ? `<button id="confirmCancelBtn" class="btn false-btn" title="${falseActionBtnText}">${falseActionBtnText}</button>`
             : ""
         }
-				<button id="confirmOkBtn" class="btn">${trueActionBtnText}</button>
+				<button id="confirmOkBtn" class="btn" title="${trueActionBtnText}">${trueActionBtnText}</button>
 			</div>
 		</div>
 	`;
