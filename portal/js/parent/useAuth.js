@@ -285,13 +285,34 @@ function _proceedViewStudentCallback(formData) {
         _btnDisable("proceedResult", btnText, false);
       } else {
         _btnDisable("proceedResult", btnText, false);
-        _showCustomConfirm({
-          title: "Unable To View Result",
-          message: response.message,
-          alertType: "error",
-          trueActionBtnText: "OK",
-          closeOnOverlayClick: true,
-        });
+
+        if (response.response===104) {
+          _showCustomConfirm({
+            title: "Student Not Found",
+            message: "The student ID you entered does not exist. Please check and try again.",
+            alertType: "error",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+        } else if (response.response===200) {
+          const staffContactForAccount = response?.staffContactForAccount;
+          const studentData = response?.studentData;
+          const accountWhatsappNumber = staffContactForAccount?.mobileNumber;
+          const studentFullName = studentData?.fullName;
+
+          _showCustomConfirm({
+            title: "Unable To View Result",
+            message: response.message,
+            alertType: "error",
+            falseActionBtn: true,
+            trueActionBtnText: "WHATSAPP",
+            falseActionBtnText: "CANCEL",
+            trueActionCallback: () => {
+              window.open("https://api.whatsapp.com/send?text=Hello, I am the parent of " + studentFullName + ". I would like to request access to view my child's academic result. Kindly assist me. Thank you.&phone=+234" + accountWhatsappNumber, "_blank");
+            },
+            closeOnOverlayClick: true,
+          });
+        }
       }
     })
     .catch((error) => {

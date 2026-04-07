@@ -1661,7 +1661,6 @@
 <?php if ($page == 'branchLoadStudentFundForm') { ?>
     <script>
         useAccountFessToPaySession = JSON.parse(sessionStorage.getItem("useAccountFessToPaySession"));
-        getEachAccountStudentSession = JSON.parse(sessionStorage.getItem("getEachAccountStudentSession"));
     </script>
 
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
@@ -1685,9 +1684,7 @@
                                     <div>Student Name:</div>
                                     <div><span id="accountFormFullName">
                                             <script>
-                                                $("#accountFormFullName").html(getEachAccountStudentSession?.studentData
-                                                    ?.surName + ' ' + getEachAccountStudentSession?.studentData?.firstName +
-                                                    ' ' + getEachAccountStudentSession?.studentData?.otherNames);
+                                                $("#accountFormFullName").html(useAccountFessToPaySession?.studentData?.fullName);
                                             </script>
                                         </span></div>
                                 </div>
@@ -1759,7 +1756,7 @@
                                     <div><span id="studentAdvancedBalance">
                                             <script>
                                                 $("#studentAdvancedBalance").html('<s>N</s>' + thousandSeperator(
-                                                    getEachAccountStudentSession?.studentData?.advancedBalance));
+                                                    useAccountFessToPaySession?.studentData?.advancedBalance));
                                             </script>
                                         </span></div>
                                 </div>

@@ -334,6 +334,55 @@ function _getSelectBranchManagerId(fieldId) {
   }
 }
 
+function _getSelectBranchAccountManagerId(fieldId) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession")
+  );
+  
+  let $searchList = $("#searchList_" + fieldId);
+  $searchList.html("<li>Loading data...</li>");
+
+  try {
+    $.ajax({
+      type: "GET",
+      url: endPoint + `/admin/staff/fetch-staff?branchId=${getEachBranchDetailsSession.branchId}&statusId=1`,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(true),
+      success: function (info) {
+        const data = info.data;
+        const success = info.success;
+        $searchList.empty();
+
+        if (success === true) {
+          for (let i = 0; i < data.length; i++) {
+            const managerFirstName = data[i].firstName;
+            const managerLastName = data[i].lastName;
+            const id = data[i].staffId;
+            const value = managerFirstName + " " + managerLastName;
+            $("#searchList_" + fieldId).append(
+              "<li onclick=\"_clickOption('searchList_" +
+                fieldId +
+                "', '" +
+                id +
+                "', '" +
+                value +
+                "');\">" +
+                value +
+                "</li>"
+            );
+          }
+        } else {
+          _actionAlert(info.message, false);
+        }
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred. Please try again.", false);
+  }
+}
+
 function _getSelectSchoolCategory(fieldId) {
   try {
     $.ajax({
@@ -984,6 +1033,7 @@ function _updateBranchConfig() {
     const termId = $("#termId").val();
     const timeSchoolOpened = $("#timeSchoolOpened").val();
     const schoolResumptionDate = $("#schoolResumptionDate").val();
+    const staffContactForAccount = $("#staffContactForAccount").val();
     const schoolLogo = $("#schoolLogo").prop("files")[0];
     const principalSignature = $("#principalSignature").prop("files")[0];
 
@@ -1030,6 +1080,12 @@ function _updateBranchConfig() {
       issueCount++;
     }
 
+    if (!staffContactForAccount) {
+      $("#staffContactForAccount").addClass("issue");
+      $("#issue_staffContactForAccount").html("USER ERROR! Kindly Select staff contact for account to continue");
+      issueCount++;
+    }
+
     if (issueCount > 0) return;
 
     if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
@@ -1042,6 +1098,7 @@ function _updateBranchConfig() {
       formData.append("termId", termId);
       formData.append("timeSchoolOpened", timeSchoolOpened);
       formData.append("schoolResumptionDate", schoolResumptionDate);
+      formData.append("staffContactForAccount", staffContactForAccount);
 
       if (schoolLogo) formData.append("schoolLogo", schoolLogo);
       if (principalSignature) formData.append("principalSignature", principalSignature);

@@ -832,7 +832,7 @@ function _fetchAccountFeesToPay(
     })
       .then((response) => {
         _staffValidationCheck(response.response);
-        if (response.success && response.data?.length > 0) {
+        if (response.success) {
           sessionStorage.setItem(
             "useAccountFessToPaySession",
             JSON.stringify(response),
@@ -951,28 +951,23 @@ function _proceedToPayment() {
   let getEachBranchDetailsSession = JSON.parse(
     sessionStorage.getItem("getEachBranchDetailsSession"),
   );
-  let fetchAccountDepartmentClassParams = JSON.parse(
-    sessionStorage.getItem("fetchAccountDepartmentClassParams"),
+  let useAccountFessToPaySession = JSON.parse(
+    sessionStorage.getItem("useAccountFessToPaySession"),
   );
   let getEachAccountStudentSession = JSON.parse(
     sessionStorage.getItem("getEachAccountStudentSession"),
   );
-  let useAccountStudentByClassSession = JSON.parse(
-    sessionStorage.getItem("useAccountStudentByClassSession"),
-  );
 
+  const session = useAccountFessToPaySession?.currentSession;
+  const termId = useAccountFessToPaySession?.termData?.termId;
+  const studentId = useAccountFessToPaySession?.studentData?.studentId;
   const branchId = getEachBranchDetailsSession?.branchId;
-  const session = fetchAccountDepartmentClassParams?.session;
-  const termId = fetchAccountDepartmentClassParams?.termId;
+  const departmentId = useAccountFessToPaySession?.departmentData?.departmentId;
+  const classId = useAccountFessToPaySession?.classData?.classId;
+  const armId = useAccountFessToPaySession?.armData?.armId;
 
-  const departmentId =
-    useAccountStudentByClassSession?.departmentData?.departmentId;
-  const classId = useAccountStudentByClassSession?.classData?.classId;
-  const armId = useAccountStudentByClassSession?.armData?.armId;
-  const studentId = getEachAccountStudentSession?.studentId;
   const advancedBalance =
     getEachAccountStudentSession?.studentData?.advancedBalance;
-
   try {
     const paymentMethodId = $("#paymentMethodId").val().trim();
     let inputFees = [];
@@ -1025,15 +1020,15 @@ function _proceedToPayment() {
 
     ///// Gather form data ////
     const formData = {
-      branchId: branchId,
       session: session,
       termId: termId,
+      studentId: studentId,
+      branchId: branchId,
       departmentId: departmentId,
       classId: classId,
       armId: armId,
-      studentId: studentId,
       paymentMethodId: paymentMethodId,
-      feesIds: inputFees,
+      allFees: inputFees,
     };
 
     ////// confirm action ////
@@ -1282,7 +1277,7 @@ function _fetchEachSudentDebtors(
     })
       .then((response) => {
         _staffValidationCheck(response.response);
-        if (response.success && response.data?.length > 0) {
+        if (response.success) {
           sessionStorage.setItem(
             "useAccountFessToPaySession",
             JSON.stringify(response),

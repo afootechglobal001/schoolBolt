@@ -144,7 +144,7 @@ function _fetchFeesToPay() {
       headers: getAuthHeaders(),
       processData: false,
       success: function (info) {
-        if (info.success && info.data.length > 0) {
+        if (info.success) {
           sessionStorage.setItem(
             "getPayFeesToPaySession",
             JSON.stringify(info),
@@ -597,7 +597,7 @@ function _viewPaymentDetails(
       headers: getAuthHeaders(),
       processData: false,
       success: function (info) {
-        if (info.success && info.data.length > 0) {
+        if (info.success) {
           sessionStorage.setItem(
             "getPayFeesToPaySession",
             JSON.stringify(info),
@@ -613,11 +613,13 @@ function _viewPaymentDetails(
         }
       },
       error: function (textStatus, errorThrown) {
+        _alertClose(2);
         console.error("AJAX Error: ", textStatus, errorThrown);
         _actionAlert("Check your internet connection and try again.", false);
       },
     });
   } catch (error) {
+    _alertClose(2);
     console.error("Error: ", error);
     _actionAlert("An unexpected error occurred! Please try again.", false);
   }
@@ -639,11 +641,21 @@ function _fetchStudentClasses() {
         if (response.success && response.data?.length > 0) {
           _initFetchStudentClasses(response.data);
         } else {
+          const staffContactForAccount = response?.staffContactForAccount;
+          const studentData = response?.studentData;
+          const accountWhatsappNumber = staffContactForAccount?.mobileNumber;
+          const studentFullName = studentData?.fullName;
+
           _showCustomConfirm({
-            title: "NO RESULT FOUND",
+            title: "Unable To View Result",
             message: response.message,
-            alertType: "warning",
-            trueActionBtnText: "OK",
+            alertType: "error",
+            falseActionBtn: true,
+            trueActionBtnText: "WHATSAPP",
+            falseActionBtnText: "CANCEL",
+            trueActionCallback: () => {
+              window.open("https://api.whatsapp.com/send?text=Hello, I am the parent of " + studentFullName + ". I would like to request access to view my child's academic result. Kindly assist me. Thank you.&phone=+234" + accountWhatsappNumber, "_blank");
+            },
             closeOnOverlayClick: true,
           });
 
