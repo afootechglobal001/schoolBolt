@@ -464,7 +464,7 @@ p {
 }
 
 .alert-success {
-  border: rgba(46, 204, 113, 0.4) 1px solid;
+  border: #2ecc7166 1px solid;
   background: rgba(46, 204, 113, 0.05);
 }
 
