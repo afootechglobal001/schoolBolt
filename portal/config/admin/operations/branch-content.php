@@ -637,14 +637,14 @@
                                 </li>
                             `);
                                     }
-                            //         if (userRoles.canViewBranchActivities) {
-                            //             $('#branchNavUlMobile').append(`
-                            //     <li title="Branch Activities"
-                            //         onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});">
-                            //         <i class="bi-bell"></i> <span>Activities</span>
-                            //     </li>
-                            // `);
-                            //         }
+                                    //         if (userRoles.canViewBranchActivities) {
+                                    //             $('#branchNavUlMobile').append(`
+                                    //     <li title="Branch Activities"
+                                    //         onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});">
+                                    //         <i class="bi-bell"></i> <span>Activities</span>
+                                    //     </li>
+                                    // `);
+                                    //         }
                                 </script>
                             </ul>
                 </div>
@@ -3121,6 +3121,22 @@
                             value: getEachBranchDetailsSession?.schoolResumptionDate || ''
                         });
                     </script>
+                </div>
+
+                <div class="alert alert-success form-alert"><span>STAFF CONTACT FOR ACCOUNT</span>
+                    <div class="text_field_back_container">
+                        <div class="text_field_container" id="staffContactForAccount_container">
+                            <script>
+                                selectField({
+                                    id: 'staffContactForAccount',
+                                    title: 'Select Branch Account Manager',
+                                    fieldValue: getEachBranchDetailsSession?.staffContactForAccountData?.staffId ?? '',
+                                    fieldLabel: getEachBranchDetailsSession?.staffContactForAccountData?.fullname ?? ''
+                                });
+                                _getSelectBranchAccountManagerId('staffContactForAccount');
+                            </script>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="title">UPLOAD SCHOOL LOGO: <i>(JPG, PNG FORMAT ONLY)</i> <span>*</span></div>
