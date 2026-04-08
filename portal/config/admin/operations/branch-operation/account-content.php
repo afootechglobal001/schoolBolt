@@ -672,7 +672,7 @@
                                             let paidFees = '';
                                             let hasPaidFees = false;
                                             let upPaidFees = false; <
-                                                script >
+                                                    script >
                                                 $(document).ready(function() {
                                                     let notPaidFees = '';
                                                 let paidFees = '';
@@ -681,14 +681,14 @@
 
                                                 if (useAccountFessToPaySession && useAccountFessToPaySession
                                                 .data) {
-                                                                const fetch = useAccountFessToPaySession.data;
+                                                                    const fetch = useAccountFessToPaySession.data;
                                                 if (useAccountFessToPaySession && useAccountFessToPaySession
                                                 ?.listOfFeesNotPaidData) {
-                                                                    const fetch = useAccountFessToPaySession
+                                                                        const fetch = useAccountFessToPaySession
                                                 ?.listOfFeesNotPaidData;
 
                                                 for (let i = 0; i < fetch.length; i++) {
-                                                                        const fetchedFess = fetch[i];
+                                                                            const fetchedFess = fetch[i];
                                                 const feesId = fetchedFess.feesId;
                                                 const percentage = feesId + "_percent";
 
@@ -738,56 +738,49 @@
                                                 notPaidFees +=
                                                 upPaidFees = true;
                                                 $("#fetchedFeeTextbox").append(` <
-                                                                                    div class=
+                                                                                        div class=
                                                         "each-toggle-div payment-each-toggle-div new-pay-toggle-div" >
                                                         <
-                                                                                    div class="title-back-div" >
+                                                                                        div class="title-back-div" >
                                                             <
-                                                                                    div class=
+                                                                                        div class=
                                                                 "toggle-title-div new-toggle-title" >
                                                                 <
-                                                                                    h5 > $ {
+                                                                                        h5 > $ {
                                                                         feesName
                                                                     } < /h5>  <
                                                                         span class="${feesOptionColor}" > ( <
-                                                                                        s > N < /s>${amount})</span >
+                                                                                            s > N < /s>${amount})</span >
                                                                     <
-                                                                                        /div> <
-                                                                                        div class=
+                                                                                            /div> <
+                                                                                            div class=
                                                                         "sub-title ${feesOptionColor}" > $ {
                                                                             newFeesOption
                                                                         } < /div> <
-                                                                                        /div>
+                                                                                            /div>
 
                                                                         <
-                                                                                        div class="text-box-wrapper" >
+                                                                                            div class="text-box-wrapper" >
                                                                             <
-                                                                                        div class="text_field_container"
+                                                                                            div class="text_field_container"
                                                                                 id="${fieldId}_container" > <
-                                                                                        /div> <
-                                                                                        input type="hidden"
+                                                                                            /div> <
+                                                                                            input type="hidden"
                                                                                     class="fees-id-holder"
                                                                                     value="${feesId}" >
                                                                                     <
-                                                                                        div class="text_field_container"
+                                                                                            div class="text_field_container"
                                                                                         id="${percentage}_container" > <
-                                                                                        /div> <
-                                                                                        /div> <
-                                                                                        /div>`);
+                                                                                            /div> <
+                                                                                            /div> <
+                                                                                            /div>`);
 
                                                                                     textField({
                                                                                         id: fieldId,
                                                                                     title: 'AMOUNT(<s>N</s>)',
                                                                                     type: 'number',
-                                                                                    value: amount,
                                                                                     onKeyUpFunction: `_convertAmountToPercentage('${feesId}')`
-                                                                                    }); textField({
-                                                                                        id: fieldId,
-                                                                                    title: 'AMOUNT(<s>N</s>)',
-                                                                                    type: 'number',
-                                                                                    value: amount,
-                                                                                    onKeyUpFunction: `_convertAmountToPercentage('${feesId}')`
-                                                                                    });
+                                            });
 
                                                                                     textField({
                                                                                         id: percentage,
@@ -1135,7 +1128,7 @@
 
                                                                                                 html += `
                                                                                                     <tr class="tb-row">
-                                                        <td>${sn}</td>
+                                                                                                        <td>${sn}</td>
 
                                                                                                         <td class="clickable-td">
                                                                                                             <div class="text-back-div" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
@@ -1354,7 +1347,7 @@
 
                                         <script>
                                                                                             $(document).ready(function() {
-                                                    let notPaidFees = '';
+                                                                                                let notPaidFees = '';
                                                                                             let paidFees = ''; <
                                                     div class="alert-list-div"
                                                                                                 id="debtorPaidFees" > < /div> <
@@ -1379,23 +1372,23 @@
 
                                                                                                     if (paid === 'TRUE') {
                                                                                                         paidFees += `
-                                            <div class="alert-list-back-div">
-                                                <div class="alert-list">
-                                                    <div>${feesName}:</div>
-                                                    <div><span id=""><s>N</s>${amount}</span></div>
-                                if (useAccountFessToPaySession && useAccountFessToPaySession?.listOfFeesPaidData) {
-                                    const feesPaidData = useAccountFessToPaySession?.listOfFeesPaidData;
+                                                <div class="alert-list-back-div">
+                                                    <div class="alert-list">
+                                                        <div>${feesName}:</div>
+                                                        <div><span id=""><s>N</s>${amount}</span></div>
+                                    if (useAccountFessToPaySession && useAccountFessToPaySession?.listOfFeesPaidData) {
+                                        const feesPaidData = useAccountFessToPaySession?.listOfFeesPaidData;
                                 
-                                    for (let i = 0; i < feesPaidData.length; i++) {
-                                        const fetchFeesPaid = feesPaidData[i];
-                                        const totalAmountPaid = thousandSeperator(fetchFeesPaid.totalAmountPaid);
-                                        const totalFeesPercentage = fetchFeesPaid.totalFeesPercentage;
-                                        const feesName = fetchFeesPaid.feesName;
-                                        const percentageColor = totalFeesPercentage >= 100 ? "green-color" : "orange-color";
+                                        for (let i = 0; i < feesPaidData.length; i++) {
+                                            const fetchFeesPaid = feesPaidData[i];
+                                            const totalAmountPaid = thousandSeperator(fetchFeesPaid.totalAmountPaid);
+                                            const totalFeesPercentage = fetchFeesPaid.totalFeesPercentage;
+                                            const feesName = fetchFeesPaid.feesName;
+                                            const percentageColor = totalFeesPercentage >= 100 ? "green-color" : "orange-color";
                                     
-                                        paidFees +=
-                                        completeFees = true;
-                                        $("#debtorPaidFees").append(` <
+                                            paidFees +=
+                                            completeFees = true;
+                                            $("#debtorPaidFees").append(` <
                                                                                                         div class =
                                                                             "alert-list-back-div paid-fees-back-div" >
                                                                                                     <
@@ -1417,12 +1410,12 @@
                                                                                                                     <
                                                                             /div> <
                                                                             /div>`;
+                                                                            }
                                                                         }
-                                                                    }
                                                                                                                         $("#paidFees").html(paidFees !== '' ? paidFees :
                                                                                                                         'No record found!');
-                                                                }
-                                                            });
+                                                                    }
+                                                                });
                                             </script>
                                         </div>
                                     </div>
@@ -1531,11 +1524,11 @@
                                 <table class="table" cellspacing="0" style="width:100%" id="accountPageContent">
                                     <script>
                                                                                                                         $(document).ready(function() {
-                                                const response = JSON.parse(sessionStorage.getItem(
+                                                    const response = JSON.parse(sessionStorage.getItem(
                                                                                                                         "useAccountStudentByClassSession"));
 
                                                                                                                         if (response && response.success === true) {
-                                                    const data = response.data;
+                                                        const data = response.data;
 
                                                                                                                         const session = response.session;
                                                                                                                         const term = response?.termData?.termName;
@@ -1567,7 +1560,7 @@
 
                                                                                                                             let sn = 0;
 
-                                                    data.forEach(item => {
+                                                        data.forEach(item => {
                                                                                                                                 sn++;
                                                                                                                             const student = item.studentData;
                                                                                                                             const fullname =
@@ -1583,14 +1576,14 @@
                                                                                                                             const debtorImgStatusColor = (isDebtor === "TRUE") ?
                                                                                                                             '<div class="status-icon debtor"><i class="bi-x"></i></div>' :
                                                                                                                             '<div class="status-icon"><i class="bi-check"></i></div>';
-                                                            data.forEach(item => {
+                                                                data.forEach(item => {
                                                                                                                                 sn++;
                                                                                                                             const student = item.studentData;
                                                                                                                             const fullname =
                                                                                                                             `${student.surName} ${student.firstName} ${student.otherNames || ''}`;
                                                                                                                             const studentId = item.studentId;
                                                                                                                             const branchId = item.branchId;
-                                                                const passport = student.passport ||
+                                                                                                                            const passport = student.passport ||
                                                                                                                             "default.jpg";
                                                                                                                             const advancedBalance = student.advancedBalance;
                                                                                                                             const isDebtor = item.isDebtor;
@@ -1673,12 +1666,12 @@
                                                                                                                                 ${viewStatus}
                                                                                                                             </td>
                                                                                                                         </tr>`;
-                                                            });
+                                                                });
 
                                                                                                                             html += `</tbody>`;
-                                                            $('#accountPageContent').html(html);
-                                                        }
-                                                    });
+                                                                $('#accountPageContent').html(html);
+                                                            }
+                                                        });
                                     </script>
                                 </table>
                             </div>
