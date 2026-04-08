@@ -38,7 +38,7 @@ function _getSelectParentType(fieldId) {
         value +
         "')\">" +
         value +
-        "</li>"
+        "</li>",
     );
   }
 }
@@ -70,15 +70,18 @@ function _counDownOtp(timer) {
         // Show MM:SS when 1 min or more
         seconds = seconds < 10 ? "0" + seconds : seconds;
         $("#resendCountdown").html(
-          'Resend in <strong id="timer">' + minutes + ":" + seconds + '</strong> min'
+          'Resend in <strong id="timer">' +
+            minutes +
+            ":" +
+            seconds +
+            "</strong> min",
         );
       } else {
         // Show seconds only when below 1 minute
         $("#resendCountdown").html(
-          'Resend in <strong id="timer">' + seconds + '</strong> sec'
+          'Resend in <strong id="timer">' + seconds + "</strong> sec",
         );
       }
-
     } else {
       clearInterval(countdown);
       $("#resendCountdown").hide();
@@ -93,7 +96,7 @@ function _counDownOtp(timer) {
 /// Confirm Login Email ///
 function _confirmLoginEmail(isResend = false) {
   let parentProceedLoginSession = JSON.parse(
-    localStorage.getItem("parentProceedLoginSession")
+    localStorage.getItem("parentProceedLoginSession"),
   );
   try {
     ////////get all needed values////////////
@@ -146,7 +149,7 @@ function _confirmLoginCallback(formData, isResend) {
           _btnDisable("proceedLoginBtn", btnText, false);
           localStorage.setItem(
             "parentProceedLoginSession",
-            JSON.stringify(response)
+            JSON.stringify(response),
           );
           _showLoader("OTP Sent Successfully!. Please wait...");
           window.location.href = parentOtpVerificationUrl;
@@ -179,7 +182,7 @@ function _confirmLoginCallback(formData, isResend) {
 /// Proceed To Login ///
 function _proceedToLogin() {
   let parentProceedLoginSession = JSON.parse(
-    localStorage.getItem("parentProceedLoginSession")
+    localStorage.getItem("parentProceedLoginSession"),
   );
   try {
     ////////get all needed values////////////
@@ -242,7 +245,6 @@ function _proceedToLoginCallback(formData) {
     });
 }
 
-
 /// Proceed To Login ///
 function _proceedViewStudentResult() {
   try {
@@ -280,21 +282,25 @@ function _proceedViewStudentCallback(formData) {
   })
     .then((response) => {
       if (response.success) {
-        localStorage.setItem("proceedViewResultSessionData", JSON.stringify(response));
+        localStorage.setItem(
+          "proceedViewResultSessionData",
+          JSON.stringify(response),
+        );
         window.location.href = parentViewResultUrl;
         _btnDisable("proceedResult", btnText, false);
       } else {
         _btnDisable("proceedResult", btnText, false);
 
-        if (response.response===104) {
+        if (response.response === 104) {
           _showCustomConfirm({
             title: "Student Not Found",
-            message: "The student ID you entered does not exist. Please check and try again.",
+            message:
+              "The student ID you entered does not exist. Please check and try again.",
             alertType: "error",
             trueActionBtnText: "OK",
             closeOnOverlayClick: true,
           });
-        } else if (response.response===200) {
+        } else if (response.response === 200) {
           const staffContactForAccount = response?.staffContactForAccount;
           const studentData = response?.studentData;
           const accountWhatsappNumber = staffContactForAccount?.mobileNumber;
@@ -308,7 +314,13 @@ function _proceedViewStudentCallback(formData) {
             trueActionBtnText: "WHATSAPP",
             falseActionBtnText: "CANCEL",
             trueActionCallback: () => {
-              window.open("https://api.whatsapp.com/send?text=Hello, I am the parent of " + studentFullName + ". I would like to request access to view my child's academic result. Kindly assist me. Thank you.&phone=+234" + accountWhatsappNumber, "_blank");
+              window.open(
+                "https://api.whatsapp.com/send?text=Hello, I am the parent of " +
+                  studentFullName +
+                  ". I would like to request access to view my child's academic result. Kindly assist me. Thank you.&phone=+234" +
+                  accountWhatsappNumber,
+                "_blank",
+              );
             },
             closeOnOverlayClick: true,
           });
@@ -320,4 +332,65 @@ function _proceedViewStudentCallback(formData) {
       _callAjaxError(() => _proceedViewStudentCallback(formData)); // retry if needed
       _btnDisable("proceedResult", btnText, false);
     });
+}
+
+/// Proceed To Login Callback ///
+function _proceedPaySchoolFees() {
+  try {
+    ////////get all needed values////////////
+    let issueCount = 0;
+    const studentId = $("#studentId").val();
+
+    ///// empty field validation//////////
+    issueCount += _validateEmptyValue("studentId", "STUDENT ID");
+
+    if (issueCount > 0) return;
+
+    // Gather form data
+    const formData = {
+      studentId,
+    };
+    ///// get btn text/////
+    const btnText = $("#proceedFees").html();
+    _btnDisable("proceedFees", btnText, true);
+
+    //// call endpoint //////
+    _callRawEndPoints({
+      url: `parent/auth/proceed-to-pay-school-fees`,
+      formData,
+    })
+      .then((response) => {
+        if (response.success) {
+          sessionStorage.setItem(
+            "getEachStudentSession",
+            JSON.stringify(response),
+          );
+          _fetchFeesToPay(
+            response.studentData.studentId,
+            response.branchData.branchId,
+            response.classData.departmentId,
+            response.classData.classId,
+            response.classData.armId,
+          );
+          _btnDisable("proceedFees", btnText, false);
+        } else {
+          _btnDisable("proceedFees", btnText, false);
+          _showCustomConfirm({
+            title: "Student Not Found",
+            message: response.message,
+            alertType: "error",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() => _proceedPaySchoolFees()); // retry if needed
+        _btnDisable("proceedFees", btnText, false);
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _proceedPaySchoolFees());
+  }
 }

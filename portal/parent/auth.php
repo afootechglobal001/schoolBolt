@@ -1,5 +1,6 @@
-<?php include '../config/constants.php';?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http: //www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php include '../config/constants.php'; ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http: //www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -16,17 +17,19 @@
             <header class="animated fadeInDown">
                 <div class="header-div-in">
                     <div class="logo-div">
-                        <a href="<?php echo $clientWebsiteUrl?>" title="<?php echo $clientName ?>">
-                        <img src="<?php echo $websiteUrl ?>/images/logo.png" alt="<?php echo $clientName ?> Logo" class="animated zoomIn" /></a>
+                        <a href="<?php echo $clientWebsiteUrl ?>" title="<?php echo $clientName ?>">
+                            <img src="<?php echo $websiteUrl ?>/images/logo.png" alt="<?php echo $clientName ?> Logo"
+                                class="animated zoomIn" /></a>
                     </div>
 
                     <ul>
-                        <a href="<?php echo $clientWebsiteUrl ?>" title="<?php echo $clientName ?>">            
-                        <li>Back to website</li></a>
+                        <a href="<?php echo $clientWebsiteUrl ?>" title="<?php echo $clientName ?>">
+                            <li>Back to website</li>
+                        </a>
                     </ul>
                 </div>
             </header>
-            
+
             <div class="form-back-div">
                 <div class="form-div" data-aos="fade-right" data-aos-duration="1600">
                     <div class="top-div">
@@ -35,26 +38,37 @@
 
                     <div class="inner-form" id="viewLogin">
                         <div class="login-action-wrapper">
-                            <a href="<?php echo $websiteUrl ?>/parent/login" title="<?php echo $appName ?>">
-                            <div class="login-action-div" title="Login To Parent Portal">
-                                <h3>Login To Parent Portal</h3>
-                                <i class="bi bi-arrow-right"></i>
-                            </div></a>
-
+                            <a href="<?php echo $websiteUrl ?>/parent/pay-school-fees" title="<?php echo $appName ?>">
+                                <div class="login-action-div" title="Pay School Fees">
+                                    <h3>Pay School Fees</h3>
+                                    <i class="bi bi-arrow-right"></i>
+                                </div>
+                            </a>
                             <a href="<?php echo $websiteUrl ?>/parent/verify-result" title="<?php echo $appName ?>">
-                            <div class="login-action-div" title="View Student Result">
-                                <h3>View Student Result</h3>
-                                <i class="bi bi-arrow-right"></i>
-                            </div></a>
-                        </div>                                                                                                                 
+                                <div class="login-action-div" title="View Student Result">
+                                    <h3>View Student Result</h3>
+                                    <i class="bi bi-arrow-right"></i>
+                                </div>
+                            </a>
+                            <a href="<?php echo $websiteUrl ?>/parent/login" title="<?php echo $appName ?>">
+                                <div class="login-action-div" title="Login To Parent Portal">
+                                    <h3>Login To Parent Portal</h3>
+                                    <i class="bi bi-arrow-right"></i>
+                                </div>
+                            </a>
+
+
+                        </div>
                     </div>
-                    <p>Need Help? <a href="<?php echo $clientWebsiteContactUsUrl ?>" title="Contact Us"><span>Contact Us</span></a></p>
+                    <p>Need Help? <a href="<?php echo $clientWebsiteContactUsUrl ?>" title="Contact Us"><span>Contact
+                                Us</span></a></p>
                 </div>
             </div>
         </div>
         <div class="graphics-div">
             <div class="content" data-aos="fade-left" data-aos-duration="800">
-                <div class="graphics" data-aos="fade-left" data-aos-duration="1200"><img src="<?php echo $websiteUrl ?>/images/check-result.webp" alt="ABCC Result checker" /></div>
+                <div class="graphics" data-aos="fade-left" data-aos-duration="1200"><img
+                        src="<?php echo $websiteUrl ?>/images/check-result.webp" alt="ABCC Result checker" /></div>
                 <h2>Your Client's Education<br> <span>is at Your Fingertips!</span></h2>
             </div>
         </div>

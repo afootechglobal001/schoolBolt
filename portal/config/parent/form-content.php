@@ -1,5 +1,7 @@
 <?php if ($page == 'studentProfileForm') { ?>
-    <script> getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));</script>
+    <script>
+        getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));
+    </script>
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
         <div class="top-panel-div">
             <div class="inner-top">
@@ -13,7 +15,11 @@
                 <div class="mini-profile">
                     <label>
                         <div class="img-div" id="headerImage">
-                            <script>$("#headerImage").html('<img src="'+websiteUrl+'/uploaded_files/studentPix/'+getEachStudentSession.studentData.passport+'" alt="'+getEachStudentSession.studentData.surName+'"/>');</script>
+                            <script>
+                                $("#headerImage").html('<img src="' + websiteUrl + '/uploaded_files/studentPix/' +
+                                    getEachStudentSession.studentData.passport + '" alt="' + getEachStudentSession
+                                        .studentData.surName + '"/>');
+                            </script>
                         </div>
                     </label>
 
@@ -21,15 +27,36 @@
                         <div class="inner-text">
                             <div class="text-div">
                                 <h2 id="headerSurname">
-                                    <script>$("#headerSurname").html(capitalizeFirstLetterOfEachWord(getEachStudentSession.studentData.surName+' '+getEachStudentSession.studentData.firstName +' '+getEachStudentSession.studentData.otherNames));</script>
+                                    <script>
+                                        $("#headerSurname").html(capitalizeFirstLetterOfEachWord(getEachStudentSession
+                                            .studentData.surName + ' ' + getEachStudentSession.studentData.firstName +
+                                            ' ' + getEachStudentSession.studentData.otherNames));
+                                    </script>
                                 </h2>
 
                                 <div class="text">
-                                    SESSION:<strong id="headerCurrentSession"><script>$("#headerCurrentSession").html(getEachStudentSession.branchData.currentSession);</script></strong> | 
-                                    TERM:<strong id="headerCurrentTerm"><script>$("#headerCurrentTerm").html(getEachStudentSession.branchData.termData.currentTerm);</script></strong> | 
-                                    CLASS:<strong id="headerClass"><script>$("#headerClass").html(getEachStudentSession.classData.className+' '+getEachStudentSession.armData.armName);</script></strong>
+                                    SESSION:<strong id="headerCurrentSession">
+                                        <script>
+                                            $("#headerCurrentSession").html(getEachStudentSession.branchData.currentSession);
+                                        </script>
+                                    </strong> |
+                                    TERM:<strong id="headerCurrentTerm">
+                                        <script>
+                                            $("#headerCurrentTerm").html(getEachStudentSession.branchData.termData.currentTerm);
+                                        </script>
+                                    </strong> |
+                                    CLASS:<strong id="headerClass">
+                                        <script>
+                                            $("#headerClass").html(getEachStudentSession.classData.className + ' ' +
+                                                getEachStudentSession.armData.armName);
+                                        </script>
+                                    </strong>
                                     <div id="headerStatus">
-                                         <script>$("#headerStatus").html('<div id="statusBtn" class="status-btn '+getEachStudentSession.studentData.statusName+'"><span>'+getEachStudentSession.studentData.statusName+'</span></div>')</script>
+                                        <script>
+                                            $("#headerStatus").html('<div id="statusBtn" class="status-btn ' +
+                                                getEachStudentSession.studentData.statusName + '"><span>' +
+                                                getEachStudentSession.studentData.statusName + '</span></div>')
+                                        </script>
                                     </div>
                                 </div>
                             </div>
@@ -41,21 +68,48 @@
             <div class="btn-div">
                 <div class="div-in">
                     <ul>
-                        <li class="active" title="Dashboard" id="studentDashbaord" onclick="_getActiveStudentPortalPage({divid: 'studentDashbaord', page: 'studentDashbaord', url: parentPortalLocalUrl});"><i class="bi-speedometer2"></i> Dashboard</li>
-                        <li title="Student Profile" id="studentProfile" onclick="_getActiveStudentPortalPage({divid: 'studentProfile', page: 'studentProfile', url: parentPortalLocalUrl});"><i class="bi-person-lines-fill"></i> Student Profile</li>
-                        <li title="Pay Fees" class="hide-li" id="payFees" onclick="_fetchFeesToPay();"><i class="bi-credit-card"></i> Pay Fees</li>
-                        <li title="Payment History" class="hide-li" id="paymentHistory" onclick="_getActiveStudentPortalPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-clock-history"></i> Payment History</li>
+                        <li class="active" title="Dashboard" id="studentDashbaord"
+                            onclick="_getActiveStudentPortalPage({divid: 'studentDashbaord', page: 'studentDashbaord', url: parentPortalLocalUrl});">
+                            <i class="bi-speedometer2"></i> Dashboard
+                        </li>
+                        <li title="Student Profile" id="studentProfile"
+                            onclick="_getActiveStudentPortalPage({divid: 'studentProfile', page: 'studentProfile', url: parentPortalLocalUrl});">
+                            <i class="bi-person-lines-fill"></i> Student Profile
+                        </li>
+                        <li title="Pay Fees" class="hide-li" id="payFees" onclick="_fetchFeesToPay();"><i
+                                class="bi-credit-card"></i> Pay Fees</li>
+                        <li title="Payment History" class="hide-li" id="paymentHistory"
+                            onclick="_getActiveStudentPortalPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});">
+                            <i class="bi-clock-history"></i> Payment History
+                        </li>
                         <!-- <li title="Attendance" id="attendance" onclick=""><i class="bi-person-bounding-box"></i> Attendance</li>
                         <li title="Time Table" id="timeTable" onclick=""><i class="bi-bell"></i> Time Table</li> -->
-                        <li title="View Result"  class="hide-li" id="studentResult" onclick="_getActiveStudentPortalPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});"><i class="bi-printer"></i> View Result</li>
+                        <li title="View Result" class="hide-li" id="studentResult"
+                            onclick="_getActiveStudentPortalPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});">
+                            <i class="bi-printer"></i> View Result
+                        </li>
                         <!-- <li title="Assignment" id="assignment" onclick=""><i class="bi-bell"></i> Assignment</li> -->
                         <li title="Other Links"><i class="bi-three-dots-vertical"></i>
                             <ul>
-                                <li title="Dashboard" class="active" onclick="_getActiveStudentPortalPage({divid: 'studentDashbaord', page: 'studentDashbaord', url: parentPortalLocalUrl});"><i class="bi-speedometer2"></i> <span>Dashboard</span></li>
-                                <li title="Student Profile" onclick="_getActiveStudentPortalPage({divid: 'studentProfile', page: 'studentProfile', url: parentPortalLocalUrl});"><i class="bi-person-lines-fill"></i> <span>Student Profile</span></li>
-                                <li title="Pay Fees" onclick="_fetchFeesToPay();"><i class="bi-credit-card-2-back"></i> <span>Pay Fees</span></li>
-                                <li title="Payment History" onclick="_getActiveStudentPortalPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});"><i class="bi-clock-history"></i> <span>Payment History</span></li>
-                                <li title="View Result" id="studentResult" onclick="_getActiveStudentPortalPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});"><i class="bi-printer"></i> <span>View Result</span></li>
+                                <li title="Dashboard" class="active"
+                                    onclick="_getActiveStudentPortalPage({divid: 'studentDashbaord', page: 'studentDashbaord', url: parentPortalLocalUrl});">
+                                    <i class="bi-speedometer2"></i> <span>Dashboard</span>
+                                </li>
+                                <li title="Student Profile"
+                                    onclick="_getActiveStudentPortalPage({divid: 'studentProfile', page: 'studentProfile', url: parentPortalLocalUrl});">
+                                    <i class="bi-person-lines-fill"></i> <span>Student Profile</span>
+                                </li>
+                                <li title="Pay Fees" onclick="_fetchFeesToPay();"><i class="bi-credit-card-2-back"></i>
+                                    <span>Pay Fees</span>
+                                </li>
+                                <li title="Payment History"
+                                    onclick="_getActiveStudentPortalPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl});">
+                                    <i class="bi-clock-history"></i> <span>Payment History</span>
+                                </li>
+                                <li title="View Result" id="studentResult"
+                                    onclick="_getActiveStudentPortalPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});">
+                                    <i class="bi-printer"></i> <span>View Result</span>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -81,41 +135,44 @@
 <!-- For Student Modal Pages -->
 <?php if ($page == 'studentDashbaord') { ?>
     <div class="card-back-div" data-aos="fade-in" data-aos-duration="1300">
-        <div class="card-div" title="Pay Fees" onclick="_fetchFeesToPay();"> 
-            <div class="pix"><img src="<?php echo $websiteUrl?>/images/online-payment.jpg" alt="Pay Fees"></div>
+        <div class="card-div" title="Pay Fees" onclick="_fetchFeesToPay();">
+            <div class="pix"><img src="<?php echo $websiteUrl ?>/images/online-payment.jpg" alt="Pay Fees"></div>
             <div class="text">Pay Fees</div>
         </div>
 
         <!-- <div class="card-div inactive-card-div" title="Attendance" onclick="">
-            <div class="pix"><img src="<?php echo $websiteUrl?>/images/attendance.jpg" alt="Attendance"></div>
+            <div class="pix"><img src="<?php echo $websiteUrl ?>/images/attendance.jpg" alt="Attendance"></div>
             <div class="text">Attendance</div>
         </div>
 
         <div class="card-div inactive-card-div" title="Time Table" onclick="">
-            <div class="pix"><img src="<?php echo $websiteUrl?>/images/time-table.png" alt="Time Table"></div>
+            <div class="pix"><img src="<?php echo $websiteUrl ?>/images/time-table.png" alt="Time Table"></div>
             <div class="text">Time Table</div>
         </div>
 
         <div class="card-div inactive-card-div" title="Assignment" onclick="">
-            <div class="pix"><img src="<?php echo $websiteUrl?>/images/assignment.jpg" alt="Assignment"></div>
+            <div class="pix"><img src="<?php echo $websiteUrl ?>/images/assignment.jpg" alt="Assignment"></div>
             <div class="text">Assignment</div>
         </div> -->
 
-        <div class="card-div" title="View Result" id="studentResult" onclick="_getActiveStudentPortalPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});">
-            <div class="pix"><img src="<?php echo $websiteUrl?>/images/print-result.jpg" alt="View Result"></div>
+        <div class="card-div" title="View Result" id="studentResult"
+            onclick="_getActiveStudentPortalPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});">
+            <div class="pix"><img src="<?php echo $websiteUrl ?>/images/print-result.jpg" alt="View Result"></div>
             <div class="text">View Result</div>
         </div>
 
         <!-- <div class="card-div inactive-card-div" title="Transcript" onclick="">
-            <div class="pix"><img src="<?php echo $websiteUrl?>/images/transcript.jpg" alt="Transcript"></div>
+            <div class="pix"><img src="<?php echo $websiteUrl ?>/images/transcript.jpg" alt="Transcript"></div>
             <div class="text">Transcript</div>
         </div> -->
     </div>
 <?php } ?>
 
 <?php if ($page == 'studentProfile') { ?>
-    <script> getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));</script>
-    <div class="detail-container" data-aos="fade-in" data-aos-duration="1300">  
+    <script>
+        getEachStudentSession = JSON.parse(sessionStorage.getItem("getEachStudentSession"));
+    </script>
+    <div class="detail-container" data-aos="fade-in" data-aos-duration="1300">
         <div class="profile-details">
             <div class="title">
                 <i class="bi-person-lines-fill"></i>
@@ -124,35 +181,70 @@
 
             <div class="details-div" id="student-details">
                 <div class="details"><span>STUDENT ID</span>
-                    <div id="studentId"><script>$("#studentId").html(getEachStudentSession.studentData.studentId);</script></div>
+                    <div id="studentId">
+                        <script>
+                            $("#studentId").html(getEachStudentSession.studentData.studentId);
+                        </script>
+                    </div>
                 </div>
 
                 <div class="details"><span>FULLNAME</span>
-                    <div id="fullName"><script>$("#fullName").html(capitalizeFirstLetterOfEachWord(getEachStudentSession.studentData.surName+' '+getEachStudentSession.studentData.firstName +' '+getEachStudentSession.studentData.otherNames));</script></div>
+                    <div id="fullName">
+                        <script>
+                            $("#fullName").html(capitalizeFirstLetterOfEachWord(getEachStudentSession.studentData.surName +
+                                ' ' + getEachStudentSession.studentData.firstName + ' ' + getEachStudentSession
+                                    .studentData.otherNames));
+                        </script>
+                    </div>
                 </div>
 
                 <div class="details"><span>CURRENT CLASS</span>
-                    <div id="className"><script>$("#className").html(getEachStudentSession.classData.className+' '+getEachStudentSession.armData.armName);</script></div>
+                    <div id="className">
+                        <script>
+                            $("#className").html(getEachStudentSession.classData.className + ' ' + getEachStudentSession.armData
+                                .armName);
+                        </script>
+                    </div>
                 </div>
 
                 <div class="details"><span>DATE OF BIRTH</span>
-                    <div id="dateOfBirth"><script>$("#dateOfBirth").html(getEachStudentSession.studentData.dateOfBirth);</script></div>
+                    <div id="dateOfBirth">
+                        <script>
+                            $("#dateOfBirth").html(getEachStudentSession.studentData.dateOfBirth);
+                        </script>
+                    </div>
                 </div>
 
                 <div class="details"><span>GENDER</span>
-                    <div id="genderName"><script>$("#genderName").html(getEachStudentSession.studentData.genderName);</script></div>
+                    <div id="genderName">
+                        <script>
+                            $("#genderName").html(getEachStudentSession.studentData.genderName);
+                        </script>
+                    </div>
                 </div>
 
                 <div class="details"><span>STUDENT CATEGORY</span>
-                    <div id="accommodationId"><script>$("#accommodationId").html(getEachStudentSession.studentData.accommodationId);</script></div>
+                    <div id="accommodationId">
+                        <script>
+                            $("#accommodationId").html(getEachStudentSession.studentData.accommodationId);
+                        </script>
+                    </div>
                 </div>
 
                 <div class="details"><span>ADDRESS</span>
-                    <div id="address"><script>$("#address").html(getEachStudentSession.studentData.address);</script></div>
+                    <div id="address">
+                        <script>
+                            $("#address").html(getEachStudentSession.studentData.address);
+                        </script>
+                    </div>
                 </div>
 
                 <div class="details"><span>DATE OF REGISTRATION</span>
-                    <div id="createdTime"><script>$("#createdTime").html(getEachStudentSession.studentData.createdTime);</script></div>
+                    <div id="createdTime">
+                        <script>
+                            $("#createdTime").html(getEachStudentSession.studentData.createdTime);
+                        </script>
+                    </div>
                 </div>
             </div>
         </div>
@@ -165,27 +257,51 @@
 
             <div class="details-div" id="student-details">
                 <div class="details"><span>SCHOOL NAME</span>
-                    <div id="branchName"><script>$("#branchName").html(getEachStudentSession.branchData.branchName);</script></div>
+                    <div id="branchName">
+                        <script>
+                            $("#branchName").html(getEachStudentSession.branchData.branchName);
+                        </script>
+                    </div>
                 </div>
 
                 <div class="details"><span>SCHOOL OFFICIAL EMAIL</span>
-                   <div id="email"><script>$("#email").html(getEachStudentSession.branchData.email);</script></div>
+                    <div id="email">
+                        <script>
+                            $("#email").html(getEachStudentSession.branchData.email);
+                        </script>
+                    </div>
                 </div>
 
                 <div class="details"><span>ADDRESS</span>
-                   <div id="address2"><script>$("#address2").html(getEachStudentSession.branchData.address);</script></div>
+                    <div id="address2">
+                        <script>
+                            $("#address2").html(getEachStudentSession.branchData.address);
+                        </script>
+                    </div>
                 </div>
 
                 <div class="details"><span>PHONE NUMBER</span>
-                   <div id="mobileNumber"><script>$("#mobileNumber").html(getEachStudentSession.branchData.mobileNumber);</script></div>
+                    <div id="mobileNumber">
+                        <script>
+                            $("#mobileNumber").html(getEachStudentSession.branchData.mobileNumber);
+                        </script>
+                    </div>
                 </div>
 
                 <div class="details"><span>SESSION</span>
-                   <div id="currentSession"><script>$("#currentSession").html(getEachStudentSession.branchData.currentSession);</script></div>
+                    <div id="currentSession">
+                        <script>
+                            $("#currentSession").html(getEachStudentSession.branchData.currentSession);
+                        </script>
+                    </div>
                 </div>
 
                 <div class="details"><span>TERM</span>
-                   <div id="currentTerm"><script>$("#currentTerm").html(getEachStudentSession.branchData.termData.currentTerm);</script></div>
+                    <div id="currentTerm">
+                        <script>
+                            $("#currentTerm").html(getEachStudentSession.branchData.termData.currentTerm);
+                        </script>
+                    </div>
                 </div>
             </div>
         </div>
@@ -193,8 +309,9 @@
 <?php } ?>
 
 <?php if ($page == 'paymentForm') { ?>
-    <script> getPayFeesToPaySession = JSON.parse(sessionStorage.getItem("getPayFeesToPaySession"));</script>
-
+    <script>
+        getPayFeesToPaySession = JSON.parse(sessionStorage.getItem("getPayFeesToPaySession"));
+    </script>
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
@@ -214,42 +331,71 @@
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
                                     <div>Student Name:</div>
-                                    <div><span id="formSurname"><script>$("#formSurname").html(getEachStudentSession.studentData.surName+' '+getEachStudentSession.studentData.firstName +' '+getEachStudentSession.studentData.otherNames);</script></span></div>
+                                    <div>
+                                        <span id="formSurname">
+                                            <script>
+                                                $("#formSurname").html(getPayFeesToPaySession.studentData.surName + ' ' +
+                                                    getPayFeesToPaySession.studentData.firstName + ' ' +
+                                                    getPayFeesToPaySession.studentData.otherNames);
+                                            </script>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
                                     <div>School Name:</div>
-                                    <div><span id="formBranchName"><script>$("#formBranchName").html(getPayFeesToPaySession.branchData.branchName);</script></span></div>
+                                    <div><span id="formBranchName">
+                                            <script>
+                                                $("#formBranchName").html(getPayFeesToPaySession.branchData.branchName);
+                                            </script>
+                                        </span></div>
                                 </div>
                             </div>
 
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
                                     <div>Department:</div>
-                                    <div><span id="formDepartment"><script>$("#formDepartment").html(getPayFeesToPaySession.departmentData.departmentName);</script></span></div>
+                                    <div><span id="formDepartment">
+                                            <script>
+                                                $("#formDepartment").html(getPayFeesToPaySession.departmentData.departmentName);
+                                            </script>
+                                        </span></div>
                                 </div>
                             </div>
 
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
                                     <div>Class:</div>
-                                <div><span id="formClass"><script>$("#formClass").html(getPayFeesToPaySession.classData.className+' '+getEachStudentSession.armData.armName);</script></span></div>
+                                    <div><span id="formClass">
+                                            <script>
+                                                $("#formClass").html(getPayFeesToPaySession.classData.className + ' ' +
+                                                    getPayFeesToPaySession.armData.armName);
+                                            </script>
+                                        </span></div>
                                 </div>
                             </div>
 
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
                                     <div>Session:</div>
-                                <div><span id="formCurrentSession"><script>$("#formCurrentSession").html(getPayFeesToPaySession.currentSession);</script></span></div>
+                                    <div><span id="formCurrentSession">
+                                            <script>
+                                                $("#formCurrentSession").html(getPayFeesToPaySession.currentSession);
+                                            </script>
+                                        </span></div>
                                 </div>
                             </div>
 
                             <div class="alert-list-back-div">
                                 <div class="alert-list">
                                     <div>Term:</div>
-                                    <div><span id="formCurrentTerm"><script>$("#formCurrentTerm").html(getPayFeesToPaySession.termData.currentTerm);</script></span></div>
+                                    <div><span id="formCurrentTerm">
+                                            <script>
+                                                $("#formCurrentTerm").html(getPayFeesToPaySession.termData.currentTerm);
+                                            </script>
+                                        </span></div>
                                 </div>
                             </div>
                         </div>
@@ -267,7 +413,8 @@
                 <div class="permission-form-back-div">
                     <div class="title-div">
                         <h4>Select Fees for Payment</h4>
-                        <p>Use the toggles below to select fees applicable to this student. Switching a toggle to "Yes" enables payment for that category.</p>
+                        <p>Use the toggles below to select fees applicable to this student. Switching a toggle to "Yes"
+                            enables payment for that category.</p>
                     </div>
 
                     <div class="permission-toggle-div">
@@ -275,11 +422,11 @@
                         <div class="fetch-toggle" id="notPaidFees">
 
                             <script>
-                                $(document).ready(function() {
+                                $(document).ready(function () {
                                     let notPaidFees = '';
                                     let paidFees = '';
                                     let unPaidFees = false;
-                                    let completedFees= false;
+                                    let completedFees = false;
 
                                     if (getPayFeesToPaySession && getPayFeesToPaySession?.listOfFeesNotPaidData) {
                                         const fetch = getPayFeesToPaySession.listOfFeesNotPaidData;
@@ -289,8 +436,10 @@
                                             const feesId = fetchedFess.feesId;
                                             const feesName = fetchedFess.feesName;
                                             const feesOption = fetchedFess.feesOption;
-                                            const newFeesOption = (feesOption === "TRUE") ? "MANDATORY" : "NOT MANDATORY";
-                                            const feesOptionColor = (feesOption === "TRUE") ? "green-color" : "orange-color";       
+                                            const newFeesOption = (feesOption === "TRUE") ? "MANDATORY" :
+                                                "NOT MANDATORY";
+                                            const feesOptionColor = (feesOption === "TRUE") ? "green-color" :
+                                                "orange-color";
                                             const amount = thousandSeperator(fetchedFess.amount);
 
                                             unPaidFees = true;
@@ -306,27 +455,30 @@
                                                     <span class="toggle-label">No</span>
                                                 </label>
                                             </div>`;
-                                           
+
                                         }
                                         $("#notPaidFees").html(notPaidFees);
                                         if (!unPaidFees) {
-                                            $("#notPaidFees").html('<div class="success-msg">Fees Payment Completed for this session and term!</div>');
+                                            $("#notPaidFees").html(
+                                                '<div class="success-msg">Fees Payment Completed for this session and term!</div>'
+                                            );
                                         }
                                         _toggleCheck();
                                     }
 
                                     if (getPayFeesToPaySession && getPayFeesToPaySession?.listOfFeesPaidData) {
                                         const feesPaidData = getPayFeesToPaySession?.listOfFeesPaidData;
-                                       
+
                                         for (let i = 0; i < feesPaidData.length; i++) {
                                             const fetchFeesPaid = feesPaidData[i];
                                             const totalAmountPaid = thousandSeperator(fetchFeesPaid.totalAmountPaid);
                                             const totalFeesPercentage = fetchFeesPaid.totalFeesPercentage;
                                             const feesName = fetchFeesPaid.feesName;
-                                            const percentageColor = totalFeesPercentage >= 100 ? "green-color" : "orange-color";
-                                            
+                                            const percentageColor = totalFeesPercentage >= 100 ? "green-color" :
+                                                "orange-color";
+
                                             paidFees +=
-                                            completedFees = true;
+                                                completedFees = true;
                                             $("#paidFees").append(`
                                             <div class="alert-list-back-div paid-fees-back-div">
                                                 <div class="alert-list paid-fees-list">
@@ -337,7 +489,7 @@
                                                     </div>
                                                 </div>
                                             </div>`);
-                                           
+
                                         }
                                         if (!completedFees) {
                                             $("#paidFees").html('No record found!');
@@ -365,7 +517,10 @@
                                     <div>SYSTEM CHARGES:</div>
                                     <div>
                                         <span id="schoolBoltCharges"></span>
-                                        <script>$("#schoolBoltCharges").html('<s>N</s>'+thousandSeperator(getPayFeesToPaySession.schoolBoltCharges));</script>
+                                        <script>
+                                            $("#schoolBoltCharges").html('<s>N</s>' + thousandSeperator(getPayFeesToPaySession
+                                                .schoolBoltCharges));
+                                        </script>
                                     </div>
                                 </div>
                             </div>
@@ -389,9 +544,10 @@
                         _getSelectPaymentMethod('paymentMethodId');
                     </script>
                 </div>
-        
+
                 <div>
-                    <button class="btn" title="Make Payment" id="submitBtn" onclick="_proceedToPayment();"> <i class="bi-check"></i> MAKE PAYMENT </button>
+                    <button class="btn" title="Make Payment" id="submitBtn" onclick="_proceedToPayment();"> <i
+                            class="bi-check"></i> MAKE PAYMENT </button>
                 </div>
             </div>
         </div>
@@ -402,15 +558,15 @@
             function updateTotal() {
 
                 let totalFee = 0;
-                let totalAmount=0;
+                let totalAmount = 0;
 
                 $('.child:checked').each(function () {
                     totalFee += parseFloat($(this).val()) || 0;
                 });
                 totalAmount = totalFee + parseFloat(getPayFeesToPaySession.schoolBoltCharges);
 
-                $('#totalFee').html('<s>N</s>'+thousandSeperator(totalFee));
-                $('#totalAmount').html('<s>N</s>'+thousandSeperator(totalAmount));
+                $('#totalFee').html('<s>N</s>' + thousandSeperator(totalFee));
+                $('#totalAmount').html('<s>N</s>' + thousandSeperator(totalAmount));
 
             }
 
@@ -425,7 +581,7 @@
 <?php } ?>
 
 <?php if ($page == 'paymentHistory') { ?>
-    <div class="detail-container" data-aos="fade-in" data-aos-duration="1300">  
+    <div class="detail-container" data-aos="fade-in" data-aos-duration="1300">
         <div class="chart-div-notifications">
             <div class="text"><i class="bi-graph-up-arrow"></i> Showing Notification History for </div>
 
@@ -450,7 +606,8 @@
                 <div class="custom-srch-div">
                     <div class="custom-srch-div-in">
                         <div class="text_field_container dash_field_container">
-                            <input class="text_field bar_cust_text_field" type="text" id="datepickers-from" placeholder="" />
+                            <input class="text_field bar_cust_text_field" type="text" id="datepickers-from"
+                                placeholder="" />
                             <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From</div>
                         </div>
 
@@ -482,31 +639,65 @@
 
         <div class="table-div animated fadeIn">
             <table class="table" cellspacing="0" style="width:100%" id="pageContent">
-                <script>_fetchPaymentHistory();</script>
+                <script>
+                    _fetchPaymentHistory();
+                </script>
             </table>
         </div>
     </div>
 <?php } ?>
 
 <?php if ($page == 'accountTransferForm') { ?>
-    <script> studentPaymentSession = JSON.parse(sessionStorage.getItem("studentPaymentSession"));</script>
-    <script> parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));</script>
+    <script>
+        studentPaymentSession = JSON.parse(sessionStorage.getItem("studentPaymentSession"));
+    </script>
+    <script>
+        parentSessionData = JSON.parse(sessionStorage.getItem("parentSessionData"));
+    </script>
     <div class="caption-div animated zoomIn">
         <div class="title-div">
             <div class="title"><i class="bi-person-check"></i> ACCOUNT INFORMATIONS</div>
         </div>
 
         <div class="div-in animated fadeIn">
-            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, <strong id="loginUsername"><script>$("#loginUsername").html(parentSessionData.parentData.titleId+' '+parentSessionData.parentData.surName +' '+parentSessionData.parentData.otherNames);</script></strong>, Kindly pay the sum of <span><strong id="amount"><script>$("#amount").html('<s>N</s>'+thousandSeperator(studentPaymentSession.amount));</script></strong></span> to the account details below:</div>
-            <div class="text">ACCOUNT NAME: <strong id="accountName"><script>$("#accountName").html(studentPaymentSession.accountName);</script></strong></div>
-            <div class="text">ACCOUNT NUMBER: <strong id="accountNumber"><script>$("#accountNumber").html(studentPaymentSession.accountNumber);</script></strong></div>
-            <div class="text">BANK NAME: <strong id="bankName"><script>$("#bankName").html(studentPaymentSession.bankName);</script></strong></div>
-            <p>Contact the admin on <strong id="branchNumber"><script>$("#branchNumber").html(studentPaymentSession.branchNumber);</script></strong> for payment activation.</p>
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, <strong id="loginUsername">
+                    <script>
+                        $("#loginUsername").html(parentSessionData.parentData.titleId + ' ' + parentSessionData.parentData
+                            .surName + ' ' + parentSessionData.parentData.otherNames);
+                    </script>
+                </strong>, Kindly pay the sum of <span><strong id="amount">
+                        <script>
+                            $("#amount").html('<s>N</s>' + thousandSeperator(studentPaymentSession.amount));
+                        </script>
+                    </strong></span> to the account details below:</div>
+            <div class="text">ACCOUNT NAME: <strong id="accountName">
+                    <script>
+                        $("#accountName").html(studentPaymentSession.accountName);
+                    </script>
+                </strong></div>
+            <div class="text">ACCOUNT NUMBER: <strong id="accountNumber">
+                    <script>
+                        $("#accountNumber").html(studentPaymentSession.accountNumber);
+                    </script>
+                </strong></div>
+            <div class="text">BANK NAME: <strong id="bankName">
+                    <script>
+                        $("#bankName").html(studentPaymentSession.bankName);
+                    </script>
+                </strong></div>
+            <p>Contact the admin on <strong id="branchNumber">
+                    <script>
+                        $("#branchNumber").html(studentPaymentSession.branchNumber);
+                    </script>
+                </strong> for payment activation.</p>
 
             <div class="btn-div">
-                <button class="btn" id="submitBtn" title="VIEW PAYMENT HISTORY" onclick="_getActiveStudentPortalPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl}); _alertClose(2)"><i class="bi-eye"></i> VIEW PAYMENT HISTORY </button>
+                <button class="btn" id="submitBtn" title="VIEW PAYMENT HISTORY"
+                    onclick="_getActiveStudentPortalPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl}); _alertClose(2)"><i
+                        class="bi-eye"></i> VIEW PAYMENT HISTORY </button>
                 <a id="callLink" href="tel:" title="Call Customer Care">
-                <button class="btn whatsapp-btn" id="submitBtn" title="PLACE A CALL ON THIS NUMBER" onclick=""><i class="bi-telephone-outbound-fill"></i> </button></a>
+                    <button class="btn whatsapp-btn" id="submitBtn" title="PLACE A CALL ON THIS NUMBER" onclick=""><i
+                            class="bi-telephone-outbound-fill"></i> </button></a>
             </div>
         </div>
     </div>
@@ -520,12 +711,12 @@
 <?php if ($page == 'logOutConfirmForm') { ?>
     <div class="caption-success-div animated zoomIn">
         <div class="div-in">
-            <div class="img"><img src="<?php echo $websiteUrl?>/images/warning.gif"/></div>
+            <div class="img"><img src="<?php echo $websiteUrl ?>/images/warning.gif" /></div>
             <h2>Are you sure to log-out?</h2>
             Please, confirm your log-out action.
             <div class="btn-div">
                 <button class="btn" onclick="_logOut();">YES</button>
-                <button class="btn no-btn" onclick="_alertClose(<?php echo $modalLayer?>);">NO</button>
+                <button class="btn no-btn" onclick="_alertClose(<?php echo $modalLayer ?>);">NO</button>
             </div>
         </div>
     </div>
@@ -534,10 +725,11 @@
 <?php if ($page == 'payemntSuccessForm') { ?>
     <div class="caption-success-div animated zoomIn">
         <div class="div-in">
-            <div class="img"><img src="<?php echo $websiteUrl?>/images/success.gif"/></div>
+            <div class="img"><img src="<?php echo $websiteUrl ?>/images/success.gif" /></div>
             <h2>PAYMENT SUCCESSFUL</h2>
             <div class="btn-div">
-                <button class="btn done-btn" onclick="_getActiveStudentPortalPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl}); _alertClose(2)">DONE</button>
+                <button class="btn done-btn"
+                    onclick="_getActiveStudentPortalPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl}); _alertClose(2)">DONE</button>
             </div>
         </div>
     </div>
@@ -549,6 +741,8 @@
     </div>
 
     <div class="pages-toggle-back-div" id="pageContent">
-        <script>_fetchStudentClasses()</script>
+        <script>
+            _fetchStudentClasses()
+        </script>
     </div>
 <?php } ?>

@@ -5,9 +5,10 @@
 
 <head>
     <?php include 'auth-meta.php' ?>
-    <title><?php echo $appName ?> | Parent Portal | Result Verification Portal</title>
-    <meta name="keywords" content="Parent View Result  - <?php echo $appName ?>" />
-    <meta name="description" content="Parent View Result - <?php echo $appName ?>" />
+    <title><?php echo $appName ?> | Parent Portal | Pay School Fees</title>
+    <meta name="keywords" content="Parent Pay School Fees  - <?php echo $appName ?>" />
+    <meta name="description" content="Parent Pay School Fees - <?php echo $appName ?>" />
+    <script src="https://js.paystack.co/v1/inline.js"></script>
 </head>
 
 <body>
@@ -33,7 +34,7 @@
             <div class="form-back-div">
                 <div class="form-div" data-aos="fade-right" data-aos-duration="1600">
                     <div class="top-div">
-                        <h1>👋 Hi Parent<br><span>This is result verification portal.</span></h1>
+                        <h1>👋 Hi Parent<br><span>This is the school fees payment portal.</span></h1>
                     </div>
 
                     <div class="inner-form" id="viewLogin">
@@ -50,8 +51,8 @@
                             </script>
                         </div>
 
-                        <button class="btn" title="Proceed" id="proceedResult"
-                            onclick="_proceedViewStudentResult();">Proceed <i class="bi-arrow-right"></i></button>
+                        <button class="btn" title="Proceed" id="proceedFees" onclick="_proceedPaySchoolFees();">Proceed
+                            <i class="bi-arrow-right"></i></button>
                     </div>
                     <p><a href="<?php echo $websiteUrl ?>/parent/auth" title="Go Back" title="Go Back"><span><i
                                     class="bi-arrow-left"></i> Go Back</span></a></p>
