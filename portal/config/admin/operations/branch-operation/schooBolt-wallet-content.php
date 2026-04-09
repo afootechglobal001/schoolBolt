@@ -9,7 +9,8 @@
 
         <div class="div-in animated fadeIn">
             <div class="alert alert-success form-alert">
-                <i class="bi-wallet-fill"></i> You’re about to fund your wallet. Enter the <span>amount</span> and proceed to complete your payment securely.
+                <i class="bi-wallet-fill"></i> You’re about to fund your wallet. Enter the <span>amount</span> and proceed
+                to complete your payment securely.
             </div>
 
             <div class="text_field_container" id="amount_container">
@@ -18,7 +19,8 @@
                         id: 'amount',
                         title: 'Enter Amount',
                         type: 'number',
-                        onKeyPressFunction: 'isNumberCheck(event);'
+                        onKeyPressFunction: 'isNumberCheck(event);',
+                        autocomplete: "off"
                     });
                 </script>
             </div>
@@ -45,7 +47,8 @@
                 </script>
             </div>
 
-            <button class="btn" id="loadWalletBtn" title="Proceed To Load Wallet" onclick="loadBranchWallet(<?php echo $modalLayer ?>);"> PROCEED <i class="bi bi-arrow-right"></i></button>
+            <button class="btn" id="loadWalletBtn" title="Proceed To Load Wallet"
+                onclick="loadBranchWallet(<?php echo $modalLayer ?>);"> PROCEED <i class="bi bi-arrow-right"></i></button>
         </div>
     </div>
 <?php } ?>
@@ -73,14 +76,23 @@
                                 <div class="icon-div"><i class="bi-caret-down"></i></div>
 
                                 <div class="srch-select alert-srch-select">
-                                    <div id="srch-today" onclick="_fetchBranchWalletFiltering('srch-today', 'Today');">Today</div>
-                                    <div id="srch-week" onclick="_fetchBranchWalletFiltering('srch-week', 'This Week');">This Week</div>
-                                    <div id="srch-7" onclick="_fetchBranchWalletFiltering('srch-7', 'Last 7 Days');">Last 7 Days</div>
-                                    <div id="srch-month" onclick="_fetchBranchWalletFiltering('srch-month', 'This Month');">This Month</div>
-                                    <div id="srch-30" onclick="_fetchBranchWalletFiltering('srch-30', 'Last 30 Days');">Last 30 Days</div>
-                                    <div id="srch-90" onclick="_fetchBranchWalletFiltering('srch-90', 'Last 90 Days');">Last 90 Days</div>
-                                    <div id="srch-year" onclick="_fetchBranchWalletFiltering('srch-year', 'This Year');">This Year</div>
-                                    <div id="srch-1year" onclick="_fetchBranchWalletFiltering('srch-1year', 'Last 1 Year');">Last 1 Year</div>
+                                    <div id="srch-today" onclick="_fetchBranchWalletFiltering('srch-today', 'Today');">Today
+                                    </div>
+                                    <div id="srch-week" onclick="_fetchBranchWalletFiltering('srch-week', 'This Week');">
+                                        This Week</div>
+                                    <div id="srch-7" onclick="_fetchBranchWalletFiltering('srch-7', 'Last 7 Days');">Last 7
+                                        Days</div>
+                                    <div id="srch-month" onclick="_fetchBranchWalletFiltering('srch-month', 'This Month');">
+                                        This Month</div>
+                                    <div id="srch-30" onclick="_fetchBranchWalletFiltering('srch-30', 'Last 30 Days');">Last
+                                        30 Days</div>
+                                    <div id="srch-90" onclick="_fetchBranchWalletFiltering('srch-90', 'Last 90 Days');">Last
+                                        90 Days</div>
+                                    <div id="srch-year" onclick="_fetchBranchWalletFiltering('srch-year', 'This Year');">
+                                        This Year</div>
+                                    <div id="srch-1year"
+                                        onclick="_fetchBranchWalletFiltering('srch-1year', 'Last 1 Year');">Last 1 Year
+                                    </div>
                                     <div onclick="wallet_srch_custom('Custom Search')">Custom Search</div>
                                 </div>
                             </div>
@@ -89,17 +101,18 @@
                                 <div class="custom-srch-div branch-wallet-custom-srch-div">
                                     <div class="custom-srch-div-in">
                                         <div class="text_field_container dash_field_container">
-                                            <input class="text_field bar_cust_text_field" type="text" id="wallet-datepickers-from"
-                                                placeholder="" />
+                                            <input class="text_field bar_cust_text_field" type="text"
+                                                id="wallet-datepickers-from" placeholder="" />
                                             <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From
                                             </div>
                                             <div class="issueText" id="issue_wallet-datepickers-from"></div>
                                         </div>
 
                                         <div class="text_field_container dash_field_container">
-                                            <input class="text_field bar_cust_text_field" type="text" id="wallet-datepickers-to"
-                                                placeholder="" />
-                                            <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To </div>
+                                            <input class="text_field bar_cust_text_field" type="text"
+                                                id="wallet-datepickers-to" placeholder="" />
+                                            <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To
+                                            </div>
                                             <div class="issueText" id="issue_wallet-datepickers-to"></div>
                                         </div>
                                         <button type="button" class="btn" id="applyWalletCustomSearchBtn"
@@ -131,11 +144,16 @@
                     </div>
 
                     <div class="alert alert-success top-alert-div animated fadeIn">
-                        <div><i class="bi-info-circle"></i> Wallet history between <span id="dateFrom">Loading...</span> and <span id="dateTo">Loading...</span></div>
+                        <div><i class="bi-info-circle"></i> Wallet history between <span id="dateFrom">Loading...</span> and
+                            <span id="dateTo">Loading...</span>
+                        </div>
 
                         <div class="btn-container">
-                            <button class="btn" title="LOAD WALLET" onclick="_getForm({page: 'branchLoadWalletForm', layer:3,  url: adminPortalLocalUrl});"><i class="bi bi-wallet-fill"></i> LOAD WALLET</button>
-                            <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i>
+                            <button class="btn" title="LOAD WALLET"
+                                onclick="_getForm({page: 'branchLoadWalletForm', layer:3,  url: adminPortalLocalUrl});"><i
+                                    class="bi bi-wallet-fill"></i> LOAD WALLET</button>
+                            <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i
+                                    class="bi-file-earmark-excel"></i>
                                 EXPORT</button>
                         </div>
                     </div>

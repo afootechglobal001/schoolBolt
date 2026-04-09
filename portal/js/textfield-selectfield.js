@@ -9,6 +9,7 @@ function textField(options) {
     readonly = false,
     maxlength = null,
     rows = null,
+    autocomplete = "on",
   } = options;
 
   const isPassword = type === "password";
@@ -21,14 +22,14 @@ function textField(options) {
 		  <div class="issueText" id="issue_${id}"></div>
         `
       : `
-          <input class="text_field" type="${type}" id="${id}" placeholder="" value="${value}"
+          <input class="text_field" type="${type}" id="${id}" placeholder="" value="${value}" autocomplete="${autocomplete}"
             ${onKeyPressFunction ? `onkeypress="${onKeyPressFunction}"` : ""} 
 			${onKeyUpFunction ? `onkeyup="${onKeyUpFunction}"` : ""}
 			${readonly ? "readonly" : ""}
 			${maxlength ? `maxlength="${maxlength}"` : ""}/>
           <div class="placeholder">${title}:</div>
 		  <div class="issueText" id="issue_${id}"></div>
-      ${isPassword ? `<span class="toggle-password" data-target="${id}"><i class='bi bi-eye-fill'></i></span>`: ""}
+      ${isPassword ? `<span class="toggle-password" data-target="${id}"><i class='bi bi-eye-fill'></i></span>` : ""}
     `;
   $("#" + id + "_container").html(template);
 }
@@ -107,34 +108,34 @@ function _clickOption(selectedOption, id, value) {
   selectBoxId = selectedOption.replace("searchList_", "");
   // Clear previous options and set the selected one
   $("#" + selectBoxId).html(
-    `<option selected="selected" value="${id}">${value}</option>`
+    `<option selected="selected" value="${id}">${value}</option>`,
   );
   _selectOption(selectBoxId);
 }
 
 /// Toggle Password Visibility ///
-$(document).on("input", ".text_field[type='password']", function() {
+$(document).on("input", ".text_field[type='password']", function () {
   const icon = $(".toggle-password[data-target='" + this.id + "']");
   if (this.value.length > 0) {
-      icon.show();
+    icon.show();
   } else {
-      icon.hide();
-      $(this).attr("type", "password");
-      icon.find("i").removeClass("bi-eye-slash-fill").addClass("bi-eye-fill");
+    icon.hide();
+    $(this).attr("type", "password");
+    icon.find("i").removeClass("bi-eye-slash-fill").addClass("bi-eye-fill");
   }
 });
 
 // Click the eye icon to show or hide password
-$(document).on("click", ".toggle-password", function() {
+$(document).on("click", ".toggle-password", function () {
   const input = $("#" + $(this).data("target"));
   const icon = $(this).find("i");
 
   if (input.attr("type") === "password") {
-      input.attr("type", "text"); // show password
-      icon.removeClass("bi-eye-fill").addClass("bi-eye-slash-fill");
+    input.attr("type", "text"); // show password
+    icon.removeClass("bi-eye-fill").addClass("bi-eye-slash-fill");
   } else {
-      input.attr("type", "password"); // hide password
-      icon.removeClass("bi-eye-slash-fill").addClass("bi-eye-fill");
+    input.attr("type", "password"); // hide password
+    icon.removeClass("bi-eye-slash-fill").addClass("bi-eye-fill");
   }
 });
 
@@ -172,7 +173,7 @@ function _getSelectStatusId(fieldId, statusIds) {
                 value +
                 "');\">" +
                 value +
-                "</li>"
+                "</li>",
             );
           }
         } else {
@@ -211,7 +212,7 @@ function _getSelectGender(fieldId) {
                 value +
                 "');\">" +
                 value +
-                "</li>"
+                "</li>",
             );
           }
         } else {
@@ -250,7 +251,7 @@ function _getSelectMaritalStatus(fieldId) {
                 value +
                 "');\">" +
                 value +
-                "</li>"
+                "</li>",
             );
           }
         } else {
@@ -289,7 +290,7 @@ function _getSelectTitle(fieldId) {
                 value +
                 "');\">" +
                 value +
-                "</li>"
+                "</li>",
             );
           }
         } else {
@@ -316,7 +317,7 @@ function _getSelectBirthDay(fieldId) {
         value +
         "')\">" +
         value +
-        "</li>"
+        "</li>",
     );
   }
 }
@@ -385,7 +386,7 @@ function _getSelectBirthMonth(fieldId) {
         value +
         "')\">" +
         value +
-        "</li>"
+        "</li>",
     );
   }
 }
@@ -415,7 +416,7 @@ function _getSelectNationality(fieldId) {
                 value +
                 "');\">" +
                 value +
-                "</li>"
+                "</li>",
             );
           }
         } else {
@@ -454,7 +455,7 @@ function _getSelectGeneralState(fieldId) {
                 value +
                 "'); _fetchGeneralStateLga()\">" +
                 value +
-                "</li>"
+                "</li>",
             );
           }
         } else {
@@ -498,7 +499,7 @@ function _getSelectGeneralLga(fieldId) {
                 value +
                 "')\">" +
                 value +
-                "</li>"
+                "</li>",
             );
           }
         } else {
@@ -537,7 +538,7 @@ function _getSelectReportType(fieldId) {
                 value +
                 "');\">" +
                 value +
-                "</li>"
+                "</li>",
             );
           }
         } else {
@@ -576,7 +577,7 @@ function _getSelectTermId(fieldId) {
                 value +
                 "');\">" +
                 value +
-                "</li>"
+                "</li>",
             );
           }
         } else {
@@ -615,7 +616,7 @@ function _getSelectAccountSession(fieldId) {
                 value +
                 "');\">" +
                 value +
-                "</li>"
+                "</li>",
             );
           }
         } else {

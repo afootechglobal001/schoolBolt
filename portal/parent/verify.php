@@ -14,15 +14,15 @@
     <?php include 'alert.php' ?>
     <section class="login-session">
         <script>
-        $(document).ready(function() {
-            let parentProceedLoginSession = JSON.parse(localStorage.getItem("parentProceedLoginSession"));
-            if (!parentProceedLoginSession) {
-                window.location.href = parentLoginUrl;
-            }
+            $(document).ready(function () {
+                let parentProceedLoginSession = JSON.parse(localStorage.getItem("parentProceedLoginSession"));
+                if (!parentProceedLoginSession) {
+                    window.location.href = parentLoginUrl;
+                }
 
-            $("#parentFullname").html(parentProceedLoginSession.parentFullname);
-            $("#email").html(parentProceedLoginSession.email);
-        });
+                $("#parentFullname").html(parentProceedLoginSession.parentFullname);
+                $("#email").html(parentProceedLoginSession.email);
+            });
         </script>
         <div class="login-div">
             <header class="animated fadeInDown">
@@ -57,12 +57,13 @@
 
                         <div class="text_field_container" id="otp_container">
                             <script>
-                            textField({
-                                id: 'otp',
-                                title: 'Enter OTP',
-                                type: 'number',
-                                onKeyPressFunction: 'isNumberCheck(event);'
-                            });
+                                textField({
+                                    id: 'otp',
+                                    title: 'Enter OTP',
+                                    type: 'number',
+                                    onKeyPressFunction: 'isNumberCheck(event);',
+                                    autocomplete: "off"
+                                });
                             </script>
                         </div>
 
@@ -80,7 +81,7 @@
 
                 </div>
                 <script>
-                _counDownOtp(180)
+                    _counDownOtp(180)
                 </script>
             </div>
         </div>
