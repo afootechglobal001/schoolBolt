@@ -1,7 +1,8 @@
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
 <?php if ($page == 'branches') { ?>
-    <div class="page-title-back-div other-pages-title-back-div adjusted-title-back-div" data-aos="fade-in" data-aos-duration="1500">
+    <div class="page-title-back-div other-pages-title-back-div adjusted-title-back-div" data-aos="fade-in"
+        data-aos-duration="1500">
         <div class="page-title-div other-pages-title-div">
             <div class="main-title title"><i class="bi-diagram-3"></i> <strong>Branches</strong></div>
             <div class="other-pg-statistics-container" id="statusContent"></div>
@@ -298,7 +299,7 @@
                     </div>
 
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const schoolLogo = getEachBranchDetailsSession.schoolLogo;
                             const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` :
                                 "<?php echo $websiteUrl ?>/images/portal-logo.jpg";
@@ -345,7 +346,7 @@
                                 </div>
 
                                 <script>
-                                    $(document).ready(function() {
+                                    $(document).ready(function () {
                                         const statusName = getEachBranchDetailsSession.statusName;
                                         $("#statusName").html(statusName);
                                         $("#statusBtn").addClass(statusName);
@@ -499,11 +500,11 @@
                             }
                             // if (userRoles.canViewBranchActivities) {
                             //     $('#branchNavUl').append(`
-                            //     <li class="hide-li" title="Branch Activities" id="branch_activities"
-                            //         onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});">
-                            //         <i class="bi-bell"></i> Activities
-                            //     </li>
-                            // `);
+                        //     <li class="hide-li" title="Branch Activities" id="branch_activities"
+                        //         onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});">
+                        //         <i class="bi-bell"></i> Activities
+                        //     </li>
+                        // `);
                             // }
                         </script>
 
@@ -639,11 +640,11 @@
                                     }
                                     //         if (userRoles.canViewBranchActivities) {
                                     //             $('#branchNavUlMobile').append(`
-                                    //     <li title="Branch Activities"
-                                    //         onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});">
-                                    //         <i class="bi-bell"></i> <span>Activities</span>
-                                    //     </li>
-                                    // `);
+                                //     <li title="Branch Activities"
+                                //         onclick="_getActiveBranchPage({divid:'branch_activities', page: 'branch_activities', url: adminPortalLocalUrl});">
+                                //         <i class="bi-bell"></i> <span>Activities</span>
+                                //     </li>
+                                // `);
                                     //         }
                                 </script>
                             </ul>
@@ -834,7 +835,7 @@
 
                         <div id="chartContainer" style="width:100%; height:300px; margin:auto;"></div>
                         <script>
-                            $(document).ready(function() {
+                            $(document).ready(function () {
                                 var chart = new CanvasJS.Chart("chartContainer", {
                                     animationEnabled: true,
                                     theme: "light2",
@@ -932,13 +933,13 @@
                                             //         y: 270000
                                             //     },
                                         ]
-                                    }, ]
+                                    },]
 
                                 });
                                 chart.render();
 
                                 function toogleDataSeries(e) {
-                                    if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                                    if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
                                         e.dataSeries.visible = false;
                                     } else {
                                         e.dataSeries.visible = true;
@@ -963,7 +964,8 @@
                     <div class="wallet-wrapper">
                         <div class="wallet-instruction">
                             <p>
-                                Click <strong>"Load Wallet"</strong>, enter your amount, and complete the payment. Your wallet will be credited instantly for school use.
+                                Click <strong>"Load Wallet"</strong>, enter your amount, and complete the payment. Your
+                                wallet will be credited instantly for school use.
                             </p>
                         </div>
 
@@ -975,8 +977,12 @@
                             </div>
 
                             <div class="btn-div">
-                                <button class="btn" title="Load Wallet" onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i class="bi bi-wallet-fill"></i> Load Wallet</button>
-                                <button class="btn view-wallet" title="View Wallet History" onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});"><i class="bi bi-eye"></i> View Wallet History</button>
+                                <button class="btn" title="Load Wallet"
+                                    onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i
+                                        class="bi bi-wallet-fill"></i> Load Wallet</button>
+                                <button class="btn view-wallet" title="View Wallet History"
+                                    onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});"><i
+                                        class="bi bi-eye"></i> View Wallet History</button>
                             </div>
                         </div>
                     </div>
@@ -1004,17 +1010,17 @@
                                 indexLabel: "{label} ({y})",
                                 yValueFormatString: "#,##0.#" % "",
                                 dataPoints: [{
-                                        label: "Debit/Credit Card",
-                                        y: 3
-                                    },
-                                    {
-                                        label: "Wallet",
-                                        y: 2
-                                    },
-                                    {
-                                        label: "Bank Transfer",
-                                        y: 11
-                                    },
+                                    label: "Debit/Credit Card",
+                                    y: 3
+                                },
+                                {
+                                    label: "Wallet",
+                                    y: 2
+                                },
+                                {
+                                    label: "Bank Transfer",
+                                    y: 11
+                                },
                                 ]
                             }]
                         };
@@ -1024,7 +1030,7 @@
             </div>
         </div>
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 _fetchBranchDashboardStatistics();
                 _fetchBranchRevenueFiltering('srch-30', 'Last 30 Days');
             });
@@ -1057,8 +1063,7 @@
             </div>
         </div>
 
-        <div class="new-statistics-div" title="Subjects"
-            onclick="_fetchBranchDepartment();">
+        <div class="new-statistics-div" title="Subjects" onclick="_fetchBranchDepartment();">
             <div class="statistics-inner-div">
                 <div class="statistics-text">
                     <p>Departments</p>
@@ -1069,9 +1074,7 @@
             </div>
         </div>
 
-        <div class="new-statistics-div" id="branch_department_class"
-            onclick=""
-            title="Class">
+        <div class="new-statistics-div" id="branch_department_class" onclick="" title="Class">
             <div class="statistics-inner-div">
                 <div class="statistics-text">
                     <p>Alumni</p>
@@ -1083,7 +1086,7 @@
         </div>
     </div>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             _fetchBranchDashboardStatistics();
         });
     </script>
@@ -1186,7 +1189,7 @@
 
                         <div id="chartContainer" style="width:100%; height:300px; margin:auto;"></div>
                         <script>
-                            $(document).ready(function() {
+                            $(document).ready(function () {
                                 var chart = new CanvasJS.Chart("chartContainer", {
                                     animationEnabled: true,
                                     theme: "light2",
@@ -1284,13 +1287,13 @@
                                             //         y: 270000
                                             //     },
                                         ]
-                                    }, ]
+                                    },]
 
                                 });
                                 chart.render();
 
                                 function toogleDataSeries(e) {
-                                    if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                                    if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
                                         e.dataSeries.visible = false;
                                     } else {
                                         e.dataSeries.visible = true;
@@ -1315,7 +1318,8 @@
                     <div class="wallet-wrapper">
                         <div class="wallet-instruction">
                             <p>
-                                Click <strong>"Load Wallet"</strong>, enter your amount, and complete the payment. Your wallet will be credited instantly for school use.
+                                Click <strong>"Load Wallet"</strong>, enter your amount, and complete the payment. Your
+                                wallet will be credited instantly for school use.
                             </p>
                         </div>
 
@@ -1327,8 +1331,12 @@
                             </div>
 
                             <div class="btn-div">
-                                <button class="btn" title="Load Wallet" onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i class="bi bi-wallet-fill"></i> Load Wallet</button>
-                                <button class="btn view-wallet" title="View Wallet History" onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});"><i class="bi bi-eye"></i> View Wallet History</button>
+                                <button class="btn" title="Load Wallet"
+                                    onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i
+                                        class="bi bi-wallet-fill"></i> Load Wallet</button>
+                                <button class="btn view-wallet" title="View Wallet History"
+                                    onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});"><i
+                                        class="bi bi-eye"></i> View Wallet History</button>
                             </div>
                         </div>
                     </div>
@@ -1356,17 +1364,17 @@
                                 indexLabel: "{label} ({y})",
                                 yValueFormatString: "#,##0.#" % "",
                                 dataPoints: [{
-                                        label: "Debit/Credit Card",
-                                        y: 3
-                                    },
-                                    {
-                                        label: "Wallet",
-                                        y: 2
-                                    },
-                                    {
-                                        label: "Bank Transfer",
-                                        y: 11
-                                    },
+                                    label: "Debit/Credit Card",
+                                    y: 3
+                                },
+                                {
+                                    label: "Wallet",
+                                    y: 2
+                                },
+                                {
+                                    label: "Bank Transfer",
+                                    y: 11
+                                },
                                 ]
                             }]
                         };
@@ -1377,7 +1385,7 @@
         </div>
 
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 _fetchBranchDashboardStatistics();
                 _fetchBranchRevenueFiltering('srch-30', 'Last 30 Days');
             });
@@ -1427,7 +1435,8 @@
             </div>
         </div>
 
-        <div class="user-managment-list staff-managment-list" onclick="_getActiveBranchPage({divid:'classTeachersCommentPage', page: 'classTeachersCommentPage', url: adminPortalLocalUrl});">
+        <div class="user-managment-list staff-managment-list"
+            onclick="_getActiveBranchPage({divid:'classTeachersCommentPage', page: 'classTeachersCommentPage', url: adminPortalLocalUrl});">
             <div class="inner-div">
                 <div class="icon-div">
                     <img src="<?php echo $websiteUrl ?>/images/timetable.png" alt="Class Teacher's Comment" />
@@ -1684,7 +1693,7 @@
 
             <div class="text_field_container col-1" id="schoolResumptionDate_container">
                 <script>
-                    $(document).ready(function() {
+                    $(document).ready(function () {
                         const bdate = getEachBranchDetailsSession?.schoolResumptionDate || '';
 
                         function formatDateForInput(date) {
@@ -1838,8 +1847,7 @@
     <div class="main-alert-div">
         <div class="system-alert" id="" onclick="_getSecondaryFormWithId('staff_alert_read');">
             <div class="alert-name"><i class="bi-person"></i> Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
-                                                                                            ?>viewed"><i
-                        class="bi-check"></i></span></div>
+                ?>viewed"><i class="bi-check"></i></span></div>
             <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...
             </div>
             <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
@@ -1847,8 +1855,7 @@
 
         <div class="system-alert" id="" onClick="_get_form_with_id()">
             <div class="alert-name"><i class="bi-person"></i> Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
-                                                                                            ?>viewed"><i
-                        class="bi-check"></i></span></div>
+                ?>viewed"><i class="bi-check"></i></span></div>
             <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...
             </div>
             <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
@@ -1856,8 +1863,7 @@
 
         <div class="system-alert" id="" onClick="_get_form_with_id()">
             <div class="alert-name"><i class="bi-person"></i> Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
-                                                                                            ?>viewed"><i
-                        class="bi-check"></i></span></div>
+                ?>viewed"><i class="bi-check"></i></span></div>
             <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...
             </div>
             <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
@@ -1865,8 +1871,7 @@
 
         <div class="system-alert" id="" onClick="_get_form_with_id()">
             <div class="alert-name"><i class="bi-person"></i> Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
-                                                                                            ?>viewed"><i
-                        class="bi-check"></i></span></div>
+                ?>viewed"><i class="bi-check"></i></span></div>
             <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...
             </div>
             <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
@@ -1874,8 +1879,7 @@
 
         <div class="system-alert" id="" onClick="_get_form_with_id()">
             <div class="alert-name"><i class="bi-person"></i> Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
-                                                                                            ?>viewed"><i
-                        class="bi-check"></i></span></div>
+                ?>viewed"><i class="bi-check"></i></span></div>
             <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...
             </div>
             <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
@@ -1883,8 +1887,7 @@
 
         <div class="system-alert" id="" onClick="_get_form_with_id()">
             <div class="alert-name"><i class="bi-person"></i> Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
-                                                                                            ?>viewed"><i
-                        class="bi-check"></i></span></div>
+                ?>viewed"><i class="bi-check"></i></span></div>
             <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...
             </div>
             <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
@@ -1914,7 +1917,7 @@
                             <span> UPDATE DEPARTMENT TO <span id="branchName"></span> BRANCH</span>
                         </div>
                         <script>
-                            $(document).ready(function() {
+                            $(document).ready(function () {
                                 $("#branchName, #branchName2").html(getBranchDepartmentSession.branchName);
                             });
                         </script>
@@ -1926,7 +1929,7 @@
                     </div>
 
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             var getBranchDepartmentSession = JSON.parse(sessionStorage.getItem(
                                 "getBranchDepartmentSession"));
                             let text = '';
@@ -2008,7 +2011,8 @@
         <span><i class="bi-credit-card"></i> BRANCH FEES CATEGORY</span>
 
         <div class="btn-container">
-            <button class="btn" title="PRINT FEES" id="printFeesSettingsBtn" onclick="_printBranchFeesSettings();"><i class="bi-printer"></i> PRINT
+            <button class="btn" title="PRINT FEES" id="printFeesSettingsBtn" onclick="_printBranchFeesSettings();"><i
+                    class="bi-printer"></i> PRINT
                 FEES</button>
             <button class="btn" title="ADD FEES"
                 onclick="sessionStorage.removeItem('getEachEachFeesSettings'); _getForm({page: 'branch_fees_reg', layer:2, url: adminPortalLocalUrl});"><i
@@ -2059,7 +2063,7 @@
 
                 <div class="text_field_container" id="feesOption_container">
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const fetchedOption = getEachEachFeesSettings?.feesOption;
                             selectField({
                                 id: 'feesOption',
@@ -2179,7 +2183,7 @@
 
                         <div class="segmentList" id="fetchedFeeTextbox">
                             <script>
-                                $(document).ready(function() {
+                                $(document).ready(function () {
                                     let getEachFeeComputeGeneral = JSON.parse(sessionStorage.getItem(
                                         "getEachFeeComputeGeneral"));
 
@@ -2202,7 +2206,8 @@
                                                     id: feesId,
                                                     title: 'AMOUNT (<s>N</s>)',
                                                     type: 'number',
-                                                    value: amount
+                                                    value: amount,
+                                                    autocomplete: "off"
                                                 });
                                             }
                                         }
@@ -2282,7 +2287,8 @@
                             id: 'assessmentTotalScore',
                             title: 'Total Assessment Score',
                             type: 'number',
-                            value: fetchEachAssessmentSession?.assessmentTotalScore ?? ''
+                            value: fetchEachAssessmentSession?.assessmentTotalScore ?? '',
+                            autocomplete: "off"
                         });
                     </script>
                 </div>
@@ -2359,7 +2365,7 @@
                         <span>Assessment Breakdown Summary</span>
                         <div class="alert-list-div" id="fetchedAssessmentBreakDown">
                             <script>
-                                $(document).ready(function() {
+                                $(document).ready(function () {
                                     let text = '';
 
                                     if (fetchAssessmentBreakdownSession) {
@@ -2532,7 +2538,7 @@
                     </div>
 
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const schoolLogo = getViewResultSummarySession?.branchData?.schoolLogo;
                             const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` :
                                 "<?php echo $websiteUrl ?>/images/report/icon.png";
@@ -2625,7 +2631,7 @@
                     <div class="table-div animated fadeIn">
                         <table class="table" cellspacing="0" style="width:100%" id="resultSumamryPageContent">
                             <script>
-                                $(document).ready(function() {
+                                $(document).ready(function () {
                                     const getViewResultSummarySession = JSON.parse(sessionStorage.getItem(
                                         "getViewResultSummarySession"));
                                     if (!getViewResultSummarySession) return;
@@ -2672,16 +2678,20 @@
                                             return;
                                         }
 
-                                        const titleWords = normalizeWords(title).map(w => w.replace(/['s]+$/g, '').replace(/s$/, '')); // remove plurals & possessives
+                                        const titleWords = normalizeWords(title).map(w => w.replace(/['s]+$/g,
+                                            '').replace(/s$/, '')); // remove plurals & possessives
                                         let bestMatch = null;
                                         let bestMatchScore = 0;
 
                                         summaryFields.forEach(field => {
-                                            const fieldWords = normalizeWords(field).map(w => w.replace(/['s]+$/g, '').replace(/s$/, ''));
-                                            const overlapCount = titleWords.filter(word => fieldWords.includes(word)).length;
+                                            const fieldWords = normalizeWords(field).map(w => w.replace(
+                                                /['s]+$/g, '').replace(/s$/, ''));
+                                            const overlapCount = titleWords.filter(word => fieldWords
+                                                .includes(word)).length;
 
                                             // Compute a ratio of overlap instead of a fixed score
-                                            const similarity = overlapCount / Math.max(titleWords.length, fieldWords.length);
+                                            const similarity = overlapCount / Math.max(titleWords
+                                                .length, fieldWords.length);
 
                                             if (similarity > bestMatchScore) {
                                                 bestMatch = field;
@@ -2694,9 +2704,11 @@
                                             scoreMap[title] = scoreMap[bestMatch];
                                         } else if (!scoreMap[title]) {
                                             // lowercase direct match fallback (handles remark vs remarks)
-                                            const lowerTitle = title.toLowerCase().replace(/['s]+$/g, '').replace(/s$/, '');
+                                            const lowerTitle = title.toLowerCase().replace(/['s]+$/g, '')
+                                                .replace(/s$/, '');
                                             const fieldMatch = summaryFields.find(field =>
-                                                field.toLowerCase().replace(/['s]+$/g, '').replace(/s$/, '') === lowerTitle
+                                                field.toLowerCase().replace(/['s]+$/g, '').replace(/s$/,
+                                                    '') === lowerTitle
                                             );
                                             if (fieldMatch) {
                                                 scoreMap[title] = scoreMap[fieldMatch];
@@ -2746,8 +2758,11 @@
 
                                         for (let i = 2; i < tableTitles.length; i++) {
                                             const title = tableTitles[i];
-                                            const score = scoreMap[title] && scoreMap[title][student.studentId] ? scoreMap[title][student.studentId] : '';
-                                            if (score === null || score === "null" || score === undefined) score = '';
+                                            const score = scoreMap[title] && scoreMap[title][student
+                                                .studentId
+                                            ] ? scoreMap[title][student.studentId] : '';
+                                            if (score === null || score === "null" || score === undefined)
+                                                score = '';
                                             row.append($('<td class="td"></td>').text(score));
                                         }
 
@@ -2799,7 +2814,7 @@
                     </div>
 
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const schoolLogo = getViewTerminalResultSummarySession?.branchData?.schoolLogo;
                             const logoUrl = schoolLogo ? `${schoolLogoPixPath}/${schoolLogo}` :
                                 "<?php echo $websiteUrl ?>/images/report/icon.png";
@@ -2882,8 +2897,9 @@
 
                         <div class="btn-container">
                             <script>
-                                $(document).ready(function() {
-                                    const schoolCategoryId = getViewTerminalResultSummarySession?.branchData?.schoolCategoryId;
+                                $(document).ready(function () {
+                                    const schoolCategoryId = getViewTerminalResultSummarySession?.branchData
+                                        ?.schoolCategoryId;
                                     // Hide by default
                                     $("#progressReportBtn").hide();
 
@@ -2898,17 +2914,18 @@
                                 onclick="_printTerminalResultSummary();"><i class="bi-printer"></i>TERMINAL RESULT
                                 SUMMARY</button>
                             <button class="btn" title="PRINT ALL TERMINAL RESULT" id="printAllTerminalBtn"
-                                onclick="_printAllStudentTerminalResult();"><i
-                                    class="bi-printer"></i> ALL TERMINAL RESULT</button>
+                                onclick="_printAllStudentTerminalResult();"><i class="bi-printer"></i> ALL TERMINAL
+                                RESULT</button>
                             <button class="btn" title="PROGRESS REPORT" id="progressReportBtn"
-                                onclick="_printAllStudentProgressReport();"><i class="bi-printer"></i> PROGRESS REPORT</button>
+                                onclick="_printAllStudentProgressReport();"><i class="bi-printer"></i> PROGRESS
+                                REPORT</button>
                         </div>
                     </div>
 
                     <div class="table-div animated fadeIn">
                         <table class="table" cellspacing="0" style="width:100%" id="terminalResultSumamryPageContent">
                             <script>
-                                $(document).ready(function() {
+                                $(document).ready(function () {
                                     const getViewTerminalResultSummarySession = JSON.parse(sessionStorage.getItem(
                                         "getViewTerminalResultSummarySession"));
                                     if (!getViewTerminalResultSummarySession) return;
@@ -2955,16 +2972,20 @@
                                             return;
                                         }
 
-                                        const titleWords = normalizeWords(title).map(w => w.replace(/['s]+$/g, '').replace(/s$/, '')); // remove plurals & possessives
+                                        const titleWords = normalizeWords(title).map(w => w.replace(/['s]+$/g,
+                                            '').replace(/s$/, '')); // remove plurals & possessives
                                         let bestMatch = null;
                                         let bestMatchScore = 0;
 
                                         summaryFields.forEach(field => {
-                                            const fieldWords = normalizeWords(field).map(w => w.replace(/['s]+$/g, '').replace(/s$/, ''));
-                                            const overlapCount = titleWords.filter(word => fieldWords.includes(word)).length;
+                                            const fieldWords = normalizeWords(field).map(w => w.replace(
+                                                /['s]+$/g, '').replace(/s$/, ''));
+                                            const overlapCount = titleWords.filter(word => fieldWords
+                                                .includes(word)).length;
 
                                             // Compute a ratio of overlap instead of a fixed score
-                                            const similarity = overlapCount / Math.max(titleWords.length, fieldWords.length);
+                                            const similarity = overlapCount / Math.max(titleWords
+                                                .length, fieldWords.length);
 
                                             if (similarity > bestMatchScore) {
                                                 bestMatch = field;
@@ -2977,9 +2998,11 @@
                                             scoreMap[title] = scoreMap[bestMatch];
                                         } else if (!scoreMap[title]) {
                                             // lowercase direct match fallback (handles remark vs remarks)
-                                            const lowerTitle = title.toLowerCase().replace(/['s]+$/g, '').replace(/s$/, '');
+                                            const lowerTitle = title.toLowerCase().replace(/['s]+$/g, '')
+                                                .replace(/s$/, '');
                                             const fieldMatch = summaryFields.find(field =>
-                                                field.toLowerCase().replace(/['s]+$/g, '').replace(/s$/, '') === lowerTitle
+                                                field.toLowerCase().replace(/['s]+$/g, '').replace(/s$/,
+                                                    '') === lowerTitle
                                             );
                                             if (fieldMatch) {
                                                 scoreMap[title] = scoreMap[fieldMatch];
@@ -3030,8 +3053,11 @@
 
                                         for (let i = 2; i < tableTitles.length; i++) {
                                             const title = tableTitles[i];
-                                            const score = scoreMap[title] && scoreMap[title][student.studentId] ? scoreMap[title][student.studentId] : '';
-                                            if (score === null || score === "null" || score === undefined) score = '';
+                                            const score = scoreMap[title] && scoreMap[title][student
+                                                .studentId
+                                            ] ? scoreMap[title][student.studentId] : '';
+                                            if (score === null || score === "null" || score === undefined)
+                                                score = '';
                                             row.append($('<td class="td"></td>').text(score));
                                         }
 
@@ -3150,7 +3176,7 @@
                     </div>
 
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const settingSchoolLogo = getEachBranchDetailsSession.schoolLogo;
                             const settingLogoUrl = settingSchoolLogo ?
                                 "<?php echo $websiteUrl ?>/uploaded_files/branchLogo/" + settingSchoolLogo :
@@ -3174,7 +3200,7 @@
                     </div>
 
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const settingPrincipalSignature = getEachBranchDetailsSession.principalSignature;
                             const settingSignature = settingPrincipalSignature ?
                                 "<?php echo $websiteUrl ?>/uploaded_files/branchPrincipalSignature/" +
@@ -3197,10 +3223,12 @@
                     </div>
 
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const resultHeader = getEachBranchDetailsSession.midTermResultHeader;
-                            const resultHeaderUrl = resultHeader ? `${midTermResultHeaderPixPath}/${resultHeader}` : "<?php echo $websiteUrl ?>/images/sample.jpg";
-                            $("#midTermResultHeaderPreviewPix").attr("src", resultHeaderUrl).attr("alt", getEachBranchDetailsSession.name + "Mid Term Header");
+                            const resultHeaderUrl = resultHeader ? `${midTermResultHeaderPixPath}/${resultHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+                            $("#midTermResultHeaderPreviewPix").attr("src", resultHeaderUrl).attr("alt",
+                                getEachBranchDetailsSession.name + "Mid Term Header");
                         });
                     </script>
                 </label>
@@ -3216,10 +3244,13 @@
                     </div>
 
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const caResultHeader = getEachBranchDetailsSession.caResultSummaryHeader;
-                            const caResultHeaderUrl = caResultHeader ? `${midTermResultHeaderPixPath}/${caResultHeader}` : "<?php echo $websiteUrl ?>/images/sample.jpg";
-                            $("#caResultSummaryHeaderPreviewPix").attr("src", caResultHeaderUrl).attr("alt", getEachBranchDetailsSession.name + "CA Result Summary");
+                            const caResultHeaderUrl = caResultHeader ?
+                                `${midTermResultHeaderPixPath}/${caResultHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+                            $("#caResultSummaryHeaderPreviewPix").attr("src", caResultHeaderUrl).attr("alt",
+                                getEachBranchDetailsSession.name + "CA Result Summary");
                         });
                     </script>
                 </label>
@@ -3235,7 +3266,7 @@
                     </div>
 
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const caBroadSheetHeader = getEachBranchDetailsSession?.caBroadSheetHeader;
                             const caBroadSheetHeaderUrl = caBroadSheetHeader ?
                                 `${midTermResultHeaderPixPath}/${caBroadSheetHeader}` :
@@ -3259,7 +3290,7 @@
                     </div>
 
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const terminalBroadSheetHeader = getEachBranchDetailsSession?.terminalBroadSheetHeader;
                             const terminalBroadSheetHeaderUrl = terminalBroadSheetHeader ?
                                 `${terminalBroadSheetHeaderPixPath}/${terminalBroadSheetHeader}` :
@@ -3276,13 +3307,14 @@
                 <div class="title">UPLOAD CLASS LIST HEADER: <i>(PNG FORMAT ONLY)</i></div>
                 <label>
                     <div class="pix-div">
-                        <img id="classListHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <img id="classListHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg"
+                            alt="Default Image">
                         <input type="file" id="classListHeader" style="display:none"
                             accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
                             onchange="classListHeaderPreviewPix.UpdatePreview(this);" />
                     </div>
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const classListHeader = getEachBranchDetailsSession?.classListHeader;
                             const classListHeaderUrl = classListHeader ?
                                 `${classListHeaderPixPath}/${classListHeader}` :
@@ -3299,13 +3331,14 @@
                 <div class="title">UPLOAD CUMMULATIVE MARK BOOK HEADER: <i>(PNG FORMAT ONLY)</i></div>
                 <label>
                     <div class="pix-div">
-                        <img id="cummulativeMarkBookHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <img id="cummulativeMarkBookHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg"
+                            alt="Default Image">
                         <input type="file" id="cummulativeMarkBookHeader" style="display:none"
                             accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
                             onchange="cummulativeMarkBookHeaderPreviewPix.UpdatePreview(this);" />
                     </div>
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const cummulativeMarkBookHeader = getEachBranchDetailsSession?.cummulativeMarkBookHeader;
                             const cummulativeMarkBookHeaderUrl = cummulativeMarkBookHeader ?
                                 `${cummulativeMarkBookHeaderPixPath}/${cummulativeMarkBookHeader}` :
@@ -3322,13 +3355,14 @@
                 <div class="title">UPLOAD MARK BOOK HEADER: <i>(PNG FORMAT ONLY)</i></div>
                 <label>
                     <div class="pix-div">
-                        <img id="markBookHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <img id="markBookHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg"
+                            alt="Default Image">
                         <input type="file" id="markBookHeader" style="display:none"
                             accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
                             onchange="markBookHeaderPreviewPix.UpdatePreview(this);" />
                     </div>
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const markBookHeader = getEachBranchDetailsSession?.markBookHeader;
                             const markBookHeaderUrl = markBookHeader ?
                                 `${markBookHeaderPixPath}/${markBookHeader}` :
@@ -3345,13 +3379,14 @@
                 <div class="title">UPLOAD PROGRESS REPORT HEADER: <i>(PNG FORMAT ONLY)</i></div>
                 <label>
                     <div class="pix-div">
-                        <img id="progressReportHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <img id="progressReportHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg"
+                            alt="Default Image">
                         <input type="file" id="progressReportHeader" style="display:none"
                             accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
                             onchange="progressReportHeaderPreviewPix.UpdatePreview(this);" />
                     </div>
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const progressReportHeader = getEachBranchDetailsSession?.progressReportHeader;
                             const progressReportHeaderUrl = progressReportHeader ?
                                 `${progressReportHeaderPixPath}/${progressReportHeader}` :
@@ -3368,13 +3403,14 @@
                 <div class="title">UPLOAD SCORE SHEET HEADER: <i>(PNG FORMAT ONLY)</i></div>
                 <label>
                     <div class="pix-div">
-                        <img id="scoreSheetHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <img id="scoreSheetHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg"
+                            alt="Default Image">
                         <input type="file" id="scoreSheetHeader" style="display:none"
                             accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
                             onchange="scoreSheetHeaderPreviewPix.UpdatePreview(this);" />
                     </div>
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const scoreSheetHeader = getEachBranchDetailsSession?.scoreSheetHeader;
                             const scoreSheetHeaderUrl = scoreSheetHeader ?
                                 `${scoreSheetHeaderPixPath}/${scoreSheetHeader}` :
@@ -3391,13 +3427,14 @@
                 <div class="title">UPLOAD STUDENT LIST HEADER: <i>(PNG FORMAT ONLY)</i></div>
                 <label>
                     <div class="pix-div">
-                        <img id="studentListHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <img id="studentListHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg"
+                            alt="Default Image">
                         <input type="file" id="studentListHeader" style="display:none"
                             accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
                             onchange="studentListHeaderPreviewPix.UpdatePreview(this);" />
                     </div>
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const studentListHeader = getEachBranchDetailsSession?.studentListHeader;
                             const studentListHeaderUrl = studentListHeader ?
                                 `${studentListHeaderPixPath}/${studentListHeader}` :
@@ -3414,13 +3451,14 @@
                 <div class="title">UPLOAD SUBJECT LIST HEADER: <i>(PNG FORMAT ONLY)</i></div>
                 <label>
                     <div class="pix-div">
-                        <img id="subjectListHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <img id="subjectListHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg"
+                            alt="Default Image">
                         <input type="file" id="subjectListHeader" style="display:none"
                             accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
                             onchange="subjectListHeaderPreviewPix.UpdatePreview(this);" />
                     </div>
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const subjectListHeader = getEachBranchDetailsSession?.subjectListHeader;
                             const subjectListHeaderUrl = subjectListHeader ?
                                 `${subjectListHeaderPixPath}/${subjectListHeader}` :
@@ -3437,14 +3475,16 @@
                 <div class="title">UPLOAD TERMINAL RESULT SUMMARY HEADER: <i>(PNG FORMAT ONLY)</i></div>
                 <label>
                     <div class="pix-div">
-                        <img id="terminalResultSummaryHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <img id="terminalResultSummaryHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg"
+                            alt="Default Image">
                         <input type="file" id="terminalResultSummaryHeader" style="display:none"
                             accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
                             onchange="terminalResultSummaryHeaderPreviewPix.UpdatePreview(this);" />
                     </div>
                     <script>
-                        $(document).ready(function() {
-                            const terminalResultSummaryHeader = getEachBranchDetailsSession?.terminalResultSummaryHeader;
+                        $(document).ready(function () {
+                            const terminalResultSummaryHeader = getEachBranchDetailsSession
+                                ?.terminalResultSummaryHeader;
                             const terminalResultSummaryHeaderUrl = terminalResultSummaryHeader ?
                                 `${terminalResultSummaryHeaderPixPath}/${terminalResultSummaryHeader}` :
                                 "<?php echo $websiteUrl ?>/images/sample.jpg";
@@ -3460,13 +3500,14 @@
                 <div class="title">UPLOAD TERMINAL RESULT HEADER: <i>(PNG FORMAT ONLY)</i></div>
                 <label>
                     <div class="pix-div">
-                        <img id="terminalResultHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <img id="terminalResultHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg"
+                            alt="Default Image">
                         <input type="file" id="terminalResultHeader" style="display:none"
                             accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
                             onchange="terminalResultHeaderPreviewPix.UpdatePreview(this);" />
                     </div>
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const terminalResultHeader = getEachBranchDetailsSession?.terminalResultHeader;
                             const terminalResultHeaderUrl = terminalResultHeader ?
                                 `${terminalResultHeaderPixPath}/${terminalResultHeader}` :
@@ -3489,7 +3530,7 @@
                             onchange="watermarkPreviewPix.UpdatePreview(this);" />
                     </div>
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             const watermark = getEachBranchDetailsSession?.watermark;
                             const watermarkUrl = watermark ?
                                 `${watermarkPixPath}/${watermark}` :
@@ -3547,7 +3588,8 @@
                 </div>
                 <div class="text-div">
                     <h3>Student Profile</h3>
-                    <p>Access and manage detailed student information, including personal, academic, and contact records.</p>
+                    <p>Access and manage detailed student information, including personal, academic, and contact records.
+                    </p>
                 </div>
             </div>
         </div>
@@ -3679,14 +3721,16 @@
             </div>
         </div> -->
 
-        <div class="user-managment-list staff-managment-list" title="SchoolBolt Wallet History" onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});">
+        <div class="user-managment-list staff-managment-list" title="SchoolBolt Wallet History"
+            onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});">
             <div class="inner-div">
                 <div class="icon-div">
                     <img src="<?php echo $websiteUrl ?>/images/wallet.png" alt="SchoolBolt Wallet History" />
                 </div>
                 <div class="text-div">
                     <h3>SchoolBolt Wallet History</h3>
-                    <p>View your wallet transaction history and keep track of all deposits, payments, and wallet activity.</p>
+                    <p>View your wallet transaction history and keep track of all deposits, payments, and wallet activity.
+                    </p>
                 </div>
             </div>
         </div>
@@ -3698,8 +3742,12 @@
     <div class="nav-content-back-div">
         <div class="nav-container">
             <ul>
-                <li class="active border" title="Male" id="malePage" onclick="_getActiveCommentNav({divid:'malePage', page: 'malePage', url: adminPortalLocalUrl});"><i class="bi-gender-male"></i> Male</li>
-                <li title="Female" id="femalePage" onclick="_getActiveCommentNav({divid:'femalePage', page: 'femalePage', url: adminPortalLocalUrl});"><i class="bi-gender-female"></i> Female</li>
+                <li class="active border" title="Male" id="malePage"
+                    onclick="_getActiveCommentNav({divid:'malePage', page: 'malePage', url: adminPortalLocalUrl});"><i
+                        class="bi-gender-male"></i> Male</li>
+                <li title="Female" id="femalePage"
+                    onclick="_getActiveCommentNav({divid:'femalePage', page: 'femalePage', url: adminPortalLocalUrl});"><i
+                        class="bi-gender-female"></i> Female</li>
             </ul>
         </div>
 
@@ -3884,7 +3932,7 @@
         </div>
     </div>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             const gender = sessionStorage.getItem("activeGender");
             $("#genderDisplay").text(gender === "M" ? "MALE" : "FEMALE");
 
@@ -3898,11 +3946,13 @@
     <div class="caption-div animated zoomIn">
         <div class="title-div">
             <div class="title"><i class="bi-file-earmark-ppt-fill"></i> PUBLISH RESULT</div>
-            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i class="bi-x-lg"></i></button>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i
+                    class="bi-x-lg"></i></button>
         </div>
 
         <div class="div-in animated fadeIn">
-            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, you're about to publish results. Please confirm your action below.</div>
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, you're about to publish results.
+                Please confirm your action below.</div>
             <div class="text_field_container" id="newSession_container">
                 <script>
                     textField({
@@ -3922,7 +3972,8 @@
                 </script>
             </div>
 
-            <button class="btn" title="PUBLISH RESULT" id="publishResultBtn" onclick="_publishResult();"> <i class="bi-check"></i> PUBLISH RESULT </button>
+            <button class="btn" title="PUBLISH RESULT" id="publishResultBtn" onclick="_publishResult();"> <i
+                    class="bi-check"></i> PUBLISH RESULT </button>
         </div>
     </div>
 <?php } ?>

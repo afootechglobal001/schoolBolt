@@ -212,7 +212,7 @@
 
                 <div class="new-btn-container"></div>
                 <script>
-                    $(document).ready(function() {
+                    $(document).ready(function () {
                         let showButton = '';
                         const statusId = studentParentSessionData?.parent?.statusId;
 
@@ -291,7 +291,8 @@
                     onclick="_proceedActivateResult('<?php echo $id ?>');">PROCEED <i class="bi-arrow-right"></i> </button>
             <?php } else { ?>
                 <button class="btn" id="proceedBtn" title="Proceed Request"
-                    onclick="_proceedFetchAcountDepartmentClass('<?php echo $id ?>');">PROCEED <i class="bi-arrow-right"></i> </button>
+                    onclick="_proceedFetchAcountDepartmentClass('<?php echo $id ?>');">PROCEED <i class="bi-arrow-right"></i>
+                </button>
             <?php } ?>
         </div>
     </div>
@@ -371,7 +372,7 @@
                     <div class="table-div animated fadeIn">
                         <table class="table" cellspacing="0" style="width:100%" id="accountPageContent">
                             <script>
-                                $(document).ready(function() {
+                                $(document).ready(function () {
                                     const response = JSON.parse(sessionStorage.getItem(
                                         "useAccountStudentByClassSession"));
 
@@ -611,14 +612,15 @@
                 <div class="permission-form-back-div account-permission-form-back-div">
                     <div class="title-div">
                         <h4>Enter Fees Amount for Payment</h4>
-                        <p>Type the amount or percentage for each fee below. The system will automatically calculate the corresponding percentage or amount and update the total balance in real-time.</p>
+                        <p>Type the amount or percentage for each fee below. The system will automatically calculate the
+                            corresponding percentage or amount and update the total balance in real-time.</p>
                     </div>
 
                     <div class="permission-toggle-div payment-permission-toggle-div">
                         <div class="fetch-toggle pay-fetch-toggle" id="fetchedFeeTextbox">
 
                             <script>
-                                $(document).ready(function() {
+                                $(document).ready(function () {
                                     let notPaidFees = '';
                                     let paidFees = '';
                                     let upPaidFees = false;
@@ -665,14 +667,16 @@
                                                 id: fieldId,
                                                 title: 'AMOUNT(<s>N</s>)',
                                                 type: 'number',
-                                                onKeyUpFunction: `_convertAmountToPercentage('${feesId}')`
+                                                onKeyUpFunction: `_convertAmountToPercentage('${feesId}')`,
+                                                autocomplete: "off"
                                             });
 
                                             textField({
                                                 id: percentage,
                                                 title: 'Percentage(%)',
                                                 type: 'number',
-                                                onKeyUpFunction: `_convertPercentageToAmount('${feesId}')`
+                                                onKeyUpFunction: `_convertPercentageToAmount('${feesId}')`,
+                                                autocomplete: "off"
                                             });
 
                                         }
@@ -843,7 +847,7 @@
 
             let totalFees = 0;
 
-            $('#fetchedFeeTextbox input[type="number"]').each(function() {
+            $('#fetchedFeeTextbox input[type="number"]').each(function () {
                 let id = $(this).attr('id');
 
                 // Only amount fields
@@ -868,7 +872,7 @@
             }
         }
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             _calculatePaymentSummary();
 
             ///// SHOW / HIDE SCHOOL BOLT CHARGES ////
@@ -900,7 +904,8 @@
                 <div class="field-inner-div student-result-field-inner-div">
                     <div class="alert alert-success top-alert-div animated fadeIn">
                         <div>
-                            <span><i class="bi-people-fill"></i> STUDENT DEBTORS LIST /</span> SESSION -- <span id="accountSession">
+                            <span><i class="bi-people-fill"></i> STUDENT DEBTORS LIST /</span> SESSION -- <span
+                                id="accountSession">
                                 <script>
                                     $("#accountSession").html(useAccountStudentByClassSession?.session);
                                 </script>
@@ -929,7 +934,7 @@
                     <div class="table-div animated fadeIn">
                         <table class="table" cellspacing="0" style="width:100%" id="accountPageContent">
                             <script>
-                                $(document).ready(function() {
+                                $(document).ready(function () {
                                     const response = JSON.parse(sessionStorage.getItem(
                                         "useAccountStudentByClassSession"));
 
@@ -1148,7 +1153,7 @@
                     </div>
 
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             let paidFees = '';
                             let completeFees = false;
 
@@ -1222,15 +1227,18 @@
 
                             <div class="search-btn-div">
                                 <div class="search-div">
-                                    <input type="text" onkeyup="_filtersActivateStudents(this.value);" placeholder="Search Student Here...">
+                                    <input type="text" onkeyup="_filtersActivateStudents(this.value);"
+                                        placeholder="Search Student Here...">
                                     <i class="bi bi-search"></i>
                                 </div>
 
                                 <div class="btn-div">
-                                    <button class="btn" title="ACTIVATE RESULT" id="activateAllBtn" onclick="_activateAllStudentResult();">
+                                    <button class="btn" title="ACTIVATE RESULT" id="activateAllBtn"
+                                        onclick="_activateAllStudentResult();">
                                         <i class="bi-check"></i> ACTIVATE RESULT
                                     </button>
-                                    <button class="btn deactivate-btn" title="DEACTIVATE ALL RESULT" id="deActivateAllBtn" onclick="_deActivateAllStudentResult();">
+                                    <button class="btn deactivate-btn" title="DEACTIVATE ALL RESULT" id="deActivateAllBtn"
+                                        onclick="_deActivateAllStudentResult();">
                                         <i class="bi-x"></i> DEACTIVATE ALL RESULT
                                     </button>
                                 </div>
@@ -1240,7 +1248,8 @@
                         <div class="content-container" id="getPaymentNav">
                             <div class="alert alert-success top-alert-div animated fadeIn">
                                 <div>
-                                    <span><i class="bi-people-fill"></i> STUDENT RESULT ACTIVATION LIST /</span> SESSION -- <span id="accountSession">
+                                    <span><i class="bi-people-fill"></i> STUDENT RESULT ACTIVATION LIST /</span> SESSION --
+                                    <span id="accountSession">
                                         <script>
                                             $("#accountSession").html(useAccountStudentByClassSession?.session);
                                         </script>
@@ -1269,7 +1278,7 @@
                             <div class="table-div animated fadeIn">
                                 <table class="table" cellspacing="0" style="width:100%" id="accountPageContent">
                                     <script>
-                                        $(document).ready(function() {
+                                        $(document).ready(function () {
                                             const response = JSON.parse(sessionStorage.getItem(
                                                 "useAccountStudentByClassSession"));
 
@@ -1412,8 +1421,12 @@
         <div class="nav-content-back-div">
             <div class="nav-container">
                 <ul>
-                    <li class="active border" title="Filter Revenue By Date Range" id="filterBranchByDate" onclick="_getActiveBranchReportNav({divid:'filterBranchByDate', page: 'filterBranchByDate', url: adminPortalLocalUrl});"><i class="bi-calendar2-check"></i> Date Range</li>
-                    <li title="Filter Revenue By Session/Term" id="filterBranchBySession" onclick="_getActiveBranchReportNav({divid:'filterBranchBySession', page: 'filterBranchBySession', url: adminPortalLocalUrl});"><i class="bi-filter"></i> Session/Term</li>
+                    <li class="active border" title="Filter Revenue By Date Range" id="filterBranchByDate"
+                        onclick="_getActiveBranchReportNav({divid:'filterBranchByDate', page: 'filterBranchByDate', url: adminPortalLocalUrl});">
+                        <i class="bi-calendar2-check"></i> Date Range</li>
+                    <li title="Filter Revenue By Session/Term" id="filterBranchBySession"
+                        onclick="_getActiveBranchReportNav({divid:'filterBranchBySession', page: 'filterBranchBySession', url: adminPortalLocalUrl});">
+                        <i class="bi-filter"></i> Session/Term</li>
                 </ul>
             </div>
 
@@ -1464,16 +1477,14 @@
             <div class="custom-srch-div">
                 <div class="custom-srch-div-in">
                     <div class="text_field_container dash_field_container">
-                        <input class="text_field bar_cust_text_field" type="text" id="datepickers-from"
-                            placeholder="" />
+                        <input class="text_field bar_cust_text_field" type="text" id="datepickers-from" placeholder="" />
                         <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From
                         </div>
                         <div class="issueText" id="issue_from"></div>
                     </div>
 
                     <div class="text_field_container dash_field_container">
-                        <input class="text_field bar_cust_text_field" type="text" id="datepickers-to"
-                            placeholder="" />
+                        <input class="text_field bar_cust_text_field" type="text" id="datepickers-to" placeholder="" />
                         <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To </div>
                         <div class="issueText" id="issue_to"></div>
                     </div>
@@ -1504,7 +1515,8 @@
     <div class="fetch-report-back-div">
         <div class="alert alert-success top-alert-div report-alert">
             <div class="div">
-                <i class="bi-info-circle"></i> Revenue report between <span id="dateFrom">Loading...</span> and <span id="dateTo">Loading...</span>
+                <i class="bi-info-circle"></i> Revenue report between <span id="dateFrom">Loading...</span> and <span
+                    id="dateTo">Loading...</span>
             </div>
 
             <div class="div">
@@ -1629,21 +1641,21 @@
                                         yValueFormatString: "#,##0.#" % "",
                                         indexLabelFontSize: 9,
                                         dataPoints: [{
-                                                label: "SUPER ADMIN",
-                                                y: 5
-                                            },
-                                            {
-                                                label: "ADMINISTRATOR",
-                                                y: 6
-                                            },
-                                            {
-                                                label: "SUBJECT TEACHER",
-                                                y: 4
-                                            },
-                                            {
-                                                label: "CLASS TEACHERS",
-                                                y: 5
-                                            },
+                                            label: "SUPER ADMIN",
+                                            y: 5
+                                        },
+                                        {
+                                            label: "ADMINISTRATOR",
+                                            y: 6
+                                        },
+                                        {
+                                            label: "SUBJECT TEACHER",
+                                            y: 4
+                                        },
+                                        {
+                                            label: "CLASS TEACHERS",
+                                            y: 5
+                                        },
                                         ]
                                     }]
                                 };
@@ -1672,13 +1684,13 @@
                                         indexLabel: "{label} ({y})",
                                         yValueFormatString: "#,##0.#" % "",
                                         dataPoints: [{
-                                                label: "Debit/Credit Card",
-                                                y: 3
-                                            },
-                                            {
-                                                label: "Bank Transfer",
-                                                y: 11
-                                            },
+                                            label: "Debit/Credit Card",
+                                            y: 3
+                                        },
+                                        {
+                                            label: "Bank Transfer",
+                                            y: 11
+                                        },
                                         ]
                                     }]
                                 };
