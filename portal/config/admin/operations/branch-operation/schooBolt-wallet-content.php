@@ -152,6 +152,9 @@
                             <button class="btn" title="LOAD WALLET"
                                 onclick="_getForm({page: 'branchLoadWalletForm', layer:3,  url: adminPortalLocalUrl});"><i
                                     class="bi bi-wallet-fill"></i> LOAD WALLET</button>
+                                    <button class="btn" title="WALLET TRANSFER"
+                                onclick="_getForm({page: 'branchWalletTransferForm', layer:3,  url: adminPortalLocalUrl});"><i
+                                    class="bi bi-wallet-fill"></i> WALLET TRANSFER</button>
                             <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i
                                     class="bi-file-earmark-excel"></i>
                                 EXPORT</button>
@@ -193,6 +196,61 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'branchWalletTransferForm') { ?>
+    <div class="caption-div animated zoomIn">
+        <div class="title-div">
+            <div class="title"><i class="bi bi-wallet-fill"></i> WALLET TRANSFER</div>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i
+                    class="bi-x-lg"></i></button>
+        </div>
+
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert">
+                <i class="bi-wallet-fill"></i> You’re about to transfer funds between branches. Enter the <span>amount</span> and proceed
+                to complete your transfer securely.
+            </div>
+
+            <div class="text_field_container" id="amount_container">
+                <script>
+                    textField({
+                        id: 'amount',
+                        title: 'Enter Amount',
+                        type: 'number',
+                        onKeyPressFunction: 'isNumberCheck(event);',
+                        autocomplete: "off"
+                    });
+                </script>
+            </div>
+
+            <div class="text_area_container" id="description_container">
+                <script>
+                    textField({
+                        id: 'description',
+                        title: 'Fund Transfer Description',
+                        type: 'textarea',
+                        rows: 1,
+                        maxlength: '50',
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container" id="newBranchId_container">
+                <script>
+                    selectField({
+                        id: 'newBranchId',
+                        title: 'Select Branch To Transfer To'
+                    });
+                    _getSelectFundTransferBranch('newBranchId');
+                </script>
+            </div>
+
+            <button class="btn" id="fundTransferBtn" title="Proceed To Transfer Funds"
+                onclick="_transferBranchFunds();"> PROCEED <i class="bi bi-arrow-right"></i></button>
         </div>
     </div>
 <?php } ?>
