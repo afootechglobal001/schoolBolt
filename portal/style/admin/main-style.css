@@ -1679,14 +1679,6 @@ header
   color: var(--secondary-color);
 }
 
-.table-div .table .tb-row .order-status {
-  color: var(--sub-body-color);
-}
-
-.table-div .table .tb-row .DELIVERED {
-  color: var(--primary-color);
-}
-
 .table-div .table .tb-row .SUCCESSFULSTATUS {
   color: rgba(9, 172, 77, 0.9);
 }
@@ -1697,16 +1689,6 @@ header
 
 .table-div .table .tb-row .CANCLLEDSTATUS {
   color: rgba(255, 0, 0);
-}
-
-.table-div .table .tb-row .order-status.PENDING {
-  color: rgba(238, 139, 19);
-  background: none;
-}
-
-.table-div .table .tb-row .unpaid-status.PENDING {
-  color: rgba(19, 141, 117);
-  background: none;
 }
 
 .table-div .table .status-div {
@@ -1738,6 +1720,16 @@ header
 .table-div .table .DEACTIVATE {
   background: rgba(255, 0, 0, 0.1);
   color: rgba(255, 0, 0);
+}
+
+.table-div .table .CREDIT {
+  color: rgba(45, 170, 225, 0.9);
+  background: rgba(45, 170, 225, 0.1);
+}
+
+.table-div .table .DEBIT {
+  color: rgba(200, 80, 80, 0.95);
+  background: rgba(200, 80, 80, 0.12);
 }
 
 .table-div .table .green-color {

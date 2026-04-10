@@ -387,3 +387,139 @@ function _initFetchBranchWalletTransactions(data) {
   __paginatorHandlers["fetchBranchWalletTransactions"] = paginator;
   paginator.renderPage();
 }
+
+//// Fetch Branches for Select Option in Fund Transfer Modal ////
+function _getSelectFundTransferBranch(fieldId){
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint +'/admin/branch/fetch-branch?statusId=1',
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].branchId;
+						const value = data[i].name;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+//// Transfer Branch Funds /////
+function _transferBranchFunds() {
+	try {
+		//////get all needed values////
+		const amount = $("#amount").val().trim();
+		const description = $("#description").val().trim();
+		const newBranchId = $("#newBranchId").val().trim();
+
+		///// empty field validation//////////
+		let issueCount = 0;
+		issueCount += _validateEmptyValue("amount", "AMOUNT");
+		issueCount += _validateEmptyValue("description", "DESCRIPTION");
+		issueCount += _validateNumber("amount", amount);
+		issueCount += _validateEmptyValue("newBranchId", "BRANCH");
+
+		if (issueCount > 0) return;
+
+		// Gather form data
+		const formData = {
+			amount: amount,
+			description: description,
+			newBranchId: newBranchId,
+		};
+
+		////// confirm action////
+		_showCustomConfirm({
+			callback: () => {
+				_transferBranchFundsCallBack(formData);
+			},
+			title: "Confirm Transfer",
+			message: "Are you sure you want to transfer the funds? This action is irreversible.",
+			alertType: "warning",
+			falseActionBtn: true,
+			trueActionBtnText: "YES, TRANSFER",
+			falseActionBtnText: "NO, CANCEL",
+			closeOnOverlayClick: true,
+		});
+
+		
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _transferBranchFunds());
+	}
+}
+
+//// Transfer Branch Funds Callback /////
+function _transferBranchFundsCallBack(formData) {
+	let getEachBranchDetailsSession = JSON.parse(
+		sessionStorage.getItem("getEachBranchDetailsSession")
+	);
+
+	try {
+		////// get btn text/////
+		const btnText = $("#fundTransferBtn").html();
+		_btnDisable("fundTransferBtn", btnText, true);
+
+		//// call endpoint //////
+		_callRawEndPoints({
+			url: `admin/branch/schoolbolt-wallet/wallet-transfer?branchId=${getEachBranchDetailsSession?.branchId}`,
+			formData,
+			accessKey: true,
+		})
+		.then((response) => {
+			_staffValidationCheck(response.response);
+			if (response.success) {
+				_showCustomConfirm({
+					callback: () => {
+						// Reload history
+						_getForm({
+							page: 'branchWalletHistory',
+							layer: 2,
+							url: adminPortalLocalUrl
+						});
+						
+						//// Update Dashboard Wallet Balance
+						_fetchBranchDashboardStatistics();
+					},
+					title: "TRANSFER SUCCESSFUL",
+					message: response.message,
+					alertType: "success",
+					trueActionBtnText: "OK",
+					closeOnOverlayClick: false,
+				});
+			} else {
+				_showCustomConfirm({
+					title: "Unable to Process Transfer",
+					message: response.message,
+					alertType: "error",
+					trueActionBtnText: "OK",
+					closeOnOverlayClick: true,
+				});
+				_btnDisable("fundTransferBtn", btnText, false);
+			}
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			_callAjaxError(() => _transferBranchFundsCallBack()); // retry if needed
+			_btnDisable("fundTransferBtn", btnText, false);
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _transferBranchFundsCallBack());
+		_btnDisable("fundTransferBtn", btnText, false);
+	}
+}
