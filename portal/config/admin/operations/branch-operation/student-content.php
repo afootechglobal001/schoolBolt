@@ -519,7 +519,7 @@ getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchS
                         onclick="_getActiveStudentPage({divid:'student_profile_details', page: 'student_profile_details', url: adminPortalLocalUrl});">
                         <i class="bi-person-bounding-box"></i> Student Profile
                     </li>
-                    <li title="Transcript" id="tanscript"
+                    <li class="hide-li" title="Transcript" id="tanscript"
                         onclick="_getActiveStudentPage({divid:'tanscript', page: 'tanscript', url: adminPortalLocalUrl});">
                         <i class="bi-mortarboard"></i> Transcript
                     </li>
@@ -547,7 +547,6 @@ getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchS
                                 <i class="bi-clock"></i>Fund History
                             </li>
                         </ul>
-
                     </li>
                     <li class="li" title="Other Links"><i class="bi-three-dots-vertical"></i>
                         <ul class="ul">
@@ -566,6 +565,18 @@ getEachBranchStudentsSession = JSON.parse(sessionStorage.getItem("getEachBranchS
                             <li title="Student Activities"
                                 onclick="_getActiveStudentPage({divid:'student_activities', page: 'student_activities', url: adminPortalLocalUrl});">
                                 <i class="bi-bell"></i> <span>Student Activities</span>
+                            </li>
+                            <li title="Current Payable Fees" onclick="_fetchStudentCurrentPayableFees();"><i
+                                    class="bi-credit-card"></i>Current Payable Fees</li>
+
+                            <li title="Payment History" id="studentPaymentHistory"
+                                onclick="_getActiveStudentPage({divid:'studentPaymentHistory', page: 'studentPaymentHistory', url: adminPortalLocalUrl});">
+                                <i class="bi-clock"></i>Payment History
+                            </li>
+
+                            <li title="Fund History" id="studentFundHistory"
+                                onclick="_getActiveStudentPage({divid:'studentFundHistory', page: 'studentFundHistory', url: adminPortalLocalUrl});">
+                                <i class="bi-clock"></i>Fund History
                             </li>
                         </ul>
                     </li>
