@@ -152,9 +152,7 @@ function _reportRevenueFiltering(dateFrom, dateTo) {
     success: function (info) {
       if (info.success && info.statistics.length > 0) {
         const statistic = info.statistics[0];
-        const sumCreditCardPayments = Number(statistic.sumCreditCardPayments) || 0;
-        const sumBankTransferPayments = Number(statistic.sumBankTransferPayments) || 0;
-        const totalRevenue = thousandSeperator(sumCreditCardPayments + sumBankTransferPayments);
+        const totalRevenue = thousandSeperator(info.totalRevenue);
 
         /// Update Total Revenue ///
         $("#totalRevenue").html("<s>N</s>" + totalRevenue);
