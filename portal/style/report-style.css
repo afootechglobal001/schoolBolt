@@ -1,0 +1,318 @@
+:root {
+  --report-text-color: #f7a025;
+}
+
+.body-div{
+	width: 900px;
+	min-height: 1290px;
+	background: var(--white-color);
+	border-radius: 3px;
+    border: #afafaf 2px solid;
+	margin: 40px auto;
+    display: flex;
+	align-items: center;
+    flex-direction: column;
+}
+
+.broadsheet-body{
+	width: max-content;
+}
+
+.terminal-body{
+	width: 980px;
+}
+
+.all-terminal-body{
+	min-width: 1200px;
+}
+
+.body-div .header-back-div {
+    width: 100%;
+    position: relative;
+}
+
+.body-div .header-back-div .school-info-div {
+    position: absolute;
+    top: 30px;
+    right: 10px; 
+	padding: 0px 10px 0px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+	gap: 3px;
+	max-width: 550px;
+}
+
+.body-div .header-back-div .school-info-div .text {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    font-family: title-font;
+    color: var(--report-text-color);
+}
+
+.body-div .header-back-div .school-info-div .text strong {
+    color: var(--sub-body-color);
+	font-family: sub-title-font;
+	font-size: 12px;
+}
+
+
+
+
+
+
+
+.body-div .header-back-div .title-div{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-height: 30px;
+	padding: 5px 0px;
+	background-color: rgba(230, 230, 230, 0.8);
+	font-size: 14px;
+	color: var(--sub-body-color);
+}
+
+.top-containner-back-div{ 
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 80px;
+}
+
+.bottom-containner-back-div{
+	padding-bottom: 40px;
+}
+
+.top-containner-back-div .inner-div-cont{ 
+ 	width: 95%;
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	min-height: 50px;
+}
+
+.top-containner-back-div .inner-div-cont .image-div{ 
+	width: 120px;
+	height: 120px;
+	overflow: hidden;
+	border-radius: 5px;
+	margin-top: -30px;
+}
+
+.top-containner-back-div .inner-div-cont .image-div img{ 
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.top-containner-back-div .inner-div-cont .content-div {
+	width: calc(100% - 130px);
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+	flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.top-containner-back-div .inner-div-cont .content-div .name{
+	font-size: 22px;
+	font-family: title-font;
+	padding: 0px 2px;
+	color: var(--sub-body-color);
+}
+
+.top-containner-back-div .inner-div-cont .content-div .details {
+    height: auto;
+    display: flex;
+    font-size: 14px;
+}
+
+.top-containner-back-div .inner-div-cont .content-div .details span {
+    color: var(--sub-body-color);
+    font-size: 13px;
+	font-family: sub-title-font;
+	font-weight: 700;
+	text-decoration: underline;
+}
+
+
+.top-containner-back-div .inner-div-cont .content-div .bottom-details{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 30px;
+}
+
+
+.body-div .inner-content{
+    width:95%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+	padding-bottom: 35px;
+	gap: 25px;
+}
+
+
+/* Table Style*/
+.table-div{
+	width:100%;
+	margin-top: 25px;
+}
+
+.table-div .table {
+	width: 100%;
+	min-width: 500px;
+	color:var(--body-color);
+	border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 2px;
+}
+
+.table-div .table .tb-col{
+	height: 40px;
+    text-align: left;
+    background-color: rgba(230, 230, 230, 0.9);
+	color: var(--body-color);
+}
+
+.table-div .table .tb-col th[colspan] {
+    text-align: center;
+}
+
+.table-div .table .tb-row {
+   	height: 45px;
+	text-align: left;
+}
+
+.table-div .table .tb-col th,
+.table-div .table .tb-row td {
+	padding: 10px 20px;
+	font-size: 12px;
+	font-family: title-font;
+	color: var(--sub-body-color);
+	border: #afafaf 2px solid;
+}
+
+.table-div .table .table-col th{
+	padding: 5px;
+	font-size: 9px;
+}
+
+.table-div .table .report-col th{
+	font-size: 10.7px;
+}
+
+.table-div .table .table-row td{
+    padding: 4px;
+	text-align: center;
+	font-size: 12px;
+}
+
+.table-div .table .table-row .name-td{
+	text-align: left;
+}
+
+.table-div .table tbody tr:nth-child(even) {
+    background-color: rgba(230, 230, 230, 0.9);
+}
+
+.table-div .table .tb-row .green-color{
+	color:rgba(9, 172, 77, 0.9);
+}
+
+.table-div .table .tb-row .orange-color{
+	color:rgba(218, 90, 31, 0.87);
+}
+
+.table-div .table .tb-row .text-back-div{
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.table-div .table .tb-row .text-back-div .text-div{
+	width: calc(100% - 33px);
+	display: flex;
+	flex-direction: column;
+}
+
+.table-div .table .tb-row .text-back-div .image-div{
+	width: 50px;
+	height: 45px;
+	border-radius: 3px;
+	overflow: hidden;
+}
+
+.table-div .table .tb-row .text-back-div .image-div img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.table-div .table .tb-row .text-back-div .text-div .bold-font{
+	font-family: sub-title-font;
+}
+
+.table-div .table .tb-row .text-back-div .text-div span{
+	color: var(--sub-body-color);
+}
+
+.bottom-content-back-div{
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 80px;
+}
+
+.bottom-content-back-div .inner-container{ 
+	width: 100%;
+	display: flex;
+    gap: 10px;
+	justify-content: space-between;
+}
+
+.bottom-content-back-div .inner-container .content-container {
+    display: flex;
+	width: calc(100% - 190px);
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.bottom-content-back-div .inner-container .content-container .list-content {
+    display: flex;
+    font-size: 11px;
+	gap: 8px;
+}
+
+.bottom-content-back-div .inner-container .content-container .list-content span {
+    color: var(--sub-body-color);
+    font-size: 12px;
+	font-family: sub-title-font;
+	font-weight: 400;
+}
+
+.bottom-content-back-div .inner-container .content-container .list-content p {
+    color: var(--sub-body-color);
+    font-size: 12px;
+	font-family: title-font;
+	text-decoration: underline;
+}
+
+.bottom-content-back-div .inner-container .signature {
+    width: 180px;
+}
+
+.bottom-content-back-div .inner-container .signature img{ 
+	width: 100%;
+	object-fit: cover;
+}
