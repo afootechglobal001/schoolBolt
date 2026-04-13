@@ -329,3 +329,198 @@ function _initFetchStudentFunds(data) {
   __paginatorHandlers["fetchStudentFunds"] = paginator;
   paginator.renderPage();
 }
+
+//// Load Student Discount Scholarship Fund /////
+function _loadStudentDiscountScholarshipFund() {
+  try {
+    ////////get all needed values////////////
+    let issueCount = 0;
+    const amount = $("#amount").val().trim();
+    const description = $("#description").val().trim();
+    const fundPurposeId = $("#fundPurposeId").val().trim();
+
+    ///// empty field validation//////////
+    issueCount += _validateEmptyValue("amount", "AMOUNT");
+    issueCount += _validateNumber("amount", amount);
+    issueCount += _validateEmptyValue("description", "DESCRIPTION");
+    issueCount += _validateEmptyValue("fundPurposeId", "FUND PURPOSE");
+
+    if (issueCount > 0) return;
+    
+    /////Gather form data////
+    const formData = {
+      amount,
+      description,
+      fundPurposeId
+    };
+
+    ////// confirm action////
+    _showCustomConfirm({
+      callback: () => {
+        _loadStudentDiscountScholarshipFundCallback(formData);
+      },
+      title: "Are you sure?",
+      message: "Are you sure you want to proceed? This action is irreversible.",
+      alertType: "warning",
+      falseActionBtn: true,
+      closeOnOverlayClick: true,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _loadStudentDiscountScholarshipFund());
+  }
+}
+
+//// Load Student Discount Scholarship Fund CallBack /////
+function _loadStudentDiscountScholarshipFundCallback(formData) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+  let getEachBranchStudentsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchStudentsSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+  const studentId = getEachBranchStudentsSession?.studentId;
+
+  try {
+    const btnText = $("#scholarshipBtn").html();
+    _btnDisable("scholarshipBtn", btnText, true);
+
+    _callRawEndPoints({
+      url: `admin/branch/account/student-funds/load-student-discount-scholarship-fund?branchId=${branchId}&studentId=${studentId}`,
+      formData,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success) {
+          _showCustomConfirm({
+            callback: () => {
+              _alertClose(3);
+              _getActiveStudentPage({divid:'studentDiscountScholarship', page: 'studentDiscountScholarship', url: adminPortalLocalUrl});
+            },
+            title: "Success!",
+            message: response.message,
+            alertType: "success",
+            trueActionBtnText: "OK, Thanks.",
+            closeOnOverlayClick: false,
+          });
+        } else {
+          _showCustomConfirm({
+            title: "Unable to proceed",
+            message: response.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+          _btnDisable("scholarshipBtn", btnText, false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() => _loadStudentDiscountScholarshipFundCallback(formData)); // retry if needed
+        _btnDisable("scholarshipBtn", btnText, false);
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _loadStudentDiscountScholarshipFundCallback(formData));
+    _btnDisable("scholarshipBtn", btnText, false);
+  }
+}
+
+///// Fetch Students Discount Scholarship Funds ////
+function _fetchStudentDiscountScholarshipFunds() {
+  	let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+  let getEachBranchStudentsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchStudentsSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+  const studentId = getEachBranchStudentsSession?.studentId;
+
+	try {
+		_callFetchEndPoints({
+		url: `admin/branch/account/student-funds/fetch-student-discount-scholarship-fund?branchId=${branchId}&studentId=${studentId}`,
+		accessKey: true,
+		})
+		.then((response) => {
+			_staffValidationCheck(response.response);
+			if (response.success && response.data?.length > 0) {
+				_initFetchStudentDiscountScholarshipFunds(response.data);
+			} else {
+			$("#fetchStudentDiscountScholarshipFunds").html(`
+				<tr>
+					<td colspan="20">
+						<div class="false-notification-div">
+							<p>No record found!</p>
+						</div>
+					</td>
+				</tr>`);
+			$("#fetchStudentDiscountScholarshipFundsPaginationControls").html("");
+			}
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			_callAjaxError(() => _fetchStudentDiscountScholarshipFunds());
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _fetchStudentDiscountScholarshipFunds());
+	}
+}
+
+///// Render Fetch Students Discount Scholarship Funds ////
+function _renderFetchStudentDiscountScholarshipFunds(data, start) {
+  return data
+    .map(
+      (item, i) => `
+      <tr class="tb-row">
+        <td>${start + i + 1}</td>
+          <td class="clickable-td">
+              <div class="text-back-div">
+                  <div class="text-div">
+                      <div class="first-class">${item?.fundPurposeData?.paymentId}</div>
+                      <div class="second-class">${item?.fundPurposeData?.description}</div>
+                  </div>
+              </div>
+          </td>
+          <td>${item?.fundPurposeDetails?.fundPurposeName}</td>
+          <td>${item?.session}</td>
+          <td>${item?.termData?.termName}</td>
+          <td>${item?.departmentData?.departmentName}</td>
+          <td>${item?.classData?.className} ${item?.armData?.armName}</td>
+          <td><s>N</s>${thousandSeperator(item?.amount)}</td>
+          <td class="clickable-td">
+              <div class="text-back-div">
+                  <div class="text-div">
+                      <div class="first-class">${item?.createdByData?.fullName}</div>
+                      <div class="second-class">${item?.createdByData?.staffId}</div>
+                  </div>
+              </div>
+          </td>
+          <td>${item?.createdTime}</td>
+          <td>
+              <div class="status-div ${item.statusData?.statusName}">
+                ${item.statusData?.statusName}
+              </div>
+          </td>
+      </tr>`
+      )
+    .join("");
+}
+
+///// Initialize Fetch Students Discount Scholarship Funds ////
+function _initFetchStudentDiscountScholarshipFunds(data) {
+  const paginator = new Paginator(
+    data,
+    _renderFetchStudentDiscountScholarshipFunds,
+    "fetchStudentDiscountScholarshipFundsPaginationControls",
+    "fetchStudentDiscountScholarshipFunds",
+    10
+  );
+  __paginatorHandlers["fetchStudentDiscountScholarshipFunds"] = paginator;
+  paginator.renderPage();
+}
