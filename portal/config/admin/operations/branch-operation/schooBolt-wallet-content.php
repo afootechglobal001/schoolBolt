@@ -148,13 +148,26 @@
                             <span id="dateTo">Loading...</span>
                         </div>
 
-                        <div class="btn-container">
-                            <button class="btn" title="LOAD WALLET"
-                                onclick="_getForm({page: 'branchLoadWalletForm', layer:3,  url: adminPortalLocalUrl});"><i
-                                    class="bi bi-wallet-fill"></i> LOAD WALLET</button>
-                                    <button class="btn" title="WALLET TRANSFER"
+                        <div class="btn-container" id="canLoadBranchSchoolBoltWallet">
+                            <script>
+                                if (userRoles.canLoadBranchSchoolBoltWallet) {
+                                    $('#canLoadBranchSchoolBoltWallet').append(`
+                                <button class="btn" title="LOAD WALLET"
+                                    onclick="_getForm({page: 'branchLoadWalletForm', layer:3,  url: adminPortalLocalUrl});"><i
+                                        class="bi bi-wallet-fill"></i> LOAD WALLET</button>
+                            `);
+                                }
+
+                                if (userRoles.canTransferBranchSchoolBoltWallet) {
+                                    $('#canLoadBranchSchoolBoltWallet').append(`
+                                <button class="btn" title="WALLET TRANSFER"
                                 onclick="_getForm({page: 'branchWalletTransferForm', layer:3,  url: adminPortalLocalUrl});"><i
                                     class="bi bi-wallet-fill"></i> WALLET TRANSFER</button>
+                            `);
+                                }
+                            </script>
+
+
                             <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i
                                     class="bi-file-earmark-excel"></i>
                                 EXPORT</button>
@@ -211,7 +224,8 @@
 
         <div class="div-in animated fadeIn">
             <div class="alert alert-success form-alert">
-                <i class="bi-wallet-fill"></i> You’re about to transfer funds between branches. Enter the <span>amount</span> and proceed
+                <i class="bi-wallet-fill"></i> You’re about to transfer funds between branches. Enter the
+                <span>amount</span> and proceed
                 to complete your transfer securely.
             </div>
 
@@ -249,8 +263,8 @@
                 </script>
             </div>
 
-            <button class="btn" id="fundTransferBtn" title="Proceed To Transfer Funds"
-                onclick="_transferBranchFunds();"> PROCEED <i class="bi bi-arrow-right"></i></button>
+            <button class="btn" id="fundTransferBtn" title="Proceed To Transfer Funds" onclick="_transferBranchFunds();">
+                PROCEED <i class="bi bi-arrow-right"></i></button>
         </div>
     </div>
 <?php } ?>

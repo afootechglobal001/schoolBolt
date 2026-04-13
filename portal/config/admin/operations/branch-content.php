@@ -3606,6 +3606,18 @@
                 </div>
             </div>
         </div>
+        <!-- <div class="user-managment-list staff-managment-list" title="Discount/Scholarship Application" onclick="">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/discount-scholarship.png"
+                        alt="Discount/Scholarship Application" />
+                </div>
+                <div class="text-div">
+                    <h3>Discount/Scholarship Application</h3>
+                    <p>Apply and view discount or scholarship applications for students.</p>
+                </div>
+            </div>
+        </div> -->
 
         <div class="user-managment-list staff-managment-list" title="Student Payment"
             onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'payment', url: adminPortalLocalUrl});">
@@ -3645,6 +3657,7 @@
                 </div>
             </div>
         </div>
+
 
         <!-- <div class="user-managment-list staff-managment-list" title="Expenses" onclick="">
             <div class="inner-div">
