@@ -15,7 +15,7 @@ function _getActiveStudentPage(props) {
 }
 function _getStudentPagesActiveLink(divid) {
   $(
-    "#student_profile_details, #tanscript, #student_activities, #student_report, #studentPaymentHistory, #studentFundHistory",
+    "#student_profile_details, #tanscript, #student_activities, #student_report, #studentPaymentHistory, #studentFundHistory, #studentDiscountScholarship",
   ).removeClass("active");
   $("#" + divid).addClass("active");
 }
@@ -503,7 +503,8 @@ function _createStudent(view) {
 
 function _uploadStudentPicture(oldPassportName, newPassportName, message) {
   $("#get-more-third-layer")
-    .html(`
+    .html(
+      `
       <div class="alert-loading-div">
           <div class="icon">
               <img src="${websiteUrl}/images/loading.gif" width="20px" alt="Uploading"/>
@@ -512,13 +513,14 @@ function _uploadStudentPicture(oldPassportName, newPassportName, message) {
               <p>UPLOADING STUDENT PICTURE! PLEASE WAIT...</p>
           </div>
       </div>
-    `)
+    `,
+    )
     .css({
       display: "flex",
       "justify-content": "center",
       "align-items": "center",
     })
-  .fadeIn(500);
+    .fadeIn(500);
 
   const action = "upload_student_pix";
 
@@ -1670,3 +1672,4 @@ function _fetchBranchArchivedStudents() {
     _actionAlert("An unexpected error occurred! Please try again.", false);
   }
 }
+

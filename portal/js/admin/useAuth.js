@@ -42,7 +42,7 @@ function _confirmLogin() {
     $("#submit_btn").html(
       '<img src="' +
         websiteUrl +
-        '/images/loading.gif" width="12px" alt="Loading"/>'
+        '/images/loading.gif" width="12px" alt="Loading"/>',
     );
     $("#submit_btn").prop("disabled", true);
     ////////////////////////////////////////////////
@@ -77,7 +77,7 @@ function _confirmLogin() {
       error: function () {
         _actionAlert(
           "Unable to reach the server. Please check your connection.",
-          false
+          false,
         );
         $("#submit_btn").html(btn_text).prop("disabled", false);
       },
@@ -144,6 +144,15 @@ function assignRole(data) {
   permissions.includes(19) ? (userRoles.canViewBranchAccount = true) : false;
   permissions.includes(22) ? (userRoles.canViewBranchActivities = true) : false;
   permissions.includes(23) ? (userRoles.canApproveFees = true) : false;
+  permissions.includes(26)
+    ? (userRoles.canLoadBranchSchoolBoltWallet = true)
+    : false;
+  permissions.includes(27)
+    ? (userRoles.canTransferBranchSchoolBoltWallet = true)
+    : false;
+  permissions.includes(28)
+    ? (userRoles.canApplyStudentDiscountScholarship = true)
+    : false;
 
   /// Developer Permissions
   permissions.includes(24) ? (userRoles.canDeleteStaff = true) : false;
@@ -168,7 +177,7 @@ function _proceedResetPassword(sessionEmail = null, btnId = "proceedBtn") {
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         $("#email").addClass("issue");
         $("#issue_email").html(
-          "USER ERROR! Kindy provide correct email address to continue"
+          "USER ERROR! Kindy provide correct email address to continue",
         );
         issueCount++;
       }
@@ -181,7 +190,7 @@ function _proceedResetPassword(sessionEmail = null, btnId = "proceedBtn") {
     $("#" + btnId).html(
       '<img src="' +
         websiteUrl +
-        '/images/loading.gif" width="12px" alt="Loading"/>'
+        '/images/loading.gif" width="12px" alt="Loading"/>',
     );
     $("#" + btnId).prop("disabled", true);
     ////////////////////////////////////////////////
@@ -218,7 +227,7 @@ function _proceedResetPassword(sessionEmail = null, btnId = "proceedBtn") {
       error: function () {
         _actionAlert(
           "Unable to reach the server. Please check your connection.",
-          false
+          false,
         );
         $("#" + btnId)
           .html(btnText)
@@ -238,7 +247,7 @@ function _verifyLink(ref) {
     .html(
       '<div class="ajax-loader"><img src="' +
         websiteUrl +
-        '/images/spinner.gif"/></div>'
+        '/images/spinner.gif"/></div>',
     )
     .css({
       display: "flex",
@@ -265,7 +274,7 @@ function _verifyLink(ref) {
       if (info.success == true) {
         sessionStorage.setItem(
           "staffCompleteResetEmailSession",
-          JSON.stringify(info)
+          JSON.stringify(info),
         );
         _getPage({ page: "complete-reset-password", url: adminLocalUrl });
       } else {
@@ -277,7 +286,7 @@ function _verifyLink(ref) {
 
 function _completeResetPassword() {
   let staffCompleteResetEmailSession = JSON.parse(
-    sessionStorage.getItem("staffCompleteResetEmailSession")
+    sessionStorage.getItem("staffCompleteResetEmailSession"),
   );
   try {
     let issueCount = 0;
@@ -290,7 +299,7 @@ function _completeResetPassword() {
     if (!newPassword) {
       $("#newPassword").addClass("issue");
       $("#issue_newPassword").html(
-        "USER ERROR! Kindly Provide New Password To Continue"
+        "USER ERROR! Kindly Provide New Password To Continue",
       );
       issueCount++;
     }
@@ -298,7 +307,7 @@ function _completeResetPassword() {
     if (!cnewPassword) {
       $("#cnewPassword").addClass("issue");
       $("#issue_cnewPassword").html(
-        "USER ERROR! Kindly Provide Confirm New Password To Continue"
+        "USER ERROR! Kindly Provide Confirm New Password To Continue",
       );
       issueCount++;
     }
@@ -307,7 +316,7 @@ function _completeResetPassword() {
       if (newPassword.length < 8) {
         $("#newPassword").addClass("issue");
         $("#issue_newPassword").html(
-          "USER ERROR! Password must be at least 8 characters"
+          "USER ERROR! Password must be at least 8 characters",
         );
         issueCount++;
       }
@@ -315,20 +324,20 @@ function _completeResetPassword() {
       if (newPassword !== cnewPassword) {
         $("#newPassword, #cnewPassword").addClass("issue");
         $("#issue_cnewPassword, #issue_cnewPassword").html(
-          "USER ERROR! Passwords do not match"
+          "USER ERROR! Passwords do not match",
         );
         issueCount++;
       }
 
       if (
         !newPassword.match(
-          /^(?=[^A-Z]*[A-Z])(?=[^!"#$%&'()*+,-.:;<=>?@[\]^_`{|}~]*[!"#$%&'()*+,-.:;<=>?@[\]^_`{|}~])(?=\D*\d).{8,}$/
+          /^(?=[^A-Z]*[A-Z])(?=[^!"#$%&'()*+,-.:;<=>?@[\]^_`{|}~]*[!"#$%&'()*+,-.:;<=>?@[\]^_`{|}~])(?=\D*\d).{8,}$/,
         )
       ) {
         $("#newPassword").addClass("issue");
         $("#newPassword").addClass("issue");
         $("#issue_newPassword").html(
-          "USER ERROR! Password Not Accepted, Please follow the instructon above"
+          "USER ERROR! Password Not Accepted, Please follow the instructon above",
         );
         issueCount++;
       }
@@ -343,7 +352,7 @@ function _completeResetPassword() {
     $("#completeBtn").html(
       '<img src="' +
         websiteUrl +
-        '/images/loading.gif" width="12px" alt="Loading"/>'
+        '/images/loading.gif" width="12px" alt="Loading"/>',
     );
     $("#completeBtn").prop("disabled", true);
 
@@ -382,7 +391,7 @@ function _completeResetPassword() {
       error: function (error) {
         _actionAlert(
           "An error occurred while processing your request! Please Try Again",
-          false
+          false,
         );
         $("#submitBtn").html(btn_text).prop("disabled", false);
       },
