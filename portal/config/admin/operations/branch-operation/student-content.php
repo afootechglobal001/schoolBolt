@@ -494,7 +494,7 @@
                                 </div>
 
                                 <script>
-                                    $(document).ready(function () {
+                                    $(document).ready(function() {
                                         const statusName2 = getEachBranchStudentsSession.studentData.statusName;
                                         const passport = getEachBranchStudentsSession.studentData.passport;
 
@@ -670,7 +670,7 @@
 
             <div class="text_field_container col-3" id="dateOfBirth_container">
                 <script>
-                    $(document).ready(function () {
+                    $(document).ready(function() {
                         const dob = getEachBranchStudentsSession?.studentData?.dateOfBirth || '';
 
                         function reverseFormatDate(date) {
@@ -835,7 +835,7 @@
 
             <div class="text_field_container col-3" id="fatherDayOfBirth_container">
                 <script>
-                    $(document).ready(function () {
+                    $(document).ready(function() {
                         const fDateOfBirth = getEachBranchStudentsSession.fatherData?.dateOfBirth;
 
                         let day = '';
@@ -857,7 +857,7 @@
 
             <div class="text_field_container col-3" id="fatherMonthOfBirth_container">
                 <script>
-                    $(document).ready(function () {
+                    $(document).ready(function() {
                         const fDateOfBirth = getEachBranchStudentsSession.fatherData?.dateOfBirth;
                         let monthNumber = '';
                         let monthName = '';
@@ -975,7 +975,7 @@
 
             <div class="text_field_container col-3" id="motherDayOfBirth_container">
                 <script>
-                    $(document).ready(function () {
+                    $(document).ready(function() {
                         const dateOfBirth = getEachBranchStudentsSession.motherData?.dateOfBirth;
 
                         let day = '';
@@ -997,7 +997,7 @@
 
             <div class="text_field_container col-3" id="motherMonthOfBirth_container">
                 <script>
-                    $(document).ready(function () {
+                    $(document).ready(function() {
                         const dateOfBirth = getEachBranchStudentsSession.motherData?.dateOfBirth;
                         let monthNumber = '';
                         let monthName = '';
@@ -1218,7 +1218,7 @@
     <div class="main-alert-div">
         <div class="system-alert" id="" onclick="_getSecondaryFormWithId('staff_alert_read');">
             <div class="alert-name"><i class="bi-person"></i>Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
-                ?>viewed"><i class="bi-check"></i></span></div>
+                                                                                            ?>viewed"><i class="bi-check"></i></span></div>
             <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...
             </div>
             <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
@@ -1226,7 +1226,7 @@
 
         <div class="system-alert" id="" onClick="_get_form_with_id()">
             <div class="alert-name"><i class="bi-person"></i>Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
-                ?>viewed"><i class="bi-check"></i></span></div>
+                                                                                            ?>viewed"><i class="bi-check"></i></span></div>
             <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...
             </div>
             <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
@@ -1234,7 +1234,7 @@
 
         <div class="system-alert" id="" onClick="_get_form_with_id()">
             <div class="alert-name"><i class="bi-person"></i> Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
-                ?>viewed"><i class="bi-check"></i></span></div>
+                                                                                            ?>viewed"><i class="bi-check"></i></span></div>
             <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...
             </div>
             <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
@@ -1242,7 +1242,7 @@
 
         <div class="system-alert" id="" onClick="_get_form_with_id()">
             <div class="alert-name"><i class="bi-person"></i> Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
-                ?>viewed"><i class="bi-check"></i></span></div>
+                                                                                            ?>viewed"><i class="bi-check"></i></span></div>
             <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...
             </div>
             <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
@@ -1250,7 +1250,7 @@
 
         <div class="system-alert" id="" onClick="_get_form_with_id()">
             <div class="alert-name"><i class="bi-person"></i> Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
-                ?>viewed"><i class="bi-check"></i></span></div>
+                                                                                            ?>viewed"><i class="bi-check"></i></span></div>
             <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...
             </div>
             <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
@@ -1258,7 +1258,7 @@
 
         <div class="system-alert" id="" onClick="_get_form_with_id()">
             <div class="alert-name"><i class="bi-person"></i> Hon. Emmanuel Paul <span id="<?php //echo $alert_id; 
-                ?>viewed"><i class="bi-check"></i></span></div>
+                                                                                            ?>viewed"><i class="bi-check"></i></span></div>
             <div class="alert-text">Success Alert: A customer with whose name is EMMANUEL PAUL have cancelled a trans...
             </div>
             <div class="alert-time"><i class="bi-clock"></i> <span>2023-07-09 15:31:34</span></div>
@@ -1572,7 +1572,7 @@
                         <div class="fetch-toggle" id="notMandatoryFees">
 
                             <script>
-                                $(document).ready(function () {
+                                $(document).ready(function() {
                                     let notMandatoryFees = '';
                                     let mandatoryFees = '';
 
@@ -1956,22 +1956,25 @@
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%" id="">
+        <table class="table" cellspacing="0" style="width:100%">
             <thead>
                 <tr class="tb-col">
                     <th>sn</th>
-                    <th>Date</th>
                     <th>Payment ID</th>
-                    <th>Balance Before(<s>N</s>)</th>
+                    <th>Fund Purpose</th>
+                    <th>Session</th>
+                    <th>Term</th>
+                    <th>Department</th>
+                    <th>Class</th>
                     <th>Amount(<s>N</s>)</th>
-                    <th>Balance After(<s>N</s>)</th>
-                    <th>Fund Loaded By</th>
+                    <th>Created By</th>
+                    <th>Date</th>
                     <th>Status</th>
                 </tr>
             </thead>
-            <tbody id="fetchStudentFunds">
+            <tbody id="fetchStudentDiscountScholarshipFunds">
                 <script>
-                    _fetchStudentFundFiltering('srch-30', 'Last 30 Days');
+                    _fetchStudentDiscountScholarshipFunds();
                 </script>
 
                 <tr>
@@ -1984,7 +1987,7 @@
             </tbody>
         </table>
         <!-- Pagination -->
-        <div id="fetchStudentFundsPaginationControls" class="pagination-div"></div>
+        <div id="fetchStudentDiscountScholarshipFundsPaginationControls" class="pagination-div"></div>
     </div>
 <?php } ?>
 
@@ -2067,7 +2070,7 @@
                 </script>
             </div>
 
-            <button class="btn" id="fundTransferBtn" title="Proceed To Transfer Funds" onclick="_transferBranchFunds();">
+            <button class="btn" id="scholarshipBtn" title="Proceed To Load Scholarship Fund" onclick="_loadStudentDiscountScholarshipFund();">
                 PROCEED <i class="bi bi-arrow-right"></i></button>
         </div>
     </div>
