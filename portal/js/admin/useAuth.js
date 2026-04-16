@@ -143,6 +143,8 @@ function assignRole(data) {
   permissions.includes(18) ? (userRoles.canViewBranchProfile = true) : false;
   permissions.includes(19) ? (userRoles.canViewBranchAccount = true) : false;
   permissions.includes(22) ? (userRoles.canViewBranchActivities = true) : false;
+
+  /////Account Permissions
   permissions.includes(23) ? (userRoles.canApproveFees = true) : false;
   permissions.includes(26)
     ? (userRoles.canLoadBranchSchoolBoltWallet = true)
@@ -153,6 +155,7 @@ function assignRole(data) {
   permissions.includes(28)
     ? (userRoles.canApplyStudentDiscountScholarship = true)
     : false;
+  permissions.includes(29) ? (userRoles.canLoadStudentFund = true) : false;
 
   /// Developer Permissions
   permissions.includes(24) ? (userRoles.canDeleteStaff = true) : false;
