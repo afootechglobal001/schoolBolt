@@ -389,6 +389,8 @@
                                         const armId = response?.armData?.armId;
                                         const arm = response?.armData?.armName;
 
+
+
                                         let html = `
                                             <thead>
                                                 <tr class="tb-col">
@@ -403,11 +405,11 @@
                                                     <th>Total Fees Paid</th>
                                                     <th>Outstanding Balance</th>
                                                     <th>Fund Balance</th>
-                                                    <th>Load Funds</th>
+                                                    ${userRoles.canLoadStudentFund ? '<th>Load Funds</th>' : ''}
                                                     <th>Pay Fees</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>`;
+                                                </tr >
+                                            </thead >
+                                        <tbody>`;
 
                                         let sn = 0;
 
@@ -421,67 +423,75 @@
                                             const passport = student.passport || "default.jpg";
                                             const advancedBalance = student.advancedBalance;
                                             const outstandingBalance = item.outstandingBalance;
-                                            const outstandingStatus = outstandingBalance > 0 ? "red-color" : "green-color";
+                                            const outstandingStatus = outstandingBalance > 0 ? "red-color" :
+                                                "green-color";
+
+                                            let loadFundColumn = '';
+                                            if (userRoles.canLoadStudentFund) {
+                                                loadFundColumn = `
+                                            <td>
+                                                <button class="btn view-btn"
+                                                    title="Click to load fund"
+                                                    onclick="_fetchAccountFeesToPay('${item.branchId}','${session}','${termId}','${departmentId}','${classId}','${armId}','${item.studentId}', 'loadFund');">
+                                                    LOAD FUND
+                                                </button>
+                                            </td>
+                                            `;
+                                            }
 
                                             html += `
-                                                <tr class="tb-row">
-                                                    <td>${sn}</td>
+                                            <tr class="tb-row">
+                                                <td>${sn}</td>
 
-                                                    <td class="clickable-td">
-                                                        <div class="text-back-div" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
-                                                            <div class="image-div general-passport">
-                                                                <img src="${studentPixPath}/${passport}" alt="${fullname}" />
-                                                            </div>
-
-                                                            <div class="text-div">
-                                                                <div class="first-class">${fullname}</div>
-                                                                <div class="second-class">${studentId}</div>
-                                                            </div>
+                                                <td class="clickable-td">
+                                                    <div class="text-back-div" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
+                                                        <div class="image-div general-passport">
+                                                            <img src="${studentPixPath}/${passport}" alt="${fullname}" />
                                                         </div>
-                                                    </td>
 
-                                                    <td>${session} - ${term}</td>
-                                                    <td>${className} ${arm}</td>
+                                                        <div class="text-div">
+                                                            <div class="first-class">${fullname}</div>
+                                                            <div class="second-class">${studentId}</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
 
-                                                    <td><s>N</s>${thousandSeperator(item.totalMandatoryAmount)}</td>
-                                                    <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmount)}</td>
-                                                    <td>
+                                                <td>${session} - ${term}</td>
+                                                <td>${className} ${arm}</td>
+
+                                                <td><s>N</s>${thousandSeperator(item.totalMandatoryAmount)}</td>
+                                                <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmount)}</td>
+                                                <td>
                                                     <div class="text-back-div">
-                                                            <div class="text-div">
-                                                                <div class="first-class ${outstandingStatus}"><s>N</s>${thousandSeperator(item.totalMandatoryAmountPaid)}</div>
-                                                                <div class="second-class">(${item.totalPercentageForMandatoryFees}%)</div>
-                                                            </div>
+                                                        <div class="text-div">
+                                                            <div class="first-class ${outstandingStatus}"><s>N</s>${thousandSeperator(item.totalMandatoryAmountPaid)}</div>
+                                                            <div class="second-class">(${item.totalPercentageForMandatoryFees}%)</div>
                                                         </div>
-                                                    </td>
-                                                    <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmountPaid)}</td>
-                                                    <td><s>N</s>${thousandSeperator(item.totalFeesPaid)}</td>
-                                                    <td>
-                                                        <div class="text-back-div">
-                                                            <div class="text-div">
-                                                                <div class="first-class ${outstandingStatus}"><s>N</s>${thousandSeperator(item.outstandingBalance)}</div>
-                                                            </div>
+                                                    </div>
+                                                </td>
+                                                <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmountPaid)}</td>
+                                                <td><s>N</s>${thousandSeperator(item.totalFeesPaid)}</td>
+                                                <td>
+                                                    <div class="text-back-div">
+                                                        <div class="text-div">
+                                                            <div class="first-class ${outstandingStatus}"><s>N</s>${thousandSeperator(item.outstandingBalance)}</div>
                                                         </div>
-                                                    </td>
-                                                    <td><s>N</s>${thousandSeperator(advancedBalance)}</td>
-                                                    <td>
-                                                        <button class="btn view-btn"
-                                                            title="Click to load fund"
-                                                            onclick="_fetchAccountFeesToPay('${item.branchId}','${session}','${termId}','${departmentId}','${classId}','${armId}','${item.studentId}', 'loadFund');">
-                                                            LOAD FUND
-                                                        </button>
-                                                    </td>
-
-                                                    <td>
-                                                        <button class="btn view-btn"
-                                                            title="Click to make pay fees"
-                                                            onclick="_fetchAccountFeesToPay('${item.branchId}','${session}','${termId}','${departmentId}','${classId}','${armId}','${item.studentId}', 'payFees');">
-                                                            PAY FEES
-                                                        </button>
-                                                    </td>
-                                                </tr>`;
+                                                    </div>
+                                                </td>
+                                                <td><s>N</s>${thousandSeperator(advancedBalance)}</td>
+                                               
+                                                ${loadFundColumn}
+                                        <td>
+                                            <button class="btn view-btn"
+                                                title="Click to make pay fees"
+                                                onclick="_fetchAccountFeesToPay('${item.branchId}','${session}','${termId}','${departmentId}','${classId}','${armId}','${item.studentId}', 'payFees');">
+                                                PAY FEES
+                                            </button>
+                                        </td>
+                                            </tr > `;
                                         });
 
-                                        html += `</tbody>`;
+                                        html += `</tbody >`;
                                         $('#accountPageContent').html(html);
                                     }
                                 });
@@ -521,7 +531,8 @@
                                     <div>Student Name:</div>
                                     <div><span id="studentPayFullName">
                                             <script>
-                                                $("#studentPayFullName").html(useAccountFessToPaySession?.studentData?.fullName);
+                                                $("#studentPayFullName").html(useAccountFessToPaySession?.studentData
+                                                    ?.fullName);
                                             </script>
                                         </span></div>
                                 </div>
@@ -626,7 +637,8 @@
                                     let upPaidFees = false;
                                     let completeFees = false;
 
-                                    if (useAccountFessToPaySession && useAccountFessToPaySession?.listOfFeesNotPaidData) {
+                                    if (useAccountFessToPaySession && useAccountFessToPaySession
+                                        ?.listOfFeesNotPaidData) {
                                         const fetch = useAccountFessToPaySession?.listOfFeesNotPaidData;
 
                                         for (let i = 0; i < fetch.length; i++) {
@@ -642,26 +654,26 @@
                                                 "orange-color";
                                             const amount = thousandSeperator(fetchedFess.amount);
 
-                                            const fieldId = `fees_${feesId}`;
+                                            const fieldId = `fees_${feesId} `;
 
                                             notPaidFees +=
                                                 upPaidFees = true;
                                             $("#fetchedFeeTextbox").append(`
-                                            <div class="each-toggle-div payment-each-toggle-div new-pay-toggle-div">
-                                                <div class="title-back-div">
-                                                    <div class="toggle-title-div new-toggle-title">
-                                                        <h5>${feesName}</h5> 
-                                                        <span class="${feesOptionColor}">(<s>N</s>${amount})</span>
-                                                    </div>
-                                                    <div class="sub-title ${feesOptionColor}">${newFeesOption}</div>
-                                                </div>
+                                            < div class="each-toggle-div payment-each-toggle-div new-pay-toggle-div" >
+                                                                            <div class="title-back-div">
+                                                                                <div class="toggle-title-div new-toggle-title">
+                                                                                    <h5>${feesName}</h5> 
+                                                                                    <span class="${feesOptionColor}">(<s>N</s>${amount})</span>
+                                                                                </div>
+                                                                                <div class="sub-title ${feesOptionColor}">${newFeesOption}</div>
+                                                                            </div>
 
-                                                <div class="text-box-wrapper">
-                                                    <div class="text_field_container" id="${fieldId}_container"></div>
-                                                    <input type="hidden" class="fees-id-holder" value="${feesId}">
-                                                    <div class="text_field_container" id="${percentage}_container"></div>
-                                                </div>
-                                            </div>`);
+                                                                            <div class="text-box-wrapper">
+                                                                                <div class="text_field_container" id="${fieldId}_container"></div>
+                                                                                <input type="hidden" class="fees-id-holder" value="${feesId}">
+                                                                                <div class="text_field_container" id="${percentage}_container"></div>
+                                                                            </div>
+                                                                        </div > `);
 
                                             textField({
                                                 id: fieldId,
@@ -681,7 +693,9 @@
 
                                         }
                                         if (!upPaidFees) {
-                                            $("#fetchedFeeTextbox").html('<div class="success-msg">Fees Payment Completed for this session and term!</div>');
+                                            $("#fetchedFeeTextbox").html(
+                                                '<div class="success-msg">Fees Payment Completed for this session and term!</div>'
+                                            );
                                         }
                                     }
 
@@ -693,12 +707,13 @@
                                             const totalAmountPaid = thousandSeperator(fetchFeesPaid.totalAmountPaid);
                                             const totalFeesPercentage = fetchFeesPaid.totalFeesPercentage;
                                             const feesName = fetchFeesPaid.feesName;
-                                            const percentageColor = totalFeesPercentage >= 100 ? "green-color" : "orange-color";
+                                            const percentageColor = totalFeesPercentage >= 100 ? "green-color" :
+                                                "orange-color";
 
                                             paidFees +=
                                                 completeFees = true;
                                             $("#paidFees").append(`
-                                            <div class="alert-list-back-div paid-fees-back-div">
+                                            < div class="alert-list-back-div paid-fees-back-div" >
                                                 <div class="alert-list paid-fees-list">
                                                     <div>${feesName}:</div>
                                                     <div class="alert-value">
@@ -706,7 +721,7 @@
                                                         <span><s>N</s>${totalAmountPaid}</span>
                                                     </div>
                                                 </div>
-                                            </div>`);
+                                                                        </div >`);
 
                                         }
                                         if (!completeFees) {
@@ -803,7 +818,7 @@
         function _convertAmountToPercentage(feesId) {
             const feeData = useAccountFessToPaySession?.listOfFeesNotPaidData.find(f => f.feesId == feesId);
 
-            const fieldId = `fees_${feesId}`;
+            const fieldId = `fees_${feesId} `;
             const percentageId = feesId + "_percent";
 
             let totalFee = parseFloat(feeData.amount) || 0;
@@ -952,21 +967,21 @@
                                         const arm = response?.armData?.armName;
 
                                         let html = `
-                                            <thead>
-                                                <tr class="tb-col">
-                                                    <th>sn</th>
-                                                    <th>Student Info</th>
-                                                    <th>Session/Term</th>
-                                                    <th>Class</th>
-                                                    <th>Total Mandatory Fees</th>
-                                                    <th>Total Non-Mandatory Fees</th>
-                                                    <th>Mandatory Fees Paid</th>
-                                                    <th>Non-Mandatory Fees Paid</th>
-                                                    <th>Total Fees Paid</th>
-                                                    <th>Oustanding Mandatory Fees</th>
-                                                    <th>View</th>
-                                                </tr>
-                                            </thead>
+                                            < thead >
+                                            <tr class="tb-col">
+                                                <th>sn</th>
+                                                <th>Student Info</th>
+                                                <th>Session/Term</th>
+                                                <th>Class</th>
+                                                <th>Total Mandatory Fees</th>
+                                                <th>Total Non-Mandatory Fees</th>
+                                                <th>Mandatory Fees Paid</th>
+                                                <th>Non-Mandatory Fees Paid</th>
+                                                <th>Total Fees Paid</th>
+                                                <th>Oustanding Mandatory Fees</th>
+                                                <th>View</th>
+                                            </tr>
+                                                                        </thead >
                                             <tbody>`;
 
                                         let sn = 0;
@@ -981,10 +996,14 @@
                                             const passport = student.passport || "default.jpg";
                                             const advancedBalance = student.advancedBalance;
                                             const isDebtor = item.isDebtor;
-                                            const debtorStatusColor = (isDebtor === "TRUE") ? "red-color" : "green-color";
-                                            const debtorImgStatusColor = (isDebtor === "TRUE") ? '<div class="status-icon debtor"><i class="bi-x"></i></div>' : '<div class="status-icon"><i class="bi-check"></i></div>';
+                                            const debtorStatusColor = (isDebtor === "TRUE") ? "red-color" :
+                                                "green-color";
+                                            const debtorImgStatusColor = (isDebtor === "TRUE") ?
+                                                '<div class="status-icon debtor"><i class="bi-x"></i></div>' :
+                                                '<div class="status-icon"><i class="bi-check"></i></div>';
                                             const outstandingBalance = item.outstandingBalance;
-                                            const outstandingStatus = outstandingBalance > 0 ? "red-color" : "green-color";
+                                            const outstandingStatus = outstandingBalance > 0 ? "red-color" :
+                                                "green-color";
 
                                             html += `
                                                 <tr class="tb-row">
@@ -1010,7 +1029,7 @@
                                                     <td><s>N</s>${thousandSeperator(item.totalMandatoryAmount)}</td>
                                                     <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmount)}</td>
                                                     <td>
-                                                    <div class="text-back-div">
+                                                        <div class="text-back-div">
                                                             <div class="text-div">
                                                                 <div class="first-class ${debtorStatusColor}"><s>N</s>${thousandSeperator(item.totalMandatoryAmountPaid)}</div>
                                                                 <div class="second-class">(${item.totalPercentageForMandatoryFees}%)</div>
@@ -1076,7 +1095,8 @@
                                     <div>Student Name:</div>
                                     <div><span id="debotorStudentPayFullName">
                                             <script>
-                                                $("#debotorStudentPayFullName").html(useAccountFessToPaySession?.studentData?.fullName);
+                                                $("#debotorStudentPayFullName").html(useAccountFessToPaySession?.studentData
+                                                    ?.fullName);
                                             </script>
                                         </span></div>
                                 </div>
@@ -1170,15 +1190,15 @@
                                     paidFees +=
                                         completeFees = true;
                                     $("#debtorPaidFees").append(`
-                                    <div class="alert-list-back-div paid-fees-back-div">
-                                        <div class="alert-list paid-fees-list">
-                                            <div>${feesName}:</div>
-                                            <div class="alert-value">
-                                                <span class="alert-percentage ${percentageColor}">${totalFeesPercentage}%</span>
-                                                <span><s>N</s>${totalAmountPaid}</span>
-                                            </div>
-                                        </div>
-                                    </div>`);
+                                            < div class="alert-list-back-div paid-fees-back-div" >
+                                                <div class="alert-list paid-fees-list">
+                                                    <div>${feesName}:</div>
+                                                    <div class="alert-value">
+                                                        <span class="alert-percentage ${percentageColor}">${totalFeesPercentage}%</span>
+                                                        <span><s>N</s>${totalAmountPaid}</span>
+                                                    </div>
+                                                </div>
+                                                                </div >`);
 
                                 }
                                 if (!completeFees) {
@@ -1267,7 +1287,8 @@
                                     </span>
                                     / CLASS -- <span id="AccountClass">
                                         <script>
-                                            $("#AccountClass").html(useAccountStudentByClassSession?.classData?.className + ' ' +
+                                            $("#AccountClass").html(useAccountStudentByClassSession?.classData?.className +
+                                                ' ' +
                                                 useAccountStudentByClassSession?.armData?.armName);
                                         </script>
                                     </span>
@@ -1295,22 +1316,22 @@
                                                 const arm = response?.armData?.armName;
 
                                                 let html = `
-                                            <thead>
-                                                <tr class="tb-col">
-                                                    <th></th>
-                                                    <th>sn</th>
-                                                    <th>Student Info</th>
-                                                    <th>Session/Term</th>
-                                                    <th>Class</th>
-                                                    <th>Total Mandatory Fees</th>
-                                                    <th>Total Non-Mandatory Fees</th>
-                                                    <th>Mandatory Fees Paid</th>
-                                                    <th>Non-Mandatory Fees Paid</th>
-                                                    <th>Total Fees Paid</th>
-                                                    <th>Outstanding Balance</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
+                                            < thead >
+                                            <tr class="tb-col">
+                                                <th></th>
+                                                <th>sn</th>
+                                                <th>Student Info</th>
+                                                <th>Session/Term</th>
+                                                <th>Class</th>
+                                                <th>Total Mandatory Fees</th>
+                                                <th>Total Non-Mandatory Fees</th>
+                                                <th>Mandatory Fees Paid</th>
+                                                <th>Non-Mandatory Fees Paid</th>
+                                                <th>Total Fees Paid</th>
+                                                <th>Outstanding Balance</th>
+                                                <th>Status</th>
+                                            </tr>
+                                                                        </thead >
                                             <tbody>`;
 
                                                 let sn = 0;
@@ -1327,33 +1348,36 @@
                                                     const isDebtor = item.isDebtor;
                                                     const isResultActivated = item.isResultActivated;
                                                     const outstandingBalance = item.outstandingBalance;
-                                                    const debtorStatusColor = (isDebtor === "TRUE") ? "red-color" : "green-color";
-                                                    const debtorImgStatusColor = (isDebtor === "TRUE") ? '<div class="status-icon debtor"><i class="bi-x"></i></div>' : '<div class="status-icon"><i class="bi-check"></i></div>';
+                                                    const debtorStatusColor = (isDebtor === "TRUE") ?
+                                                        "red-color" : "green-color";
+                                                    const debtorImgStatusColor = (isDebtor === "TRUE") ?
+                                                        '<div class="status-icon debtor"><i class="bi-x"></i></div>' :
+                                                        '<div class="status-icon"><i class="bi-check"></i></div>';
 
                                                     viewStatus = (isResultActivated === "TRUE") ?
                                                         `
-                                                            <div class="status-div ACTIVATE">
-                                                                ACTIVATED
-                                                            </div>
-                                                        ` :
+                                                <div class="status-div ACTIVATE">
+                                                    ACTIVATED
+                                                </div>
+                                                ` :
                                                         `
-                                                            <div class="status-div DEACTIVATE">
-                                                                DEACTIVATED
-                                                            </div>
-                                                        `;
+                                                <div class="status-div DEACTIVATE">
+                                                    DEACTIVATED
+                                                </div>
+                                                `;
 
                                                     html += `
                                                 <tr class="tb-row">
                                                     <td>
                                                         <label class="custom-checkbox">
-                                                            <input type="checkbox" 
+                                                            <input type="checkbox"
                                                                 class="child"
                                                                 id="student_${studentId}"
-                                                                name="studentId[]" 
-                                                                value="${studentId}" 
+                                                                name="studentId[]"
+                                                                value="${studentId}"
                                                                 data-value="${studentId}"
                                                                 ${isResultActivated === "TRUE" ? "checked" : ""}>
-                                                            <span></span>
+                                                                <span></span>
                                                         </label>
                                                     </td>
                                                     <td>${sn}</td>
@@ -1378,7 +1402,7 @@
                                                     <td><s>N</s>${thousandSeperator(item.totalMandatoryAmount)}</td>
                                                     <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmount)}</td>
                                                     <td>
-                                                    <div class="text-back-div">
+                                                        <div class="text-back-div">
                                                             <div class="text-div">
                                                                 <div class="first-class ${debtorStatusColor}"><s>N</s>${thousandSeperator(item.totalMandatoryAmountPaid)}</div>
                                                                 <div class="second-class">(${item.totalPercentageForMandatoryFees}%)</div>
@@ -1388,7 +1412,7 @@
                                                     <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmountPaid)}</td>
                                                     <td><s>N</s>${thousandSeperator(item.totalFeesPaid)}</td>
                                                     <td>
-                                                    <div class="text-back-div">
+                                                        <div class="text-back-div">
                                                             <div class="text-div">
                                                                 <div class="first-class ${debtorStatusColor}"><s>N</s>${thousandSeperator(item.outstandingBalance)}</div>
                                                             </div>
