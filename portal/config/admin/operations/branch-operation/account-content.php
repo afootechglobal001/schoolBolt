@@ -212,7 +212,7 @@
 
                 <div class="new-btn-container"></div>
                 <script>
-                    $(document).ready(function () {
+                    $(document).ready(function() {
                         let showButton = '';
                         const statusId = studentParentSessionData?.parent?.statusId;
 
@@ -372,7 +372,7 @@
                     <div class="table-div animated fadeIn">
                         <table class="table" cellspacing="0" style="width:100%" id="accountPageContent">
                             <script>
-                                $(document).ready(function () {
+                                $(document).ready(function() {
                                     const response = JSON.parse(sessionStorage.getItem(
                                         "useAccountStudentByClassSession"));
 
@@ -631,7 +631,7 @@
                         <div class="fetch-toggle pay-fetch-toggle" id="fetchedFeeTextbox">
 
                             <script>
-                                $(document).ready(function () {
+                                $(document).ready(function() {
                                     let notPaidFees = '';
                                     let paidFees = '';
                                     let upPaidFees = false;
@@ -862,7 +862,7 @@
 
             let totalFees = 0;
 
-            $('#fetchedFeeTextbox input[type="number"]').each(function () {
+            $('#fetchedFeeTextbox input[type="number"]').each(function() {
                 let id = $(this).attr('id');
 
                 // Only amount fields
@@ -887,7 +887,7 @@
             }
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             _calculatePaymentSummary();
 
             ///// SHOW / HIDE SCHOOL BOLT CHARGES ////
@@ -949,7 +949,7 @@
                     <div class="table-div animated fadeIn">
                         <table class="table" cellspacing="0" style="width:100%" id="accountPageContent">
                             <script>
-                                $(document).ready(function () {
+                                $(document).ready(function() {
                                     const response = JSON.parse(sessionStorage.getItem(
                                         "useAccountStudentByClassSession"));
 
@@ -1173,7 +1173,7 @@
                     </div>
 
                     <script>
-                        $(document).ready(function () {
+                        $(document).ready(function() {
                             let paidFees = '';
                             let completeFees = false;
 
@@ -1299,7 +1299,7 @@
                             <div class="table-div animated fadeIn">
                                 <table class="table" cellspacing="0" style="width:100%" id="accountPageContent">
                                     <script>
-                                        $(document).ready(function () {
+                                        $(document).ready(function() {
                                             const response = JSON.parse(sessionStorage.getItem(
                                                 "useAccountStudentByClassSession"));
 
@@ -1443,7 +1443,7 @@
 <?php if ($page == 'branchDailyRevenuePage') { ?>
     <div class="branch-account-wrapper">
         <div class="nav-content-back-div">
-            <div class="nav-container">
+            <div class="nav-container branch-account-nav">
                 <ul>
                     <li class="active border" title="Filter Revenue By Date Range" id="filterBranchByDate"
                         onclick="_getActiveBranchReportNav({divid:'filterBranchByDate', page: 'filterBranchByDate', url: adminPortalLocalUrl});">
@@ -1471,7 +1471,7 @@
 
 <!-- Filter By Date Revenue Pages -->
 <?php if ($page == 'filterBranchByDate') { ?>
-    <div class="chart-div-notifications report-chart-div">
+    <div class="chart-div-notifications report-chart-div branch-chat-div">
         <div class="text"><i class="bi-graph-up-arrow"></i> Showing Matrix for </div>
 
         <div class="text text-right" onclick="select_search()">
@@ -1541,12 +1541,12 @@
     <div class="fetch-report-back-div">
         <div class="alert alert-success top-alert-div report-alert">
             <div class="div">
-                <i class="bi-info-circle"></i> Revenue report between <span id="dateFrom">Loading...</span> and <span
-                    id="dateTo">Loading...</span>
+                <i class="bi-info-circle"></i> Revenue report between <span id="dateFrom"> March 17 2026</span> and <span
+                    id="dateTo">April 15 2026</span>
             </div>
 
             <div class="div">
-                Total Revenue: <span class="balance" id="totalRevenue">Loading...</span>
+                Total Revenue: <span class="balance" id="totalRevenue">N347,000.00</span>
             </div>
         </div>
 
@@ -1631,14 +1631,23 @@
                                 </thead>
 
                                 <tbody id="pageContent">
-                                    <!-- CONTENT GOES HERE -->
+                                    <tr class="tb-row">
+                                        <td>1</td>
+                                        <td class="clickable-td" title="Click to view payment breakdown" onclick="_getForm({ page: 'branchRevenueBreakdown', id: '', layer:2, url: adminPortalLocalUrl});">2026-04-14</td>
+                                        <td class="SUCCESSFULSTATUS"><s>N</s>20,000</td>
+                                        <td class="PENDINGSTATUS"><s>N</s>15,000</td>
+                                        <td class="CANCLLEDSTATUS"><s>N</s>5,000</td>
+                                        <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="_getForm({ page: 'branchRevenueBreakdown', id: '', layer:2, url: adminPortalLocalUrl});">VIEW DETAILS</button></td>
+                                    </tr>
+
+                                    <!-- CONTENT GOES HERE
                                     <tr>
                                         <td colspan="20">
                                             <div class="content-loading-div">
                                                 <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
                                             </div>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>
@@ -1667,21 +1676,13 @@
                                         yValueFormatString: "#,##0.#" % "",
                                         indexLabelFontSize: 9,
                                         dataPoints: [{
-                                            label: "SUPER ADMIN",
-                                            y: 5
-                                        },
-                                        {
-                                            label: "ADMINISTRATOR",
-                                            y: 6
-                                        },
-                                        {
-                                            label: "SUBJECT TEACHER",
-                                            y: 4
-                                        },
-                                        {
-                                            label: "CLASS TEACHERS",
-                                            y: 5
-                                        },
+                                                label: "MANUAL PAYMENT",
+                                                y: 300000.00
+                                            },
+                                            {
+                                                label: "CREDIT CARD",
+                                                y: 43000.00
+                                            },
                                         ]
                                     }]
                                 };
@@ -1710,13 +1711,13 @@
                                         indexLabel: "{label} ({y})",
                                         yValueFormatString: "#,##0.#" % "",
                                         dataPoints: [{
-                                            label: "Debit/Credit Card",
-                                            y: 3
-                                        },
-                                        {
-                                            label: "Bank Transfer",
-                                            y: 11
-                                        },
+                                                label: "Debit/Credit Card",
+                                                y: 3
+                                            },
+                                            {
+                                                label: "Bank Transfer",
+                                                y: 11
+                                            },
                                         ]
                                     }]
                                 };
@@ -1768,29 +1769,531 @@
             <div class="div" id="reportBalanceContainer"></div>
         </div>
 
-        <div class="table-div animated fadeIn">
-            <table class="table" cellspacing="0" style="width:100%">
-                <thead>
-                    <tr class="tb-col">
-                        <th>sn</th>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>View</th>
-                    </tr>
-                </thead>
+        <div class="branch-revenue-table-wrapper">
+            <div class="table-div animated fadeIn">
+                <table class="table" cellspacing="0" style="width:100%">
+                    <thead>
+                        <tr class="tb-col">
+                            <th>sn</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>View</th>
+                        </tr>
+                    </thead>
 
-                <tbody id="pageContent">
-                    <!-- CONTENT GOES HERE -->
+                    <tbody id="pageContent">
+                        <!-- CONTENT GOES HERE -->
 
-                    <tr>
-                        <td colspan="20">
-                            <div class="false-notification-div">
-                                <p>Select session And term to filter revenue</p>
+                        <tr>
+                            <td colspan="20">
+                                <div class="false-notification-div">
+                                    <p>Select session And term to filter revenue</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'branchRevenueBreakdown') { ?>
+    <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="top-panel-div">
+            <div class="inner-top">
+                <span><i class="bi-graph-up-arrow"></i> BRANCH REVENUE BREAKDOWN</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="profile-content-div">
+            <div class="field-back-div">
+                <div class="field-inner-div student-result-field-inner-div">
+
+                    <div class="content-wrapper animated fadeIn">
+                        <div class="header-div">
+                            <div class="title-nav-back-div">
+                                <div class="nav-ul-div">
+                                    <ul>
+                                        <li class="active-li" title="Successful Status" id="branchSuccessfulPage" onclick="_getBranchPaymentStatusNav({divid:'branchSuccessfulPage', page: 'branchSuccessfulPage', id: '<?php echo $id; ?>', url: adminPortalLocalUrl});"><img src="<?php echo $websiteUrl ?>/images/tick-mark.png" alt="Successful Icon" /> SUCCESSFUL</li>
+                                        <li title="Pending Status" id="branchPendingPage" onclick="_getBranchPaymentStatusNav({divid:'branchPendingPage', page: 'branchPendingPage', id: '<?php echo $id; ?>', url: adminPortalLocalUrl});"><img src="<?php echo $websiteUrl ?>/images/load.png" alt="Pending Icon" /> PENDING</li>
+                                        <li title="Cancel Status" id="branchCancelledPage" onclick="_getBranchPaymentStatusNav({divid:'branchCancelledPage', page: 'branchCancelledPage', id: '<?php echo $id; ?>', url: adminPortalLocalUrl});"><img src="<?php echo $websiteUrl ?>/images/close.png" alt="Cancelled Icon" /></i> CANCELLED</li>
+                                    </ul>
+                                </div>
                             </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        </div>
+
+                        <div class="content-container" id="getBranchPaymentNav">
+                            <script>
+                                _getBranchPaymentStatusNav({
+                                    divid: 'branchSuccessfulPage',
+                                    page: 'branchSuccessfulPage',
+                                    id: '<?php echo $id; ?>',
+                                    url: adminPortalLocalUrl
+                                });
+                                 sessionStorage.setItem("sessionPayDate", '<?php echo $id; ?>');
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- ///// Success Page //// -->
+<?php if ($page == 'branchSuccessfulPage') { ?>
+    <div id="revenueAlert" class="alert top-alert-div animated fadeIn">
+        <div>
+            <i class="bi-graph-up-arrow"></i>
+            Successful Transactions On <span id="date"></span>
+            <output style="display:none;">
+               -- Total Revenue:
+                <span class="balance" id="totalAmount"></span>
+            </output>
+        </div>
+
+        <div class="btn-container">
+            <button class="btn"><i class="bi-printer"></i> PRINT</button>
+            <button class="btn"><i class="bi-file-earmark-excel"></i> EXPORT</button>
+        </div>
+    </div>
+
+    <div class="table-div animated fadeIn">
+        <table class="table" cellspacing="0" style="width:100%">
+            <thead>
+                <tr class="tb-col">
+                    <th>sn</th>
+                    <th>Student Info</th>
+                    <th>Parent Info</th>
+                    <th>Branch</th>
+                    <th>Session/Term</th>
+                    <th>Class</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+
+            <tbody id="pageContent">
+                <script>
+                    $(document).ready(function() {
+                        const newpayDate = "<?php echo $id; ?>";
+                        _loadPaymentsByStatus('5', newpayDate);
+                    });
+                </script>
+                <tr>
+                    <td colspan="20">
+                        <div class="content-loading-div">
+                            <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<?php } ?>
+
+<!-- ///// Pending Page //// -->
+<?php if ($page == 'branchPendingPage') { ?>
+    <div id="revenueAlert" class="alert top-alert-div animated fadeIn">
+        <div>
+            <i class="bi-graph-up-arrow"></i>
+            Pending Transactions On <span id="date"></span>
+            <output style="display:none;">
+               -- Total Revenue:
+                <span class="balance" id="totalAmount"></span>
+            </output>
+        </div>
+
+        <div class="btn-container">
+            <button class="btn"><i class="bi-printer"></i> PRINT</button>
+            <button class="btn"><i class="bi-file-earmark-excel"></i> EXPORT</button>
+        </div>
+    </div>
+
+    <div class="table-div animated fadeIn">
+        <table class="table" cellspacing="0" style="width:100%">
+            <thead>
+                <tr class="tb-col">
+                    <th>sn</th>
+                    <th>Student Info</th>
+                    <th>Parent Info</th>
+                    <th>Branch</th>
+                    <th>Session/Term</th>
+                    <th>Class</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+
+            <tbody id="pageContent">
+                <script>
+                    $(document).ready(function() {
+                        const newpayDate = "<?php echo $id; ?>";
+                        _loadPaymentsByStatus('3', newpayDate);
+                    });
+                </script>
+                <tr>
+                    <td colspan="20">
+                        <div class="content-loading-div">
+                            <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<?php } ?>
+
+<!-- ///// Cancel Page //// -->
+<?php if ($page == 'branchCancelledPage') { ?>
+    <div id="revenueAlert" class="alert top-alert-div animated fadeIn">
+        <div>
+            <i class="bi-graph-up-arrow"></i>
+            Cancelled Transactions On <span id="date"></span>
+            <output style="display:none;">
+               -- Total Revenue:
+                <span class="balance" id="totalAmount"></span>
+            </output>
+        </div>
+
+        <div class="btn-container">
+            <button class="btn"><i class="bi-printer"></i> PRINT</button>
+            <button class="btn"><i class="bi-file-earmark-excel"></i> EXPORT</button>
+        </div>
+    </div>
+
+    <div class="table-div animated fadeIn">
+        <table class="table" cellspacing="0" style="width:100%">
+            <thead>
+                <tr class="tb-col">
+                    <th>sn</th>
+                    <th>Student Info</th>
+                    <th>Parent Info</th>
+                    <th>Branch</th>
+                    <th>Session/Term</th>
+                    <th>Class</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+
+            <tbody id="pageContent">
+                <script>
+                    $(document).ready(function() {
+                        const newpayDate = "<?php echo $id; ?>";
+                        _loadPaymentsByStatus('4', newpayDate);
+                    });
+                </script>
+                <tr>
+                    <td colspan="20">
+                        <div class="content-loading-div">
+                            <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'branchPaymentBreakDownForm') { ?>
+    <script>
+        getRevenueBreakdownSessionData = JSON.parse(sessionStorage.getItem("getRevenueBreakdownSessionData"));
+    </script>
+
+    <div class="slide-form-div save-compute-slide-form" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <div class="icon-title-div">
+                    <span id="panel-title"><span><i class="bi-plus-square"></i></span> REVENUE BREAKDOWN</span>
+                </div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Branch Details:</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Branch Name:</div>
+                                    <div><span id="branchName">
+                                            <script>
+                                                $("#branchName").html(getRevenueBreakdownSessionData?.branchData?.branchName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Branch Mobile Number:</div>
+                                    <div><span id="mobileNumber">
+                                            <script>
+                                                $("#mobileNumber").html(getRevenueBreakdownSessionData?.branchData?.mobileNumber);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Parent Details:</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Parent Full Name:</div>
+                                    <div><span id="fullName">
+                                            <script>
+                                                $("#fullName").html(capitalizeFirstLetterOfEachWord(getRevenueBreakdownSessionData?.parentData?.titleId + ' ' + getRevenueBreakdownSessionData?.parentData?.surName + ' ' + getRevenueBreakdownSessionData?.parentData?.otherNames));
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Parent Email:</div>
+                                    <div><span id="parentEmail">
+                                            <script>
+                                                $("#parentEmail").html(getRevenueBreakdownSessionData?.parentData?.email);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Relationship:</div>
+                                    <div><span id="relationship">
+                                            <script>
+                                                $("#relationship").html(getRevenueBreakdownSessionData?.parentData?.relationship);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Student Details:</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Student Full Name:</div>
+                                    <div><span id="studentFullName">
+                                            <script>
+                                                $("#studentFullName").html(capitalizeFirstLetterOfEachWord(getRevenueBreakdownSessionData?.studentData?.surName + ' ' + getRevenueBreakdownSessionData?.studentData?.firstName + ' ' + getRevenueBreakdownSessionData?.studentData?.otherNames));
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Student Id:</div>
+                                    <div><span id="studentId">
+                                            <script>
+                                                $("#studentId").html(getRevenueBreakdownSessionData?.studentData?.studentId);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Session:</div>
+                                    <div><span id="sessionName">
+                                            <script>
+                                                $("#sessionName").html(getRevenueBreakdownSessionData?.session);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Term:</div>
+                                    <div><span id="studentTermName">
+                                            <script>
+                                                $("#studentTermName").html(getRevenueBreakdownSessionData?.termData?.termName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Department:</div>
+                                    <div><span id="departmentName">
+                                            <script>
+                                                $("#departmentName").html(getRevenueBreakdownSessionData?.departmentData?.departmentName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Class:</div>
+                                    <div><span id="className">
+                                            <script>
+                                                $("#className").html(getRevenueBreakdownSessionData?.classData?.className + ' ' + getRevenueBreakdownSessionData?.armData?.armName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Payment Details:</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Payment Id:</div>
+                                    <div><span id="paymentId">
+                                            <script>
+                                                $("#paymentId").html(getRevenueBreakdownSessionData?.paymentId);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Payment Method:</div>
+                                    <div><span id="paymentMethodName">
+                                            <script>
+                                                $("#paymentMethodName").html(getRevenueBreakdownSessionData?.paymentMethodData?.paymentMethodName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Status:</div>
+                                    <div><span id="statusName">
+                                            <script>
+                                                $("#statusName").html(getRevenueBreakdownSessionData?.statusData?.statusName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    $(document).ready(function () {
+                        const paymentComputedBy = getRevenueBreakdownSessionData?.paymentComputedBy;
+
+                        let content = "";
+                        if (paymentComputedBy) {
+                            content += `
+                                <div class="alert alert-success form-alert">
+                                <span>Manual Payment Processed By:</span>
+                                <div class="alert-list-div">
+                                    <div class="alert-list-back-div">
+                                        <div class="alert-list">
+                                            <div>Staff Id:</div>
+                                            <div><span>${paymentComputedBy?.staffId}</span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert-list-back-div">
+                                        <div class="alert-list">
+                                            <div>Staff FullName:</div>
+                                            <div><span>${paymentComputedBy?.fullName}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+                        }
+                        $('#showPaymentComputedBy').html(content);
+                    });
+                </script>
+
+                <div id="showPaymentComputedBy"></div>
+
+                <div class="paid-fee-conatiner">
+                    <div class="alert alert-success form-alert">
+                        <span>Breakdown of Fees Paid</span>
+
+                        <div class="alert-list-div" id="paidFees">
+                            No record found!
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Total Amount</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>TOTAL AMOUNT:</div>
+                                    <div><span class="total-amount" id="formTotalAmount"><s>N</s>
+                                            <script>
+                                                $("#formTotalAmount").html('<s>N</s>' + thousandSeperator(getRevenueBreakdownSessionData?.totalFeesPaid));
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    $(document).ready(function() {
+                        let paidFees = '';
+
+                        if (getRevenueBreakdownSessionData && getRevenueBreakdownSessionData?.paymentBreakdownData) {
+                            const fetch = getRevenueBreakdownSessionData?.paymentBreakdownData;
+
+                            for (let i = 0; i < fetch.length; i++) {
+                                const fetchedFess = fetch[i];
+                                const feesName = fetchedFess.feesName;
+                                const amount = thousandSeperator(fetchedFess.amount);
+
+                                paidFees += `
+                                <div class="alert-list-back-div">
+                                    <div class="alert-list">
+                                        <div>${feesName}:</div>
+                                        <div><span><s>N</s>${amount}</span></div>
+                                    </div>
+                                </div>`;
+                            }
+                            $("#paidFees").html(paidFees !== '' ? paidFees : 'No record found!');
+                        }
+                    });
+                </script>
+
+                <div>
+                    <button class="btn" title="PRINT RECEIPT" id="submitBtn" onclick=""> <i class="bi-check"></i> PRINT RECEIPT </button>
+                </div>
+            </div>
         </div>
     </div>
 <?php } ?>

@@ -149,11 +149,34 @@ function _fetchFeesToPay() {
             "getPayFeesToPaySession",
             JSON.stringify(info),
           );
-          _getForm({
-            page: "paymentForm",
-            layer: 2,
-            url: parentPortalLocalUrl,
-          });
+
+          //// Check if student have an outstanding payment for last term /// 
+          const haveOutstandingFeesForLastTerm = info?.haveOutstandingFeesForLastTerm;
+          if (haveOutstandingFeesForLastTerm===true) {
+            _alertClose(2);
+            _showCustomConfirm({
+              title: "Outstanding Fees Detected!",
+              message: info.message,
+              alertType: "error",
+              falseActionBtn: true,
+              trueActionBtnText: "PROCCED TO PAY",
+              falseActionBtnText: "CANCEL",
+              trueActionCallback: () => {
+                _getForm({
+                  page: "paymentForm",
+                  layer: 2,
+                  url: parentPortalLocalUrl,
+                });
+              },
+              closeOnOverlayClick: false,
+            });
+          } else {
+            _getForm({
+              page: "paymentForm",
+              layer: 2,
+              url: parentPortalLocalUrl,
+            });
+          }
         } else {
           _showCustomConfirm({
             title: "Cannot Proceed!",
@@ -166,11 +189,13 @@ function _fetchFeesToPay() {
         }
       },
       error: function (textStatus, errorThrown) {
+        _alertClose(2);
         console.error("AJAX Error: ", textStatus, errorThrown);
         _actionAlert("Check your internet connection and try again.", false);
       },
     });
   } catch (error) {
+    _alertClose(2);
     console.error("Error: ", error);
     _actionAlert("An unexpected error occurred! Please try again.", false);
   }

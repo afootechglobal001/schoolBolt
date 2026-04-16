@@ -845,15 +845,43 @@ function _fetchAccountFeesToPay(
               url: adminPortalLocalUrl,
             });
           } else {
-            _getForm({
-              page: "branchStudentPayFeesForm",
-              layer: 3,
-              url: adminPortalLocalUrl,
-            });
+            //// Check if student have an outstanding payment for last term /// 
+            const haveOutstandingFeesForLastTerm = response?.haveOutstandingFeesForLastTerm;
+            if (haveOutstandingFeesForLastTerm===true) {
+              _alertClose(3);
+              _showCustomConfirm({
+                title: "Outstanding Fees Detected!",
+                message: response.message,
+                alertType: "error",
+                falseActionBtn: true,
+                trueActionBtnText: "PROCCED TO PAY",
+                falseActionBtnText: "CANCEL",
+                trueActionCallback: () => {
+                  _getForm({
+                    page: "branchStudentPayFeesForm",
+                    layer: 3,
+                    url: adminPortalLocalUrl,
+                  });
+                },
+                closeOnOverlayClick: false,
+              });
+            } else {
+              _getForm({
+                page: "branchStudentPayFeesForm",
+                layer: 3,
+                url: adminPortalLocalUrl,
+              });
+            }
           }
         } else {
           _alertClose(3);
-          _actionAlert(response.message, false);
+          _showCustomConfirm({
+            title: "Cannot Proceed!",
+            message: response.message,
+            alertType: "error",
+            trueActionBtnText: "Got it",
+            closeOnOverlayClick: true,
+          });
         }
       })
       .catch((error) => {

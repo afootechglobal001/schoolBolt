@@ -976,13 +976,20 @@
                                 </h3>
                             </div>
 
-                            <div class="btn-div">
-                                <button class="btn" title="Load Wallet"
+                            <div class="btn-div" id="canLoadDashboardWallet">
+                                <script>
+                                if (userRoles.canLoadBranchSchoolBoltWallet) {
+                                    $('#canLoadDashboardWallet').append(`
+                                    <button class="btn" title="Load Wallet"
                                     onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i
                                         class="bi bi-wallet-fill"></i> Load Wallet</button>
-                                <button class="btn view-wallet" title="View Wallet History"
+
+                                    <button class="btn view-wallet" title="View Wallet History"
                                     onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});"><i
                                         class="bi bi-eye"></i> View Wallet History</button>
+                                `);
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -1330,13 +1337,20 @@
                                 </h3>
                             </div>
 
-                            <div class="btn-div">
-                                <button class="btn" title="Load Wallet"
+                            <div class="btn-div" id="canLoadDashboardWallet">
+                                <script>
+                                if (userRoles.canLoadBranchSchoolBoltWallet) {
+                                    $('#canLoadDashboardWallet').append(`
+                                    <button class="btn" title="Load Wallet"
                                     onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i
                                         class="bi bi-wallet-fill"></i> Load Wallet</button>
-                                <button class="btn view-wallet" title="View Wallet History"
+
+                                    <button class="btn view-wallet" title="View Wallet History"
                                     onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});"><i
                                         class="bi bi-eye"></i> View Wallet History</button>
+                                `);
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -3644,6 +3658,19 @@
                 </div>
             </div>
         </div>
+
+        <!-- <div class="user-managment-list staff-managment-list" title="Daily Revenue Report" onclick="_getActiveBranchPage({divid:'branch_account', page: 'branchDailyRevenuePage', url: adminPortalLocalUrl});">
+            <div class="inner-div">
+                <div class="icon-div">
+                    <img src="<?php echo $websiteUrl ?>/images/fees-revenue.png" alt="Daily Revenue Report" />
+                </div>
+                <div class="text-div">
+                    <h3>Daily Revenue Report</h3>
+                    <p>Track daily revenue generated from fees and monitor payment performance.</p>
+                </div>
+            </div>
+        </div> -->
+
 
         <div class="user-managment-list staff-managment-list" title="Activate Academic Result"
             onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'activateResult', url: adminPortalLocalUrl});">

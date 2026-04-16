@@ -334,7 +334,7 @@ function _proceedViewStudentCallback(formData) {
     });
 }
 
-/// Proceed To Login Callback ///
+/// Proceed To Pay School Fees ///
 function _proceedPaySchoolFees() {
   try {
     ////////get all needed values////////////
