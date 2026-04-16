@@ -1344,13 +1344,13 @@
                                     <button class="btn" title="Load Wallet"
                                     onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i
                                         class="bi bi-wallet-fill"></i> Load Wallet</button>
-
-                                    <button class="btn view-wallet" title="View Wallet History"
-                                    onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});"><i
-                                        class="bi bi-eye"></i> View Wallet History</button>
                                 `);
                                     }
                                 </script>
+
+                                <button class="btn view-wallet" title="View Wallet History"
+                                    onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});"><i
+                                        class="bi bi-eye"></i> View Wallet History</button>
                             </div>
                         </div>
                     </div>
