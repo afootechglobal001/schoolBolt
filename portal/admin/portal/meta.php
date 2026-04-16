@@ -74,3 +74,4 @@ const rolePermissionIds = staffLoginData.rolePermissionIds;
 <script src="<?php echo $websiteUrl?>/js/reports/print-all-student-progressive-result.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/branch/schoolbolt-wallet/useSchoolBoltWallet.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/branch/account/useStudentFunds.js?v=<?php echo $codeVersion?>"></script>
+<script src="<?php echo $websiteUrl?>/js/branch/account/useBranchAccountReport.js?v=<?php echo $codeVersion?>"></script>
