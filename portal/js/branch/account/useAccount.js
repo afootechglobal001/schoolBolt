@@ -845,15 +845,43 @@ function _fetchAccountFeesToPay(
               url: adminPortalLocalUrl,
             });
           } else {
-            _getForm({
-              page: "branchStudentPayFeesForm",
-              layer: 3,
-              url: adminPortalLocalUrl,
-            });
+            //// Check if student have an outstanding payment for last term /// 
+            const haveOutstandingFeesForLastTerm = response?.haveOutstandingFeesForLastTerm;
+            if (haveOutstandingFeesForLastTerm===true) {
+              _alertClose(3);
+              _showCustomConfirm({
+                title: "Outstanding Fees Detected!",
+                message: response.message,
+                alertType: "error",
+                falseActionBtn: true,
+                trueActionBtnText: "PROCCED TO PAY",
+                falseActionBtnText: "CANCEL",
+                trueActionCallback: () => {
+                  _getForm({
+                    page: "branchStudentPayFeesForm",
+                    layer: 3,
+                    url: adminPortalLocalUrl,
+                  });
+                },
+                closeOnOverlayClick: false,
+              });
+            } else {
+              _getForm({
+                page: "branchStudentPayFeesForm",
+                layer: 3,
+                url: adminPortalLocalUrl,
+              });
+            }
           }
         } else {
           _alertClose(3);
-          _actionAlert(response.message, false);
+          _showCustomConfirm({
+            title: "Cannot Proceed!",
+            message: response.message,
+            alertType: "error",
+            trueActionBtnText: "Got it",
+            closeOnOverlayClick: true,
+          });
         }
       })
       .catch((error) => {
@@ -1534,5 +1562,356 @@ function _deActivateAllStudentResultCallback() {
     console.error("Error:", error);
     _callCatchError(() => _deActivateAllStudentResultCallback(formData));
     _btnDisable("deActivateAllBtn", btnText, false);
+  }
+}
+
+
+//// Proceed Fetch Student Discount and scholarship Department Classes /////
+function _proceedFetchDiscountDepartmentClass() {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+
+  const session = getEachBranchDetailsSession?.session;
+  const termId = getEachBranchDetailsSession?.termId;
+  const termName = getEachBranchDetailsSession?.termName;
+
+  const fetchDiscountDepartmentClassParams = {
+    session: session,
+    termId: termId,
+    termName: termName,
+  };
+
+  sessionStorage.setItem(
+    "fetchDiscountDepartmentClassParams",
+    JSON.stringify(fetchDiscountDepartmentClassParams),
+  );
+
+  _getActiveBranchPage({
+    divid: "branchDiscountScholarshipDepartmentClass",
+    page: "branchDiscountScholarshipDepartmentClass",
+    url: adminPortalLocalUrl,
+  });
+}
+
+//////// Branch Student Discount and scholarship Department Class ///////////
+function _fetchDiscountScholarshipDepartmentClass() {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+  let fetchAccountDepartmentClassParams = JSON.parse(
+    sessionStorage.getItem("fetchAccountDepartmentClassParams"),
+  );
+
+  const session = fetchDiscountDepartmentClassParams?.session;
+  const termName = fetchDiscountDepartmentClassParams?.termName;
+
+  $("#pageDiscountContent")
+    .html(
+      '<div class="ajax-loader pages-ajax-loader"><img src="' +
+        websiteUrl +
+        '/images/spinner.gif" alt="Loading"/></div>',
+    )
+    .fadeIn("fast");
+
+  try {
+    $.ajax({
+      type: "GET",
+      url: `${endPoint}/admin/branch/account/fetch-department-classes?branchId=${getEachBranchDetailsSession.branchId}`,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(true),
+      success: function (info) {
+        const fetch = info.data;
+        const success = info.success;
+
+        let text = "";
+        let no = 0;
+
+        if (success === true) {
+          for (let i = 0; i < fetch.length; i++) {
+            no++;
+            const department = fetch[i];
+            const departmentName = department.departmentData.departmentName;
+            const departmentId = department.departmentData.departmentId;
+            const classData = department.classData;
+
+            text += `
+                <div class="pages-toggle-div">
+                    <div class="pages-toggle-title" onclick="_collapse('view${no}');" title="CLICK TO VIEW ${departmentName} DEPARTMENT CLASSES">
+                        <h3>${departmentName}</h3>
+                        <div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
+                    </div>
+
+                    <div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
+                        <div class="alert alert-success top-alert-div class-top-alert-div animated fadeIn">
+                            <span><i class="bi-people-fill"></i> <span>${departmentName}</span> DEPARTMENT</span>       
+                        </div>
+
+                        <div class="table-div animated fadeIn">
+                            <table class="table" cellspacing="0" style="width:100%">
+                                <thead>
+                                    <tr class="tb-col">
+                                        <th>sn</th>
+                                        <th>Department</th>
+                                        <th>Class</th>
+                                        <th>Session</th>
+                                        <th>Term</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+
+                              let sn = 0;
+                              if (classData.length > 0) {
+                                for (let j = 0; j < classData.length; j++) {
+                                  const classInfo = classData[j];
+                                  const className = classInfo.className;
+                                  const classId = classInfo.classId;
+                                  const armData = classInfo.armData;
+
+                                  if (armData.length > 0) {
+                                    for (let k = 0; k < armData.length; k++) {
+                                      sn++;
+                                      const armInfo = armData[k];
+                                      const arm = armInfo.armName;
+                                      const armId = armInfo.armId;
+                                      
+                                      text += `
+                                        <tr class="tb-row">
+                                        <td>${sn}</td>
+                                        <td>${departmentName}</td>
+                                        <td>${className} ${arm}</td>
+                                        <td>${session}</td>
+                                        <td>${termName}</td>
+                                        <td>
+                                          <div class="btn-div">
+                                            <button class="btn view-btn" title="CLICK TO VIEW DISCOUNT AND SCHOLARSHIP STUDENTS" onclick="_fetchStudentDiscountAndScholarshipByClass('${departmentId}', '${classId}', '${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT DISCOUNT & PAYMENT</button>
+                                          </div>
+                                        </td>`;
+                                    }
+                                  }
+                                }
+                              }
+                              text += `</tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>`;
+              }
+              $("#pageDiscountContent").html(text);
+            } else {
+              _actionAlert(info.message, false);
+              $("#pageDiscountContent").html(`
+            <tbody>
+                <tr>
+                    <td colspan="15">
+                        <div class="false-notification-div">
+                            <p>${info.message}</p>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>`);
+
+          if (info.response < 100) {
+            _logOut();
+          }
+        }
+      },
+      error: function (textStatus, errorThrown) {
+        console.error("AJAX Error: ", textStatus, errorThrown);
+        _actionAlert("Check your internet connection and try again.", false);
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred! Please try again.", false);
+  }
+}
+
+///// Fetch Discount Scholarship Students By Class /////
+function _fetchStudentDiscountAndScholarshipByClass(departmentId, classId, armId) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+  let fetchDiscountDepartmentClassParams = JSON.parse(
+    sessionStorage.getItem("fetchDiscountDepartmentClassParams"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+  const session = fetchDiscountDepartmentClassParams?.session;
+  const termId = fetchDiscountDepartmentClassParams?.termId;
+
+  $("#get-more-div-secondary")
+    .css({
+      display: "flex",
+      "justify-content": "center",
+      "align-items": "center",
+    })
+    .fadeIn(500);
+  try {
+    //// call endpoint //////
+    _callFetchEndPoints({
+      url: `admin/branch/account/student-funds/fetch-all-student-discount-scholarship-fund?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success && response.data?.length > 0) {
+          sessionStorage.setItem(
+            "useStudentDiscountScholarshipSession",
+            JSON.stringify(response),
+          );
+          _getForm({
+            page: "viewStudentDiscountScholarshipClassModal",
+            layer: 2,
+            url: adminPortalLocalUrl,
+          });
+        } else {
+          _alertClose(2);
+          _actionAlert(response.message, false);
+        }
+      })
+      .catch((error) => {
+        _alertClose(2);
+        console.error("Error:", error);
+        _callAjaxError(() =>
+          _fetchStudentDiscountAndScholarshipByClass(depatmentId, classId, armId),
+        ); // retry if needed
+      });
+  } catch (error) {
+    _alertClose(2);
+    console.error("Error:", error);
+    _callAjaxError(() =>
+      _fetchStudentDiscountAndScholarshipByClass(depatmentId, classId, armId),
+    ); // retry if needed
+  }
+}
+
+function _getFetchEachDiscountStudent(Id) {
+  let storedDiscountData = JSON.parse(
+    sessionStorage.getItem("useStudentDiscountScholarshipSession"),
+  );
+
+  let student = storedDiscountData.data.find(
+    (s) => s.studentId === Id
+  );
+
+  if (student) {
+    // rebuild response but with only this student
+    let filteredResponse = {
+      ...storedDiscountData,
+      data: [student],
+    };
+
+    sessionStorage.setItem(
+      "getEachDiscountStudentSession",
+      JSON.stringify(filteredResponse)
+    );
+  }
+  _getForm({page: 'studentDiscountScholarshipForm', layer:3, url: adminPortalLocalUrl});
+}
+
+//// Load Student Discount Scholarship Fund /////
+function _loadStudentDiscountScholarshipFund() {
+  try {
+    ////////get all needed values////////////
+    let issueCount = 0;
+    const amount = $("#amount").val().trim();
+    const description = $("#description").val().trim();
+    const fundPurposeId = $("#fundPurposeId").val().trim();
+
+    ///// empty field validation//////////
+    issueCount += _validateEmptyValue("amount", "AMOUNT");
+    issueCount += _validateNumber("amount", amount);
+    issueCount += _validateEmptyValue("description", "DESCRIPTION");
+    issueCount += _validateEmptyValue("fundPurposeId", "FUND PURPOSE");
+
+    if (issueCount > 0) return;
+    
+    /////Gather form data////
+    const formData = {
+      amount,
+      description,
+      fundPurposeId
+    };
+
+    ////// confirm action////
+    _showCustomConfirm({
+      callback: () => {
+        _loadStudentDiscountScholarshipFundCallback(formData);
+      },
+      title: "Are you sure?",
+      message: "Are you sure you want to proceed? This action is irreversible.",
+      alertType: "warning",
+      falseActionBtn: true,
+      closeOnOverlayClick: true,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _loadStudentDiscountScholarshipFund());
+  }
+}
+
+//// Load Student Discount Scholarship Fund CallBack /////
+function _loadStudentDiscountScholarshipFundCallback(formData) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+  let getEachDiscountStudentSession = JSON.parse(
+    sessionStorage.getItem("getEachDiscountStudentSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+  const studentId = getEachDiscountStudentSession?.data?.[0].studentId;
+  const session = getEachDiscountStudentSession?.session;
+  const termId = getEachDiscountStudentSession?.termData?.termName;
+  const departmentId = getEachDiscountStudentSession?.departmentData?.departmentId;
+  const classId = getEachDiscountStudentSession?.classData?.classId;
+  const armId = getEachDiscountStudentSession?.armData?.armId;
+
+  try {
+    const btnText = $("#scholarshipBtn").html();
+    _btnDisable("scholarshipBtn", btnText, true);
+
+    _callRawEndPoints({
+      url: `admin/branch/account/student-funds/load-student-discount-scholarship-fund?branchId=${branchId}&studentId=${studentId}`,
+      formData,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success) {
+          _showCustomConfirm({
+            callback: () => {
+              _alertClose(3);
+              _fetchStudentDiscountAndScholarshipByClass(departmentId, classId, armId, branchId, session, termId)
+            },
+            title: "Success!",
+            message: response.message,
+            alertType: "success",
+            trueActionBtnText: "OK, Thanks.",
+            closeOnOverlayClick: false,
+          });
+        } else {
+          _showCustomConfirm({
+            title: "Unable to proceed",
+            message: response.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+          _btnDisable("scholarshipBtn", btnText, false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() => _loadStudentDiscountScholarshipFundCallback(formData)); // retry if needed
+        _btnDisable("scholarshipBtn", btnText, false);
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _loadStudentDiscountScholarshipFundCallback(formData));
+    _btnDisable("scholarshipBtn", btnText, false);
   }
 }

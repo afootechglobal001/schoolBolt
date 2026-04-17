@@ -976,13 +976,20 @@
                                 </h3>
                             </div>
 
-                            <div class="btn-div">
-                                <button class="btn" title="Load Wallet"
+                            <div class="btn-div" id="canLoadDashboardWallet">
+                                <script>
+                                if (userRoles.canLoadBranchSchoolBoltWallet) {
+                                    $('#canLoadDashboardWallet').append(`
+                                    <button class="btn" title="Load Wallet"
                                     onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i
                                         class="bi bi-wallet-fill"></i> Load Wallet</button>
-                                <button class="btn view-wallet" title="View Wallet History"
+
+                                    <button class="btn view-wallet" title="View Wallet History"
                                     onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});"><i
                                         class="bi bi-eye"></i> View Wallet History</button>
+                                `);
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -1330,10 +1337,17 @@
                                 </h3>
                             </div>
 
-                            <div class="btn-div">
-                                <button class="btn" title="Load Wallet"
+                            <div class="btn-div" id="canLoadDashboardWallet">
+                                <script>
+                                if (userRoles.canLoadBranchSchoolBoltWallet) {
+                                    $('#canLoadDashboardWallet').append(`
+                                    <button class="btn" title="Load Wallet"
                                     onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i
                                         class="bi bi-wallet-fill"></i> Load Wallet</button>
+                                `);
+                                    }
+                                </script>
+
                                 <button class="btn view-wallet" title="View Wallet History"
                                     onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});"><i
                                         class="bi bi-eye"></i> View Wallet History</button>
@@ -3555,195 +3569,285 @@
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 <?php if ($page == 'branch_account') { ?>
-    <div class="user-managment-back-div" data-aos="fade-in" data-aos-duration="1500">
-        <div class="user-managment-list staff-managment-list" title="Fees Settings"
-            onclick="_getActiveBranchPage({divid:'branch_fees_page', page: 'branch_fees_page', url: adminPortalLocalUrl});">
-            <div class="inner-div">
-                <div class="icon-div"><img src="<?php echo $websiteUrl ?>/images/fees.png" alt="Fees Settings" /></div>
-                <div class="text-div">
-                    <h3>Fees Settings</h3>
-                    <p>Set tuition fees and manage billing items.</p>
+    <div class="branch-account-category-wrapper">
+        <div class="branch-account-category animated fadeIn">
+            <div class="title-div">
+                <i class="bi bi-gear-wide-connected"></i>
+                <h3>Configurations</h3>
+            </div>
+
+            <div class="div-in">
+                <div class="user-managment-back-div">
+                    <div class="user-managment-list staff-managment-list" title="Fees Settings"
+                        onclick="_getActiveBranchPage({divid:'branch_account', page: 'branch_fees_page', url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div"><img src="<?php echo $websiteUrl ?>/images/fees.png" alt="Fees Settings" /></div>
+                            <div class="text-div">
+                                <h3>Fees Settings</h3>
+                                <p>Set tuition fees and manage billing items.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user-managment-list staff-managment-list" title="Compute Fees"
+                        onclick="_getActiveBranchPage({divid:'branch_account', page: 'branch_fees_computaion_page', url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/compute.png" alt="Compute Fees" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Compute Fees</h3>
+                                <p>Compute payable fees for each branch.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="user-managment-list staff-managment-list" title="Compute Fees"
-            onclick="_getActiveBranchPage({divid:'branch_fees_computaion_page', page: 'branch_fees_computaion_page', url: adminPortalLocalUrl});">
-            <div class="inner-div">
-                <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/compute.png" alt="Compute Fees" />
-                </div>
-                <div class="text-div">
-                    <h3>Compute Fees</h3>
-                    <p>Compute payable fees for each branch.</p>
+        <div class="branch-account-category animated fadeIn">
+            <div class="title-div">
+                <i class="bi bi-people-fill"></i>
+                <h3>Student Data</h3>
+            </div>
+
+            <div class="div-in">
+                <div class="user-managment-back-div">
+                    <div class="user-managment-list staff-managment-list" title="Student Profile"
+                        onclick="_getForm({page: 'student_select_form', layer:2, url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/student.png" alt="Student Profile" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Student Profile</h3>
+                                <p>Access and manage detailed student information, including personal, academic, and contact records.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user-managment-list staff-managment-list" title="Parent List"
+                        onclick="_getForm({page: 'fetch_parent_form', layer:2, url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/student-reg.png" alt="Parent List" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Parent List</h3>
+                                <p>View and manage parents associated with your branch.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="user-managment-list staff-managment-list" title="Student Profile"
-            onclick="_getForm({page: 'student_select_form', layer:2, url: adminPortalLocalUrl});">
-            <div class="inner-div">
-                <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/student.png" alt="Student Profile" />
-                </div>
-                <div class="text-div">
-                    <h3>Student Profile</h3>
-                    <p>Access and manage detailed student information, including personal, academic, and contact records.
-                    </p>
+        <div class="branch-account-category animated fadeIn">
+            <div class="title-div">
+                <i class="bi bi-credit-card-2-back"></i>
+                <h3>Payment</h3>
+            </div>
+
+            <div class="div-in">
+                <div class="user-managment-back-div">
+                    <div class="user-managment-list staff-managment-list" title="Discount/Scholarship Application" onclick="_proceedFetchDiscountDepartmentClass();">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/discount-scholarship.png"
+                                    alt="Discount/Scholarship Application" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Discount/Scholarship Application</h3>
+                                <p>Apply and view discount or scholarship applications for students.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user-managment-list staff-managment-list" title="Student Payment"
+                        onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'payment', url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/credit-card.png" alt="Student Payment" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Student Payment</h3>
+                                <p>View and manage student payments associated with your branch.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user-managment-list staff-managment-list" title="View Debtors"
+                        onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'debtors', url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/branch-account.png" alt="View Debtors" />
+                            </div>
+                            <div class="text-div">
+                                <h3>View Debtors</h3>
+                                <p>View the list of students by class and identify those with outstanding payment (DEBTORS).</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="user-managment-list staff-managment-list" title="Parent List"
-            onclick="_getForm({page: 'fetch_parent_form', layer:2, url: adminPortalLocalUrl});">
-            <div class="inner-div">
-                <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/student-reg.png" alt="Parent List" />
+        <!-- <div class="branch-account-category animated fadeIn">
+            <div class="title-div">
+                <i class="bi bi-graph-down-arrow"></i>
+                <h3>Expenditure</h3>
+            </div>
+
+            <div class="div-in">
+                <div class="user-managment-back-div">
+                    <div class="user-managment-list staff-managment-list" title="Expenses" onclick="">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/expenses.png" alt="Expenses" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Expenses</h3>
+                                <p>Record and monitor branch expenses to ensure proper financial management.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user-managment-list staff-managment-list" title="Staff Loan"
+                        onclick="">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/loan.png" alt="Staff Loan" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Staff Loan</h3>
+                                <p>View and manage staff loans for employees associated with your branch.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user-managment-list staff-managment-list" title="Payroll"
+                        onclick="">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/payroll.png" alt="Payroll" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Payroll</h3>
+                                <p>View and manage payroll for staff associated with your branch.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="text-div">
-                    <h3>Parent List</h3>
-                    <p>View and manage parents associated with your branch.</p>
+            </div>
+        </div> -->
+
+        <div class="branch-account-category animated fadeIn">
+            <div class="title-div">
+                <i class="bi bi-graph-up-arrow"></i>
+                <h3>Report</h3>
+            </div>
+
+            <div class="div-in">
+                <div class="user-managment-back-div">
+                    <div class="user-managment-list staff-managment-list" title="Discount Report" onclick="">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/scholarship-report.png" alt="Discount Reporte" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Discount Report</h3>
+                                <p>Monitor all discounts applied across fees, track reductions, and analyze their impact on overall revenue.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user-managment-list staff-managment-list" title="Scholarship Report" onclick="">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/scholarship-report.png" alt="Scholarship Report" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Scholarship Report</h3>
+                                <p>View and manage scholarships awarded to students, including eligibility, amounts granted, and financial impact.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="user-managment-list staff-managment-list" title="Each Fees Revenue" onclick="">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/fees-revenue.png" alt="Each Fees Revenue" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Each Fees Revenue</h3>
+                                <p>Track revenue generated from each fee type and monitor payment performance.</p>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="user-managment-list staff-managment-list" title="All Revenue Report"
+                        onclick="_getActiveBranchPage({divid:'branch_account', page: 'branchDailyRevenuePage', url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/revenue-report.png" alt="Revenue Report" />
+                            </div>
+                            <div class="text-div">
+                                <h3>All Revenue Report</h3>
+                                <p>View and analyze revenue reports for your branch operations.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="user-managment-list staff-managment-list" title="Balance Sheet" onclick="">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/balance-sheet.png" alt="Balance Sheet" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Balance Sheet</h3>
+                                <p>View a detailed summary of assets, liabilities, and equity to assess your branch’s financial position.</p>
+                            </div>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>
-        <!-- <div class="user-managment-list staff-managment-list" title="Discount/Scholarship Application" onclick="">
-            <div class="inner-div">
-                <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/discount-scholarship.png"
-                        alt="Discount/Scholarship Application" />
-                </div>
-                <div class="text-div">
-                    <h3>Discount/Scholarship Application</h3>
-                    <p>Apply and view discount or scholarship applications for students.</p>
-                </div>
+
+        <div class="branch-account-category animated fadeIn">
+            <div class="title-div">
+                <i class="bi bi-highlights"></i>
+                <h3>Others</h3>
             </div>
-        </div> -->
 
-        <div class="user-managment-list staff-managment-list" title="Student Payment"
-            onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'payment', url: adminPortalLocalUrl});">
-            <div class="inner-div">
-                <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/credit-card.png" alt="Student Payment" />
-                </div>
-                <div class="text-div">
-                    <h3>Student Payment</h3>
-                    <p>View and manage student payments associated with your branch.</p>
-                </div>
-            </div>
-        </div>
+            <div class="div-in">
+                <div class="user-managment-back-div">
+                    <div class="user-managment-list staff-managment-list" title="Activate Academic Result"
+                        onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'activateResult', url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/double-check.png" alt="Activate Academic Result" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Activate Academic Result</h3>
+                                <p>Activate the result for your branch to make it available for viewing and further processing.</p>
+                            </div>
+                        </div>
+                    </div>
 
-        <div class="user-managment-list staff-managment-list" title="View Debtors"
-            onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'debtors', url: adminPortalLocalUrl});">
-            <div class="inner-div">
-                <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/branch-account.png" alt="View Debtors" />
-                </div>
-                <div class="text-div">
-                    <h3>View Debtors</h3>
-                    <p>View the list of students by class and identify those with outstanding payment (DEBTORS).</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="user-managment-list staff-managment-list" title="Activate Academic Result"
-            onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'activateResult', url: adminPortalLocalUrl});">
-            <div class="inner-div">
-                <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/double-check.png" alt="Activate Academic Result" />
-                </div>
-                <div class="text-div">
-                    <h3>Activate Academic Result</h3>
-                    <p>Activate the result for your branch to make it available for viewing and further processing.</p>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- <div class="user-managment-list staff-managment-list" title="Expenses" onclick="">
-            <div class="inner-div">
-                <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/expenses.png" alt="Expenses" />
-                </div>
-                <div class="text-div">
-                    <h3>Expenses</h3>
-                    <p>Record and monitor branch expenses to ensure proper financial management.</p>
-                </div>
-            </div>
-        </div> -->
-
-        <!-- <div class="user-managment-list staff-managment-list" title="Staff Loan"
-            onclick="">
-            <div class="inner-div">
-                <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/loan.png" alt="Staff Loan" />
-                </div>
-                <div class="text-div">
-                    <h3>Staff Loan</h3>
-                    <p>View and manage staff loans for employees associated with your branch.</p>
-                </div>
-            </div>
-        </div> -->
-
-        <!-- <div class="user-managment-list staff-managment-list" title="Payroll"
-            onclick="">
-            <div class="inner-div">
-                <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/payroll.png" alt="Payroll" />
-                </div>
-                <div class="text-div">
-                    <h3>Payroll</h3>
-                    <p>View and manage payroll for staff associated with your branch.</p>
-                </div>
-            </div>
-        </div> -->
-
-        <!-- <div class="user-managment-list staff-managment-list" title="Each Fees Revenue" onclick="">
-            <div class="inner-div">
-                <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/fees-revenue.png" alt="Each Fees Revenue" />
-                </div>
-                <div class="text-div">
-                    <h3>Each Fees Revenue</h3>
-                    <p>Track revenue generated from each fee type and monitor payment performance.</p>
-                </div>
-            </div>
-        </div> -->
-
-        <!-- <div class="user-managment-list staff-managment-list" title="All Revenue Report"
-            onclick="">
-            <div class="inner-div">
-                <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/revenue-report.png" alt="Revenue Report" />
-                </div>
-                <div class="text-div">
-                    <h3>All Revenue Report</h3>
-                    <p>View and analyze revenue reports for your branch operations.</p>
-                </div>
-            </div>
-        </div> -->
-
-        <!-- <div class="user-managment-list staff-managment-list" title="Balance Sheet" onclick="">
-            <div class="inner-div">
-                <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/balance-sheet.png" alt="Balance Sheet" />
-                </div>
-                <div class="text-div">
-                    <h3>Balance Sheet</h3>
-                    <p>View a detailed summary of assets, liabilities, and equity to assess your branch’s financial position.</p>
-                </div>
-            </div>
-        </div> -->
-
-        <div class="user-managment-list staff-managment-list" title="SchoolBolt Wallet History"
-            onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});">
-            <div class="inner-div">
-                <div class="icon-div">
-                    <img src="<?php echo $websiteUrl ?>/images/wallet.png" alt="SchoolBolt Wallet History" />
-                </div>
-                <div class="text-div">
-                    <h3>SchoolBolt Wallet History</h3>
-                    <p>View your wallet transaction history and keep track of all deposits, payments, and wallet activity.
-                    </p>
+                    <div class="user-managment-list staff-managment-list" title="SchoolBolt Wallet"
+                        onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/wallet.png" alt="SchoolBolt Wallet" />
+                            </div>
+                            <div class="text-div">
+                                <h3>SchoolBolt Wallet</h3>
+                                <p>View your wallet transaction history and keep track of all deposits, payments, and wallet activity.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

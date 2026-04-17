@@ -6368,6 +6368,18 @@ header
   margin-top: 10px;
 }
 
+.branch-account-wrapper{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: var(--white-color);
+  padding-bottom: 20px;
+  border: #ececec 1px solid;
+  border-top: none;
+  border-radius: 10px;
+
+}
+
 .nav-content-back-div {
   width: 100%;
   display: flex;
@@ -6381,6 +6393,11 @@ header
   border: #ececec 1px solid;
   border-bottom: 0px;
   border-radius: 8px 8px 0px 0px;
+}
+
+.nav-content-back-div .branch-account-nav {
+  border-left: 0px;
+  border-right: 0px;
 }
 
 .nav-content-back-div .nav-container ul {
@@ -6422,6 +6439,11 @@ header
 
 .report-chart-div {
   border-top: 0px;
+}
+
+.branch-chat-div{
+  border-right: 0px;
+  border-left: 0px;
 }
 
 #getNavPage {
@@ -6872,4 +6894,52 @@ header
 
 .wallet-wrapper .wallet-container .btn-div .view-wallet:hover {
   background: rgba(215, 215, 215, 0.6);
+}
+
+
+.branch-revenue-table-wrapper {
+  width: calc(100% - 40px);
+  padding: 20px;
+}
+
+.branch-account-category-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.branch-account-category {
+  width: 100%;
+  min-height: 200px;
+  background: var(--white-color);
+  border-radius: 10px;
+  border: 1px solid rgba(215, 215, 215, 0.6);
+}
+
+.branch-account-category .title-div {
+  width: calc(100% - 40px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background: rgba(215, 215, 215, 0.226);
+  border-bottom: 1px solid rgba(215, 215, 215, 0.4);
+}
+
+.branch-account-category .title-div i {
+  color: var(--secondary-color);
+}
+
+.branch-account-category .title-div h3 {
+  padding: 0px;
+  margin: 0px;
+  font-family: sub-title-font;
+  color: var(--sub-body-color);
+  font-size: 15px;
+}
+
+.branch-account-category .div-in {
+ display: flex;
 }

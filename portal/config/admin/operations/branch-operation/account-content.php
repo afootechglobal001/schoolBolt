@@ -212,7 +212,7 @@
 
                 <div class="new-btn-container"></div>
                 <script>
-                    $(document).ready(function () {
+                    $(document).ready(function() {
                         let showButton = '';
                         const statusId = studentParentSessionData?.parent?.statusId;
 
@@ -372,7 +372,7 @@
                     <div class="table-div animated fadeIn">
                         <table class="table" cellspacing="0" style="width:100%" id="accountPageContent">
                             <script>
-                                $(document).ready(function () {
+                                $(document).ready(function() {
                                     const response = JSON.parse(sessionStorage.getItem(
                                         "useAccountStudentByClassSession"));
 
@@ -389,6 +389,8 @@
                                         const armId = response?.armData?.armId;
                                         const arm = response?.armData?.armName;
 
+
+
                                         let html = `
                                             <thead>
                                                 <tr class="tb-col">
@@ -403,11 +405,11 @@
                                                     <th>Total Fees Paid</th>
                                                     <th>Outstanding Balance</th>
                                                     <th>Fund Balance</th>
-                                                    <th>Load Funds</th>
+                                                    ${userRoles.canLoadStudentFund ? '<th>Load Funds</th>' : ''}
                                                     <th>Pay Fees</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>`;
+                                                </tr >
+                                            </thead >
+                                        <tbody>`;
 
                                         let sn = 0;
 
@@ -421,67 +423,75 @@
                                             const passport = student.passport || "default.jpg";
                                             const advancedBalance = student.advancedBalance;
                                             const outstandingBalance = item.outstandingBalance;
-                                            const outstandingStatus = outstandingBalance > 0 ? "red-color" : "green-color";
+                                            const outstandingStatus = outstandingBalance > 0 ? "red-color" :
+                                                "green-color";
+
+                                            let loadFundColumn = '';
+                                            if (userRoles.canLoadStudentFund) {
+                                                loadFundColumn = `
+                                            <td>
+                                                <button class="btn view-btn"
+                                                    title="Click to load fund"
+                                                    onclick="_fetchAccountFeesToPay('${item.branchId}','${session}','${termId}','${departmentId}','${classId}','${armId}','${item.studentId}', 'loadFund');">
+                                                    LOAD FUND
+                                                </button>
+                                            </td>
+                                            `;
+                                            }
 
                                             html += `
-                                                <tr class="tb-row">
-                                                    <td>${sn}</td>
+                                            <tr class="tb-row">
+                                                <td>${sn}</td>
 
-                                                    <td class="clickable-td">
-                                                        <div class="text-back-div" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
-                                                            <div class="image-div general-passport">
-                                                                <img src="${studentPixPath}/${passport}" alt="${fullname}" />
-                                                            </div>
-
-                                                            <div class="text-div">
-                                                                <div class="first-class">${fullname}</div>
-                                                                <div class="second-class">${studentId}</div>
-                                                            </div>
+                                                <td class="clickable-td">
+                                                    <div class="text-back-div" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
+                                                        <div class="image-div general-passport">
+                                                            <img src="${studentPixPath}/${passport}" alt="${fullname}" />
                                                         </div>
-                                                    </td>
 
-                                                    <td>${session} - ${term}</td>
-                                                    <td>${className} ${arm}</td>
+                                                        <div class="text-div">
+                                                            <div class="first-class">${fullname}</div>
+                                                            <div class="second-class">${studentId}</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
 
-                                                    <td><s>N</s>${thousandSeperator(item.totalMandatoryAmount)}</td>
-                                                    <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmount)}</td>
-                                                    <td>
+                                                <td>${session} - ${term}</td>
+                                                <td>${className} ${arm}</td>
+
+                                                <td><s>N</s>${thousandSeperator(item.totalMandatoryAmount)}</td>
+                                                <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmount)}</td>
+                                                <td>
                                                     <div class="text-back-div">
-                                                            <div class="text-div">
-                                                                <div class="first-class ${outstandingStatus}"><s>N</s>${thousandSeperator(item.totalMandatoryAmountPaid)}</div>
-                                                                <div class="second-class">(${item.totalPercentageForMandatoryFees}%)</div>
-                                                            </div>
+                                                        <div class="text-div">
+                                                            <div class="first-class ${outstandingStatus}"><s>N</s>${thousandSeperator(item.totalMandatoryAmountPaid)}</div>
+                                                            <div class="second-class">(${item.totalPercentageForMandatoryFees}%)</div>
                                                         </div>
-                                                    </td>
-                                                    <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmountPaid)}</td>
-                                                    <td><s>N</s>${thousandSeperator(item.totalFeesPaid)}</td>
-                                                    <td>
-                                                        <div class="text-back-div">
-                                                            <div class="text-div">
-                                                                <div class="first-class ${outstandingStatus}"><s>N</s>${thousandSeperator(item.outstandingBalance)}</div>
-                                                            </div>
+                                                    </div>
+                                                </td>
+                                                <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmountPaid)}</td>
+                                                <td><s>N</s>${thousandSeperator(item.totalFeesPaid)}</td>
+                                                <td>
+                                                    <div class="text-back-div">
+                                                        <div class="text-div">
+                                                            <div class="first-class ${outstandingStatus}"><s>N</s>${thousandSeperator(item.outstandingBalance)}</div>
                                                         </div>
-                                                    </td>
-                                                    <td><s>N</s>${thousandSeperator(advancedBalance)}</td>
-                                                    <td>
-                                                        <button class="btn view-btn"
-                                                            title="Click to load fund"
-                                                            onclick="_fetchAccountFeesToPay('${item.branchId}','${session}','${termId}','${departmentId}','${classId}','${armId}','${item.studentId}', 'loadFund');">
-                                                            LOAD FUND
-                                                        </button>
-                                                    </td>
-
-                                                    <td>
-                                                        <button class="btn view-btn"
-                                                            title="Click to make pay fees"
-                                                            onclick="_fetchAccountFeesToPay('${item.branchId}','${session}','${termId}','${departmentId}','${classId}','${armId}','${item.studentId}', 'payFees');">
-                                                            PAY FEES
-                                                        </button>
-                                                    </td>
-                                                </tr>`;
+                                                    </div>
+                                                </td>
+                                                <td><s>N</s>${thousandSeperator(advancedBalance)}</td>
+                                               
+                                                ${loadFundColumn}
+                                        <td>
+                                            <button class="btn view-btn"
+                                                title="Click to make pay fees"
+                                                onclick="_fetchAccountFeesToPay('${item.branchId}','${session}','${termId}','${departmentId}','${classId}','${armId}','${item.studentId}', 'payFees');">
+                                                PAY FEES
+                                            </button>
+                                        </td>
+                                            </tr > `;
                                         });
 
-                                        html += `</tbody>`;
+                                        html += `</tbody >`;
                                         $('#accountPageContent').html(html);
                                     }
                                 });
@@ -521,7 +531,8 @@
                                     <div>Student Name:</div>
                                     <div><span id="studentPayFullName">
                                             <script>
-                                                $("#studentPayFullName").html(useAccountFessToPaySession?.studentData?.fullName);
+                                                $("#studentPayFullName").html(useAccountFessToPaySession?.studentData
+                                                    ?.fullName);
                                             </script>
                                         </span></div>
                                 </div>
@@ -620,7 +631,7 @@
                         <div class="fetch-toggle pay-fetch-toggle" id="fetchedFeeTextbox">
 
                             <script>
-                                $(document).ready(function () {
+                                $(document).ready(function() {
                                     let notPaidFees = '';
                                     let paidFees = '';
                                     let upPaidFees = false;
@@ -681,7 +692,9 @@
 
                                         }
                                         if (!upPaidFees) {
-                                            $("#fetchedFeeTextbox").html('<div class="success-msg">Fees Payment Completed for this session and term!</div>');
+                                            $("#fetchedFeeTextbox").html(
+                                                '<div class="success-msg">Fees Payment Completed for this session and term!</div>'
+                                            );
                                         }
                                     }
 
@@ -693,10 +706,11 @@
                                             const totalAmountPaid = thousandSeperator(fetchFeesPaid.totalAmountPaid);
                                             const totalFeesPercentage = fetchFeesPaid.totalFeesPercentage;
                                             const feesName = fetchFeesPaid.feesName;
-                                            const percentageColor = totalFeesPercentage >= 100 ? "green-color" : "orange-color";
+                                            const percentageColor = totalFeesPercentage >= 100 ? "green-color" :
+                                                "orange-color";
 
                                             paidFees +=
-                                                completeFees = true;
+                                            completeFees = true;
                                             $("#paidFees").append(`
                                             <div class="alert-list-back-div paid-fees-back-div">
                                                 <div class="alert-list paid-fees-list">
@@ -803,7 +817,7 @@
         function _convertAmountToPercentage(feesId) {
             const feeData = useAccountFessToPaySession?.listOfFeesNotPaidData.find(f => f.feesId == feesId);
 
-            const fieldId = `fees_${feesId}`;
+            const fieldId = `fees_${feesId} `;
             const percentageId = feesId + "_percent";
 
             let totalFee = parseFloat(feeData.amount) || 0;
@@ -847,7 +861,7 @@
 
             let totalFees = 0;
 
-            $('#fetchedFeeTextbox input[type="number"]').each(function () {
+            $('#fetchedFeeTextbox input[type="number"]').each(function() {
                 let id = $(this).attr('id');
 
                 // Only amount fields
@@ -872,7 +886,7 @@
             }
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             _calculatePaymentSummary();
 
             ///// SHOW / HIDE SCHOOL BOLT CHARGES ////
@@ -934,7 +948,7 @@
                     <div class="table-div animated fadeIn">
                         <table class="table" cellspacing="0" style="width:100%" id="accountPageContent">
                             <script>
-                                $(document).ready(function () {
+                                $(document).ready(function() {
                                     const response = JSON.parse(sessionStorage.getItem(
                                         "useAccountStudentByClassSession"));
 
@@ -952,21 +966,21 @@
                                         const arm = response?.armData?.armName;
 
                                         let html = `
-                                            <thead>
-                                                <tr class="tb-col">
-                                                    <th>sn</th>
-                                                    <th>Student Info</th>
-                                                    <th>Session/Term</th>
-                                                    <th>Class</th>
-                                                    <th>Total Mandatory Fees</th>
-                                                    <th>Total Non-Mandatory Fees</th>
-                                                    <th>Mandatory Fees Paid</th>
-                                                    <th>Non-Mandatory Fees Paid</th>
-                                                    <th>Total Fees Paid</th>
-                                                    <th>Oustanding Mandatory Fees</th>
-                                                    <th>View</th>
-                                                </tr>
-                                            </thead>
+                                            < thead >
+                                            <tr class="tb-col">
+                                                <th>sn</th>
+                                                <th>Student Info</th>
+                                                <th>Session/Term</th>
+                                                <th>Class</th>
+                                                <th>Total Mandatory Fees</th>
+                                                <th>Total Non-Mandatory Fees</th>
+                                                <th>Mandatory Fees Paid</th>
+                                                <th>Non-Mandatory Fees Paid</th>
+                                                <th>Total Fees Paid</th>
+                                                <th>Oustanding Mandatory Fees</th>
+                                                <th>View</th>
+                                            </tr>
+                                                                        </thead >
                                             <tbody>`;
 
                                         let sn = 0;
@@ -981,10 +995,14 @@
                                             const passport = student.passport || "default.jpg";
                                             const advancedBalance = student.advancedBalance;
                                             const isDebtor = item.isDebtor;
-                                            const debtorStatusColor = (isDebtor === "TRUE") ? "red-color" : "green-color";
-                                            const debtorImgStatusColor = (isDebtor === "TRUE") ? '<div class="status-icon debtor"><i class="bi-x"></i></div>' : '<div class="status-icon"><i class="bi-check"></i></div>';
+                                            const debtorStatusColor = (isDebtor === "TRUE") ? "red-color" :
+                                                "green-color";
+                                            const debtorImgStatusColor = (isDebtor === "TRUE") ?
+                                                '<div class="status-icon debtor"><i class="bi-x"></i></div>' :
+                                                '<div class="status-icon"><i class="bi-check"></i></div>';
                                             const outstandingBalance = item.outstandingBalance;
-                                            const outstandingStatus = outstandingBalance > 0 ? "red-color" : "green-color";
+                                            const outstandingStatus = outstandingBalance > 0 ? "red-color" :
+                                                "green-color";
 
                                             html += `
                                                 <tr class="tb-row">
@@ -1010,7 +1028,7 @@
                                                     <td><s>N</s>${thousandSeperator(item.totalMandatoryAmount)}</td>
                                                     <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmount)}</td>
                                                     <td>
-                                                    <div class="text-back-div">
+                                                        <div class="text-back-div">
                                                             <div class="text-div">
                                                                 <div class="first-class ${debtorStatusColor}"><s>N</s>${thousandSeperator(item.totalMandatoryAmountPaid)}</div>
                                                                 <div class="second-class">(${item.totalPercentageForMandatoryFees}%)</div>
@@ -1076,7 +1094,8 @@
                                     <div>Student Name:</div>
                                     <div><span id="debotorStudentPayFullName">
                                             <script>
-                                                $("#debotorStudentPayFullName").html(useAccountFessToPaySession?.studentData?.fullName);
+                                                $("#debotorStudentPayFullName").html(useAccountFessToPaySession?.studentData
+                                                    ?.fullName);
                                             </script>
                                         </span></div>
                                 </div>
@@ -1153,7 +1172,7 @@
                     </div>
 
                     <script>
-                        $(document).ready(function () {
+                        $(document).ready(function() {
                             let paidFees = '';
                             let completeFees = false;
 
@@ -1170,15 +1189,15 @@
                                     paidFees +=
                                         completeFees = true;
                                     $("#debtorPaidFees").append(`
-                                    <div class="alert-list-back-div paid-fees-back-div">
-                                        <div class="alert-list paid-fees-list">
-                                            <div>${feesName}:</div>
-                                            <div class="alert-value">
-                                                <span class="alert-percentage ${percentageColor}">${totalFeesPercentage}%</span>
-                                                <span><s>N</s>${totalAmountPaid}</span>
+                                        <div class="alert-list-back-div paid-fees-back-div">
+                                            <div class="alert-list paid-fees-list">
+                                                <div>${feesName}:</div>
+                                                <div class="alert-value">
+                                                    <span class="alert-percentage ${percentageColor}">${totalFeesPercentage}%</span>
+                                                    <span><s>N</s>${totalAmountPaid}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>`);
+                                        </div>`);
 
                                 }
                                 if (!completeFees) {
@@ -1267,7 +1286,8 @@
                                     </span>
                                     / CLASS -- <span id="AccountClass">
                                         <script>
-                                            $("#AccountClass").html(useAccountStudentByClassSession?.classData?.className + ' ' +
+                                            $("#AccountClass").html(useAccountStudentByClassSession?.classData?.className +
+                                                ' ' +
                                                 useAccountStudentByClassSession?.armData?.armName);
                                         </script>
                                     </span>
@@ -1278,7 +1298,7 @@
                             <div class="table-div animated fadeIn">
                                 <table class="table" cellspacing="0" style="width:100%" id="accountPageContent">
                                     <script>
-                                        $(document).ready(function () {
+                                        $(document).ready(function() {
                                             const response = JSON.parse(sessionStorage.getItem(
                                                 "useAccountStudentByClassSession"));
 
@@ -1295,22 +1315,22 @@
                                                 const arm = response?.armData?.armName;
 
                                                 let html = `
-                                            <thead>
-                                                <tr class="tb-col">
-                                                    <th></th>
-                                                    <th>sn</th>
-                                                    <th>Student Info</th>
-                                                    <th>Session/Term</th>
-                                                    <th>Class</th>
-                                                    <th>Total Mandatory Fees</th>
-                                                    <th>Total Non-Mandatory Fees</th>
-                                                    <th>Mandatory Fees Paid</th>
-                                                    <th>Non-Mandatory Fees Paid</th>
-                                                    <th>Total Fees Paid</th>
-                                                    <th>Outstanding Balance</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
+                                            < thead >
+                                            <tr class="tb-col">
+                                                <th></th>
+                                                <th>sn</th>
+                                                <th>Student Info</th>
+                                                <th>Session/Term</th>
+                                                <th>Class</th>
+                                                <th>Total Mandatory Fees</th>
+                                                <th>Total Non-Mandatory Fees</th>
+                                                <th>Mandatory Fees Paid</th>
+                                                <th>Non-Mandatory Fees Paid</th>
+                                                <th>Total Fees Paid</th>
+                                                <th>Outstanding Balance</th>
+                                                <th>Status</th>
+                                            </tr>
+                                                                        </thead >
                                             <tbody>`;
 
                                                 let sn = 0;
@@ -1327,33 +1347,36 @@
                                                     const isDebtor = item.isDebtor;
                                                     const isResultActivated = item.isResultActivated;
                                                     const outstandingBalance = item.outstandingBalance;
-                                                    const debtorStatusColor = (isDebtor === "TRUE") ? "red-color" : "green-color";
-                                                    const debtorImgStatusColor = (isDebtor === "TRUE") ? '<div class="status-icon debtor"><i class="bi-x"></i></div>' : '<div class="status-icon"><i class="bi-check"></i></div>';
+                                                    const debtorStatusColor = (isDebtor === "TRUE") ?
+                                                        "red-color" : "green-color";
+                                                    const debtorImgStatusColor = (isDebtor === "TRUE") ?
+                                                        '<div class="status-icon debtor"><i class="bi-x"></i></div>' :
+                                                        '<div class="status-icon"><i class="bi-check"></i></div>';
 
                                                     viewStatus = (isResultActivated === "TRUE") ?
                                                         `
-                                                            <div class="status-div ACTIVATE">
-                                                                ACTIVATED
-                                                            </div>
-                                                        ` :
+                                                <div class="status-div ACTIVATE">
+                                                    ACTIVATED
+                                                </div>
+                                                ` :
                                                         `
-                                                            <div class="status-div DEACTIVATE">
-                                                                DEACTIVATED
-                                                            </div>
-                                                        `;
+                                                <div class="status-div DEACTIVATE">
+                                                    DEACTIVATED
+                                                </div>
+                                                `;
 
                                                     html += `
                                                 <tr class="tb-row">
                                                     <td>
                                                         <label class="custom-checkbox">
-                                                            <input type="checkbox" 
+                                                            <input type="checkbox"
                                                                 class="child"
                                                                 id="student_${studentId}"
-                                                                name="studentId[]" 
-                                                                value="${studentId}" 
+                                                                name="studentId[]"
+                                                                value="${studentId}"
                                                                 data-value="${studentId}"
                                                                 ${isResultActivated === "TRUE" ? "checked" : ""}>
-                                                            <span></span>
+                                                                <span></span>
                                                         </label>
                                                     </td>
                                                     <td>${sn}</td>
@@ -1378,7 +1401,7 @@
                                                     <td><s>N</s>${thousandSeperator(item.totalMandatoryAmount)}</td>
                                                     <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmount)}</td>
                                                     <td>
-                                                    <div class="text-back-div">
+                                                        <div class="text-back-div">
                                                             <div class="text-div">
                                                                 <div class="first-class ${debtorStatusColor}"><s>N</s>${thousandSeperator(item.totalMandatoryAmountPaid)}</div>
                                                                 <div class="second-class">(${item.totalPercentageForMandatoryFees}%)</div>
@@ -1388,7 +1411,7 @@
                                                     <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmountPaid)}</td>
                                                     <td><s>N</s>${thousandSeperator(item.totalFeesPaid)}</td>
                                                     <td>
-                                                    <div class="text-back-div">
+                                                        <div class="text-back-div">
                                                             <div class="text-div">
                                                                 <div class="first-class ${debtorStatusColor}"><s>N</s>${thousandSeperator(item.outstandingBalance)}</div>
                                                             </div>
@@ -1415,356 +1438,262 @@
     </div>
 <?php } ?>
 
+<!-- ///////////////// Branch Department Class/////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'branchDiscountScholarshipDepartmentClass') { ?>
+    <script>
+        fetchDiscountDepartmentClassParams = JSON.parse(sessionStorage.getItem("fetchDiscountDepartmentClassParams"));
+    </script>
+
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div><span><i class="bi-people-fill"></i> BRANCH DEPARTMENT CLASS LIST /</span> SESSION -- <span
+                id="discountSession">
+                <script>
+                    $("#discountSession").html(fetchDiscountDepartmentClassParams?.session);
+                </script>
+            </span> / TERM -- <span id="discountTermName">
+                <script>
+                    $("#discountTermName").html(fetchDiscountDepartmentClassParams?.termName);
+                </script>
+            </span></span></div>
+    </div>
+
+    <div class="pages-toggle-back-div" id="pageDiscountContent">
+        <script>
+            _fetchDiscountScholarshipDepartmentClass();
+        </script>
+    </div>
+<?php } ?>
+
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<?php if ($page == 'branchDailyRevenuePage') { ?>
-    <div class="branch-account-wrapper">
-        <div class="nav-content-back-div">
-            <div class="nav-container">
-                <ul>
-                    <li class="active border" title="Filter Revenue By Date Range" id="filterBranchByDate"
-                        onclick="_getActiveBranchReportNav({divid:'filterBranchByDate', page: 'filterBranchByDate', url: adminPortalLocalUrl});">
-                        <i class="bi-calendar2-check"></i> Date Range</li>
-                    <li title="Filter Revenue By Session/Term" id="filterBranchBySession"
-                        onclick="_getActiveBranchReportNav({divid:'filterBranchBySession', page: 'filterBranchBySession', url: adminPortalLocalUrl});">
-                        <i class="bi-filter"></i> Session/Term</li>
-                </ul>
+<?php if ($page == 'viewStudentDiscountScholarshipClassModal') { ?>
+    <script>
+        useStudentDiscountScholarshipSession = JSON.parse(sessionStorage.getItem("useStudentDiscountScholarshipSession"));
+    </script>
+
+    <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="top-panel-div">
+            <div class="inner-top">
+                <span><i class="bi-people-fill"></i> STUDENT'S DISCOUNT & SCHOLARSHIP LIST</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="profile-content-div">
+            <div class="field-back-div">
+                <div class="field-inner-div student-result-field-inner-div">
+                    <div class="alert alert-success top-alert-div animated fadeIn">
+                        <div>
+                            <span><i class="bi-people-fill"></i> STUDENT LIST /</span> SESSION -- <span id="accountSession">
+                                <script>
+                                    $("#accountSession").html(useStudentDiscountScholarshipSession?.session);
+                                </script>
+                            </span>
+                            / TERM -- <span id="accountTermName">
+                                <script>
+                                    $("#accountTermName").html(useStudentDiscountScholarshipSession?.termData?.termName);
+                                </script>
+                            </span>
+                            / DEPARTMENT -- <span id="accountDepartment">
+                                <script>
+                                    $("#accountDepartment").html(useStudentDiscountScholarshipSession?.departmentData
+                                        ?.departmentName);
+                                </script>
+                            </span>
+                            / CLASS -- <span id="AccountClass">
+                                <script>
+                                    $("#AccountClass").html(useStudentDiscountScholarshipSession?.classData?.className + ' ' +
+                                        useStudentDiscountScholarshipSession?.armData?.armName);
+                                </script>
+                            </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="table-div animated fadeIn">
+                        <table class="table" cellspacing="0" style="width:100%" id="discountScholarshopPageContent">
+                            <script>
+                                $(document).ready(function() {
+                                    const response = JSON.parse(sessionStorage.getItem(
+                                        "useStudentDiscountScholarshipSession"));
+
+                                    if (response && response.success === true) {
+                                        const data = response.data;
+
+                                        const session = response.session;
+                                        const termName = response?.termData?.termName;
+                                        const termId = response?.termData?.termId;
+                                        const departmentId = response?.departmentData?.departmentId;
+                                        const departmentName = response?.departmentData?.departmentName;
+                                        const classId = response?.classData?.classId;
+                                        const className = response?.classData?.className;
+                                        const armId = response?.armData?.armId;
+                                        const armName = response?.armData?.armName;
+
+                                        let loadDiscountColumnTittle = '';
+                                        if (userRoles.canApplyStudentDiscountScholarship) {
+                                            loadDiscountColumnTittle = `
+                                            <th>Action</th>`;
+                                        }
+
+                                        let html = `
+                                            <thead>
+                                                <tr class="tb-col">
+                                                    <th>sn</th>
+                                                    <th>Student Info</th>
+                                                    <th>Session/Term</th>
+                                                    <th>Department</th>
+                                                    <th>Class</th>
+                                                    <th>Discount</th>
+                                                    <th>Scholarship</th>
+                                                    ${loadDiscountColumnTittle}
+                                                </tr>
+                                            </thead>
+                                        <tbody>`;
+
+                                        let sn = 0;
+
+                                        data.forEach(item => {
+                                            sn++;
+                                            const fullname = `${item.surName} ${item.firstName}`;
+                                            const studentId = item.studentId;
+                                            const branchId = item.branchId;
+                                            const passport = item.passport || "default.jpg";
+                                            const totalDiscountFund = item.totalDiscountFund;
+                                            const totalScholarshipFund = item.totalScholarshipFund;
+
+                                            let loadDiscountColumn = '';
+                                            if (userRoles.canApplyStudentDiscountScholarship) {
+                                                loadDiscountColumn = `
+                                                <td>
+                                                    <button class="btn view-btn"
+                                                        title="Click to load scholarship and Discount Fund"
+                                                        onclick="_getFetchEachDiscountStudent('${studentId}');">
+                                                        LOAD SCHOLARSHIP/DISCOUNT
+                                                    </button>
+                                                </td>`;
+                                            }
+
+                                            html += `
+                                            <tr class="tb-row">
+                                                <td>${sn}</td>
+
+                                                <td class="clickable-td">
+                                                    <div class="text-back-div" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
+                                                        <div class="image-div general-passport">
+                                                            <img src="${studentPixPath}/${passport}" alt="${fullname}" />
+                                                        </div>
+
+                                                        <div class="text-div">
+                                                            <div class="first-class">${fullname}</div>
+                                                            <div class="second-class">${studentId}</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td>${session} - ${termName}</td>
+                                                <td>${departmentName}</td>
+                                                <td>${className} ${armName}</td>
+
+                                                <td><s>N</s>${thousandSeperator(item.totalDiscountFund)}</td>
+                                                <td><s>N</s>${thousandSeperator(item.totalScholarshipFund)}</td>
+                                                ${loadDiscountColumn}
+                                            </tr > `;
+                                        });
+
+                                        html += `</tbody >`;
+                                        $('#discountScholarshopPageContent').html(html);
+                                    }
+                                });
+                            </script>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'studentDiscountScholarshipForm') { ?>
+    <script>
+        getEachDiscountStudentSession = JSON.parse(sessionStorage.getItem("getEachDiscountStudentSession"));
+    </script>
+    <div class="caption-div animated zoomIn">
+        <div class="title-div">
+            <div class="title"><i class="bi bi-wallet-fill"></i> DISCOUNT OR SCHOLARSHIP FUND</div>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i
+                    class="bi-x-lg"></i></button>
+        </div>
+
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert">
+                <i class="bi-wallet-fill"></i> You’re about to load discount or scholarship fund for
+                <span id="studentFullNameSession">
+                    <script>
+                        $("#studentFullNameSession").html(getEachDiscountStudentSession?.data?.[0].surName + ' ' +
+                            getEachDiscountStudentSession?.data?.[0].firstName);
+                    </script>
+                </span>
+
+                | SESSION:
+                <span id="studentDiscountScholarshipSession">
+                    <script>
+                        $("#studentDiscountScholarshipSession").html(getEachDiscountStudentSession?.session);
+                    </script>
+                </span>
+
+                | TERM:
+                <span id="studentDiscountScholarshipTerm">
+                    <script>
+                        $("#studentDiscountScholarshipTerm").html(getEachDiscountStudentSession?.termData?.termName);
+                    </script>
+                </span>
+                | CLASS:
+                <span id="studentDiscountScholarshipClass">
+                    <script>
+                        $("#studentDiscountScholarshipClass").html(getEachDiscountStudentSession?.departmentData
+                            ?.departmentName + ' ' + getEachDiscountStudentSession?.classData?.className + ' ' +
+                            getEachDiscountStudentSession?.armData?.armName);
+                    </script>
+                </span>
             </div>
 
-            <div id="getBranchReportNavPage">
+            <div class="text_field_container" id="amount_container">
                 <script>
-                    _getActiveBranchReportNav({
-                        divid: 'filterBranchByDate',
-                        page: 'filterBranchByDate',
-                        url: adminPortalLocalUrl
+                    textField({
+                        id: 'amount',
+                        title: 'Enter Amount',
+                        type: 'number',
+                        onKeyPressFunction: 'isNumberCheck(event);',
+                        autocomplete: "off"
                     });
                 </script>
             </div>
-        </div>
-    </div>
-<?php } ?>
 
-<!-- Filter By Date Revenue Pages -->
-<?php if ($page == 'filterBranchByDate') { ?>
-    <div class="chart-div-notifications report-chart-div">
-        <div class="text"><i class="bi-graph-up-arrow"></i> Showing Matrix for </div>
-
-        <div class="text text-right" onclick="select_search()">
-            <span id="srch-text">Last 30 Days</span>
-            <div class="icon-div"><i class="bi-caret-down"></i></div>
-
-            <div class="srch-select alert-srch-select">
-                <div id="srch-today" onclick="_fetchReportRevenueFiltering('srch-today', 'Today');">Today
-                </div>
-                <div id="srch-week" onclick="_fetchReportRevenueFiltering('srch-week', 'This Week');">This
-                    Week</div>
-                <div id="srch-7" onclick="_fetchReportRevenueFiltering('srch-7', 'Last 7 Days');">Last 7 Days
-                </div>
-                <div id="srch-month" onclick="_fetchReportRevenueFiltering('srch-month', 'This Month');">This
-                    Month</div>
-                <div id="srch-30" onclick="_fetchReportRevenueFiltering('srch-30', 'Last 30 Days');">Last 30 Days
-                </div>
-                <div id="srch-90" onclick="_fetchReportRevenueFiltering('srch-90', 'Last 90 Days');">Last 90 Days
-                </div>
-                <div id="srch-year" onclick="_fetchReportRevenueFiltering('srch-year', 'This Year');">This
-                    Year</div>
-                <div id="srch-1year" onclick="_fetchReportRevenueFiltering('srch-1year', 'Last 1 Year');">Last 1
-                    Year</div>
-                <div onclick="srch_custom('Custom Search')">Custom Search</div>
-            </div>
-        </div>
-
-        <div class="text">
-            <div class="custom-srch-div">
-                <div class="custom-srch-div-in">
-                    <div class="text_field_container dash_field_container">
-                        <input class="text_field bar_cust_text_field" type="text" id="datepickers-from" placeholder="" />
-                        <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From
-                        </div>
-                        <div class="issueText" id="issue_from"></div>
-                    </div>
-
-                    <div class="text_field_container dash_field_container">
-                        <input class="text_field bar_cust_text_field" type="text" id="datepickers-to" placeholder="" />
-                        <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To </div>
-                        <div class="issueText" id="issue_to"></div>
-                    </div>
-                    <button type="button" class="btn" id="applyCustomSearchBtn"
-                        onclick="_fetchCustomReportRevenueFiltering();">Apply</button>
-                </div>
-            </div>
-        </div>
-
-
-        <script language="javascript">
-            $('#datepickers-from').datetimepicker({
-                lang: 'en',
-                timepicker: false,
-                format: 'Y-m-d',
-                formatDate: 'Y-M-d',
-            });
-
-            $('#datepickers-to').datetimepicker({
-                lang: 'en',
-                timepicker: false,
-                format: 'Y-m-d',
-                formatDate: 'Y-M-d',
-            });
-        </script>
-    </div>
-
-    <div class="fetch-report-back-div">
-        <div class="alert alert-success top-alert-div report-alert">
-            <div class="div">
-                <i class="bi-info-circle"></i> Revenue report between <span id="dateFrom">Loading...</span> and <span
-                    id="dateTo">Loading...</span>
+            <div class="text_area_container" id="description_container">
+                <script>
+                    textField({
+                        id: 'description',
+                        title: 'Enter Description',
+                        type: 'textarea',
+                        rows: 1,
+                        maxlength: '50',
+                    });
+                </script>
             </div>
 
-            <div class="div">
-                Total Revenue: <span class="balance" id="totalRevenue">Loading...</span>
-            </div>
-        </div>
-
-        <div class="report-dashbaord-wrapper animated fadeIn">
-            <div class="dashboard-statistics-wrapper">
-                <div class="left-dashbaord-container left-report-dashbaord-container">
-                    <div class="statistics-chart-back-div">
-                        <div class="new-statistics-back-div">
-                            <div class="new-statistics-div" id="branch" title="Credit Card">
-                                <div class="statistics-inner-div">
-                                    <div class="statistics-text report-statistics-text">
-                                        <p>Credit Card Revenue</p>
-                                        <span>Total Amount Paid via Credit Card</span>
-                                        <h2 id="sumCreditCardPayments">0</h2>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="new-statistics-div" title="Bank Transfer Revenue">
-                                <div class="statistics-inner-div">
-                                    <div class="statistics-text report-statistics-text">
-                                        <p>Bank Transfer Revenue</p>
-                                        <span>Total Amount Paid via Bank Transfer</span>
-                                        <h2 id="sumBankTransferPayments">0</h2>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="new-statistics-div" title="Manual Payment Revenue">
-                                <div class="statistics-inner-div">
-                                    <div class="statistics-text report-statistics-text">
-                                        <p>Manual Payment Revenue</p>
-                                        <span>Total Amount Paid via Manual Payment</span>
-                                        <h2 id="sumManualPayments">0.00</h2>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="new-statistics-div" title="Number of Card Payments">
-                                <div class="statistics-inner-div">
-                                    <div class="statistics-text report-statistics-text">
-                                        <p>Credit Card Transactions</p>
-                                        <span>Number of Card Payments</span>
-                                        <h2 id="countCreditCardPayments">0</h2>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="new-statistics-div" title="Bank Transfer Transactions">
-                                <div class="statistics-inner-div">
-                                    <div class="statistics-text report-statistics-text">
-                                        <p>Bank Transfer Transactions</p>
-                                        <span>Number of Bank Transfer Payments</span>
-                                        <h2 id="countBankTransferPayments">0</h2>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="new-statistics-div" title="Manual Payment Transactions">
-                                <div class="statistics-inner-div">
-                                    <div class="statistics-text report-statistics-text">
-                                        <p>Manual Payment Transactions</p>
-                                        <span>Number of Manual Payments</span>
-                                        <h2 id="countManualPayments">0</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="table-div animated fadeIn">
-                            <table class="table" cellspacing="0" style="width:100%">
-                                <thead>
-                                    <tr class="tb-col">
-                                        <th>sn</th>
-                                        <th>Date</th>
-                                        <th>Successful(<s>N</s>)</th>
-                                        <th>Pending(<s>N</s>)</th>
-                                        <th>Cancelled(<s>N</s>)</th>
-                                        <th>View</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody id="pageContent">
-                                    <!-- CONTENT GOES HERE -->
-                                    <tr>
-                                        <td colspan="20">
-                                            <div class="content-loading-div">
-                                                <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="right-dashbaord-container">
-                    <div class="matrix-div">
-                        <div class="inner-div">
-                            <div class="title">
-                                <h3>Revenue Matrix</h3>
-                            </div>
-                            <div id="chartContainer1" style="width:100%; height:200px; margin:auto;"></div>
-
-                            <script type="text/javascript">
-                                var options = {
-                                    title: {
-                                        text: "" /*My Performance*/
-                                    },
-                                    data: [{
-                                        type: "doughnut",
-                                        innerRadius: 30,
-                                        showInLegend: "False",
-                                        legendText: "{label}",
-                                        indexLabel: "{label} ({y})",
-                                        yValueFormatString: "#,##0.#" % "",
-                                        indexLabelFontSize: 9,
-                                        dataPoints: [{
-                                            label: "SUPER ADMIN",
-                                            y: 5
-                                        },
-                                        {
-                                            label: "ADMINISTRATOR",
-                                            y: 6
-                                        },
-                                        {
-                                            label: "SUBJECT TEACHER",
-                                            y: 4
-                                        },
-                                        {
-                                            label: "CLASS TEACHERS",
-                                            y: 5
-                                        },
-                                        ]
-                                    }]
-                                };
-                                $("#chartContainer1").CanvasJSChart(options);
-                            </script>
-                        </div>
-                    </div>
-
-                    <div class="matrix-div">
-                        <div class="inner-div">
-                            <div class="title">
-                                <h3>Payment Channel Matrix</h3>
-                            </div>
-                            <div id="chartContainer2" style="width:100%; height:200px; margin:auto;"></div>
-
-                            <script type="text/javascript">
-                                var options = {
-                                    title: {
-                                        text: "" /*My Performance*/
-                                    },
-                                    data: [{
-                                        type: "pie",
-                                        startAngle: 45,
-                                        showInLegend: "False",
-                                        legendText: "{label}",
-                                        indexLabel: "{label} ({y})",
-                                        yValueFormatString: "#,##0.#" % "",
-                                        dataPoints: [{
-                                            label: "Debit/Credit Card",
-                                            y: 3
-                                        },
-                                        {
-                                            label: "Bank Transfer",
-                                            y: 11
-                                        },
-                                        ]
-                                    }]
-                                };
-                                $("#chartContainer2").CanvasJSChart(options);
-                            </script>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php } ?>
-
-<!-- Filter By Session Revenue Pages -->
-<?php if ($page == 'filterBranchBySession') { ?>
-    <div class="report-select-back-div">
-        <div>Select session and term to filter Revenue</div>
-        <div class="div-in">
-            <div class="select-field-back-div">
-                <div class="text_field_container select_field_container" id="session_container">
-                    <script>
-                        selectField({
-                            id: 'session',
-                            title: 'Select Session'
-                        });
-                        _getSelectAccountSession('session');
-                    </script>
-                </div>
-
-                <div class="text_field_container select_field_container" id="termId_container">
-                    <script>
-                        selectField({
-                            id: 'termId',
-                            title: 'Select Term'
-                        });
-                        _getSelectTermId('termId');
-                    </script>
-                </div>
+            <div class="text_field_container" id="fundPurposeId_container">
+                <script>
+                    selectField({
+                        id: 'fundPurposeId',
+                        title: 'Select Fund Purpose',
+                    });
+                    _getSelectFundPurposeId('fundPurposeId', '2,3');
+                </script>
             </div>
 
-            <button type="button" class="btn" id="filterRevenueBtn"
-                onclick="_fetchRevenueBySessionAndTerm();">Filter</button>
-        </div>
-    </div>
-
-    <div class="fetch-report-back-div">
-        <div class="alert alert-success top-alert-div report-alert">
-            <div class="div" id="reportTitleContainer"></div>
-            <div class="div" id="reportBalanceContainer"></div>
-        </div>
-
-        <div class="table-div animated fadeIn">
-            <table class="table" cellspacing="0" style="width:100%">
-                <thead>
-                    <tr class="tb-col">
-                        <th>sn</th>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>View</th>
-                    </tr>
-                </thead>
-
-                <tbody id="pageContent">
-                    <!-- CONTENT GOES HERE -->
-
-                    <tr>
-                        <td colspan="20">
-                            <div class="false-notification-div">
-                                <p>Select session And term to filter revenue</p>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <button class="btn" id="scholarshipBtn" title="Proceed To Load Scholarship Fund" onclick="_loadStudentDiscountScholarshipFund();">
+                PROCEED <i class="bi bi-arrow-right"></i></button>
         </div>
     </div>
 <?php } ?>

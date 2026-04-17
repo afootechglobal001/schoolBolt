@@ -1,10 +1,10 @@
-function _getActiveReportNav(props) {
+function _getActiveBranchReportNav(props) {
   const {
     page = "",
     divid = "",
-    pageContainer = "getNavPage",
+    pageContainer = "getBranchReportNavPage",
   } = props;
-  _getReportActiveNav(divid);
+  _getBranchReportActiveNav(divid);
   if (page) {
     _getPage({
       page: page,
@@ -13,22 +13,21 @@ function _getActiveReportNav(props) {
     });
   }
 }
-function _getReportActiveNav(divid) {
+function _getBranchReportActiveNav(divid) {
   $(
-    "#filterByDate, #filterBySession"
+    "#filterBranchByDate, #filterBranchBySession"
   ).removeClass("active");
   $("#" + divid).addClass("active");
 }
 
-
-function _getPaymentStatusNav(props) {
+function _getBranchPaymentStatusNav(props) {
   const {
     page = "",
     divid = "",
     id="",
-    pageContainer = "getPaymentNav",
+    pageContainer = "getBranchPaymentNav",
   } = props;
-  _getActivePaymentStatusNav(divid);
+  _getActiveBranchPaymentStatusNav(divid);
   if (page) {
     _getPage({
       page: page,
@@ -38,13 +37,14 @@ function _getPaymentStatusNav(props) {
     });
   }
 }
-function _getActivePaymentStatusNav(divid) {
+function _getActiveBranchPaymentStatusNav(divid) {
   $(".title-nav-back-div ul li").removeClass("active-li");
   $("#" + divid).addClass("active-li");
 }
 
+
 ///// Dashbaord Custom Revenue Filtering ////////
-function _fetchReportRevenueFiltering(filterWith, text) {
+function _fetchBranchRevenueReportFiltering(filterWith, text) {
   $("#srch-text").html(text);
   $(".custom-srch-div").fadeOut(500);
   let dateFrom;
@@ -107,9 +107,9 @@ function _fetchReportRevenueFiltering(filterWith, text) {
     dateFrom = pastDate;
   }
 
-  _reportRevenueFiltering(dateFrom, dateTo);
+  _branchReportRevenueFiltering(dateFrom, dateTo);
 }
-function _fetchCustomReportRevenueFiltering() {
+function _fetchCustomBranchRevenueReportFiltering() {
   let issueCount = 0;
 
   const dateFrom = $("#datepickers-from").val();
@@ -132,11 +132,15 @@ function _fetchCustomReportRevenueFiltering() {
     return;
   }
 
-  _reportRevenueFiltering(dateFrom, dateTo);
+  _branchReportRevenueFiltering(dateFrom, dateTo);
 }
 
-function _reportRevenueFiltering(dateFrom, dateTo) {
-  $("#get-form-more-div")
+function _branchReportRevenueFiltering(dateFrom, dateTo) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+
+  $("#get-more-div-secondary")
     .css({
       display: "flex",
       "justify-content": "center",
@@ -145,7 +149,7 @@ function _reportRevenueFiltering(dateFrom, dateTo) {
     .fadeIn(500);
   $.ajax({
     type: "GET",
-    url: `${endPoint}/admin/account-reports/fetch-revenue-by-date-range?dateFrom=${dateFrom}&dateTo=${dateTo}`,
+    url: `${endPoint}/admin/branch/account/account-reports/fetch-revenue-by-date-range?dateFrom=${dateFrom}&dateTo=${dateTo}&branchId=${getEachBranchDetailsSession?.branchId}`,
     dataType: "json",
     cache: false,
     headers: getAuthHeaders(true),
@@ -248,11 +252,11 @@ function _reportRevenueFiltering(dateFrom, dateTo) {
             text += `
               <tr class="tb-row">
                 <td>${no}</td>
-                <td class="clickable-td" title="Click to view payment breakdown" onclick="_getForm({ page: 'revenueBreakdown', id: '${newpayDate}', url: adminPortalLocalUrl});">${newpayDate}</td>
+                <td class="clickable-td" title="Click to view payment breakdown" onclick="_getForm({ page: 'branchRevenueBreakdown', id: '${newpayDate}', layer:2, url: adminPortalLocalUrl});">${newpayDate}</td>
                 <td class="SUCCESSFULSTATUS"><s>N</s>${thousandSeperator(totalSuccessfulFees)}</td>
                 <td class="PENDINGSTATUS"><s>N</s>${thousandSeperator(totalPendingFees)}</td>
                 <td class="CANCLLEDSTATUS"><s>N</s>${thousandSeperator(totalCancelledFees)}</td>
-                <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="_getForm({ page: 'revenueBreakdown', id: '${newpayDate}', url: adminPortalLocalUrl});">VIEW DETAILS</button></td>
+                <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="_getForm({ page: 'branchRevenueBreakdown', id: '${newpayDate}', layer:2, url: adminPortalLocalUrl});">VIEW DETAILS</button></td>
               </tr>
             `;
           }
@@ -279,59 +283,31 @@ function _reportRevenueFiltering(dateFrom, dateTo) {
       console.error(err);
     },
   });
-  $("#get-form-more-div").fadeOut(500);
+  $("#get-more-div-secondary").fadeOut(500);
 }
 
-function _fetchRevenueById(paymentId) {
-	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
-	try {
-		$.ajax({
-			type: "GET",
-			url: `${endPoint}/admin/account-reports/fetch-revenue-by-id?paymentId=${paymentId}`,
-			dataType: "json", 
-			cache: false,
-			headers: getAuthHeaders(true),
-			success: function(info) {
-				if (info.success && info.data.length > 0) {
-					sessionStorage.setItem("getRevenueBreakdownSessionData", JSON.stringify(info.data[0]));
-					_getForm({ page: 'paymentBreakDownForm', layer: 2, url: adminPortalLocalUrl });
-				} else {
-					const response = info.response;
-					if (response < 100) {
-						_logOut();
-					}    
-				}
-			},
-			error: function(textStatus, errorThrown) {
-				console.error("AJAX Error: ", textStatus, errorThrown);
-				_actionAlert('Check your internet connection and try again.', false);
-			}
-		});
-	} catch (error) {
-		_alertClose();
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred! Please try again.', false);
-	}
-}
+function _fetchBranchRevenueBySessionAndTerm() {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
 
-function _fetchRevenueBySessionAndTerm() {
   let issueCount = 0;
 
-  const session = $("#session").val();
-  const termId = $("#termId").val();
+  const session = $("#branchAccountSession").val();
+  const termId = $("#branchAccountTermId").val();
 
-  $("#session, #termId").removeClass("issue");
-  $("#issue_session, #issue_termId").html("");
+  $("#branchAccountSession, #branchAccountTermId").removeClass("issue");
+  $("#issue_branchAccountSession, #issue_branchAccountTermId").html("");
   
   if (!session) {
-    $('#session').addClass('issue');
-    $('#issue_session').html('Select Session To Continue');
+    $('#branchAccountSession').addClass('issue');
+    $('#issue_branchAccountSession').html('Select Session To Continue');
     issueCount++;
   }
 
   if (!termId) {
-    $('#termId').addClass('issue');
-    $('#issue_termId').html('Select Term To Continue');
+    $('#branchAccountTermId').addClass('issue');
+    $('#issue_branchAccountTermId').html('Select Term To Continue');
     issueCount++;
   }
 
@@ -339,11 +315,11 @@ function _fetchRevenueBySessionAndTerm() {
     return;
   }
 
-  const btnText = $("#filterRevenueBtn").html();
-  $("#filterRevenueBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="10px" alt="Loading"/>');
-  $("#filterRevenueBtn").prop("disabled", true);
+  const btnText = $("#filterBrnachRevenueBtn").html();
+  $("#filterBrnachRevenueBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="10px" alt="Loading"/>');
+  $("#filterBrnachRevenueBtn").prop("disabled", true);
 
-    $("#pageContent")
+    $("#branchSessionTermContent")
     .html(
       `<tr>
           <td colspan="20">
@@ -356,7 +332,7 @@ function _fetchRevenueBySessionAndTerm() {
 
   $.ajax({
     type: "GET",
-    url: `${endPoint}/admin/account-reports/fetch-revenue-by-term?session=${session}&termId=${termId}`,
+    url: `${endPoint}/admin/branch/account/account-reports/fetch-revenue-by-term?session=${session}&termId=${termId}&branchId=${getEachBranchDetailsSession?.branchId}`,
     dataType: "json",
     cache: false,
     headers: getAuthHeaders(true),
@@ -377,7 +353,7 @@ function _fetchRevenueBySessionAndTerm() {
           Total Balance: <span class="balance"><s>N</s>${thousandSeperator(totalRevenue)}</span>`;
         $("#reportBalanceContainer").html(balanceContainer);
 
-        sessionStorage.setItem("sessionTermData", JSON.stringify({
+        sessionStorage.setItem("branchSessionTermData", JSON.stringify({
 					session: info.session,
 					termId: info?.termData?.termId
 				}));
@@ -396,13 +372,13 @@ function _fetchRevenueBySessionAndTerm() {
             text += `
               <tr class="tb-row">
                 <td>${no}</td>
-                <td class="clickable-td" title="Click to view payment breakdown" onclick="_getForm({ page: 'revenueBreakdown', id: '${newpayDate}', url: adminPortalLocalUrl});">${newpayDate}</td>
+                <td class="clickable-td" title="Click to view payment breakdown" onclick="_getForm({ page: 'branchRevenueBreakdown', id: '${newpayDate}', layer:2, url: adminPortalLocalUrl});">${newpayDate}</td>
                 <td><s>N</s>${thousandSeperator(totalFeesPaid)}</td>
-                <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="_getForm({ page: 'revenueBreakdown', id: '${newpayDate}', url: adminPortalLocalUrl});">VIEW DETAILS</button></td>
+                <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="_getForm({ page: 'branchRevenueBreakdown', id: '${newpayDate}', layer:2, url: adminPortalLocalUrl});">VIEW DETAILS</button></td>
               </tr>
             `;
           }
-          $("#pageContent").html(text);
+          $("#branchSessionTermContent").html(text);
         } else {
           text += `
             <tr>
@@ -412,9 +388,9 @@ function _fetchRevenueBySessionAndTerm() {
 									</div>
                 </td>
             </tr>`;
-          $("#pageContent").html(text);
+          $("#branchSessionTermContent").html(text);
         }
-        $("#filterRevenueBtn").html(btnText).prop("disabled", false);
+        $("#filterBrnachRevenueBtn").html(btnText).prop("disabled", false);
       } else {
         const response = info.response;
         if (response < 100) {
@@ -424,20 +400,24 @@ function _fetchRevenueBySessionAndTerm() {
     },
     error: function (err) {
       console.error(err);
-      $("#filterRevenueBtn").html(btnText).prop("disabled", false);
+      $("#filterBrnachRevenueBtn").html(btnText).prop("disabled", false);
     },
   });
 }
 
-function _loadPaymentsByStatus(statusId, newpayDate) {
-  let sessionTermData = JSON.parse(
-    sessionStorage.getItem("sessionTermData")
+function _loadBranchPaymentsByStatus(statusId, newpayDate) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
   );
 
-  let url = `${endPoint}/admin/account-reports/fetch-revenue-by-date?date=${newpayDate}&statusId=${statusId}`;
+  let branchSessionTermData = JSON.parse(
+    sessionStorage.getItem("branchSessionTermData")
+  );
 
-  if (sessionTermData?.session && sessionTermData?.termId) {
-    url= `${endPoint}/admin/account-reports/fetch-revenue-by-date?date=${newpayDate}&statusId=${statusId}&session=${sessionTermData?.session}&termId=${sessionTermData?.termId}`;
+  let url = `${endPoint}/admin/branch/account/account-reports/fetch-revenue-by-date?date=${newpayDate}&statusId=${statusId}&branchId=${getEachBranchDetailsSession?.branchId}`;
+
+  if (branchSessionTermData?.session && branchSessionTermData?.termId) {
+    url= `${endPoint}/admin/branch/account/account-reports/fetch-revenue-by-date?date=${newpayDate}&statusId=${statusId}&session=${branchSessionTermData?.session}&termId=${branchSessionTermData?.termId}&branchId=${getEachBranchDetailsSession?.branchId}`;
   }
 
   try {
@@ -531,14 +511,14 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
                       <div class="btn-div">
                         <button class="btn view-btn"
                           title="Click to view payment breakdown"
-                          onclick="_fetchRevenueById('${paymentId}');">
+                          onclick="_fetchBranchRevenueById('${paymentId}');">
                           VIEW DETAILS
                         </button>
 
                         <button class="btn view-btn print-btn"
                           id="refreshBtn_${paymentId}"
                           title="Click to refresh payment"
-                          onclick="_proceedVerifyPaystackTransaction('${paymentId}');">
+                          onclick="_proceedVerifyBranchPaystackTransaction('${paymentId}');">
                           REFRESH
                         </button>
                       </div>
@@ -549,7 +529,7 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
                     <td>
                       <button class="btn view-btn"
                           title="Click to view payment breakdown"
-                          onclick="_fetchRevenueById('${paymentId}');">
+                          onclick="_fetchBranchRevenueById('${paymentId}');">
                         VIEW DETAILS
                       </button>
                     </td>
@@ -613,7 +593,7 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
                   </tr>
               `;
             }
-            $('#pageContent').html(text);
+            $('#branchPageContent').html(text);
           } else {
             text += `
               <tr>
@@ -623,7 +603,7 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
                     </div>
                   </td>
               </tr>`;
-            $("#pageContent").html(text);
+            $("#branchPageContent").html(text);
           }
 
 				} else {
@@ -645,8 +625,39 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
 	}
 }
 
+function _fetchBranchRevenueById(paymentId) {
+	$("#get-more-third-layer").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/branch/account/account-reports/fetch-revenue-by-id?paymentId=${paymentId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				if (info.success && info.data.length > 0) {
+					sessionStorage.setItem("getBranchRevenueBreakdownSessionData", JSON.stringify(info.data[0]));
+					_getForm({ page: 'branchPaymentBreakDownForm', layer: 3, url: adminPortalLocalUrl });
+				} else {
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('Check your internet connection and try again.', false);
+			}
+		});
+	} catch (error) {
+		_alertClose();
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+	}
+}
 
-function _proceedVerifyPaystackTransaction(paymentId) {
+function _proceedVerifyBranchPaystackTransaction(paymentId) {
 
   try {
     const btnText = $(`#refreshBtn_${paymentId}`).html();
@@ -655,7 +666,7 @@ function _proceedVerifyPaystackTransaction(paymentId) {
 
     $.ajax({
       type: "GET",
-      url: `${endPoint}/admin/account-reports/verify-paystack-transaction?paymentId=${paymentId}`,
+      url: `${endPoint}/admin/branch/account/account-reports/verify-paystack-transaction?paymentId=${paymentId}`,
       dataType: "json",
       cache: false,
       headers: getAuthHeaders(true),
@@ -665,7 +676,7 @@ function _proceedVerifyPaystackTransaction(paymentId) {
           const paymentId = info.paymentId; 
           const secretKey = info.secretKey;
 
-          _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText);
+          _verifyBranchPaystackTransaction(branchId, paymentId, secretKey, btnText);
         } else {
           _actionAlert(data.message, false);
           $(`#refreshBtn_${paymentId}`).html(btn_text).prop("disabled", false);
@@ -689,7 +700,7 @@ function _proceedVerifyPaystackTransaction(paymentId) {
 	}
 }
 
-function _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText) {
+function _verifyBranchPaystackTransaction(branchId, paymentId, secretKey, btnText) {
 
   $.ajax({
     url: `https://api.paystack.co/transaction/verify/${paymentId}`,
@@ -701,7 +712,7 @@ function _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText) {
     success: function (data) {
       console.log(data);
       if (data.status === true && data.data.status === "success") {
-        _callVeifyPaymentSuccess(paymentId, branchId, btnText);
+        _callVerifyBranchPaymentSuccess(paymentId, branchId, btnText);
       } else {
         _actionAlert('Transaction is still in pending status', false);
         $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
@@ -717,7 +728,7 @@ function _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText) {
 
 }
 
-function _callVeifyPaymentSuccess(paymentId, branchId, btnText) {
+function _callVerifyBranchPaymentSuccess(paymentId, branchId, btnText) {
  let sessionPayDate = sessionStorage.getItem("sessionPayDate");
   try {
     const formData = {
