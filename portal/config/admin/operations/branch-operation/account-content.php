@@ -637,8 +637,7 @@
                                     let upPaidFees = false;
                                     let completeFees = false;
 
-                                    if (useAccountFessToPaySession && useAccountFessToPaySession
-                                        ?.listOfFeesNotPaidData) {
+                                    if (useAccountFessToPaySession && useAccountFessToPaySession?.listOfFeesNotPaidData) {
                                         const fetch = useAccountFessToPaySession?.listOfFeesNotPaidData;
 
                                         for (let i = 0; i < fetch.length; i++) {
@@ -654,26 +653,26 @@
                                                 "orange-color";
                                             const amount = thousandSeperator(fetchedFess.amount);
 
-                                            const fieldId = `fees_${feesId} `;
+                                            const fieldId = `fees_${feesId}`;
 
                                             notPaidFees +=
                                                 upPaidFees = true;
                                             $("#fetchedFeeTextbox").append(`
-                                            < div class="each-toggle-div payment-each-toggle-div new-pay-toggle-div" >
-                                                                            <div class="title-back-div">
-                                                                                <div class="toggle-title-div new-toggle-title">
-                                                                                    <h5>${feesName}</h5> 
-                                                                                    <span class="${feesOptionColor}">(<s>N</s>${amount})</span>
-                                                                                </div>
-                                                                                <div class="sub-title ${feesOptionColor}">${newFeesOption}</div>
-                                                                            </div>
+                                            <div class="each-toggle-div payment-each-toggle-div new-pay-toggle-div">
+                                                <div class="title-back-div">
+                                                    <div class="toggle-title-div new-toggle-title">
+                                                        <h5>${feesName}</h5> 
+                                                        <span class="${feesOptionColor}">(<s>N</s>${amount})</span>
+                                                    </div>
+                                                    <div class="sub-title ${feesOptionColor}">${newFeesOption}</div>
+                                                </div>
 
-                                                                            <div class="text-box-wrapper">
-                                                                                <div class="text_field_container" id="${fieldId}_container"></div>
-                                                                                <input type="hidden" class="fees-id-holder" value="${feesId}">
-                                                                                <div class="text_field_container" id="${percentage}_container"></div>
-                                                                            </div>
-                                                                        </div > `);
+                                                <div class="text-box-wrapper">
+                                                    <div class="text_field_container" id="${fieldId}_container"></div>
+                                                    <input type="hidden" class="fees-id-holder" value="${feesId}">
+                                                    <div class="text_field_container" id="${percentage}_container"></div>
+                                                </div>
+                                            </div>`);
 
                                             textField({
                                                 id: fieldId,
@@ -711,9 +710,9 @@
                                                 "orange-color";
 
                                             paidFees +=
-                                                completeFees = true;
+                                            completeFees = true;
                                             $("#paidFees").append(`
-                                            < div class="alert-list-back-div paid-fees-back-div" >
+                                            <div class="alert-list-back-div paid-fees-back-div">
                                                 <div class="alert-list paid-fees-list">
                                                     <div>${feesName}:</div>
                                                     <div class="alert-value">
@@ -721,7 +720,7 @@
                                                         <span><s>N</s>${totalAmountPaid}</span>
                                                     </div>
                                                 </div>
-                                                                        </div >`);
+                                            </div>`);
 
                                         }
                                         if (!completeFees) {
@@ -1190,15 +1189,15 @@
                                     paidFees +=
                                         completeFees = true;
                                     $("#debtorPaidFees").append(`
-                                            < div class="alert-list-back-div paid-fees-back-div" >
-                                                <div class="alert-list paid-fees-list">
-                                                    <div>${feesName}:</div>
-                                                    <div class="alert-value">
-                                                        <span class="alert-percentage ${percentageColor}">${totalFeesPercentage}%</span>
-                                                        <span><s>N</s>${totalAmountPaid}</span>
-                                                    </div>
+                                        <div class="alert-list-back-div paid-fees-back-div">
+                                            <div class="alert-list paid-fees-list">
+                                                <div>${feesName}:</div>
+                                                <div class="alert-value">
+                                                    <span class="alert-percentage ${percentageColor}">${totalFeesPercentage}%</span>
+                                                    <span><s>N</s>${totalAmountPaid}</span>
                                                 </div>
-                                                                </div >`);
+                                            </div>
+                                        </div>`);
 
                                 }
                                 if (!completeFees) {
@@ -1439,371 +1438,42 @@
     </div>
 <?php } ?>
 
-<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<?php if ($page == 'branchDailyRevenuePage') { ?>
-    <div class="branch-account-wrapper">
-        <div class="nav-content-back-div">
-            <div class="nav-container branch-account-nav">
-                <ul>
-                    <li class="active border" title="Filter Revenue By Date Range" id="filterBranchByDate"
-                        onclick="_getActiveBranchReportNav({divid:'filterBranchByDate', page: 'filterBranchByDate', url: adminPortalLocalUrl});">
-                        <i class="bi-calendar2-check"></i> Date Range
-                    </li>
-                    <li title="Filter Revenue By Session/Term" id="filterBranchBySession"
-                        onclick="_getActiveBranchReportNav({divid:'filterBranchBySession', page: 'filterBranchBySession', url: adminPortalLocalUrl});">
-                        <i class="bi-filter"></i> Session/Term
-                    </li>
-                </ul>
-            </div>
+<!-- ///////////////// Branch Department Class/////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'branchDiscountScholarshipDepartmentClass') { ?>
+    <script>
+        fetchDiscountDepartmentClassParams = JSON.parse(sessionStorage.getItem("fetchDiscountDepartmentClassParams"));
+    </script>
 
-            <div id="getBranchReportNavPage">
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div><span><i class="bi-people-fill"></i> BRANCH DEPARTMENT CLASS LIST /</span> SESSION -- <span
+                id="discountSession">
                 <script>
-                    _getActiveBranchReportNav({
-                        divid: 'filterBranchByDate',
-                        page: 'filterBranchByDate',
-                        url: adminPortalLocalUrl
-                    });
+                    $("#discountSession").html(fetchDiscountDepartmentClassParams?.session);
                 </script>
-            </div>
-        </div>
+            </span> / TERM -- <span id="discountTermName">
+                <script>
+                    $("#discountTermName").html(fetchDiscountDepartmentClassParams?.termName);
+                </script>
+            </span></span></div>
     </div>
-<?php } ?>
 
-<!-- Filter By Date Revenue Pages -->
-<?php if ($page == 'filterBranchByDate') { ?>
-    <div class="chart-div-notifications report-chart-div branch-chat-div">
-        <div class="text"><i class="bi-graph-up-arrow"></i> Showing Matrix for </div>
-
-        <div class="text text-right" onclick="select_search()">
-            <span id="srch-text">Last 30 Days</span>
-            <div class="icon-div"><i class="bi-caret-down"></i></div>
-
-            <div class="srch-select alert-srch-select">
-                <div id="srch-today" onclick="_fetchReportRevenueFiltering('srch-today', 'Today');">Today
-                </div>
-                <div id="srch-week" onclick="_fetchReportRevenueFiltering('srch-week', 'This Week');">This
-                    Week</div>
-                <div id="srch-7" onclick="_fetchReportRevenueFiltering('srch-7', 'Last 7 Days');">Last 7 Days
-                </div>
-                <div id="srch-month" onclick="_fetchReportRevenueFiltering('srch-month', 'This Month');">This
-                    Month</div>
-                <div id="srch-30" onclick="_fetchReportRevenueFiltering('srch-30', 'Last 30 Days');">Last 30 Days
-                </div>
-                <div id="srch-90" onclick="_fetchReportRevenueFiltering('srch-90', 'Last 90 Days');">Last 90 Days
-                </div>
-                <div id="srch-year" onclick="_fetchReportRevenueFiltering('srch-year', 'This Year');">This
-                    Year</div>
-                <div id="srch-1year" onclick="_fetchReportRevenueFiltering('srch-1year', 'Last 1 Year');">Last 1
-                    Year</div>
-                <div onclick="srch_custom('Custom Search')">Custom Search</div>
-            </div>
-        </div>
-
-        <div class="text">
-            <div class="custom-srch-div">
-                <div class="custom-srch-div-in">
-                    <div class="text_field_container dash_field_container">
-                        <input class="text_field bar_cust_text_field" type="text" id="datepickers-from" placeholder="" />
-                        <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From
-                        </div>
-                        <div class="issueText" id="issue_from"></div>
-                    </div>
-
-                    <div class="text_field_container dash_field_container">
-                        <input class="text_field bar_cust_text_field" type="text" id="datepickers-to" placeholder="" />
-                        <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To </div>
-                        <div class="issueText" id="issue_to"></div>
-                    </div>
-                    <button type="button" class="btn" id="applyCustomSearchBtn"
-                        onclick="_fetchCustomReportRevenueFiltering();">Apply</button>
-                </div>
-            </div>
-        </div>
-
-
-        <script language="javascript">
-            $('#datepickers-from').datetimepicker({
-                lang: 'en',
-                timepicker: false,
-                format: 'Y-m-d',
-                formatDate: 'Y-M-d',
-            });
-
-            $('#datepickers-to').datetimepicker({
-                lang: 'en',
-                timepicker: false,
-                format: 'Y-m-d',
-                formatDate: 'Y-M-d',
-            });
+    <div class="pages-toggle-back-div" id="pageDiscountContent">
+        <script>
+            _fetchDiscountScholarshipDepartmentClass();
         </script>
     </div>
-
-    <div class="fetch-report-back-div">
-        <div class="alert alert-success top-alert-div report-alert">
-            <div class="div">
-                <i class="bi-info-circle"></i> Revenue report between <span id="dateFrom"> March 17 2026</span> and <span
-                    id="dateTo">April 15 2026</span>
-            </div>
-
-            <div class="div">
-                Total Revenue: <span class="balance" id="totalRevenue">N347,000.00</span>
-            </div>
-        </div>
-
-        <div class="report-dashbaord-wrapper animated fadeIn">
-            <div class="dashboard-statistics-wrapper">
-                <div class="left-dashbaord-container left-report-dashbaord-container">
-                    <div class="statistics-chart-back-div">
-                        <div class="new-statistics-back-div">
-                            <div class="new-statistics-div" id="branch" title="Credit Card">
-                                <div class="statistics-inner-div">
-                                    <div class="statistics-text report-statistics-text">
-                                        <p>Credit Card Revenue</p>
-                                        <span>Total Amount Paid via Credit Card</span>
-                                        <h2 id="sumCreditCardPayments">0</h2>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="new-statistics-div" title="Bank Transfer Revenue">
-                                <div class="statistics-inner-div">
-                                    <div class="statistics-text report-statistics-text">
-                                        <p>Bank Transfer Revenue</p>
-                                        <span>Total Amount Paid via Bank Transfer</span>
-                                        <h2 id="sumBankTransferPayments">0</h2>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="new-statistics-div" title="Manual Payment Revenue">
-                                <div class="statistics-inner-div">
-                                    <div class="statistics-text report-statistics-text">
-                                        <p>Manual Payment Revenue</p>
-                                        <span>Total Amount Paid via Manual Payment</span>
-                                        <h2 id="sumManualPayments">0.00</h2>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="new-statistics-div" title="Number of Card Payments">
-                                <div class="statistics-inner-div">
-                                    <div class="statistics-text report-statistics-text">
-                                        <p>Credit Card Transactions</p>
-                                        <span>Number of Card Payments</span>
-                                        <h2 id="countCreditCardPayments">0</h2>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="new-statistics-div" title="Bank Transfer Transactions">
-                                <div class="statistics-inner-div">
-                                    <div class="statistics-text report-statistics-text">
-                                        <p>Bank Transfer Transactions</p>
-                                        <span>Number of Bank Transfer Payments</span>
-                                        <h2 id="countBankTransferPayments">0</h2>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="new-statistics-div" title="Manual Payment Transactions">
-                                <div class="statistics-inner-div">
-                                    <div class="statistics-text report-statistics-text">
-                                        <p>Manual Payment Transactions</p>
-                                        <span>Number of Manual Payments</span>
-                                        <h2 id="countManualPayments">0</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="table-div animated fadeIn">
-                            <table class="table" cellspacing="0" style="width:100%">
-                                <thead>
-                                    <tr class="tb-col">
-                                        <th>sn</th>
-                                        <th>Date</th>
-                                        <th>Successful(<s>N</s>)</th>
-                                        <th>Pending(<s>N</s>)</th>
-                                        <th>Cancelled(<s>N</s>)</th>
-                                        <th>View</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody id="pageContent">
-                                    <tr class="tb-row">
-                                        <td>1</td>
-                                        <td class="clickable-td" title="Click to view payment breakdown" onclick="_getForm({ page: 'branchRevenueBreakdown', id: '', layer:2, url: adminPortalLocalUrl});">2026-04-14</td>
-                                        <td class="SUCCESSFULSTATUS"><s>N</s>20,000</td>
-                                        <td class="PENDINGSTATUS"><s>N</s>15,000</td>
-                                        <td class="CANCLLEDSTATUS"><s>N</s>5,000</td>
-                                        <td><button class="btn view-btn" title="Click to view payment breakdown" onclick="_getForm({ page: 'branchRevenueBreakdown', id: '', layer:2, url: adminPortalLocalUrl});">VIEW DETAILS</button></td>
-                                    </tr>
-
-                                    <!-- CONTENT GOES HERE
-                                    <tr>
-                                        <td colspan="20">
-                                            <div class="content-loading-div">
-                                                <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
-                                            </div>
-                                        </td>
-                                    </tr> -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="right-dashbaord-container">
-                    <div class="matrix-div">
-                        <div class="inner-div">
-                            <div class="title">
-                                <h3>Revenue Matrix</h3>
-                            </div>
-                            <div id="chartContainer1" style="width:100%; height:200px; margin:auto;"></div>
-
-                            <script type="text/javascript">
-                                var options = {
-                                    title: {
-                                        text: "" /*My Performance*/
-                                    },
-                                    data: [{
-                                        type: "doughnut",
-                                        innerRadius: 30,
-                                        showInLegend: "False",
-                                        legendText: "{label}",
-                                        indexLabel: "{label} ({y})",
-                                        yValueFormatString: "#,##0.#" % "",
-                                        indexLabelFontSize: 9,
-                                        dataPoints: [{
-                                                label: "MANUAL PAYMENT",
-                                                y: 300000.00
-                                            },
-                                            {
-                                                label: "CREDIT CARD",
-                                                y: 43000.00
-                                            },
-                                        ]
-                                    }]
-                                };
-                                $("#chartContainer1").CanvasJSChart(options);
-                            </script>
-                        </div>
-                    </div>
-
-                    <div class="matrix-div">
-                        <div class="inner-div">
-                            <div class="title">
-                                <h3>Payment Channel Matrix</h3>
-                            </div>
-                            <div id="chartContainer2" style="width:100%; height:200px; margin:auto;"></div>
-
-                            <script type="text/javascript">
-                                var options = {
-                                    title: {
-                                        text: "" /*My Performance*/
-                                    },
-                                    data: [{
-                                        type: "pie",
-                                        startAngle: 45,
-                                        showInLegend: "False",
-                                        legendText: "{label}",
-                                        indexLabel: "{label} ({y})",
-                                        yValueFormatString: "#,##0.#" % "",
-                                        dataPoints: [{
-                                                label: "Debit/Credit Card",
-                                                y: 3
-                                            },
-                                            {
-                                                label: "Bank Transfer",
-                                                y: 11
-                                            },
-                                        ]
-                                    }]
-                                };
-                                $("#chartContainer2").CanvasJSChart(options);
-                            </script>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php } ?>
-
-<!-- Filter By Session Revenue Pages -->
-<?php if ($page == 'filterBranchBySession') { ?>
-    <div class="report-select-back-div">
-        <div>Select session and term to filter Revenue</div>
-        <div class="div-in">
-            <div class="select-field-back-div">
-                <div class="text_field_container select_field_container" id="session_container">
-                    <script>
-                        selectField({
-                            id: 'session',
-                            title: 'Select Session'
-                        });
-                        _getSelectAccountSession('session');
-                    </script>
-                </div>
-
-                <div class="text_field_container select_field_container" id="termId_container">
-                    <script>
-                        selectField({
-                            id: 'termId',
-                            title: 'Select Term'
-                        });
-                        _getSelectTermId('termId');
-                    </script>
-                </div>
-            </div>
-
-            <button type="button" class="btn" id="filterRevenueBtn"
-                onclick="_fetchRevenueBySessionAndTerm();">Filter</button>
-        </div>
-    </div>
-
-    <div class="fetch-report-back-div">
-        <div class="alert alert-success top-alert-div report-alert">
-            <div class="div" id="reportTitleContainer"></div>
-            <div class="div" id="reportBalanceContainer"></div>
-        </div>
-
-        <div class="branch-revenue-table-wrapper">
-            <div class="table-div animated fadeIn">
-                <table class="table" cellspacing="0" style="width:100%">
-                    <thead>
-                        <tr class="tb-col">
-                            <th>sn</th>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>View</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="pageContent">
-                        <!-- CONTENT GOES HERE -->
-
-                        <tr>
-                            <td colspan="20">
-                                <div class="false-notification-div">
-                                    <p>Select session And term to filter revenue</p>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<?php if ($page == 'branchRevenueBreakdown') { ?>
+<?php if ($page == 'viewStudentDiscountScholarshipClassModal') { ?>
+    <script>
+        useStudentDiscountScholarshipSession = JSON.parse(sessionStorage.getItem("useStudentDiscountScholarshipSession"));
+    </script>
+
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
         <div class="top-panel-div">
             <div class="inner-top">
-                <span><i class="bi-graph-up-arrow"></i> BRANCH REVENUE BREAKDOWN</span>
+                <span><i class="bi-people-fill"></i> STUDENT'S DISCOUNT & SCHOLARSHIP LIST</span>
                 <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
         </div>
@@ -1811,31 +1481,131 @@
         <div class="profile-content-div">
             <div class="field-back-div">
                 <div class="field-inner-div student-result-field-inner-div">
-
-                    <div class="content-wrapper animated fadeIn">
-                        <div class="header-div">
-                            <div class="title-nav-back-div">
-                                <div class="nav-ul-div">
-                                    <ul>
-                                        <li class="active-li" title="Successful Status" id="branchSuccessfulPage" onclick="_getBranchPaymentStatusNav({divid:'branchSuccessfulPage', page: 'branchSuccessfulPage', id: '<?php echo $id; ?>', url: adminPortalLocalUrl});"><img src="<?php echo $websiteUrl ?>/images/tick-mark.png" alt="Successful Icon" /> SUCCESSFUL</li>
-                                        <li title="Pending Status" id="branchPendingPage" onclick="_getBranchPaymentStatusNav({divid:'branchPendingPage', page: 'branchPendingPage', id: '<?php echo $id; ?>', url: adminPortalLocalUrl});"><img src="<?php echo $websiteUrl ?>/images/load.png" alt="Pending Icon" /> PENDING</li>
-                                        <li title="Cancel Status" id="branchCancelledPage" onclick="_getBranchPaymentStatusNav({divid:'branchCancelledPage', page: 'branchCancelledPage', id: '<?php echo $id; ?>', url: adminPortalLocalUrl});"><img src="<?php echo $websiteUrl ?>/images/close.png" alt="Cancelled Icon" /></i> CANCELLED</li>
-                                    </ul>
-                                </div>
-                            </div>
+                    <div class="alert alert-success top-alert-div animated fadeIn">
+                        <div>
+                            <span><i class="bi-people-fill"></i> STUDENT LIST /</span> SESSION -- <span id="accountSession">
+                                <script>
+                                    $("#accountSession").html(useStudentDiscountScholarshipSession?.session);
+                                </script>
+                            </span>
+                            / TERM -- <span id="accountTermName">
+                                <script>
+                                    $("#accountTermName").html(useStudentDiscountScholarshipSession?.termData?.termName);
+                                </script>
+                            </span>
+                            / DEPARTMENT -- <span id="accountDepartment">
+                                <script>
+                                    $("#accountDepartment").html(useStudentDiscountScholarshipSession?.departmentData
+                                        ?.departmentName);
+                                </script>
+                            </span>
+                            / CLASS -- <span id="AccountClass">
+                                <script>
+                                    $("#AccountClass").html(useStudentDiscountScholarshipSession?.classData?.className + ' ' +
+                                        useStudentDiscountScholarshipSession?.armData?.armName);
+                                </script>
+                            </span>
+                            </span>
                         </div>
+                    </div>
 
-                        <div class="content-container" id="getBranchPaymentNav">
+                    <div class="table-div animated fadeIn">
+                        <table class="table" cellspacing="0" style="width:100%" id="discountScholarshopPageContent">
                             <script>
-                                _getBranchPaymentStatusNav({
-                                    divid: 'branchSuccessfulPage',
-                                    page: 'branchSuccessfulPage',
-                                    id: '<?php echo $id; ?>',
-                                    url: adminPortalLocalUrl
+                                $(document).ready(function() {
+                                    const response = JSON.parse(sessionStorage.getItem(
+                                        "useStudentDiscountScholarshipSession"));
+
+                                    if (response && response.success === true) {
+                                        const data = response.data;
+
+                                        const session = response.session;
+                                        const termName = response?.termData?.termName;
+                                        const termId = response?.termData?.termId;
+                                        const departmentId = response?.departmentData?.departmentId;
+                                        const departmentName = response?.departmentData?.departmentName;
+                                        const classId = response?.classData?.classId;
+                                        const className = response?.classData?.className;
+                                        const armId = response?.armData?.armId;
+                                        const armName = response?.armData?.armName;
+
+                                        let loadDiscountColumnTittle = '';
+                                        if (userRoles.canApplyStudentDiscountScholarship) {
+                                            loadDiscountColumnTittle = `
+                                            <th>Action</th>`;
+                                        }
+
+                                        let html = `
+                                            <thead>
+                                                <tr class="tb-col">
+                                                    <th>sn</th>
+                                                    <th>Student Info</th>
+                                                    <th>Session/Term</th>
+                                                    <th>Department</th>
+                                                    <th>Class</th>
+                                                    <th>Discount</th>
+                                                    <th>Scholarship</th>
+                                                    ${loadDiscountColumnTittle}
+                                                </tr>
+                                            </thead>
+                                        <tbody>`;
+
+                                        let sn = 0;
+
+                                        data.forEach(item => {
+                                            sn++;
+                                            const fullname = `${item.surName} ${item.firstName}`;
+                                            const studentId = item.studentId;
+                                            const branchId = item.branchId;
+                                            const passport = item.passport || "default.jpg";
+                                            const totalDiscountFund = item.totalDiscountFund;
+                                            const totalScholarshipFund = item.totalScholarshipFund;
+
+                                            let loadDiscountColumn = '';
+                                            if (userRoles.canApplyStudentDiscountScholarship) {
+                                                loadDiscountColumn = `
+                                                <td>
+                                                    <button class="btn view-btn"
+                                                        title="Click to load scholarship and Discount Fund"
+                                                        onclick="_getFetchEachDiscountStudent('${studentId}');">
+                                                        LOAD SCHOLARSHIP/DISCOUNT
+                                                    </button>
+                                                </td>`;
+                                            }
+
+                                            html += `
+                                            <tr class="tb-row">
+                                                <td>${sn}</td>
+
+                                                <td class="clickable-td">
+                                                    <div class="text-back-div" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
+                                                        <div class="image-div general-passport">
+                                                            <img src="${studentPixPath}/${passport}" alt="${fullname}" />
+                                                        </div>
+
+                                                        <div class="text-div">
+                                                            <div class="first-class">${fullname}</div>
+                                                            <div class="second-class">${studentId}</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td>${session} - ${termName}</td>
+                                                <td>${departmentName}</td>
+                                                <td>${className} ${armName}</td>
+
+                                                <td><s>N</s>${thousandSeperator(item.totalDiscountFund)}</td>
+                                                <td><s>N</s>${thousandSeperator(item.totalScholarshipFund)}</td>
+                                                ${loadDiscountColumn}
+                                            </tr > `;
+                                        });
+
+                                        html += `</tbody >`;
+                                        $('#discountScholarshopPageContent').html(html);
+                                    }
                                 });
-                                 sessionStorage.setItem("sessionPayDate", '<?php echo $id; ?>');
                             </script>
-                        </div>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -1843,457 +1613,87 @@
     </div>
 <?php } ?>
 
-<!-- ///// Success Page //// -->
-<?php if ($page == 'branchSuccessfulPage') { ?>
-    <div id="revenueAlert" class="alert top-alert-div animated fadeIn">
-        <div>
-            <i class="bi-graph-up-arrow"></i>
-            Successful Transactions On <span id="date"></span>
-            <output style="display:none;">
-               -- Total Revenue:
-                <span class="balance" id="totalAmount"></span>
-            </output>
-        </div>
-
-        <div class="btn-container">
-            <button class="btn"><i class="bi-printer"></i> PRINT</button>
-            <button class="btn"><i class="bi-file-earmark-excel"></i> EXPORT</button>
-        </div>
-    </div>
-
-    <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%">
-            <thead>
-                <tr class="tb-col">
-                    <th>sn</th>
-                    <th>Student Info</th>
-                    <th>Parent Info</th>
-                    <th>Branch</th>
-                    <th>Session/Term</th>
-                    <th>Class</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                    <th>View</th>
-                </tr>
-            </thead>
-
-            <tbody id="pageContent">
-                <script>
-                    $(document).ready(function() {
-                        const newpayDate = "<?php echo $id; ?>";
-                        _loadPaymentsByStatus('5', newpayDate);
-                    });
-                </script>
-                <tr>
-                    <td colspan="20">
-                        <div class="content-loading-div">
-                            <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-<?php } ?>
-
-<!-- ///// Pending Page //// -->
-<?php if ($page == 'branchPendingPage') { ?>
-    <div id="revenueAlert" class="alert top-alert-div animated fadeIn">
-        <div>
-            <i class="bi-graph-up-arrow"></i>
-            Pending Transactions On <span id="date"></span>
-            <output style="display:none;">
-               -- Total Revenue:
-                <span class="balance" id="totalAmount"></span>
-            </output>
-        </div>
-
-        <div class="btn-container">
-            <button class="btn"><i class="bi-printer"></i> PRINT</button>
-            <button class="btn"><i class="bi-file-earmark-excel"></i> EXPORT</button>
-        </div>
-    </div>
-
-    <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%">
-            <thead>
-                <tr class="tb-col">
-                    <th>sn</th>
-                    <th>Student Info</th>
-                    <th>Parent Info</th>
-                    <th>Branch</th>
-                    <th>Session/Term</th>
-                    <th>Class</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                    <th>View</th>
-                </tr>
-            </thead>
-
-            <tbody id="pageContent">
-                <script>
-                    $(document).ready(function() {
-                        const newpayDate = "<?php echo $id; ?>";
-                        _loadPaymentsByStatus('3', newpayDate);
-                    });
-                </script>
-                <tr>
-                    <td colspan="20">
-                        <div class="content-loading-div">
-                            <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-<?php } ?>
-
-<!-- ///// Cancel Page //// -->
-<?php if ($page == 'branchCancelledPage') { ?>
-    <div id="revenueAlert" class="alert top-alert-div animated fadeIn">
-        <div>
-            <i class="bi-graph-up-arrow"></i>
-            Cancelled Transactions On <span id="date"></span>
-            <output style="display:none;">
-               -- Total Revenue:
-                <span class="balance" id="totalAmount"></span>
-            </output>
-        </div>
-
-        <div class="btn-container">
-            <button class="btn"><i class="bi-printer"></i> PRINT</button>
-            <button class="btn"><i class="bi-file-earmark-excel"></i> EXPORT</button>
-        </div>
-    </div>
-
-    <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%">
-            <thead>
-                <tr class="tb-col">
-                    <th>sn</th>
-                    <th>Student Info</th>
-                    <th>Parent Info</th>
-                    <th>Branch</th>
-                    <th>Session/Term</th>
-                    <th>Class</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                    <th>View</th>
-                </tr>
-            </thead>
-
-            <tbody id="pageContent">
-                <script>
-                    $(document).ready(function() {
-                        const newpayDate = "<?php echo $id; ?>";
-                        _loadPaymentsByStatus('4', newpayDate);
-                    });
-                </script>
-                <tr>
-                    <td colspan="20">
-                        <div class="content-loading-div">
-                            <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-<?php } ?>
-
-<?php if ($page == 'branchPaymentBreakDownForm') { ?>
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'studentDiscountScholarshipForm') { ?>
     <script>
-        getRevenueBreakdownSessionData = JSON.parse(sessionStorage.getItem("getRevenueBreakdownSessionData"));
+        getEachDiscountStudentSession = JSON.parse(sessionStorage.getItem("getEachDiscountStudentSession"));
     </script>
-
-    <div class="slide-form-div save-compute-slide-form" data-aos="fade-left" data-aos-duration="900">
-        <div class="title-panel-div">
-            <div class="inner-top">
-                <div class="icon-title-div">
-                    <span id="panel-title"><span><i class="bi-plus-square"></i></span> REVENUE BREAKDOWN</span>
-                </div>
-                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
-            </div>
+    <div class="caption-div animated zoomIn">
+        <div class="title-div">
+            <div class="title"><i class="bi bi-wallet-fill"></i> DISCOUNT OR SCHOLARSHIP FUND</div>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i
+                    class="bi-x-lg"></i></button>
         </div>
 
-        <div class="container-back-div">
-            <div class="inner-container">
-                <div>
-                    <div class="alert alert-success form-alert">
-                        <span>Branch Details:</span>
-                        <div class="alert-list-div">
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>Branch Name:</div>
-                                    <div><span id="branchName">
-                                            <script>
-                                                $("#branchName").html(getRevenueBreakdownSessionData?.branchData?.branchName);
-                                            </script>
-                                        </span></div>
-                                </div>
-                            </div>
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert">
+                <i class="bi-wallet-fill"></i> You’re about to load discount or scholarship fund for
+                <span id="studentFullNameSession">
+                    <script>
+                        $("#studentFullNameSession").html(getEachDiscountStudentSession?.data?.[0].surName + ' ' +
+                            getEachDiscountStudentSession?.data?.[0].firstName);
+                    </script>
+                </span>
 
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>Branch Mobile Number:</div>
-                                    <div><span id="mobileNumber">
-                                            <script>
-                                                $("#mobileNumber").html(getRevenueBreakdownSessionData?.branchData?.mobileNumber);
-                                            </script>
-                                        </span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                | SESSION:
+                <span id="studentDiscountScholarshipSession">
+                    <script>
+                        $("#studentDiscountScholarshipSession").html(getEachDiscountStudentSession?.session);
+                    </script>
+                </span>
 
-                <div>
-                    <div class="alert alert-success form-alert">
-                        <span>Parent Details:</span>
-                        <div class="alert-list-div">
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>Parent Full Name:</div>
-                                    <div><span id="fullName">
-                                            <script>
-                                                $("#fullName").html(capitalizeFirstLetterOfEachWord(getRevenueBreakdownSessionData?.parentData?.titleId + ' ' + getRevenueBreakdownSessionData?.parentData?.surName + ' ' + getRevenueBreakdownSessionData?.parentData?.otherNames));
-                                            </script>
-                                        </span></div>
-                                </div>
-                            </div>
-
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>Parent Email:</div>
-                                    <div><span id="parentEmail">
-                                            <script>
-                                                $("#parentEmail").html(getRevenueBreakdownSessionData?.parentData?.email);
-                                            </script>
-                                        </span></div>
-                                </div>
-                            </div>
-
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>Relationship:</div>
-                                    <div><span id="relationship">
-                                            <script>
-                                                $("#relationship").html(getRevenueBreakdownSessionData?.parentData?.relationship);
-                                            </script>
-                                        </span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="alert alert-success form-alert">
-                        <span>Student Details:</span>
-                        <div class="alert-list-div">
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>Student Full Name:</div>
-                                    <div><span id="studentFullName">
-                                            <script>
-                                                $("#studentFullName").html(capitalizeFirstLetterOfEachWord(getRevenueBreakdownSessionData?.studentData?.surName + ' ' + getRevenueBreakdownSessionData?.studentData?.firstName + ' ' + getRevenueBreakdownSessionData?.studentData?.otherNames));
-                                            </script>
-                                        </span></div>
-                                </div>
-                            </div>
-
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>Student Id:</div>
-                                    <div><span id="studentId">
-                                            <script>
-                                                $("#studentId").html(getRevenueBreakdownSessionData?.studentData?.studentId);
-                                            </script>
-                                        </span></div>
-                                </div>
-                            </div>
-
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>Session:</div>
-                                    <div><span id="sessionName">
-                                            <script>
-                                                $("#sessionName").html(getRevenueBreakdownSessionData?.session);
-                                            </script>
-                                        </span></div>
-                                </div>
-                            </div>
-
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>Term:</div>
-                                    <div><span id="studentTermName">
-                                            <script>
-                                                $("#studentTermName").html(getRevenueBreakdownSessionData?.termData?.termName);
-                                            </script>
-                                        </span></div>
-                                </div>
-                            </div>
-
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>Department:</div>
-                                    <div><span id="departmentName">
-                                            <script>
-                                                $("#departmentName").html(getRevenueBreakdownSessionData?.departmentData?.departmentName);
-                                            </script>
-                                        </span></div>
-                                </div>
-                            </div>
-
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>Class:</div>
-                                    <div><span id="className">
-                                            <script>
-                                                $("#className").html(getRevenueBreakdownSessionData?.classData?.className + ' ' + getRevenueBreakdownSessionData?.armData?.armName);
-                                            </script>
-                                        </span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="alert alert-success form-alert">
-                        <span>Payment Details:</span>
-                        <div class="alert-list-div">
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>Payment Id:</div>
-                                    <div><span id="paymentId">
-                                            <script>
-                                                $("#paymentId").html(getRevenueBreakdownSessionData?.paymentId);
-                                            </script>
-                                        </span></div>
-                                </div>
-                            </div>
-
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>Payment Method:</div>
-                                    <div><span id="paymentMethodName">
-                                            <script>
-                                                $("#paymentMethodName").html(getRevenueBreakdownSessionData?.paymentMethodData?.paymentMethodName);
-                                            </script>
-                                        </span></div>
-                                </div>
-                            </div>
-
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>Status:</div>
-                                    <div><span id="statusName">
-                                            <script>
-                                                $("#statusName").html(getRevenueBreakdownSessionData?.statusData?.statusName);
-                                            </script>
-                                        </span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <script>
-                    $(document).ready(function () {
-                        const paymentComputedBy = getRevenueBreakdownSessionData?.paymentComputedBy;
-
-                        let content = "";
-                        if (paymentComputedBy) {
-                            content += `
-                                <div class="alert alert-success form-alert">
-                                <span>Manual Payment Processed By:</span>
-                                <div class="alert-list-div">
-                                    <div class="alert-list-back-div">
-                                        <div class="alert-list">
-                                            <div>Staff Id:</div>
-                                            <div><span>${paymentComputedBy?.staffId}</span></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="alert-list-back-div">
-                                        <div class="alert-list">
-                                            <div>Staff FullName:</div>
-                                            <div><span>${paymentComputedBy?.fullName}</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            `;
-                        }
-                        $('#showPaymentComputedBy').html(content);
-                    });
-                </script>
-
-                <div id="showPaymentComputedBy"></div>
-
-                <div class="paid-fee-conatiner">
-                    <div class="alert alert-success form-alert">
-                        <span>Breakdown of Fees Paid</span>
-
-                        <div class="alert-list-div" id="paidFees">
-                            No record found!
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="alert alert-success form-alert">
-                        <span>Total Amount</span>
-                        <div class="alert-list-div">
-                            <div class="alert-list-back-div">
-                                <div class="alert-list">
-                                    <div>TOTAL AMOUNT:</div>
-                                    <div><span class="total-amount" id="formTotalAmount"><s>N</s>
-                                            <script>
-                                                $("#formTotalAmount").html('<s>N</s>' + thousandSeperator(getRevenueBreakdownSessionData?.totalFeesPaid));
-                                            </script>
-                                        </span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <script>
-                    $(document).ready(function() {
-                        let paidFees = '';
-
-                        if (getRevenueBreakdownSessionData && getRevenueBreakdownSessionData?.paymentBreakdownData) {
-                            const fetch = getRevenueBreakdownSessionData?.paymentBreakdownData;
-
-                            for (let i = 0; i < fetch.length; i++) {
-                                const fetchedFess = fetch[i];
-                                const feesName = fetchedFess.feesName;
-                                const amount = thousandSeperator(fetchedFess.amount);
-
-                                paidFees += `
-                                <div class="alert-list-back-div">
-                                    <div class="alert-list">
-                                        <div>${feesName}:</div>
-                                        <div><span><s>N</s>${amount}</span></div>
-                                    </div>
-                                </div>`;
-                            }
-                            $("#paidFees").html(paidFees !== '' ? paidFees : 'No record found!');
-                        }
-                    });
-                </script>
-
-                <div>
-                    <button class="btn" title="PRINT RECEIPT" id="submitBtn" onclick=""> <i class="bi-check"></i> PRINT RECEIPT </button>
-                </div>
+                | TERM:
+                <span id="studentDiscountScholarshipTerm">
+                    <script>
+                        $("#studentDiscountScholarshipTerm").html(getEachDiscountStudentSession?.termData?.termName);
+                    </script>
+                </span>
+                | CLASS:
+                <span id="studentDiscountScholarshipClass">
+                    <script>
+                        $("#studentDiscountScholarshipClass").html(getEachDiscountStudentSession?.departmentData
+                            ?.departmentName + ' ' + getEachDiscountStudentSession?.classData?.className + ' ' +
+                            getEachDiscountStudentSession?.armData?.armName);
+                    </script>
+                </span>
             </div>
+
+            <div class="text_field_container" id="amount_container">
+                <script>
+                    textField({
+                        id: 'amount',
+                        title: 'Enter Amount',
+                        type: 'number',
+                        onKeyPressFunction: 'isNumberCheck(event);',
+                        autocomplete: "off"
+                    });
+                </script>
+            </div>
+
+            <div class="text_area_container" id="description_container">
+                <script>
+                    textField({
+                        id: 'description',
+                        title: 'Enter Description',
+                        type: 'textarea',
+                        rows: 1,
+                        maxlength: '50',
+                    });
+                </script>
+            </div>
+
+            <div class="text_field_container" id="fundPurposeId_container">
+                <script>
+                    selectField({
+                        id: 'fundPurposeId',
+                        title: 'Select Fund Purpose',
+                    });
+                    _getSelectFundPurposeId('fundPurposeId', '2,3');
+                </script>
+            </div>
+
+            <button class="btn" id="scholarshipBtn" title="Proceed To Load Scholarship Fund" onclick="_loadStudentDiscountScholarshipFund();">
+                PROCEED <i class="bi bi-arrow-right"></i></button>
         </div>
     </div>
 <?php } ?>

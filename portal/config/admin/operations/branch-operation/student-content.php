@@ -1938,17 +1938,8 @@
         <div><i class="bi-mortarboard"></i> STUDENT DISCOUNT OR SCHOLARSHIP APPLICATION</div>
 
         <div class="btn-container" id="canApplyStudentDiscountScholarship">
-            <script>
-                if (userRoles.canApplyStudentDiscountScholarship) {
-                    $('#canApplyStudentDiscountScholarship').append(`
-                                <button class="btn" title="LOAD DISCOUNT OR SCHOLARSHIP FUNDS"
-                onclick="_getForm({page: 'studentDiscountScholarshipForm', layer:3,  url: adminPortalLocalUrl});"><i
-                    class="bi-printer"></i> LOAD
-                DISCOUNT OR
-                SCHOLARSHIP FUNDS</button>
-                            `);
-                }
-            </script>
+            <button class="btn" title="PRINT RECORDS" onclick=""><i class="bi-printer"></i>
+                PRINT</button>
 
             <button class="btn" title="EXPORT RECORDS" onclick=""><i class="bi-file-earmark-excel"></i>
                 EXPORT</button>
@@ -1992,86 +1983,3 @@
 <?php } ?>
 
 
-<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<?php if ($page == 'studentDiscountScholarshipForm') { ?>
-
-    <div class="caption-div animated zoomIn">
-        <div class="title-div">
-            <div class="title"><i class="bi bi-wallet-fill"></i> DISCOUNT OR SCHOLARSHIP FUND</div>
-            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i
-                    class="bi-x-lg"></i></button>
-        </div>
-
-        <div class="div-in animated fadeIn">
-            <div class="alert alert-success form-alert">
-                <i class="bi-wallet-fill"></i> You’re about to load discount or scholarship fund for
-                <span id="studentFullNameSession">
-                    <script>
-                        $("#studentFullNameSession").html(getEachBranchStudentsSession?.studentData?.surName + ' ' +
-                            getEachBranchStudentsSession?.studentData?.firstName + ' ' +
-                            getEachBranchStudentsSession?.studentData?.otherNames);
-                    </script>
-                </span>
-
-                | SESSION:
-                <span id="studentDiscountScholarshipSession">
-                    <script>
-                        $("#studentDiscountScholarshipSession").html(getEachBranchDetailsSession?.session);
-                    </script>
-                </span>
-
-                | TERM:
-                <span id="studentDiscountScholarshipTerm">
-                    <script>
-                        $("#studentDiscountScholarshipTerm").html(getEachBranchDetailsSession?.termData[0]?.termName);
-                    </script>
-                </span>
-                | CLASS:
-                <span id="studentDiscountScholarshipClass">
-                    <script>
-                        $("#studentDiscountScholarshipClass").html(getEachBranchStudentsSession?.departmentData
-                            ?.departmentName + ' ' + getEachBranchStudentsSession?.classData?.className + ' ' +
-                            getEachBranchStudentsSession?.armData?.armName);
-                    </script>
-                </span>
-            </div>
-
-            <div class="text_field_container" id="amount_container">
-                <script>
-                    textField({
-                        id: 'amount',
-                        title: 'Enter Amount',
-                        type: 'number',
-                        onKeyPressFunction: 'isNumberCheck(event);',
-                        autocomplete: "off"
-                    });
-                </script>
-            </div>
-
-            <div class="text_area_container" id="description_container">
-                <script>
-                    textField({
-                        id: 'description',
-                        title: 'Enter Description',
-                        type: 'textarea',
-                        rows: 1,
-                        maxlength: '50',
-                    });
-                </script>
-            </div>
-
-            <div class="text_field_container" id="fundPurposeId_container">
-                <script>
-                    selectField({
-                        id: 'fundPurposeId',
-                        title: 'Select Fund Purpose',
-                    });
-                    _getSelectFundPurposeId('fundPurposeId', '2,3');
-                </script>
-            </div>
-
-            <button class="btn" id="scholarshipBtn" title="Proceed To Load Scholarship Fund" onclick="_loadStudentDiscountScholarshipFund();">
-                PROCEED <i class="bi bi-arrow-right"></i></button>
-        </div>
-    </div>
-<?php } ?>
