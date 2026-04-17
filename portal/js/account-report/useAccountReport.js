@@ -363,9 +363,7 @@ function _fetchRevenueBySessionAndTerm() {
     success: function (info) {
       if (info.success && info.statistics.length > 0) {
         const statistic = info.statistics[0];
-        const sumCreditCardPayments = Number(statistic.sumCreditCardPayments) || 0;
-        const sumBankTransferPayments = Number(statistic.sumBankTransferPayments) || 0;
-        const totalRevenue = thousandSeperator(sumCreditCardPayments + sumBankTransferPayments);
+        const totalRevenue = info.totalRevenue;
         const termName = info?.termData?.termName;
         const fetchedSession = info?.session;
 
@@ -376,7 +374,7 @@ function _fetchRevenueBySessionAndTerm() {
 
         let balanceContainer = "";
         balanceContainer += `
-          Total Balance: <span class="balance"><s>N</s>${totalRevenue}</span>`;
+          Total Balance: <span class="balance"><s>N</s>${thousandSeperator(totalRevenue)}</span>`;
         $("#reportBalanceContainer").html(balanceContainer);
 
         sessionStorage.setItem("sessionTermData", JSON.stringify({
