@@ -978,8 +978,8 @@
 
                             <div class="btn-div" id="canLoadDashboardWallet">
                                 <script>
-                                if (userRoles.canLoadBranchSchoolBoltWallet) {
-                                    $('#canLoadDashboardWallet').append(`
+                                    if (userRoles.canLoadBranchSchoolBoltWallet) {
+                                        $('#canLoadDashboardWallet').append(`
                                     <button class="btn" title="Load Wallet"
                                     onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i
                                         class="bi bi-wallet-fill"></i> Load Wallet</button>
@@ -1339,8 +1339,8 @@
 
                             <div class="btn-div" id="canLoadDashboardWallet">
                                 <script>
-                                if (userRoles.canLoadBranchSchoolBoltWallet) {
-                                    $('#canLoadDashboardWallet').append(`
+                                    if (userRoles.canLoadBranchSchoolBoltWallet) {
+                                        $('#canLoadDashboardWallet').append(`
                                     <button class="btn" title="Load Wallet"
                                     onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i
                                         class="bi bi-wallet-fill"></i> Load Wallet</button>
@@ -3581,10 +3581,12 @@
                     <div class="user-managment-list staff-managment-list" title="Fees Settings"
                         onclick="_getActiveBranchPage({divid:'branch_account', page: 'branch_fees_page', url: adminPortalLocalUrl});">
                         <div class="inner-div">
-                            <div class="icon-div"><img src="<?php echo $websiteUrl ?>/images/fees.png" alt="Fees Settings" /></div>
+                            <div class="icon-div"><img src="<?php echo $websiteUrl ?>/images/fees.png"
+                                    alt="Fees Settings" /></div>
                             <div class="text-div">
                                 <h3>Fees Settings</h3>
-                                <p>Set tuition fees and manage billing items.</p>
+                                <p>Set tuition fees for this current session and term and manage billing items for the
+                                    mandatory and non-mandatory fees.</p>
                             </div>
                         </div>
                     </div>
@@ -3597,7 +3599,7 @@
                             </div>
                             <div class="text-div">
                                 <h3>Compute Fees</h3>
-                                <p>Compute payable fees for each branch.</p>
+                                <p>Compute fees prices and manage payable fees for this current session and term.</p>
                             </div>
                         </div>
                     </div>
@@ -3621,7 +3623,8 @@
                             </div>
                             <div class="text-div">
                                 <h3>Student Profile</h3>
-                                <p>Access and manage detailed student information, including personal, academic, and contact records.
+                                <p>Access and manage student information, including personal, academic, and contact
+                                    records.
                                 </p>
                             </div>
                         </div>
@@ -3635,7 +3638,7 @@
                             </div>
                             <div class="text-div">
                                 <h3>Parent List</h3>
-                                <p>View and manage parents associated with your branch.</p>
+                                <p>View and manage parents associated with each student in a class.</p>
                             </div>
                         </div>
                     </div>
@@ -3651,7 +3654,8 @@
 
             <div class="div-in">
                 <div class="user-managment-back-div">
-                    <div class="user-managment-list staff-managment-list" title="Discount/Scholarship Application" onclick="_proceedFetchDiscountDepartmentClass();">
+                    <div class="user-managment-list staff-managment-list" title="Discount/Scholarship Application"
+                        onclick="_proceedFetchDiscountScholarshipDepartmentClass();">
                         <div class="inner-div">
                             <div class="icon-div">
                                 <img src="<?php echo $websiteUrl ?>/images/discount-scholarship.png"
@@ -3659,7 +3663,7 @@
                             </div>
                             <div class="text-div">
                                 <h3>Discount/Scholarship Application</h3>
-                                <p>Apply and view discount or scholarship applications for students.</p>
+                                <p>Apply discount or scholarship for students in this current session and term.</p>
                             </div>
                         </div>
                     </div>
@@ -3672,7 +3676,9 @@
                             </div>
                             <div class="text-div">
                                 <h3>Student Payment</h3>
-                                <p>View and manage student payments associated with your branch.</p>
+                                <p>View and manage student payments, load student funds manually, compute installment
+                                    payment and send payment receipts
+                                    to parents.</p>
                             </div>
                         </div>
                     </div>
@@ -3685,7 +3691,8 @@
                             </div>
                             <div class="text-div">
                                 <h3>View Debtors</h3>
-                                <p>View the list of students by class and identify those with outstanding payment (DEBTORS).</p>
+                                <p>View the list of students by class and identify those with outstanding payment (DEBTORS).
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -3750,26 +3757,31 @@
 
             <div class="div-in">
                 <div class="user-managment-back-div">
-                    <div class="user-managment-list staff-managment-list" title="Discount Report" onclick="">
+                    <div class="user-managment-list staff-managment-list" title="Discount Report"
+                        onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'discountReport', url: adminPortalLocalUrl});">
                         <div class="inner-div">
                             <div class="icon-div">
                                 <img src="<?php echo $websiteUrl ?>/images/scholarship-report.png" alt="Discount Reporte" />
                             </div>
                             <div class="text-div">
                                 <h3>Discount Report</h3>
-                                <p>Monitor all discounts applied across fees, track reductions, and analyze their impact on overall revenue.</p>
+                                <p>Monitor all discounts applied across fees, track reductions, and analyze their impact on
+                                    overall revenue.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="user-managment-list staff-managment-list" title="Scholarship Report" onclick="">
+                    <div class="user-managment-list staff-managment-list" title="Scholarship Report"
+                        onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'scholarshipReport', url: adminPortalLocalUrl});">
                         <div class="inner-div">
                             <div class="icon-div">
-                                <img src="<?php echo $websiteUrl ?>/images/scholarship-report.png" alt="Scholarship Report" />
+                                <img src="<?php echo $websiteUrl ?>/images/scholarship-report.png"
+                                    alt="Scholarship Report" />
                             </div>
                             <div class="text-div">
                                 <h3>Scholarship Report</h3>
-                                <p>View and manage scholarships awarded to students, including eligibility, amounts granted, and financial impact.</p>
+                                <p>View and manage scholarships awarded to students, including eligibility, amounts granted,
+                                    and financial impact.</p>
                             </div>
                         </div>
                     </div>
@@ -3794,7 +3806,7 @@
                             </div>
                             <div class="text-div">
                                 <h3>All Revenue Report</h3>
-                                <p>View and analyze revenue reports for your branch operations.</p>
+                                <p>View and analyze all revenue reports by date range or by session and term.</p>
                             </div>
                         </div>
                     </div>
@@ -3826,11 +3838,13 @@
                         onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'activateResult', url: adminPortalLocalUrl});">
                         <div class="inner-div">
                             <div class="icon-div">
-                                <img src="<?php echo $websiteUrl ?>/images/double-check.png" alt="Activate Academic Result" />
+                                <img src="<?php echo $websiteUrl ?>/images/double-check.png"
+                                    alt="Activate Academic Result" />
                             </div>
                             <div class="text-div">
                                 <h3>Activate Academic Result</h3>
-                                <p>Activate the result for your branch to make it available for viewing and further processing.</p>
+                                <p>Activate the result for your branch to make it available for viewing and further
+                                    processing.</p>
                             </div>
                         </div>
                     </div>
@@ -3843,7 +3857,8 @@
                             </div>
                             <div class="text-div">
                                 <h3>SchoolBolt Wallet</h3>
-                                <p>View your wallet transaction history and keep track of all deposits, payments, and wallet activity.
+                                <p>View your wallet transaction history and keep track of all deposits, payments, and wallet
+                                    activity.
                                 </p>
                             </div>
                         </div>
@@ -3870,11 +3885,11 @@
 
         <div id="getNavPage">
             <script>
-                _getActiveCommentNav({
-                    divid: 'malePage',
-                    page: 'malePage',
-                    url: adminPortalLocalUrl
-                });
+            _getActiveCommentNav({
+                divid: 'malePage',
+                page: 'malePage',
+                url: adminPortalLocalUrl
+            });
             </script>
 
         </div>
@@ -3885,7 +3900,7 @@
 <!-- ///// Male Student Comment Page //// -->
 <?php if ($page == 'malePage') { ?>
     <script>
-        getEachTeachersCommentSession = JSON.parse(sessionStorage.getItem("getEachTeachersCommentSession"));
+    getEachTeachersCommentSession = JSON.parse(sessionStorage.getItem("getEachTeachersCommentSession"));
     </script>
 
     <div class="fetch-report-back-div">
@@ -3917,7 +3932,7 @@
                 <tbody id="pageContent">
                     <!-- CONTENT GOES HERE -->
                     <script>
-                        _fetchTeachersComment('M');
+                    _fetchTeachersComment('M');
                     </script>
                     <tr>
                         <td colspan="20">
@@ -3935,7 +3950,7 @@
 <!-- ///// Female Student Comment Page //// -->
 <?php if ($page == 'femalePage') { ?>
     <script>
-        getEachTeachersCommentSession = JSON.parse(sessionStorage.getItem("getEachTeachersCommentSession"));
+    getEachTeachersCommentSession = JSON.parse(sessionStorage.getItem("getEachTeachersCommentSession"));
     </script>
 
     <div class="fetch-report-back-div">
@@ -3967,7 +3982,7 @@
                 <tbody id="pageContent">
                     <!-- CONTENT GOES HERE -->
                     <script>
-                        _fetchTeachersComment('F');
+                    _fetchTeachersComment('F');
                     </script>
                     <tr>
                         <td colspan="20">
@@ -3985,7 +4000,7 @@
 <!-- ///// Male Teacher's Comment Form //// -->
 <?php if ($page == 'commentRegForm') { ?>
     <script>
-        getEachTeachersCommentSession = JSON.parse(sessionStorage.getItem("getEachTeachersCommentSession"));
+    getEachTeachersCommentSession = JSON.parse(sessionStorage.getItem("getEachTeachersCommentSession"));
     </script>
 
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
@@ -4018,25 +4033,25 @@
 
                 <div class="text_area_container" id="comment_container">
                     <script>
-                        textField({
-                            id: 'comment',
-                            title: 'Class Teacher\'s Comment',
-                            type: 'textarea',
-                            rows: 2,
-                            value: getEachTeachersCommentSession?.comment,
-                        });
+                    textField({
+                        id: 'comment',
+                        title: 'Class Teacher\'s Comment',
+                        type: 'textarea',
+                        rows: 2,
+                        value: getEachTeachersCommentSession?.comment,
+                    });
                     </script>
                 </div>
 
                 <div class="text_field_container" id="statusId_container">
                     <script>
-                        selectField({
-                            id: 'statusId',
-                            title: 'Select Status',
-                            fieldValue: getEachTeachersCommentSession?.statusData?.statusId ?? '',
-                            fieldLabel: getEachTeachersCommentSession?.statusData?.statusName ?? ''
-                        });
-                        _getSelectStatusId('statusId', '1,2');
+                    selectField({
+                        id: 'statusId',
+                        title: 'Select Status',
+                        fieldValue: getEachTeachersCommentSession?.statusData?.statusId ?? '',
+                        fieldLabel: getEachTeachersCommentSession?.statusData?.statusName ?? ''
+                    });
+                    _getSelectStatusId('statusId', '1,2');
                     </script>
                 </div>
 
@@ -4049,12 +4064,12 @@
         </div>
     </div>
     <script>
-        $(document).ready(function () {
-            const gender = sessionStorage.getItem("activeGender");
-            $("#genderDisplay").text(gender === "M" ? "MALE" : "FEMALE");
+    $(document).ready(function() {
+        const gender = sessionStorage.getItem("activeGender");
+        $("#genderDisplay").text(gender === "M" ? "MALE" : "FEMALE");
 
-            $("#submitBtn").attr("onclick", `_createClassTeachersComment('${gender}')`);
-        });
+        $("#submitBtn").attr("onclick", `_createClassTeachersComment('${gender}')`);
+    });
     </script>
 <?php } ?>
 
@@ -4072,20 +4087,20 @@
                 Please confirm your action below.</div>
             <div class="text_field_container" id="newSession_container">
                 <script>
-                    textField({
-                        id: 'newSession',
-                        title: 'Provide New Session'
-                    });
+                textField({
+                    id: 'newSession',
+                    title: 'Provide New Session'
+                });
                 </script>
             </div>
 
             <div class="text_field_container" id="newTermId_container">
                 <script>
-                    selectField({
-                        id: 'newTermId',
-                        title: 'Select Term'
-                    });
-                    _getSelectTermId('newTermId');
+                selectField({
+                    id: 'newTermId',
+                    title: 'Select Term'
+                });
+                _getSelectTermId('newTermId');
                 </script>
             </div>
 

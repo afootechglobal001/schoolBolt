@@ -212,7 +212,7 @@
 
                 <div class="new-btn-container"></div>
                 <script>
-                    $(document).ready(function() {
+                    $(document).ready(function () {
                         let showButton = '';
                         const statusId = studentParentSessionData?.parent?.statusId;
 
@@ -249,9 +249,13 @@
             <?php if ($id == "payment") {
                 $pageTitle = "STUDENT PAYMENT";
             } else if ($id == "debtors") {
-                $pageTitle = "VIEW DEPTORS";
+                $pageTitle = "VIEW DEBTORS";
             } else if ($id == "activateResult") {
                 $pageTitle = "ACTIVATE ACADEMIC RESULT";
+            } else if ($id == "discountReport") {
+                $pageTitle = "DISCOUNT REPORT";
+            } else if ($id == "scholarshipReport") {
+                $pageTitle = "SCHOLARSHIP REPORT";
             }
             ?>
 
@@ -286,14 +290,22 @@
                 </script>
             </div>
 
-            <?php if ($id == "activateResult") { ?>
-                <button class="btn" id="proceedActivateResultBtn" title="Proceed Request"
-                    onclick="_proceedActivateResult('<?php echo $id ?>');">PROCEED <i class="bi-arrow-right"></i> </button>
-            <?php } else { ?>
+            <?php if ($id == "payment" or $id == "debtors") { ?>
                 <button class="btn" id="proceedBtn" title="Proceed Request"
                     onclick="_proceedFetchAcountDepartmentClass('<?php echo $id ?>');">PROCEED <i class="bi-arrow-right"></i>
                 </button>
+            <?php } else if ($id == "activateResult") { ?>
+                    <button class="btn" id="proceedActivateResultBtn" title="Proceed Request"
+                        onclick="_proceedActivateResult('<?php echo $id ?>');">PROCEED <i class="bi-arrow-right"></i> </button>
+            <?php } else if ($id == "discountReport") { ?>
+                        <button class="btn" id="proceedBtn" title="Proceed Request"
+                            onclick="_proceedFetchDiscountDepartmentClass();">PROCEED <i class="bi-arrow-right"></i> </button>
+            <?php } else if ($id == "scholarshipReport") { ?>
+                            <button class="btn" id="proceedBtn" title="Proceed Request"
+                                onclick="_proceedFetchScholarshipDepartmentClass();">PROCEED <i class="bi-arrow-right"></i> </button>
             <?php } ?>
+
+
         </div>
     </div>
 <?php } ?>
@@ -372,7 +384,7 @@
                     <div class="table-div animated fadeIn">
                         <table class="table" cellspacing="0" style="width:100%" id="accountPageContent">
                             <script>
-                                $(document).ready(function() {
+                                $(document).ready(function () {
                                     const response = JSON.parse(sessionStorage.getItem(
                                         "useAccountStudentByClassSession"));
 
@@ -631,13 +643,14 @@
                         <div class="fetch-toggle pay-fetch-toggle" id="fetchedFeeTextbox">
 
                             <script>
-                                $(document).ready(function() {
+                                $(document).ready(function () {
                                     let notPaidFees = '';
                                     let paidFees = '';
                                     let upPaidFees = false;
                                     let completeFees = false;
 
-                                    if (useAccountFessToPaySession && useAccountFessToPaySession?.listOfFeesNotPaidData) {
+                                    if (useAccountFessToPaySession && useAccountFessToPaySession
+                                        ?.listOfFeesNotPaidData) {
                                         const fetch = useAccountFessToPaySession?.listOfFeesNotPaidData;
 
                                         for (let i = 0; i < fetch.length; i++) {
@@ -710,7 +723,7 @@
                                                 "orange-color";
 
                                             paidFees +=
-                                            completeFees = true;
+                                                completeFees = true;
                                             $("#paidFees").append(`
                                             <div class="alert-list-back-div paid-fees-back-div">
                                                 <div class="alert-list paid-fees-list">
@@ -861,7 +874,7 @@
 
             let totalFees = 0;
 
-            $('#fetchedFeeTextbox input[type="number"]').each(function() {
+            $('#fetchedFeeTextbox input[type="number"]').each(function () {
                 let id = $(this).attr('id');
 
                 // Only amount fields
@@ -886,7 +899,7 @@
             }
         }
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             _calculatePaymentSummary();
 
             ///// SHOW / HIDE SCHOOL BOLT CHARGES ////
@@ -948,7 +961,7 @@
                     <div class="table-div animated fadeIn">
                         <table class="table" cellspacing="0" style="width:100%" id="accountPageContent">
                             <script>
-                                $(document).ready(function() {
+                                $(document).ready(function () {
                                     const response = JSON.parse(sessionStorage.getItem(
                                         "useAccountStudentByClassSession"));
 
@@ -1172,7 +1185,7 @@
                     </div>
 
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             let paidFees = '';
                             let completeFees = false;
 
@@ -1298,7 +1311,7 @@
                             <div class="table-div animated fadeIn">
                                 <table class="table" cellspacing="0" style="width:100%" id="accountPageContent">
                                     <script>
-                                        $(document).ready(function() {
+                                        $(document).ready(function () {
                                             const response = JSON.parse(sessionStorage.getItem(
                                                 "useAccountStudentByClassSession"));
 
@@ -1442,17 +1455,28 @@
 <?php if ($page == 'branchDiscountScholarshipDepartmentClass') { ?>
     <script>
         fetchDiscountDepartmentClassParams = JSON.parse(sessionStorage.getItem("fetchDiscountDepartmentClassParams"));
+
+        if (fetchDiscountDepartmentClassParams?.view === "discountScholarship") {
+            title = "STUDENT'S DISCOUNT & SCHOLARSHIP LIST";
+        } else if (fetchDiscountDepartmentClassParams?.view === "discount") {
+            title = "STUDENT DISCOUNT REPORT";
+        } else if (fetchDiscountDepartmentClassParams?.view === "scholarship") {
+            title = "STUDENT SCHOLARSHIP REPORT";
+        }
     </script>
 
     <div class="alert alert-success top-alert-div animated fadeIn">
-        <div><span><i class="bi-people-fill"></i> BRANCH DEPARTMENT CLASS LIST /</span> SESSION -- <span
-                id="discountSession">
+        <div><span id="title">
+                <script>
+                    $("#title").html('<i class="bi-people-fill"></i> ' + title + '/');
+                </script>
+            </span> SESSION -- <span id="discountSession">
                 <script>
                     $("#discountSession").html(fetchDiscountDepartmentClassParams?.session);
                 </script>
             </span> / TERM -- <span id="discountTermName">
                 <script>
-                    $("#discountTermName").html(fetchDiscountDepartmentClassParams?.termName);
+                    $("#discountTermName").html(getTermNameById(fetchDiscountDepartmentClassParams?.termId));
                 </script>
             </span></span></div>
     </div>
@@ -1468,12 +1492,26 @@
 <?php if ($page == 'viewStudentDiscountScholarshipClassModal') { ?>
     <script>
         useStudentDiscountScholarshipSession = JSON.parse(sessionStorage.getItem("useStudentDiscountScholarshipSession"));
+        fetchDiscountDepartmentClassParams = JSON.parse(sessionStorage.getItem("fetchDiscountDepartmentClassParams"));
+
+        if (fetchDiscountDepartmentClassParams?.view === "discountScholarship") {
+            modalTitle = "STUDENT'S DISCOUNT & SCHOLARSHIP LIST";
+        } else if (fetchDiscountDepartmentClassParams?.view === "discount") {
+            modalTitle = "STUDENT DISCOUNT REPORT";
+        } else if (fetchDiscountDepartmentClassParams?.view === "scholarship") {
+            modalTitle = "STUDENT SCHOLARSHIP REPORT";
+        }
     </script>
+
 
     <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
         <div class="top-panel-div">
             <div class="inner-top">
-                <span><i class="bi-people-fill"></i> STUDENT'S DISCOUNT & SCHOLARSHIP LIST</span>
+                <span id="modalTitle">
+                    <script>
+                        $("#modalTitle").html('<i class="bi-people-fill"></i> ' + modalTitle);
+                    </script>
+                </span>
                 <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
         </div>
@@ -1512,10 +1550,12 @@
                     <div class="table-div animated fadeIn">
                         <table class="table" cellspacing="0" style="width:100%" id="discountScholarshopPageContent">
                             <script>
-                                $(document).ready(function() {
+                                $(document).ready(function () {
                                     const response = JSON.parse(sessionStorage.getItem(
                                         "useStudentDiscountScholarshipSession"));
 
+                                    console.log("fetchDiscountDepartmentClassParams",
+                                        fetchDiscountDepartmentClassParams);
                                     if (response && response.success === true) {
                                         const data = response.data;
 
@@ -1530,11 +1570,24 @@
                                         const armName = response?.armData?.armName;
 
                                         let loadDiscountColumnTittle = '';
-                                        if (userRoles.canApplyStudentDiscountScholarship) {
+                                        if (userRoles.canApplyStudentDiscountScholarship &&
+                                            fetchDiscountDepartmentClassParams?.view ===
+                                            "discountScholarship") {
                                             loadDiscountColumnTittle = `
                                             <th>Action</th>`;
                                         }
 
+                                        if (fetchDiscountDepartmentClassParams?.view === "discount") {
+                                            showColumn = `
+                                            <th>Discount</th>`;
+                                        } else if (fetchDiscountDepartmentClassParams?.view === "scholarship") {
+                                            showColumn = `
+                                            <th>Scholarship</th>`;
+                                        } else {
+                                            showColumn = `
+                                            <th>Discount</th>
+                                            <th>Scholarship</th>`;
+                                        }
                                         let html = `
                                             <thead>
                                                 <tr class="tb-col">
@@ -1543,8 +1596,7 @@
                                                     <th>Session/Term</th>
                                                     <th>Department</th>
                                                     <th>Class</th>
-                                                    <th>Discount</th>
-                                                    <th>Scholarship</th>
+                                                    ${showColumn}
                                                     ${loadDiscountColumnTittle}
                                                 </tr>
                                             </thead>
@@ -1562,7 +1614,9 @@
                                             const totalScholarshipFund = item.totalScholarshipFund;
 
                                             let loadDiscountColumn = '';
-                                            if (userRoles.canApplyStudentDiscountScholarship) {
+                                            if (userRoles.canApplyStudentDiscountScholarship &&
+                                                fetchDiscountDepartmentClassParams?.view ===
+                                                "discountScholarship") {
                                                 loadDiscountColumn = `
                                                 <td>
                                                     <button class="btn view-btn"
@@ -1571,6 +1625,20 @@
                                                         LOAD SCHOLARSHIP/DISCOUNT
                                                     </button>
                                                 </td>`;
+                                            }
+
+                                            let discountScholarshipColumn = '';
+                                            if (fetchDiscountDepartmentClassParams?.view === "discount") {
+                                                discountScholarshipColumn = `
+                                                <td><s>N</s>${thousandSeperator(totalDiscountFund)}</td>`;
+                                            } else if (fetchDiscountDepartmentClassParams?.view ===
+                                                "scholarship") {
+                                                discountScholarshipColumn = `
+                                                <td><s>N</s>${thousandSeperator(totalScholarshipFund)}</td>`;
+                                            } else {
+                                                discountScholarshipColumn = `
+                                                <td><s>N</s>${thousandSeperator(totalDiscountFund)}</td>
+                                                <td><s>N</s>${thousandSeperator(totalScholarshipFund)}</td>`;
                                             }
 
                                             html += `
@@ -1594,8 +1662,7 @@
                                                 <td>${departmentName}</td>
                                                 <td>${className} ${armName}</td>
 
-                                                <td><s>N</s>${thousandSeperator(item.totalDiscountFund)}</td>
-                                                <td><s>N</s>${thousandSeperator(item.totalScholarshipFund)}</td>
+                                                ${discountScholarshipColumn}
                                                 ${loadDiscountColumn}
                                             </tr > `;
                                         });
@@ -1692,7 +1759,8 @@
                 </script>
             </div>
 
-            <button class="btn" id="scholarshipBtn" title="Proceed To Load Scholarship Fund" onclick="_loadStudentDiscountScholarshipFund();">
+            <button class="btn" id="scholarshipBtn" title="Proceed To Load Scholarship Fund"
+                onclick="_loadStudentDiscountScholarshipFund();">
                 PROCEED <i class="bi bi-arrow-right"></i></button>
         </div>
     </div>
