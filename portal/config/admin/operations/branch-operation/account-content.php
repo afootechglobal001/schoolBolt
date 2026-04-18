@@ -1553,9 +1553,7 @@
                                 $(document).ready(function () {
                                     const response = JSON.parse(sessionStorage.getItem(
                                         "useStudentDiscountScholarshipSession"));
-
-                                    console.log("fetchDiscountDepartmentClassParams",
-                                        fetchDiscountDepartmentClassParams);
+                                        
                                     if (response && response.success === true) {
                                         const data = response.data;
 

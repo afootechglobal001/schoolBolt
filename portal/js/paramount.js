@@ -365,3 +365,7 @@ function _showLoader(message = 'Processing, please wait...') {
 function _hideLoader() {
   $('#globalLoader').fadeOut(150);
 }
+
+function _goBack() {
+  window.history.go(-1);
+}
