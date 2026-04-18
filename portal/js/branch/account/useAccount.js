@@ -424,7 +424,7 @@ function _proceedFetchAcountDepartmentClass(accountViewMethod) {
     sessionName: sessionName,
     termId: termId,
     termName: termName,
-    accountViewMethod: accountViewMethod
+    accountViewMethod: accountViewMethod,
   };
 
   sessionStorage.setItem(
@@ -437,7 +437,6 @@ function _proceedFetchAcountDepartmentClass(accountViewMethod) {
     url: adminPortalLocalUrl,
   });
   _alertClose(2);
-
 }
 
 //// Proceed Fetch Account Department Classes /////
@@ -460,14 +459,14 @@ function _proceedActivateResult(accountViewMethod) {
     sessionName: sessionName,
     termId: termId,
     termName: termName,
-    accountViewMethod: accountViewMethod
+    accountViewMethod: accountViewMethod,
   };
 
-   ///// Gather form data ////
-    const formData = {
-      session: session,
-      termId: termId,
-    };
+  ///// Gather form data ////
+  const formData = {
+    session: session,
+    termId: termId,
+  };
 
   sessionStorage.setItem(
     "fetchAccountDepartmentClassParams",
@@ -490,12 +489,12 @@ function _proceedActivateResult(accountViewMethod) {
       .then((response) => {
         _staffValidationCheck(response.response);
         if (response.success === true) {
-            _alertClose(2);
-            _getActiveBranchPage({
-              divid: "branchDepartmentClass",
-              page: "branchDepartmentClass",
-              url: adminPortalLocalUrl,
-            });
+          _alertClose(2);
+          _getActiveBranchPage({
+            divid: "branchDepartmentClass",
+            page: "branchDepartmentClass",
+            url: adminPortalLocalUrl,
+          });
         } else {
           _showCustomConfirm({
             title: "Unable to Proceed",
@@ -530,7 +529,8 @@ function _fetchAccountBranchDepartmentClass() {
 
   const sessionName = fetchAccountDepartmentClassParams?.sessionName;
   const termName = fetchAccountDepartmentClassParams?.termName;
-  const accountViewMethod = fetchAccountDepartmentClassParams?.accountViewMethod;
+  const accountViewMethod =
+    fetchAccountDepartmentClassParams?.accountViewMethod;
 
   $("#pageContent")
     .html(
@@ -588,42 +588,42 @@ function _fetchAccountBranchDepartmentClass() {
                                 </thead>
                                 <tbody>`;
 
-                              let sn = 0;
-                              if (classData.length > 0) {
-                                for (let j = 0; j < classData.length; j++) {
-                                  const classInfo = classData[j];
-                                  const className = classInfo.className;
-                                  const classId = classInfo.classId;
-                                  const armData = classInfo.armData;
+            let sn = 0;
+            if (classData.length > 0) {
+              for (let j = 0; j < classData.length; j++) {
+                const classInfo = classData[j];
+                const className = classInfo.className;
+                const classId = classInfo.classId;
+                const armData = classInfo.armData;
 
-                                  if (armData.length > 0) {
-                                    for (let k = 0; k < armData.length; k++) {
-                                      sn++;
-                                      const armInfo = armData[k];
-                                      const arm = armInfo.armName;
-                                      const armId = armInfo.armId;
+                if (armData.length > 0) {
+                  for (let k = 0; k < armData.length; k++) {
+                    sn++;
+                    const armInfo = armData[k];
+                    const arm = armInfo.armName;
+                    const armId = armInfo.armId;
 
-                                      if (accountViewMethod==="activateResult") {
-                                          showBtn=`
+                    if (accountViewMethod === "activateResult") {
+                      showBtn = `
                                             <div class="btn-div">
                                               <button class="btn view-btn" title="CLICK TO ACTIVATE STUDENT RESULT" onclick="_fetchApprovedStudentBySchoolBolt('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT RESULT</button>
                                             </div>
                                           `;
-                                      } else if (accountViewMethod==="debtors"){
-                                        showBtn=`
+                    } else if (accountViewMethod === "debtors") {
+                      showBtn = `
                                             <div class="btn-div">
                                               <button class="btn view-btn" title="CLICK TO VIEW STUDENT DEBTORS" onclick="_fetchAccountStudentsByClass('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT DEBTORS</button>
                                             </div>
                                           `;
-                                      } else {
-                                        showBtn=`
+                    } else {
+                      showBtn = `
                                             <div class="btn-div">
                                               <button class="btn view-btn" title="CLICK TO VIEW STUDENT PAYMENT" onclick="_fetchAccountStudentsByClass('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT PAYMENT</button>
                                             </div>
                                           `;
-                                      }
+                    }
 
-                                      text += `
+                    text += `
                                         <tr class="tb-row">
                                         <td>${sn}</td>
                                         <td>${departmentName}</td>
@@ -633,20 +633,20 @@ function _fetchAccountBranchDepartmentClass() {
                                         <td>
                                           ${showBtn}
                                         </td>`;
-                                    }
-                                  }
-                                }
-                              }
-                              text += `</tbody>
+                  }
+                }
+              }
+            }
+            text += `</tbody>
                             </table>
                         </div>
                     </div>
                 </div>`;
-              }
-              $("#pageContent").html(text);
-            } else {
-              _actionAlert(info.message, false);
-              $("#pageContent").html(`
+          }
+          $("#pageContent").html(text);
+        } else {
+          _actionAlert(info.message, false);
+          $("#pageContent").html(`
             <tbody>
                 <tr>
                     <td colspan="15">
@@ -685,7 +685,8 @@ function _fetchAccountStudentsByClass(departmentId, classId, armId) {
   const branchId = getEachBranchDetailsSession?.branchId;
   const session = fetchAccountDepartmentClassParams?.session;
   const termId = fetchAccountDepartmentClassParams?.termId;
-  const accountViewMethod = fetchAccountDepartmentClassParams?.accountViewMethod;
+  const accountViewMethod =
+    fetchAccountDepartmentClassParams?.accountViewMethod;
 
   $("#get-more-div-secondary")
     .css({
@@ -707,19 +708,19 @@ function _fetchAccountStudentsByClass(departmentId, classId, armId) {
             "useAccountStudentByClassSession",
             JSON.stringify(response),
           );
-          if (accountViewMethod==='payment') {
+          if (accountViewMethod === "payment") {
             _getForm({
               page: "viewAccountStudentByClassModal",
               layer: 2,
               url: adminPortalLocalUrl,
             });
-          } else if (accountViewMethod==='debtors'){
+          } else if (accountViewMethod === "debtors") {
             _getForm({
               page: "viewStudentDebtorsModal",
               layer: 2,
               url: adminPortalLocalUrl,
             });
-          } else if (accountViewMethod==='activateResult'){
+          } else if (accountViewMethod === "activateResult") {
             _getForm({
               page: "activateStudentResultModal",
               layer: 2,
@@ -845,9 +846,10 @@ function _fetchAccountFeesToPay(
               url: adminPortalLocalUrl,
             });
           } else {
-            //// Check if student have an outstanding payment for last term /// 
-            const haveOutstandingFeesForLastTerm = response?.haveOutstandingFeesForLastTerm;
-            if (haveOutstandingFeesForLastTerm===true) {
+            //// Check if student have an outstanding payment for last term ///
+            const haveOutstandingFeesForLastTerm =
+              response?.haveOutstandingFeesForLastTerm;
+            if (haveOutstandingFeesForLastTerm === true) {
               _alertClose(3);
               _showCustomConfirm({
                 title: "Outstanding Fees Detected!",
@@ -1002,7 +1004,7 @@ function _proceedToPayment() {
     let totalFees = 0;
     let hasFeeInput = false;
 
-    $('.fees-id-holder').each(function () {
+    $(".fees-id-holder").each(function () {
       const feesId = $(this).val();
       const inputSelector = `#fees_${feesId}`;
       const amount = $(inputSelector).val().trim();
@@ -1014,7 +1016,7 @@ function _proceedToPayment() {
 
         inputFees.push({
           feesId: feesId,
-          amount: parsedAmount
+          amount: parsedAmount,
         });
 
         totalFees += parsedAmount;
@@ -1024,7 +1026,8 @@ function _proceedToPayment() {
     if (!hasFeeInput) {
       _showCustomConfirm({
         title: "Nothing to Pay Yet!",
-        message: "You haven’t added any fees. Please enter a fee amount to continue.",
+        message:
+          "You haven’t added any fees. Please enter a fee amount to continue.",
         alertType: "warning",
         trueActionBtnText: "Got it",
         closeOnOverlayClick: true,
@@ -1262,12 +1265,7 @@ function _schoolBoltChargesPaymentAction(action, branchId, paymentId, btnText) {
       .catch((error) => {
         console.error("Error:", error);
         _callAjaxError(() =>
-          _schoolBoltChargesPaymentAction(
-            action,
-            branchId,
-            paymentId,
-            btnText,
-          ),
+          _schoolBoltChargesPaymentAction(action, branchId, paymentId, btnText),
         ); // retry if needed
         _btnDisable("paymentBtn", btnText, false);
       });
@@ -1311,11 +1309,11 @@ function _fetchEachSudentDebtors(
             JSON.stringify(response),
           );
           _getFetchEachAccountStudent(studentId);
-            _getForm({
-              page: "branchStudentDebtorsForm",
-              layer: 3,
-              url: adminPortalLocalUrl,
-            });
+          _getForm({
+            page: "branchStudentDebtorsForm",
+            layer: 3,
+            url: adminPortalLocalUrl,
+          });
         } else {
           _alertClose(3);
           _actionAlert(response.message, false);
@@ -1363,55 +1361,58 @@ function _filtersActivateStudents(value) {
   });
 }
 
-function _checkAll(){
-  $(document).ready(function() {
-    $('#parent').on('change', function() {
-        $('.child').prop('checked', this.checked);
+function _checkAll() {
+  $(document).ready(function () {
+    $("#parent").on("change", function () {
+      $(".child").prop("checked", this.checked);
     });
-    $('.child').on('change', function() {
-        $('#parent').prop('checked', $('.child:checked').length===$('.child').length);
+    $(".child").on("change", function () {
+      $("#parent").prop(
+        "checked",
+        $(".child:checked").length === $(".child").length,
+      );
     });
-});
+  });
 }
 
 /// Activate All Student Result ////
-function _activateAllStudentResult(){
-	try {
-		////////get all needed values////////////
-		let selectedStudents = [];
-		$('.child:checked').each(function() {
-			selectedStudents.push({ studentId: $(this).data('value') });
-		});
+function _activateAllStudentResult() {
+  try {
+    ////////get all needed values////////////
+    let selectedStudents = [];
+    $(".child:checked").each(function () {
+      selectedStudents.push({ studentId: $(this).data("value") });
+    });
 
-		const checked = $('input[name="studentId[]"]:checked').length;
-		$("#studentId").removeClass("issue");
+    const checked = $('input[name="studentId[]"]:checked').length;
+    $("#studentId").removeClass("issue");
 
-		if (checked < 1) {
-			$("#studentId").addClass("issue");
-			_actionAlert('Select at least a student to continue', false);
-			return;
-		}
+    if (checked < 1) {
+      $("#studentId").addClass("issue");
+      _actionAlert("Select at least a student to continue", false);
+      return;
+    }
 
-		// Gather form data
-		const formData = {
-			studentIds: selectedStudents,
-		};
+    // Gather form data
+    const formData = {
+      studentIds: selectedStudents,
+    };
 
-		////// confirm action////
-		_showCustomConfirm({
-		callback: () => {
-			_activateAllStudentResultCallback(formData);
-		},
-			title: "Are you sure?",
-			message: 'Are you sure you want to proceed? This action is irreversible.',
-			alertType: "warning",
-			falseActionBtn: true,
-			closeOnOverlayClick: true,
-		});
-	} catch (error) {
-		console.error("Error:", error);
-		_callCatchError(() => _activateAllStudentResult());
-	}
+    ////// confirm action////
+    _showCustomConfirm({
+      callback: () => {
+        _activateAllStudentResultCallback(formData);
+      },
+      title: "Are you sure?",
+      message: "Are you sure you want to proceed? This action is irreversible.",
+      alertType: "warning",
+      falseActionBtn: true,
+      closeOnOverlayClick: true,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _activateAllStudentResult());
+  }
 }
 
 //// Proceed To Activation of student result CallBack /////
@@ -1447,16 +1448,23 @@ function _activateAllStudentResultCallback(formData) {
       .then((response) => {
         _staffValidationCheck(response.response);
         if (response.success) {
-           _showCustomConfirm({
-              callback: () => {
-                _fetchApprovedStudentBySchoolBolt(departmentId, classId, armId, branchId, session, termId);
-              },
-              title: "Success!",
-              message: response.message,
-              alertType: "success",
-              trueActionBtnText: "OK, Thanks.",
-              closeOnOverlayClick: false,
-            });
+          _showCustomConfirm({
+            callback: () => {
+              _fetchApprovedStudentBySchoolBolt(
+                departmentId,
+                classId,
+                armId,
+                branchId,
+                session,
+                termId,
+              );
+            },
+            title: "Success!",
+            message: response.message,
+            alertType: "success",
+            trueActionBtnText: "OK, Thanks.",
+            closeOnOverlayClick: false,
+          });
         } else {
           _showCustomConfirm({
             title: "Unable To Activate Result",
@@ -1481,23 +1489,23 @@ function _activateAllStudentResultCallback(formData) {
 }
 
 /// Deactivate All Student Result ////
-function _deActivateAllStudentResult(){
-	try {
-		////// confirm action////
-		_showCustomConfirm({
-		callback: () => {
-			_deActivateAllStudentResultCallback();
-		},
-			title: "Are you sure?",
-			message: 'Are you sure you want to proceed? This action is irreversible.',
-			alertType: "warning",
-			falseActionBtn: true,
-			closeOnOverlayClick: true,
-		});
-	} catch (error) {
-		console.error("Error:", error);
-		_callCatchError(() => _deActivateAllStudentResult());
-	}
+function _deActivateAllStudentResult() {
+  try {
+    ////// confirm action////
+    _showCustomConfirm({
+      callback: () => {
+        _deActivateAllStudentResultCallback();
+      },
+      title: "Are you sure?",
+      message: "Are you sure you want to proceed? This action is irreversible.",
+      alertType: "warning",
+      falseActionBtn: true,
+      closeOnOverlayClick: true,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _deActivateAllStudentResult());
+  }
 }
 
 //// Proceed To Activation of student result CallBack /////
@@ -1532,16 +1540,23 @@ function _deActivateAllStudentResultCallback() {
       .then((response) => {
         _staffValidationCheck(response.response);
         if (response.success) {
-           _showCustomConfirm({
-              callback: () => {
-                _fetchApprovedStudentBySchoolBolt(departmentId, classId, armId, branchId, session, termId);
-              },
-              title: "Success!",
-              message: response.message,
-              alertType: "success",
-              trueActionBtnText: "OK, Thanks.",
-              closeOnOverlayClick: false,
-            });
+          _showCustomConfirm({
+            callback: () => {
+              _fetchApprovedStudentBySchoolBolt(
+                departmentId,
+                classId,
+                armId,
+                branchId,
+                session,
+                termId,
+              );
+            },
+            title: "Success!",
+            message: response.message,
+            alertType: "success",
+            trueActionBtnText: "OK, Thanks.",
+            closeOnOverlayClick: false,
+          });
         } else {
           _showCustomConfirm({
             title: "Unable To Dactivate Result",
@@ -1565,23 +1580,17 @@ function _deActivateAllStudentResultCallback() {
   }
 }
 
-
 //// Proceed Fetch Student Discount and scholarship Department Classes /////
-function _proceedFetchDiscountDepartmentClass() {
+function _proceedFetchDiscountScholarshipDepartmentClass() {
   let getEachBranchDetailsSession = JSON.parse(
     sessionStorage.getItem("getEachBranchDetailsSession"),
   );
 
-  const session = getEachBranchDetailsSession?.session;
-  const termId = getEachBranchDetailsSession?.termId;
-  const termName = getEachBranchDetailsSession?.termName;
-
   const fetchDiscountDepartmentClassParams = {
-    session: session,
-    termId: termId,
-    termName: termName,
+    session: getEachBranchDetailsSession?.session,
+    termId: getEachBranchDetailsSession?.termId,
+    view: "discountScholarship",
   };
-
   sessionStorage.setItem(
     "fetchDiscountDepartmentClassParams",
     JSON.stringify(fetchDiscountDepartmentClassParams),
@@ -1593,18 +1602,74 @@ function _proceedFetchDiscountDepartmentClass() {
     url: adminPortalLocalUrl,
   });
 }
+function _proceedFetchDiscountDepartmentClass() {
+  const session = $("#sessionId").val();
+  const termId = $("#termId").val();
+  let issueCount = 0;
+  issueCount += _validateEmptyValue("sessionId", "SESSION");
+  issueCount += _validateEmptyValue("termId", "TERM");
+
+  if (issueCount > 0) return;
+
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+  const fetchDiscountDepartmentClassParams = {
+    session: session,
+    termId: termId,
+    view: "discount",
+  };
+  sessionStorage.setItem(
+    "fetchDiscountDepartmentClassParams",
+    JSON.stringify(fetchDiscountDepartmentClassParams),
+  );
+  _getActiveBranchPage({
+    divid: "branchDiscountScholarshipDepartmentClass",
+    page: "branchDiscountScholarshipDepartmentClass",
+    url: adminPortalLocalUrl,
+  });
+  _alertClose(2);
+}
+
+function _proceedFetchScholarshipDepartmentClass() {
+  const session = $("#sessionId").val();
+  const termId = $("#termId").val();
+  let issueCount = 0;
+  issueCount += _validateEmptyValue("sessionId", "SESSION");
+  issueCount += _validateEmptyValue("termId", "TERM");
+
+  if (issueCount > 0) return;
+
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+  const fetchDiscountDepartmentClassParams = {
+    session: session,
+    termId: termId,
+    view: "scholarship",
+  };
+  sessionStorage.setItem(
+    "fetchDiscountDepartmentClassParams",
+    JSON.stringify(fetchDiscountDepartmentClassParams),
+  );
+  _getActiveBranchPage({
+    divid: "branchDiscountScholarshipDepartmentClass",
+    page: "branchDiscountScholarshipDepartmentClass",
+    url: adminPortalLocalUrl,
+  });
+  _alertClose(2);
+}
 
 //////// Branch Student Discount and scholarship Department Class ///////////
 function _fetchDiscountScholarshipDepartmentClass() {
   let getEachBranchDetailsSession = JSON.parse(
     sessionStorage.getItem("getEachBranchDetailsSession"),
   );
-  let fetchAccountDepartmentClassParams = JSON.parse(
-    sessionStorage.getItem("fetchAccountDepartmentClassParams"),
+  let fetchDiscountDepartmentClassParams = JSON.parse(
+    sessionStorage.getItem("fetchDiscountDepartmentClassParams"),
   );
-
   const session = fetchDiscountDepartmentClassParams?.session;
-  const termName = fetchDiscountDepartmentClassParams?.termName;
+  const termName = getTermNameById(fetchDiscountDepartmentClassParams?.termId);
 
   $("#pageDiscountContent")
     .html(
@@ -1662,22 +1727,22 @@ function _fetchDiscountScholarshipDepartmentClass() {
                                 </thead>
                                 <tbody>`;
 
-                              let sn = 0;
-                              if (classData.length > 0) {
-                                for (let j = 0; j < classData.length; j++) {
-                                  const classInfo = classData[j];
-                                  const className = classInfo.className;
-                                  const classId = classInfo.classId;
-                                  const armData = classInfo.armData;
+            let sn = 0;
+            if (classData.length > 0) {
+              for (let j = 0; j < classData.length; j++) {
+                const classInfo = classData[j];
+                const className = classInfo.className;
+                const classId = classInfo.classId;
+                const armData = classInfo.armData;
 
-                                  if (armData.length > 0) {
-                                    for (let k = 0; k < armData.length; k++) {
-                                      sn++;
-                                      const armInfo = armData[k];
-                                      const arm = armInfo.armName;
-                                      const armId = armInfo.armId;
-                                      
-                                      text += `
+                if (armData.length > 0) {
+                  for (let k = 0; k < armData.length; k++) {
+                    sn++;
+                    const armInfo = armData[k];
+                    const arm = armInfo.armName;
+                    const armId = armInfo.armId;
+
+                    text += `
                                         <tr class="tb-row">
                                         <td>${sn}</td>
                                         <td>${departmentName}</td>
@@ -1689,20 +1754,20 @@ function _fetchDiscountScholarshipDepartmentClass() {
                                             <button class="btn view-btn" title="CLICK TO VIEW DISCOUNT AND SCHOLARSHIP STUDENTS" onclick="_fetchStudentDiscountAndScholarshipByClass('${departmentId}', '${classId}', '${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT DISCOUNT & PAYMENT</button>
                                           </div>
                                         </td>`;
-                                    }
-                                  }
-                                }
-                              }
-                              text += `</tbody>
+                  }
+                }
+              }
+            }
+            text += `</tbody>
                             </table>
                         </div>
                     </div>
                 </div>`;
-              }
-              $("#pageDiscountContent").html(text);
-            } else {
-              _actionAlert(info.message, false);
-              $("#pageDiscountContent").html(`
+          }
+          $("#pageDiscountContent").html(text);
+        } else {
+          _actionAlert(info.message, false);
+          $("#pageDiscountContent").html(`
             <tbody>
                 <tr>
                     <td colspan="15">
@@ -1730,7 +1795,11 @@ function _fetchDiscountScholarshipDepartmentClass() {
 }
 
 ///// Fetch Discount Scholarship Students By Class /////
-function _fetchStudentDiscountAndScholarshipByClass(departmentId, classId, armId) {
+function _fetchStudentDiscountAndScholarshipByClass(
+  departmentId,
+  classId,
+  armId,
+) {
   let getEachBranchDetailsSession = JSON.parse(
     sessionStorage.getItem("getEachBranchDetailsSession"),
   );
@@ -1776,14 +1845,18 @@ function _fetchStudentDiscountAndScholarshipByClass(departmentId, classId, armId
         _alertClose(2);
         console.error("Error:", error);
         _callAjaxError(() =>
-          _fetchStudentDiscountAndScholarshipByClass(depatmentId, classId, armId),
+          _fetchStudentDiscountAndScholarshipByClass(
+            departmentId,
+            classId,
+            armId,
+          ),
         ); // retry if needed
       });
   } catch (error) {
     _alertClose(2);
     console.error("Error:", error);
     _callAjaxError(() =>
-      _fetchStudentDiscountAndScholarshipByClass(depatmentId, classId, armId),
+      _fetchStudentDiscountAndScholarshipByClass(departmentId, classId, armId),
     ); // retry if needed
   }
 }
@@ -1793,9 +1866,7 @@ function _getFetchEachDiscountStudent(Id) {
     sessionStorage.getItem("useStudentDiscountScholarshipSession"),
   );
 
-  let student = storedDiscountData.data.find(
-    (s) => s.studentId === Id
-  );
+  let student = storedDiscountData.data.find((s) => s.studentId === Id);
 
   if (student) {
     // rebuild response but with only this student
@@ -1806,10 +1877,14 @@ function _getFetchEachDiscountStudent(Id) {
 
     sessionStorage.setItem(
       "getEachDiscountStudentSession",
-      JSON.stringify(filteredResponse)
+      JSON.stringify(filteredResponse),
     );
   }
-  _getForm({page: 'studentDiscountScholarshipForm', layer:3, url: adminPortalLocalUrl});
+  _getForm({
+    page: "studentDiscountScholarshipForm",
+    layer: 3,
+    url: adminPortalLocalUrl,
+  });
 }
 
 //// Load Student Discount Scholarship Fund /////
@@ -1828,12 +1903,12 @@ function _loadStudentDiscountScholarshipFund() {
     issueCount += _validateEmptyValue("fundPurposeId", "FUND PURPOSE");
 
     if (issueCount > 0) return;
-    
+
     /////Gather form data////
     const formData = {
       amount,
       description,
-      fundPurposeId
+      fundPurposeId,
     };
 
     ////// confirm action////
@@ -1866,7 +1941,8 @@ function _loadStudentDiscountScholarshipFundCallback(formData) {
   const studentId = getEachDiscountStudentSession?.data?.[0].studentId;
   const session = getEachDiscountStudentSession?.session;
   const termId = getEachDiscountStudentSession?.termData?.termName;
-  const departmentId = getEachDiscountStudentSession?.departmentData?.departmentId;
+  const departmentId =
+    getEachDiscountStudentSession?.departmentData?.departmentId;
   const classId = getEachDiscountStudentSession?.classData?.classId;
   const armId = getEachDiscountStudentSession?.armData?.armId;
 
@@ -1885,7 +1961,14 @@ function _loadStudentDiscountScholarshipFundCallback(formData) {
           _showCustomConfirm({
             callback: () => {
               _alertClose(3);
-              _fetchStudentDiscountAndScholarshipByClass(departmentId, classId, armId, branchId, session, termId)
+              _fetchStudentDiscountAndScholarshipByClass(
+                departmentId,
+                classId,
+                armId,
+                branchId,
+                session,
+                termId,
+              );
             },
             title: "Success!",
             message: response.message,
@@ -1906,12 +1989,16 @@ function _loadStudentDiscountScholarshipFundCallback(formData) {
       })
       .catch((error) => {
         console.error("Error:", error);
-        _callAjaxError(() => _loadStudentDiscountScholarshipFundCallback(formData)); // retry if needed
+        _callAjaxError(() =>
+          _loadStudentDiscountScholarshipFundCallback(formData),
+        ); // retry if needed
         _btnDisable("scholarshipBtn", btnText, false);
       });
   } catch (error) {
     console.error("Error:", error);
-    _callCatchError(() => _loadStudentDiscountScholarshipFundCallback(formData));
+    _callCatchError(() =>
+      _loadStudentDiscountScholarshipFundCallback(formData),
+    );
     _btnDisable("scholarshipBtn", btnText, false);
   }
 }

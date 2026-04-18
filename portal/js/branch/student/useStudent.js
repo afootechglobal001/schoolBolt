@@ -778,11 +778,6 @@ function _fetchEachBranchStudents(
             JSON.stringify(info.data[0]),
           );
 
-          sessionStorage.setItem(
-            "getEachBranchDetailsSession",
-            JSON.stringify({ branchId: branchId }),
-          );
-
           _getForm({
             page: "student_profile",
             layer: 2,
@@ -1672,4 +1667,3 @@ function _fetchBranchArchivedStudents() {
     _actionAlert("An unexpected error occurred! Please try again.", false);
   }
 }
-
