@@ -102,8 +102,8 @@
                             </script>
                         </div>
                     </div>
-                    <p><a href="<?php echo $websiteUrl ?>/parent/verify-result" title="Go Back" title="Go Back"><span><i
-                                    class="bi-arrow-left"></i> Go Back</span></a></p>
+                    <p><a href="<?php echo $websiteUrl ?>/student/verify-result" title="Go Back"
+                            title="Go Back"><span><i class="bi-arrow-left"></i> Go Back</span></a></p>
                 </div>
             </div>
         </div>

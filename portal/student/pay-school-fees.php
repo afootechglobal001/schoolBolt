@@ -54,7 +54,7 @@
                         <button class="btn" title="Proceed" id="proceedFees" onclick="_proceedPaySchoolFees();">Proceed
                             <i class="bi-arrow-right"></i></button>
                     </div>
-                    <p><a href="<?php echo $websiteUrl ?>/parent/auth" title="Go Back" title="Go Back"><span><i
+                    <p><a href="<?php echo $websiteUrl ?>/student/auth" title="Go Back" title="Go Back"><span><i
                                     class="bi-arrow-left"></i> Go Back</span></a></p>
                 </div>
             </div>
