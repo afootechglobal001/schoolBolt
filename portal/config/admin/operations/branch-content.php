@@ -3578,6 +3578,18 @@
 
             <div class="div-in">
                 <div class="user-managment-back-div">
+                    <div class="user-managment-list staff-managment-list" title="Bank Setup"
+                        onclick="_getActiveBranchPage({divid:'branch_account', page: 'branchAccountSetupPage', url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div"><img src="<?php echo $websiteUrl ?>/images/bank.png"
+                                    alt="Bank Setup" /></div>
+                            <div class="text-div">
+                                <h3>Bank Setup</h3>
+                                <p>Configure bank account details for receiving manual payments from parents, ensuring accurate tracking and proper record management.</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="user-managment-list staff-managment-list" title="Fees Settings"
                         onclick="_getActiveBranchPage({divid:'branch_account', page: 'branch_fees_page', url: adminPortalLocalUrl});">
                         <div class="inner-div">
@@ -3654,6 +3666,20 @@
 
             <div class="div-in">
                 <div class="user-managment-back-div">
+                    <div class="user-managment-list staff-managment-list" title="Bank Transaction Record"
+                        onclick="_getActiveBranchPage({divid:'branch_account', page: 'branchBankTransactionRecordPage', url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/transaction.png"
+                                    alt="Bank Transaction Record" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Bank Transaction Record</h3>
+                                <p>Record and manage bank transactions from parents’ manual payments for accurate tracking and reconciliation.</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="user-managment-list staff-managment-list" title="Discount/Scholarship Application"
                         onclick="_proceedFetchDiscountScholarshipDepartmentClass();">
                         <div class="inner-div">
@@ -3761,7 +3787,7 @@
                         onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'discountReport', url: adminPortalLocalUrl});">
                         <div class="inner-div">
                             <div class="icon-div">
-                                <img src="<?php echo $websiteUrl ?>/images/scholarship-report.png" alt="Discount Reporte" />
+                                <img src="<?php echo $websiteUrl ?>/images/scholarship-report.png" alt="Discount Report" />
                             </div>
                             <div class="text-div">
                                 <h3>Discount Report</h3>
@@ -3797,6 +3823,20 @@
                             </div>
                         </div>
                     </div> -->
+
+                    <div class="user-managment-list staff-managment-list" title="Bank Transaction Report"
+                        onclick="_getActiveBranchPage({divid:'branch_account', page: 'branchTransactionReportPage', url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/mobile-banking.png" alt="Bank Transaction Report" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Bank Transaction Report</h3>
+                                <p>View and analyze all bank transactions from parents’ manual payments for accurate tracking and financial reporting.</p>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="user-managment-list staff-managment-list" title="All Revenue Report"
                         onclick="_getActiveBranchPage({divid:'branch_account', page: 'branchDailyRevenuePage', url: adminPortalLocalUrl});">
