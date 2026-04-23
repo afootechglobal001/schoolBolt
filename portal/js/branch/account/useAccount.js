@@ -2002,3 +2002,509 @@ function _loadStudentDiscountScholarshipFundCallback(formData) {
     _btnDisable("scholarshipBtn", btnText, false);
   }
 }
+
+//// Create And Update Bank Setup /////
+function _createAndUpdateBankSetUp() {
+  try {
+    ////////get all needed values////////////
+    let issueCount = 0;
+    const bankName = $("#bankName").val().trim();
+    const accountNumber = $("#accountNumber").val().trim();
+    const accountName = $("#accountName").val().trim();
+    const statusId = $("#statusId").val().trim();
+
+    ///// empty field validation//////////
+    issueCount += _validateEmptyValue("bankName", "BANK NAME");
+    issueCount += _validateNumber("accountNumber", accountNumber);
+    issueCount += _validateEmptyValue("accountNumber", "ACCOUNT NUMBER");
+    issueCount += _validateEmptyValue("accountName", "ACCOUNT NAME");
+    issueCount += _validateEmptyValue("statusId", "STATUS");
+
+    if (issueCount > 0) return;
+
+    /////Gather form data////
+    const formData = {
+      bankName,
+      accountNumber,
+      accountName,
+      statusId,
+    };
+
+    ////// confirm action////
+    _showCustomConfirm({
+      callback: () => {
+        _createAndUpdateBankSetUpCallback(formData);
+      },
+      title: "Are you sure?",
+      message: "Are you sure you want to proceed? This action is irreversible.",
+      alertType: "warning",
+      falseActionBtn: true,
+      closeOnOverlayClick: true,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _createAndUpdateBankSetUp());
+  }
+}
+
+//// Create And Update Bank Setup CallBack /////
+function _createAndUpdateBankSetUpCallback(formData) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+
+  let useEachBankSetUpSession = JSON.parse(
+    sessionStorage.getItem("useEachBankSetUpSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+  const bankId = useEachBankSetUpSession?.bankId;
+
+  try {
+    const btnText = $("#submitBtn").html();
+    _btnDisable("submitBtn", btnText, true);
+
+    let callUrl= bankId ? `admin/branch/account/banks/update-bank?branchId=${branchId}&bankId=${bankId}` : `admin/branch/account/banks/create-bank?branchId=${branchId}`;
+
+    _callRawEndPoints({
+      url: callUrl,
+      formData,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success) {
+          _showCustomConfirm({
+            callback: () => {
+              _alertClose(2);
+              _getActiveBranchPage({divid:'branch_account', page: 'branchAccountSetupPage', url: adminPortalLocalUrl});
+            },
+            title: "Success!",
+            message: response.message,
+            alertType: "success",
+            trueActionBtnText: "OK, Thanks.",
+            closeOnOverlayClick: false,
+          });
+        } else {
+          _showCustomConfirm({
+            title: "Unable to proceed",
+            message: response.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+          _btnDisable("submitBtn", btnText, false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() =>
+          _createAndUpdateBankSetUpCallback(formData),
+        ); // retry if needed
+        _btnDisable("submitBtn", btnText, false);
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() =>
+      _createAndUpdateBankSetUpCallback(formData),
+    );
+    _btnDisable("submitBtn", btnText, false);
+  }
+}
+
+///// Fetch Branch Bank Setup ////
+function _fetchBranchBankSetUp() {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+
+	try {
+		_callFetchEndPoints({
+		url: `admin/branch/account/banks/fetch-banks?branchId=${branchId}`,
+		accessKey: true,
+		})
+		.then((response) => {
+			_staffValidationCheck(response.response);
+			if (response.success && response.data?.length > 0) {
+				_initFetchBranchBankSetUp(response.data);
+			} else {
+			$("#fetchBankSetUpPageContent").html(`
+				<tr>
+					<td colspan="20">
+						<div class="false-notification-div">
+							<p>${response.message}</p>
+              <div>
+                <button class="btn" title="ADD BANK"
+                onclick="sessionStorage.removeItem('useEachBankSetUpSession'); _getForm({page: 'branchAccountReg', layer:2, url: adminPortalLocalUrl});"><i
+                    class="bi-plus-square"></i> ADD BANK</button>
+              </div>
+						</div>
+					</td>
+				</tr>`);
+			$("#fetchBankSetUpPageContentPaginationControls").html("");
+			}
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			_callAjaxError(() => _fetchBranchBankSetUp());
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _fetchBranchBankSetUp());
+	}
+}
+
+///// Render Fetch Branch Bank Setup  ////
+function _renderFetchBranchBankSetUp(data, start) {
+  return data
+    .map(
+      (item, i) => `
+      <tr class="tb-row">
+        <td>${start + i + 1}</td>
+        <td class="clickable-td">${item.bankId}</td>
+        <td>${item.bankName}</td>
+        <td>${item.accountNumber}</td>
+        <td>${item.accountName}</td>
+        <td class="clickable-td">
+            ${item.createdByData?.staffId}<br />
+            <span>${item.createdByData?.fullName}</span>
+        </td>
+        <td class="clickable-td">
+            ${item.updatedByData?.staffId ? item.updatedByData?.staffId : "--"}<br />
+            <span>${item.updatedByData?.fullName ? item.updatedByData?.fullName : "--"}</span>
+        </td>
+        <td>${item.updatedTime}</td>
+        <td>
+            <div class="status-div ${item.statusData?.statusName}">
+                ${item.statusData?.statusName}
+            </div>
+        </td>
+        <td><button class="btn view-btn" title="Click to edit bank details" onclick="_fetchEachBankSetUp('${item.bankId}');">EDIT</button></td>
+      </tr>`)
+    .join("");
+}
+
+///// Initialize Fetch Branch Bank Setup  ////
+function _initFetchBranchBankSetUp(data) {
+  const paginator = new Paginator(
+    data,
+    _renderFetchBranchBankSetUp,
+    "fetchBankSetUpPageContentPaginationControls",
+    "fetchBankSetUpPageContent",
+    10
+  );
+  __paginatorHandlers["fetchBankSetUpPageContent"] = paginator;
+  paginator.renderPage();
+}
+
+/////// Fetch Each Bank Setup /////
+function _fetchEachBankSetUp(bankId) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+
+  $("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
+	try {
+		//// call endpoint //////
+		_callFetchEndPoints({
+			url: `admin/branch/account/banks/fetch-banks?branchId=${branchId}&bankId=${bankId}`,
+			accessKey: true,
+		})
+		.then((response) => {
+        _staffValidationCheck(response.response);
+			if (response.success && response.data?.length > 0) {
+    			sessionStorage.setItem("useEachBankSetUpSession", JSON.stringify(response.data[0]));
+          _getForm({page: 'branchAccountReg', layer:2, url: adminPortalLocalUrl});
+			} else {
+				_actionAlert(response.message, false);
+			}
+		 })
+		.catch((error) => {
+			console.error("Error:", error);
+      _alertClose(2);
+			_callAjaxError(() => _fetchEachBankSetUp(bankId)); // retry if needed
+		});
+	} catch (error) {
+		console.error("Error:", error);
+    _alertClose(2);
+		_callCatchError(() => _fetchEachBankSetUp(bankId));
+  }
+}
+
+//// Get Select Branch Bank ///
+function _getSelectBranchBank(fieldId) {
+   let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+  try {
+    $.ajax({
+      type: "GET",
+      url: endPoint + `/preset-data/fetch-branch-banks?branchId=${branchId}`,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(true),
+      success: function (info) {
+        const data = info.data;
+        const success = info.success;
+
+        if (success === true) {
+          for (let i = 0; i < data.length; i++) {
+            const id = data[i].bankId;
+            const value = data[i].bankName;
+            $("#searchList_" + fieldId).append(
+              "<li onclick=\"_clickOption('searchList_" +
+                fieldId +
+                "', '" +
+                id +
+                "', '" +
+                value +
+                "');\">" +
+                value +
+                "</li>",
+            );
+          }
+        } else {
+          _actionAlert(info.message, false);
+        }
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+  }
+}
+
+///// Fetch Branch Bank Setup ////
+function _fetchBranchBankTransactionRecord() {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+
+	try {
+		_callFetchEndPoints({
+		url: `admin/branch/account/banks-payment-transactions/fetch-transactions?branchId=${branchId}`,
+		accessKey: true,
+		})
+		.then((response) => {
+			_staffValidationCheck(response.response);
+			if (response.success && response.data?.length > 0) {
+				_initFetchBranchBankTransactionRecord(response.data);
+			} else {
+			$("#fetchBankTransactionRecordPageContent").html(`
+				<tr>
+					<td colspan="20">
+						<div class="false-notification-div">
+							<p>${response.message}</p>
+              <div>
+                <button class="btn" title="ADD BANK TRANSACTION"
+                onclick="sessionStorage.removeItem('useEachBankTransactionRecordSession'); _getForm({page: 'branchBankTransactionReg', layer:2, url: adminPortalLocalUrl});"><i
+                    class="bi-plus-square"></i> ADD BANK TRANSACTION</button>
+              </div>
+						</div>
+					</td>
+				</tr>`);
+			$("#ffetchBankTransactionRecordPageContentPaginationControls").html("");
+			}
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			_callAjaxError(() => _fetchBranchBankTransactionRecord());
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _fetchBranchBankTransactionRecord());
+	}
+}
+
+///// Render Fetch Branch Bank Setup  ////
+function _renderFetchBranchBankTransactionRecord(data, start) {
+  return data
+    .map(
+      (item, i) => `
+      <tr class="tb-row">
+        <td>${start + i + 1}</td>
+        <td class="clickable-td">${item.transactionDate}</td>
+        <td>${item.bankData?.bankName}</td>
+        <td><s>N</s>${thousandSeperator(item.amount)}</td>
+        <td>${item.description}</td>
+        <td>${item.session}</td>
+        <td>${item.termData?.termName}</td>
+        <td>${item.paymentBy}</td>
+        <td class="clickable-td">
+            ${item.createdByData?.staffId}<br />
+            <span>${item.createdByData?.fullName}</span>
+        </td>
+        <td>${item.updatedTime}</td>
+        <td><button class="btn view-btn" title="Click to edit bank details" onclick="_fetchEachBankTransactionRecord('${item.transactionId}');">EDIT</button></td>
+      </tr>`)
+    .join("");
+}
+
+///// Initialize Fetch Branch Bank Setup  ////
+function _initFetchBranchBankTransactionRecord(data) {
+  const paginator = new Paginator(
+    data,
+    _renderFetchBranchBankTransactionRecord,
+    "ffetchBankTransactionRecordPageContentPaginationControls",
+    "fetchBankTransactionRecordPageContent",
+    10
+  );
+  __paginatorHandlers["fetchBankTransactionRecordPageContent"] = paginator;
+  paginator.renderPage();
+}
+
+/////// Fetch Each Bank Transaction Record /////
+function _fetchEachBankTransactionRecord(transactionId) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+
+  $("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
+	try {
+		//// call endpoint //////
+		_callFetchEndPoints({
+			url: `admin/branch/account/banks-payment-transactions/fetch-transactions?branchId=${branchId}&transactionId=${transactionId}`,
+			accessKey: true,
+		})
+		.then((response) => {
+        _staffValidationCheck(response.response);
+			if (response.success && response.data?.length > 0) {
+    			sessionStorage.setItem("useEachBankTransactionRecordSession", JSON.stringify(response.data[0]));
+          _getForm({page: 'branchBankTransactionReg', layer:2, url: adminPortalLocalUrl});
+			} else {
+				_actionAlert(response.message, false);
+        _alertClose(2);
+			}
+		 })
+		.catch((error) => {
+			console.error("Error:", error);
+      _alertClose(2);
+			_callAjaxError(() => _fetchEachBankTransactionRecord(transactionId)); // retry if needed
+		});
+	} catch (error) {
+		console.error("Error:", error);
+    _alertClose(2);
+		_callCatchError(() => _fetchEachBankTransactionRecord(transactionId));
+  }
+}
+
+//// Create And Update Bank Setup /////
+function _createAndUpdateBankTransactionRecord() {
+  try {
+    ////////get all needed values////////////
+    let issueCount = 0;
+    const bankId = $("#bankId").val().trim();
+    const amount = $("#amount").val().trim();
+    const paymentBy = $("#paymentBy").val().trim();
+    const description = $("#description").val().trim();
+    const transactionDate = $("#transactionDate").val().trim();
+
+    ///// empty field validation//////////
+    issueCount += _validateEmptyValue("bankId", "BANK");
+    issueCount += _validateNumber("amount", amount);
+    issueCount += _validateEmptyValue("amount", "AMOUNT");
+    issueCount += _validateEmptyValue("paymentBy", "PAYMENT BY");
+    issueCount += _validateEmptyValue("description", "DESCRIPTION");
+    issueCount += _validateEmptyValue("transactionDate", "TRANSACTION DATE");
+
+    if (issueCount > 0) return;
+
+    /////Gather form data////
+    const formData = {
+      bankId,
+      amount,
+      paymentBy,
+      description,
+      transactionDate,
+    };
+
+    ////// confirm action////
+    _showCustomConfirm({
+      callback: () => {
+        _createAndUpdateBankTransactionRecordCallback(formData);
+      },
+      title: "Are you sure?",
+      message: "Are you sure you want to proceed? This action is irreversible.",
+      alertType: "warning",
+      falseActionBtn: true,
+      closeOnOverlayClick: true,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _createAndUpdateBankTransactionRecord());
+  }
+}
+
+//// Create And Update Bank Setup CallBack /////
+function _createAndUpdateBankTransactionRecordCallback(formData) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+
+  let useEachBankTransactionRecordSession = JSON.parse(
+    sessionStorage.getItem("useEachBankTransactionRecordSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+  const transactionId = useEachBankTransactionRecordSession?.transactionId;
+
+  try {
+    const btnText = $("#submitBtn").html();
+    _btnDisable("submitBtn", btnText, true);
+
+    let callUrl= transactionId ? `admin/branch/account/banks-payment-transactions/update-transaction?branchId=${branchId}&transactionId=${transactionId}` : `admin/branch/account/banks-payment-transactions/create-transaction?branchId=${branchId}`;
+
+    _callRawEndPoints({
+      url: callUrl,
+      formData,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success) {
+          _showCustomConfirm({
+            callback: () => {
+              _alertClose(2);
+              _getActiveBranchPage({divid:'branch_account', page: 'branchBankTransactionRecordPage', url: adminPortalLocalUrl});
+            },
+            title: "Success!",
+            message: response.message,
+            alertType: "success",
+            trueActionBtnText: "OK, Thanks.",
+            closeOnOverlayClick: false,
+          });
+        } else {
+          _showCustomConfirm({
+            title: "Unable to proceed",
+            message: response.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+          _btnDisable("submitBtn", btnText, false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() =>
+          _createAndUpdateBankTransactionRecordCallback(formData),
+        ); // retry if needed
+        _btnDisable("submitBtn", btnText, false);
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() =>
+      _createAndUpdateBankTransactionRecordCallback(formData),
+    );
+    _btnDisable("submitBtn", btnText, false);
+  }
+}

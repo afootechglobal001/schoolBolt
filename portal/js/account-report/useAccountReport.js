@@ -690,7 +690,7 @@ function _proceedVerifyPaystackTransaction(paymentId) {
 }
 
 function _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText) {
-
+  let sessionPayDate = sessionStorage.getItem("sessionPayDate");
   $.ajax({
     url: `https://api.paystack.co/transaction/verify/${paymentId}`,
     type: "GET",
@@ -699,22 +699,49 @@ function _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText) {
       "Content-Type": "application/json"
     },
     success: function (data) {
-      console.log(data);
       if (data.status === true && data.data.status === "success") {
         _callVeifyPaymentSuccess(paymentId, branchId, btnText);
       } else {
-        _actionAlert('Transaction is still in pending status', false);
+        _callVerifyPaymentCancelled(paymentId);
+        _showCustomConfirm({
+            callback: () => {
+              _getPaymentStatusNav({
+                divid: 'cancelledPage',
+                page: 'cancelledPage',
+                id: sessionPayDate,
+                url: adminPortalLocalUrl
+              });
+            },
+            title: "Transaction Not Successful!",
+            message: "This transaction was not successful and has been automatically cancelled by the system.",
+            alertType: "error",
+            trueActionBtnText: "Got It",
+            closeOnOverlayClick: false,
+        });
         $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
       }
-
     },
     error: function (xhr, status, error) {
       console.error("Error:", error);
-      _actionAlert("An unexpected error occurred! Please try again.", false);
+        _callVerifyPaymentCancelled(paymentId);
+        _showCustomConfirm({
+            callback: () => {
+              _getPaymentStatusNav({
+                divid: 'cancelledPage',
+                page: 'cancelledPage',
+                id: sessionPayDate,
+                url: adminPortalLocalUrl
+              });
+            },
+            title: "Transaction Not Successful!",
+            message: "This transaction was not successful and has been automatically cancelled by the system.",
+            alertType: "error",
+            trueActionBtnText: "Got It",
+            closeOnOverlayClick: false,
+        });
       $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
     }
   });
-
 }
 
 function _callVeifyPaymentSuccess(paymentId, branchId, btnText) {
@@ -747,6 +774,30 @@ function _callVeifyPaymentSuccess(paymentId, branchId, btnText) {
           $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
         }
       },
+      error: function (error) {
+        console.log(error);
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function _callVerifyPaymentCancelled(paymentId) {
+  try {
+    const formData = {
+      paymentId: paymentId,
+    };
+
+    $.ajax({
+      type: "POST",
+      url: `${endPoint}/parent/payment/payment-cancelled`,
+      data: JSON.stringify(formData),
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      processData: false,
+      success: function () {},
       error: function (error) {
         console.log(error);
       },

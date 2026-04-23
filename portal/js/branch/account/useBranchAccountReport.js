@@ -701,6 +701,7 @@ function _proceedVerifyBranchPaystackTransaction(paymentId) {
 }
 
 function _verifyBranchPaystackTransaction(branchId, paymentId, secretKey, btnText) {
+  let branchSessionPayDate = sessionStorage.getItem("branchSessionPayDate");
 
   $.ajax({
     url: `https://api.paystack.co/transaction/verify/${paymentId}`,
@@ -710,18 +711,46 @@ function _verifyBranchPaystackTransaction(branchId, paymentId, secretKey, btnTex
       "Content-Type": "application/json"
     },
     success: function (data) {
-      console.log(data);
       if (data.status === true && data.data.status === "success") {
         _callVerifyBranchPaymentSuccess(paymentId, branchId, btnText);
       } else {
-        _actionAlert('Transaction is still in pending status', false);
+        _callBranchVerifyPaymentCancelled(paymentId);
+        _showCustomConfirm({
+            callback: () => {
+              _getBranchPaymentStatusNav({
+                divid: 'branchCancelledPage',
+                page: 'branchCancelledPage',
+                id: branchSessionPayDate,
+                url: adminPortalLocalUrl
+              });
+            },
+            title: "Transaction Not Successful!",
+            message: "This transaction was not successful and has been automatically cancelled by the system.",
+            alertType: "error",
+            trueActionBtnText: "Got It",
+            closeOnOverlayClick: false,
+        });
         $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
       }
-
     },
     error: function (xhr, status, error) {
       console.error("Error:", error);
-      _actionAlert("An unexpected error occurred! Please try again.", false);
+      _callBranchVerifyPaymentCancelled(paymentId);
+      _showCustomConfirm({
+          callback: () => {
+            _getBranchPaymentStatusNav({
+              divid: 'branchCancelledPage',
+              page: 'branchCancelledPage',
+              id: branchSessionPayDate,
+              url: adminPortalLocalUrl
+            });
+          },
+          title: "Transaction Not Successful!",
+          message: "This transaction was not successful and has been automatically cancelled by the system.",
+          alertType: "error",
+          trueActionBtnText: "Got It",
+          closeOnOverlayClick: false,
+      });
       $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
     }
   });
@@ -729,7 +758,7 @@ function _verifyBranchPaystackTransaction(branchId, paymentId, secretKey, btnTex
 }
 
 function _callVerifyBranchPaymentSuccess(paymentId, branchId, btnText) {
- let sessionPayDate = sessionStorage.getItem("sessionPayDate");
+ let branchSessionPayDate = sessionStorage.getItem("branchSessionPayDate");
   try {
     const formData = {
       paymentId: paymentId,
@@ -747,10 +776,10 @@ function _callVerifyBranchPaymentSuccess(paymentId, branchId, btnText) {
       success: function (data) {
         if (data.success) {
          _actionAlert(data.message, true);
-          _getPaymentStatusNav({
-            divid: 'successfulPage',
-            page: 'successfulPage',
-            id: sessionPayDate,
+          _getBranchPaymentStatusNav({
+            divid: 'branchSuccessfulPage',
+            page: 'branchSuccessfulPage',
+            id: branchSessionPayDate,
             url: adminPortalLocalUrl
           });
         } else {
@@ -758,6 +787,30 @@ function _callVerifyBranchPaymentSuccess(paymentId, branchId, btnText) {
           $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
         }
       },
+      error: function (error) {
+        console.log(error);
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function _callBranchVerifyPaymentCancelled(paymentId) {
+  try {
+    const formData = {
+      paymentId: paymentId,
+    };
+
+    $.ajax({
+      type: "POST",
+      url: `${endPoint}/parent/payment/payment-cancelled`,
+      data: JSON.stringify(formData),
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      processData: false,
+      success: function () {},
       error: function (error) {
         console.log(error);
       },

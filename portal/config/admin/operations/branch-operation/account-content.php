@@ -1776,13 +1776,13 @@
 
         <div class="btn-container">
             <button class="btn" title="ADD BANK"
-                onclick="_getForm({page: 'branchAccountReg', layer:2, url: adminPortalLocalUrl});"><i
+                onclick="sessionStorage.removeItem('useEachBankSetUpSession'); _getForm({page: 'branchAccountReg', layer:2, url: adminPortalLocalUrl});"><i
                     class="bi-plus-square"></i> ADD BANK</button>
         </div>
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+        <table class="table" cellspacing="0" style="width:100%">
             <thead>
                 <tr class="tb-col">
                     <th>sn</th>
@@ -1798,40 +1798,34 @@
                 </tr>
             </thead>
 
-            <tbody>
-                <tr class="tb-row">
-                    <td>1</td>
-                    <td class="clickable-td">BANK12337484899</td>
-                    <td>First Bank</td>
-                    <td>3021098482</td>
-                    <td>SchoolBolt</td>
-                    <td class="clickable-td">
-                        PAUL EMMANUEL<br />
-                        <span>seunemmanuel107@gmail.com</span>
-                    </td>
-                    <td class="clickable-td">
-                        PAUL EMMANUEL<br />
-                        <span>seunemmanuel107@gmail.com</span>
-                    </td>
-                    <td>2026-04-21 18:33:37</td>
-                    <td>
-                        <div class="status-div SUCCESSFUL">
-                            SUCCESSFUL
+            <tbody id="fetchBankSetUpPageContent">
+                <script>_fetchBranchBankSetUp();</script>
+                <tr>
+                    <td colspan="20">
+                        <div class="content-loading-div">
+                            <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
                         </div>
                     </td>
-                    <td><button class="btn view-btn" title="Click to edit bank details" onclick="">EDIT</button></td>
                 </tr>
             </tbody>
         </table>
+        <!-- Pagination -->
+        <div id="fetchBankSetUpPageContentPaginationControls" class="pagination-div"></div>
     </div>
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 <?php if ($page == 'branchAccountReg') { ?>
+    <script> 
+        useEachBankSetUpSession = JSON.parse(sessionStorage.getItem("useEachBankSetUpSession"));
+        $('#bankSetUpPageTitle').html(useEachBankSetUpSession?.bankId ? 'UPDATE BANK':'ADD NEW BANK');
+        $('#subTitle').html(useEachBankSetUpSession?.bankId ? 'UPDATE BANK':'ADD NEW BANK');
+    </script>
+
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
-                <span id="pageTitle"><i class="bi-plus-square"></i> ADD A NEW BANK</span>
+                <span id="bankSetUpPageTitle"><i class="bi-plus-square"></i> ADD NEW BANK</span>
                 <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
         </div>
@@ -1839,8 +1833,7 @@
         <div class="container-back-div">
             <div class="inner-container">
                 <div>
-                    <div class="alert alert-success form-alert">Kindly fill the form below to <span id="pageTitle2"> ADD A
-                            NEW BANK</span></div>
+                    <div class="alert alert-success form-alert">Kindly fill the form below to <span id="subTitle"> ADD NEW BANK</span></div>
                 </div>
 
                 <div class="text_field_container" id="bankName_container">
@@ -1848,6 +1841,7 @@
                         textField({
                             id: 'bankName',
                             title: 'Bank Name',
+                            value: useEachBankSetUpSession?.bankName?? '',
                         });
                     </script>
                 </div>
@@ -1859,7 +1853,8 @@
                             title: 'Account Number',
                             type: 'number',
                             onKeyPressFunction: 'isNumberCheck(event);',
-                            autocomplete: "off"
+                            autocomplete: "off",
+                            value: useEachBankSetUpSession?.accountNumber?? '',
                         });
                     </script>
                 </div>
@@ -1869,6 +1864,7 @@
                         textField({
                             id: 'accountName',
                             title: 'Account Name',
+                            value: useEachBankSetUpSession?.accountName?? '',
                         });
                     </script>
                 </div>
@@ -1877,14 +1873,16 @@
                     <script>
                         selectField({
                             id: 'statusId',
-                            title: 'Select Status'
+                            title: 'Select Status',
+                            fieldValue: useEachBankSetUpSession?.statusData?.statusId ?? '',
+                            fieldLabel: useEachBankSetUpSession?.statusData?.statusName ?? '',
                         });
                         _getSelectStatusId('statusId', '1,2');
                     </script>
                 </div>
 
                 <div>
-                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick="_createAndUpdateBankSetUp();"> <i
                             class="bi-check"></i> SUBMIT </button>
                 </div>
             </div>
@@ -1899,7 +1897,7 @@
 
         <div class="btn-container">
             <button class="btn" title="ADD BANK TRANSACTION"
-                onclick="_getForm({page: 'branchBankTransactionReg', layer:2, url: adminPortalLocalUrl});"><i
+                onclick="sessionStorage.removeItem('useEachBankTransactionRecordSession'); _getForm({page: 'branchBankTransactionReg', layer:2, url: adminPortalLocalUrl});"><i
                     class="bi-plus-square"></i> ADD BANK TRANSACTION</button>
         </div>
     </div>
@@ -1913,37 +1911,43 @@
                     <th>Bank Name</th>
                     <th>Amount (<s>N</s>)</th>
                     <th>Description</th>
+                    <th>Session</th>
+                    <th>Term</th>
+                    <th>Payment By</th>
                     <th>Computed By</th>
                     <th>Date Computed</th>
                     <th>Action</th>
                 </tr>
             </thead>
 
-            <tbody>
-                <tr class="tb-row">
-                    <td>1</td>
-                    <td>2026-04-21 18:33:37</td>
-                    <td>SchoolBolt</td>
-                    <td><s>N</s>20,000.00</td>
-                    <td>Part Payment for third term tuition fee</td>
-                    <td class="clickable-td">
-                        PAUL EMMANUEL<br />
-                        <span>seunemmanuel107@gmail.com</span>
+            <tbody id="fetchBankTransactionRecordPageContent">
+                <script>_fetchBranchBankTransactionRecord();</script>
+                <tr>
+                    <td colspan="20">
+                        <div class="content-loading-div">
+                            <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
+                        </div>
                     </td>
-                    <td>2026-04-21 18:33:37</td>
-                    <td><button class="btn view-btn" title="Click to edit transaction" onclick="">EDIT</button></td>
                 </tr>
             </tbody>
         </table>
+        <!-- Pagination -->
+        <div id="ffetchBankTransactionRecordPageContentPaginationControls" class="pagination-div"></div>
     </div>
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 <?php if ($page == 'branchBankTransactionReg') { ?>
+    <script> 
+        useEachBankTransactionRecordSession = JSON.parse(sessionStorage.getItem("useEachBankTransactionRecordSession"));
+        $('#bankTransPageTitle').html(useEachBankTransactionRecordSession?.transactionId ? 'UPDATE BANK TRANSACTION':'ADD NEW BANK TRANSACTION');
+        $('#bankTransSubTitle').html(useEachBankTransactionRecordSession?.transactionId ? 'UPDATE BANK TRANSACTION':'ADD NEW BANK TRANSACTION');
+    </script>
+
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
         <div class="title-panel-div">
             <div class="inner-top">
-                <span id="pageTitle"><i class="bi-plus-square"></i> ADD NEW BANK TRANSACTION</span>
+                <span id="bankTransPageTitle"><i class="bi-plus-square"></i> ADD NEW BANK TRANSACTION</span>
                 <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
             </div>
         </div>
@@ -1951,17 +1955,19 @@
         <div class="container-back-div">
             <div class="inner-container">
                 <div>
-                    <div class="alert alert-success form-alert">Kindly fill the form below to <span id="pageTitle2"> ADD
+                    <div class="alert alert-success form-alert">Kindly fill the form below to <span id="bankTransSubTitle"> ADD
                             NEW BANK TRANSACTION</span></div>
                 </div>
 
-                <div class="text_field_container" id="brankId_container">
+                <div class="text_field_container" id="bankId_container">
                     <script>
                         selectField({
-                            id: 'brankId',
-                            title: 'Select Bank'
+                            id: 'bankId',
+                            title: 'Select Bank',
+                            fieldValue: useEachBankTransactionRecordSession?.bankData?.bankId ?? '',
+                            fieldLabel: useEachBankTransactionRecordSession?.bankData?.bankName ?? '',
                         });
-                        //_getSelectStatusId('statusId', '1,2');
+                        _getSelectBranchBank('bankId');
                     </script>
                 </div>
 
@@ -1972,7 +1978,8 @@
                             title: 'Amount',
                             type: 'number',
                             onKeyPressFunction: 'isNumberCheck(event);',
-                            autocomplete: "off"
+                            autocomplete: "off",
+                            value: useEachBankTransactionRecordSession?.amount?? '',
                         });
                     </script>
                 </div>
@@ -1981,7 +1988,8 @@
                     <script>
                         textField({
                             id: 'paymentBy',
-                            title: 'Payment By'
+                            title: 'Payment By',
+                            value: useEachBankTransactionRecordSession?.paymentBy?? '',
                         });
                     </script>
                 </div>
@@ -1994,22 +2002,24 @@
                         type: 'textarea',
                         rows: 2,
                         maxlength: '55',
+                        value: useEachBankTransactionRecordSession?.description?? '',
                     });
                 </script>
             </div>
 
-                <div class="text_field_container" id="date_container">
+                <div class="text_field_container" id="transactionDate_container">
                     <script>
                         textField({
-                            id: 'date',
+                            id: 'transactionDate',
                             title: 'Transaction Date',
                             type: 'date',
+                            value: useEachBankTransactionRecordSession?.transactionDate?? '',
                         });
                     </script>
                 </div>
 
                 <div>
-                    <button class="btn" title="SUBMIT" id="submitBtn" onclick=""> <i
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick="_createAndUpdateBankTransactionRecord();"> <i
                             class="bi-check"></i> SUBMIT </button>
                 </div>
             </div>

@@ -390,7 +390,7 @@
                                     id: '<?php echo $id; ?>',
                                     url: adminPortalLocalUrl
                                 });
-                                 sessionStorage.setItem("sessionPayDate", '<?php echo $id; ?>');
+                                sessionStorage.setItem("branchSessionPayDate", '<?php echo $id; ?>');
                             </script>
                         </div>
                     </div>
