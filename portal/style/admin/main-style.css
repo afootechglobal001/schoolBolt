@@ -6286,8 +6286,36 @@ header
 .new-statistics-back-div
   .new-statistics-div
   .statistics-inner-div
+  .report-statistics-text
+  .flex-cont{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.new-statistics-back-div
+  .new-statistics-div
+  .statistics-inner-div
+  .report-statistics-text
+  .flex-cont .transCount{
+    font-size: px;
+    color: var(--white-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 13px;
+    padding: 0px 2px;
+    font-style:normal;
+    font-family: body-font;
+    background: var(--secondary-color);
+    border-radius: 4px;
+}
+
+.new-statistics-back-div
+  .new-statistics-div
+  .statistics-inner-div
   .statistics-icon {
-  color: var(--secondary-color);
   font-size: 25px;
   width: 50px;
   height: 50px;
