@@ -79,10 +79,6 @@ function windowPop(url) {
 	return false;
 }
 
-function _exportStudents(session, departmentName, className, armName) {
-    let fileName = `${session} ${departmentName} ${className} ${armName} Students`;
-    exportTableToExcel("pageContent", fileName);
-}
 
 function exportTableToExcel(tableID, filename) {
     var dataType = 'application/vnd.ms-excel';

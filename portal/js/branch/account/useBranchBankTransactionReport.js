@@ -126,6 +126,17 @@ function _branchBankTransactionReportFiltering(dateFrom, dateTo, bankId) {
       "align-items": "center",
     })
     .fadeIn(500);
+
+    $("#bankTransactionReportPageContent")
+    .html(
+      `<tr>
+          <td colspan="20">
+              <div class="content-loading-div">
+                  <img src="${websiteUrl}/images/spinner.gif" alt="Loading" />
+              </div>
+          </td>
+      </tr>`
+    ).fadeIn("fast");
   $.ajax({
     type: "GET",
     url: `${endPoint}/admin/branch/account/banks-transactions-reports/fetch-transactions-by-date-range?dateFrom=${dateFrom}&dateTo=${dateTo}&branchId=${getEachBranchDetailsSession?.branchId}&bankId=${bankId}`,
@@ -133,7 +144,8 @@ function _branchBankTransactionReportFiltering(dateFrom, dateTo, bankId) {
     cache: false,
     headers: getAuthHeaders(true),
     success: function (info) {
-      if (info.success && info.statistics.length > 0) {
+      let text = "";
+      if (info?.statistics?.length > 0) {
         const statistic = info.statistics;
         const totalRevenue = thousandSeperator(info.totalRevenue);
 
@@ -163,33 +175,34 @@ function _branchBankTransactionReportFiltering(dateFrom, dateTo, bankId) {
         $("#statisticsContent").html(content);
 
         //// Update Dougnut Chart Transaction Banks ///
-        let dataPoints = [];
-        for (let i = 0; i < statistic.length; i++) {
-          const fetchDoughnutData = statistic[i];
+        if (statistic && statistic.length > 0) {
+          let dataPoints = [];
+          for (let i = 0; i < statistic.length; i++) {
+            const fetchDoughnutData = statistic[i];
 
-          dataPoints.push({
-            label: fetchDoughnutData.bankName,
-            y: Number(fetchDoughnutData.totalAmount) || 0,
+            dataPoints.push({
+              label: fetchDoughnutData.bankName,
+              y: Number(fetchDoughnutData.totalAmount) || 0,
+            });
+          }
+
+          $("#chartContainer").CanvasJSChart({
+            data: [
+              {
+                type: "doughnut",
+                innerRadius: 30,
+                indexLabel: "{label} ({y})",
+                yValueFormatString: "₦#,##0.00",
+                indexLabelFontSize: 9,
+                dataPoints: dataPoints,
+              },
+            ],
           });
         }
 
-        $("#chartContainer").CanvasJSChart({
-          data: [
-            {
-              type: "doughnut",
-              innerRadius: 30,
-              indexLabel: "{label} ({y})",
-              yValueFormatString: "₦#,##0.00",
-              indexLabelFontSize: 9,
-              dataPoints: dataPoints,
-            },
-          ],
-        });
-
-        // Update Transaction Report Table ///
-        let text = "";
+        // Update Transaction Report Table //
         let no = 0;
-        if (info.data && info.data.length > 0) {
+        if (info?.data && info?.data?.length > 0) {
           for (let i = 0; i < info.data.length; i++) {
             no++;
             const fetchedData = info.data[i];
@@ -219,6 +232,16 @@ function _branchBankTransactionReportFiltering(dateFrom, dateTo, bankId) {
           $("#bankTransactionReportPageContent").html(text);
         }
       } else {
+        text += `
+          <tr>
+              <td colspan="20">
+                <div class="false-notification-div">
+                  <p>No Transaction record found!</p>
+                </div>
+              </td>
+          </tr>`;
+        $("#bankTransactionReportPageContent").html(text);
+
         const response = info.response;
         if (response < 100) {
           _logOut();

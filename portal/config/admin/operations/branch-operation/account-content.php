@@ -379,6 +379,12 @@ useAccountStudentByClassSession = JSON.parse(sessionStorage.getItem("useAccountS
                         </span>
                         </span>
                     </div>
+
+                    <div class="btn-container">
+                        <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('accountPageContent','Student_Payment_List');">
+                            <i class="bi-file-earmark-excel"></i> EXPORT
+                        </button>
+                    </div>
                 </div>
 
                 <div class="table-div animated fadeIn">
@@ -958,13 +964,14 @@ useAccountStudentByClassSession = JSON.parse(sessionStorage.getItem("useAccountS
                     </div>
 
                     <div class="btn-container">
-                        <button class="btn" title="EXPORT RECORDS" onclick=""><i class="bi-file-earmark-excel"></i>
-                            EXPORT</button>
+                        <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('accountStudentDebtorPageContent','Student_Debtors_List');">
+                            <i class="bi-file-earmark-excel"></i> EXPORT
+                        </button>
                     </div>
                 </div>
 
                 <div class="table-div animated fadeIn">
-                    <table class="table" cellspacing="0" style="width:100%" id="accountPageContent">
+                    <table class="table" cellspacing="0" style="width:100%" id="accountStudentDebtorPageContent">
                         <script>
                         $(document).ready(function() {
                             const response = JSON.parse(sessionStorage.getItem(
@@ -984,7 +991,7 @@ useAccountStudentByClassSession = JSON.parse(sessionStorage.getItem("useAccountS
                                 const arm = response?.armData?.armName;
 
                                 let html = `
-                                            < thead >
+                                            <thead>
                                             <tr class="tb-col">
                                                 <th>sn</th>
                                                 <th>Student Info</th>
@@ -998,7 +1005,7 @@ useAccountStudentByClassSession = JSON.parse(sessionStorage.getItem("useAccountS
                                                 <th>Oustanding Mandatory Fees</th>
                                                 <th>View</th>
                                             </tr>
-                                                                        </thead >
+                                               </thead>
                                             <tbody>`;
 
                                 let sn = 0;
@@ -1073,7 +1080,7 @@ useAccountStudentByClassSession = JSON.parse(sessionStorage.getItem("useAccountS
                                 });
 
                                 html += `</tbody>`;
-                                $('#accountPageContent').html(html);
+                                $('#accountStudentDebtorPageContent').html(html);
                             }
                         });
                         </script>
@@ -1550,6 +1557,12 @@ if (fetchDiscountDepartmentClassParams?.view === "discountScholarship") {
                         </span>
                         </span>
                     </div>
+
+                    <div class="btn-container">
+                        <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('discountScholarshopPageContent','Student_Discount_Scholarship_List');">
+                            <i class="bi-file-earmark-excel"></i> EXPORT
+                        </button>
+                    </div>
                 </div>
 
                 <div class="table-div animated fadeIn">
@@ -1774,21 +1787,11 @@ getEachDiscountStudentSession = JSON.parse(sessionStorage.getItem("getEachDiscou
 <div class="alert alert-success top-alert-div animated fadeIn">
     <span><i class="bi-bank"></i> BRANCH BANK SETUP</span>
 
-    <div class="btn-container" id="addbankBtn">
-        <script>
-        if (userRoles.canAddBank) {
-            $('#addbankBtn').append(`
-                                <button class="btn" title="ADD BANK"
-                onclick="sessionStorage.removeItem('useEachBankSetUpSession'); _getForm({page: 'branchAccountReg', layer:2, url: adminPortalLocalUrl});"><i
-                    class="bi-plus-square"></i> ADD BANK</button>
-                            `);
-        }
-        </script>
-    </div>
+    <div class="btn-container" id="exportBankSetupButton"></div>
 </div>
 
 <div class="table-div animated fadeIn">
-    <table class="table" cellspacing="0" style="width:100%">
+    <table class="table" cellspacing="0" style="width:100%" id="fetchBankSetUpPageContentTable">
         <thead>
             <tr class="tb-col">
                 <th>sn</th>
@@ -1910,22 +1913,12 @@ $('#subTitle').html(useEachBankSetUpSession?.bankId ? 'UPDATE BANK' : 'ADD NEW B
 <div class="alert alert-success top-alert-div animated fadeIn">
     <span><i class="bi-bank"></i> BRANCH TRANSACTION RECORD</span>
 
-    <div class="btn-container" id="addbankBtn">
-        <script>
-        if (userRoles.canAddBankPaymentTransaction) {
-            $('#addbankBtn').append(`
-                                <button class="btn" title="ADD BANK TRANSACTION"
-            onclick="sessionStorage.removeItem('useEachBankTransactionRecordSession'); _getForm({page: 'branchBankTransactionReg', layer:2, url: adminPortalLocalUrl});"><i
-                class="bi-plus-square"></i> ADD BANK TRANSACTION</button>
-                            `);
-        }
-        </script>
-    </div>
+    <div class="btn-container" id="exportBankTransButton"></div>
 
 </div>
 
 <div class="table-div animated fadeIn">
-    <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+    <table class="table" cellspacing="0" style="width:100%" id="fetchBankTransactionRecordPageContentTable">
         <thead>
             <tr class="tb-col">
                 <th>sn</th>

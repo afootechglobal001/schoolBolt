@@ -1368,9 +1368,9 @@
         <div><span><i class="bi-clock"></i></span> STUDENT TRANSACTION HISTORY</div>
 
         <div class="btn-container">
-            <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
-            <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i>
-                EXPORT</button>
+            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('transactionHistoryContentTable','Student_Transaction_History_List');">
+                <i class="bi-file-earmark-excel"></i> EXPORT
+            </button>  
         </div>
     </div>
 
@@ -1436,7 +1436,7 @@
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%">
+        <table class="table" cellspacing="0" style="width:100%" id="transactionHistoryContentTable">
             <thead>
                 <tr class="tb-col">
                     <th>sn</th>
@@ -1892,14 +1892,14 @@
                 id="dateTo">Loading...</span></div>
 
         <div class="btn-container">
-            <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
-            <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i>
-                EXPORT</button>
+            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('fetchStudentFundsTable','Student_Fund_History_List');">
+                <i class="bi-file-earmark-excel"></i> EXPORT
+            </button>  
         </div>
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%" id="">
+        <table class="table" cellspacing="0" style="width:100%" id="fetchStudentFundsTable">
             <thead>
                 <tr class="tb-col">
                     <th>sn</th>
@@ -1938,16 +1938,14 @@
         <div><i class="bi-mortarboard"></i> STUDENT DISCOUNT OR SCHOLARSHIP APPLICATION</div>
 
         <div class="btn-container" id="canApplyStudentDiscountScholarship">
-            <button class="btn" title="PRINT RECORDS" onclick=""><i class="bi-printer"></i>
-                PRINT</button>
-
-            <button class="btn" title="EXPORT RECORDS" onclick=""><i class="bi-file-earmark-excel"></i>
-                EXPORT</button>
+            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('fetchStudentDiscountScholarshipFundsTable','Student_Discount_Scholarship_History_List');">
+                <i class="bi-file-earmark-excel"></i> EXPORT
+            </button>  
         </div>
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%">
+        <table class="table" cellspacing="0" style="width:100%" id="fetchStudentDiscountScholarshipFundsTable">
             <thead>
                 <tr class="tb-col">
                     <th>sn</th>

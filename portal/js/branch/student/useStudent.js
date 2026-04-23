@@ -632,7 +632,7 @@ function _fetchBranchStudents() {
 					<button class="btn" title="PRINT RECORDS" id="printStudentsByClassBtn" onclick="_printStudentByClass('${info.departmentData.departmentId}','${info.classData.classId}','${info.armData.armId}')">
 						<i class="bi-printer"></i> PRINT
 					</button>
-					<button class="btn" title="EXPORT RECORDS" onclick="_exportStudents('${session}','${departmentName}','${className}','${armName}');">
+					<button class="btn" title="EXPORT RECORDS" onclick="exportTableToExcel('pageContent','studentList');">
 						<i class="bi-file-earmark-excel"></i> EXPORT
 					</button>
 				`;
