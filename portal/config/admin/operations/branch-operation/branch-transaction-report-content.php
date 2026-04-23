@@ -240,13 +240,13 @@
                     <tbody id="branchSessionTermContent">
                         <!-- CONTENT GOES HERE -->
 
-                        <tr>
+                        <!-- <tr>
                             <td colspan="20">
                                 <div class="false-notification-div">
                                     <p>Select session And term to filter revenue</p>
                                 </div>
                             </td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>
