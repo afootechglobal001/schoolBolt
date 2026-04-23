@@ -2129,6 +2129,22 @@ function _fetchBranchBankSetUp() {
     })
       .then((response) => {
         _staffValidationCheck(response.response);
+        let showButtons = `
+          <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('fetchBankSetUpPageContentTable','Bank_Setup_List')">
+              <i class="bi-file-earmark-excel"></i> EXPORT
+          </button>
+        `;
+
+        if (userRoles.canAddBank) {
+            showButtons += `
+              <button class="btn" title="ADD BANK"
+                  onclick="sessionStorage.removeItem('useEachBankSetUpSession'); _getForm({page: 'branchAccountReg', layer:2, url: adminPortalLocalUrl});">
+                  <i class="bi-plus-square"></i> ADD BANK
+              </button>
+            `;
+        }
+        $("#exportBankSetupButton").html(showButtons);
+
         if (response.success && response.data?.length > 0) {
           _initFetchBranchBankSetUp(response.data);
         } else {
@@ -2137,11 +2153,6 @@ function _fetchBranchBankSetUp() {
 					<td colspan="20">
 						<div class="false-notification-div">
 							<p>${response.message}</p>
-              <div>
-                <button class="btn" title="ADD BANK"
-                onclick="sessionStorage.removeItem('useEachBankSetUpSession'); _getForm({page: 'branchAccountReg', layer:2, url: adminPortalLocalUrl});"><i
-                    class="bi-plus-square"></i> ADD BANK</button>
-              </div>
 						</div>
 					</td>
 				</tr>`);
@@ -2324,6 +2335,21 @@ function _fetchBranchBankTransactionRecord() {
     })
       .then((response) => {
         _staffValidationCheck(response.response);
+        let showButtons = `
+          <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('fetchBankTransactionRecordPageContentTable','Bank_Transaction_List');">
+              <i class="bi-file-earmark-excel"></i> EXPORT
+          </button>
+        `;
+
+        if (userRoles.canAddBankPaymentTransaction) {
+            showButtons += `
+              <button class="btn" title="ADD BANK TRANSACTION"
+                onclick="sessionStorage.removeItem('useEachBankTransactionRecordSession'); _getForm({page: 'branchBankTransactionReg', layer:2, url: adminPortalLocalUrl});">
+                <i class="bi-plus-square"></i> ADD BANK TRANSACTION</button>
+            `;
+        }
+        $("#exportBankTransButton").html(showButtons);
+
         if (response.success && response.data?.length > 0) {
           _initFetchBranchBankTransactionRecord(response.data);
         } else {
@@ -2331,12 +2357,7 @@ function _fetchBranchBankTransactionRecord() {
 				<tr>
 					<td colspan="20">
 						<div class="false-notification-div">
-							<p>${response.message}</p>
-              <div>
-                <button class="btn" title="ADD BANK TRANSACTION"
-                onclick="sessionStorage.removeItem('useEachBankTransactionRecordSession'); _getForm({page: 'branchBankTransactionReg', layer:2, url: adminPortalLocalUrl});"><i
-                    class="bi-plus-square"></i> ADD BANK TRANSACTION</button>
-              </div>
+							<p>${response.message}</p> 
 						</div>
 					</td>
 				</tr>`);
@@ -2573,4 +2594,54 @@ function _createAndUpdateBankTransactionRecordCallback(formData) {
     );
     _btnDisable("submitBtn", btnText, false);
   }
+}
+
+
+///// Export ///
+function exportAccountTableToExcel(tableID, filename) {
+  var dataType = 'application/vnd.ms-excel';
+    var $table = $('#' + tableID);
+    var removedImages = [];
+
+    // Temporarily remove all images from the table
+    $table.find('img').each(function () {
+        var $img = $(this);
+        removedImages.push({
+            parent: $img.parent(),
+            nextSibling: $img.next(),
+            element: $img
+        });
+        $img.remove();
+    });
+
+    // Convert table to HTML
+    var tableHTML = $table.prop('outerHTML').replace(/ /g, '%20').replace(/#/g, '%23');
+
+    // Specify file name
+    filename = filename ? filename + '.xls' : 'excel_data.xls';
+
+    // Create download link
+    var $downloadLink = $('<a></a>');
+    $('body').append($downloadLink);
+
+    if (window.navigator.msSaveOrOpenBlob) {
+        var blob = new Blob(['\ufeff', tableHTML], { type: dataType });
+        window.navigator.msSaveOrOpenBlob(blob, filename);
+    } else {
+        $downloadLink.attr('href', 'data:' + dataType + ', ' + tableHTML);
+        $downloadLink.attr('download', filename);
+        $downloadLink[0].click();
+    }
+
+    // Restore the removed images
+    $.each(removedImages, function (i, item) {
+        if (item.nextSibling.length) {
+            item.element.insertBefore(item.nextSibling);
+        } else {
+            item.parent.append(item.element);
+        }
+    });
+
+    // Clean up
+    $downloadLink.remove();
 }

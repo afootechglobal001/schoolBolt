@@ -104,7 +104,7 @@
             </div>
 
             <div class="div">
-                Total Transactions: <span class="balance" id="totalRevenue">N347,000.00</span>
+                Total Transactions: <span class="balance" id="totalRevenue"><s>N</s>00.00</span>
             </div>
         </div>
 
@@ -127,13 +127,7 @@
 
                                 <tbody id="bankTransactionReportPageContent">
                                     <!-- CONTENT GOES HERE -->
-                                    <tr>
-                                        <td colspan="20">
-                                            <div class="content-loading-div">
-                                                <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -161,15 +155,7 @@
                                         indexLabel: "{label} ({y})",
                                         yValueFormatString: "#,##0.#" % "",
                                         indexLabelFontSize: 9,
-                                        dataPoints: [{
-                                                label: "MANUAL PAYMENT",
-                                                y: 300000.00
-                                            },
-                                            {
-                                                label: "CREDIT CARD",
-                                                y: 43000.00
-                                            },
-                                        ]
+                                        dataPoints: []
                                     }]
                                 };
                                 $("#chartContainer").CanvasJSChart(options);
@@ -245,7 +231,7 @@
                         <tr>
                             <td colspan="20">
                                 <div class="false-notification-div">
-                                    <p>Select session And term to filter revenue</p>
+                                    <p>Select session And term to filter Transaction</p>
                                 </div>
                             </td>
                         </tr>
@@ -283,13 +269,14 @@
                                 </div>
 
                                 <div class="btn-container">
-                                    <button class="btn"><i class="bi-printer"></i> PRINT</button>
-                                    <button class="btn"><i class="bi-file-earmark-excel"></i> EXPORT</button>
+                                    <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('bankTransactionRecordBreakdownPageContentTable','Bank_Transaction_Record_By_Date_List');">
+                                        <i class="bi-file-earmark-excel"></i> EXPORT
+                                    </button>
                                 </div>
                             </div>
 
                             <div class="table-div animated fadeIn">
-                                <table class="table" cellspacing="0" style="width:100%">
+                                <table class="table" cellspacing="0" style="width:100%" id="bankTransactionRecordBreakdownPageContentTable">
                                     <thead>
                                         <tr class="tb-col">
                                             <th>sn</th>

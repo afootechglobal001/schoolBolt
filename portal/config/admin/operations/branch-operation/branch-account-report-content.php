@@ -413,13 +413,14 @@
         </div>
 
         <div class="btn-container">
-            <button class="btn"><i class="bi-printer"></i> PRINT</button>
-            <button class="btn"><i class="bi-file-earmark-excel"></i> EXPORT</button>
+            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('branchPageContentTable','Revenue_Breakdown_By_Date_List');">
+                <i class="bi-file-earmark-excel"></i> EXPORT
+            </button>
         </div>
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%">
+        <table class="table" cellspacing="0" style="width:100%" id="branchPageContentTable">
             <thead>
                 <tr class="tb-col">
                     <th>sn</th>
@@ -467,13 +468,14 @@
         </div>
 
         <div class="btn-container">
-            <button class="btn"><i class="bi-printer"></i> PRINT</button>
-            <button class="btn"><i class="bi-file-earmark-excel"></i> EXPORT</button>
+            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('branchPendingPageContentTable','Revenue_Breakdown_By_Date_List');">
+                <i class="bi-file-earmark-excel"></i> EXPORT
+            </button>
         </div>
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%">
+        <table class="table" cellspacing="0" style="width:100%" id="branchPendingPageContentTable">
             <thead>
                 <tr class="tb-col">
                     <th>sn</th>
@@ -521,13 +523,14 @@
         </div>
 
         <div class="btn-container">
-            <button class="btn"><i class="bi-printer"></i> PRINT</button>
-            <button class="btn"><i class="bi-file-earmark-excel"></i> EXPORT</button>
+            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('branchCancelledPageContentTable','Revenue_Breakdown_By_Date_List');">
+                <i class="bi-file-earmark-excel"></i> EXPORT
+            </button>
         </div>
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%">
+        <table class="table" cellspacing="0" style="width:100%" id="branchCancelledPageContentTable">
             <thead>
                 <tr class="tb-col">
                     <th>sn</th>
