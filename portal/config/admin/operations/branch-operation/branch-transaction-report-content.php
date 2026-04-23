@@ -79,7 +79,6 @@
             </div>
         </div>
 
-
         <script language="javascript">
             $('#datepickers-from').datetimepicker({
                 lang: 'en',
