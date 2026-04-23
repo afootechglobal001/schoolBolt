@@ -1233,67 +1233,6 @@
                                         name: "Revenue",
                                         xValueFormatString: "DD MMM, YYYY",
                                         color: "#328ab3",
-                                        dataPoints: [ //{
-                                            //         x: new Date(2025, 0, 1),
-                                            //         y: 250000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 2),
-                                            //         y: 180000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 3),
-                                            //         y: 100000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 4),
-                                            //         y: 300000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 5),
-                                            //         y: 120000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 6),
-                                            //         y: 150000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 7),
-                                            //         y: 275000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 8),
-                                            //         y: 160000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 9),
-                                            //         y: 350000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 10),
-                                            //         y: 380000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 11),
-                                            //         y: 0
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 12),
-                                            //         y: 100000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 13),
-                                            //         y: 0
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 14),
-                                            //         y: 180000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 15),
-                                            //         y: 270000
-                                            //     },
-                                        ]
                                     },]
 
                                 });
@@ -3783,6 +3722,19 @@
 
             <div class="div-in">
                 <div class="user-managment-back-div">
+                    <div class="user-managment-list staff-managment-list" title="Bank Transaction Report"
+                        onclick="_getActiveBranchPage({divid:'branch_account', page: 'branchTransactionReportPage', url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/mobile-banking.png" alt="Bank Transaction Report" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Bank Transaction Report</h3>
+                                <p>View and analyze all bank transactions from parents’ manual payments for accurate tracking and financial reporting.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="user-managment-list staff-managment-list" title="Discount Report"
                         onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'discountReport', url: adminPortalLocalUrl});">
                         <div class="inner-div">
@@ -3823,20 +3775,6 @@
                             </div>
                         </div>
                     </div> -->
-
-                    <div class="user-managment-list staff-managment-list" title="Bank Transaction Report"
-                        onclick="_getActiveBranchPage({divid:'branch_account', page: 'branchTransactionReportPage', url: adminPortalLocalUrl});">
-                        <div class="inner-div">
-                            <div class="icon-div">
-                                <img src="<?php echo $websiteUrl ?>/images/mobile-banking.png" alt="Bank Transaction Report" />
-                            </div>
-                            <div class="text-div">
-                                <h3>Bank Transaction Report</h3>
-                                <p>View and analyze all bank transactions from parents’ manual payments for accurate tracking and financial reporting.</p>
-                            </div>
-                        </div>
-                    </div>
-
 
                     <div class="user-managment-list staff-managment-list" title="All Revenue Report"
                         onclick="_getActiveBranchPage({divid:'branch_account', page: 'branchDailyRevenuePage', url: adminPortalLocalUrl});">
