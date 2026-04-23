@@ -156,6 +156,14 @@ function assignRole(data) {
     ? (userRoles.canApplyStudentDiscountScholarship = true)
     : false;
   permissions.includes(29) ? (userRoles.canLoadStudentFund = true) : false;
+  permissions.includes(30) ? (userRoles.canAddBank = true) : false;
+  permissions.includes(31) ? (userRoles.canUpdateBank = true) : false;
+  permissions.includes(32)
+    ? (userRoles.canAddBankPaymentTransaction = true)
+    : false;
+  permissions.includes(33)
+    ? (userRoles.canUpdateBankPaymentTransaction = true)
+    : false;
 
   /// Developer Permissions
   permissions.includes(24) ? (userRoles.canDeleteStaff = true) : false;
