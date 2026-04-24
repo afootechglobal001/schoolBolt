@@ -71,8 +71,8 @@ function _confirmLogin() {
           assignRole(data);
         } else {
           _actionAlert(data.message, false);
+          $("#submit_btn").html(btn_text).prop("disabled", false);
         }
-        $("#submit_btn").html(btn_text).prop("disabled", false);
       },
       error: function () {
         _actionAlert(
