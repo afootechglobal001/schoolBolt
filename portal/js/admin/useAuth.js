@@ -164,6 +164,9 @@ function assignRole(data) {
   permissions.includes(33)
     ? (userRoles.canUpdateBankPaymentTransaction = true)
     : false;
+  permissions.includes(34)
+    ? (userRoles.canPerformPaymentReconciliation = true)
+    : false;
 
   /// Developer Permissions
   permissions.includes(24) ? (userRoles.canDeleteStaff = true) : false;
