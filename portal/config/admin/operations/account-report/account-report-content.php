@@ -773,6 +773,28 @@
                                         </span></div>
                                 </div>
                             </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Date Initiated:</div>
+                                    <div><span id="createdTime">
+                                            <script>
+                                                $("#createdTime").html(getRevenueBreakdownSessionData?.createdTime);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Date Confirmed:</div>
+                                    <div><span id="payDate">
+                                            <script>
+                                                $("#payDate").html(getRevenueBreakdownSessionData?.payDate);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -785,7 +807,7 @@
                         if (paymentComputedBy) {
                             content += `
                                 <div class="alert alert-success form-alert">
-                                <span>Manual Payment Processed By:</span>
+                                <span>Payment Confirmed By:</span>
                                 <div class="alert-list-div">
                                     <div class="alert-list-back-div">
                                         <div class="alert-list">
@@ -862,6 +884,46 @@
                         }
                     });
                 </script>
+
+                <script>
+                    $(document).ready(function () {
+                        const paystackCharges = getRevenueBreakdownSessionData?.paystackCharges;
+
+                        let content = "";
+                        if (paystackCharges > 0) {
+                            content += `
+                                <div class="alert alert-success form-alert">
+                                <span>Paystack Details:</span>
+                                <div class="alert-list-div">
+                                    <div class="alert-list-back-div">
+                                        <div class="alert-list">
+                                            <div>Paystack ID:</div>
+                                            <div><span>${getRevenueBreakdownSessionData?.paystackId}</span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert-list-back-div">
+                                        <div class="alert-list">
+                                            <div>Paystack Charges:</div>
+                                            <div><span><s>N</s>${getRevenueBreakdownSessionData?.paystackCharges}</span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert-list-back-div">
+                                        <div class="alert-list">
+                                            <div>Paystack Remittance:</div>
+                                            <div><span class="total-amount"><s>N</s>${getRevenueBreakdownSessionData?.paystackRemittance}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+                        }
+                        $('#showPaystackDetails').html(content);
+                    });
+                </script>
+
+                <div id="showPaystackDetails"></div>
 
                 <div>
                     <button class="btn" title="PRINT RECEIPT" id="submitBtn" onclick=""> <i class="bi-check"></i> PRINT RECEIPT </button>
