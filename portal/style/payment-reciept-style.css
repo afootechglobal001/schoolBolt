@@ -1,0 +1,105 @@
+/* Payment Receipt Css */
+.receipt-body {
+	background-color: #f0f2f5;
+}
+
+.receipt-container {
+	max-width: 600px;
+	padding: 20px;
+	border: 1px solid #ddd;
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
+	background: var(--white-color);
+	border-radius: 10px;
+	margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+	gap: 10px;
+}
+
+.receipt-container h1 {
+	text-align: center;
+	font-family: title-font;
+}
+
+.receipt-container .section {
+	display: flex;
+    flex-direction: column;
+}
+
+.receipt-container .section h2 {
+	font-size: 16px;
+	font-family: sub-title-font;
+	border-bottom: 1px solid #ccc;
+	padding: 5px 0px 5px 0px;
+}
+
+.receipt-container .section .details-cont {
+	display: flex;
+    flex-direction: column;
+	gap: 5px;
+	margin-top: 5px;
+}
+
+.receipt-container .section .details-cont .details {
+	display: flex;
+	justify-content: space-between;
+	color: var(--body-color);
+	font-family: body-font;
+}
+
+.receipt-container .section .details-cont .details div {
+	font-family:sub-title-font;
+}
+
+.receipt-container .section .details-cont .details span {
+	font-family:body-font;
+	font-size: 14px;
+}
+
+.reciept-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 10px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	padding: 3px;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border-radius: 5px;
+	border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 2px;
+}
+
+table th, td {
+	padding: 10px;
+	border: 1px solid #ddd;
+	text-align: left;
+	border-radius: 5px;
+	font-family: body-font;
+	font-size: 14px;
+}
+
+table th {
+	background: #ececec;
+	font-family: body-font;
+}
+
+table tr .total-td{
+	font-size: 18px;
+	font-family: title-font;
+}
+
+table .total {
+	background-color: #ececec;
+}
+
+.disclaimer {
+	margin-top: 10px;
+	font-size: 12px;
+	text-align: center;
+	color: #555;
+}

@@ -17,15 +17,6 @@ function _getStudentPortalPageActiveLink(divid) {
   $("#" + divid).addClass("active");
 }
 
-function capitalizeFirstLetterOfEachWord(inputText) {
-  const words = inputText.toLowerCase().split(" ");
-  for (let i = 0; i < words.length; i++) {
-    words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
-  }
-  const result = words.join(" ");
-  return result;
-}
-
 function getAuthHeaders() {
   return {
     apiKey: apiKey,

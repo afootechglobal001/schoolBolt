@@ -830,3 +830,12 @@ function _callVerifyPaymentCancelled(paymentId) {
     console.log(error);
   }
 }
+
+function _printPaymentBreakDownReciept() {
+  let getRevenueBreakdownSessionData = JSON.parse(sessionStorage.getItem("getRevenueBreakdownSessionData"));
+
+  if (getRevenueBreakdownSessionData) {
+		sessionStorage.setItem("printGeneralPaymentRecieptBreakdownSession", JSON.stringify(getRevenueBreakdownSessionData));
+		window.open(`${websiteUrl}/reports/print-payment-receipt`, '_blank');
+	}
+}
