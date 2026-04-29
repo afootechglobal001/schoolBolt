@@ -1564,7 +1564,6 @@ header
 }
 
 .table-div .table .tb-row .text-back-div .text-div {
-  width: calc(100% - 33px);
   display: flex;
   flex-direction: column;
 }
@@ -1625,6 +1624,27 @@ header
   font-family: sub-title-font;
   font-size: 11px;
   color: var(--sub-body-color);
+}
+
+.table-div .table .tb-row .text-back-div .text-div .new-payment {
+  font-family: body-font;
+  font-size: 11px;
+  color: var(--white-color);
+  background-color: rgb(26, 115, 232);
+  border-radius: 25px;
+  padding: 1px 7px;
+}
+
+.table-div .table .tb-row .text-back-div .each-new-payment {
+  position: absolute;
+  top: -4px;
+  left: -2px;
+  font-size: 10px;
+  color: var(--white-color);
+  background-color: rgb(26, 115, 232);
+  border-radius: 25px;
+  padding: 1px 5px;
+  z-index: 100;
 }
 
 .table-div .table .tb-row .text-back-div .text-div .red-color {

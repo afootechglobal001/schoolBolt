@@ -152,6 +152,7 @@ function _proceedToPayment() {
               JSON.stringify(data),
             );
             const paymentKey = data.paymentKey;
+            const secretKey = data.secretKey;
             const paymentId = data.paymentId;
             const email = data.email;
             const amount = data.amount;
@@ -163,6 +164,7 @@ function _proceedToPayment() {
 
             _callPayStack(
               paymentKey,
+              secretKey,
               paymentId,
               email,
               amount,
@@ -194,6 +196,7 @@ function _proceedToPayment() {
 ////// CALL PAYSTACK ////////////////
 function _callPayStack(
   paymentKey,
+  secretKey,
   paymentId,
   email,
   amount,
@@ -231,7 +234,8 @@ function _callPayStack(
         },
       ],
     },
-    callback: function () {
+      callback: function (response) {
+      const paystackId = $.trim(response.transaction);
       $("#get-more-div-secondary")
         .css({
           display: "flex",
@@ -242,7 +246,7 @@ function _callPayStack(
           `<div class="alert-loading-div"><div class="icon"><img src="${websiteUrl}/images/loading.gif" width="20px" alt="Loading"/></div><div class="text"><p>PROCESSING...</p></div></div>`,
         )
         .fadeIn(500);
-      _callPaymentSuccess(paymentId, branchId);
+      _getTransactionDetailsFromPaystack(paymentId, secretKey, branchId, paystackId)
     },
     onClose: function () {
       _callPaymentCancelled(paymentId);
@@ -267,11 +271,42 @@ function _callPayStack(
   handler.openIframe();
 }
 
-function _callPaymentSuccess(paymentId, branchId) {
+function _getTransactionDetailsFromPaystack(paymentId, secretKey, branchId, paystackId) {
+  try{
+  $.ajax({
+   url: `https://api.paystack.co/transaction/${paystackId}`,
+    type: "GET",
+    headers: {
+      "Authorization": "Bearer " + secretKey,
+      "Content-Type": "application/json"
+    },
+    success: function (data) {
+      if (data.status === true && data.data.status === "success") {
+        const paystackCharges = $.trim(data?.data?.fees);
+        _callPaymentSuccess(paymentId, branchId, paystackId, paystackCharges);
+      } else {
+        _callPaymentSuccess(paymentId, branchId, paystackId, paystackCharges);
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error("Error:", error);
+      _callPaymentSuccess(paymentId, branchId, paystackId, paystackCharges);
+    }
+  });
+  }catch (error) {
+    console.log(error);
+    _callPaymentSuccess(paymentId, branchId, paystackId, paystackCharges);
+  }
+}
+
+
+function _callPaymentSuccess(paymentId, branchId, paystackId, paystackCharges) {
   try {
     const formData = {
       paymentId: paymentId,
       branchId: branchId,
+      paystackId: paystackId,
+      paystackCharges: paystackCharges,
     };
 
     $.ajax({

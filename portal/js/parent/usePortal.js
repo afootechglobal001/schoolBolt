@@ -201,6 +201,8 @@ function _fetchFeesToPay() {
   }
 }
 
+
+//// Proceed To Payment /////
 function _proceedToPayment() {
   let getEachStudentSession = JSON.parse(
     sessionStorage.getItem("getEachStudentSession"),
@@ -208,8 +210,11 @@ function _proceedToPayment() {
   let parentSessionData = JSON.parse(localStorage.getItem("parentSessionData"));
 
   try {
+    let issueCount = 0;
     const paymentMethodId = $("#paymentMethodId").val().trim();
-    $("#paymentMethodId").removeClass("issue");
+
+    ///// empty field validation//////////
+    issueCount += _validateEmptyValue("paymentMethodId", "PAYMENT METHOD");
 
     let selectedFees = [];
 
@@ -223,60 +228,70 @@ function _proceedToPayment() {
       return;
     }
 
-    if (!paymentMethodId) {
-      $("#paymentMethodId").addClass("issue");
-      _actionAlert("Select payment method to continue", false);
-      return;
-    }
+     if (issueCount > 0) return;
 
-    if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
-      const btn_text = $("#submitBtn").html();
-      $("#submitBtn").html(
-        '<img src="' +
-          websiteUrl +
-          '/images/loading.gif" width="12px" alt="Loading"/>',
-      );
-      $("#submitBtn").prop("disabled", true);
+    ///// Gather form data ////
+    const formData = {
+      session: getEachStudentSession?.branchData?.currentSession,
+      termId: getEachStudentSession?.branchData?.termId,
+      studentId: getEachStudentSession?.studentData?.studentId,
+      branchId: getEachStudentSession?.branchData?.branchId,
+      departmentId: getEachStudentSession?.departmentData?.departmentId,
+      classId: getEachStudentSession?.classData?.classId,
+      armId: getEachStudentSession?.armData?.armId,
+      feesIds: selectedFees,
+      paymentMethodId: paymentMethodId,
+      email: parentSessionData?.parentData?.email,
+    };
 
-      const formData = {
-        session: getEachStudentSession?.branchData?.currentSession,
-        termId: getEachStudentSession?.branchData?.termId,
-        studentId: getEachStudentSession?.studentData?.studentId,
-        branchId: getEachStudentSession?.branchData?.branchId,
-        departmentId: getEachStudentSession?.departmentData?.departmentId,
-        classId: getEachStudentSession?.classData?.classId,
-        armId: getEachStudentSession?.armData?.armId,
-        feesIds: selectedFees,
-        paymentMethodId: paymentMethodId,
-        email: parentSessionData?.parentData?.email,
-      };
+    ////// confirm action ////
+    _showCustomConfirm({
+      callback: () => {
+        _proceedToPaymentCallback(formData);
+      },
+      title: "Are you sure?",
+      message: "Are you sure you want to proceed to payment?",
+      alertType: "warning",
+      falseActionBtn: true,
+      closeOnOverlayClick: true,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _proceedToPayment());
+  }
+}
 
-      $.ajax({
-        type: "POST",
-        url: `${endPoint}/parent/payment/proceed-to-payment`,
-        data: JSON.stringify(formData),
-        dataType: "json",
-        cache: false,
-        headers: getAuthHeaders(),
-        processData: false,
-        success: function (data) {
-          if (data.success) {
+//// Proceed To Payment CallBack /////
+function _proceedToPaymentCallback(formData) {
+  try {
+    const btnText = $("#submitBtn").html();
+    _btnDisable("submitBtn", btnText, true);
+
+    _callRawEndPoints({
+      url: `parent/payment/proceed-to-payment`,
+      formData,
+      accessKey: true,
+    })
+      .then((response) => {
+        if (response.success) {
             sessionStorage.setItem(
               "studentPaymentSession",
-              JSON.stringify(data),
+              JSON.stringify(response),
             );
-            const paymentKey = data.paymentKey;
-            const paymentId = data.paymentId;
-            const email = data.email;
-            const amount = data.amount;
-            //const paymentMethodId = data.paymentMethodId;
-            const deductCharges = data.deductCharges;
-            const schoolBoltCharges = data.schoolBoltCharges;
-            const receiverKey = data.receiverKey;
-            const paymentChannel = data.paymentChannel;
+            const paymentKey = response.paymentKey;
+            const secretKey = response.secretKey;
+            const paymentId = response.paymentId;
+            const email = response.email;
+            const amount = response.amount;
+            //const paymentMethodId = response.paymentMethodId;
+            const deductCharges = response.deductCharges;
+            const schoolBoltCharges = response.schoolBoltCharges;
+            const receiverKey = response.receiverKey;
+            const paymentChannel = response.paymentChannel;
 
             _callPayStack(
               paymentKey,
+              secretKey,
               paymentId,
               email,
               amount,
@@ -285,29 +300,33 @@ function _proceedToPayment() {
               receiverKey,
               paymentChannel,
             );
-          } else {
-            _actionAlert(data.message, false);
-          }
-          $("#submitBtn").html(btn_text).prop("disabled", false);
-        },
-        error: function (error) {
-          _actionAlert(
-            "An error occurred while processing your request: " + error,
-            false,
-          );
-          $("#submitBtn").html(btn_text).prop("disabled", false);
-        },
+        } else {
+          _showCustomConfirm({
+            title: "Unable to Process Payment",
+            message: response.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+          _btnDisable("submitBtn", btnText, false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() => _proceedToPaymentCallback(formData)); // retry if needed
+        _btnDisable("submitBtn", btnText, false);
       });
-    }
   } catch (error) {
-    _actionAlert("An unexpected error occurred: " + error.message, false);
-    $("#submitBtn").prop("disabled", false);
+    console.error("Error:", error);
+    _callCatchError(() => _proceedToPaymentCallback(formData));
+    _btnDisable("submitBtn", btnText, false);
   }
 }
 
 ////// CALL PAYSTACK ////////////////
 function _callPayStack(
   paymentKey,
+  secretKey,
   paymentId,
   email,
   amount,
@@ -346,7 +365,8 @@ function _callPayStack(
         },
       ],
     },
-    callback: function () {
+    callback: function (response) {
+      const paystackId = $.trim(response.transaction);
       $("#get-more-div-secondary")
         .css({
           display: "flex",
@@ -357,7 +377,7 @@ function _callPayStack(
           `<div class="alert-loading-div"><div class="icon"><img src="${websiteUrl}/images/loading.gif" width="20px" alt="Loading"/></div><div class="text"><p>PROCESSING...</p></div></div>`,
         )
         .fadeIn(500);
-      _callPaymentSuccess(paymentId, branchId);
+      _getTransactionDetailsFromPaystack(paymentId, secretKey, branchId, paystackId);
     },
     onClose: function () {
       _callPaymentCancelled(paymentId);
@@ -382,11 +402,41 @@ function _callPayStack(
   handler.openIframe();
 }
 
-function _callPaymentSuccess(paymentId, branchId) {
+function _getTransactionDetailsFromPaystack(paymentId, secretKey, branchId, paystackId) {
+  try{
+  $.ajax({
+   url: `https://api.paystack.co/transaction/${paystackId}`,
+    type: "GET",
+    headers: {
+      "Authorization": "Bearer " + secretKey,
+      "Content-Type": "application/json"
+    },
+    success: function (data) {
+      if (data.status === true && data.data.status === "success") {
+        const paystackCharges = $.trim(data?.data?.fees);
+        _callPaymentSuccess(paymentId, branchId, paystackId, paystackCharges);
+      } else {
+        _callPaymentSuccess(paymentId, branchId, paystackId, paystackCharges);
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error("Error:", error);
+      _callPaymentSuccess(paymentId, branchId, paystackId, paystackCharges);
+    }
+  });
+  }catch (error) {
+    console.log(error);
+    _callPaymentSuccess(paymentId, branchId, paystackId, paystackCharges);
+  }
+}
+
+function _callPaymentSuccess(paymentId, branchId, paystackId, paystackCharges) {
   try {
     const formData = {
       paymentId: paymentId,
       branchId: branchId,
+      paystackId: paystackId,
+      paystackCharges: paystackCharges,
     };
 
     $.ajax({

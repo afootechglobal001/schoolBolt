@@ -249,10 +249,24 @@ function _branchReportRevenueFiltering(dateFrom, dateTo) {
             const totalPendingFees = fetchedData.totalPendingFees;
             const totalCancelledFees = fetchedData.totalCancelledFees;
 
+            const paymentViewed = fetchedData.paymentViewed;
+            const viewedPayment = paymentViewed === false
+              ? `
+                <div class="text-div">
+                  <div class="new-payment animated fadeIn">new</div>
+                </div>
+              `
+              : '';
+
             text += `
               <tr class="tb-row">
                 <td>${no}</td>
-                <td class="clickable-td" title="Click to view payment breakdown" onclick="_getForm({ page: 'branchRevenueBreakdown', id: '${newpayDate}', layer:2, url: adminPortalLocalUrl});">${newpayDate}</td>
+                <td class="clickable-td" title="Click to view payment breakdown" onclick="_getForm({ page: 'branchRevenueBreakdown', id: '${newpayDate}', layer:2, url: adminPortalLocalUrl});">
+                  <div class="text-back-div">
+                    ${newpayDate}
+                    ${viewedPayment}
+                  </div>
+                </td>
                 <td class="SUCCESSFULSTATUS"><s>N</s>${thousandSeperator(totalSuccessfulFees)}</td>
                 <td class="PENDINGSTATUS"><s>N</s>${thousandSeperator(totalPendingFees)}</td>
                 <td class="CANCLLEDSTATUS"><s>N</s>${thousandSeperator(totalCancelledFees)}</td>
@@ -458,6 +472,7 @@ function _loadBranchPaymentsByStatus(statusId, newpayDate) {
                 const session = fetchedData[i].session;
                 const departmentId = fetchedData[i].departmentId;
                 const paymentId = fetchedData[i].paymentId;
+                const paymentViewed = fetchedData[i].paymentViewed;
 
                 //// Student Data ////
                 const studentId = fetchStudentData.studentId;
@@ -496,6 +511,10 @@ function _loadBranchPaymentsByStatus(statusId, newpayDate) {
                 const statusName = fetchedStatusData.statusName;
                 const statusId = fetchedStatusData.statusId;
 
+                const viewedPayment = paymentViewed === false
+                ? `<div class="each-new-payment animated fadeIn" id="new_${paymentId}">new</div>`
+                : '';
+
                 let buttonHtml = '';
 
                 $('#revenueAlert').removeClass('alert-success alert-failed');
@@ -511,7 +530,7 @@ function _loadBranchPaymentsByStatus(statusId, newpayDate) {
                       <div class="btn-div">
                         <button class="btn view-btn"
                           title="Click to view payment breakdown"
-                          onclick="_fetchBranchRevenueById('${paymentId}');">
+                          onclick="_fetchBranchRevenueById('${paymentId}',this);">
                           VIEW DETAILS
                         </button>
 
@@ -529,7 +548,7 @@ function _loadBranchPaymentsByStatus(statusId, newpayDate) {
                     <td>
                       <button class="btn view-btn"
                           title="Click to view payment breakdown"
-                          onclick="_fetchBranchRevenueById('${paymentId}');">
+                          onclick="_fetchBranchRevenueById('${paymentId}',this);">
                         VIEW DETAILS
                       </button>
                     </td>
@@ -545,6 +564,7 @@ function _loadBranchPaymentsByStatus(statusId, newpayDate) {
                           onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
 
                           <div class="text-back-div">
+                              ${viewedPayment}
                               <div class="image-div general-passport">
                                   <img src="${studentPixPath}/${passport}" alt="${fullname}" />
                               </div>
@@ -625,7 +645,7 @@ function _loadBranchPaymentsByStatus(statusId, newpayDate) {
 	}
 }
 
-function _fetchBranchRevenueById(paymentId) {
+function _fetchBranchRevenueById(paymentId, btn) {
 	$("#get-more-third-layer").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
 	try {
 		$.ajax({
@@ -638,6 +658,7 @@ function _fetchBranchRevenueById(paymentId) {
 				if (info.success && info.data.length > 0) {
 					sessionStorage.setItem("getBranchRevenueBreakdownSessionData", JSON.stringify(info.data[0]));
 					_getForm({ page: 'branchPaymentBreakDownForm', layer: 3, url: adminPortalLocalUrl });
+          $(btn).closest('tr').find('.each-new-payment').fadeOut(300, function () {$(this).remove();});
 				} else {
 					const response = info.response;
 					if (response < 100) {
@@ -712,7 +733,9 @@ function _verifyBranchPaystackTransaction(branchId, paymentId, secretKey, btnTex
     },
     success: function (data) {
       if (data.status === true && data.data.status === "success") {
-        _callVerifyBranchPaymentSuccess(paymentId, branchId, btnText);
+        const paystackId = $.trim(data?.data?.id);
+        const paystackCharges = $.trim(data?.data?.fees);
+        _callVerifyBranchPaymentSuccess(paymentId, branchId, paystackId, paystackCharges, btnText);
       } else {
         _callBranchVerifyPaymentCancelled(paymentId);
         _showCustomConfirm({
@@ -757,12 +780,14 @@ function _verifyBranchPaystackTransaction(branchId, paymentId, secretKey, btnTex
 
 }
 
-function _callVerifyBranchPaymentSuccess(paymentId, branchId, btnText) {
+function _callVerifyBranchPaymentSuccess(paymentId, branchId, paystackId, paystackCharges, btnText) {
  let branchSessionPayDate = sessionStorage.getItem("branchSessionPayDate");
   try {
     const formData = {
       paymentId: paymentId,
       branchId: branchId,
+      paystackId: paystackId,
+      paystackCharges: paystackCharges,
     };
 
     $.ajax({
