@@ -844,3 +844,12 @@ function _callBranchVerifyPaymentCancelled(paymentId) {
     console.log(error);
   }
 }
+
+function _printBranchPaymentBreakDownReciept() {
+  let getBranchRevenueBreakdownSessionData = JSON.parse(sessionStorage.getItem("getBranchRevenueBreakdownSessionData"));
+
+  if (getBranchRevenueBreakdownSessionData) {
+		sessionStorage.setItem("printGeneralPaymentRecieptBreakdownSession", JSON.stringify(getBranchRevenueBreakdownSessionData));
+		window.open(`${websiteUrl}/reports/print-payment-receipt`, '_blank');
+	}
+}

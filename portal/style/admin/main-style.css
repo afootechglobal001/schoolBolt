@@ -2021,6 +2021,10 @@ header
   margin-top: 8px;
 }
 
+.slide-form-div .container-back-div .inner-container .blue-bg-btn {
+  background: var(--primary-color);
+}
+
 .slide-form-div .container-back-div .inner-container .btn:hover {
   background: var(--secondary-color);
 }

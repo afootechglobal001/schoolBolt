@@ -912,7 +912,7 @@
                 <div id="showPaystackDetails"></div>
 
                 <div>
-                    <button class="btn" title="PRINT RECEIPT" id="submitBtn" onclick=""> <i class="bi-check"></i> PRINT RECEIPT </button>
+                    <button class="btn" title="PRINT RECEIPT" id="printBtn" onclick="_printBranchPaymentBreakDownReciept();"> <i class="bi-printer"></i> PRINT RECEIPT </button>
                 </div>
             </div>
         </div>
