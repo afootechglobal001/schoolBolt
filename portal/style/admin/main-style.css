@@ -2007,6 +2007,11 @@ header
   color: var(--subactive-color);
 }
 
+.slide-form-div .container-back-div .inner-container .btn-cont {
+  display: flex;
+  gap: 8px;
+}
+
 .slide-form-div .container-back-div .inner-container .btn {
   border: none;
   height: 45px;

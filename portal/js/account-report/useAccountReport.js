@@ -249,7 +249,7 @@ function _reportRevenueFiltering(dateFrom, dateTo) {
             const viewedPayment = paymentViewed === false
               ? `
                 <div class="text-div">
-                  <div class="new-payment animated fadeIn">new</div>
+                  <div class="new-payment animated fadeIn">New</div>
                 </div>
               `
               : '';
@@ -533,7 +533,7 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
                 const statusId = fetchedStatusData.statusId;
 
                 const viewedPayment = paymentViewed === false
-                ? `<div class="each-new-payment animated fadeIn" id="new_${paymentId}">new</div>`
+                ? `<div class="each-new-payment animated fadeIn" id="new_${paymentId}">New</div>`
                 : '';
 
                 let buttonHtml = '';
@@ -543,6 +543,17 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
                   $('#revenueAlert').addClass('alert-success');
                 } else {
                   $('#revenueAlert').addClass('alert-failed');
+                }
+
+                let canPerformReconcileButton = '';
+                if (userRoles.canPerformPaymentReconciliation) {
+                    canPerformReconcileButton = `
+                    <button class="btn view-btn print-btn"
+                      id="reconcileBtn_${paymentId}"
+                      title="Click to reconcile payment"
+                      onclick="_paymentReconciliation('${paymentId}');">
+                      RECONCILE
+                    </button>`;
                 }
 
                 if (statusId === '3') {
@@ -561,6 +572,20 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
                           onclick="_proceedVerifyPaystackTransaction('${paymentId}');">
                           REFRESH
                         </button>
+                      </div>
+                    </td>
+                  `;
+                } else if (statusId === '4') {
+                  buttonHtml = `
+                    <td>
+                      <div class="btn-div">
+                        <button class="btn view-btn"
+                          title="Click to view payment breakdown"
+                          onclick="_fetchRevenueById('${paymentId}',this);">
+                          VIEW DETAILS
+                        </button>
+
+                        ${canPerformReconcileButton}
                       </div>
                     </td>
                   `;
@@ -687,8 +712,8 @@ function _proceedVerifyPaystackTransaction(paymentId) {
 
           _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText);
         } else {
-          _actionAlert(data.message, false);
-          $(`#refreshBtn_${paymentId}`).html(btn_text).prop("disabled", false);
+          _actionAlert(info.message, false);
+          $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
 
           const response = info.response;
           if (response < 100) {
@@ -838,4 +863,115 @@ function _printPaymentBreakDownReciept() {
 		sessionStorage.setItem("printGeneralPaymentRecieptBreakdownSession", JSON.stringify(getRevenueBreakdownSessionData));
 		window.open(`${websiteUrl}/reports/print-payment-receipt`, '_blank');
 	}
+}
+
+//// Resend Payment Reciept /////
+function _resendPaymentReciept() {
+  let getRevenueBreakdownSessionData = JSON.parse(sessionStorage.getItem("getRevenueBreakdownSessionData"));
+  const paymentId = getRevenueBreakdownSessionData?.paymentId;
+  const studentId = getRevenueBreakdownSessionData?.studentId;
+
+	try {
+		//////get all needed values////
+		const parentFullname = $("#parentFullname").val().trim();
+		const parentEmail = $("#recieptParentEmail").val().trim();
+
+		///// empty field validation//////////
+		let issueCount = 0;
+		issueCount += _validateEmptyValue("parentFullname", "RECIEVER NAME");
+		issueCount += _validateEmptyValue("recieptParentEmail", "RECIEVER EMAIL");
+    issueCount += _validateEmail("recieptParentEmail", parentEmail);
+
+		if (issueCount > 0) return;
+
+		// Gather form data
+		const formData = {
+			parentFullname: parentFullname,
+			parentEmail: parentEmail,
+		};
+
+		const btnText = $("#proceedBtn").html();
+    _btnDisable("proceedBtn", btnText, true);
+
+		_callRawEndPoints({
+      url: `parent/payment/reprint-receipt?paymentId=${paymentId}&studentId=${studentId}`,
+      formData,
+      accessKey: true,
+		})
+		.then((response) => {
+			_staffValidationCheck(response.response);
+			if (response.success) {
+        _alertClose(3);
+        _showCustomConfirm({
+          title: 'Receipt Resent Successfully!',
+          message: response.message,
+          alertType: 'success',
+          trueActionBtnText: 'OK, Thanks.',
+          closeOnOverlayClick: true,
+        });
+			} else {
+				_showCustomConfirm({
+					title: "Unable to Resend Reciept",
+					message: response.message,
+					alertType: "warning",
+					trueActionBtnText: "OK",
+					closeOnOverlayClick: true,
+				});
+				_btnDisable("proceedBtn", btnText, false);
+			}
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			_callAjaxError(() => _resendPaymentReciept()); // retry if needed
+			_btnDisable("proceedBtn", btnText, false);
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _resendPaymentReciept());
+		_btnDisable("proceedBtn", btnText, false);
+	}
+}
+
+function _paymentReconciliation(paymentId) {
+ let sessionPayDate = sessionStorage.getItem("sessionPayDate");
+  try {
+    const btnText = $(`#reconcileBtn_${paymentId}`).html();
+    $(`#reconcileBtn_${paymentId}`).html('<img src="' + websiteUrl + '/images/loading.gif" width="10px" alt="Loading"/>');
+    $(`#reconcileBtn_${paymentId}`).prop("disabled", true);
+
+    const formData = {
+      paymentId: paymentId,
+    };
+
+    $.ajax({
+      type: "POST",
+      url: `${endPoint}/parent/payment/payment-reconciliation`,
+      data: JSON.stringify(formData),
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      processData: false,
+      success: function (data) {
+        if (data.success) {
+         _actionAlert(data.message, true);
+          _getPaymentStatusNav({
+            divid: 'pendingPage',
+            page: 'pendingPage',
+            id: sessionPayDate,
+            url: adminPortalLocalUrl
+          });
+        } else {
+          _actionAlert(data.message, false);
+          $(`#reconcileBtn_${paymentId}`).html(btnText).prop("disabled", false);
+        }
+      },
+      error: function (error) {
+        console.log(error);
+        $(`#reconcileBtn_${paymentId}`).html(btnText).prop("disabled", false);
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    $(`#reconcileBtn_${paymentId}`).html(btnText).prop("disabled", false);
+  }
 }
