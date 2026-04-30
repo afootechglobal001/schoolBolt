@@ -911,10 +911,59 @@
                 </script>
                 <div id="showPaystackDetails"></div>
 
-                <div>
-                    <button class="btn" title="PRINT RECEIPT" id="printBtn" onclick="_printBranchPaymentBreakDownReciept();"> <i class="bi-printer"></i> PRINT RECEIPT </button>
+                <div class="btn-div">
+                    <script>
+                        $(document).ready(function () {
+                            let showButton = '';
+                            if (getBranchRevenueBreakdownSessionData?.statusData?.statusId === "5") {
+                                showButton +=
+                                `<button class="btn" title="PRINT RECEIPT" id="printBtn" onclick="_printBranchPaymentBreakDownReciept();"> <i class="bi-printer"></i> PRINT RECEIPT </button>
+                                <button class="btn blue-bg-btn" title="RESEND RECEIPT" id="resendReciept" onclick="_getForm({page: 'resendBranchRecieptSelectForm', layer:4, url: adminPortalLocalUrl});"> <i class="bi-envelope-check-fill"></i> RESEND RECEIPT </button>`; 
+                            }
+                            $(".btn-div").html(showButton);
+                        });
+                    </script>
                 </div>
             </div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'resendBranchRecieptSelectForm') { ?>
+    <div class="caption-div animated zoomIn">
+        <div class="title-div">
+            <div class="title"><i class="bi-folder-symlink-fill"></i> RESEND PAYMENT RECIEPT</div>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i
+                    class="bi-x-lg"></i></button>
+        </div>
+
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, You’re about to continue with this
+                operation.
+                Please provide the required <span>Name</span>, and <span>Email</span>, to proceed.
+            </div>
+
+            <div class="text_field_container" id="parentFullname_container">
+                <script>
+                textField({
+                    id: 'parentFullname',
+                    title: 'Reciever Name'
+                });
+                </script>
+            </div>
+
+            <div class="text_field_container" id="recieptParentEmail_container">
+                <script>
+                textField({
+                    id: 'recieptParentEmail',
+                    title: 'Reciever Email'
+                });
+                </script>
+            </div>
+
+            <button class="btn" id="proceedBtn" title="Resend Reciept"
+                onclick="_resendBranchPaymentReciept();">RESEND <i class="bi-reply-all"></i>
+            </button>
         </div>
     </div>
 <?php } ?>

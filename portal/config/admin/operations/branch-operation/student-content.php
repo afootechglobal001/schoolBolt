@@ -42,7 +42,7 @@
                             <script>
                                 textField({
                                     id: 'surName',
-                                    title: 'SURNAME NAME',
+                                    title: 'SURNAME',
                                     onKeyUpFunction: 'copyTextbox()'
                                 });
                             </script>
@@ -90,7 +90,7 @@
                             <script>
                                 textField({
                                     id: 'dateOfBirth',
-                                    title: 'Dtae Of Birth',
+                                    title: 'Date Of Birth',
                                     type: 'date'
                                 });
                             </script>

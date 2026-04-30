@@ -34,7 +34,7 @@ function _getForm(options) {
         url = ''
     } = options;
 
-    const target = layer === 1 ? '#get-form-more-div' : layer === 2  ? '#get-more-div-secondary' : '#get-more-third-layer';
+    const target = layer === 1 ? '#get-form-more-div' : layer === 2  ? '#get-more-div-secondary' : layer === 3 ? '#get-more-third-layer' : '#get-more-fourth-layer';
     $(target).css({ 'display': 'flex', 'justify-content': 'center', 'align-items': 'center' }).fadeIn(500);
     const dataString = "action=" + action + "&page=" + page + "&id=" + id + "&modalLayer=" + layer;
 
@@ -56,7 +56,7 @@ function _alertClose(layer=1){
 		'<div class="icon"><img src="'+ websiteUrl +'/images/loading.gif" width="20px" alt="Loading"/></div>' +
 		'<div class="text"><p>LOADING...</p></div>'+
 		'</div>';
-			$(layer === 1 ? '#get-form-more-div' : layer === 2  ? '#get-more-div-secondary' : '#get-more-third-layer').html(text).fadeOut(200);
+			$(layer === 1 ? '#get-form-more-div' : layer === 2  ? '#get-more-div-secondary' : layer === 3  ? '#get-more-third-layer' : '#get-more-fourth-layer').html(text).fadeOut(200);
 }
 
 $(document).on('click', '#get-form-more-div', function () {

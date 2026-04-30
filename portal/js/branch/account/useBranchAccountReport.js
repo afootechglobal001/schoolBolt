@@ -253,7 +253,7 @@ function _branchReportRevenueFiltering(dateFrom, dateTo) {
             const viewedPayment = paymentViewed === false
               ? `
                 <div class="text-div">
-                  <div class="new-payment animated fadeIn">new</div>
+                  <div class="new-payment animated fadeIn">New</div>
                 </div>
               `
               : '';
@@ -512,7 +512,7 @@ function _loadBranchPaymentsByStatus(statusId, newpayDate) {
                 const statusId = fetchedStatusData.statusId;
 
                 const viewedPayment = paymentViewed === false
-                ? `<div class="each-new-payment animated fadeIn" id="new_${paymentId}">new</div>`
+                ? `<div class="each-new-payment animated fadeIn" id="new_${paymentId}">New</div>`
                 : '';
 
                 let buttonHtml = '';
@@ -851,5 +851,72 @@ function _printBranchPaymentBreakDownReciept() {
   if (getBranchRevenueBreakdownSessionData) {
 		sessionStorage.setItem("printGeneralPaymentRecieptBreakdownSession", JSON.stringify(getBranchRevenueBreakdownSessionData));
 		window.open(`${websiteUrl}/reports/print-payment-receipt`, '_blank');
+	}
+}
+
+//// Resend Payment Reciept /////
+function _resendBranchPaymentReciept() {
+  let getBranchRevenueBreakdownSessionData = JSON.parse(sessionStorage.getItem("getBranchRevenueBreakdownSessionData"));
+  const paymentId = getBranchRevenueBreakdownSessionData?.paymentId;
+  const studentId = getBranchRevenueBreakdownSessionData?.studentId;
+
+	try {
+		//////get all needed values////
+		const parentFullname = $("#parentFullname").val().trim();
+		const parentEmail = $("#recieptParentEmail").val().trim();
+
+		///// empty field validation//////////
+		let issueCount = 0;
+		issueCount += _validateEmptyValue("parentFullname", "RECIEVER NAME");
+		issueCount += _validateEmptyValue("recieptParentEmail", "RECIEVER EMAIL");
+    issueCount += _validateEmail("recieptParentEmail", parentEmail);
+
+		if (issueCount > 0) return;
+
+		// Gather form data
+		const formData = {
+			parentFullname: parentFullname,
+			parentEmail: parentEmail,
+		};
+
+		const btnText = $("#proceedBtn").html();
+    _btnDisable("proceedBtn", btnText, true);
+
+		_callRawEndPoints({
+      url: `parent/payment/reprint-receipt?paymentId=${paymentId}&studentId=${studentId}`,
+      formData,
+      accessKey: true,
+		})
+		.then((response) => {
+			_staffValidationCheck(response.response);
+			if (response.success) {
+        _alertClose(4);
+        _showCustomConfirm({
+          title: 'Receipt Resent Successfully!',
+          message: response.message,
+          alertType: 'success',
+          trueActionBtnText: 'OK, Thanks.',
+          closeOnOverlayClick: true,
+        });
+			} else {
+				_showCustomConfirm({
+					title: "Unable to Resend Reciept",
+					message: response.message,
+					alertType: "warning",
+					trueActionBtnText: "OK",
+					closeOnOverlayClick: true,
+				});
+				_btnDisable("proceedBtn", btnText, false);
+			}
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			_callAjaxError(() => _resendBranchPaymentReciept()); // retry if needed
+			_btnDisable("proceedBtn", btnText, false);
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _resendBranchPaymentReciept());
+		_btnDisable("proceedBtn", btnText, false);
 	}
 }
