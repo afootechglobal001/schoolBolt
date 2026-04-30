@@ -524,6 +524,17 @@ function _loadBranchPaymentsByStatus(statusId, newpayDate) {
                   $('#revenueAlert').addClass('alert-failed');
                 }
 
+                let canPerformReconcileButton = '';
+                if (userRoles.canPerformPaymentReconciliation) {
+                    canPerformReconcileButton = `
+                    <button class="btn view-btn print-btn"
+                      id="reconcileBtn_${paymentId}"
+                      title="Click to reconcile payment"
+                      onclick="_branchPaymentReconciliation('${paymentId}');">
+                      RECONCILE
+                    </button>`;
+                }
+
                 if (statusId === '3') {
                   buttonHtml = `
                     <td>
@@ -540,6 +551,20 @@ function _loadBranchPaymentsByStatus(statusId, newpayDate) {
                           onclick="_proceedVerifyBranchPaystackTransaction('${paymentId}');">
                           REFRESH
                         </button>
+                      </div>
+                    </td>
+                  `;
+                } else if (statusId === '4') {
+                  buttonHtml = `
+                    <td>
+                      <div class="btn-div">
+                        <button class="btn view-btn"
+                          title="Click to view payment breakdown"
+                          onclick="_fetchBranchRevenueById('${paymentId}',this);">
+                          VIEW DETAILS
+                        </button>
+
+                        ${canPerformReconcileButton}
                       </div>
                     </td>
                   `;
@@ -699,8 +724,8 @@ function _proceedVerifyBranchPaystackTransaction(paymentId) {
 
           _verifyBranchPaystackTransaction(branchId, paymentId, secretKey, btnText);
         } else {
-          _actionAlert(data.message, false);
-          $(`#refreshBtn_${paymentId}`).html(btn_text).prop("disabled", false);
+          _actionAlert(info.message, false);
+          $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
 
           const response = info.response;
           if (response < 100) {
@@ -919,4 +944,48 @@ function _resendBranchPaymentReciept() {
 		_callCatchError(() => _resendBranchPaymentReciept());
 		_btnDisable("proceedBtn", btnText, false);
 	}
+}
+
+function _branchPaymentReconciliation(paymentId) {
+ let branchSessionPayDate = sessionStorage.getItem("branchSessionPayDate");
+  try {
+    const btnText = $(`#reconcileBtn_${paymentId}`).html();
+    $(`#reconcileBtn_${paymentId}`).html('<img src="' + websiteUrl + '/images/loading.gif" width="10px" alt="Loading"/>');
+    $(`#reconcileBtn_${paymentId}`).prop("disabled", true);
+
+    const formData = {
+      paymentId: paymentId,
+    };
+
+    $.ajax({
+      type: "POST",
+      url: `${endPoint}/parent/payment/payment-reconciliation`,
+      data: JSON.stringify(formData),
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      processData: false,
+      success: function (data) {
+        if (data.success) {
+         _actionAlert(data.message, true);
+          _getBranchPaymentStatusNav({
+            divid: 'branchPendingPage',
+            page: 'branchPendingPage',
+            id: branchSessionPayDate,
+            url: adminPortalLocalUrl
+          });
+        } else {
+          _actionAlert(data.message, false);
+          $(`#reconcileBtn_${paymentId}`).html(btnText).prop("disabled", false);
+        }
+      },
+      error: function (error) {
+        console.log(error);
+        $(`#reconcileBtn_${paymentId}`).html(btnText).prop("disabled", false);
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    $(`#reconcileBtn_${paymentId}`).html(btnText).prop("disabled", false);
+  }
 }

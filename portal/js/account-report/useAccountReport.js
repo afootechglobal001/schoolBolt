@@ -712,8 +712,8 @@ function _proceedVerifyPaystackTransaction(paymentId) {
 
           _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText);
         } else {
-          _actionAlert(data.message, false);
-          $(`#refreshBtn_${paymentId}`).html(btn_text).prop("disabled", false);
+          _actionAlert(info.message, false);
+          $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
 
           const response = info.response;
           if (response < 100) {
