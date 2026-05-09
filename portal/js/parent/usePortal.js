@@ -60,6 +60,7 @@ function _getFetchEachStudent(Id) {
   let student = parentStudents.find((s) => s.studentId === Id);
   if (student) {
     sessionStorage.setItem("getEachStudentSession", JSON.stringify(student));
+    console.log(student);
     _getForm({ page: "studentProfileForm", url: parentPortalLocalUrl });
   }
 }
@@ -198,6 +199,9 @@ function _proceedToPayment() {
   let getEachStudentSession = JSON.parse(
     sessionStorage.getItem("getEachStudentSession"),
   );
+  let getPayFeesToPaySession = JSON.parse(
+    sessionStorage.getItem("getPayFeesToPaySession"),
+  );
   let parentSessionData = JSON.parse(localStorage.getItem("parentSessionData"));
 
   try {
@@ -223,8 +227,8 @@ function _proceedToPayment() {
 
     ///// Gather form data ////
     const formData = {
-      session: getEachStudentSession?.branchData?.currentSession,
-      termId: getEachStudentSession?.branchData?.termId,
+      session: getPayFeesToPaySession?.currentSession,
+      termId: getPayFeesToPaySession?.termData?.termId,
       studentId: getEachStudentSession?.studentData?.studentId,
       branchId: getEachStudentSession?.branchData?.branchId,
       departmentId: getEachStudentSession?.departmentData?.departmentId,
