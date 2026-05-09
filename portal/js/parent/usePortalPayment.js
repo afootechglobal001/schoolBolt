@@ -93,6 +93,10 @@ function _proceedToPayment() {
     sessionStorage.getItem("getEachStudentSession"),
   );
 
+   let getPayFeesToPaySession = JSON.parse(
+    sessionStorage.getItem("getPayFeesToPaySession"),
+  );
+
   try {
     const paymentMethodId = $("#paymentMethodId").val().trim();
     $("#paymentMethodId").removeClass("issue");
@@ -125,8 +129,8 @@ function _proceedToPayment() {
       $("#submitBtn").prop("disabled", true);
 
       const formData = {
-        session: getEachStudentSession?.branchData?.session,
-        termId: getEachStudentSession?.branchData?.termId,
+        session: getPayFeesToPaySession?.currentSession,
+        termId: getPayFeesToPaySession?.termData?.termId,
         studentId: getEachStudentSession?.studentData?.studentId,
         branchId: getEachStudentSession?.branchData?.branchId,
         departmentId: getEachStudentSession?.classData?.departmentId,
