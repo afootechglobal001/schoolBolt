@@ -205,6 +205,7 @@
 .table-div .table .table-col th{
 	padding: 5px;
 	font-size: 9px;
+	text-align: center;
 }
 
 .table-div .table .report-col th{
@@ -220,6 +221,15 @@
 .table-div .table .table-row .name-td{
 	text-align: left;
 }
+
+.table-div .table .cumulative-col th{
+	padding: 2px;
+}
+
+.table-div .table .table-col,
+.th-small  { width: 30px; }
+.th-medium { width: 45px; }
+.th-name   { width: 180px; }
 
 .table-div .table tbody tr:nth-child(even) {
     background-color: rgba(230, 230, 230, 0.9);
