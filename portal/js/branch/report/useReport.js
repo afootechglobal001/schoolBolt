@@ -302,7 +302,6 @@ function _fetchBroadsheetClass() {
     }
 }
 
-
 function _viewCaResultSummary(departmentId, classId, armId) {
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
 	let fetchPresetDataSession = JSON.parse(sessionStorage.getItem("fetchPresetDataSession"));
@@ -394,7 +393,6 @@ function _viewTerminalResultSummary(departmentId, classId, armId) {
 	}
 }
 
-
 function _lockAssessmentRecord(e, el) {
     try {
         e.stopPropagation();
@@ -426,7 +424,6 @@ function _lockAssessmentRecord(e, el) {
         _callCatchError(() => _lockAssessmentRecord(e, el));
     }
 }
-
 
 function _lockAssessmentRecordCallback(assessmentLock) {
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
@@ -474,4 +471,213 @@ function _lockAssessmentRecordCallback(assessmentLock) {
 		_callAjaxError(() => _lockAssessmentRecordCallback(assessmentLock)); // retry if needed
 		_hideLoader();
     });
+}
+
+
+//// Proceed Fetch Cumulative and Promotional Broadsheet ////
+function proceedPromotionalAndCumulativeBroadsheet(viewBroadsheetType) {
+	try {
+		let issueCount=0;
+		const session = $('#sessionId').val().trim();
+
+  		issueCount += _validateEmptyValue("sessionId", "SESSION");
+
+		if (issueCount>0){
+			return;
+		}
+
+		const cumulativeAndPromotionalDepartmentClassParams = {
+			session: session,
+			viewBroadsheetType: viewBroadsheetType,
+		};
+
+		sessionStorage.setItem(
+			"cumulativeAndPromotionalDepartmentClassParams",
+			JSON.stringify(cumulativeAndPromotionalDepartmentClassParams),
+		);
+		_getActiveBranchPage({
+			divid: "cumulativeAndPromotionalBranchDepartmentClass",
+			page: "cumulativeAndPromotionalBranchDepartmentClass",
+			url: adminPortalLocalUrl,
+		});
+		_alertClose(2);
+
+	} catch (error) {
+		_actionAlert('An unexpected error occurred! Please Try Again', false);
+	}
+}
+
+//// Fetch Cumulative and Promotional Broadsheet Class ////
+function _fetchCumulativeAndPromotionalBroadsheetClass() {
+    let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+	let cumulativeAndPromotionalDepartmentClassParams = JSON.parse(sessionStorage.getItem("cumulativeAndPromotionalDepartmentClassParams"));
+
+	const session = cumulativeAndPromotionalDepartmentClassParams?.session;
+	const viewBroadsheetType = cumulativeAndPromotionalDepartmentClassParams?.viewBroadsheetType;
+
+    $('#cumulativePromotionalPageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");
+
+    try {
+        $.ajax({
+            type: "GET",
+            url: `${endPoint}/reports/fetch-report-department-classes?branchId=${getEachBranchDetailsSession.branchId}`,
+            dataType: "json",
+            cache: false,
+            headers: getAuthHeaders(true),
+            success: function(info) {
+                const fetch = info.data;
+                const success = info.success;
+
+                let text = '';
+                let no = 0;
+
+                if (success === true) {
+                    for (let i = 0; i < fetch.length; i++) {
+                        no++;
+                        const department = fetch[i];
+                       	const departmentName = department.departmentName;
+						const departmentId = department.departmentId;
+						const classesData = department.classesData;
+
+						if (classesData.length > 0) {
+							for (let j = 0; j < classesData.length; j++) {
+								no++;
+								const classInfo = classesData[j];
+								const classId = classInfo.classId;
+								const className = classInfo.className;
+								const armData = classInfo.armData;
+						
+								text += `
+									<div class="pages-toggle-div">
+										<div class="pages-toggle-title" onclick="_collapse('view${no}');" title="Click to view classess">
+											<h3>${departmentName} (${className})</h3>
+											<div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
+										</div>
+
+										<div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
+											<div class="table-div animated fadeIn">
+												<table class="table" cellspacing="0" style="width:100%">
+													<thead>
+														<tr class="tb-col">
+															<th>sn</th>
+															<th>Department</th>
+															<th>Class</th>
+															<th>Session</th>
+															<th>Action</th>
+														</tr>
+													</thead>
+													
+													<tbody>`;
+														let sn = 0; 
+														if (armData.length > 0) {
+															for (let k = 0; k < armData.length; k++) {
+																sn++;
+																const armInfo = armData[k];
+																const arm = armInfo.armName;
+																const armId = armInfo.armId;
+
+																text += `
+																<tr class="tb-row">
+																	<td>${sn}</td>
+																	<td>${departmentName}</td>
+																	<td>${className} ${arm}</td>
+																	<td>${session}</td>`;
+																	if (viewBroadsheetType==='cumulative') {
+																		text += `
+																		<td>
+																			<div class="btn-div">
+																				<button class="btn view-btn" title="Click to print cumulative broad sheet" id="printCumulativeBtn_${classId}_${armId}" onclick="_printSessionCumulativeBroadSheet('${session}', '${departmentId}', '${classId}', '${armId}');"><i class="bi-printer"></i> PRINT CUMULATIVE BROAD SHEET</button>
+																			</div>
+																		</td>`;
+																	} else {
+																		text += `
+																		<td>
+																			<div class="btn-div">
+																				<button class="btn view-btn" title="Click to print promotional broad sheet" id="printPromotionalBtn_${classId}_${armId}" onclick="window.open('${websiteUrl}/reports/print-session-promotional-broad-sheet', '_blank')"><i class="bi-printer"></i> PRINT PROMOTIONAL BROAD SHEET</button>
+																			</div>
+																		</td>`;
+																	}
+																text +=`</tr>`;
+															}
+														} else {
+															sn++;
+															text += `
+															<tr class="tb-row">
+																<td>${sn}</td>
+																<td>${departmentName}</td>
+																<td>${className} (No Arm)</td>
+																<td></td>
+															</tr>`;
+														}
+												text += `
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>`;
+							}
+						} else {
+							no++;
+							text += `
+							<div class="pages-toggle-div">
+								<div class="pages-toggle-title" onclick="_collapse('view${no}');" title="No classes available">
+									<h3>${departmentName} (No Class)</h3>
+									<div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
+								</div>
+
+								<div class="toggle-expand-div" id="view${no}answer" style="display:none;">
+									<div class="table-div animated fadeIn">
+										<table class="table" cellspacing="0" style="width:100%">
+											<thead>
+												<tr class="tb-col">
+													<th>sn</th>
+													<th>Department</th>
+													<th>Class</th>
+													<th>Session</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="tb-row">
+													<td>${no}</td>
+													<td>${departmentName}</td>
+													<td>No Class Available</td>
+													<td>${session}</td>
+													<td></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div> 
+							</div>`;
+						}
+                    }
+                    $('#cumulativePromotionalPageContent').html(text);
+                } else {
+                    _actionAlert(info.message, false);
+                    $('#cumulativePromotionalPageContent').html(`
+                        <tbody>
+                            <tr>
+                                <td colspan="15">
+                                    <div class="false-notification-div">
+                                        <p>${info.message}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>`);
+
+                    if (info.response < 100) {
+                        _logOut();
+                    }
+                }
+            },
+            error: function(textStatus, errorThrown) {
+                console.error("AJAX Error: ", textStatus, errorThrown);
+                _actionAlert('Check your internet connection and try again.', false);
+            }
+        });
+    } catch (error) {
+        console.error("Error: ", error);
+        _actionAlert('An unexpected error occurred! Please try again.', false);
+    }
 }

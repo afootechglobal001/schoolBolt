@@ -1,99 +1,141 @@
 let allowOverlayClose = false;
 
 function _getPage(options) {
-	const {
-        page = '',
-		action='get_page',
-		url='',
-		pageContainer='page-content',
-		id=''
-    } = options;
+  const {
+    page = "",
+    action = "get_page",
+    url = "",
+    pageContainer = "page-content",
+    id = "",
+  } = options;
 
-    // allowOverlayClose = false;
+  // allowOverlayClose = false;
 
-		$("#"+pageContainer).html('<div class="ajax-loader"><img src="'+ websiteUrl +'/images/spinner.gif"/></div>').css({'display': 'flex','flex-direction': 'column','gap': '20px','align-items': 'center','align-items': 'center'}).fadeIn(500);
-		const dataString = "action=" + action + "&page=" + page + "&id=" + id;
-		$.ajax({
-			type: "POST",
-			url: url,
-			data: dataString,
-			cache: false,
-			success: function (html) {
-				$("#"+pageContainer).html(html);
-			},
-		});
+  $("#" + pageContainer)
+    .html(
+      '<div class="ajax-loader"><img src="' +
+        websiteUrl +
+        '/images/spinner.gif"/></div>',
+    )
+    .css({
+      display: "flex",
+      "flex-direction": "column",
+      gap: "20px",
+      "align-items": "center",
+      "align-items": "center",
+    })
+    .fadeIn(500);
+  const dataString = "action=" + action + "&page=" + page + "&id=" + id;
+  $.ajax({
+    type: "POST",
+    url: url,
+    data: dataString,
+    cache: false,
+    success: function (html) {
+      $("#" + pageContainer).html(html);
+    },
+  });
 }
-
 
 function _getForm(options) {
-    const {
-        page = '',
-        id = '',
-        layer = 1,
-        action = 'get_form',
-        url = ''
-    } = options;
+  const {
+    page = "",
+    id = "",
+    layer = 1,
+    action = "get_form",
+    url = "",
+  } = options;
 
-    const target = layer === 1 ? '#get-form-more-div' : layer === 2  ? '#get-more-div-secondary' : layer === 3 ? '#get-more-third-layer' : '#get-more-fourth-layer';
-    $(target).css({ 'display': 'flex', 'justify-content': 'center', 'align-items': 'center' }).fadeIn(500);
-    const dataString = "action=" + action + "&page=" + page + "&id=" + id + "&modalLayer=" + layer;
+  const target =
+    layer === 1
+      ? "#get-form-more-div"
+      : layer === 2
+        ? "#get-more-div-secondary"
+        : layer === 3
+          ? "#get-more-third-layer"
+          : "#get-more-fourth-layer";
+  $(target)
+    .css({
+      display: "flex",
+      "justify-content": "center",
+      "align-items": "center",
+    })
+    .fadeIn(500);
+  const dataString =
+    "action=" + action + "&page=" + page + "&id=" + id + "&modalLayer=" + layer;
 
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: dataString,
-        cache: false,
-        success: function (html) {
-            $(target).html(html);
-        },
-    });
+  $.ajax({
+    type: "POST",
+    url: url,
+    data: dataString,
+    cache: false,
+    success: function (html) {
+      $(target).html(html);
+    },
+  });
 }
 
-function _alertClose(layer=1){
-	let text = '';
-	  text +=
-	  '<div class="alert-loading-div">' +
-		'<div class="icon"><img src="'+ websiteUrl +'/images/loading.gif" width="20px" alt="Loading"/></div>' +
-		'<div class="text"><p>LOADING...</p></div>'+
-		'</div>';
-			$(layer === 1 ? '#get-form-more-div' : layer === 2  ? '#get-more-div-secondary' : layer === 3  ? '#get-more-third-layer' : '#get-more-fourth-layer').html(text).fadeOut(200);
+function _alertClose(layer = 1) {
+  let text = "";
+  text +=
+    '<div class="alert-loading-div">' +
+    '<div class="icon"><img src="' +
+    websiteUrl +
+    '/images/loading.gif" width="20px" alt="Loading"/></div>' +
+    '<div class="text"><p>LOADING...</p></div>' +
+    "</div>";
+  $(
+    layer === 1
+      ? "#get-form-more-div"
+      : layer === 2
+        ? "#get-more-div-secondary"
+        : layer === 3
+          ? "#get-more-third-layer"
+          : "#get-more-fourth-layer",
+  )
+    .html(text)
+    .fadeOut(200);
 }
 
-$(document).on('click', '#get-form-more-div', function () {
+$(document).on("click", "#get-form-more-div", function () {
   if (allowOverlayClose) {
     _alertClose(1);
   }
 });
 
-function _actionAlert(message,status ){
-	let text = '';
-	$('.all-alert-back-div').html(text).css('display', 'flex');
-	if(status==true){
-		text +=
-		'<div class="success-alert-div animated fadeInDown">' +
-			'<div class="icon"><i class="bi-check-all"></i></div>'+
-			'<div class="text"><p>'+message+'</p></div>'+
-		'</div>';
-	}else{
-		text +=
-		'<div class="failed-alert-div animated fadeInDown">' +
-			'<div class="icon"><i class="bi-exclamation-octagon-fill"></i></div>'+
-			'<div class="text"><p>'+message+'</p></div>'+
-		'</div>';
-	}
-	$('.all-alert-back-div').html(text).fadeIn(500).delay(3000).fadeOut(100);
+function _actionAlert(message, status) {
+  let text = "";
+  $(".all-alert-back-div").html(text).css("display", "flex");
+  if (status == true) {
+    text +=
+      '<div class="success-alert-div animated fadeInDown">' +
+      '<div class="icon"><i class="bi-check-all"></i></div>' +
+      '<div class="text"><p>' +
+      message +
+      "</p></div>" +
+      "</div>";
+  } else {
+    text +=
+      '<div class="failed-alert-div animated fadeInDown">' +
+      '<div class="icon"><i class="bi-exclamation-octagon-fill"></i></div>' +
+      '<div class="text"><p>' +
+      message +
+      "</p></div>" +
+      "</div>";
+  }
+  $(".all-alert-back-div").html(text).fadeIn(500).delay(3000).fadeOut(100);
 }
 
 function isNumberCheck(e) {
-    var key = e.keyCode || e.which;
+  var key = e.keyCode || e.which;
 
-    if (!((key >= 48 && key <= 57))) {
-        if (e.preventDefault) {
-            e.preventDefault();
-        } else {
-            e.returnValue = false;
-        }
+  if (!(key >= 48 && key <= 57)) {
+    if (e.preventDefault) {
+      e.preventDefault();
+    } else {
+      e.returnValue = false;
     }
+  }
 }
 
 function capitalizeFirstLetterOfEachWord(inputText) {
@@ -106,16 +148,15 @@ function capitalizeFirstLetterOfEachWord(inputText) {
 }
 
 function thousandSeperator(val) {
-	let dp=2;
-  const formatter = new Intl.NumberFormat('ng-NG', {
-    style: 'decimal',
+  let dp = 2;
+  const formatter = new Intl.NumberFormat("ng-NG", {
+    style: "decimal",
     maximumFractionDigits: dp,
     minimumFractionDigits: dp,
   });
   //   return formatter.format(val);
-  return isNaN(parseFloat(formatter.format(val))) ? '-' : formatter.format(val);
-};
-
+  return isNaN(parseFloat(formatter.format(val))) ? "-" : formatter.format(val);
+}
 
 function _showCustomConfirm(options) {
   const {
@@ -184,13 +225,13 @@ function _showCustomConfirm(options) {
 
   $("#customConfirmModal").off("click");
 
-if (closeOnOverlayClick) {
-  $("#customConfirmModal").on("click", function (e) {
-    if (e.target === this) {
-      _modalClose();
-    }
-  });
-}
+  if (closeOnOverlayClick) {
+    $("#customConfirmModal").on("click", function (e) {
+      if (e.target === this) {
+        _modalClose();
+      }
+    });
+  }
 }
 function _modalClose() {
   $("#customConfirmModal").html("").fadeOut(200);
@@ -225,7 +266,7 @@ function _validateNumber(fieldId, number) {
   if (!/^\d+(\.\d+)?$/.test(number)) {
     $("#" + fieldId).addClass("issue");
     $("#issue_" + fieldId).html(
-      "NUMBER MUST CONTAIN ONLY DIGITS OR DECIMAL POINT"
+      "NUMBER MUST CONTAIN ONLY DIGITS OR DECIMAL POINT",
     );
     return 1;
   }
@@ -353,7 +394,10 @@ function _callCatchError(callback) {
 function _btnDisable(btnId, btnText = "SUBMIT", action = true) {
   //////////////// get btn text ////////////////
   if (action) {
-    $("#" + btnId).html('<img src="' + websiteUrl + '/images/loading.gif" style="width:12px;" alt="Loading"/>'
+    $("#" + btnId).html(
+      '<img src="' +
+        websiteUrl +
+        '/images/loading.gif" style="width:12px;" alt="Loading"/>',
     );
     $("#" + btnId).prop("disabled", action);
   } else {
@@ -364,15 +408,14 @@ function _btnDisable(btnId, btnText = "SUBMIT", action = true) {
   ////////////////////////////////////////////////
 }
 
-
- ////////////////////////////////////////////////
-function _showLoader(message = 'Processing, please wait...') {
-  $('#globalLoaderText').html(message);
-  $('#globalLoader').fadeIn(150);
+////////////////////////////////////////////////
+function _showLoader(message = "Processing, please wait...") {
+  $("#globalLoaderText").html(message);
+  $("#globalLoader").fadeIn(150);
 }
 
 function _hideLoader() {
-  $('#globalLoader').fadeOut(150);
+  $("#globalLoader").fadeOut(150);
 }
 
 function _goBack() {

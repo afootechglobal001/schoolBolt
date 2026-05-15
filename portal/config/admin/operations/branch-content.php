@@ -464,8 +464,14 @@
                                                 <i class="bi-table"></i> Broad/Report Sheet
                                             </li>
 
-                                            <li title="Cumulative Broadsheet">
-                                                <i class="bi-table"></i> Cumulative Broadsheet
+                                            <li title="Session Cumulative Broadsheet"
+                                                onclick="_getForm({page: 'cumulativeAndPromotionalBroadsheetSelectForm', layer:2, id: 'cumulative', url: adminPortalLocalUrl});">
+                                                <i class="bi-table"></i> Session Cumulative Broadsheet
+                                            </li>
+
+                                            <li title="Promotional Broadsheet"
+                                                onclick="_getForm({page: 'cumulativeAndPromotionalBroadsheetSelectForm', layer:2, id: 'promotional', url: adminPortalLocalUrl});">
+                                                <i class="bi-table"></i> Promotional Broadsheet
                                             </li>
 
                                             <li title="Promotional Panel">
@@ -611,8 +617,14 @@
                                             onclick="_getForm({page: 'broadsheet_select_form', layer:2, url: adminPortalLocalUrl});">
                                             <i class="bi-person-lines-fill"></i>Broad/Report Sheet
                                         </li>
-                                        <li title="Cumulative Broadsheet"><i class="bi-person-lines-fill"></i>Cumulative
-                                            Broadsheet
+                                        <li title="Session Cumulative Broadsheet"
+                                            onclick="_getForm({page: 'cumulativeAndPromotionalBroadsheetSelectForm', layer:2, id: 'cumulative', url: adminPortalLocalUrl});">
+                                            <i class="bi-table"></i> Session Cumulative Broadsheet
+                                        </li>
+
+                                        <li title="Promotional Broadsheet"
+                                            onclick="_getForm({page: 'cumulativeAndPromotionalBroadsheetSelectForm', layer:2, id: 'promotional', url: adminPortalLocalUrl});">
+                                            <i class="bi-table"></i> Promotional Broadsheet
                                         </li>
                                         <li title="Promotional Panel"><i class="bi-person-lines-fill"></i>Promotion Panel</li>
                                         <li title="Publish Result" onclick="_getForm({page: 'publishResultSelectForm', layer:2, url: adminPortalLocalUrl});"><i class="bi-file-earmark-ppt-fill"></i>Publish Result</li>
@@ -2463,6 +2475,71 @@
     <div class="pages-toggle-back-div" id="pageContent">
         <script>
             _fetchBroadsheetClass();
+        </script>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'cumulativeAndPromotionalBroadsheetSelectForm') { ?>
+    <div class="caption-div animated zoomIn">
+        <div class="title-div">
+            <?php 
+                if ($id == "cumulative") {
+                    $pageTitle = "SESSION CUMULATIVE BROADSHEET";
+                    $subTitle = "cumulative";
+                } else if ($id == "promotional") {
+                    $pageTitle = "PROMOTIONAL BROADSHEET";
+                    $subTitle = "promotional";
+                }
+            ?>
+            <div class="title"><i class="bi-table"></i> <?php echo $pageTitle; ?></div>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i class="bi-x-lg"></i></button>
+        </div>
+
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, you're about to print <?php echo $subTitle; ?> broad sheet
+                for each class. Please select the <span>Session</span> to proceed.
+            </div>
+
+            <div class="text_field_container" id="sessionId_container">
+                <script>
+                    selectField({
+                        id: 'sessionId',
+                        title: 'Select Session'
+                    });
+                    _getSelectSession('sessionId');
+                </script>
+            </div>
+
+            <button class="btn" id="proceedBtn" title="Proceed Request" onclick="proceedPromotionalAndCumulativeBroadsheet('<?php echo $id ?>');">PROCEED <i class="bi-arrow-right"></i> </button>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'cumulativeAndPromotionalBranchDepartmentClass') { ?>
+    <script>
+        cumulativeAndPromotionalDepartmentClassParams = JSON.parse(sessionStorage.getItem("cumulativeAndPromotionalDepartmentClassParams"));
+    </script>
+
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div>
+            <span><i class="bi-grid-3x3"></i></span> <span id="viewBroadsheetType">
+                <script>
+                    $("#viewBroadsheetType").html(cumulativeAndPromotionalDepartmentClassParams?.viewBroadsheetType === 'cumulative' ? 'SESSION CUMULATIVE BROADSHEET' : 'PROMOTIONAL BROADSHEET');
+                </script>
+            </span> --
+            <span>SESSION</span>
+            </span> -- <span id="cumulativePromotionalBroadSession">
+                <script>
+                    $("#cumulativePromotionalBroadSession").html(cumulativeAndPromotionalDepartmentClassParams?.session);
+                </script>
+            </span></div>
+    </div>
+
+    <div class="pages-toggle-back-div" id="cumulativePromotionalPageContent">
+        <script>
+            _fetchCumulativeAndPromotionalBroadsheetClass();
         </script>
     </div>
 <?php } ?>
