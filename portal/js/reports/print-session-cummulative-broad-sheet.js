@@ -23,6 +23,13 @@ function _printSessionCumulativeBroadSheet(session, departmentId, classId, armId
 				window.open(`${websiteUrl}/reports/print-session-cummulative-broad-sheet`, '_blank');
 			} else {
 				_actionAlert(response.message, false);
+				_showCustomConfirm({
+					title: "Unable to Proceed",
+					message: response.message,
+					alertType: "error",
+					trueActionBtnText: "OK",
+					closeOnOverlayClick: true,
+				});
 			}
 			$(`#printCumulativeBtn_${classId}_${armId}`).html(btnText).prop("disabled", false);
 		})
@@ -38,6 +45,6 @@ function _printSessionCumulativeBroadSheet(session, departmentId, classId, armId
 		_callAjaxError(() =>
 		_printSessionCumulativeBroadSheet(session, departmentId, classId, armId),
 		); // retry if needed
-		(`#printCumulativeBtn_${classId}_${armId}`).prop("disabled", false);
+		$(`#printCumulativeBtn_${classId}_${armId}`).prop("disabled", false);
 	}
 }

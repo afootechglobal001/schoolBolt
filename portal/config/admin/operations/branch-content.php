@@ -3573,6 +3573,28 @@
                     </script>
                 </label>
 
+                <!-- WATERMARK -->
+                <div class="title">UPLOAD WATERMARK: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="watermarkPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="watermark" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="watermarkPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            const watermark = getEachBranchDetailsSession?.watermark;
+                            const watermarkUrl = watermark ?
+                                `${watermarkPixPath}/${watermark}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#watermarkPreviewPix")
+                                .attr("src", watermarkUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " Watermark");
+                        });
+                    </script>
+                </label>
 
                 <div>
                     <button class="btn" title="SUBMIT" id="submitBtn" onclick="_updateBranchConfig();"> <i
