@@ -593,7 +593,7 @@ function _fetchCumulativeAndPromotionalBroadsheetClass() {
 																		text += `
 																		<td>
 																			<div class="btn-div">
-																				<button class="btn view-btn" title="Click to print promotional broad sheet" id="printPromotionalBtn_${classId}_${armId}" onclick="window.open('${websiteUrl}/reports/print-session-promotional-broad-sheet', '_blank')"><i class="bi-printer"></i> PRINT PROMOTIONAL BROAD SHEET</button>
+																				<button class="btn view-btn" title="Click to print promotional broad sheet" id="printPromotionalBtn_${classId}_${armId}" onclick="_printSessionPromotionalBroadSheet('${session}', '${departmentId}', '${classId}', '${armId}');"><i class="bi-printer"></i> PRINT PROMOTIONAL BROAD SHEET</button>
 																			</div>
 																		</td>`;
 																	}

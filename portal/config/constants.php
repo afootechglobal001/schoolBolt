@@ -84,6 +84,7 @@ var terminalResultHeaderPixPath = websiteUrl +
 var watermarkPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Watermark path //
 var progressReportHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Progress Report Header path //
 var cummulativeBroadsheetHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Cummulative BroadSheet Header path //
+var promotionalBroadSheetHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Promotional BroadSheet Header path //
 
 var parentViewResultUrl = websiteUrl + '/parent/view-student-result'; /// For Parent OTP Verification Url //
 </script>
