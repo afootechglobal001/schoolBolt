@@ -764,19 +764,29 @@ function _verifyBranchPaystackTransaction(branchId, paymentId, secretKey, btnTex
       } else {
         _callBranchVerifyPaymentCancelled(paymentId);
         _showCustomConfirm({
-            callback: () => {
-              _getBranchPaymentStatusNav({
-                divid: 'branchCancelledPage',
-                page: 'branchCancelledPage',
-                id: branchSessionPayDate,
-                url: adminPortalLocalUrl
-              });
-            },
-            title: "Transaction Not Successful!",
-            message: "This transaction was not successful and has been automatically cancelled by the system.",
-            alertType: "error",
-            trueActionBtnText: "Got It",
-            closeOnOverlayClick: false,
+          title: "Transaction Not Successful!",
+          message: "This transaction was not successful and has been automatically cancelled by the system.",
+          alertType: "error",
+          falseActionBtn: true,
+          trueActionBtnText: "View Cancelled Payments",
+          falseActionBtnText: "Stay Here",
+          closeOnOverlayClick: false,
+          trueActionCallback: () => {
+            _getBranchPaymentStatusNav({
+              divid: 'branchCancelledPage',
+              page: 'branchCancelledPage',
+              id: branchSessionPayDate,
+              url: adminPortalLocalUrl
+            });
+          },
+          falseActionCallback: () => {
+            _getBranchPaymentStatusNav({
+              divid: 'branchPendingPage',
+              page: 'branchPendingPage',
+              id: branchSessionPayDate,
+              url: adminPortalLocalUrl
+            });
+          },
         });
         $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
       }
@@ -785,19 +795,29 @@ function _verifyBranchPaystackTransaction(branchId, paymentId, secretKey, btnTex
       console.error("Error:", error);
       _callBranchVerifyPaymentCancelled(paymentId);
       _showCustomConfirm({
-          callback: () => {
-            _getBranchPaymentStatusNav({
-              divid: 'branchCancelledPage',
-              page: 'branchCancelledPage',
-              id: branchSessionPayDate,
-              url: adminPortalLocalUrl
-            });
-          },
-          title: "Transaction Not Successful!",
-          message: "This transaction was not successful and has been automatically cancelled by the system.",
-          alertType: "error",
-          trueActionBtnText: "Got It",
-          closeOnOverlayClick: false,
+        title: "Transaction Not Successful!",
+        message: "This transaction was not successful and has been automatically cancelled by the system.",
+        alertType: "error",
+        falseActionBtn: true,
+        trueActionBtnText: "View Cancelled Payments",
+        falseActionBtnText: "Stay Here",
+        closeOnOverlayClick: false,
+        trueActionCallback: () => {
+          _getBranchPaymentStatusNav({
+            divid: 'branchCancelledPage',
+            page: 'branchCancelledPage',
+            id: branchSessionPayDate,
+            url: adminPortalLocalUrl
+          });
+        },
+        falseActionCallback: () => {
+          _getBranchPaymentStatusNav({
+            divid: 'branchPendingPage',
+            page: 'branchPendingPage',
+            id: branchSessionPayDate,
+            url: adminPortalLocalUrl
+          });
+        },
       });
       $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
     }
@@ -825,13 +845,31 @@ function _callVerifyBranchPaymentSuccess(paymentId, branchId, paystackId, paysta
       processData: false,
       success: function (data) {
         if (data.success) {
-         _actionAlert(data.message, true);
-          _getBranchPaymentStatusNav({
-            divid: 'branchSuccessfulPage',
-            page: 'branchSuccessfulPage',
-            id: branchSessionPayDate,
-            url: adminPortalLocalUrl
-          });
+          _showCustomConfirm({
+            title: "Transaction Successful!",
+            message: data.message,
+            alertType: "success",
+            falseActionBtn: true,
+            trueActionBtnText: "View Successful Payments",
+            falseActionBtnText: "Stay Here",
+            closeOnOverlayClick: false,
+            trueActionCallback: () => {
+              _getBranchPaymentStatusNav({
+                divid: 'branchSuccessfulPage',
+                page: 'branchSuccessfulPage',
+                id: branchSessionPayDate,
+                url: adminPortalLocalUrl
+              });
+            },
+            falseActionCallback: () => {
+              _getBranchPaymentStatusNav({
+                divid: 'branchPendingPage',
+                page: 'branchPendingPage',
+                id: branchSessionPayDate,
+                url: adminPortalLocalUrl
+              });
+            },
+        });
         } else {
           _actionAlert(data.message, false);
           $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
