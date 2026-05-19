@@ -70,7 +70,13 @@ function _confirmLogin() {
         if (data.success) {
           assignRole(data);
         } else {
-          _actionAlert(data.message, false);
+          _showCustomConfirm({
+            title: "Unable to Login",
+            message: data.message,
+            alertType: "error",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
           $("#submit_btn").html(btn_text).prop("disabled", false);
         }
       },

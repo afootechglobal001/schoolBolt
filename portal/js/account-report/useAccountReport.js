@@ -751,19 +751,29 @@ function _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText) {
       } else {
         _callVerifyPaymentCancelled(paymentId);
         _showCustomConfirm({
-            callback: () => {
-              _getPaymentStatusNav({
-                divid: 'cancelledPage',
-                page: 'cancelledPage',
-                id: sessionPayDate,
-                url: adminPortalLocalUrl
-              });
-            },
-            title: "Transaction Not Successful!",
-            message: "This transaction was not successful and has been automatically cancelled by the system.",
-            alertType: "error",
-            trueActionBtnText: "Got It",
-            closeOnOverlayClick: false,
+          title: "Transaction Not Successful!",
+          message: "This transaction was not successful and has been automatically cancelled by the system.",
+          alertType: "error",
+          falseActionBtn: true,
+          trueActionBtnText: "View Cancelled Payments",
+          falseActionBtnText: "Stay Here",
+          closeOnOverlayClick: false,
+          trueActionCallback: () => {
+            _getPaymentStatusNav({
+              divid: 'cancelledPage',
+              page: 'cancelledPage',
+              id: sessionPayDate,
+              url: adminPortalLocalUrl
+            });
+          },
+          falseActionCallback: () => {
+            _getPaymentStatusNav({
+              divid: 'pendingPage',
+              page: 'pendingPage',
+              id: sessionPayDate,
+              url: adminPortalLocalUrl
+            });
+          },
         });
         $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
       }
@@ -772,7 +782,14 @@ function _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText) {
       console.error("Error:", error);
         _callVerifyPaymentCancelled(paymentId);
         _showCustomConfirm({
-            callback: () => {
+            title: "Transaction Not Successful!",
+            message: "This transaction was not successful and has been automatically cancelled by the system.",
+            alertType: "error",
+            falseActionBtn: true,
+            trueActionBtnText: "View Cancelled Payments",
+            falseActionBtnText: "Stay Here",
+            closeOnOverlayClick: false,
+            trueActionCallback: () => {
               _getPaymentStatusNav({
                 divid: 'cancelledPage',
                 page: 'cancelledPage',
@@ -780,11 +797,14 @@ function _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText) {
                 url: adminPortalLocalUrl
               });
             },
-            title: "Transaction Not Successful!",
-            message: "This transaction was not successful and has been automatically cancelled by the system.",
-            alertType: "error",
-            trueActionBtnText: "Got It",
-            closeOnOverlayClick: false,
+            falseActionCallback: () => {
+              _getPaymentStatusNav({
+                divid: 'pendingPage',
+                page: 'pendingPage',
+                id: sessionPayDate,
+                url: adminPortalLocalUrl
+              });
+            },
         });
       $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
     }
@@ -811,13 +831,31 @@ function _callVeifyPaymentSuccess(paymentId, branchId, paystackId, paystackCharg
       processData: false,
       success: function (data) {
         if (data.success) {
-         _actionAlert(data.message, true);
-          _getPaymentStatusNav({
-            divid: 'successfulPage',
-            page: 'successfulPage',
-            id: sessionPayDate,
-            url: adminPortalLocalUrl
-          });
+          _showCustomConfirm({
+            title: "Transaction Successful!",
+            message: data.message,
+            alertType: "success",
+            falseActionBtn: true,
+            trueActionBtnText: "View Successful Payments",
+            falseActionBtnText: "Stay Here",
+            closeOnOverlayClick: false,
+            trueActionCallback: () => {
+              _getPaymentStatusNav({
+                divid: 'successfulPage',
+                page: 'successfulPage',
+                id: sessionPayDate,
+                url: adminPortalLocalUrl
+              });
+            },
+            falseActionCallback: () => {
+              _getPaymentStatusNav({
+                divid: 'pendingPage',
+                page: 'pendingPage',
+                id: sessionPayDate,
+                url: adminPortalLocalUrl
+              });
+            },
+        });
         } else {
           _actionAlert(data.message, false);
           $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
