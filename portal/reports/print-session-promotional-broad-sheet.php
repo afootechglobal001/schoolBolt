@@ -16,13 +16,13 @@
     <section class="body-div broadsheet-body" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
         <div class="header-back-div">
             <div class="header-image">
-                <img id="promotionalBroadSheetHeader" src="<?php echo $websiteUrl ?>/images/report/cummulative-mark-book-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
+                <img id="sessionPromotionalBroadsheetHeader" src="<?php echo $websiteUrl ?>/images/report/session-promotional-broad-sheet-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
 
                 <script>
                     $(document).ready(function () {
-                        const schoolHeader = printPromotionalBroadSheetSession?.branchData?.cummulativeBroadsheetHeader;
-                        const headerUrl = schoolHeader ? `${cummulativeBroadsheetHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/cummulative-mark-book-header.png`;
-                        $("#promotionalBroadSheetHeader").attr("src", headerUrl).attr("alt", `${printPromotionalBroadSheetSession?.branchData?.branchName} Report Header`);
+                        const schoolHeader = printPromotionalBroadSheetSession?.branchData?.sessionPromotionalBroadsheetHeader;
+                        const headerUrl = schoolHeader ? `${sessionPromotionalBroadsheetHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/session-promotional-broad-sheet-header.png`;
+                        $("#sessionPromotionalBroadsheetHeader").attr("src", headerUrl).attr("alt", `${printPromotionalBroadSheetSession?.branchData?.branchName} Report Header`);
 
                         const backendWatermark = printPromotionalBroadSheetSession?.branchData?.watermark;
                         const defaultWatermark = '../images/report/watermark.jpg';

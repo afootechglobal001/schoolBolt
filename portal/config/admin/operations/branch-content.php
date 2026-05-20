@@ -474,15 +474,14 @@
                                                 <i class="bi-table"></i> Promotional Broadsheet
                                             </li>
 
-                                            <li title="Promotional Panel">
-                                                <i class="bi-file-spreadsheet-fill"></i> Promotion Panel
-                                            </li>
-
                                             <li title="Publish Result"
                                                 onclick="_getForm({page: 'publishResultSelectForm', layer:2, url: adminPortalLocalUrl});">
                                                 <i class="bi-file-earmark-ppt-fill"></i> Publish Result
                                             </li>
 
+                                            <li title="Promotional Panel">
+                                                <i class="bi-file-spreadsheet-fill"></i> Promotion Panel
+                                            </li>
                                         </ul>
                                     </li>
                                 `);
@@ -626,8 +625,8 @@
                                             onclick="_getForm({page: 'cumulativeAndPromotionalBroadsheetSelectForm', layer:2, id: 'promotional', url: adminPortalLocalUrl});">
                                             <i class="bi-table"></i> Promotional Broadsheet
                                         </li>
-                                        <li title="Promotional Panel"><i class="bi-person-lines-fill"></i>Promotion Panel</li>
                                         <li title="Publish Result" onclick="_getForm({page: 'publishResultSelectForm', layer:2, url: adminPortalLocalUrl});"><i class="bi-file-earmark-ppt-fill"></i>Publish Result</li>
+                                        <li title="Promotional Panel"><i class="bi-person-lines-fill"></i>Promotion Panel</li>
                                     </ul>
 
                                 </li>
@@ -2925,17 +2924,35 @@
                                 </script>
                             </span></div>
 
-                        <div class="btn-container">
+                        <div class="btn-container" id="canUpdatePrincipalsComment">
                             <script>
                                 $(document).ready(function () {
-                                    const schoolCategoryId = getViewTerminalResultSummarySession?.branchData
-                                        ?.schoolCategoryId;
-                                    // Hide by default
-                                    $("#progressReportBtn").hide();
+                                    const schoolCategoryId = getViewTerminalResultSummarySession?.branchData?.schoolCategoryId?.toUpperCase();
 
-                                    // Show only if schoolCategory is COLLEGE
-                                    if (schoolCategoryId && schoolCategoryId.toUpperCase() === "COLLEGE") {
+                                    // Hide buttons by default
+                                    $("#progressReportBtn").hide();
+                                    $("#commentBtn").hide();
+
+                                    // Check allowed school categories
+                                    const isCollege = schoolCategoryId === "COLLEGE";
+                                    const isBasicSchool = schoolCategoryId === "BASIC";
+
+                                    // Show Progress Report only for College
+                                    if (isCollege) {
                                         $("#progressReportBtn").show();
+                                    }
+                                   
+                                    //// Show Comment button only for Term 3 and for College or Basic School categories
+                                    if (isCollege || isBasicSchool) {
+                                        $("#commentBtn").show();
+
+                                        const commentTitle = isCollege
+                                            ? "UPDATE PRINCIPAL'S COMMENT"
+                                            : "UPDATE HEAD TEACHER'S COMMENT";
+
+                                        $("#commentBtn")
+                                            .attr("title", commentTitle)
+                                            .html(`<i class="bi-pencil"></i> ${commentTitle}`);
                                     }
                                 });
                             </script>
@@ -2949,6 +2966,15 @@
                             <button class="btn" title="PROGRESS REPORT" id="progressReportBtn"
                                 onclick="_printAllStudentProgressReport();"><i class="bi-printer"></i> PROGRESS
                                 REPORT</button>
+
+                            <script>
+                                if (userRoles.canUpdatePrincipalsComment) {
+                                      $('#canUpdatePrincipalsComment').append(`
+                                        <button class="btn" id="commentBtn"
+                                        onclick="_proceedUpdatePrincipalsComment();"></button>
+                                    `);
+                                }
+                            </script>
                         </div>
                     </div>
 
@@ -3040,22 +3066,16 @@
                                         }
                                     });
 
-
                                     // Build the table
                                     const thead = $('<thead></thead>');
                                     const headerRow = $('<tr class="tb-col small-font-tb-col"></tr>');
-
-
                                     tableTitles.forEach(title => {
                                         headerRow.append($('<th></th>').text(title));
                                     });
-
                                     headerRow.append($('<th></th>').text('ACTION'));
-
                                     thead.append(headerRow);
 
                                     const tbody = $('<tbody></tbody>');
-
                                     studentList.forEach((student, index) => {
                                         const row = $('<tr class="tb-row report-tb-row"></tr>');
                                         const fullName = `${student.surName} ${student.otherNames || ''}`
@@ -3100,10 +3120,8 @@
 
                                         actionTd.append(printButton);
                                         row.append(actionTd);
-
                                         tbody.append(row);
                                     });
-
                                     $('#terminalResultSumamryPageContent').empty().append(thead).append(tbody);
                                 });
                             </script>
@@ -3592,6 +3610,54 @@
                             $("#watermarkPreviewPix")
                                 .attr("src", watermarkUrl)
                                 .attr("alt", getEachBranchDetailsSession.name + " Watermark");
+                        });
+                    </script>
+                </label>
+
+                <!-- SESSION CUMULATIVE BROADSHEET HEADER -->
+                <div class="title">UPLOAD SESSION CUMULATIVE BROADSHEET HEADER: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="sessionCumulativeBroadSheetHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="sessionCumulativeBroadSheetHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="sessionCumulativeBroadSheetHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            const sessionCumulativeBroadSheetHeader = getEachBranchDetailsSession?.sessionCumulativeBroadSheetHeader;
+
+                            const sessionCumulativeBroadSheetHeaderUrl = sessionCumulativeBroadSheetHeader ?
+                                `${sessionCumulativeBroadSheetHeaderPixPath}/${sessionCumulativeBroadSheetHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#sessionCumulativeBroadSheetHeaderPreviewPix")
+                                .attr("src", sessionCumulativeBroadSheetHeaderUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " Session Cumulative BroadSheet Header");
+                        });
+                    </script>
+                </label>
+
+                <!-- SESSION PROMOTIONAL BROADSHEET HEADER -->
+                <div class="title">UPLOAD SESSION PROMOTIONAL BROADSHEET HEADER: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="sessionPromotionalBroadSheetHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="sessionPromotionalBroadSheetHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="sessionPromotionalBroadSheetHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            const sessionPromotionalBroadSheetHeader = getEachBranchDetailsSession?.sessionPromotionalBroadSheetHeader;
+
+                            const sessionPromotionalBroadSheetHeaderUrl = sessionPromotionalBroadSheetHeader ?
+                                `${sessionPromotionalBroadSheetHeaderPixPath}/${sessionPromotionalBroadSheetHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#sessionPromotionalBroadSheetHeaderPreviewPix")
+                                .attr("src", sessionPromotionalBroadSheetHeaderUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " Session Promotional BroadSheet Header");
                         });
                     </script>
                 </label>
@@ -4183,6 +4249,184 @@
 
             <button class="btn" title="PUBLISH RESULT" id="publishResultBtn" onclick="_publishResult();"> <i
                     class="bi-check"></i> PUBLISH RESULT </button>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'updateHeadAndPrincipalComment') { ?>
+    <script>
+        getViewTerminalResultSummarySession = JSON.parse(sessionStorage.getItem("getViewTerminalResultSummarySession"));
+        var commentSchoolCategoryId = getViewTerminalResultSummarySession?.branchData?.schoolCategoryId;
+
+        $(document).ready(function () {
+            if (commentSchoolCategoryId === "BASIC") {
+                $("#panel-title").html( '<i class="bi-plus-square"></i> UPDATE HEAD TEACHER\'S COMMENT');
+                $("#formAlertTitle").html("Head Teacher's Comment");
+            } else {
+                $("#panel-title").html('<i class="bi-plus-square"></i> UPDATE PRINCIPAL\'S COMMENT');
+                $("#formAlertTitle").html("Principal's Comment");
+            }
+        });
+    </script>
+
+    <div class="slide-form-div save-compute-teachers-comment-slide-form" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="panel-title"><i class="bi-plus-square"></i> UPDATE PRINCIPAL'S COMMENT</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert compute-form-alert">
+                        <span>Kindly input new comment for each student or update existing comments to complete <span id="formAlertTitle"></span> </span>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Branch:</div>
+                                    <div><span id="formBranch">
+                                            <script>
+                                            $("#formBranch").html(getViewTerminalResultSummarySession?.branchData?.branchName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Session:</div>
+                                    <div><span id="formSession">
+                                            <script>
+                                            $("#formSession").html(getViewTerminalResultSummarySession?.session);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Term:</div>
+                                    <div><span id="formTermName">
+                                            <script>
+                                            $("#formTermName").html(getViewTerminalResultSummarySession?.termData?.termName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Department:</div>
+                                    <div><span id="departmentName">
+                                            <script>
+                                            $("#departmentName").html(getViewTerminalResultSummarySession?.departmentData
+                                                ?.departmentName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Class:</div>
+                                    <div><span id="className">
+                                            <script>
+                                            $("#className").html(getViewTerminalResultSummarySession?.classData?.className);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Arm:</div>
+                                    <div><span id="armName">
+                                            <script>
+                                            $("#armName").html(getViewTerminalResultSummarySession?.armData?.armName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="compute-comment-back-div" id="fetchStudents">
+                    <script>
+                    $(document).ready(function() {
+                        let text = '';
+
+                        if (getViewTerminalResultSummarySession) {
+                            const fetchStudentData = getViewTerminalResultSummarySession?.studentData;
+                            const fetchBranchData = getViewTerminalResultSummarySession?.branchData;
+                            const deparmtentData = getViewTerminalResultSummarySession?.departmentData;
+                            const classData = getViewTerminalResultSummarySession?.classData;
+                            const armData = getViewTerminalResultSummarySession?.armData;
+                            const success = getViewTerminalResultSummarySession?.success;
+
+                            if (success === true && fetchStudentData.length > 0) {
+                                for (let i = 0; i < fetchStudentData.length; i++) {
+                                    const student = fetchStudentData[i];
+                                    const principalComment = fetchStudentData[i].principalComment;
+
+                                    const fullName = `${student.surName} ${student.firstName}`;
+                                    const passport = student.passport || 'default.jpg';
+                                    const studentId = student.studentId;
+                                    const fieldId = `principalComment_${studentId}`;
+
+                                    $("#fetchStudents").append(`
+                                        <div class="new-each-compute-score-div">
+                                            <div class="new-inner-score-div">
+                                                <div class="top-cont-div">
+                                                    <div class="image-div">
+                                                        <img src="${studentPixPath}/${passport}" alt="${fullName}"/>
+                                                    </div>
+
+                                                    <div class="text-container">
+                                                        <div class="text-div">
+                                                            <div class="name">${fullName}</div>
+                                                            <div>${deparmtentData?.departmentName} -- (${classData?.className} ${armData?.armName})</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <div class="text_area_container" id="${fieldId}_container"></div>
+                                                    <div class="issueText" id="issue_principalComment"></div>
+                                                    <input type="hidden" class="student-id-holder" value="${studentId}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `);
+
+                                    textField({
+                                        id: fieldId,
+                                        title: 'Principal\'s Comment',
+                                        type: 'textarea',
+                                        rows: 2,
+                                        value: principalComment
+                                    });
+                                }
+                            }
+                        }
+                    });
+                    </script>
+                </div>
+
+                <div>
+                    <button class="btn" title="UPDATE COMMENTS" id="submitBtn"
+                        onclick="_savePrincipalsComment();">
+                        <i class="bi-save"></i> UPDATE COMMENTS
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 <?php } ?>
