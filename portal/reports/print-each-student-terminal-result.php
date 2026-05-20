@@ -262,6 +262,7 @@
                         const branchItems = printEachStudentTerminalResultSession?.branchData;
                         const attendanceItems = printEachStudentTerminalResultSession?.attendanceData;
                         const classTeachersComment = printEachStudentTerminalResultSession?.classTeachersComment;
+                        const sessionResultSummaryItems = printEachStudentTerminalResultSession?.sessionResultSummary || {};
 
                         let text='';
                         let showComment = '';
@@ -318,37 +319,37 @@
 
                                         <div class="list-content">
                                             <span>NUMBER OF SITTING(S):</span>
-                                            <p>${items.noOfStudentsInClass}</p>
+                                            <p>${sessionResultSummaryItems.numberOfSittings}</p>
                                         </div>
 
                                         <div class="list-content">
                                             <span>1ST TERM OVERALL (%):</span>
-                                            <p id="">45.82 %</p>
+                                            <p>${sessionResultSummaryItems.firstTermPercentage} %</p>
                                         </div>
 
                                         <div class="list-content">
                                             <span>2ND TERM OVERALL (%):</span>
-                                            <p id="">48.78</p>
+                                            <p>${sessionResultSummaryItems.secondTermPercentage} %</p>
                                         </div>
 
                                         <div class="list-content">
                                             <span>3RD TERM OVERALL (%):</span>
-                                            <p id="">47.42 %</p>
+                                            <p>${sessionResultSummaryItems.thirdTermPercentage} %</p>
                                         </div>
 
                                         <div class="list-content">
                                             <span>AVERAGE (%):</span>
-                                            <p id="">48.78</p>
+                                            <p>${sessionResultSummaryItems.averagePercentage} %</p>
                                         </div>
 
                                         <div class="list-content">
                                             <span>ANNUAL POSITION IN CLASS:</span>
-                                            <p id="">33RD</p>
+                                            <p>${sessionResultSummaryItems.positionInClass}</p>
                                         </div>
 
                                         <div class="list-content">
                                             <span>ANNUAL OVERALL POSITION:</span>
-                                            <p id="">143RD(166)</p>
+                                            <p>${sessionResultSummaryItems.overallPosition}</p>
                                         </div>
 
                                         <div class="list-content">

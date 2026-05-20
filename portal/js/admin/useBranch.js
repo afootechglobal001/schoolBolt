@@ -286,6 +286,34 @@ $(function () {
       }
     },
   };
+
+  sessionCumulativeBroadSheetHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#sessionCumulativeBroadSheetHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+
+  sessionPromotionalBroadSheetHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#sessionPromotionalBroadSheetHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
 });
 
 
@@ -1052,6 +1080,8 @@ function _updateBranchConfig() {
     const terminalResultSummaryHeader = $("#terminalResultSummaryHeader").prop("files")[0];
     const terminalResultHeader = $("#terminalResultHeader").prop("files")[0];
     const watermark = $("#watermark").prop("files")[0];
+    const sessionCumulativeBroadSheetHeader = $("#sessionCumulativeBroadSheetHeader").prop("files")[0];
+    const sessionPromotionalBroadSheetHeader = $("#sessionPromotionalBroadSheetHeader").prop("files")[0];
 
     $("#currentSession, #termId, #timeSchoolOpened, #schoolResumptionDate").removeClass("issue");
     $("#issue_currentSession, #issue_termId, #issue_timeSchoolOpened, #issue_schoolResumptionDate").html("");
@@ -1118,6 +1148,8 @@ function _updateBranchConfig() {
       if (terminalResultSummaryHeader) formData.append("terminalResultSummaryHeader", terminalResultSummaryHeader);
       if (terminalResultHeader) formData.append("terminalResultHeader", terminalResultHeader);
       if (watermark) formData.append("watermark", watermark);
+      if (sessionCumulativeBroadSheetHeader) formData.append("sessionCumulativeBroadSheetHeader", sessionCumulativeBroadSheetHeader);
+      if (sessionPromotionalBroadSheetHeader) formData.append("sessionPromotionalBroadSheetHeader", sessionPromotionalBroadSheetHeader);
 
       $.ajax({
         type: "POST",
@@ -1184,6 +1216,12 @@ function _updateBranchConfig() {
             const oldWatermark = data.oldWatermark;
             const newWatermark = data.watermark;
 
+            const oldSessionCumulativeBroadSheetHeader = data.oldSessionCumulativeBroadSheetHeader;
+            const newSessionCumulativeBroadSheetHeader = data.sessionCumulativeBroadSheetHeader;
+
+            const oldSessionPromotionalBroadSheetHeader = data.oldSessionPromotionalBroadSheetHeader;
+            const newSessionPromotionalBroadSheetHeader = data.sessionPromotionalBroadSheetHeader;
+
             if (newSchoolLogo !== "") _uploadSchoolLogo("schoolLogo", oldSchoolLogo, newSchoolLogo, message);
             if (newPrincipalSignature !== "") _uploadSchoolLogo("principalSignature", oldPrincipalSignature, newPrincipalSignature, message);
 
@@ -1202,6 +1240,8 @@ function _updateBranchConfig() {
             if (newTerminalResultSummaryHeader !== "") _uploadSchoolLogo("terminalResultSummaryHeader", oldTerminalResultSummaryHeader, newTerminalResultSummaryHeader, message);
             if (newTerminalResultHeader !== "") _uploadSchoolLogo("terminalResultHeader", oldTerminalResultHeader, newTerminalResultHeader, message);
             if (newWatermark !== "") _uploadSchoolLogo("watermark", oldWatermark, newWatermark, message);
+            if (newSessionCumulativeBroadSheetHeader !== "") _uploadSchoolLogo("sessionCumulativeBroadSheetHeader", oldSessionCumulativeBroadSheetHeader, newSessionCumulativeBroadSheetHeader, message);
+            if (newSessionPromotionalBroadSheetHeader !== "") _uploadSchoolLogo("sessionPromotionalBroadSheetHeader", oldSessionPromotionalBroadSheetHeader, newSessionPromotionalBroadSheetHeader, message);
 
             if (
               newSchoolLogo === "" &&
@@ -1219,7 +1259,9 @@ function _updateBranchConfig() {
               newSubjectListHeader === "" &&
               newTerminalResultSummaryHeader === "" &&
               newTerminalResultHeader === "" &&
-              newWatermark === ""
+              newWatermark === "" &&
+              newSessionCumulativeBroadSheetHeader === "" &&
+              newSessionPromotionalBroadSheetHeader === ""
             ) {
               _actionAlert(message, true);
               _fetchEachBranches(getEachBranchDetailsSession.branchId);
@@ -1631,4 +1673,128 @@ function _publishResultCallback(formData) {
 		_callAjaxError(() => _publishResultCallback(formData)); // retry if needed
 		_btnDisable("publishResultBtn", btnText, false);
     });
+}
+
+//// Proceed To Update Comment ////
+function _proceedUpdateComment() {
+	let getViewTerminalResultSummarySession = JSON.parse(sessionStorage.getItem("getViewTerminalResultSummarySession"));
+  const classTeachersComment = getViewTerminalResultSummarySession?.studentData[0]?.classTeachersComment || "";
+	
+	if (getViewTerminalResultSummarySession) {
+    if (classTeachersComment==="" || classTeachersComment==null) {
+      _showCustomConfirm({
+        title: "Unable to Proceed!",
+        message: "Class teacher's comment must be computed. Kindly compute class teacher's comment to proceed.",
+        alertType: "error",
+        trueActionBtnText: "OK",
+        closeOnOverlayClick: true,
+      });
+    } else {
+      sessionStorage.setItem("printTerminalResultSummarySession", JSON.stringify(getViewTerminalResultSummarySession));
+      _getForm({ page: "updateHeadAndPrincipalComment", layer: 3, url: adminPortalLocalUrl });
+    }
+	}
+}
+
+//// Save Principal And Head Teachers Comment ////
+function _savePrincipalsComment() {
+  try {
+    let issueCount = 0;
+		const allComments = [];
+	
+		$('.student-id-holder').each(function () {
+			const studentId = $(this).val();
+			const inputSelector = `#principalComment_${studentId}`;
+			const errorSelector = `#issue_principalComment_${studentId}`;
+			const principalComment = $(inputSelector).val();
+
+			$(inputSelector).removeClass('issue');
+			$(errorSelector).html('');
+
+			if (principalComment === "" || null) {
+				$(inputSelector).addClass('issue');
+				$(errorSelector).html(`Principal's comment is required`);
+				issueCount++;
+			} else {
+				allComments.push({
+					studentId: studentId,
+					principalsComment: principalComment
+				});
+			}
+		});
+
+		if (issueCount>0){
+			return;
+		}
+
+    ///// Gather form data ////
+    const formData = {
+      allComments: allComments,
+    };
+
+    ////// confirm action ////
+    _showCustomConfirm({
+      callback: () => {
+        _savePrincipalsCommentCallback(formData);
+      },
+      title: "Are you sure?",
+      message: "Are you sure you want to proceed? This action is irreversible.",
+      alertType: "warning",
+      falseActionBtn: true,
+      closeOnOverlayClick: true,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _savePrincipalsComment());
+  }
+}
+
+//// Proceed To Principal And Head Teachers Comment CallBack /////
+function _savePrincipalsCommentCallback(formData) {
+  let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+
+  let getViewTerminalResultSummarySession = JSON.parse(
+    sessionStorage.getItem("getViewTerminalResultSummarySession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+	const departmentId = getViewTerminalResultSummarySession?.departmentData?.departmentId;
+	const classId = getViewTerminalResultSummarySession?.classData?.classId;
+	const armId = getViewTerminalResultSummarySession?.armData?.armId;
+
+  try {
+    const btnText = $("#submitBtn").html();
+    _btnDisable("submitBtn", btnText, true);
+
+    _callRawEndPoints({
+      url: `reports/save-class-principals-comments?branchId=${branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+      formData,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success) {
+          _alertClose(3);
+          _viewTerminalResultSummary(departmentId, classId, armId);
+        } else {
+          _showCustomConfirm({
+            title: "Unable to Save Comments!",
+            message: response.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+          _btnDisable("submitBtn", btnText, false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() => _savePrincipalsCommentCallback(formData)); // retry if needed
+        _btnDisable("submitBtn", btnText, false);
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _savePrincipalsCommentCallback(formData));
+    _btnDisable("submitBtn", btnText, false);
+  }
 }

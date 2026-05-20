@@ -16,14 +16,14 @@
     <section class="body-div broadsheet-body" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
         <div class="header-back-div">
             <div class="header-image">
-                <img id="cummulativeBroadsheetHeader" src="<?php echo $websiteUrl ?>/images/report/cummulative-mark-book-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
+                <img id="sessionCummulativeBroadsheetHeader" src="<?php echo $websiteUrl ?>/images/report/session-cumulative-broad-sheet-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
             </div>
             
             <script>
                 $(document).ready(function () {
-                    const schoolHeader = printSessionCumulativeBroadSheetSession?.branchData?.cummulativeBroadsheetHeader;
-                    const headerUrl = schoolHeader ? `${cummulativeBroadsheetHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/cummulative-mark-book-header.png`;
-                    $("#cummulativeBroadsheetHeader").attr("src", headerUrl).attr("alt", `${printSessionCumulativeBroadSheetSession?.branchData?.branchName} Report Header`);
+                    const schoolHeader = printSessionCumulativeBroadSheetSession?.branchData?.sessionCummulativeBroadsheetHeader;
+                    const headerUrl = schoolHeader ? `${sessionCummulativeBroadsheetHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/session-cumulative-broad-sheet-header.png`;
+                    $("#sessionCummulativeBroadsheetHeader").attr("src", headerUrl).attr("alt", `${printSessionCumulativeBroadSheetSession?.branchData?.branchName} Report Header`);
 
                     const backendWatermark = printSessionCumulativeBroadSheetSession?.branchData?.watermark;
                     const defaultWatermark = '../images/report/watermark.jpg';
