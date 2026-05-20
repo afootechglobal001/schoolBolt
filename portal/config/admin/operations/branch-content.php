@@ -2924,7 +2924,7 @@
                                 </script>
                             </span></div>
 
-                        <div class="btn-container">
+                        <div class="btn-container" id="canUpdatePrincipalsComment">
                             <script>
                                 $(document).ready(function () {
                                     const schoolCategoryId = getViewTerminalResultSummarySession?.branchData?.schoolCategoryId?.toUpperCase();
@@ -2966,9 +2966,15 @@
                             <button class="btn" title="PROGRESS REPORT" id="progressReportBtn"
                                 onclick="_printAllStudentProgressReport();"><i class="bi-printer"></i> PROGRESS
                                 REPORT</button>
-                            
-                            <button class="btn" id="commentBtn"
-                                onclick="_proceedUpdateComment();"></button>
+
+                            <script>
+                                if (userRoles.canUpdatePrincipalsComment) {
+                                      $('#canUpdatePrincipalsComment').append(`
+                                        <button class="btn" id="commentBtn"
+                                        onclick="_proceedUpdatePrincipalsComment();"></button>
+                                    `);
+                                }
+                            </script>
                         </div>
                     </div>
 

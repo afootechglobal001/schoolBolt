@@ -1676,7 +1676,7 @@ function _publishResultCallback(formData) {
 }
 
 //// Proceed To Update Comment ////
-function _proceedUpdateComment() {
+function _proceedUpdatePrincipalsComment() {
 	let getViewTerminalResultSummarySession = JSON.parse(sessionStorage.getItem("getViewTerminalResultSummarySession"));
   const classTeachersComment = getViewTerminalResultSummarySession?.studentData[0]?.classTeachersComment || "";
 	
