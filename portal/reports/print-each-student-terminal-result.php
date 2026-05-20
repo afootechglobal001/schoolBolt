@@ -616,7 +616,7 @@
                             subjectList.forEach((subjectName, idx) => {
                                 const tr = $('<tr class="tb-row table-row"></tr>');
                                 tr.append(`<td>${idx + 1}</td>`);
-                                tr.append(`<td>${subjectName}</td>`);
+                                tr.append(`<td class="name-td">${subjectName}</td>`);
 
                                 progressiveReportData.forEach(cls => {
                                     const subObj = cls.subjectsScores.find(s => s.subjectName === subjectName);
@@ -636,7 +636,7 @@
                             const totalTR = $('<tr class="tb-row table-row"></tr>');
 
                             totalTR.append(`<td>-</td>`);
-                            totalTR.append(`<td>TOTAL PERCENTAGE</td>`);
+                            totalTR.append(`<td class="name-td">TOTAL PERCENTAGE</td>`);
 
                             progressiveReportData.forEach(cls => {
                                 totalTR.append(`<td class="bold-font">${(cls.totalPercentage.firstTermTotalPercentage ?? 0)} %</td>`);
