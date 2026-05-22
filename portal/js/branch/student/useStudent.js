@@ -15,7 +15,7 @@ function _getActiveStudentPage(props) {
 }
 function _getStudentPagesActiveLink(divid) {
   $(
-    "#student_profile_details, #tanscript, #student_activities, #student_report, #studentPaymentHistory, #studentFundHistory, #studentDiscountScholarship",
+    "#student_profile_details, #studentTranscriptPage, #student_activities, #student_report, #studentPaymentHistory, #studentFundHistory, #studentDiscountScholarship",
   ).removeClass("active");
   $("#" + divid).addClass("active");
 }
@@ -110,7 +110,7 @@ function _getSelectAccomodation(fieldId) {
   }
 }
 
-function _getSelectDepartment(fieldId) {
+function _getSelectDepartment(fieldId, isAlumni = false) {
   try {
     $.ajax({
       type: "GET",
@@ -120,24 +120,28 @@ function _getSelectDepartment(fieldId) {
       headers: getAuthHeaders(true),
       success: function (info) {
         const data = info.data;
-        const success = info.success;
-
-        if (success === true) {
+        if (info.success === true) {
+          $("#searchList_" + fieldId).html("");
           for (let i = 0; i < data.length; i++) {
             if (data[i].checked) {
               const id = data[i].departmentId;
               const value = data[i].departmentName;
-              $("#searchList_" + fieldId).append(
-                "<li onclick=\"_clickOption('searchList_" +
-                  fieldId +
-                  "', '" +
-                  id +
-                  "', '" +
-                  value +
-                  "'); _fetchSelectDepartmentClass();\">" +
-                  value +
-                  "</li>",
-              );
+
+              $("#searchList_" + fieldId).append(`
+                <li onclick="
+                  _clickOption(
+                    'searchList_${fieldId}',
+                    '${id}',
+                    '${value}'
+                  );
+                  _getSelectDepartmentClass(
+                    'classId',
+                    ${isAlumni}
+                  );
+                ">
+                  ${value}
+                </li>
+              `);
             }
           }
         } else {
@@ -146,47 +150,47 @@ function _getSelectDepartment(fieldId) {
       },
     });
   } catch (error) {
-    console.error("Error: ", error);
+    console.error(error);
   }
 }
 
 function _fetchSelectDepartmentClass() {
-  _getSelectDepartmentClass("classId");
+  _getSelectDepartmentClass('classId', isAlumni);
 }
 
-function _getSelectDepartmentClass(fieldId) {
+function _getSelectDepartmentClass(fieldId, isAlumni = false) {
   const departmentId = $("#departmentId").val();
   try {
     $.ajax({
       type: "GET",
-      url:
-        endPoint +
-        "/admin/settings/departments/fetch-department-classes?departmentId=" +
-        departmentId,
+      url: `${endPoint}/admin/settings/departments/fetch-department-classes?departmentId=${departmentId}${isAlumni ? "&isAlumni=true" : ""}`,
       dataType: "json",
       cache: false,
       headers: getAuthHeaders(true),
       success: function (info) {
         const data = info.data;
-        const success = info.success;
-
-        if (success === true) {
+        if (info.success === true) {
           $("#searchList_" + fieldId).html("");
-          const checkedClasses = data.filter((item) => item.checked === true);
+          const checkedClasses = data.filter(
+            item => item.checked === true
+          );
           for (let i = 0; i < checkedClasses.length; i++) {
             const id = checkedClasses[i].classId;
             const value = checkedClasses[i].className;
-            $("#searchList_" + fieldId).append(
-              "<li onclick=\"_clickOption('searchList_" +
-                fieldId +
-                "', '" +
-                id +
-                "', '" +
-                value +
-                "'); _fetchSelectDepartmentClassArm();\">" +
-                value +
-                "</li>",
-            );
+
+            $("#searchList_" + fieldId).append(`
+              <li onclick="
+                _clickOption(
+                  'searchList_${fieldId}',
+                  '${id}',
+                  '${value}'
+                );
+
+                _fetchSelectDepartmentClassArm();
+              ">
+                ${value}
+              </li>
+            `);
           }
         } else {
           _actionAlert(info.message, false);
@@ -194,8 +198,7 @@ function _getSelectDepartmentClass(fieldId) {
       },
     });
   } catch (error) {
-    console.error("Error: ", error);
-    _actionAlert("An unexpected error occurred. Please try again.", false);
+    console.error(error);
   }
 }
 
@@ -2027,5 +2030,103 @@ function _fetchEachBranchAlumniStudents(branchId, alumniSession, departmentId, c
     _callAjaxError(() =>
       _fetchEachBranchAlumniStudents(departmentId, classId, armId, studentId),
     ); // retry if needed
+  }
+}
+
+//// Fetch Student Class Transcript  Data ////
+function _fetchStudentClassTranscriptData () {
+	try {
+		//// call endpoint //////
+		_callFetchEndPoints({
+			url: `admin/publish/faq/fetch-faq`,
+			accessKey: true,
+		})
+		.then((response) => {
+      _staffValidationCheck(response.response);
+      if (response.success === true) {
+        _initFetchStudentClassTranscriptData(response.data);
+      } else {
+        $('#transcriptClassPageContent').html(`
+					<div class="false-notification-div">
+						<p>${response.message}</p>
+					</div>
+				`);
+      }
+		})
+		.catch((error) => {
+			console.error("Error:", error);				
+			_callAjaxError(() => _fetchStudentClassTranscriptData()); // retry if needed
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _fetchStudentClassTranscriptData());
+  }
+}
+
+/// Initialize Fetch Student Class Transcript Data ////
+function _initFetchStudentClassTranscriptData(data) {
+  	const content = data.map((item) => {
+    return `
+      <div class="pages-toggle-div">
+        <div class="pages-toggle-title">
+          <h3>JUNIOR</h3>
+          <div class="btn-back-div">
+              <button class="btn" title="PRINT TRANSCRIPT" id="" onclick="_printStudentTranscript();">
+                <i class="bi-printer"></i> PRINT
+              </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+  $('#transcriptClassPageContent').html(content);
+}
+
+///// Print Student Transcript Data /////
+function _printStudentTranscript(departmentId, classId, armId) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+  try {
+	const btnText = $(`#proceedBtn_${classId}_${armId}`).html();
+    _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, true);
+	
+    //// call endpoint //////
+    _callFetchEndPoints({
+      url: `admin/branch/students/fetch-student?branchId=${branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success=== true) {
+          sessionStorage.setItem(
+            "usePrintStudentTranscriptSession",
+            JSON.stringify(response),
+          );
+          window.open(`${websiteUrl}/reports/print-student-academic-transcript`, '_blank');
+        } else {
+          _alertClose(2);
+          _actionAlert(response.message, false);
+		     _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, false);
+        }
+		    _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, false);
+      })
+      .catch((error) => {
+        _alertClose(2);
+        console.error("Error:", error);
+        _callAjaxError(() =>
+          _printStudentTranscript(departmentId, classId, armId),
+        ); // retry if needed
+		  _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, false);
+    });
+  } catch (error) {
+    _alertClose(2);
+    console.error("Error:", error);
+    _callAjaxError(() =>
+      _printStudentTranscript(departmentId, classId, armId),
+    ); // retry if needed
+	  _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, false);
   }
 }

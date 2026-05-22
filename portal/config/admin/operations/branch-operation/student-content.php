@@ -519,18 +519,18 @@
                             onclick="_getActiveStudentPage({divid:'student_profile_details', page: 'student_profile_details', url: adminPortalLocalUrl});">
                             <i class="bi-person-bounding-box"></i> Student Profile
                         </li>
-                        <li class="hide-li" title="Transcript" id="tanscript"
-                            onclick="_getActiveStudentPage({divid:'tanscript', page: 'tanscript', url: adminPortalLocalUrl});">
+                        <li class="hide-li" title="Transcript" id="studentTranscriptPage"
+                            onclick="">
                             <i class="bi-mortarboard"></i> Transcript
                         </li>
                         <li class="hide-li" title="Student Report" id="student_report"
-                            onclick="_getActiveStudentPage({divid:'student_report', page: 'student_report', url: adminPortalLocalUrl});">
+                            onclick="">
                             <i class="bi-mortarboard"></i> Student Report
                         </li>
-                        <li class="hide-li" title="Student Activities" id="student_activities"
+                        <!-- <li class="hide-li" title="Student Activities" id="student_activities"
                             onclick="_getActiveStudentPage({divid:'student_activities', page: 'student_activities', url: adminPortalLocalUrl});">
                             <i class="bi-bell"></i> Student Activities
-                        </li>
+                        </li> -->
                         <li class="hide-li" id="dotted" title="Student Account"><i class="bi-credit-card"></i> Student
                             Account
                             <ul class="animated fadeIn">
@@ -566,10 +566,10 @@
                                     onclick="_getActiveStudentPage({divid:'student_report', page: 'student_report', url: adminPortalLocalUrl});">
                                     <i class="bi-mortarboard"></i> Student Report
                                 </li>
-                                <li title="Student Activities"
+                                <!-- <li title="Student Activities"
                                     onclick="_getActiveStudentPage({divid:'student_activities', page: 'student_activities', url: adminPortalLocalUrl});">
                                     <i class="bi-bell"></i> <span>Student Activities</span>
-                                </li>
+                                </li> -->
                                 <li title="Current Payable Fees" onclick="_fetchStudentCurrentPayableFees();"><i
                                         class="bi-credit-card"></i>Current Payable Fees</li>
 
@@ -2216,6 +2216,38 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- For Student Transcript Page-->
+<?php if ($page == 'studentTranscriptPage') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div><span><i class="bi-person-bounding-box"></i></span> STUDENT TRANSCRIPT CLASS LIST 
+        </div>
+    </div>
+
+    <div class="pages-toggle-back-div" id="transcriptClassPageContent">
+        <div class="pages-toggle-div">
+            <div class="pages-toggle-title">
+                <h3>JUNIOR</h3>
+                <div class="btn-back-div">
+                    <button class="btn" title="PRINT TRANSCRIPT" id="" onclick="_printStudentTranscript();">
+                        <i class="bi-printer"></i> PRINT
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pages-toggle-div">
+            <div class="pages-toggle-title">
+                <h3>SENIOR</h3>
+                <div class="btn-back-div">
+                    <button class="btn" title="PRINT TRANSCRIPT" id="" onclick="window.open(`${websiteUrl}/reports/print-student-academic-transcript`, '_blank');">
+                        <i class="bi-printer"></i> PRINT
+                    </button>
                 </div>
             </div>
         </div>
