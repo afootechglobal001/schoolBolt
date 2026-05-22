@@ -464,9 +464,9 @@
                                                 <i class="bi-table"></i> Broad/Report Sheet
                                             </li>
 
-                                            <li title="Session Cumulative Broadsheet"
+                                            <li title="Session Cumulative MarkBook"
                                                 onclick="_getForm({page: 'cumulativeAndPromotionalBroadsheetSelectForm', layer:2, id: 'cumulative', url: adminPortalLocalUrl});">
-                                                <i class="bi-table"></i> Session Cumulative Broadsheet
+                                                <i class="bi-table"></i> Session Cumulative MarkBook
                                             </li>
 
                                             <li title="Promotional Broadsheet"
@@ -617,9 +617,9 @@
                                             onclick="_getForm({page: 'broadsheet_select_form', layer:2, url: adminPortalLocalUrl});">
                                             <i class="bi-person-lines-fill"></i>Broad/Report Sheet
                                         </li>
-                                        <li title="Session Cumulative Broadsheet"
+                                        <li title="Session Cumulative MarkBook"
                                             onclick="_getForm({page: 'cumulativeAndPromotionalBroadsheetSelectForm', layer:2, id: 'cumulative', url: adminPortalLocalUrl});">
-                                            <i class="bi-table"></i> Session Cumulative Broadsheet
+                                            <i class="bi-table"></i> Session Cumulative MarkBook
                                         </li>
 
                                         <li title="Promotional Broadsheet"
@@ -2489,7 +2489,7 @@
         <div class="title-div">
             <?php 
                 if ($id == "cumulative") {
-                    $pageTitle = "SESSION CUMULATIVE BROADSHEET";
+                    $pageTitle = "SESSION CUMULATIVE MARKBOOK";
                     $subTitle = "cumulative";
                 } else if ($id == "promotional") {
                     $pageTitle = "PROMOTIONAL BROADSHEET";
@@ -2530,7 +2530,7 @@
         <div>
             <span><i class="bi-grid-3x3"></i></span> <span id="viewBroadsheetType">
                 <script>
-                    $("#viewBroadsheetType").html(cumulativeAndPromotionalDepartmentClassParams?.viewBroadsheetType === 'cumulative' ? 'SESSION CUMULATIVE BROADSHEET' : 'PROMOTIONAL BROADSHEET');
+                    $("#viewBroadsheetType").html(cumulativeAndPromotionalDepartmentClassParams?.viewBroadsheetType === 'cumulative' ? 'SESSION CUMULATIVE MARKBOOK' : 'PROMOTIONAL BROADSHEET');
                 </script>
             </span> --
             <span>SESSION</span>
@@ -3619,8 +3619,8 @@
                     </script>
                 </label>
 
-                <!-- SESSION CUMULATIVE BROADSHEET HEADER -->
-                <div class="title">UPLOAD SESSION CUMULATIVE BROADSHEET HEADER: <i>(PNG FORMAT ONLY)</i></div>
+                <!-- SESSION CUMULATIVE MARKBOOK HEADER -->
+                <div class="title">UPLOAD SESSION CUMULATIVE MARKBOOK HEADER: <i>(PNG FORMAT ONLY)</i></div>
                 <label>
                     <div class="pix-div">
                         <img id="sessionCumulativeBroadSheetHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
@@ -4705,7 +4705,7 @@
                             id: 'departmentId',
                             title: 'Select New Department'
                         });
-                        _getSelectDepartment('departmentId');
+                        _getSelectDepartment("departmentId", true);
                     </script>
                 </div>
 

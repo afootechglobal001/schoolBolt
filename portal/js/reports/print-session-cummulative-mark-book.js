@@ -20,7 +20,7 @@ function _printSessionCumulativeMarkBook(session, departmentId, classId, armId) 
 			_staffValidationCheck(response.response);
 			if (response.success > 0) {
 				sessionStorage.setItem("printSessionCumulativeMarkBookSession", JSON.stringify(response));
-				window.open(`${websiteUrl}/reports/print-session-cummulative-broad-sheet`, '_blank');
+				window.open(`${websiteUrl}/reports/print-session-cummulative-mark-book`, '_blank');
 			} else {
 				_actionAlert(response.message, false);
 				_showCustomConfirm({

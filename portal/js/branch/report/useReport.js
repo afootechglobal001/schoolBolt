@@ -679,7 +679,7 @@ function _fetchCumulativeAndPromotionalBroadsheetClass() {
 																		text += `
 																		<td>
 																			<div class="btn-div">
-																				<button class="btn view-btn" title="Click to print cumulative broad sheet" id="printCumulativeBtn_${classId}_${armId}" onclick="_printSessionCumulativeMarkBook('${session}', '${departmentId}', '${classId}', '${armId}');"><i class="bi-printer"></i> PRINT CUMULATIVE BROAD SHEET</button>
+																				<button class="btn view-btn" title="Click to print cumulative broad sheet" id="printCumulativeBtn_${classId}_${armId}" onclick="_printSessionCumulativeMarkBook('${session}', '${departmentId}', '${classId}', '${armId}');"><i class="bi-printer"></i> PRINT CUMULATIVE MARKBOOK</button>
 																			</div>
 																		</td>`;
 																	} else {
@@ -1091,7 +1091,7 @@ function _fetchPromotionPanelStudentsByClass(departmentId, classId, armId) {
             "usePromotionPanelStudentByClassSession",
             JSON.stringify(response),
           );
-          _getForm({page: 'studentPromotionPanelModal', layer: 2, url: adminPortalLocalUrl})
+          _getForm({page: 'studentPromotionPanelModal', layer: 2, url: adminPortalLocalUrl});
         } else {
           _alertClose(2);
           _actionAlert(response.message, false);
