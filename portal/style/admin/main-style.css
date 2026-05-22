@@ -4870,6 +4870,18 @@ header
   .text-back-div
   .inner-text
   .text-div
+  .GRADUATED {
+  background: #4D7AFF;
+  color: var(--white-color);
+}
+
+.user-profile-div
+  .profile-content-div
+  .bg-img
+  .mini-profile
+  .text-back-div
+  .inner-text
+  .text-div
   .name {
   overflow: hidden;
   color: var(--sub-body-color);
