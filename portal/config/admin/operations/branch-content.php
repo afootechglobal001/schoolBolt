@@ -410,7 +410,7 @@
                                         </li>
 
                                         <li id="my_students" title="Student Alumni"
-                                            onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});">
+                                            onclick="_getForm({page: 'branchAlumniStudentsSessionSelect', layer:2, url: adminPortalLocalUrl});">
                                             <i class="bi-mortarboard"></i>Student Alumni
                                         </li>
                                     </ul>
@@ -479,8 +479,9 @@
                                                 <i class="bi-file-earmark-ppt-fill"></i> Publish Result
                                             </li>
 
-                                            <li title="Promotional Panel">
-                                                <i class="bi-file-spreadsheet-fill"></i> Promotion Panel
+                                            <li title="Promotional Panel" id="branchResultPage"
+                                                onclick="_getActiveBranchPage({divid:'branchResultPage', page: 'promotionPanelBranchDepartmentClass', url: adminPortalLocalUrl});">
+                                                <i class="bi-clipboard-check"></i> Promotion Panel
                                             </li>
                                         </ul>
                                     </li>
@@ -563,7 +564,7 @@
                                     </li>
 
                                     <li id="my_students" title="Student Alumni"
-                                        onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});">
+                                        onclick="_getForm({page: 'branchAlumniStudentsSessionSelect', layer:2, url: adminPortalLocalUrl});">
                                         <i class="bi-mortarboard"></i>Student Alumni
                                     </li>
                                 </ul>
@@ -625,8 +626,13 @@
                                             onclick="_getForm({page: 'cumulativeAndPromotionalBroadsheetSelectForm', layer:2, id: 'promotional', url: adminPortalLocalUrl});">
                                             <i class="bi-table"></i> Promotional Broadsheet
                                         </li>
+
                                         <li title="Publish Result" onclick="_getForm({page: 'publishResultSelectForm', layer:2, url: adminPortalLocalUrl});"><i class="bi-file-earmark-ppt-fill"></i>Publish Result</li>
-                                        <li title="Promotional Panel"><i class="bi-person-lines-fill"></i>Promotion Panel</li>
+                                        
+                                        <li title="Promotional Panel"
+                                            onclick="_getActiveBranchPage({divid:'branchResultPage', page: 'promotionPanelBranchDepartmentClass', url: adminPortalLocalUrl});">
+                                            <i class="bi-clipboard-check"></i>Promotion Panel
+                                        </li>
                                     </ul>
 
                                 </li>
@@ -1420,8 +1426,7 @@
         <span><i class="bi-person-bounding-box"></i> BRANCH STAFF LIST</span>
 
         <div class="btn-container">
-            <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
-            <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i>
+            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('pageContent','Branch_Staff_List');"><i class="bi-file-earmark-excel"></i>
                 EXPORT</button>
         </div>
     </div>
@@ -4425,6 +4430,305 @@
                         onclick="_savePrincipalsComment();">
                         <i class="bi-save"></i> UPDATE COMMENTS
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'promotionPanelBranchDepartmentClass') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div>
+            <span>
+                <i class="bi-clipboard-check"></i>
+                PROMOTION PANEL
+            </span>
+        </div>
+    </div>
+
+    <div class="pages-toggle-back-div" id="promotionPanelPageContent">
+        <script>
+            _fetchPromotionDepartmentClasses();
+        </script>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'studentPromotionPanelModal') { ?>
+    <script> usePromotionPanelStudentByClassSession = JSON.parse(sessionStorage.getItem("usePromotionPanelStudentByClassSession"));</script>
+
+    <script>
+    _checkAll()
+    </script>
+    <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="top-panel-div">
+            <div class="inner-top">
+                <span><i class="bi-people-fill"></i> STUDENT PROMOTION PANEL</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="profile-content-div">
+            <div class="field-back-div">
+                <div class="field-inner-div student-result-field-inner-div">
+                    <div class="content-wrapper animated fadeIn">
+                        <div class="header-div">
+                            <div class="title-nav-back-div">
+                                <div class="nav-ul-div">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="parent">
+                                        <span>Check All Students</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="search-btn-div">
+                                <div class="search-div">
+                                    <input type="text" onkeyup="_filtersPromotionPanelStudents(this.value);"
+                                        placeholder="Search Student Here...">
+                                    <i class="bi bi-search"></i>
+                                </div>
+
+                                <div class="btn-div">
+                                    <button class="btn" title="ACTIVATE RESULT" id="activateAllBtn"
+                                        onclick="_openProceedPromotionForm();">
+                                        <i class="bi-check"></i> PROCEED TO PROMOTE
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-container" id="getPaymentNav">
+                            <div class="alert alert-success top-alert-div animated fadeIn">
+                                <div>
+                                    <span><i class="bi-people-fill"></i> STUDENT PROMOTION PANEL LIST /</span> SESSION --
+                                    <span id="promotionSession">
+                                        <script>
+                                        $("#promotionSession").html(usePromotionPanelStudentByClassSession?.session);
+                                        </script>
+                                    </span>
+                                    / TERM -- <span id="promotionTermName">
+                                        <script>
+                                        $("#promotionTermName").html(usePromotionPanelStudentByClassSession?.termData?.termName);
+                                        </script>
+                                    </span>
+                                    / DEPARTMENT -- <span id="promotionDepartment">
+                                        <script>
+                                        $("#promotionDepartment").html(usePromotionPanelStudentByClassSession?.departmentData
+                                            ?.departmentName);
+                                        </script>
+                                    </span>
+                                    / CLASS -- <span id="promotionClass">
+                                        <script>
+                                        $("#promotionClass").html(usePromotionPanelStudentByClassSession?.classData?.className +
+                                            ' ' +
+                                            usePromotionPanelStudentByClassSession?.armData?.armName);
+                                        </script>
+                                    </span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="table-div animated fadeIn">
+                                <table class="table" cellspacing="0" style="width:100%" id="promotionPanelStudentByClassPageContent">
+                                    <script>
+                                    $(document).ready(function() {
+                                        const response = JSON.parse(sessionStorage.getItem(
+                                            "usePromotionPanelStudentByClassSession"));
+
+                                        if (response && response.success === true) {
+                                            const data = response.data;
+
+                                            const session = response.session;
+                                            const termName = response?.termData?.termName;
+                                            const departmentId = response?.departmentData?.departmentId;
+                                            const departmentName = response?.departmentData?.departmentName;
+                                            const classId = response?.classData?.classId;
+                                            const className = response?.classData?.className;
+                                            const armId = response?.armData?.armId;
+                                            const armName = response?.armData?.armName;
+
+                                            let html = `
+                                                <thead>
+                                                    <tr class="tb-col">
+                                                        <th></th>
+                                                        <th>sn</th>
+                                                        <th>Student Info</th>
+                                                        <th>Session</th>
+                                                        <th>Term</th>
+                                                        <th>Current Department</th>
+                                                        <th>Current Class</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>`;
+
+                                            let sn = 0;
+
+                                            if (data.length > 0) {
+                                                data.forEach(item => {
+                                                    sn++;
+                                                    const student = item.studentData;
+                                                    const fullname =
+                                                        `${student.surName} ${student.firstName} ${student.otherNames || ''}`;
+                                                    const studentId = item.studentId;
+                                                    const branchId = item.branchId;
+                                                    const passport = student.passport || "default.jpg";
+
+                                                    html += `
+                                                    <tr class="tb-row">
+                                                        <td>
+                                                            <label class="custom-checkbox">
+                                                                <input type="checkbox"
+                                                                    class="child"
+                                                                    id="student_${studentId}"
+                                                                    name="studentId[]"
+                                                                    value="${studentId}"
+                                                                    data-value="${studentId}">
+                                                                    <span></span>
+                                                            </label>
+                                                        </td>
+                                                        <td>${sn}</td>
+
+                                                        <td class="clickable-td">
+                                                            <div class="text-back-div" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
+                                                                <div class="image-div general-passport">
+                                                                    <img src="${studentPixPath}/${passport}" alt="${fullname}" />
+                                                                </div>
+
+                                                                <div class="text-div">
+                                                                    <div class="first-class">${fullname}</div>
+                                                                    <div class="second-class">${studentId}</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>${session}</td>
+                                                        <td>${termName}</td>
+                                                        <td>${departmentName}</td>
+                                                        <td>${className} ${armName}</td>
+                                                    </tr>`;
+                                                });
+                                            } else {
+                                                html += `
+                                                <tr>
+                                                    <td colspan="7">
+                                                        <div class="false-notification-div">
+                                                            <p>No Record Found!!!</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>`;
+                                            }
+                                            html += `</tbody>`;
+                                            $('#promotionPanelStudentByClassPageContent').html(html);
+                                        }
+                                    });
+                                    </script>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- For Promotion Panel Department and class select -->
+<?php if ($page == 'promotionPanelStudentSelectForm') { ?>
+    <script>
+        usePromotionPanelStudentByClassSession = JSON.parse(sessionStorage.getItem("usePromotionPanelStudentByClassSession"));
+    </script>
+
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <div class="icon-title-div">
+                    <span id="panel-title"><span><i class="bi-plus-square"></i></span> PROMOTION PANEL</span>
+                </div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div class="alert alert-success form-alert">
+                    <i class="bi bi-person"></i>
+                    Hello, you are about to carry out student promotion.
+                    Please select the appropriate <span>New Department</span>, <span>New Class</span> and <span>New Arm</span> to continue.
+                </div>
+                
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Confirm Promotion Information</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Current Department:</div>
+                                    <div><span id="promotionDepartmentName">
+                                            <script>
+                                            $("#promotionDepartmentName").html(usePromotionPanelStudentByClassSession?.departmentData
+                                                ?.departmentName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Current Class:</div>
+                                    <div><span id="promotionClassName">
+                                            <script>
+                                            $("#promotionClassName").html(usePromotionPanelStudentByClassSession?.classData
+                                                ?.className);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Current Arm:</div>
+                                    <div><span id="promotionArmName">
+                                            <script>
+                                            $("#promotionArmName").html(usePromotionPanelStudentByClassSession?.armData?.armName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text_field_container" id="departmentId_container">
+                    <script>
+                        selectField({
+                            id: 'departmentId',
+                            title: 'Select New Department'
+                        });
+                        _getSelectDepartment('departmentId');
+                    </script>
+                </div>
+
+                <div class="text_field_container" id="classId_container">
+                    <script>
+                        selectField({
+                            id: 'classId',
+                            title: 'Select New Class'
+                        });
+                    </script>
+                </div>
+
+                <div class="text_field_container" id="armId_container">
+                    <script>
+                        selectField({
+                            id: 'armId',
+                            title: 'Select New Arm'
+                        });
+                    </script>
+                </div>
+
+                <button class="btn" id="submitBtn" title="Proceed Request" onclick="_proceedStudentPromotion();">PROMOTE STUDENTS <i
+                        class="bi-arrow-right"></i> </button>
                 </div>
             </div>
         </div>

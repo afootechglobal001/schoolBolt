@@ -7,11 +7,11 @@
     <link href="<?php echo $websiteUrl?>/style/report-style.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
     <link href="<?php echo $websiteUrl?>/style/paramount.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
     <script src="<?php echo $websiteUrl?>/js/jquery-v3.6.1.min.js"></script>
-    <title>Cumulative Broad Sheet | <?php echo $clientName ?></title>
+    <title>Cumulative Mark Book | <?php echo $clientName ?></title>
 </head>
 
 <body>
-    <script> printSessionCumulativeBroadSheetSession = JSON.parse(sessionStorage.getItem("printSessionCumulativeBroadSheetSession"));</script>
+    <script> printSessionCumulativeMarkBookSession = JSON.parse(sessionStorage.getItem("printSessionCumulativeMarkBookSession"));</script>
 
     <section class="body-div broadsheet-body" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
         <div class="header-back-div">
@@ -21,11 +21,11 @@
             
             <script>
                 $(document).ready(function () {
-                    const schoolHeader = printSessionCumulativeBroadSheetSession?.branchData?.sessionCummulativeBroadsheetHeader;
+                    const schoolHeader = printSessionCumulativeMarkBookSession?.branchData?.sessionCummulativeBroadsheetHeader;
                     const headerUrl = schoolHeader ? `${sessionCummulativeBroadsheetHeaderPixPath}/${schoolHeader}` : `<?php echo $websiteUrl ?>/images/report/session-cumulative-broad-sheet-header.png`;
-                    $("#sessionCummulativeBroadsheetHeader").attr("src", headerUrl).attr("alt", `${printSessionCumulativeBroadSheetSession?.branchData?.branchName} Report Header`);
+                    $("#sessionCummulativeBroadsheetHeader").attr("src", headerUrl).attr("alt", `${printSessionCumulativeMarkBookSession?.branchData?.branchName} Report Header`);
 
-                    const backendWatermark = printSessionCumulativeBroadSheetSession?.branchData?.watermark;
+                    const backendWatermark = printSessionCumulativeMarkBookSession?.branchData?.watermark;
                     const defaultWatermark = '../images/report/watermark.jpg';
                     const watermarkUrl = backendWatermark ? `${watermarkPixPath}/${backendWatermark}` : defaultWatermark;
 
@@ -39,10 +39,10 @@
             <div class="title-div">
                 <h3 id="titleDetails"></h3>
                 <script>
-                    $("#titleDetails").html(printSessionCumulativeBroadSheetSession?.session + ' - ' +
-                    printSessionCumulativeBroadSheetSession?.departmentData?.departmentName + ' - ' +
-                    printSessionCumulativeBroadSheetSession?.classData?.className + ' - ' +
-                    printSessionCumulativeBroadSheetSession?.armData?.armName + ' - ' +
+                    $("#titleDetails").html(printSessionCumulativeMarkBookSession?.session + ' - ' +
+                    printSessionCumulativeMarkBookSession?.departmentData?.departmentName + ' - ' +
+                    printSessionCumulativeMarkBookSession?.classData?.className + ' - ' +
+                    printSessionCumulativeMarkBookSession?.armData?.armName + ' - ' +
                     'ACADEMIC SESSION');
                 </script>
             </div>
@@ -53,7 +53,7 @@
                 <table class="table" cellspacing="0" style="width:100%" id="pageContent">
                     <script>
                         $(document).ready(function () {
-                            const data = JSON.parse(sessionStorage.getItem("printSessionCumulativeBroadSheetSession"));
+                            const data = JSON.parse(sessionStorage.getItem("printSessionCumulativeMarkBookSession"));
                             if (!data) return;
 
                             const studentData = data.data || [];

@@ -223,14 +223,6 @@ function _fetchCustomStudentFundFiltering() {
 
 ///// Fetch Students Funds ////
 function _studentFundHistoryFiltering(dateFrom, dateTo) {
-	$("#get-more-third-layer")
-    .css({
-      display: "flex",
-      "justify-content": "center",
-      "align-items": "center",
-    })
-    .fadeIn(500);
-
   	let getEachBranchDetailsSession = JSON.parse(
 		  sessionStorage.getItem("getEachBranchDetailsSession")
 	  );
@@ -277,7 +269,6 @@ function _studentFundHistoryFiltering(dateFrom, dateTo) {
 		console.error("Error:", error);
 		_callCatchError(() => _walletHistoryFiltering(dateFrom, dateTo));
 	}
-	$("#get-more-third-layer").fadeOut(500);
 }
 
 ///// Render Fetch Students Funds ////

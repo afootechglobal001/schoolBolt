@@ -1,3 +1,4 @@
+//// Get Select Session ////
 function _getSelectBranchAssessment(fieldId){
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
 	try {
@@ -28,6 +29,7 @@ function _getSelectBranchAssessment(fieldId){
 	}
 }
 
+///// Get Select Session ////
 function _getSelectSession(fieldId){
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
 	try {
@@ -58,6 +60,7 @@ function _getSelectSession(fieldId){
 	}
 }
 
+//// Proceed Fetch Report Classes ////
 function _proceedFetchReportClasses(){
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
 
@@ -130,6 +133,7 @@ function _proceedFetchReportClasses(){
 	}
 }
 
+//// Fetch Broadsheet Class ////
 function _fetchBroadsheetClass() {
     let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
 	let fetchPresetDataSession = JSON.parse(sessionStorage.getItem("fetchPresetDataSession"));
@@ -302,6 +306,7 @@ function _fetchBroadsheetClass() {
     }
 }
 
+//// View Continuous Assessment Result Summary ////
 function _viewCaResultSummary(departmentId, classId, armId) {
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
 	let fetchPresetDataSession = JSON.parse(sessionStorage.getItem("fetchPresetDataSession"));
@@ -345,6 +350,7 @@ function _viewCaResultSummary(departmentId, classId, armId) {
 	}
 }
 
+//// View Terminal Result Summary ////
 function _viewTerminalResultSummary(departmentId, classId, armId) {
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
 	let fetchPresetDataSession = JSON.parse(sessionStorage.getItem("fetchPresetDataSession"));
@@ -393,6 +399,7 @@ function _viewTerminalResultSummary(departmentId, classId, armId) {
 	}
 }
 
+/// Lock Assessment Record ///
 function _lockAssessmentRecord(e, el) {
     try {
         e.stopPropagation();
@@ -425,6 +432,7 @@ function _lockAssessmentRecord(e, el) {
     }
 }
 
+//// Lock Assessment Record Callback ////
 function _lockAssessmentRecordCallback(assessmentLock) {
 	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
 
@@ -473,6 +481,91 @@ function _lockAssessmentRecordCallback(assessmentLock) {
     });
 }
 
+/// Publish Result ///
+function _publishResult(){
+	try {
+		////////get all needed values////////////
+		let issueCount = 0;
+		const newSession = $('#newSession').val().trim();
+    	const newTermId = $('#newTermId').val().trim();
+		
+		///// empty field validation//////////
+		issueCount += _validateEmptyValue("newSession", "SESSION");
+		issueCount += _validateEmptyValue("newTermId", "TERM");
+
+		if (issueCount > 0) return;
+
+		/////Gather form data////
+		const formData = {
+			newSession,
+			newTermId,
+		};
+
+		////// confirm action////
+		_showCustomConfirm({
+		callback: () => {
+			_publishResultCallback(formData);
+		},
+			title: "Are you sure?",
+			message: 'Once you publish this result, the current student result data cannot be updated. Ensure all scores and details are 100% correct before proceeding.',
+			alertType: "warning",
+			falseActionBtn: true,
+			trueActionBtnText: "Yes, Publish",
+			falseActionBtnText: "Cancel",
+			closeOnOverlayClick: true,
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _publishResult());
+	}
+}
+
+/// Publish Result Callback ////
+function _publishResultCallback(formData) {
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+
+	///// get btn text/////
+	const btnText = $("#publishResultBtn").html();
+	_btnDisable("publishResultBtn", btnText, true);
+	
+	//// call endpoint //////
+	 _callRawEndPoints({
+		url: `reports/publish-results?branchId=${getEachBranchDetailsSession.branchId}`,
+		formData,
+		accessKey: true,
+	})
+    .then((response) => {
+		_staffValidationCheck(response.response);
+		if (response.success) {
+      _showCustomConfirm({
+				callback: () => {
+				  _alertClose(2);
+          _fetchEachBranches(getEachBranchDetailsSession.branchId);
+          _getPage({ page: "branches", url: adminPortalLocalUrl });
+				},
+          title: "Success!",
+          message: response.message,
+          alertType: "success",
+          trueActionBtnText: "Okay, Thanks",
+          closeOnOverlayClick: false,
+      });
+			_btnDisable("publishResultBtn", btnText, false);
+		} else {
+			_btnDisable("publishResultBtn", btnText, false);
+			_showCustomConfirm({
+				title: "Unable to Publish Result!",
+				message: response.message,
+				alertType: "error",
+				trueActionBtnText: "OK",
+			});
+		}
+    })
+    .catch((error) => {
+		console.error("Error:", error);
+		_callAjaxError(() => _publishResultCallback(formData)); // retry if needed
+		_btnDisable("publishResultBtn", btnText, false);
+    });
+}
 
 //// Proceed Fetch Cumulative and Promotional Broadsheet ////
 function proceedPromotionalAndCumulativeBroadsheet(viewBroadsheetType) {
@@ -586,7 +679,7 @@ function _fetchCumulativeAndPromotionalBroadsheetClass() {
 																		text += `
 																		<td>
 																			<div class="btn-div">
-																				<button class="btn view-btn" title="Click to print cumulative broad sheet" id="printCumulativeBtn_${classId}_${armId}" onclick="_printSessionCumulativeBroadSheet('${session}', '${departmentId}', '${classId}', '${armId}');"><i class="bi-printer"></i> PRINT CUMULATIVE BROAD SHEET</button>
+																				<button class="btn view-btn" title="Click to print cumulative broad sheet" id="printCumulativeBtn_${classId}_${armId}" onclick="_printSessionCumulativeMarkBook('${session}', '${departmentId}', '${classId}', '${armId}');"><i class="bi-printer"></i> PRINT CUMULATIVE BROAD SHEET</button>
 																			</div>
 																		</td>`;
 																	} else {
@@ -680,4 +773,498 @@ function _fetchCumulativeAndPromotionalBroadsheetClass() {
         console.error("Error: ", error);
         _actionAlert('An unexpected error occurred! Please try again.', false);
     }
+}
+
+//// Proceed To Update Comment ////
+function _proceedUpdatePrincipalsComment() {
+	let getViewTerminalResultSummarySession = JSON.parse(sessionStorage.getItem("getViewTerminalResultSummarySession"));
+  const classTeachersComment = getViewTerminalResultSummarySession?.studentData[0]?.classTeachersComment || "";
+	
+	if (getViewTerminalResultSummarySession) {
+    if (classTeachersComment==="" || classTeachersComment==null) {
+      _showCustomConfirm({
+        title: "Unable to Proceed!",
+        message: "Class teacher's comment must be computed. Kindly compute class teacher's comment to proceed.",
+        alertType: "error",
+        trueActionBtnText: "OK",
+        closeOnOverlayClick: true,
+      });
+    } else {
+      sessionStorage.setItem("printTerminalResultSummarySession", JSON.stringify(getViewTerminalResultSummarySession));
+      _getForm({ page: "updateHeadAndPrincipalComment", layer: 3, url: adminPortalLocalUrl });
+    }
+	}
+}
+
+//// Save Principal Comment ////
+function _savePrincipalsComment() {
+  try {
+    let issueCount = 0;
+		const allComments = [];
+	
+		$('.student-id-holder').each(function () {
+			const studentId = $(this).val();
+			const inputSelector = `#principalComment_${studentId}`;
+			const errorSelector = `#issue_principalComment_${studentId}`;
+			const principalComment = $(inputSelector).val();
+
+			$(inputSelector).removeClass('issue');
+			$(errorSelector).html('');
+
+			if (principalComment === "" || null) {
+				$(inputSelector).addClass('issue');
+				$(errorSelector).html(`Principal's comment is required`);
+				issueCount++;
+			} else {
+				allComments.push({
+					studentId: studentId,
+					principalsComment: principalComment
+				});
+			}
+		});
+
+		if (issueCount>0){
+			return;
+		}
+
+    ///// Gather form data ////
+    const formData = {
+      allComments: allComments,
+    };
+
+    ////// confirm action ////
+    _showCustomConfirm({
+      callback: () => {
+        _savePrincipalsCommentCallback(formData);
+      },
+      title: "Are you sure?",
+      message: "Are you sure you want to proceed? This action is irreversible.",
+      alertType: "warning",
+      falseActionBtn: true,
+      closeOnOverlayClick: true,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _savePrincipalsComment());
+  }
+}
+
+//// Proceed To Principal Comment CallBack /////
+function _savePrincipalsCommentCallback(formData) {
+  let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+
+  let getViewTerminalResultSummarySession = JSON.parse(
+    sessionStorage.getItem("getViewTerminalResultSummarySession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+	const departmentId = getViewTerminalResultSummarySession?.departmentData?.departmentId;
+	const classId = getViewTerminalResultSummarySession?.classData?.classId;
+	const armId = getViewTerminalResultSummarySession?.armData?.armId;
+
+  try {
+    const btnText = $("#submitBtn").html();
+    _btnDisable("submitBtn", btnText, true);
+
+    _callRawEndPoints({
+      url: `reports/save-class-principals-comments?branchId=${branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+      formData,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success) {
+          _alertClose(3);
+          _viewTerminalResultSummary(departmentId, classId, armId);
+        } else {
+          _showCustomConfirm({
+            title: "Unable to Save Comments!",
+            message: response.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+          _btnDisable("submitBtn", btnText, false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() => _savePrincipalsCommentCallback(formData)); // retry if needed
+        _btnDisable("submitBtn", btnText, false);
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _savePrincipalsCommentCallback(formData));
+    _btnDisable("submitBtn", btnText, false);
+  }
+}
+
+//// Fetch Promotional Panel Department Classes ////
+function _fetchPromotionDepartmentClasses() {
+    let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+
+	const branchId = getEachBranchDetailsSession?.branchId;
+	const session = getEachBranchDetailsSession?.session;
+	const termName = getEachBranchDetailsSession?.termData[0]?.termName;
+
+    $('#promotionPanelPageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");
+    try {
+        $.ajax({
+            type: "GET",
+            url: `${endPoint}/reports/fetch-report-department-classes?branchId=${branchId}`,
+            dataType: "json",
+            cache: false,
+            headers: getAuthHeaders(true),
+            success: function(info) {
+                const fetch = info.data;
+                const success = info.success;
+
+                let text = '';
+                let no = 0;
+
+                if (success === true) {
+                    for (let i = 0; i < fetch.length; i++) {
+                        no++;
+                        const department = fetch[i];
+                       	const departmentName = department.departmentName;
+						const departmentId = department.departmentId;
+						const classesData = department.classesData;
+
+						if (classesData.length > 0) {
+							for (let j = 0; j < classesData.length; j++) {
+								no++;
+								const classInfo = classesData[j];
+								const classId = classInfo.classId;
+								const className = classInfo.className;
+								const armData = classInfo.armData;
+						
+								text += `
+									<div class="pages-toggle-div">
+										<div class="pages-toggle-title" onclick="_collapse('view${no}');" title="Click to view classess">
+											<h3>${departmentName} (${className})</h3>
+											<div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
+										</div>
+
+										<div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
+											<div class="table-div animated fadeIn">
+												<table class="table" cellspacing="0" style="width:100%">
+													<thead>
+														<tr class="tb-col">
+															<th>sn</th>
+															<th>Department</th>
+															<th>Class</th>
+															<th>Session</th>
+															<th>Term</th>
+															<th>Action</th>
+														</tr>
+													</thead>
+													
+													<tbody>`;
+														let sn = 0; 
+														if (armData.length > 0) {
+															for (let k = 0; k < armData.length; k++) {
+																sn++;
+																const armInfo = armData[k];
+																const arm = armInfo.armName;
+																const armId = armInfo.armId;
+
+																text += `
+																<tr class="tb-row">
+																	<td>${sn}</td>
+																	<td>${departmentName}</td>
+																	<td>${className} ${arm}</td>
+																	<td>${session}</td>
+																	<td>${termName}</td>
+																	<td>
+																		<div class="btn-div">
+																			<button class="btn view-btn" title="Click to proceed to promotion panel" id="proceedBtn_${classId}_${armId}" onclick="_fetchPromotionPanelStudentsByClass('${departmentId}', '${classId}', '${armId}');"><i class="bi-printer"></i> PROCEED TO VIEW STUDENTS</button>
+																		</div>
+																	</td>`;
+																	
+																text +=`</tr>`;
+															}
+														} else {
+															sn++;
+															text += `
+															<tr class="tb-row">
+																<td>${sn}</td>
+																<td>${departmentName}</td>
+																<td>${className} (No Arm)</td>
+																<td></td>
+															</tr>`;
+														}
+												text += `
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>`;
+							}
+						} else {
+							no++;
+							text += `
+							<div class="pages-toggle-div">
+								<div class="pages-toggle-title" onclick="_collapse('view${no}');" title="No classes available">
+									<h3>${departmentName} (No Class)</h3>
+									<div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
+								</div>
+
+								<div class="toggle-expand-div" id="view${no}answer" style="display:none;">
+									<div class="table-div animated fadeIn">
+										<table class="table" cellspacing="0" style="width:100%">
+											<thead>
+												<tr class="tb-col">
+													<th>sn</th>
+													<th>Department</th>
+													<th>Class</th>
+													<th>Session</th>
+													<th>Term</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="tb-row">
+													<td>${no}</td>
+													<td>${departmentName}</td>
+													<td>No Class Available</td>
+													<td>${session}</td>
+													<td>${termName}</td>
+													<td></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div> 
+							</div>`;
+						}
+                    }
+                    $('#promotionPanelPageContent').html(text);
+                } else {
+                    _actionAlert(info.message, false);
+                    $('#promotionPanelPageContent').html(`
+                        <tbody>
+                            <tr>
+                                <td colspan="15">
+                                    <div class="false-notification-div">
+                                        <p>${info.message}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>`);
+
+                    if (info.response < 100) {
+                        _logOut();
+                    }
+                }
+            },
+            error: function(textStatus, errorThrown) {
+                console.error("AJAX Error: ", textStatus, errorThrown);
+                _actionAlert('Check your internet connection and try again.', false);
+            }
+        });
+    } catch (error) {
+        console.error("Error: ", error);
+        _actionAlert('An unexpected error occurred! Please try again.', false);
+    }
+}
+
+///// Fetch Promotion Panel Students By Class /////
+function _fetchPromotionPanelStudentsByClass(departmentId, classId, armId) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+  try {
+	const btnText = $(`#proceedBtn_${classId}_${armId}`).html();
+    _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, true);
+	
+    //// call endpoint //////
+    _callFetchEndPoints({
+      url: `admin/branch/students/fetch-student?branchId=${branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success=== true) {
+          sessionStorage.setItem(
+            "usePromotionPanelStudentByClassSession",
+            JSON.stringify(response),
+          );
+          _getForm({page: 'studentPromotionPanelModal', layer: 2, url: adminPortalLocalUrl})
+        } else {
+          _alertClose(2);
+          _actionAlert(response.message, false);
+		   _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, false);
+        }
+		_btnDisable(`proceedBtn_${classId}_${armId}`, btnText, false);
+      })
+      .catch((error) => {
+        _alertClose(2);
+        console.error("Error:", error);
+        _callAjaxError(() =>
+          _fetchPromotionPanelStudentsByClass(departmentId, classId, armId),
+        ); // retry if needed
+		_btnDisable(`proceedBtn_${classId}_${armId}`, btnText, false);
+      });
+  } catch (error) {
+    _alertClose(2);
+    console.error("Error:", error);
+    _callAjaxError(() =>
+      _fetchPromotionPanelStudentsByClass(departmentId, classId, armId),
+    ); // retry if needed
+	_btnDisable(`proceedBtn_${classId}_${armId}`, btnText, false);
+  }
+}
+
+/// filter Combo Product Data ///
+function _filtersPromotionPanelStudents(value) {
+  $("#promotionPanelStudentByClassPageContent .tb-row").each(function () {
+    var text = $(this).text();
+    text.toLowerCase().indexOf(value.toLowerCase()) > -1
+      ? $(this).show()
+      : $(this).hide();
+  });
+}
+
+//// Open Proceed Promotion Form ////
+function _openProceedPromotionForm() {
+    ////////get all needed values////////////
+    let selectedStudents = [];
+    $(".child:checked").each(function () {
+      selectedStudents.push({ studentId: $(this).data("value") });
+    });
+
+    const checked = $('input[name="studentId[]"]:checked').length;
+    $("#studentId").removeClass("issue");
+
+    if (checked < 1) {
+		_showCustomConfirm({
+			title: "No Student Selected!",
+			message: "Select at least a student to continue.",
+			alertType: "error",
+			trueActionBtnText: "OK",
+			closeOnOverlayClick: true,
+		});
+		return;
+    }
+
+    // STORE SELECTED IDS
+    sessionStorage.setItem(
+        "getPromotionStudentIds",
+        JSON.stringify(selectedStudents)
+    );
+
+    // OPEN MODAL
+    _getForm({
+        page: 'promotionPanelStudentSelectForm',
+        layer: 3,
+        url: adminPortalLocalUrl
+    });
+}
+
+/// Proceed With Student Promotion ////
+function _proceedStudentPromotion() {
+	let getPromotionStudentIds = JSON.parse(sessionStorage.getItem("getPromotionStudentIds"));
+
+	try {
+		////////get all needed values////////////
+		let issueCount = 0;
+		let selectedStudents = getPromotionStudentIds || [];
+		const newDepartmentId = $("#departmentId").val().trim();
+		const newClassId = $("#classId").val().trim();
+		const newArmId = $("#armId").val().trim();
+
+		issueCount += _validateEmptyValue("departmentId", "NEW DEPARTMENT");
+		issueCount += _validateEmptyValue("classId", "NEW CLASS");
+		issueCount += _validateEmptyValue("armId", "NEW ARM");
+
+		if (issueCount > 0) return;
+
+		// Gather form data
+		const formData = {
+			studentIds: selectedStudents,
+			newDepartmentId: newDepartmentId,
+			newClassId: newClassId,
+			newArmId: newArmId,
+		};
+
+		////// confirm action////
+		_showCustomConfirm({
+			callback: () => {
+				_proceedStudentPromotionCallback(formData);
+			},
+			title: "Are you sure?",
+			message: "Are you sure you want to proceed? This action is irreversible.",
+			alertType: "warning",
+			falseActionBtn: true,
+			closeOnOverlayClick: true,
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _proceedStudentPromotion());
+	}
+}
+
+//// Proceed To Promotion of student CallBack /////
+function _proceedStudentPromotionCallback(formData) {
+	let getEachBranchDetailsSession = JSON.parse(
+		sessionStorage.getItem("getEachBranchDetailsSession"),
+	);
+
+	let usePromotionPanelStudentByClassSession = JSON.parse(
+		sessionStorage.getItem("usePromotionPanelStudentByClassSession"),
+	);
+
+	const branchId = getEachBranchDetailsSession?.branchId;
+	const selectedDepartmentId = usePromotionPanelStudentByClassSession?.departmentData?.departmentId;
+	const selectedClassId = usePromotionPanelStudentByClassSession?.classData?.classId;
+	const selectedArmId = usePromotionPanelStudentByClassSession?.armData?.armId;
+	
+	try {
+		/// Get Btn Text ///
+		const btnText = $("#submitBtn").html();
+		_btnDisable("submitBtn", btnText, true);
+
+		//// Call endpoint //////
+		_callRawEndPoints({
+			url: `reports/promote-students-to-next-class?branchId=${branchId}`,
+			formData,
+			accessKey: true,
+		})
+		.then((response) => {
+			_staffValidationCheck(response.response);
+			if (response.success) {
+				_alertClose(3);
+				_showCustomConfirm({
+					callback: () => {
+						_fetchPromotionPanelStudentsByClass(selectedDepartmentId, selectedClassId, selectedArmId)
+					},
+					title: "Success!",
+					message: response.message,
+					alertType: "success",
+					trueActionBtnText: "OK, Thanks.",
+					closeOnOverlayClick: false,
+				});
+			} else {
+				_showCustomConfirm({
+					title: "Unable To Promote Students!",
+					message: response.message,
+					alertType: "warning",
+					trueActionBtnText: "OK",
+					closeOnOverlayClick: true,
+				});
+				_btnDisable("submitBtn", btnText, false);
+			}
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			_callAjaxError(() => _proceedStudentPromotionCallback(formData)); // retry if needed
+			_btnDisable("submitBtn", btnText, false);
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _proceedStudentPromotionCallback(formData));
+		_btnDisable("submitBtn", btnText, false);
+	}
 }

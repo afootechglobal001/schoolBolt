@@ -1,5 +1,5 @@
 ///// Fetch Account Students By Class /////
-function _printSessionCumulativeBroadSheet(session, departmentId, classId, armId) {
+function _printSessionCumulativeMarkBook(session, departmentId, classId, armId) {
 	let getEachBranchDetailsSession = JSON.parse(
 		sessionStorage.getItem("getEachBranchDetailsSession"),
 	);
@@ -13,13 +13,13 @@ function _printSessionCumulativeBroadSheet(session, departmentId, classId, armId
 
 		//// call endpoint //////
 		_callFetchEndPoints({
-		url: `reports/print-session-cummulative-broad-sheet?branchId=${branchId}&session=${session}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+		url: `reports/print-session-cummulative-mark-book?branchId=${branchId}&session=${session}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
 		accessKey: true,
 		})
 		.then((response) => {
 			_staffValidationCheck(response.response);
 			if (response.success > 0) {
-				sessionStorage.setItem("printSessionCumulativeBroadSheetSession", JSON.stringify(response));
+				sessionStorage.setItem("printSessionCumulativeMarkBookSession", JSON.stringify(response));
 				window.open(`${websiteUrl}/reports/print-session-cummulative-broad-sheet`, '_blank');
 			} else {
 				_actionAlert(response.message, false);
@@ -36,14 +36,14 @@ function _printSessionCumulativeBroadSheet(session, departmentId, classId, armId
 		.catch((error) => {
 			console.error("Error:", error);
 			_callAjaxError(() =>
-			_printSessionCumulativeBroadSheet(session, departmentId, classId, armId),
+			_printSessionCumulativeMarkBook(session, departmentId, classId, armId),
 			); // retry if needed
 			$(`#printCumulativeBtn_${classId}_${armId}`).html(btnText).prop("disabled", false);
 		});
 	} catch (error) {
 		console.error("Error:", error);
 		_callAjaxError(() =>
-		_printSessionCumulativeBroadSheet(session, departmentId, classId, armId),
+		_printSessionCumulativeMarkBook(session, departmentId, classId, armId),
 		); // retry if needed
 		$(`#printCumulativeBtn_${classId}_${armId}`).prop("disabled", false);
 	}

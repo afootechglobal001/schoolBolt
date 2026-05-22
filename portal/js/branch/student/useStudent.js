@@ -632,7 +632,7 @@ function _fetchBranchStudents() {
 					<button class="btn" title="PRINT RECORDS" id="printStudentsByClassBtn" onclick="_printStudentByClass('${info.departmentData.departmentId}','${info.classData.classId}','${info.armData.armId}')">
 						<i class="bi-printer"></i> PRINT
 					</button>
-					<button class="btn" title="EXPORT RECORDS" onclick="exportTableToExcel('pageContent','studentList');">
+					<button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('pageContent','Student_List');">
 						<i class="bi-file-earmark-excel"></i> EXPORT
 					</button>
 				`;
@@ -1570,14 +1570,11 @@ function _fetchBranchArchivedStudents() {
 
         if (success === true) {
           let showButtons = `
-            <button class="btn" title="PRINT RECORDS" onclick="_printStudentByClass('${fetch[0].departmentData.departmentId}','${fetch[0].classData.classId}','${fetch[0].armData.armId}');">
-              <i class="bi-printer"></i> PRINT
-            </button>
-            <button class="btn" title="EXPORT RECORDS" onclick="_exportStudents('${fetch[0].session}','${fetch[0].departmentData.departmentName}','${fetch[0].classData.className}','${fetch[0].armData.armName}');">
+            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('pageContent','Archived_Students_List');">
               <i class="bi-file-earmark-excel"></i> EXPORT
             </button>`;
           $("#printAndExportButton").html(showButtons);
-
+          
           for (let i = 0; i < fetch.length; i++) {
             no++;
             const branchId = fetch[i]?.branchId;
@@ -1665,5 +1662,370 @@ function _fetchBranchArchivedStudents() {
   } catch (error) {
     console.error("Error: ", error);
     _actionAlert("An unexpected error occurred! Please try again.", false);
+  }
+}
+
+///// Get Select Alumni Session ////
+function _getSelectAlumniSession(fieldId){
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+	try {
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/preset-data/fetch-alumni-session?branchId=${getEachBranchDetailsSession.branchId}`,
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].session;
+						const value = data[i].session;
+						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+//// Proceed Fetch Alumni Students /////
+function _proceedviewAlumniStudents() {
+  const session = $("#alumniSession").val().trim();
+
+  // Get the selected text (name)
+  const sessionName = $("#alumniSession option:selected").text();
+
+  let issueCount = 0;
+  issueCount += _validateEmptyValue("alumniSession", "SESSION");
+
+  if (issueCount > 0) return;
+
+  const fetchAlumniStudentsParams = {
+    session: session,
+    sessionName: sessionName,
+  };
+
+  sessionStorage.setItem(
+    "fetchAlumniStudentsParams",
+    JSON.stringify(fetchAlumniStudentsParams),
+  );
+
+  _getActiveBranchPage({
+    divid: "branchAlumniStudentsPage",
+    page: "branchAlumniStudentsPage",
+    url: adminPortalLocalUrl,
+  });
+  _alertClose(2);
+}
+
+//// Fetch Alumni Department Classes ////
+function _fetchBranchAlumniDepartmentClasses() {
+    const getEachBranchDetailsSession = JSON.parse(
+      sessionStorage.getItem("getEachBranchDetailsSession")
+    );
+    const fetchAlumniStudentsParams = JSON.parse(
+      sessionStorage.getItem("fetchAlumniStudentsParams")
+    );
+
+    const branchId = getEachBranchDetailsSession?.branchId;
+    const alumniSession = fetchAlumniStudentsParams?.session;
+
+    $('#alumniPageContent').html(`
+      <div class="ajax-loader pages-ajax-loader">
+        <img src="${websiteUrl}/images/spinner.gif" alt="Loading"/>
+      </div>
+    `).fadeIn("fast");
+
+    try {
+      $.ajax({
+          type: "GET",
+          url: `${endPoint}/admin/branch/students/fetch-alumni-class?branchId=${branchId}&alumniSession=${alumniSession}`,
+          dataType: "json",
+          cache: false,
+          headers: getAuthHeaders(true),
+          success: function (info) {
+              const fetch = info.data;
+              const success = info.success;
+              const alumniSession = info.alumniSession;
+
+              let mainContent = '';
+              let no = 0;
+
+              if (success === true) {
+                  for (let i = 0; i < fetch.length; i++) {
+                      no++;
+                      const department = fetch[i];
+                      const departmentName = department.departmentName;
+                      const departmentId = department.departmentId;
+                      const classData = department.classData;
+                      const classId = classData?.classId;
+                      const className = classData?.className;
+                      const armData = department.armData;
+
+                      let innerContent = '';
+                      let sn = 0;
+                      if (armData.length > 0) {
+                        for (let k = 0; k < armData.length; k++) {
+                          sn++;
+                          const armInfo = armData[k];
+                          const armName = armInfo.armName;
+                          const armId = armInfo.armId;
+
+                          innerContent += `
+                              <tr class="tb-row">
+                                  <td>${sn}</td>
+                                  <td>${departmentName}</td>
+                                  <td>${className} ${armName}</td>
+                                  <td>${alumniSession}</td>
+
+                                  <td>
+                                      <div class="btn-div">
+                                          <button 
+                                              class="btn view-btn"
+                                              id="proceedBtn_${classId}_${armId}"
+                                              title="Click to view alumni students"
+                                              onclick="_fetchAlumniStudentsByClass('${alumniSession}','${departmentId}','${classId}','${armId}');"
+                                          >
+                                              <i class="bi-printer"></i>
+                                              PROCEED TO VIEW ALUMNI STUDENTS
+                                          </button>
+                                      </div>
+                                  </td>
+                              </tr>
+                          `;
+                        }
+                      } else {
+                        innerContent += `
+                        <tr class="tb-row">
+                          <td>1</td>
+                          <td>${departmentName}</td>
+                          <td>${className} (No Arm)</td>
+                          <td>${alumniSession}</td>
+
+                          <td>
+                              <div class="false-notification-div">
+                                  No Class Arm Found
+                              </div>
+                          </td>
+                        </tr>
+                        `;
+                      }
+
+                      mainContent += `
+                        <div class="pages-toggle-div">
+                          <div class="pages-toggle-title" onclick="_collapse('view${no}');" title="Click to view classess">
+                            <h3>${departmentName} (${className})</h3>
+                            <div class="expand-div" id="view${no}num">&nbsp;<i class="bi-chevron-down"></i>&nbsp;</div> 
+                          </div>
+
+                          <div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
+                            <div class="table-div animated fadeIn">
+                              <table class="table" cellspacing="0" style="width:100%">
+                                <thead>
+                                  <tr class="tb-col">
+                                    <th>sn</th>
+                                    <th>Department</th>
+                                    <th>Class</th>
+                                    <th>Session</th>
+                                    <th>Action</th>
+                                  </tr>
+                                </thead>
+                                
+                                <tbody>
+                                  ${innerContent}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      `;
+                  }
+
+                $('#alumniPageContent').html(mainContent);
+              } else {
+                _actionAlert(info.message, false);
+                $('#alumniPageContent').html(`
+                  <div class="false-notification-div">
+                      <p>${info.message}</p>
+                  </div>
+                `);
+
+                if (info.response < 100) {
+                    _logOut();
+                }
+              }
+          },
+          error: function (textStatus, errorThrown) {
+            console.error("AJAX Error:", textStatus, errorThrown);
+            _actionAlert(
+                'Check your internet connection and try again.',
+                false
+            );
+          }
+      });
+    } catch (error) {
+      console.error("Error:", error);
+      _actionAlert(
+          'An unexpected error occurred! Please try again.',
+          false
+      );
+    }
+}
+
+///// Fetch Alumni Students By Class /////
+function _fetchAlumniStudentsByClass(alumniSession, departmentId, classId, armId) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+  try {
+	const btnText = $(`#proceedBtn_${classId}_${armId}`).html();
+    _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, true);
+	
+    //// call endpoint //////
+    _callFetchEndPoints({
+      url: `admin/branch/students/fetch-alumni-students?branchId=${branchId}&alumniSession=${alumniSession}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success=== true) {
+          sessionStorage.setItem(
+            "useAlumniStudentByClassSession",
+            JSON.stringify(response),
+          );
+          _getForm({page: 'alumniStudentByClassModal', layer: 2, url: adminPortalLocalUrl})
+        } else {
+          _alertClose(2);
+          _actionAlert(response.message, false);
+		      _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, false);
+        }
+		    _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, false);
+      })
+      .catch((error) => {
+        _alertClose(2);
+        console.error("Error:", error);
+        _callAjaxError(() =>
+          _fetchAlumniStudentsByClass(alumniSession, departmentId, classId, armId),
+        ); // retry if needed
+		    _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, false);
+      });
+  } catch (error) {
+    _alertClose(2);
+    console.error("Error:", error);
+    _callAjaxError(() =>
+      _fetchAlumniStudentsByClass(alumniSession, departmentId, classId, armId),
+    ); // retry if needed
+	  _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, false);
+  }
+}
+
+/// filter Alumni Students Data ///
+function _filtersAlumniStudents(value) {
+  $("#fetchAlumiStudentPageContent .tb-row").each(function () {
+    var text = $(this).text();
+    text.toLowerCase().indexOf(value.toLowerCase()) > -1
+      ? $(this).show()
+      : $(this).hide();
+  });
+}
+
+//// Print Alumni Students By Class ////
+function _printAlumniStudentByClass(alumniSession, departmentId, classId, armId) {
+	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+  const branchId = getEachBranchDetailsSession?.branchId;
+
+	try {
+		const btnText = $("#printAlumniBtn").html();
+		$("#printAlumniBtn").html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+		$("#printAlumniBtn").prop("disabled", true);
+
+		$.ajax({
+			type: "GET",
+			url: `${endPoint}/admin/branch/students/fetch-alumni-students?branchId=${branchId}&alumniSession=${alumniSession}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+			dataType: "json", 
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				if (info.success > 0) {
+					sessionStorage.setItem("printAlumniStudentByClassSession", JSON.stringify(info));
+					window.open(`${websiteUrl}/reports/print-alumni-student-by-class`, '_blank');
+				} else {
+					_actionAlert(info.message, false);
+					const response = info.response;
+					if (response < 100) {
+						_logOut();
+					}    
+				}
+				$("#printAlumniBtn").html(btnText).prop("disabled", false);
+			},
+			error: function(textStatus, errorThrown) {
+				console.error("AJAX Error: ", textStatus, errorThrown);
+				_actionAlert('Check your internet connection and try again.', false);
+				$("#printAlumniBtn").html(btnText).prop("disabled", false);
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred! Please try again.', false);
+		$("#printAlumniBtn").prop("disabled", false);
+	}
+}
+
+///// Fetch Alumni Students By Class /////
+function _fetchEachBranchAlumniStudents(branchId, alumniSession, departmentId, classId, armId, studentId) {
+  $("#get-more-third-layer")
+    .css({
+      display: "flex",
+      "justify-content": "center",
+      "align-items": "center",
+    }).fadeIn(500);
+
+  try {
+    //// call endpoint //////
+    _callFetchEndPoints({
+      url: `admin/branch/students/fetch-alumni-students?branchId=${branchId}&alumniSession=${alumniSession}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&studentId=${studentId}`,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success=== true) {
+          sessionStorage.setItem(
+            "getEachBranchStudentsSession",
+            JSON.stringify(response.data[0]),
+          );
+
+          _getForm({
+            page: "student_profile",
+            layer: 3,
+            url: adminPortalLocalUrl,
+          });
+        } else {
+          _alertClose(3);
+          _actionAlert(response.message, false);
+        }
+      })
+      .catch((error) => {
+        _alertClose(3);
+        console.error("Error:", error);
+        _callAjaxError(() =>
+          _fetchEachBranchAlumniStudents(departmentId, classId, armId, studentId),
+        ); // retry if needed
+      });
+  } catch (error) {
+    _alertClose(3);
+    console.error("Error:", error);
+    _callAjaxError(() =>
+      _fetchEachBranchAlumniStudents(departmentId, classId, armId, studentId),
+    ); // retry if needed
   }
 }
