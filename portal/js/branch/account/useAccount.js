@@ -736,14 +736,14 @@ function _fetchAccountStudentsByClass(departmentId, classId, armId) {
         _alertClose(2);
         console.error("Error:", error);
         _callAjaxError(() =>
-          _fetchAccountStudentsByClass(depatmentId, classId, armId),
+          _fetchAccountStudentsByClass(departmentId, classId, armId),
         ); // retry if needed
       });
   } catch (error) {
     _alertClose(2);
     console.error("Error:", error);
     _callAjaxError(() =>
-      _fetchAccountStudentsByClass(depatmentId, classId, armId),
+      _fetchAccountStudentsByClass(departmentId, classId, armId),
     ); // retry if needed
   }
 }
@@ -795,14 +795,14 @@ function _fetchApprovedStudentBySchoolBolt(departmentId, classId, armId) {
         _alertClose(2);
         console.error("Error:", error);
         _callAjaxError(() =>
-          _fetchApprovedStudentBySchoolBolt(depatmentId, classId, armId),
+          _fetchApprovedStudentBySchoolBolt(departmentId, classId, armId),
         ); // retry if needed
       });
   } catch (error) {
     _alertClose(2);
     console.error("Error:", error);
     _callAjaxError(() =>
-      _fetchApprovedStudentBySchoolBolt(depatmentId, classId, armId),
+      _fetchApprovedStudentBySchoolBolt(departmentId, classId, armId),
     ); // retry if needed
   }
 }

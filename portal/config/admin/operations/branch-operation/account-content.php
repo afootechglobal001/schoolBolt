@@ -425,8 +425,8 @@ useAccountStudentByClassSession = JSON.parse(sessionStorage.getItem("useAccountS
                                                     <th>Fund Balance</th>
                                                     ${userRoles.canLoadStudentFund ? '<th>Load Funds</th>' : ''}
                                                     <th>Pay Fees</th>
-                                                </tr >
-                                            </thead >
+                                                </tr>
+                                            </thead>
                                         <tbody>`;
 
                                 let sn = 0;
@@ -506,10 +506,10 @@ useAccountStudentByClassSession = JSON.parse(sessionStorage.getItem("useAccountS
                                                 PAY FEES
                                             </button>
                                         </td>
-                                            </tr > `;
+                                            </tr> `;
                                 });
 
-                                html += `</tbody >`;
+                                html += `</tbody>`;
                                 $('#accountPageContent').html(html);
                             }
                         });
@@ -1340,22 +1340,22 @@ _checkAll()
                                         const arm = response?.armData?.armName;
 
                                         let html = `
-                                            < thead >
-                                            <tr class="tb-col">
-                                                <th></th>
-                                                <th>sn</th>
-                                                <th>Student Info</th>
-                                                <th>Session/Term</th>
-                                                <th>Class</th>
-                                                <th>Total Mandatory Fees</th>
-                                                <th>Total Non-Mandatory Fees</th>
-                                                <th>Mandatory Fees Paid</th>
-                                                <th>Non-Mandatory Fees Paid</th>
-                                                <th>Total Fees Paid</th>
-                                                <th>Outstanding Balance</th>
-                                                <th>Status</th>
-                                            </tr>
-                                                                        </thead >
+                                            <thead>
+                                                <tr class="tb-col">
+                                                    <th></th>
+                                                    <th>sn</th>
+                                                    <th>Student Info</th>
+                                                    <th>Session/Term</th>
+                                                    <th>Class</th>
+                                                    <th>Total Mandatory Fees</th>
+                                                    <th>Total Non-Mandatory Fees</th>
+                                                    <th>Mandatory Fees Paid</th>
+                                                    <th>Non-Mandatory Fees Paid</th>
+                                                    <th>Total Fees Paid</th>
+                                                    <th>Outstanding Balance</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
                                             <tbody>`;
 
                                         let sn = 0;
