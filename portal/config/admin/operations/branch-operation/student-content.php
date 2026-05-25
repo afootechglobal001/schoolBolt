@@ -520,7 +520,7 @@
                             <i class="bi-person-bounding-box"></i> Student Profile
                         </li>
                         <li class="hide-li" title="Transcript" id="studentTranscriptPage"
-                            onclick="">
+                            onclick="_getActiveStudentPage({divid:'studentTranscriptPage', page: 'studentTranscriptPage', url: adminPortalLocalUrl});">
                             <i class="bi-mortarboard"></i> Transcript
                         </li>
                         <li class="hide-li" title="Student Report" id="student_report"
@@ -2234,7 +2234,7 @@
             <div class="pages-toggle-title">
                 <h3>JUNIOR</h3>
                 <div class="btn-back-div">
-                    <button class="btn" title="PRINT TRANSCRIPT" id="" onclick="_printStudentTranscript();">
+                    <button class="btn" title="PRINT TRANSCRIPT" id="" onclick="window.open(`${websiteUrl}/reports/print-student-academic-transcript`, '_blank');">
                         <i class="bi-printer"></i> PRINT
                     </button>
                 </div>
