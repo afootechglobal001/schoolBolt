@@ -743,8 +743,8 @@
         </div>
 
         <div class="div-in animated fadeIn">
-            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello parent, you're about to view your <span>child's results.</span>
-            Kindly select the result type and click on the <span>PROCEED</span> button to proceed.</div>
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello Parent, you are about to view your <span>child's result.</span>
+            Kindly select the result type and click the <span>PROCEED</span> button to continue</div>
             <div class="text_field_container" id="checkResultAsessmentId_container">
                 <script>
                     selectField({
