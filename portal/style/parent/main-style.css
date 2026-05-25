@@ -2433,3 +2433,97 @@ header .inner-div .mobile-logout:hover{
 .list-back-div .list-div .btn-container .btn:hover {
   background: #444;
 }
+
+
+
+/*--------------------------------------------------------------------------------------------------*/
+.caption-div {
+  width: 500px;
+  min-height: 200px;
+  background: var(--white-color);
+  border-radius: 7px;
+  overflow: hidden;
+}
+.caption-div .title-div {
+  width: calc(100% - 40px);
+  height: 50px;
+  background: var(--primary-color);
+  padding: 0px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--white-color);
+  font-family: sub-title-font;
+  font-size: 14px;
+}
+
+.caption-div .title-div .title {
+  color: var(--white-color);
+}
+
+.caption-div .title-div .close-btn {
+  font-family: sub-title-font;
+  border: none;
+  height: 35px;
+  padding: 0px 13px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease-in 0.2s;
+  transition: all 0.2s ease-in 0.2s;
+  -moz-transition: all 0.2s ease-in 0.2s;
+}
+
+.caption-div .title-div .close-btn i {
+  font-size: 12px;
+  color: var(--white-color);
+}
+.caption-div .title-div .close-btn:hover {
+  opacity: 0.8;
+}
+
+.caption-div .div-in {
+  padding: 30px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.caption-div .div-in .pswd_info {
+  font-size: 14px;
+  font-family: body-font;
+  color: var(--sub-body-color);
+  line-height: 15px;
+}
+
+.caption-div .div-in .pswd_info em {
+  padding: 0px;
+  margin: 0px;
+}
+
+.caption-div .div-in .btn {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 5px;
+  font-family: sub-title-font;
+  font-size: 14px;
+  background: var(--primary-color);
+  color: var(--white-color);
+  cursor: pointer;
+  transition: all 0.2s ease-in 0.2s;
+}
+.caption-div .div-in .btn:hover {
+  background: var(--secondary-color);
+}
+
+@media all and (max-width: 450px) {
+  .caption-div {
+    width: 96%;
+  }
+
+  .caption-div .div-in {
+    padding: 20px 20px 35px 20px;
+  }
+}

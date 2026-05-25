@@ -520,7 +520,7 @@
                             <i class="bi-person-bounding-box"></i> Student Profile
                         </li>
                         <li class="hide-li" title="Transcript" id="studentTranscriptPage"
-                            onclick="_getActiveStudentPage({divid:'studentTranscriptPage', page: 'studentTranscriptPage', url: adminPortalLocalUrl});">
+                            onclick="">
                             <i class="bi-mortarboard"></i> Transcript
                         </li>
                         <li class="hide-li" title="Student Report" id="student_report"
@@ -558,8 +558,8 @@
                                     onclick="_getActiveStudentPage({divid:'student_profile_details', page: 'student_profile_details', url: adminPortalLocalUrl});">
                                     <i class="bi-speedometer2"></i> <span> Dashboard</span>
                                 </li>
-                                <li title="Transcript" id="tanscript"
-                                    onclick="_getActiveStudentPage({divid:'tanscript', page: 'tanscript', url: adminPortalLocalUrl});">
+                                <li title="Transcript" id="studentTranscriptPage"
+                                    onclick="">
                                     <i class="bi-mortarboard"></i> Transcript
                                 </li>
                                 <li title="Student Report" id="student_report"

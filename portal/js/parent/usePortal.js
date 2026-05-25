@@ -60,7 +60,6 @@ function _getFetchEachStudent(Id) {
   let student = parentStudents.find((s) => s.studentId === Id);
   if (student) {
     sessionStorage.setItem("getEachStudentSession", JSON.stringify(student));
-    console.log(student);
     _getForm({ page: "studentProfileForm", url: parentPortalLocalUrl });
   }
 }
@@ -434,46 +433,52 @@ function _callPaymentSuccess(paymentId, branchId, paystackId, paystackCharges) {
       paystackCharges: paystackCharges,
     };
 
-    $.ajax({
-      type: "POST",
-      url: `${endPoint}/parent/payment/payment-success`,
-      data: JSON.stringify(formData),
-      dataType: "json",
-      cache: false,
-      headers: getAuthHeaders(),
-      processData: false,
-      success: function (data) {
-        if (data.success) {
-          _getForm({
-            page: "payemntSuccessForm",
-            layer: 2,
-            url: parentPortalLocalUrl,
+    _callRawEndPoints({
+      url: `parent/payment/payment-success`,
+      formData,
+    })
+      .then((response) => {
+        if (response.success) {
+          _showCustomConfirm({
+              callback: () =>
+              _getActiveStudentPortalPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl}),
+            title: "PAYMENT SUCCESSFUL",
+            message: response?.message,
+            alertType: "success",
+            trueActionBtnText: "DONE",
+            closeOnOverlayClick: false,
           });
+          $("#get-more-div-secondary")
+          .css({
+            display: "flex",
+            "justify-content": "center",
+            "align-items": "center",
+          })
+          .html(
+            `<div class="alert-loading-div"><div class="icon"><img src="${websiteUrl}/images/loading.gif" width="20px" alt="Loading"/></div><div class="text"><p>PROCESSING...</p></div></div>`,
+          )
+          .fadeOut(500);
         } else {
-          _actionAlert(data.message, false);
-          _getForm({
-            page: "payemntSuccessForm",
-            layer: 2,
-            url: parentPortalLocalUrl,
+          _showCustomConfirm({
+            title: "Unable to Process Payment",
+            message: response?.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
           });
         }
-      },
-      error: function (error) {
-        console.log(error);
-        _getForm({
-          page: "payemntSuccessForm",
-          layer: 2,
-          url: parentPortalLocalUrl,
-        });
-      },
-    });
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() =>
+          _callPaymentSuccess(paymentId, branchId, paystackId, paystackCharges),
+        ); // retry if needed
+      });
   } catch (error) {
-    console.log(error);
-    _getForm({
-      page: "payemntSuccessForm",
-      layer: 2,
-      url: parentPortalLocalUrl,
-    });
+    console.error("Error:", error);
+    _callCatchError(() =>
+      _callPaymentSuccess(paymentId, branchId, paystackId, paystackCharges),
+    );
   }
 }
 
@@ -695,6 +700,36 @@ function _viewPaymentDetails(
   }
 }
 
+/// Proceed To View Student Result Controller ///
+function _proceedViewStudentResultController() {
+  try {
+    ////////get all needed values////////////
+    let issueCount = 0;
+    const studentId = $("#studentId").val();
+    const checkResultAsessmentId = $("#checkResultAsessmentId").val();
+
+    ///// empty field validation//////////
+    issueCount += _validateEmptyValue("studentId", "STUDENT ID");
+    issueCount += _validateEmptyValue("checkResultAsessmentId", "RESULT ASSESSMENT");
+
+    if (issueCount > 0) return;
+
+    // Gather form data
+    const formData = {
+      studentId,
+    };
+
+    if (checkResultAsessmentId === "1") {
+      _proceedViewStudentCaResult(formData);
+    } else {
+      _proceedViewStudentTerminalResult(formData);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _proceedViewStudentResultController());
+  }
+}
+
 /////// Fetch Student Classes ///////
 function _fetchStudentClasses() {
   _showLoader("Fetching available result classes, please wait...");
@@ -866,5 +901,146 @@ function printStudentTerminalResult(
       ),
     );
     _btnDisable(`printStudentResultBtn_${classId}_${termId}`, btnText, false);
+  }
+}
+
+/// Proceed To View Student Result Controller ///
+function _proceedViewPortalStudentResultController() {
+  let getEachStudentSession = JSON.parse(
+    sessionStorage.getItem("getEachStudentSession"),
+  );
+  const studentId = getEachStudentSession?.studentData?.studentId;
+  try {
+    ////////get all needed values////////////
+    let issueCount = 0;
+    const checkResultAsessmentId = $("#checkResultAsessmentId").val();
+
+    ///// empty field validation//////////
+    issueCount += _validateEmptyValue("checkResultAsessmentId", "RESULT ASSESSMENT");
+
+    if (issueCount > 0) return;
+
+    // Gather form data
+    const formData = {
+      studentId,
+    };
+
+    if (checkResultAsessmentId === "1") {
+      _proceedViewPortalStudentCaResult(formData);
+    } else {
+      _alertClose(2);
+     _getActiveStudentPortalPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _proceedViewPortalStudentResultController());
+  }
+}
+
+/// Proceed To View Student Ca Result ///
+function _proceedViewPortalStudentCaResult(formData) {
+  ///// get btn text/////
+  const btnText = $("#proceedResult").html();
+  _btnDisable("proceedResult", btnText, true);
+
+  //// call endpoint //////
+  _callRawEndPoints({
+    url: `parent/auth/view-student-result-verification-for-ca`,
+    formData,
+  })
+    .then((response) => {
+      if (response.success) {
+        const studentInfo = response;
+        const branchId = studentInfo?.data?.branchId;
+        const session = studentInfo?.data?.session;
+        const termId = studentInfo?.data?.termId;
+        const departmentId = studentInfo?.data?.departmentId;
+        const classId = studentInfo?.data?.classId;
+        const armId = studentInfo?.data?.armId;
+        const assessmentId = studentInfo?.data?.assessmentId;
+        const studentId = studentInfo?.data?.studentId;
+
+        _printEachPortalStudentCaResult(branchId, session, termId, departmentId, classId, armId, assessmentId, studentId);
+        _alertClose(2);
+      } else {
+        _btnDisable("proceedResult", btnText, false);
+        if (response.response === 104) {
+          _showCustomConfirm({
+            title: "Student Not Found",
+            message:
+              "The student ID you entered does not exist. Please check and try again.",
+            alertType: "error",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+        } else if (response.response === 200) {
+          const staffContactForAccount = response?.staffContactForAccount;
+          const studentData = response?.studentData;
+          const accountWhatsappNumber = staffContactForAccount?.mobileNumber;
+          const studentFullName = studentData?.fullName;
+
+          _showCustomConfirm({
+            title: "Unable To View Result",
+            message: response.message,
+            alertType: "error",
+            falseActionBtn: true,
+            trueActionBtnText: "WHATSAPP",
+            falseActionBtnText: "CANCEL",
+            trueActionCallback: () => {
+              window.open(
+                "https://api.whatsapp.com/send?text=Hello, I am the parent of " +
+                  studentFullName +
+                  ". I would like to request access to view my child's academic result. Kindly assist me. Thank you.&phone=+234" +
+                  accountWhatsappNumber,
+                "_blank",
+              );
+            },
+            closeOnOverlayClick: true,
+          });
+        }
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      _callAjaxError(() => _proceedViewPortalStudentCaResult(formData)); // retry if needed
+      _btnDisable("proceedResult", btnText, false);
+    });
+}
+
+//// Print Each Student Ca Result ////
+function _printEachPortalStudentCaResult(branchId, session, termId, departmentId, classId, armId, assessmentId, studentId) {
+  try {
+    //// call endpoint //////
+    _callFetchEndPoints({
+      url: `reports/print-each-student-ca-result?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&assessmentId=${assessmentId}&studentId=${studentId}`,
+    })
+      .then((response) => {
+        if (response.success) {
+          sessionStorage.setItem(
+            "printSingleAssessementSession",
+            JSON.stringify(response),
+          );
+          window.open(`${websiteUrl}/reports/print-each-student-ca-result`, '_blank');
+        } else {
+          _showCustomConfirm({
+            title: "UNABLE TO VIEW CA RESULT",
+            message: response.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() =>
+          _printEachPortalStudentCaResult(branchId, session, termId, departmentId, classId, armId, assessmentId, studentId),
+        ); // retry if needed
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() =>
+      _printEachPortalStudentCaResult(branchId, session, termId, departmentId, classId, armId, assessmentId, studentId),
+    );
   }
 }

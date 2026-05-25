@@ -475,6 +475,8 @@ p {
 .alert-success {
   border: #2ecc7166 1px solid;
   background: rgba(46, 204, 113, 0.05);
+  color: var(--sub-body-color);
+  font-family: body-font;
 }
 
 .alert-failed {
