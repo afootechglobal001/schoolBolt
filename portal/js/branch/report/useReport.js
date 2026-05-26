@@ -857,7 +857,9 @@ function _savePrincipalsCommentCallback(formData) {
     sessionStorage.getItem("getViewTerminalResultSummarySession"),
   );
 
-  const branchId = getEachBranchDetailsSession?.branchId;
+  	const branchId = getEachBranchDetailsSession?.branchId;
+	const session = getViewTerminalResultSummarySession?.session;
+	const termId = getViewTerminalResultSummarySession?.termData?.termId;
 	const departmentId = getViewTerminalResultSummarySession?.departmentData?.departmentId;
 	const classId = getViewTerminalResultSummarySession?.classData?.classId;
 	const armId = getViewTerminalResultSummarySession?.armData?.armId;
@@ -867,7 +869,7 @@ function _savePrincipalsCommentCallback(formData) {
     _btnDisable("submitBtn", btnText, true);
 
     _callRawEndPoints({
-      url: `reports/save-class-principals-comments?branchId=${branchId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+      url: `reports/save-class-principals-comments?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
       formData,
       accessKey: true,
     })
@@ -880,7 +882,7 @@ function _savePrincipalsCommentCallback(formData) {
           _showCustomConfirm({
             title: "Unable to Save Comments!",
             message: response.message,
-            alertType: "warning",
+            alertType: "error",
             trueActionBtnText: "OK",
             closeOnOverlayClick: true,
           });
