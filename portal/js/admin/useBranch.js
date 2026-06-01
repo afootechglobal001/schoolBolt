@@ -715,22 +715,22 @@ function _fetchBranches() {
 
         text = `
 				<thead>
-                    <tr class="tb-col">
-                        <th>sn</th>
-                        <th>Name</th>
+          <tr class="tb-col">
+            <th>sn</th>
+            <th>Name</th>
 						<th>Session</th>
 						<th>Term</th>
-                        <th>Phone Number</th>
-                        <th>Address</th>
-                        <th>Manager</th>
-                        <th>No. of Staff</th>
-                        <th>No. of Students</th>
-                        <th>SchoolBolt Wallet Balance(<s>N</s>)</th>
-                        <th>Date of Reg.</th>
-                        <th>Status</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+            <th>Manager</th>
+            <th>No. of Staff</th>
+            <th>No. of Students</th>
+            <th>SchoolBolt Wallet Balance(<s>N</s>)</th>
+            <th>Date of Reg.</th>
+            <th>Status</th>
 						<th>View</th>
-                    </tr>
-                </thead>`;
+            </tr>
+        </thead>`;
 
         if (success === true) {
           for (let i = 0; i < fetch.length; i++) {
