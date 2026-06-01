@@ -715,21 +715,22 @@ function _fetchBranches() {
 
         text = `
 				<thead>
-                    <tr class="tb-col">
-                        <th>sn</th>
-                        <th>Name</th>
+          <tr class="tb-col">
+            <th>sn</th>
+            <th>Name</th>
 						<th>Session</th>
 						<th>Term</th>
-                        <th>Phone Number</th>
-                        <th>Address</th>
-                        <th>Manager</th>
-                        <th>No. of Staff</th>
-                        <th>No. of Students</th>
-                        <th>Date of Reg.</th>
-                        <th>Status</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+            <th>Manager</th>
+            <th>No. of Staff</th>
+            <th>No. of Students</th>
+            <th>SchoolBolt Wallet Balance(<s>N</s>)</th>
+            <th>Date of Reg.</th>
+            <th>Status</th>
 						<th>View</th>
-                    </tr>
-                </thead>`;
+            </tr>
+        </thead>`;
 
         if (success === true) {
           for (let i = 0; i < fetch.length; i++) {
@@ -745,6 +746,7 @@ function _fetchBranches() {
             const staffId = fetch[i].managerId;
             const totalNumberOfStaff = fetch[i].totalNumberOfStaff;
             const totalNumberOfStudents = fetch[i].totalNumberOfStudents;
+            const walletBalance = fetch[i].walletBalance;
             const createdTime = fetch[i].createdTime;
             const statusName = fetch[i].statusName;
 
@@ -760,6 +762,7 @@ function _fetchBranches() {
 								<td class="clickable-td" onclick="_fetchEachStaff('${staffId}');">${managerName}</td>
 								<td>${totalNumberOfStaff}</td>
                 <td>${totalNumberOfStudents}</td>
+                <td><s>N</s>${thousandSeperator(walletBalance)}</td>
 								<td>${createdTime}</td>
 								<td><div class="status-div ${statusName}">${statusName}</div></td>
 								<td><button class="btn view-btn" title="Click to view branch profile" onclick="_fetchEachBranches('${branchId}');">VIEW</button></td>
