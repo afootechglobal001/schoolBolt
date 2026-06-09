@@ -329,7 +329,13 @@ function _viewCaResultSummary(departmentId, classId, armId) {
 					sessionStorage.setItem("getViewResultSummarySession", JSON.stringify(info));
 					_getForm({page: 'view_ca_result_summary_form', layer:2, url: adminPortalLocalUrl});
 				} else {
-					_actionAlert(info.message, false);
+					_showCustomConfirm({
+                        title: "Access Denied!",
+                        message: info.message,
+                        alertType: "error",
+                        trueActionBtnText: "OK",
+                        closeOnOverlayClick: true,
+                    });
 					_alertClose(2);
 					const response = info.response;
 					if (response < 100) {
