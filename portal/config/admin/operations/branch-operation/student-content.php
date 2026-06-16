@@ -1955,7 +1955,7 @@
     <div class="table-div animated fadeIn">
         <table class="table" cellspacing="0" style="width:100%" id="fetchStudentFundsTable">
             <thead>
-                <tr class="tb-col">
+                <tr class="tb-col fund-tb-col">
                     <th>sn</th>
                     <th>Date</th>
                     <th>Payment ID</th>
@@ -1964,11 +1964,12 @@
                     <th>Balance After(<s>N</s>)</th>
                     <th>Fund Loaded By</th>
                     <th>Status</th>
+                    <th>Action</th>                 
                 </tr>
             </thead>
             <tbody id="fetchStudentFunds">
                 <script>
-                    _fetchStudentFundFiltering('srch-30', 'Last 30 Days');
+                    _fetchStudentFundFiltering('srch-90', 'Last 90 Days');
                 </script>
 
                 <tr>
@@ -1983,6 +1984,273 @@
         <!-- Pagination -->
         <div id="fetchStudentFundsPaginationControls" class="pagination-div"></div>
     </div>
+<?php } ?>
+
+<!-- For Student Cancel Form -->
+<?php if ($page == 'studentFundCancelForm') { ?>
+    <script>
+        useEachFetchStudentFundSession = JSON.parse(sessionStorage.getItem("useEachFetchStudentFundSession"));
+    </script>
+
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <div class="icon-title-div">
+                    <span id="panel-title"><span><i class="bi-plus-square"></i></span> STUDENT FUND DETAILS</span>
+                </div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Student Information;</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Student Name:</div>
+                                    <div><span id="cancelFormFullName">
+                                            <script>
+                                                $("#cancelFormFullName").html(useEachFetchStudentFundSession?.studentData
+                                                    ?.surName + ' ' + useEachFetchStudentFundSession?.studentData
+                                                    ?.firstName + ' ' +useEachFetchStudentFundSession?.studentData?.otherNames);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Student ID:</div>
+                                    <div><span id="cancelFormStudentId">
+                                            <script>
+                                                $("#cancelFormStudentId").html(useEachFetchStudentFundSession?.studentData
+                                                    ?.studentId);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Student Wallet Balance:</div>
+                                    <div><span id="cancelAdvancedBalance">
+                                            <script>
+                                                $("#cancelAdvancedBalance").html('<s>N</s>' + thousandSeperator(
+                                                    useEachFetchStudentFundSession?.studentData?.advancedBalance));
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Payment Details;</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Payment ID:</div>
+                                    <div><span id="cancelPaymentId">
+                                            <script>
+                                                $("#cancelPaymentId").html(useEachFetchStudentFundSession?.data[0]?.paymentId);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Advanced Balance Before:</div>
+                                    <div><span id="cancelAdvancedBalanceBefore">
+                                            <script>
+                                                $("#cancelAdvancedBalanceBefore").html('<s>N</s>' + thousandSeperator(
+                                                    useEachFetchStudentFundSession?.data[0]?.advancedBalanceBefore));
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Amount Funded:</div>
+                                    <div><span id="cancelAdvancedAmount">
+                                            <script>
+                                                $("#cancelAdvancedAmount").html('<s>N</s>' + thousandSeperator(
+                                                    useEachFetchStudentFundSession?.data[0]?.amount));
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Advanced Balance After:</div>
+                                    <div><span id="cancelAdvancedBalanceAfter">
+                                            <script>
+                                                $("#cancelAdvancedBalanceAfter").html('<s>N</s>' + thousandSeperator(
+                                                    useEachFetchStudentFundSession?.data[0]?.advancedBalanceAfter));
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Reason For Funding:</div>
+                                    <div><span id="cancelDescription">
+                                            <script>
+                                                $("#cancelDescription").html(useEachFetchStudentFundSession?.data[0]?.description);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Status:</div>
+                                    <div><span id="fundFormStatusName">
+                                            <script>
+                                                $("#fundFormStatusName").html(useEachFetchStudentFundSession?.data[0]?.statusData?.statusName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Date:</div>
+                                    <div><span id="fundUpdatedTime">
+                                            <script>
+                                                $("#fundUpdatedTime").html(useEachFetchStudentFundSession?.data[0]?.updatedTime);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Funded By;</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Staff ID:</div>
+                                    <div><span id="fundedById">
+                                            <script>
+                                                $("#fundedById").html(useEachFetchStudentFundSession?.data[0]?.createdByData?.staffId);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Staff FullName:</div>
+                                    <div><span id="fundedByName">
+                                            <script>
+                                                $("#fundedByName").html(useEachFetchStudentFundSession?.data[0]?.createdByData?.fullName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert" id="viewCanelledByInfo">
+                        <span>Cancelled By;</span>
+                        <div class="alert-list-div">                 
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Staff ID:</div>
+                                    <div><span id="cancelledById">
+                                            <script>
+                                                $("#cancelledById").html(useEachFetchStudentFundSession?.data[0]?.updatedByData?.staffId);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Staff FullName:</div>
+                                    <div><span id="cancelledByName">
+                                            <script>
+                                                $("#cancelledByName").html(useEachFetchStudentFundSession?.data[0]?.updatedByData?.fullName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Reason For Cancellation:</div>
+                                    <div><span id="formReasonForCancellation">
+                                            <script>
+                                                $("#formReasonForCancellation").html(useEachFetchStudentFundSession?.data[0]?.reasonForCancellation);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="viewProceedButton">
+                    <div class="permission-form-back-div account-permission-form-back-div">
+                        <div class="title-div">
+                            <h4>Reason for the student fund cancellation</h4>
+                            <div class="text_area_container" id="reasonForCancellation_container">
+                                <script>
+                                    textField({
+                                        id: 'reasonForCancellation',
+                                        title: 'Reason For Cancellation',
+                                        type: 'textarea',
+                                        rows: 1,
+                                        maxlength: '50',
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn" title="Proceed" id="submitBtn" onclick="_studentFundCancellation();"> <i
+                                class="bi-check"></i> Proceed </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>  
+        $(document).ready(function() {
+            ///// SHOW / HIDE CANCELLED BY ////
+            if (useEachFetchStudentFundSession?.data[0]?.statusData?.statusId==="4") {
+                $('#viewCanelledByInfo').show();
+            } else {
+                $('#viewCanelledByInfo').hide();
+            }
+            
+            ///// SHOW / HIDE PROCEED FUND CANCEL BUTTON ////
+            if (
+                userRoles?.canCancelStudentFund && 
+                useEachFetchStudentFundSession?.data?.[0]?.statusData?.statusId === "5"
+            ) {
+                $('#viewProceedButton').show();
+            } else {
+                $('#viewProceedButton').hide();
+            }
+        });
+    </script>
 <?php } ?>
 
 <!-- For Student discount or scholarship Page -->
