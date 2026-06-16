@@ -176,6 +176,9 @@ function assignRole(data) {
   permissions.includes(34)
     ? (userRoles.canPerformPaymentReconciliation = true)
     : false;
+  permissions.includes(36)
+    ? (userRoles.canCancelStudentFund = true)
+    : false;
 
   /// Developer Permissions
   permissions.includes(24) ? (userRoles.canDeleteStaff = true) : false;
