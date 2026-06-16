@@ -1964,11 +1964,7 @@
                     <th>Balance After(<s>N</s>)</th>
                     <th>Fund Loaded By</th>
                     <th>Status</th>
-                    <script>
-                        if (userRoles.canCancelStudentFund) {
-                            $('.fund-tb-col').append(`<th>Action</th>`);
-                        }
-                    </script>
+                    <th>Action</th>                 
                 </tr>
             </thead>
             <tbody id="fetchStudentFunds">
@@ -2243,9 +2239,12 @@
             } else {
                 $('#viewCanelledByInfo').hide();
             }
-
-            ///// SHOW / HIDE PROCEED FUND CANCEL BUTTON BY ////
-            if (useEachFetchStudentFundSession?.data[0]?.statusData?.statusId==="5") {
+            
+            ///// SHOW / HIDE PROCEED FUND CANCEL BUTTON ////
+            if (
+                userRoles?.canCancelStudentFund && 
+                useEachFetchStudentFundSession?.data?.[0]?.statusData?.statusId === "5"
+            ) {
                 $('#viewProceedButton').show();
             } else {
                 $('#viewProceedButton').hide();

@@ -279,20 +279,6 @@ function _renderFetchStudentFunds(data, start) {
 
   return data
     .map((item, i) => {
-      let canCancelStudentFundColumn = "";
-
-      if (userRoles.canCancelStudentFund) {
-        canCancelStudentFundColumn = `
-          <td>
-            <button class="btn view-btn"
-              title="Click to view student fund details"
-              onclick="_fetchEachStudentFunds('${getEachBranchDetailsSession?.branchId}', '${item.studentId}', '${item.paymentId}');">
-              VIEW
-            </button>
-          </td>
-        `;
-      }
-
       return `
       <tr class="tb-row">
         <td>${start + i + 1}</td>
@@ -321,7 +307,13 @@ function _renderFetchStudentFunds(data, start) {
             ${item.statusData?.statusName}
           </div>
         </td>
-        ${canCancelStudentFundColumn}
+        <td>
+          <button class="btn view-btn"
+            title="Click to view student fund details"
+            onclick="_fetchEachStudentFunds('${getEachBranchDetailsSession?.branchId}', '${item.studentId}', '${item.paymentId}');">
+            VIEW
+          </button>
+        </td>
       </tr>`
     })
     .join("");
