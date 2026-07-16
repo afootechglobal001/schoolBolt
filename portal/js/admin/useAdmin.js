@@ -2,6 +2,7 @@ function _getActivePage(props) {
   const { page = "", divid = "", nav = "" } = props;
   _getActiveLink(divid, nav);
   if (page) {
+    sessionStorage.setItem("currentDashboardPage", page);
     _getPage({ page: page, url: adminPortalLocalUrl });
   }
 }

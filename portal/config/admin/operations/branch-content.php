@@ -428,8 +428,20 @@
                             }
                             if (userRoles.canViewBranchSubjects) {
                                 $('#branchNavUl').append(`
-                                <li class="hide-li" title="Branch Subject" id="branch_subjects"
-                                    onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-journals"></i> Subject</li>
+                                <li class="hide-li" title="Branch Subject" id="branch_subjects">
+                                    <i class="bi-journals"></i> Subject
+                                    <ul class="animated fadeIn">
+                                        <li title="Allocate Subject"
+                                            onclick="_getForm({page: 'allocateSubjectForm', layer:2, url: adminPortalLocalUrl});">
+                                            <i class="bi bi-check2-all"></i> Allocate Subject
+                                        </li>
+
+                                        <li title="View Subject Allocation"
+                                            onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});">
+                                            <i class="bi bi-eye-fill"></i> View Subject Allocation
+                                        </li>
+                                    </ul>
+                                </li>
                             `);
                             }
                             if (userRoles.canViewBranchResults) {
@@ -583,11 +595,21 @@
                                     }
                                     if (userRoles.canViewBranchSubjects) {
                                         $('#branchNavUlMobile').append(`
-                                <li title="Branch Subject"
-                                     onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});">
-                                    <i class="bi-journals"></i> <span>Subject</span>
-                                </li>
-                            `);
+                                    <li class="hide-li" title="Branch Subject" id="branch_subjects">
+                                        <i class="bi-journals"></i> Subject
+                                        <ul class="animated fadeIn">
+                                            <li title="Allocate Subject"
+                                                onclick="_getForm({page: 'allocateSubjectForm', layer:2, url: adminPortalLocalUrl});">
+                                                <i class="bi bi-check2-all"></i> Allocate Subject
+                                            </li>
+
+                                            <li title="View Subject Allocation"
+                                                onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});">
+                                                <i class="bi bi-eye-fill"></i> View Subject Allocation
+                                            </li>
+                                        </ul>
+                                    </li>
+                                `);
                                     }
                                     if (userRoles.canViewBranchResults) {
                                         const assessmentLockStatus = getEachBranchDetailsSession?.assessmentLock === true;
@@ -671,10 +693,9 @@
             <div class="field-back-div background-color">
                 <div class="field-inner-div branch-field-inner-div" id="get_branch_details">
                     <script>
-                        _getActiveBranchPage({
-                            divid: 'branch_dashboard',
-                            page: 'branch_dashboard',
-                            url: adminPortalLocalUrl
+                        $(document).ready(function () {
+                            let savedBranchPage = sessionStorage.getItem("currentBranchDashboardPage") ?? "branch_dashboard";
+                            _getActiveBranchPage({divid: savedBranchPage, page: savedBranchPage,  url: adminPortalLocalUrl});
                         });
                     </script>
                 </div>

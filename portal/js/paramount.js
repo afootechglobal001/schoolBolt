@@ -46,6 +46,20 @@ function _getForm(options) {
     url = "",
   } = options;
 
+  if (layer===1) {
+    // Save the current form
+    sessionStorage.setItem(
+      "currentDashboardForm",
+      JSON.stringify({
+        page,
+        id,
+        layer,
+        action,
+        url,
+      })
+    );
+  }
+
   const target =
     layer === 1
       ? "#get-form-more-div"
@@ -54,12 +68,12 @@ function _getForm(options) {
         : layer === 3
           ? "#get-more-third-layer"
           : "#get-more-fourth-layer";
-  $(target)
-    .css({
-      display: "flex",
-      "justify-content": "center",
-      "align-items": "center",
-    })
+    $(target)
+      .css({
+        display: "flex",
+        "justify-content": "center",
+        "align-items": "center",
+      })
     .fadeIn(500);
   const dataString =
     "action=" + action + "&page=" + page + "&id=" + id + "&modalLayer=" + layer;
@@ -95,6 +109,10 @@ function _alertClose(layer = 1) {
   )
     .html(text)
     .fadeOut(200);
+    if (layer ===1) {
+      sessionStorage.removeItem("currentDashboardForm");
+      sessionStorage.removeItem("currentBranchDashboardPage");
+    }
 }
 
 $(document).on("click", "#get-form-more-div", function () {

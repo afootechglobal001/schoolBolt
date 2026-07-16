@@ -1326,7 +1326,7 @@
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+        <table class="table" cellspacing="0" style="width:100%" id="branchStudentpageContent">
             <script>
                 _fetchBranchStudents();
             </script>

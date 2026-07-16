@@ -564,6 +564,7 @@ p {
   padding: 0px;
   margin: 0px;
   font-size: 14px;
+  color: var(--primary-color);
 }
 
 @keyframes pulsate {
