@@ -528,3 +528,326 @@ function _deallocateSubjectTeacher(departmentId, classId, armId, subjectId) {
 		_actionAlert('An unexpected error occurred! Please try again.', false);
 	}
 }
+
+
+
+function _getSelectNewSubjectAllocationDepartment(fieldId) {
+  try {
+    $.ajax({
+      type: "GET",
+      url: `${endPoint}/admin/branch/department/fetch-branch-departments?branchId=${getEachBranchDetailsSession.branchId}`,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(true),
+      success: function (info) {
+        const data = info.data;
+        const success = info.success;
+
+        if (success === true) {
+          for (let i = 0; i < data.length; i++) {
+            if (data[i].checked) {
+              const id = data[i].departmentId;
+              const value = data[i].departmentName;
+              $("#searchList_" + fieldId).append(
+                "<li onclick=\"_clickOption('searchList_" +
+                  fieldId +
+                  "', '" +
+                  id +
+                  "', '" +
+                  value +
+                  "'); _fetchSelectNewSujectAllocationDepartmentClass(); _getSelectNewSubjectAllocationArm(); _fetchSelectNewSujectAllocationClassSubject();\">" +
+                  value +
+                  "</li>"
+              );
+            }
+          }
+        } else {
+          _actionAlert(info.message, false);
+        }
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred. Please try again.", false);
+  }
+}
+
+function _fetchSelectNewSujectAllocationDepartmentClass() {
+  // clear previous Class selection completely
+  _clearSelectField("classId");
+  _getSelectNewSubjectAllocationClass("classId");
+}
+
+function _getSelectNewSubjectAllocationClass(fieldId) {
+  const departmentId = $("#departmentId").val();
+  // always reset before loading
+  $("#"+fieldId).val("");
+  $("#searchList_" + fieldId).html("");
+
+  try {
+    $.ajax({
+      type: "GET",
+      url:
+        endPoint +
+        "/admin/settings/departments/fetch-department-classes?departmentId=" +
+        departmentId,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(true),
+      success: function (info) {
+        const data = info.data;
+        const success = info.success;
+
+        if (success === true) {
+          $("#searchList_" + fieldId).html("");
+          const checkedClasses = data.filter((item) => item.checked === true);
+          for (let i = 0; i < checkedClasses.length; i++) {
+            const id = checkedClasses[i].classId;
+            const value = checkedClasses[i].className;
+            $("#searchList_" + fieldId).append(
+              "<li onclick=\"_clickOption('searchList_" +
+                fieldId +
+                "', '" +
+                id +
+                "', '" +
+                value +
+                "'); _fetchSelectNewSubjectAllocationClassArm(); _fetchSelectNewSujectAllocationClassSubject();\">" +
+                value +
+                "</li>"
+            );
+          }
+        } else {
+          _actionAlert(info.message, false);
+        }
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred. Please try again.", false);
+  }
+}
+
+function _fetchSelectNewSubjectAllocationClassArm() {
+  _getSelectNewSubjectAllocationArm();
+}
+
+function _fetchSelectNewSujectAllocationClassSubject() {
+  // clear previous Subject selection completely
+  _clearSelectField("subjectId");
+  _getSelectNewSubjectByClass("subjectId");
+}
+
+function _getSelectNewSubjectByClass(fieldId) {
+  const classId = $("#classId").val();
+
+  // always reset before loading
+  $("#"+fieldId).val("");
+  $("#searchList_" + fieldId).html("");
+
+  try {
+    $.ajax({
+      type: "GET",
+      url: `${endPoint}/admin/settings/classes/fetch-class-subjects?classId=${classId}`,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(true),
+      success: function (info) {
+        const data = info.data;
+        const success = info.success;
+
+        if (success === true) {
+          $("#searchList_" + fieldId).html("");
+          const checkedClasses = data.filter((item) => item.checked === true);
+          for (let i = 0; i < checkedClasses.length; i++) {
+            const id = checkedClasses[i].subjectId;
+            const value = checkedClasses[i].subjectName;
+            $("#searchList_" + fieldId).append(
+              "<li onclick=\"_clickOption('searchList_" +
+                fieldId +
+                "', '" +
+                id +
+                "', '" +
+                value +
+                "');\">" +
+                value +
+                "</li>"
+            );
+          }
+        }
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred. Please try again.", false);
+  }
+}
+
+/// Fetch Subject Allocation Arm Toggle ///
+function _getSelectNewSubjectAllocationArm() {
+  const departmentId = $("#departmentId").val();
+  const classId = $("#classId").val();
+
+	try {
+		_callFetchEndPoints({
+		url: `admin/branch/students/fetch-department-class-arms?branchId=${getEachBranchDetailsSession.branchId}&departmentId=${departmentId}&classId=${classId}`,
+		accessKey: true,
+		})
+		.then((response) => {
+      if (response?.success === true) {
+        _initFetchSubjectAllocationArm(response?.armData);
+      } else {
+        $('#fetchArmToggle').html(`
+          <div class="false-notification-div">
+            <p>${response?.message}</p>
+          </div>
+        `);
+      }
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+		});
+	} catch (error) {
+		console.error("Error:", error);
+	}
+}
+
+//// Initialize Fetch Subject Allocation Arm Toggle ////
+function _initFetchSubjectAllocationArm(armData) {
+  let armHtml = '';
+	for (let i = 0; i < armData.length; i++) {
+		const {armId, armName} = armData[i];
+
+		armHtml += `
+      <div class="each-toggle-div">
+        <span>${armName}</span>
+        <label for="arm_${armId}" class="switch">
+          <input type="checkbox" class="child exam-checkbox" id="arm_${armId}" name="armId[]" data-value="${armId}">
+          <span class="slider"></span>
+          <span class="toggle-label">No</span>
+        </label>
+      </div>`;
+	}
+	$('#fetchArmToggle').html(armHtml);
+	_toggleCheck();
+}
+
+//// Function Clear SelectField ////
+function _clearSelectField(fieldId) {
+    // clear actual select value
+    $("#" + fieldId).val("");
+
+    // reset displayed option
+    $("#" + fieldId).html(`
+        <option selected="selected" value="">
+            Select here
+        </option>
+    `);
+}
+
+/// Proceed Allocate Subject ////
+function _proceedAllocateSubject() {
+  try {
+    let issueCount = 0;
+    ////////get all needed values////////////
+    const departmentId = $('#departmentId').val().trim();
+    const classId = $('#classId').val().trim();
+    const subjectId = $('#subjectId').val().trim();
+    const staffId = $('#staffId').val().trim();
+
+    issueCount += _validateEmptyValue("departmentId", "DEPARTMENT");
+    issueCount += _validateEmptyValue("classId", "CLASS");
+    issueCount += _validateEmptyValue("subjectId", "SUBJECT");
+    issueCount += _validateEmptyValue("staffId", "STAFF");
+
+    if (issueCount > 0) return;
+
+    let selectedArms = [];
+		$('.child:checked').each(function() {
+			selectedArms.push({ armId: $(this).data('value') });
+		});
+
+    const checked = $('input[name="armId[]"]:checked').length;
+		$("#armId").removeClass("issue");
+
+		if (checked < 1) {
+			$("#armId").addClass("issue");
+			_actionAlert('Assign at least an arm to continue', false);
+			return;
+		}
+
+    // Gather form data
+    const formData = {
+      departmentId,
+      classId,
+      armIds: selectedArms,
+      subjectId,
+      staffId,
+    };
+
+    ////// confirm action////
+    _showCustomConfirm({
+      callback: () => {
+        _proceedAllocateSubjectCallback(formData);
+      },
+      title: "Are you sure?",
+      message: "Are you sure you want to proceed? This action is irreversible.",
+      alertType: "warning",
+      falseActionBtn: true,
+      closeOnOverlayClick: true,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _proceedAllocateSubject());
+  }
+}
+
+//// Proceed To Allocate Subject CallBack /////
+function _proceedAllocateSubjectCallback(formData) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+
+  try {
+    const btnText = $("#submitBtn").html();
+    _btnDisable("submitBtn", btnText, true);
+
+    _callRawEndPoints({
+      url: `admin/branch/subject/subject-teacher-bulk-allocations?branchId=${getEachBranchDetailsSession?.branchId}`,
+      formData,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success) {
+          _showCustomConfirm({
+            callback: () => {
+              _alertClose(2);
+            },
+            title: "Success!",
+            message: response.message,
+            alertType: "success",
+            trueActionBtnText: "OK, Thanks.",
+            closeOnOverlayClick: false,
+          });
+        } else {
+          _showCustomConfirm({
+            title: "Unable To Allocate Subject",
+            message: response.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+          _btnDisable("submitBtn", btnText, false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() => _proceedAllocateSubjectCallback(formData)); // retry if needed
+        _btnDisable("submitBtn", btnText, false);
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _proceedAllocateSubjectCallback(formData));
+    _btnDisable("submitBtn", btnText, false);
+  }
+}
