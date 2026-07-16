@@ -2,6 +2,7 @@ function _getActiveBranchPage(props) {
   const { page = "", divid = "", pageContainer = "get_branch_details" } = props;
   _getBranchPagesActiveLink(divid);
   if (page) {
+    sessionStorage.setItem("currentBranchDashboardPage", page);
     _getPage({
       page: page,
       pageContainer: pageContainer,

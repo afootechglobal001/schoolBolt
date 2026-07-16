@@ -109,7 +109,10 @@ function _alertClose(layer = 1) {
   )
     .html(text)
     .fadeOut(200);
-    sessionStorage.removeItem("currentDashboardForm");
+    if (layer ===1) {
+      sessionStorage.removeItem("currentDashboardForm");
+      sessionStorage.removeItem("currentBranchDashboardPage");
+    }
 }
 
 $(document).on("click", "#get-form-more-div", function () {

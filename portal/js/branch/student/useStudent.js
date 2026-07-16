@@ -602,7 +602,7 @@ function _fetchBranchStudents() {
   let getEachBranchDetailsSession = JSON.parse(
     sessionStorage.getItem("getEachBranchDetailsSession"),
   );
-  $("#pageContent")
+  $("#branchStudentpageContent")
     .html(
       '<div class="ajax-loader pages-ajax-loader"><img src="' +
         websiteUrl +
@@ -719,7 +719,7 @@ function _fetchBranchStudents() {
 								</tr>
 							</tbody>`;
           }
-          $("#pageContent").html(text);
+          $("#branchStudentpageContent").html(text);
         } else {
           _actionAlert(info.message, false);
 
@@ -733,7 +733,7 @@ function _fetchBranchStudents() {
 								</td>
 							</tr>
 						</tbody>`;
-          $("#pageContent").html(text);
+          $("#branchStudentpageContent").html(text);
 
           const response = info.response;
           if (response < 100) {

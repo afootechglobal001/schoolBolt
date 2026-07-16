@@ -693,10 +693,9 @@
             <div class="field-back-div background-color">
                 <div class="field-inner-div branch-field-inner-div" id="get_branch_details">
                     <script>
-                        _getActiveBranchPage({
-                            divid: 'branch_dashboard',
-                            page: 'branch_dashboard',
-                            url: adminPortalLocalUrl
+                        $(document).ready(function () {
+                            let savedBranchPage = sessionStorage.getItem("currentBranchDashboardPage") ?? "branch_dashboard";
+                            _getActiveBranchPage({divid: savedBranchPage, page: savedBranchPage,  url: adminPortalLocalUrl});
                         });
                     </script>
                 </div>
