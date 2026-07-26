@@ -123,7 +123,7 @@
                         });
 
                         // Build table head
-                        let subjectTable = `<thead><tr class="tb-col table-col">`;
+                        let subjectTable = `<thead><tr class="tb-col table-col cumulative-col">`;
                         tableTitles.forEach(title => {
                             subjectTable += `<th>${title}</th>`;
                         });
@@ -150,7 +150,7 @@
                         subjectTable += `</tbody>`;
 
                         sectionHtml += `
-                            <section class="body-div backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat; page-break-after: always;">
+                            <section class="body-div all-terminal-body backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat; page-break-after: always;">
                                 <div class="header-back-div">
                                     <div class="header-image">
                                         <img src="${headerUrl}" alt="${branch.branchName} Report Header" style="width: 100%; height: auto;" />
