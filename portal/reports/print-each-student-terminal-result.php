@@ -51,7 +51,7 @@
     </div>
 
     <div id="body-wrapper">
-        <section class="body-div" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
+        <section class="body-div all-terminal-body" id="backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat;">
             <div class="header-back-div">
                 <div class="header-image">
                     <img id="terminalResultHeader" src="<?php echo $websiteUrl ?>/images/report/terminal-result-header.png" alt="Report Header" style="width: 100%; height: auto;"/>
@@ -251,7 +251,7 @@
 
                                 // Build the table
                                 const thead = $('<thead></thead>');
-                                const headerRow = $('<tr class="tb-col table-col"></tr>');
+                                const headerRow = $('<tr class="tb-col table-col cumulative-col"></tr>');
                                 tableTitles.forEach(title => {
                                     headerRow.append($('<th></th>').text(title));
                                 });
@@ -484,7 +484,7 @@
             </div>
         </section>
 
-        <section class="body-div" id="progressReportSection">
+        <section class="body-div all-terminal-body" id="progressReportSection">
             <div class="header-back-div">
                 <div class="header-image">
                     <img id="progressReportHeader" src="<?php echo $websiteUrl ?>/images/report/progress-report-header.png" alt="Report Header" style="width: 100%; height: auto;"/>

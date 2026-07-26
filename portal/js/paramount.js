@@ -46,7 +46,7 @@ function _getForm(options) {
     url = "",
   } = options;
 
-  if (layer===1) {
+  if (layer===1 && page!=="revenueBreakdown") {
     // Save the current form
     sessionStorage.setItem(
       "currentDashboardForm",

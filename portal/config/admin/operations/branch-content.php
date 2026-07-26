@@ -595,9 +595,9 @@
                                     }
                                     if (userRoles.canViewBranchSubjects) {
                                         $('#branchNavUlMobile').append(`
-                                    <li class="hide-li" title="Branch Subject" id="branch_subjects">
+                                    <li title="Branch Subject" id="branch_subjects">
                                         <i class="bi-journals"></i> Subject
-                                        <ul class="animated fadeIn">
+                                        <ul class="ul-expand animated fadeIn">
                                             <li title="Allocate Subject"
                                                 onclick="_getForm({page: 'allocateSubjectForm', layer:2, url: adminPortalLocalUrl});">
                                                 <i class="bi bi-check2-all"></i> Allocate Subject
