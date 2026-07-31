@@ -123,7 +123,7 @@
                         });
 
                         // Build table head
-                        let subjectTable = `<thead><tr class="tb-col table-col">`;
+                        let subjectTable = `<thead><tr class="tb-col table-col cumulative-col">`;
                         tableTitles.forEach(title => {
                             subjectTable += `<th>${title}</th>`;
                         });
@@ -150,7 +150,7 @@
                         subjectTable += `</tbody>`;
 
                         sectionHtml += `
-                            <section class="body-div backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat; page-break-after: always;">
+                            <section class="body-div all-terminal-body backgroundTable" style="background: url(../images/report/watermark.jpg) center no-repeat; page-break-after: always;">
                                 <div class="header-back-div">
                                     <div class="header-image">
                                         <img src="${headerUrl}" alt="${branch.branchName} Report Header" style="width: 100%; height: auto;" />
@@ -187,7 +187,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="details">
-                                                        <p>GENDER
+                                                        <p>GENDER:
                                                             <span>${genderName}</span>
                                                         </p>
                                                     </div>
@@ -266,37 +266,37 @@
 
                                                         <div class="list-content">
                                                             <span>NUMBER OF SITTING(S):</span>
-                                                            <p>${studentResultData.noOfStudentsInClass}</p>
+                                                            <p>${studentResultData?.sessionResultSummary?.numberOfSittings}</p>
                                                         </div>
 
                                                         <div class="list-content">
                                                             <span>1ST TERM OVERALL (%):</span>
-                                                            <p id="">45.82 %</p>
+                                                            <p>${studentResultData?.sessionResultSummary?.firstTermPercentage} %</p>
                                                         </div>
 
                                                         <div class="list-content">
                                                             <span>2ND TERM OVERALL (%):</span>
-                                                            <p id="">48.78</p>
+                                                            <p>${studentResultData?.sessionResultSummary?.secondTermPercentage} %</p>
                                                         </div>
 
                                                         <div class="list-content">
                                                             <span>3RD TERM OVERALL (%):</span>
-                                                            <p id="">47.42 %</p>
+                                                            <p>${studentResultData?.sessionResultSummary?.thirdTermPercentage} %</p>
                                                         </div>
 
                                                         <div class="list-content">
                                                             <span>AVERAGE (%):</span>
-                                                            <p id="">48.78</p>
+                                                            <p>${studentResultData?.sessionResultSummary?.averagePercentage} %</p>
                                                         </div>
 
                                                         <div class="list-content">
                                                             <span>ANNUAL POSITION IN CLASS:</span>
-                                                            <p id="">33RD</p>
+                                                            <p>${studentResultData?.sessionResultSummary?.positionInClass}</p>
                                                         </div>
 
                                                         <div class="list-content">
                                                             <span>ANNUAL OVERALL POSITION:</span>
-                                                            <p id="">143RD(166)</p>
+                                                            <p>${studentResultData?.sessionResultSummary?.overallPosition}</p>
                                                         </div>
 
                                                         <div class="list-content">

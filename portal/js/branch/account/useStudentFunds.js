@@ -223,14 +223,6 @@ function _fetchCustomStudentFundFiltering() {
 
 ///// Fetch Students Funds ////
 function _studentFundHistoryFiltering(dateFrom, dateTo) {
-	$("#get-more-third-layer")
-    .css({
-      display: "flex",
-      "justify-content": "center",
-      "align-items": "center",
-    })
-    .fadeIn(500);
-
   	let getEachBranchDetailsSession = JSON.parse(
 		  sessionStorage.getItem("getEachBranchDetailsSession")
 	  );
@@ -277,14 +269,17 @@ function _studentFundHistoryFiltering(dateFrom, dateTo) {
 		console.error("Error:", error);
 		_callCatchError(() => _walletHistoryFiltering(dateFrom, dateTo));
 	}
-	$("#get-more-third-layer").fadeOut(500);
 }
 
 ///// Render Fetch Students Funds ////
 function _renderFetchStudentFunds(data, start) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession")
+  );
+
   return data
-    .map(
-      (item, i) => `
+    .map((item, i) => {
+      return `
       <tr class="tb-row">
         <td>${start + i + 1}</td>
         <td class="clickable-td">${item.updatedTime}</td>
@@ -312,8 +307,15 @@ function _renderFetchStudentFunds(data, start) {
             ${item.statusData?.statusName}
           </div>
         </td>
+        <td>
+          <button class="btn view-btn"
+            title="Click to view student fund details"
+            onclick="_fetchEachStudentFunds('${getEachBranchDetailsSession?.branchId}', '${item.studentId}', '${item.paymentId}');">
+            VIEW
+          </button>
+        </td>
       </tr>`
-    )
+    })
     .join("");
 }
 
@@ -328,6 +330,50 @@ function _initFetchStudentFunds(data) {
   );
   __paginatorHandlers["fetchStudentFunds"] = paginator;
   paginator.renderPage();
+}
+
+/////// Fetch Each Student Fund /////
+function _fetchEachStudentFunds(branchId, studentId, paymentId) {
+  try {
+    $("#get-more-third-layer")
+      .css({
+        display: "flex",
+        "justify-content": "center",
+        "align-items": "center",
+      })
+      .fadeIn(500);
+
+    //// call endpoint //////
+    _callFetchEndPoints({
+      url: `admin/branch/account/student-funds/fetch-student-fund?branchId=${branchId}&studentId=${studentId}&paymentId=${paymentId}`,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success && response.data?.length > 0) {
+          sessionStorage.setItem(
+            "useEachFetchStudentFundSession",
+            JSON.stringify(response),
+          );
+          _getForm({
+            page: "studentFundCancelForm",
+            layer: 3,
+            url: adminPortalLocalUrl,
+          });
+        } else {
+          _actionAlert(response.message, false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _alertClose(3);
+        _callAjaxError(() => _fetchEachStudentFunds(branchId, studentId, paymentId)); // retry if needed
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _alertClose(3);
+    _callCatchError(() => _fetchEachStudentFunds(branchId, studentId, paymentId));
+  }
 }
 
 ///// Fetch Students Discount Scholarship Funds ////
@@ -424,4 +470,103 @@ function _initFetchStudentDiscountScholarshipFunds(data) {
   );
   __paginatorHandlers["fetchStudentDiscountScholarshipFunds"] = paginator;
   paginator.renderPage();
+}
+
+//// Student Fund Cancellation /////
+function _studentFundCancellation() {
+  let useEachFetchStudentFundSession = JSON.parse(
+    sessionStorage.getItem("useEachFetchStudentFundSession"),
+  );
+  const paymentId = useEachFetchStudentFundSession?.data[0]?.paymentId;
+
+  try {
+    ////////get all needed values////////////
+    let issueCount = 0;
+    const reasonForCancellation = $("#reasonForCancellation").val().trim();
+
+    ///// empty field validation//////////
+    issueCount += _validateEmptyValue("reasonForCancellation", "REASON FOR CANCELLATION");
+
+    if (issueCount > 0) return;
+
+    /////Gather form data////
+    const formData = {
+      paymentId,
+      reasonForCancellation,
+    };
+
+    ////// confirm action////
+    _showCustomConfirm({
+      callback: () => {
+        _studentFundCancellationCallback(formData);
+      },
+      title: "Are you sure?",
+      message: "Are you sure you want to proceed? This action is irreversible.",
+      alertType: "warning",
+      falseActionBtn: true,
+      closeOnOverlayClick: true,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _studentFundCancellation());
+  }
+}
+
+//// Student Fund Cancellation CallBack /////
+function _studentFundCancellationCallback(formData) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+
+  let useEachFetchStudentFundSession = JSON.parse(
+    sessionStorage.getItem("useEachFetchStudentFundSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+  const studentId = useEachFetchStudentFundSession?.data[0]?.studentId;
+
+  try {
+    const btnText = $("#submitBtn").html();
+    _btnDisable("submitBtn", btnText, true);
+
+    _callRawEndPoints({
+      url: `admin/branch/account/student-funds/cancel-student-fund?branchId=${branchId}&studentId=${studentId}`,
+      formData,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success) {
+          _showCustomConfirm({
+            callback: () => {
+              _alertClose(3);
+              _fetchStudentFundFiltering('srch-90', 'Last 90 Days');
+            },
+            title: "Success!",
+            message: response.message,
+            alertType: "success",
+            trueActionBtnText: "OK, Thanks.",
+            closeOnOverlayClick: false,
+          });
+        } else {
+          _showCustomConfirm({
+            title: "Unable to Cancel Fund",
+            message: response.message,
+            alertType: "error",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+          _btnDisable("submitBtn", btnText, false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() => _studentFundCancellationCallback(formData)); // retry if needed
+        _btnDisable("submitBtn", btnText, false);
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _studentFundCancellationCallback(formData));
+    _btnDisable("submitBtn", btnText, false);
+  }
 }
