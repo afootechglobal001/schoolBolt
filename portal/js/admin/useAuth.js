@@ -184,6 +184,10 @@ function assignRole(data) {
   permissions.includes(24) ? (userRoles.canDeleteStaff = true) : false;
   permissions.includes(25) ? (userRoles.canChangeStaffPassword = true) : false;
 
+  /// Result Permissions
+  permissions.includes(37) ? (userRoles.canPublishResult = true) : false;
+  permissions.includes(38) ? (userRoles.canActivateResult = true) : false;
+  
   // Store in sessionStorage
   sessionStorage.setItem("userRoles", JSON.stringify(userRoles));
   sessionStorage.setItem("staffLoginData", JSON.stringify(staffLoginData));
