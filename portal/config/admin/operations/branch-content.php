@@ -446,11 +446,22 @@
                             }
                             if (userRoles.canViewBranchResults) {
                                 const assessmentLockStatus = getEachBranchDetailsSession?.assessmentLock === true;
+                                let canPublishResultLi = "";
+
+                                if (userRoles.canPublishResult) {
+                                    canPublishResultLi += `
+                                    <li title="Publish Result"
+                                        onclick="_getForm({page: 'publishResultSelectForm', layer:2, url: adminPortalLocalUrl});">
+                                        <i class="bi-file-earmark-ppt-fill"></i> Publish Result
+                                    </li>
+                                    `;
+                                }
+                                $("#resultNavUl").append(canPublishResultLi);
 
                                 $('#branchNavUl').append(`
                                     <li class="hide-li" title="Branch Record">
                                         <i class="bi-person-lines-fill"></i> Result
-                                        <ul class="animated fadeIn">
+                                        <ul class="animated fadeIn" id="resultNavUl">
 
                                             <li class="switch-li" title="Lock Assessment Update">
                                                 <div class="gap">
@@ -486,10 +497,7 @@
                                                 <i class="bi-table"></i> Promotional Broadsheet
                                             </li>
 
-                                            <li title="Publish Result"
-                                                onclick="_getForm({page: 'publishResultSelectForm', layer:2, url: adminPortalLocalUrl});">
-                                                <i class="bi-file-earmark-ppt-fill"></i> Publish Result
-                                            </li>
+                                            ${canPublishResultLi}
 
                                             <li title="Promotional Panel" id="branchResultPage"
                                                 onclick="_getActiveBranchPage({divid:'branchResultPage', page: 'promotionPanelBranchDepartmentClass', url: adminPortalLocalUrl});">
@@ -613,9 +621,22 @@
                                     }
                                     if (userRoles.canViewBranchResults) {
                                         const assessmentLockStatus = getEachBranchDetailsSession?.assessmentLock === true;
+
+                                         let canPublishMobileResultLi = "";
+
+                                        if (userRoles.canPublishResult) {
+                                            canPublishMobileResultLi += `
+                                            <li title="Publish Result"
+                                                onclick="_getForm({page: 'publishResultSelectForm', layer:2, url: adminPortalLocalUrl});">
+                                                <i class="bi-file-earmark-ppt-fill"></i> Publish Result
+                                            </li>
+                                            `;
+                                        }
+                                        $("#resultMobileNavUl").append(canPublishMobileResultLi);
+
                                         $('#branchNavUlMobile').append(`
                                 <li title="Branch Record"><i class="bi-person-lines-fill"></i> Result
-                                    <ul class="ul-expand animated fadeIn">
+                                    <ul class="ul-expand animated fadeIn" id="resultMobileNavUl">
                                         <li class="switch-li" title="Lock Assessment Update">
                                             <div class="gap">
                                                 <i class="bi-shield-lock-fill"></i> Lock Assessment Update
@@ -649,7 +670,7 @@
                                             <i class="bi-table"></i> Promotional Broadsheet
                                         </li>
 
-                                        <li title="Publish Result" onclick="_getForm({page: 'publishResultSelectForm', layer:2, url: adminPortalLocalUrl});"><i class="bi-file-earmark-ppt-fill"></i>Publish Result</li>
+                                       ${canPublishMobileResultLi}
                                         
                                         <li title="Promotional Panel"
                                             onclick="_getActiveBranchPage({divid:'branchResultPage', page: 'promotionPanelBranchDepartmentClass', url: adminPortalLocalUrl});">
@@ -4002,21 +4023,29 @@
             </div>
 
             <div class="div-in">
-                <div class="user-managment-back-div">
-                    <div class="user-managment-list staff-managment-list" title="Activate Academic Result"
-                        onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'activateResult', url: adminPortalLocalUrl});">
-                        <div class="inner-div">
-                            <div class="icon-div">
-                                <img src="<?php echo $websiteUrl ?>/images/double-check.png"
-                                    alt="Activate Academic Result" />
+                <div class="user-managment-back-div" id="userManagement">
+                    <script>
+                        $(document).ready(function () {
+                        if (userRoles.canActivateResult) {
+                            $('#userManagement').append(`
+                            <div class="user-managment-list staff-managment-list" title="Activate Academic Result"
+                                onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'activateResult', url: adminPortalLocalUrl});">
+                                <div class="inner-div">
+                                    <div class="icon-div">
+                                        <img src="<?php echo $websiteUrl ?>/images/double-check.png"
+                                            alt="Activate Academic Result" />
+                                    </div>
+                                    <div class="text-div">
+                                        <h3>Activate Academic Result</h3>
+                                        <p>Activate the result for your branch to make it available for viewing and further
+                                            processing.</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-div">
-                                <h3>Activate Academic Result</h3>
-                                <p>Activate the result for your branch to make it available for viewing and further
-                                    processing.</p>
-                            </div>
-                        </div>
-                    </div>
+                        `);
+                        }
+                        });
+                    </script>
 
                     <div class="user-managment-list staff-managment-list" title="SchoolBolt Wallet"
                         onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});">
