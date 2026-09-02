@@ -1,43 +1,55 @@
 function textField(options) {
-    const {
-        id = '',
-        title = '',
-        type = 'text',
-        value = '',
-        onKeyPressFunction = null,
-		onKeyUpFunction = null,
-		readonly = false
-    } = options;
+  const {
+    id = "",
+    title = "",
+    type = "text",
+    value = "",
+    onKeyPressFunction = null,
+    onKeyUpFunction = null,
+    readonly = false,
+    maxlength = null,
+    rows = null,
+  } = options;
 
-    const template = type === "textarea"
-        ? `
-          <textarea class="text_area" id="${id}" placeholder="" rows="">${value}</textarea>
-          <div class="placeholder">${title}:</div>
+  const isPassword = type === "password";
+  const template =
+    type === "textarea"
+      ? `
+          <textarea class="text_area" id="${id}" placeholder="" rows="${rows}"
+		  ${maxlength ? `maxlength="${maxlength}"` : ""} ${rows ? `rows="${rows}"` : ""}>${value}</textarea>
+          <div class="placeholder">${title}</div>
+		  <div class="issueText" id="issue_${id}"></div>
         `
-        : `
+      : `
           <input class="text_field" type="${type}" id="${id}" placeholder="" value="${value}"
-              ${onKeyPressFunction ? `onkeypress="${onKeyPressFunction}"` : ''} 
-			  ${onKeyUpFunction ? `onkeyup="${onKeyUpFunction}"` : ''}
-			  ${readonly ? 'readonly' : ''}/>
+            ${onKeyPressFunction ? `onkeypress="${onKeyPressFunction}"` : ""} 
+			${onKeyUpFunction ? `onkeyup="${onKeyUpFunction}"` : ""}
+			${readonly ? "readonly" : ""}
+			${maxlength ? `maxlength="${maxlength}"` : ""}/>
           <div class="placeholder">${title}:</div>
-        `;
-    $('#' + id + '_container').html(template);
+		  <div class="issueText" id="issue_${id}"></div>
+      ${isPassword ? `<span class="toggle-password" data-target="${id}"><i class='bi bi-eye-fill'></i></span>` : ""}
+    `;
+  $("#" + id + "_container").html(template);
 }
 
-
 function selectField(options) {
-    const {
-        id = '',
-        title = '',
-        emptyValue = '',
-		fieldValue = '',
-		fieldLabel = ''
-    } = options;
-    
-    const template = `
-    <select class="text_field selectSearch" id="${id}"
+  const {
+    id = "",
+    title = "",
+    emptyValue = "",
+    fieldValue = "",
+    fieldLabel = "",
+  } = options;
+
+  const template = `
+    <select class="text_field select_text_field selectSearch" id="${id}"
         onclick="_selectOption('${id}')" style="opacity: 1;">
-		${fieldValue ? `<option selected="selected" value="${fieldValue}">${fieldLabel}</option>` : '<option selected="selected" value="">Select here</option>'}
+		${
+      fieldValue
+        ? `<option selected="selected" value="${fieldValue}">${fieldLabel}</option>`
+        : '<option selected="selected" value="">Select here</option>'
+    }
     </select>
     <div class="placeholder">${title}:</div>
     <div class="searchPanel addSearchPanel animated fadeIn" id="searchPanel_${id}"
@@ -46,361 +58,153 @@ function selectField(options) {
             id="txtSearchValue_${id}" autocomplete="off"
             onkeyup="filter('${id}')">
         <ul id="searchList_${id}">
-            ${emptyValue ? `<li onclick="_clickOption('searchList_${id}', '', '${emptyValue}');">${emptyValue}</li>` : ''}
+            ${
+              emptyValue
+                ? `<li onclick="_clickOption('searchList_${id}', '', '${emptyValue}');">${emptyValue}</li>`
+                : ""
+            }
         </ul>
     </div>
+	<div class="issueText" id="issue_${id}"></div>
     `;
-    $('#' + id + '_container').html(template);
+  $("#" + id + "_container").html(template);
 }
 
+function otpField(options) {
+  const { id = "otpCode", length = 6, onKeyPressFunction = null } = options;
+  let inputs = "";
+  for (let i = 0; i < length; i++) {
+    inputs += `
+      <input
+        class="otp_text_field"
+        type="number"
+        maxlength="1"
+        data-index="${i}"
+        ${onKeyPressFunction ? `onkeypress="${onKeyPressFunction}"` : ''}
+      />
+    `;
+  }
+
+  const template = `
+  <div class="otp-wrapper">
+    <div class="otp-container" id="${id}_box">
+      ${inputs}
+    </div>
+    <input type="hidden" id="${id}" />
+    <div class="issueText" id="issue_${id}"></div>
+  </div>
+  `;
+  $("#" + id + "_container").html(template);
+
+  const otpInputs = $("#" + id + "_box .otp_text_field");
+
+  // Auto move + update hidden input
+  otpInputs.on("input", function () {
+    let value = $(this).val();
+
+    if (value.length === 1) {
+      $(this).next(".otp_text_field").focus();
+    }
+    updateOTP();
+  });
+
+  // Paste OTP (e.g. 109735)
+  otpInputs.on("paste", function (e) {
+    e.preventDefault();
+
+    let pastedData = e.originalEvent.clipboardData.getData("text")
+      .replace(/\D/g, "")
+      .slice(0, length);
+    
+    for (let i = 0; i < pastedData.length; i++) {
+      otpInputs.eq(i).val(pastedData[i]);
+    }
+
+    updateOTP();
+    // focus next empty or last box
+    otpInputs.eq(pastedData.length - 1).focus();
+  });
+
+  // Backspace move back
+  otpInputs.on("keydown", function (e) {
+    if (e.key === "Backspace" && $(this).val() === "") {
+      $(this).prev(".otp_text_field").focus();
+    }
+  });
+
+  function updateOTP() {
+    let otp = "";
+    otpInputs.each(function () {
+      otp += $(this).val();
+    });
+    $("#" + id).val(otp);
+  }
+}
 
 function _selectOption(selectBoxId) {
-	$('#txtSearchValue_'+selectBoxId).val('');
-	filter(selectBoxId);
+  $("#txtSearchValue_" + selectBoxId).val("");
+  filter(selectBoxId);
 
-    if ($('#searchPanel_'+selectBoxId).is(":visible")) {
-        $('#searchPanel_'+selectBoxId).css('display', 'none');
-    } else {
-        $('#searchPanel_'+selectBoxId).css('display', 'flex');
-        $('#txtSearchValue_'+selectBoxId).focus();
-    }
+  if ($("#searchPanel_" + selectBoxId).is(":visible")) {
+    $("#searchPanel_" + selectBoxId).css("display", "none");
+  } else {
+    $("#searchPanel_" + selectBoxId).css("display", "flex");
+    $("#txtSearchValue_" + selectBoxId).focus();
+  }
 }
 
-document.addEventListener('click', (e) => {
-    document.querySelectorAll('.text_field_container').forEach(container => {
-        // If the click is not inside the container, hide its search panel.
-        if (!container.contains(e.target)) {
-            const searchPanel = container.querySelector('.searchPanel');
-            if (searchPanel) {
-                searchPanel.style.display = 'none';
-            }
-        }
-    });
+document.addEventListener("click", (e) => {
+  document.querySelectorAll(".text_field_container").forEach((container) => {
+    // If the click is not inside the container, hide its search panel.
+    if (!container.contains(e.target)) {
+      const searchPanel = container.querySelector(".searchPanel");
+      if (searchPanel) {
+        searchPanel.style.display = "none";
+      }
+    }
+  });
 });
 
 function filter(selectBoxId) {
-	var valThis = $('#txtSearchValue_'+selectBoxId).val();
-	$('#searchList_'+selectBoxId+' > li').each(function() {
-		var text = $(this).text();
-		(text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show(): $(this).hide();
-	});
-};
+  var valThis = $("#txtSearchValue_" + selectBoxId).val();
+  $("#searchList_" + selectBoxId + " > li").each(function () {
+    var text = $(this).text();
+    text.toLowerCase().indexOf(valThis.toLowerCase()) > -1
+      ? $(this).show()
+      : $(this).hide();
+  });
+}
 function _clickOption(selectedOption, id, value) {
-	selectBoxId = selectedOption.replace("searchList_", "");
-	// Clear previous options and set the selected one
-	$('#'+selectBoxId).html(`<option selected="selected" value="${id}">${value}</option>`);
-	_selectOption(selectBoxId);
-};
-
-///// Admin SelectFields ///////////
-
-function _getSelectStatusId(fieldId, statusIds){
-	try {
-		$.ajax({
-			type: "GET",
-			url: endPoint+"/preset-data/fetch-status?statusId="+statusIds,
-			dataType: "json",
-			cache: false,
-			headers: {
-				'apiKey': apiKey,
-				'userOsBrowser': userOsBrowser,
-				'userIpAddress': userIpAddress,
-				'userDeviceId': userDeviceId,
-				'clientId': clientId,
-				'clientAddress': clientAddress,
-				'Authorization': 'Bearer ' + loginAccessKey
-			},
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-
-				if (success === true) {
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].statusId;
-						const value = data[i].statusName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
+  selectBoxId = selectedOption.replace("searchList_", "");
+  // Clear previous options and set the selected one
+  $("#" + selectBoxId).html(
+    `<option selected="selected" value="${id}">${value}</option>`,
+  );
+  _selectOption(selectBoxId);
 }
 
-function _getSelectGender(fieldId){
-	try {
-		$.ajax({
-			type: "GET",
-			url: endPoint+"/preset-data/fetch-gender",
-			dataType: "json",
-			cache: false,
-			headers: getAuthHeaders(),
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-				
-				if (success === true) {
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].genderId;
-						const value = data[i].genderName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
-}
+/// Toggle Password Visibility ///
+$(document).on("input", ".text_field[type='password']", function () {
+  const icon = $(".toggle-password[data-target='" + this.id + "']");
+  if (this.value.length > 0) {
+    icon.show();
+  } else {
+    icon.hide();
+    $(this).attr("type", "password");
+    icon.find("i").removeClass("bi-eye-slash-fill").addClass("bi-eye-fill");
+  }
+});
 
-function _getSelectMaritalStatus(fieldId){
-	try {
-		$.ajax({
-			type: "GET",
-			url: endPoint+"/preset-data/fetch-marital-status",
-			dataType: "json",
-			cache: false,
-			headers: getAuthHeaders(),
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-				
-				if (success === true) {
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].maritalStatusId;
-						const value = data[i].maritalStatusName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
-}
+// Click the eye icon to show or hide password
+$(document).on("click", ".toggle-password", function () {
+  const input = $("#" + $(this).data("target"));
+  const icon = $(this).find("i");
 
-function _getSelectTitle(fieldId){
-	try {
-		$.ajax({
-			type: "GET",
-			url: endPoint+'/preset-data/fetch-title',
-			dataType: "json",
-			cache: false,
-			headers: getAuthHeaders(),
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-				
-				if (success === true) {
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].titleId;
-						const value = data[i].titleName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
-}
-
-function _getSelectBirthDay(fieldId) {
-	for (let i = 1; i <= 31; i++) {
-		const id = i;
-		const value = i;
-		$('#searchList_' + fieldId).append(
-			'<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">' + value + '</li>'
-		);
-	}
-}
-
-function _getSelectBirthMonth(fieldId){
-	const data = [
-		{
-			'birthMonthId': 1,
-			'birthMonthName': 'Jan',
-		},
-		{
-			'birthMonthId': 2,
-			'birthMonthName': 'Feb',
-		},
-		{
-			'birthMonthId': 3,
-			'birthMonthName': 'Mar',
-		},
-		{
-			'birthMonthId': 4,
-			'birthMonthName': 'Apr',
-		},
-		{
-			'birthMonthId': 5,
-			'birthMonthName': 'May',
-		},
-		{
-			'birthMonthId': 6,
-			'birthMonthName': 'Jun',
-		},
-		{
-			'birthMonthId': 7,
-			'birthMonthName': 'Jul',
-		},
-		{
-			'birthMonthId': 8,
-			'birthMonthName': 'Aug',
-		},
-		{
-			'birthMonthId': 9,
-			'birthMonthName': 'Sep',
-		},
-		{
-			'birthMonthId': 10,
-			'birthMonthName': 'Oct',
-		},
-		{
-			'birthMonthId': 11,
-			'birthMonthName': 'Nov',
-		},
-		{
-			'birthMonthId': 12,
-			'birthMonthName': 'Dec',
-		}
-	];
-
-	for (let i = 0; i < data.length; i++) {
-		const id = data[i].birthMonthId;
-		const value = data[i].birthMonthName;
-		$('#searchList_' + fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">' + value + '</li>');
-	}	
-}
-
-function _getSelectBlogCategory(fieldId){
-	const data=[
-		{
-			'blogCatId': 1,
-			'blogCatName': 'GENERAL',
-		},
-		{
-			'blogCatId': 2,
-			'blogCatName': 'ANNOUNCEMENT',
-		},
-		{
-			'blogCatId': 3,
-			'blogCatName': 'PRODUCTS',
-		}
-	]
-
-	for (let i = 0; i < data.length; i++) {
-		const id = data[i].blogCatId;
-		const value = data[i].blogCatName;
-		$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
-	}	
-}
-
-function _getSelectNationality(fieldId){
-	try {
-		$.ajax({
-			type: "GET",
-			url: endPoint+'/preset-data/fetch-country',
-			dataType: "json",
-			cache: false,
-			headers: getAuthHeaders(),
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-				
-				if (success === true) {
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].countryId;
-						const value = data[i].countryName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
-}
-
-function _getSelectGeneralState(fieldId){
-	try {
-		$.ajax({
-			type: "GET",
-			url: endPoint+"/preset-data/fetch-states",
-			dataType: "json",
-			cache: false,
-			headers: getAuthHeaders(),
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-
-				if (success === true) {
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].stateId;
-						const value = data[i].stateName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\'); _fetchGeneralStateLga()">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
-}
-
-function _fetchGeneralStateLga(){
-	_getSelectGeneralLga('lgaId');
-}
-function _getSelectGeneralLga(fieldId){
-	const stateId = $('#stateId').val();
-	try {
-		$.ajax({
-			type: "GET",
-			url: endPoint+"/preset-data/fetch-lga?stateId="+stateId,
-			dataType: "json",
-			cache: false,
-			headers: getAuthHeaders(),
-			success: function(info) {
-				const data = info.data;
-				const success = info.success;
-
-				if (success === true) {
-					$('#searchList_'+ fieldId).html('');
-					for (let i = 0; i < data.length; i++) {
-						const id = data[i].lgaId;
-						const value = data[i].lgaName;
-						$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\')">'+ value +'</li>');
-					}	
-				} else {
-					_actionAlert(info.message, false); 
-				}
-			}
-		});
-	} catch (error) {
-		console.error("Error: ", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-	}
-	
-}
-
-
+  if (input.attr("type") === "password") {
+    input.attr("type", "text"); // show password
+    icon.removeClass("bi-eye-fill").addClass("bi-eye-slash-fill");
+  } else {
+    input.attr("type", "password"); // hide password
+    icon.removeClass("bi-eye-slash-fill").addClass("bi-eye-fill");
+  }
+});

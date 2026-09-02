@@ -183,7 +183,7 @@ function _fetchDepartmentClass(departmentId) {
 	try {
 		$.ajax({
 			type: "GET",
-			url: `${endPoint}/admin/settings/departments/fetch-department-classes?departmentId=${departmentId}`,
+			url: `${endPoint}/admin/settings/departments/fetch-department-classes?departmentId=${departmentId}&isAlumni=true`,
 			dataType: "json", 
 			cache: false,
 			headers: getAuthHeaders(true),
