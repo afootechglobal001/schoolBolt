@@ -1,7 +1,7 @@
 <?php
 	error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_WARNING);
 	$websiteAutoUrl =(isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-	$appName='schoolBolt'; 
+	$appName='SchoolBolt'; 
 
 	//$websiteUrl='https://schoolbolt.com'; /// For Live Server Url //
 	$websiteUrl='http://localhost/schoolbolt/schoolbolt';
@@ -39,10 +39,23 @@ $userDeviceId=getBrowserId();
 
 
 <script>
-var websiteUrl = "<?php echo $websiteUrl;?>";
-var apiKey = 'a7c37b6289b9dd879b2c005118d3ef14'; /// For API Key //
-var endPoint = 'https://schoolbolt.com/schoolbolt-api/dev'; /// Server End Point url
-var userOsBrowser = "<?php echo $userOsBrowser;?>"; /// For User OS Browser //
-var userIpAddress = "<?php echo $userIpAddress;?>"; /// For User IP Address //
-var userDeviceId = "<?php echo $userDeviceId;?>"; /// For User Device Id //
+    var websiteUrl = "<?php echo $websiteUrl;?>";
+    var apiKey = 'a7c37b6289b9dd879b2c005118d3ef14'; /// For API Key //
+    var endPoint = 'https://schoolbolt.com/schoolbolt-api/dev'; /// Server End Point url
+    var userOsBrowser = "<?php echo $userOsBrowser;?>"; /// For User OS Browser //
+    var userIpAddress = "<?php echo $userIpAddress;?>"; /// For User IP Address //
+    var userDeviceId = "<?php echo $userDeviceId;?>"; /// For User Device Id //
+
+    /// Site Middleware Urls ///
+    var siteMiddlewareUrl = websiteUrl + '/config/code'; //// For site url
+
+    /// Admin Middleware Urls ///
+    var adminMiddleWareUrl = websiteUrl + '/admin/config/code'; /// For Admin Login Middleware Url //
+    var adminUrl = websiteUrl + '/admin'; /// For Admin Url //
+    var userVerificationUrl = websiteUrl + '/admin/user-verification'; /// For User Verification Url //
+    var completeResetPasswordUrl = websiteUrl + '/admin/complete-reset-password'; /// For Complete Reset Password Url //
+
+    /// Portal Middleware Urls ///
+    var portalMiddleWareUrl = websiteUrl + '/admin/portal/config/code'; /// For Portal Login Middleware Url //
+    var portalUrl = websiteUrl + '/admin/portal'; /// For Portal Url //
 </script>
