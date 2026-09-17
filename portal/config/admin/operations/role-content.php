@@ -106,6 +106,11 @@
                         <div class="fetch-toggle" id="developer"></div>
                     </div>
 
+                    <div class="permission-toggle-div">
+                        <div class="toggle-title">Result Permissions</div>
+                        <div class="fetch-toggle" id="result"></div>
+                    </div>
+
                     <script>_fetchRolePermissions();</script>
                 </div>
                 <div>    

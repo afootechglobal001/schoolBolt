@@ -167,15 +167,14 @@
                                 }
                             </script>
 
-
-                            <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i
-                                    class="bi-file-earmark-excel"></i>
-                                EXPORT</button>
+                            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('fetchBranchWalletTransactionsTable','SchooBolt_Wallet_History_List');">
+                                <i class="bi-file-earmark-excel"></i> EXPORT
+                            </button>   
                         </div>
                     </div>
 
                     <div class="table-div animated fadeIn">
-                        <table class="table" cellspacing="0" style="width:100%">
+                        <table class="table" cellspacing="0" style="width:100%" id="fetchBranchWalletTransactionsTable">
                             <thead>
                                 <tr class="tb-col">
                                     <th>sn</th>

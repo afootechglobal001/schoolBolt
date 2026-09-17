@@ -1,8 +1,8 @@
 function _printComputeFee(branchId, departmentId, classId, currentSession, termId) {
 	try {
-		const btnText = $(`#printFeesBtn_${classId}`).html();
-		$(`#printFeesBtn_${classId}`).html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
-		$(`#printFeesBtn_${classId}`).prop("disabled", true);
+		const btnText = $(`#printFeesBtn_${departmentId}_${classId}`).html();
+		$(`#printFeesBtn_${departmentId}_${classId}`).html('<img src="' + websiteUrl + '/images/loading.gif" width="12px" alt="Loading"/>');
+		$(`#printFeesBtn_${departmentId}_${classId}`).prop("disabled", true);
 
 		$.ajax({
 			type: "GET",
@@ -21,17 +21,17 @@ function _printComputeFee(branchId, departmentId, classId, currentSession, termI
 						_logOut();
 					}    
 				}
-				$(`#printFeesBtn_${classId}`).html(btnText).prop("disabled", false);
+				$(`#printFeesBtn_${departmentId}_${classId}`).html(btnText).prop("disabled", false);
 			},
 			error: function(textStatus, errorThrown) {
 				console.error("AJAX Error: ", textStatus, errorThrown);
 				_actionAlert('Check your internet connection and try again.', false);
-				$(`#printFeesBtn_${classId}`).html(btnText).prop("disabled", false);
+				$(`#printFeesBtn_${departmentId}_${classId}`).html(btnText).prop("disabled", false);
 			}
 		});
 	} catch (error) {
 		console.error("Error: ", error);
 		_actionAlert('An unexpected error occurred! Please try again.', false);
-		$(`#printFeesBtn_${classId}`).html(btnText).prop("disabled", false);
+		$(`#printFeesBtn_${departmentId}_${classId}`).html(btnText).prop("disabled", false);
 	}
 }

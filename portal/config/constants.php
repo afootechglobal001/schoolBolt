@@ -43,7 +43,7 @@ var websiteUrl = "<?php echo $websiteUrl;?>";
 var clientId = "3b338d51b4971ec84429b3e1a6ffe769"; /// for dev
 var clientAddress = "<?php echo $websiteAutoUrl;?>/https://schoolbolt.com";
 var apiKey = 'a7c37b6289b9dd879b2c005118d3ef14'; /// For API Key //
-var endPoint = 'https://schoolbolt.org/api/dev'; /// Server End Point url
+var endPoint='https://schoolbolt.org/api/dev'; /// Server End Point url
 //var endPoint = 'http://localhost/projects/schoolbolt/api/dev'; /// Server End Point url
 var userOsBrowser = "<?php echo $userOsBrowser;?>"; /// For User OS Browser //
 var userIpAddress = "<?php echo $userIpAddress;?>"; /// For User IP Address //
@@ -83,6 +83,8 @@ var terminalResultHeaderPixPath = websiteUrl +
 '/uploaded_files/schoolResultHeaders'; /// For Terminal Result Header path //
 var watermarkPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Watermark path //
 var progressReportHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Progress Report Header path //
+var sessionCumulativeBroadSheetHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Cummulative BroadSheet Header path //
+var sessionPromotionalBroadSheetHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Promotional BroadSheet Header path //
 
 var parentViewResultUrl = websiteUrl + '/parent/view-student-result'; /// For Parent OTP Verification Url //
 </script>

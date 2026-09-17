@@ -34,7 +34,7 @@
                     </div>
 
                     <ul>
-                        <li onclick="window.location.href = parentLoginUrl"><i class="bi-arrow-left"></i> Go Back</li>
+                        <li onclick="_goBack()"><i class="bi-arrow-left"></i> Go Back</li>
                     </ul>
                 </div>
             </header>

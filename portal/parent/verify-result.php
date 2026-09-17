@@ -50,11 +50,20 @@
                             </script>
                         </div>
 
+                        <div class="text_field_container" id="checkResultAsessmentId_container">
+                            <script>
+                                selectField({
+                                    id: 'checkResultAsessmentId',
+                                    title: 'Select Result Type'
+                                });
+                                _getSelectResultAssessments('checkResultAsessmentId');
+                            </script>
+                        </div>
+
                         <button class="btn" title="Proceed" id="proceedResult"
-                            onclick="_proceedViewStudentResult();">Proceed <i class="bi-arrow-right"></i></button>
+                            onclick="_proceedViewStudentResultController();">Proceed <i class="bi-arrow-right"></i></button>
                     </div>
-                    <p><a href="<?php echo $websiteUrl ?>/parent/auth" title="Go Back" title="Go Back"><span><i
-                                    class="bi-arrow-left"></i> Go Back</span></a></p>
+                    <p><span onclick="_goBack();"><i class="bi-arrow-left"></i> Go Back</span></p>
                 </div>
             </div>
         </div>
