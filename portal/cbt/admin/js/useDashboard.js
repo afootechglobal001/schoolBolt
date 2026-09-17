@@ -43,25 +43,24 @@ $(document).ready(function () {
       }
     }
 
-    // Default to dark mode on first visit
+    // Get saved theme
     const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      $("html").toggleClass("dark-mode", savedTheme === "dark");
+    // Default to light mode if no theme has been saved
+    if (savedTheme === "dark") {
+        $("html").addClass("dark-mode");
     } else {
-      $("html").addClass("dark-mode");
-      localStorage.setItem("theme", "dark");
+        $("html").removeClass("dark-mode");
     }
 
     updateThemeIcon();
-
+    // Toggle theme
     $("#darkModeBtn").click(function () {
-      $("html").toggleClass("dark-mode");
-      const currentTheme = $("html").hasClass("dark-mode")
-          ? "dark"
-          : "light";
-
-      localStorage.setItem("theme", currentTheme);
-      updateThemeIcon();
+        $("html").toggleClass("dark-mode");
+        const currentTheme = $("html").hasClass("dark-mode")
+            ? "dark"
+            : "light";
+        localStorage.setItem("theme", currentTheme);
+        updateThemeIcon();
     });
 });
 

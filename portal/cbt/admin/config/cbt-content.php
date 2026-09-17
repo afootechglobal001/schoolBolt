@@ -74,7 +74,7 @@
                         </div>
 
                         <div class="question-count-content">
-                            <span>Total Questions Bank</span>
+                            <span>Total Question Bank</span>
                             <strong id="totalQuestions">50</strong>
                         </div>
                     </div>
@@ -132,8 +132,10 @@
                 <input type="checkbox" id="parent">
                 <span>All Questions</span>
             </label>
-            <div>
+            
+            <div class="btn-div">
                 <button class="btn" id="submitBtn" title="Set As Questions Quiz" onclick=""><i class="bi-check2-circle"></i> Set As Quiz Questions</button>
+                <button class="btn del-btn" id="deleteBtn" title="Delete Quiz Questions" onclick=""><i class="bi-trash"></i> Delete Questions</button>
             </div>
         </div>
 
@@ -201,30 +203,40 @@
                     <div class="each-question">
                         <div class="text-div">
                             <div>
-                                <p>______________ is an electronic machine that accept data, process data and provide output.</p>
+                                <p>Which of the following is a computer mouse?</p>
                             </div>
-                            <div class="options-div">
 
+                            <div class="options-div">
                                 <div class="each-option">
                                     <div class="letter">A</div>
-                                    <!-- <div class="pix"><img src="<?php echo $websiteUrl?>/uploaded_files/cbt/question-images/house.jpg" alt="house"/></div> -->
-                                    <div>House</div>
+                                    <div class="pix">
+                                        <img src="<?php echo $websiteUrl?>/uploaded_files/cbt/question-images/keyboard.jpg" alt="Keyboard"/>
+                                    </div>
+                                    <div>Keyboard</div>
                                 </div>
 
                                 <div class="each-option correct-option">
                                     <div class="letter correct-letter">B</div>
-                                    <div>House</div>
+                                    <div class="pix">
+                                        <img src="<?php echo $websiteUrl?>/uploaded_files/cbt/question-images/mouse.jpg" alt="Computer Mouse"/>
+                                    </div>
+                                    <div>Computer Mouse</div>
                                 </div>
 
                                 <div class="each-option">
                                     <div class="letter">C</div>
-
-                                    <div>House</div>
+                                    <div class="pix">
+                                        <img src="<?php echo $websiteUrl?>/uploaded_files/cbt/question-images/monitor.jpg" alt="Monitor"/>
+                                    </div>
+                                    <div>Monitor</div>
                                 </div>
 
                                 <div class="each-option">
                                     <div class="letter">D</div>
-                                    <div>House</div>
+                                    <div class="pix">
+                                        <img src="<?php echo $websiteUrl?>/uploaded_files/cbt/question-images/printer.jpg" alt="Printer"/>
+                                    </div>
+                                    <div>Printer</div>
                                 </div>
                             </div>
                         </div>
@@ -337,6 +349,10 @@
                 <div class="text"><i class="bi-clock"></i> Quiz Duration:</div>
                 <span id="quiz_duration">00:00:00</span>
             </label>
+
+            <div class="btn-div">
+                <button class="btn del-btn" id="deleteBtn" title="Remove All Quiz Questions" onclick=""><i class="bi-trash"></i> Remove All</button>
+            </div>
         </div>
 
         <div class="question-body-div">
@@ -775,7 +791,7 @@
                             <span>Upload <i>(CSV Format Only)</i></span>
                         </label>
                         <div class="btn-div">
-                            <button class="btn" type="button" id="submit_btn" title="Download Question Template" onclick="_download_question_template();"><i class="bi-download"></i> Download Question Template</button>
+                            <button class="btn" type="button" id="downloadBtn" title="Download Question Template" onclick="_downloadQuestionTemplate();"><i class="bi-download"></i> Download Question Template</button>
                         </div>
                     </div>
 
