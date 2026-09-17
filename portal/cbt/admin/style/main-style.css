@@ -5878,8 +5878,24 @@ white-space: nowrap;
   background: var(--btn-bg-color);
 }
 
+@media (max-width: 740px) {
+    .toggle-list-wrapper .toggle-list {
+		flex-direction: column;
+		gap: 10px;
+		align-items: flex-start;
+	}
+}
 
-
+@media (max-width: 400px) {
+    .toggle-wrapper .toggle-card .title-content .content-div .left-content .text-div h2{
+		font-size: 4vw;
+		line-height: 5.5vw;
+	} 
+	.toggle-list-wrapper .toggle-list .title h4 {
+		font-size: 3.5vw;
+		line-height: 5vw;
+	}
+}
 
 
 
@@ -6242,12 +6258,12 @@ white-space: nowrap;
 	align-items: center;
 	gap: 10px;
 	cursor: pointer;
+	color: var(--sub-body-color);
 }
 
 .cbt-creation-panel .question-back-div .top-div label .text{
 	font-size: 14px;
 	font-family: body-font;
-	font-weight: 100;
 }
 
 .cbt-creation-panel .question-back-div .top-div label .text i{
@@ -6256,25 +6272,31 @@ white-space: nowrap;
 	color: var(--secondary-color);
 }
 
-.cbt-creation-panel .question-back-div .top-div .btn{
+.cbt-creation-panel .question-back-div .top-div .btn-div{
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.cbt-creation-panel .question-back-div .top-div .btn-div .btn{
 	border: none;
 	height: 35px;
 	background: var(--active-color2);
 	padding: 0px 15px;
 	font-family: sub-title-font;
-	color: var(--sub-body-color);
 	border-radius: 25px;
 	cursor: pointer;
 	font-size: 12px;
     transition: all 0.2s ease-in 0.2s;
+	color: var(--text-white);
 }
 
-.cbt-creation-panel .question-back-div .top-div .btn:hover{
+.cbt-creation-panel .question-back-div .top-div .btn-div .btn:hover{
 	opacity: .8;
 }
 
-.cbt-creation-panel .question-back-div .top-div .delete{
-	background: #FF7E7C;
+.cbt-creation-panel .question-back-div .top-div .btn-div .del-btn{
+	background: var(--sub-text-color);
 }
 
 
@@ -6355,7 +6377,7 @@ white-space: nowrap;
 	background: var(--active-color2);
 	padding: 0px 15px;
 	font-family: sub-title-font;
-	color: var(--sub-body-color);
+	color: var(--text-white);
 	font-size: 11px;
 	border-radius: 25px;
 	cursor: pointer;
@@ -6429,14 +6451,16 @@ white-space: nowrap;
 .cbt-creation-panel .question-back-div .question-body-div .question-div .div-in .each-question .pix-div{
 	width: 200px;
 	height: 200px;
-	border-radius: 5px;
+	border-radius: 10px;
 	background: var(--bg-white);
+	overflow: hidden;
 }
 
 .cbt-creation-panel .question-back-div .question-body-div .question-div .div-in .each-question .pix-div img{
 	width: 100%;
 	object-fit: cover;
 	transition: all 2000ms cubic-bezier(.19,1,.22,1) 0ms;
+	border-radius: 10px;
 }
 
 .cbt-creation-panel .question-back-div .question-body-div .question-div .div-in .each-question .pix-div:hover img{
@@ -6485,13 +6509,18 @@ white-space: nowrap;
 
 .cbt-creation-panel .question-back-div .question-body-div .question-div .div-in .each-question .text-div .options-div .each-option .letter{
 	width: 50px;
-	height: 55px;
+	min-height: 50px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	font-family: sub-title-font;
 	color: var(--sub-body-color);
 	border-right: var(--general-border-color) 1px solid;
+}
+
+.cbt-creation-panel .question-back-div .question-body-div .question-div .div-in .each-question .text-div .options-div .each-option:has(.pix) .letter{
+	min-height: 80px;
+	line-height: 80px;
 }
 
 .cbt-creation-panel .question-back-div .question-body-div .question-div .div-in .each-question .text-div .options-div .each-option .correct-letter{
@@ -6508,9 +6537,10 @@ white-space: nowrap;
 
 .cbt-creation-panel .question-back-div .question-body-div .question-div .div-in .each-question .text-div .options-div .each-option .pix{
 	width: 100px;
-	height: 100px;
+	height: 70px;
 	border-radius: 8px;
 	background: var(--bg-white);
+	overflow: hidden;
 }
 
 .cbt-creation-panel .question-back-div .question-body-div .question-div .div-in .each-question .text-div .options-div .each-option .pix img{

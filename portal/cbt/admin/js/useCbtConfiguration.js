@@ -51,13 +51,12 @@ function _addAndUpdateCbtConfig(){
 /// Create And Update CBT Configuration Call Back ////
 function _saveAddAndUpdateCbtConfigCallback(formData) {
 	let useEachCbtConfigSession = JSON.parse(sessionStorage.getItem("useEachCbtConfigSession"));
-	staffLoginData = JSON.parse(sessionStorage.getItem("staffLoginData"));
 
 	///// get btn text/////
 	const btnText = $("#submitBtn").html();
 	_btnDisable("submitBtn", btnText, true);
 
-	let callUrl= useEachCbtConfigSession?.cbtId ? `cbt/admin/settings/cbt-config/update-cbt-config?cbtId=${useEachCbtConfigSession?.cbtId}&branchId=${staffLoginData?.branchId}` : `cbt/admin/settings/cbt-config/create-cbt-config?branchId=${staffLoginData?.branchId}`;
+	let callUrl= useEachCbtConfigSession?.cbtId ? `cbt/admin/settings/cbt-config/update-cbt-config?cbtId=${useEachCbtConfigSession?.cbtId}` : `cbt/admin/settings/cbt-config/create-cbt-config`;
 	
 	//// call endpoint //////
 	_callRawEndPoints({
@@ -100,10 +99,9 @@ function _saveAddAndUpdateCbtConfigCallback(formData) {
 
 /// Fetch CBT Configuration Data ////
 function _fetchCbtConfigData() {
-	staffLoginData = JSON.parse(sessionStorage.getItem("staffLoginData"));
 	try {
 		_callFetchEndPoints({
-			url: `cbt/admin/settings/cbt-config/fetch-cbt-config?branchId=${staffLoginData?.branchId}`,
+			url: `cbt/admin/settings/cbt-config/fetch-cbt-config`,
 			accessKey: true,
 		})
 		.then((response) => {
@@ -235,7 +233,6 @@ function _initCbtConfigData(productCat) {
 
 /// Fetch Each CBT Configuration ////
 function _fetchEachCbtConfig(cbtId) {
-	staffLoginData = JSON.parse(sessionStorage.getItem("staffLoginData"));
 	$("#get-form-more-div")
 		.css({
 			'display': 'flex',
@@ -245,7 +242,7 @@ function _fetchEachCbtConfig(cbtId) {
 		.fadeIn(500);
 	try {
 		_callFetchEndPoints({
-			url: `cbt/admin/settings/cbt-config/fetch-cbt-config?branchId=${staffLoginData?.branchId}&cbtId=${cbtId}`,
+			url: `cbt/admin/settings/cbt-config/fetch-cbt-config?cbtId=${cbtId}`,
 			accessKey: true,
 		})
 		.then((response) => {
