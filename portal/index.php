@@ -48,7 +48,7 @@
                     <h1> Welcome to School Database Management System 😊</h1>
 
                     <div class="portal-list-back-div">
-                        <a href="<?php echo $websiteUrl ?>/admin/login" title="Admin Portal">
+                        <a href="<?php echo $websiteUrl ?>/admin/auth" title="Admin Portal">
                             <div class="portal-list-div">
                                 <div class="div-in">
                                     <div class="icon-div"><i class="bi-person-vcard"></i></div>
@@ -66,7 +66,7 @@
                             </div>
                         </a>
 
-                        <a href="<?php echo $websiteUrl ?>/admin/login" title="Staff Portal">
+                        <a href="<?php echo $websiteUrl ?>/admin/auth" title="Staff Portal">
                             <div class="portal-list-div">
                                 <div class="div-in">
                                     <div class="icon-div"><i class="bi-arrow-right-circle-fill"></i></div>

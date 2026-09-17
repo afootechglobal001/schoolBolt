@@ -1,0 +1,591 @@
+let allowOverlayClose = false;
+
+function _getPage(options) {
+	const {
+    page = '',
+		action='get_page',
+    url = '',
+    className='',
+    pageCategory = "", /// optional
+		pageContainer='page-content',
+    } = options;
+
+		$("#"+pageContainer).html(`<div class="ajax-loader ${className}"><img src="${websiteUrl}/all-images/images/spinner.gif"/></div>`).css({'display': 'flex','flex-direction': 'column','gap': '20px','align-items': 'center'}).fadeIn(500);
+		const dataString = "action=" + action + "&page=" + page + "&pageCategory=" + pageCategory;
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: dataString,
+			cache: false,
+			success: function (html) {
+				$("#"+pageContainer).html(html);
+			},
+		});
+}
+
+function _getForm(options) {
+	const {
+    page = '',
+    id = '',
+		layer=1,
+		action='get_form',
+    pageCategory = "", /// optional
+		url=''
+    } = options;
+
+    // Allow overlay click only for Gallery Form
+    if (page === "galleryDetails") {
+      allowOverlayClose = true;
+      $('body').addClass('no-scroll');
+    } else {
+      allowOverlayClose = false;
+    }
+
+		if (layer===1 && page!=="revenueBreakdown") {
+      // Save the current form
+      sessionStorage.setItem(
+        "currentDashboardForm",
+        JSON.stringify({
+          page,
+          id,
+          layer,
+          action,
+          pageCategory,
+          url,
+        })
+      );
+    }
+
+
+    const target = layer === 1 ? '#get-form-more-div' : layer === 2  ? '#get-more-div-secondary' : '#get-more-third-layer';
+    $(target).css({ 'display': 'flex', 'justify-content': 'center', 'align-items': 'center' }).fadeIn(500);
+    const dataString = "action=" + action + "&page=" + page + "&id=" + id + "&pageCategory=" + pageCategory + "&modalLayer=" + layer;
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: dataString,
+        cache: false,
+        success: function (html) {
+          $(target).html(html);
+          
+          if (page === "galleryDetails") {
+            _initializeGallery();
+          }
+        },
+  });
+}
+
+function _alertClose(layer=1){
+	let text = '';
+	  text +=
+	  '<div class="alert-loading-div">' +
+		'<div class="icon"><img src="'+ websiteUrl +'/all-images/images/loading.gif" width="20px" alt="Loading"/></div>' +
+		'<div class="text"><p>LOADING...</p></div>'+
+		'</div>';
+    $(layer === 1 ? '#get-form-more-div' : layer === 2  ? '#get-more-div-secondary' : '#get-more-third-layer').html(text).fadeOut(200);
+    $('body').removeClass('no-scroll');
+
+    if (layer ===1) {
+      sessionStorage.removeItem("currentDashboardForm");
+    }
+}
+
+$(document).on('click', '#get-form-more-div', function () {
+  if (allowOverlayClose) {
+    _alertClose(1);
+  }
+});
+
+function _actionAlert(message,status ){
+	let text = '';
+	$('.all-alert-back-div').html(text).css('display', 'flex');
+	if(status==true){
+		text +=
+		'<div class="success-alert-div animated fadeInDown">' +
+			'<div class="icon"><i class="bi-check-all"></i></div>'+
+			'<div class="text"><p>'+message+'</p></div>'+
+		'</div>';
+	}else{
+		text +=
+		'<div class="failed-alert-div animated fadeInDown">' +
+			'<div class="icon"><i class="bi-exclamation-octagon-fill"></i></div>'+
+			'<div class="text"><p>'+message+'</p></div>'+
+		'</div>';
+	}
+	$('.all-alert-back-div').html(text).fadeIn(500).delay(3000).fadeOut(100);
+}
+
+function isNumberCheck(e) {
+    var key = e.keyCode || e.which;
+
+    if (!((key >= 48 && key <= 57))) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        } else {
+            e.returnValue = false;
+        }
+    }
+}
+
+function _showCustomConfirm(options) {
+  const {
+    callback = () => {},
+    alertType = "info",
+    title = "Are you sure?",
+    message = "This action can't be undone. Please confirm if you want to proceed.",
+    trueActionBtnText = "YES",
+    falseActionBtn = false,
+    falseActionBtnText = "NO",
+    trueActionCallback = () => {},
+    falseActionCallback = () => {},
+    closeOnOverlayClick = false,
+  } = options;
+
+  // Show modal
+  $("#customConfirmModal").html("").fadeIn(200);
+  let icon = "bi-info-circle-fill";
+  let iconBg = "bg-info";
+
+  if (alertType === "success") {
+    icon = "bi-check-circle-fill";
+    iconBg = "bg-success";
+  } else if (alertType === "error") {
+    icon = "bi-x-circle-fill";
+    iconBg = "bg-danger";
+  } else if (alertType === "warning") {
+    icon = "bi-exclamation-octagon-fill";
+    iconBg = "bg-warning";
+  }
+
+  const content = `
+		<div class="modal-box">
+			<div class="modal-icon ${iconBg}">
+				<i class="bi ${icon}"></i>
+			</div>
+			<h3>${title}</h3>
+			<p>${message}</p>
+			<div class="btn-div">
+				${
+          falseActionBtn
+            ? `<button id="confirmCancelBtn" class="btn false-btn" title="${falseActionBtnText}">${falseActionBtnText}</button>`
+            : ""
+        }
+				<button id="confirmOkBtn" class="btn" title="${trueActionBtnText}">${trueActionBtnText}</button>
+			</div>
+		</div>
+	`;
+  $("#customConfirmModal").html(content);
+  // Attach button events
+  $("#confirmOkBtn")
+    .off("click")
+    .on("click", function () {
+      callback();
+      _modalClose();
+      trueActionCallback();
+    });
+  if (falseActionBtn) {
+    $("#confirmCancelBtn")
+      .off("click")
+      .on("click", function () {
+        _modalClose();
+        falseActionCallback();
+      });
+  }
+
+  $("#customConfirmModal").off("click");
+
+  if (closeOnOverlayClick) {
+    $("#customConfirmModal").on("click", function (e) {
+      if (e.target === this) {
+        _modalClose();
+      }
+    });
+  }
+}
+function _modalClose() {
+  $("#customConfirmModal").html("").fadeOut(200);
+}
+
+function _validateEmptyValue(fieldId, fieldName) {
+  const fieldValue = $("#" + fieldId)
+    .val()
+    .trim();
+  $("#" + fieldId).removeClass("issue");
+  $("#issue_" + fieldId).html("");
+
+  if (!fieldValue) {
+    $("#" + fieldId).addClass("issue");
+    $("#issue_" + fieldId).html(fieldName + " IS REQUIRED");
+    return 1;
+  }
+  return 0;
+}
+
+function _validateEmail(fieldId, fieldName) {
+  const value = $("#" + fieldId)
+    .val()
+    .trim();
+  if (!value) {
+    $("#" + fieldId).addClass("issue");
+    $("#issue_" + fieldId).html("PROVIDE " + fieldName.toUpperCase());
+    return 1;
+  }
+
+  let isValid = true;
+  let message = "";
+
+  // Email fields (support email, SMTP username)
+  if (/email|username/i.test(fieldName)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      isValid = false;
+      message = "PROVIDE A VALID " + fieldName.toUpperCase();
+    }
+  }
+
+  // Host fields (smtp host)
+  else if (/host/i.test(fieldName)) {
+    if (!/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) {
+      isValid = false;
+      message = "PROVIDE A VALID " + fieldName.toUpperCase();
+    }
+  }
+
+  if (!isValid) {
+    $("#" + fieldId).addClass("issue");
+    $("#issue_" + fieldId).html(message);
+    return 1;
+  }
+
+  $("#" + fieldId).removeClass("issue");
+  $("#issue_" + fieldId).html("");
+  return 0;
+}
+
+function _validateNumber(fieldId, number) {
+  if (!number) return 0;
+
+  // Remove spaces, brackets, hyphens and dots
+  const cleanNumber = number.replace(/[\s().-]/g, "");
+
+  // Nigeria: 08012345678, 2348012345678, +2348012345678
+  // USA:     2015550123, 12015550123, +12015550123
+  const nigeriaPattern = /^(?:0\d{10}|234\d{10}|\+234\d{10})$/;
+  const usaPattern = /^(?:\d{10}|1\d{10}|\+1\d{10})$/;
+
+  if (!nigeriaPattern.test(cleanNumber) && !usaPattern.test(cleanNumber)) {
+    $("#" + fieldId).addClass("issue");
+    $("#issue_" + fieldId).html(
+      "PLEASE ENTER A VALID PHONE NUMBER"
+    );
+    return 1;
+  }
+
+  $("#" + fieldId).removeClass("issue");
+  $("#issue_" + fieldId).html("");
+
+  return 0;
+}
+
+function getAuthHeaders(includeAuth = false) {
+  return {
+    apiKey: apiKey,
+    userOsBrowser: userOsBrowser,
+    userIpAddress: userIpAddress,
+    userDeviceId: userDeviceId,
+    clientId: clientId,
+    clientAddress: clientAddress,
+    Authorization: includeAuth ? "Bearer " + (loginAccessKey ?? "") : undefined,
+  };
+}
+
+function _callRawEndPoints(payLoadProps) {
+  const {
+    type = "POST",
+    url = "",
+    formData = null,
+    accessKey = false,
+  } = payLoadProps;
+  // Auto-flatten if formData has only one key called "formData"
+  const payload = formData && formData.formData ? formData.formData : formData;
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      type: type,
+      url: `${endPoint}/${url}`,
+      data: JSON.stringify(payload),
+      dataType: "json",
+      contentType: "application/json", // important for JSON
+      cache: false,
+      headers: getAuthHeaders(accessKey),
+      success: function (data) {
+        resolve(data); // ✅ resolve promise
+      },
+      error: function (jqXHR, errorThrown) {
+        // normalize the error object
+        const err = jqXHR.responseJSON || {
+          message: errorThrown || "Check your internet connection and try again.",
+          status: jqXHR.status,
+        };
+        reject(err);
+      },
+    });
+  });
+}
+
+function _callFileEndPoints(payLoadProps) {
+  const {
+    type = "POST",
+    url = "",
+    formData = null,
+    accessKey = false,
+    expectJson = true, // default true
+  } = payLoadProps;
+
+  // const payload = formData && formData.formData ? formData.formData : formData;
+  const finalUrl = url.startsWith("http") ? url : `${endPoint}/${url}`;
+
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      type: type,
+      url: finalUrl,
+      data: formData,
+      dataType: expectJson ? "json" : undefined, // only parse if JSON expected
+      contentType: false,
+      cache: false,
+      processData: false,
+      headers: getAuthHeaders(accessKey),
+      success: function (data) {
+        resolve(data);
+      },
+      error: function (jqXHR, errorThrown) {
+        // normalize the error object
+        const err = jqXHR.responseJSON || {
+          message: errorThrown || "Check your internet connection and try again.",
+          status: jqXHR.status,
+        };
+        reject(err);
+      },
+    });
+  });
+}
+
+function _callFetchEndPoints(payLoadProps) {
+  const { type = "GET", url = "", accessKey = false } = payLoadProps;
+  return new Promise((resolve, reject) => {
+    const finalUrl = url.startsWith("http") ? url : `${endPoint}/${url}`;
+
+    $.ajax({
+      type: type,
+      url: finalUrl,
+      dataType: url.startsWith("http") ? undefined : "json",
+      cache: false,
+      headers: getAuthHeaders(accessKey),
+      success: function (data) {
+        resolve(data);
+      },
+      error: function (jqXHR, errorThrown) {
+        // normalize the error object
+        const err = jqXHR.responseJSON || {
+          message: errorThrown || "Check your internet connection and try again.",
+          status: jqXHR.status,
+        };
+        reject(err);
+      },
+    });
+  });
+}
+
+function _callAjaxError(callback, message) {
+  _showCustomConfirm({
+    callback: () => {
+      callback();
+    },
+    title: "Connection Error!",
+    message: message==='error' ?  "Check your internet connection and try again." : message,
+    alertType: "error",
+    trueActionBtnText: "OK",
+    closeOnOverlayClick: true,
+  });
+}
+function _callCatchError(callback) {
+  _showCustomConfirm({
+    callback: () => {
+      callback();
+    },
+    title: "Unexpected Error",
+    message: "An unexpected error occurred! Please try again.",
+    alertType: "error",
+    trueActionBtnText: "OK, Retry",
+    closeOnOverlayClick: true,
+  });
+}
+
+function _btnDisable(btnId, btnText = "SUBMIT", action = true) {
+  //////////////// get btn text ////////////////
+  if (action) {
+    $("#" + btnId).html(
+      '<img src="' +
+        websiteUrl +
+        '/all-images/images/loading.gif" style="width:12px;" alt="Loading"/>'
+    );
+    $("#" + btnId).prop("disabled", action);
+  } else {
+    $("#" + btnId)
+      .html(btnText)
+      .prop("disabled", false);
+  }
+  ////////////////////////////////////////////////
+}
+
+ ////////////////////////////////////////////////
+function _showLoader(message = 'Processing, please wait...') {
+  $('#globalLoaderText').html(message);
+  $('#globalLoader').fadeIn(150);
+}
+
+function _hideLoader() {
+  $('#globalLoader').fadeOut(150);
+}
+
+////// Show False Notofication /////
+function _showEmptyState(props) {
+  const {
+    container = "",
+    message = "Something went wrong",
+    colspan = null,
+    button = "",
+    paginationContainer = ""
+  } = props;
+
+  let content = `
+    <div class="empty-state-div">
+      <div class="icon"><img src="${websiteUrl}/all-images/images/no-record.png" alt="Warning" /></div>
+      <p>${message}</p>
+      ${button ? `<div>${button}</div>` : ""}
+    </div>
+  `;
+
+  if (colspan) {
+    content = `
+      <tr>
+        <td colspan="${colspan}">
+          ${content}
+        </td>
+      </tr>
+    `;
+  }
+
+  $(`#${container}`).html(content);
+
+  if (`#${paginationContainer}`) {
+    $(`#${paginationContainer}`).empty().hide();
+  }
+}
+
+/// countdown function ///
+function _counDownOtp(timer) {
+    $("#resendOtpBtn").hide();
+    $("#resendCountdown").fadeIn(500);
+
+    const countdown = setInterval(() => {
+        if (timer > 0) {
+        timer--;
+
+        let minutes = Math.floor(timer / 60);
+        let seconds = timer % 60;
+
+        if (timer >= 60) {
+            // Show MM:SS when 1 min or more
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            $("#resendCountdown").html(
+            'Resend in <strong id="timer">' +
+                minutes +
+                ":" +
+                seconds +
+                "</strong> min",
+            );
+        } else {
+            // Show seconds only when below 1 minute
+            $("#resendCountdown").html(
+            'Resend in <strong id="timer">' + seconds + "</strong> sec",
+            );
+        }
+        } else {
+        clearInterval(countdown);
+        $("#resendCountdown").hide();
+        $("#resendOtpBtn").fadeIn(500);
+        }
+    }, 1000);
+
+    return () => clearInterval(countdown);
+}
+
+function generalButtons(props) {
+	const {
+		container = "",
+		buttons = []
+	} = props;
+
+	let template = "";
+	buttons.forEach(btn => {
+		const icon = btn.icon
+			? `<i class="${btn.icon}"></i>`
+			: "";
+
+		const content = btn.iconPosition === "right"
+			? `${btn.text} ${icon}`
+			: `${icon} ${btn.text}`;
+
+		const onClick = btn.onClick ? `onclick="${btn.onClick}"` : "";
+
+		if (btn.link) {
+			template += `
+				<a
+					href="${btn.link}"
+					id="${btn.id || ""}"
+					title="${btn.title || btn.text}"
+					class="btn ${btn.variant || ""} ${btn.size || ""} ${btn.width || ""} ${btn.className || ""}"
+					${onClick}
+				>
+					${content}
+				</a>
+			`;
+		} else {
+			template += `
+				<button
+					id="${btn.id || ""}"
+					title="${btn.title || btn.text}"
+					class="btn ${btn.variant || ""} ${btn.size || ""} ${btn.width || ""} ${btn.className || ""}"
+					${onClick}
+				>
+					${content}
+				</button>
+			`;
+		}
+	});
+
+	$(`#${container}`).html(template);
+}
+
+
+///// for FAQs
+function _collapse(div_id) {
+  const $currentFaq = $("#" + div_id);
+  const $currentIcon = $("#" + div_id + "num");
+  const $currentAnswer = $("#" + div_id + "answer");
+
+  $(".faq-toggle.active-faq").each(function () {
+    if (this.id !== div_id) {
+      $(this).removeClass("active-faq");
+      $(this).find(".expand-div").html('&nbsp;<i class="bi-plus"></i>&nbsp;');
+      $(this).find(".answer-div").slideUp("slow");
+    }
+  });
+
+  const isActive = $currentFaq.toggleClass("active-faq").hasClass("active-faq");
+  $currentIcon.html(
+    isActive
+      ? '&nbsp;<i class="bi-dash"></i>&nbsp;'
+      : '&nbsp;<i class="bi-plus"></i>&nbsp;',
+  );
+  $currentAnswer.slideToggle("slow");
+}
