@@ -6286,7 +6286,7 @@ white-space: nowrap;
 	font-family: sub-title-font;
 	border-radius: 25px;
 	cursor: pointer;
-	font-size: 12px;
+	font-size: 13px;
     transition: all 0.2s ease-in 0.2s;
 	color: var(--text-white);
 }
@@ -6298,6 +6298,35 @@ white-space: nowrap;
 .cbt-creation-panel .question-back-div .top-div .btn-div .del-btn{
 	background: var(--sub-text-color);
 }
+
+.cbt-creation-panel .question-back-div .top-div .btn-div .search-div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+  background: var(--bg-white);
+  padding: 0px 25px;
+  border-radius: 25px;
+  height: 35px;
+  box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
+}
+
+.cbt-creation-panel .question-back-div .top-div .btn-div .search-div input {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 13px;
+  font-family: body-font;
+  color: var(--sub-body-color);
+}
+
+.cbt-creation-panel .question-back-div .top-div .btn-div .search-div i {
+  color: var(--text-color);
+  font-size: 12px;
+}
+
+
+
 
 
 .cbt-creation-panel .question-back-div .question-body-div{
@@ -6454,6 +6483,7 @@ white-space: nowrap;
 	border-radius: 10px;
 	background: var(--bg-white);
 	overflow: hidden;
+	cursor: pointer;
 }
 
 .cbt-creation-panel .question-back-div .question-body-div .question-div .div-in .each-question .pix-div img{
@@ -6461,6 +6491,7 @@ white-space: nowrap;
 	object-fit: cover;
 	transition: all 2000ms cubic-bezier(.19,1,.22,1) 0ms;
 	border-radius: 10px;
+	cursor: pointer;
 }
 
 .cbt-creation-panel .question-back-div .question-body-div .question-div .div-in .each-question .pix-div:hover img{
@@ -6474,8 +6505,15 @@ white-space: nowrap;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
+	gap: 10px;
 	color: var(--sub-body-color);
+}
+
+.cbt-creation-panel .question-back-div .question-body-div .question-div .div-in .each-question .text-div .issueText {
+  color: #f00;
+  font-family: body-font;
+  font-size: 10px;
+  font-style: italic;
 }
 
 .cbt-creation-panel .question-back-div .question-body-div .question-div .div-in .each-question .text-div .options-div{
@@ -6557,7 +6595,13 @@ white-space: nowrap;
 	transform: scale(1.10);
 }
 
-.input-container{
+.input-wrapper {
+	display: flex;
+	gap: 10px;
+	flex-direction: column;
+}
+
+.input-wrapper .input-container{
 	display: flex;
 	align-items: center;
 	min-width: 100%;
@@ -6572,4 +6616,20 @@ white-space: nowrap;
 	box-sizing: border-box;
 	color: var(--sub-body-color);
 	cursor: pointer;
+}
+
+.input-wrapper .input-container input[type="file"] {
+    cursor: pointer;
+}
+
+.input-wrapper .issue {
+  background: var(--bg-white);
+  border: #f00 1px solid;
+}
+
+.input-wrapper .issueText {
+  color: #f00;
+  font-family: body-font;
+  font-size: 10px;
+  font-style: italic;
 }

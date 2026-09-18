@@ -782,9 +782,13 @@ a {
   border-bottom: #b6b6b6 1px dashed;
 }
 
-.alert .alert-list-div .alert-list span {
+.alert .alert-list-div .alert-list span,
+.alert .alert-list-div .alert-list strong
+ {
   font-family: body-font;
   font-size: 12px;
+  font-style: italic;
+  color: var(--secondary-color);
 }
 
 .alert .alert-details {
@@ -1107,7 +1111,7 @@ a {
 
 .empty-state-div {
   padding: 40px 50px;
-  width: calc(100% - 100px);
+  width: calc(100% - 102px);
   background: var(--body-bg-color);
   border-radius: 10px;
   display: flex;
@@ -1174,6 +1178,7 @@ a {
 .empty-state-div p {
   font-size: 15px;
   font-family: sub-title-font;
+  text-align: center;
 }
 
 .content-loading-div {

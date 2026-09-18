@@ -11,10 +11,8 @@ function _filtersCbtExam(value) {
 //// Fetch all Assigned Subject Data ////
 function _fetchAssignedSubjectData() {
 	try {
-
-		/*
 		_callFetchEndPoints({
-			url: ``,
+			url: `cbt/admin/set-exam/fetch-teachers-subject-for-each-cbt`,
 			accessKey: true,
 		})
 		.then((response) => {
@@ -41,310 +39,26 @@ function _fetchAssignedSubjectData() {
 				});
 			}
 		});
-		*/
-
-		// Dummy backend response
-		const dummyResponse = {
-			response: 200,
-			success: true,
-			message: "SUBJECT FETCH SUCCESFFULY!",
-			allRecordCount: 4,
-
-			data: [
-				{
-					cbtId: "CBT001",
-					cbtTitle: "WELCOME TEST",
-
-					cbtConfigData: [
-						{
-							departmentId: "DEPARTMENT00420260327041353",
-							classId: "CLASS01020260327041803",
-							subjectId: "SUBJECT029",
-
-							departmentData: {
-								departmentId: "DEPARTMENT00420260327041353",
-								departmentName: "JUNIOR"
-							},
-
-							classData: {
-								classId: "CLASS01020260327041803",
-								className: "JS 1"
-							},
-
-							subjectData: {
-								subjectId: "SUBJECT029",
-								subjectName: "MATHEMATICS"
-							}
-						},
-
-						{
-							departmentId: "DEPARTMENT00420260327041353",
-							classId: "CLASS01020260327041803",
-							subjectId: "SUBJECT033",
-
-							departmentData: {
-								departmentId: "DEPARTMENT00420260327041353",
-								departmentName: "JUNIOR"
-							},
-
-							classData: {
-								classId: "CLASS01020260327041803",
-								className: "JS 1"
-							},
-
-							subjectData: {
-								subjectId: "SUBJECT033",
-								subjectName: "SOCIAL STUDIES"
-							}
-						},
-
-						{
-							departmentId: "DEPARTMENT00420260327041353",
-							classId: "CLASS01020260327041803",
-							subjectId: "SUBJECT034",
-
-							departmentData: {
-								departmentId: "DEPARTMENT00420260327041353",
-								departmentName: "JUNIOR"
-							},
-
-							classData: {
-								classId: "CLASS01020260327041803",
-								className: "JS 1"
-							},
-
-							subjectData: {
-								subjectId: "SUBJECT034",
-								subjectName: "TECHNICAL DRAWING"
-							}
-						},
-
-						{
-							departmentId: "DEPARTMENT00420260327041353",
-							classId: "CLASS01020260327041803",
-							subjectId: "SUBJECT036",
-
-							departmentData: {
-								departmentId: "DEPARTMENT00420260327041353",
-								departmentName: "JUNIOR"
-							},
-
-							classData: {
-								classId: "CLASS01020260327041803",
-								className: "JS 1"
-							},
-
-							subjectData: {
-								subjectId: "SUBJECT036",
-								subjectName: "YORUBA LANGUAGE"
-							}
-						}
-					]
-				},
-
-				{
-					cbtId: "CBT002",
-					cbtTitle: "MOCK EXAMINATION",
-
-					cbtConfigData: [
-						{
-							departmentId: "DEPARTMENT00420260327041353",
-							classId: "CLASS01020260327041803",
-							subjectId: "SUBJECT029",
-
-							departmentData: {
-								departmentId: "DEPARTMENT00420260327041353",
-								departmentName: "JUNIOR"
-							},
-
-							classData: {
-								classId: "CLASS01020260327041803",
-								className: "JS 1"
-							},
-
-							subjectData: {
-								subjectId: "SUBJECT029",
-								subjectName: "MATHEMATICS"
-							}
-						},
-
-						{
-							departmentId: "DEPARTMENT00420260327041353",
-							classId: "CLASS01020260327041803",
-							subjectId: "SUBJECT033",
-
-							departmentData: {
-								departmentId: "DEPARTMENT00420260327041353",
-								departmentName: "JUNIOR"
-							},
-
-							classData: {
-								classId: "CLASS01020260327041803",
-								className: "JS 1"
-							},
-
-							subjectData: {
-								subjectId: "SUBJECT033",
-								subjectName: "SOCIAL STUDIES"
-							}
-						},
-
-						{
-							departmentId: "DEPARTMENT00420260327041353",
-							classId: "CLASS01020260327041803",
-							subjectId: "SUBJECT034",
-
-							departmentData: {
-								departmentId: "DEPARTMENT00420260327041353",
-								departmentName: "JUNIOR"
-							},
-
-							classData: {
-								classId: "CLASS01020260327041803",
-								className: "JS 1"
-							},
-
-							subjectData: {
-								subjectId: "SUBJECT034",
-								subjectName: "TECHNICAL DRAWING"
-							}
-						},
-
-						{
-							departmentId: "DEPARTMENT00420260327041353",
-							classId: "CLASS01020260327041803",
-							subjectId: "SUBJECT036",
-
-							departmentData: {
-								departmentId: "DEPARTMENT00420260327041353",
-								departmentName: "JUNIOR"
-							},
-
-							classData: {
-								classId: "CLASS01020260327041803",
-								className: "JS 1"
-							},
-
-							subjectData: {
-								subjectId: "SUBJECT036",
-								subjectName: "YORUBA LANGUAGE"
-							}
-						}
-					]
-				},
-
-				{
-					cbtId: "CBT003",
-					cbtTitle: "FIRST CA TEST",
-
-					cbtConfigData: [
-						{
-							departmentId: "DEPARTMENT00420260327041353",
-							classId: "CLASS01020260327041803",
-							subjectId: "SUBJECT029",
-
-							departmentData: {
-								departmentId: "DEPARTMENT00420260327041353",
-								departmentName: "JUNIOR"
-							},
-
-							classData: {
-								classId: "CLASS01020260327041803",
-								className: "JS 1"
-							},
-
-							subjectData: {
-								subjectId: "SUBJECT029",
-								subjectName: "MATHEMATICS"
-							}
-						},
-
-						{
-							departmentId: "DEPARTMENT00420260327041353",
-							classId: "CLASS01020260327041803",
-							subjectId: "SUBJECT033",
-
-							departmentData: {
-								departmentId: "DEPARTMENT00420260327041353",
-								departmentName: "JUNIOR"
-							},
-
-							classData: {
-								classId: "CLASS01020260327041803",
-								className: "JS 1"
-							},
-
-							subjectData: {
-								subjectId: "SUBJECT033",
-								subjectName: "SOCIAL STUDIES"
-							}
-						},
-
-						{
-							departmentId: "DEPARTMENT00420260327041353",
-							classId: "CLASS01020260327041803",
-							subjectId: "SUBJECT034",
-
-							departmentData: {
-								departmentId: "DEPARTMENT00420260327041353",
-								departmentName: "JUNIOR"
-							},
-
-							classData: {
-								classId: "CLASS01020260327041803",
-								className: "JS 1"
-							},
-
-							subjectData: {
-								subjectId: "SUBJECT034",
-								subjectName: "TECHNICAL DRAWING"
-							}
-						},
-
-						{
-							departmentId: "DEPARTMENT00420260327041353",
-							classId: "CLASS01020260327041803",
-							subjectId: "SUBJECT036",
-
-							departmentData: {
-								departmentId: "DEPARTMENT00420260327041353",
-								departmentName: "JUNIOR"
-							},
-
-							classData: {
-								classId: "CLASS01020260327041803",
-								className: "JS 1"
-							},
-
-							subjectData: {
-								subjectId: "SUBJECT036",
-								subjectName: "YORUBA LANGUAGE"
-							}
-						}
-					]
-				}
-			]
-		};
-
-		_initFetchAllAssignedSubjectData(dummyResponse?.data);
 	} catch (error) {
 		console.error("Error:", error);
 		_callCatchError(() => _fetchAssignedSubjectData());
 	}
 }
 
-
 /// Render All Assigned Subject Data ///
 function _initFetchAllAssignedSubjectData(data) {
 	const content = data?.length > 0 ? data.map((item, start) => {
 		const viewId = `view${item?.cbtId}`;
 		const cbtTitle = item?.cbtTitle;
-		const cbtConfigData = item?.cbtConfigData || [];
+		const subjectAllocatedData = item?.subjectAllocatedData || [];
 
-		const subjectContent = cbtConfigData.length > 0 ? cbtConfigData.map((subjectItem) => {
+		const subjectContent = subjectAllocatedData.length > 0 ? subjectAllocatedData.map((subjectItem) => {
 			const subjectName = subjectItem?.subjectData?.subjectName;
+			const subjectId = subjectItem?.subjectData?.subjectId;
 			const departmentName = subjectItem?.departmentData?.departmentName;
+			const departmentId = subjectItem?.departmentData?.departmentId;
 			const className = subjectItem?.classData?.className;
+			const classId = subjectItem?.classData?.classId;
 
 			return `
 				<div class="toggle-list">
@@ -360,7 +74,7 @@ function _initFetchAllAssignedSubjectData(data) {
 						<button
 							class="btn"
 							title="MANAGE CBT"
-							onclick="event.stopPropagation(); _getForm({page: 'cbtPageDetails', url: cbtAdminMiddleWareUrl});">
+							onclick="event.stopPropagation(); _fetchEachCbtPageDetails('${item?.cbtId}', '${departmentId}', '${classId}', '${subjectId}');">
 							<i class="bi bi-tv"></i> MANAGE CBT
 						</button>
 					</div>
@@ -369,7 +83,12 @@ function _initFetchAllAssignedSubjectData(data) {
 		}).join("")
 		: `
 			<div class="empty-state-div">
-				<p>No subject assigned to this CBT.</p>
+				<div class="icon">
+					<img
+						src="${websiteUrl}/all-images/images/no-record.png"
+						alt="Warning" />
+				</div>
+				<p>No subject assigned to this CBT. <br>Kindly contact the administrator to assign subjects.</p>
 			</div>
 		`;
 
@@ -428,4 +147,57 @@ function _initFetchAllAssignedSubjectData(data) {
 			</div>
 		`;
 	$("#fetchAssignedSubjectContent").html(content);
+}
+
+/// Fetch Each CBT Page Details ////
+function _fetchEachCbtPageDetails(cbtId, departmentId, classId, subjectId) {
+	$("#get-form-more-div")
+		.css({
+			'display': 'flex',
+			'justify-content': 'center',
+			'align-items': 'center'
+		})
+		.fadeIn(500);
+	try {
+		_callFetchEndPoints({
+			url: `cbt/admin/set-exam/fetch-subject-exam-details?cbtId=${cbtId}&departmentId=${departmentId}&classId=${classId}&subjectId=${subjectId}`,
+			accessKey: true,
+		})
+		.then((response) => {
+			sessionStorage.setItem(
+				"useEachCbtPageDetailsSession",
+				JSON.stringify(response?.data)
+			);
+
+			_getForm({
+				page: 'cbtPageDetails',
+				url: cbtAdminMiddleWareUrl
+			});
+		})	
+		.catch((error) => {
+			_staffValidationCheck(error.response);
+			_alertClose();
+			console.error("Error:", error);
+			if (error.status==0) {
+				_callAjaxError(
+					() => _fetchEachCbtPageDetails(cbtId, departmentId, classId, subjectId),
+					error.message
+				); // retry if needed
+				_alertClose();
+			} else {
+				_showCustomConfirm({
+					title: "Unable to fetch details!",
+					message: error.message,
+					alertType: "error",
+					trueActionBtnText: "OK",
+					closeOnOverlayClick: true,
+				});
+				_alertClose();
+			}
+		});
+	} catch (error) {
+		_alertClose();
+		console.error("Error:", error);
+		_callCatchError(() => _fetchEachCbtPageDetails(cbtId, departmentId, classId, subjectId));
+	}
 }
