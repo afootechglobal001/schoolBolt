@@ -262,18 +262,6 @@ function _initCbtQuizQuestionData(data) {
 		return `
 			<div class="question-div">
 				<div class="div-in">
-					<div class="check-div">
-						<label>
-							<input 
-								type="checkbox" 
-								class="child" 
-								name="class_id[]" 
-								data-value="${item?.questionId}"
-							>
-							<span>Question ${index + 1}</span>
-						</label>
-					</div>
-
 					<div class="each-question">
 						${questionPix}
 						<div class="text-div">
@@ -758,7 +746,18 @@ function _uploadQuestionsImages(newQuestionPixName, optionImages, message, btnTe
 	) {
 		_showCustomConfirm({
 			callback: () => {
-				_fetchEachCbtPageDetails(cbtId, departmentId, classId, subjectId);
+				_showLoader("Please wait while we update your question!");
+				Promise.resolve(
+					_fetchEachCbtPageDetails(
+						cbtId,
+						departmentId,
+						classId,
+						subjectId
+					)
+				).finally(() => {
+					_hideLoader();
+					_btnDisable("submitBtn", btnText, false);
+				});
 			},
 			title: 'Success!',
 			message: message,
@@ -766,7 +765,7 @@ function _uploadQuestionsImages(newQuestionPixName, optionImages, message, btnTe
 			trueActionBtnText: 'Done.',
 			closeOnOverlayClick: false,
 		});
-
+		_hideLoader();
 		_btnDisable("submitBtn", btnText, false);
 		return;
 	}
@@ -820,7 +819,18 @@ function _uploadQuestionsImages(newQuestionPixName, optionImages, message, btnTe
 	.then(() => {
 		_showCustomConfirm({
 			callback: () => {
-				_fetchEachCbtPageDetails(cbtId, departmentId, classId, subjectId);
+				_showLoader("Please wait while we update your question!");
+				Promise.resolve(
+					_fetchEachCbtPageDetails(
+						cbtId,
+						departmentId,
+						classId,
+						subjectId
+					)
+				).finally(() => {
+					_hideLoader();
+					_btnDisable("submitBtn", btnText, false);
+				});
 			},
 			title: 'Success!',
 			message: message,
@@ -829,9 +839,11 @@ function _uploadQuestionsImages(newQuestionPixName, optionImages, message, btnTe
 			closeOnOverlayClick: false,
 		});
 		_btnDisable("submitBtn", btnText, false);
+		_hideLoader();
 	})
 	.catch((error) => {
 		console.error("Error:", error);
+		_hideLoader();
 		_callAjaxError(
 			() => _uploadQuestionsImages(
 				newQuestionPixName,
@@ -842,6 +854,24 @@ function _uploadQuestionsImages(newQuestionPixName, optionImages, message, btnTe
 			error.message
 		);
 	});
+}
+
+//// Fetch Time Count Option ////
+function _fetchTimeCountOption(selectId, maxValue) {
+  for (let minValue = 0; minValue <= maxValue; minValue++) {
+	  let paddedValue = String(minValue).padStart(2, '0');
+	  $("#searchList_" + selectId).append(`
+		<li onclick="
+			_clickOption(
+			'searchList_${selectId}',
+			'${paddedValue}',
+			'${paddedValue}'
+			);
+		">
+		${paddedValue}
+	</li>
+	`);
+  }
 }
 
 //// Proceed Set Quiz Questions ////
@@ -896,38 +926,32 @@ function _setQuizQuestions() {
 
 	try {
 		let issueCount = 0;
-		const timeAllowed = $("#timeAllowed").val()?.trim();
+		const quizHour = $("#quizHour").val()?.trim();
+		const quizMinute = $("#quizMinute").val()?.trim();
+		const quizSecond = $("#quizSecond").val()?.trim();
 
-		useSetSelectedQuizQuestions.timeAllowed = timeAllowed;
+		const timeAllowed = `${quizHour}:${quizMinute}:${quizSecond}`;
 
-		sessionStorage.setItem(
-			"useSetSelectedQuizQuestions",
-			JSON.stringify(useSetSelectedQuizQuestions)
-		);
-		
-		///// empty field validation//////////
-		issueCount += _validateEmptyValue("timeAllowed", "Time Allowed");
-
-		// Validate HH:MM:SS
-		const timePattern = /^([0-9]{2}):([0-5][0-9]):([0-5][0-9])$/;
-
-		if (!timePattern.test(timeAllowed)) {
-			$("#timeAllowed").addClass("issue");
-			$("#issue_timeAllowed").html("Time must be in HH:MM:SS format");
-			issueCount += 1;
-		} else {
-			$("#timeAllowed").removeClass("issue");
-			$("#issue_timeAllowed").html("");
-		}
+		///// empty field validation //////////
+		issueCount += _validateEmptyValue("quizHour", "HOUR");
+		issueCount += _validateEmptyValue("quizMinute", "MINUTE");
+		issueCount += _validateEmptyValue("quizSecond", "SECOND");
 
 		// Convert to numbers
-		const [hours, minutes, seconds] = timeAllowed.split(":").map(Number);
+		const hours = Number(quizHour);
+		const minutes = Number(quizMinute);
+		const seconds = Number(quizSecond);
 
 		// Don't allow 00:00:00
 		if (hours === 0 && minutes === 0 && seconds === 0) {
 			$("#timeAllowed").addClass("issue");
-			$("#issue_timeAllowed").html("Time allowed must be greater than zero");
+			$("#issue_timeAllowed").html(
+				"Time allowed must be greater than zero"
+			);
 			issueCount += 1;
+		} else {
+			$("#timeAllowed").removeClass("issue");
+			$("#issue_timeAllowed").html("");
 		}
 
 		// Get selected questions from session
@@ -939,7 +963,14 @@ function _setQuizQuestions() {
 		}
 
 		if (issueCount > 0) return;
-		
+
+		// Save time to session
+		useSetSelectedQuizQuestions.timeAllowed = timeAllowed;
+		sessionStorage.setItem(
+			"useSetSelectedQuizQuestions",
+			JSON.stringify(useSetSelectedQuizQuestions)
+		);
+
 		// Form Data payload
 		const formData = {
 			timeAllowed: timeAllowed,

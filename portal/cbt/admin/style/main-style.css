@@ -6633,3 +6633,21 @@ white-space: nowrap;
   font-size: 10px;
   font-style: italic;
 }
+
+
+.flex-text-field {
+    display: flex;
+    gap: 10px;
+}
+
+.flex-text-field .col-1,
+.flex-text-field .col-2,
+.flex-text-field .col-3 {
+    flex: 1;
+    min-width: 0;
+}
+
+.flex-text-field select {
+    width: 100%;
+    box-sizing: border-box;
+}

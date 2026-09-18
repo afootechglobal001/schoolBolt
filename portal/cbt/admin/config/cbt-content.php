@@ -706,14 +706,36 @@
                     </div>
 
                     <div class="form-container">
-                        <div class="text_field_container" id="timeAllowed_container">
-                            <script>
-                                textField({
-                                    id: 'timeAllowed',
-                                    title: 'HH:MM:SS',
-                                    onKeyPressFunction: "isNumberCheck(event);",
-                                });
-                            </script>
+                        <div class="flex-text-field">
+                            <div class="text_field_container col-1" id="quizHour_container">
+                                <script>
+                                    selectField({
+                                        id: 'quizHour',
+                                        title: 'HH',
+                                    });
+                                    _fetchTimeCountOption('quizHour', 12);
+                                </script>
+                            </div>
+
+                            <div class="text_field_container col-2" id="quizMinute_container">
+                                <script>
+                                    selectField({
+                                        id: 'quizMinute',
+                                        title: 'MM',
+                                    });
+                                    _fetchTimeCountOption('quizMinute', 60);
+                                </script>
+                            </div>
+
+                            <div class="text_field_container col-3" id="quizSecond_container">
+                                <script>
+                                    selectField({
+                                        id: 'quizSecond',
+                                        title: 'SS',
+                                    });
+                                    _fetchTimeCountOption('quizSecond', 60);
+                                </script>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -726,5 +748,8 @@
                 </button>
             </div>
         </div>
+        <script>
+            $(".flex-text-field select option[value='']").html("--");
+        </script>
     </div>
 <?php } ?>
