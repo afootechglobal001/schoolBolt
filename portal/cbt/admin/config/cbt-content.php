@@ -1,4 +1,6 @@
 <?php if ($page == 'cbtPageDetails') { ?>
+    <script>useEachCbtPageDetailsSession = JSON.parse(sessionStorage.getItem("useEachCbtPageDetailsSession"));</script>
+
     <div class="cbt-creation-panel">
         <div class="cbt-side-bar">
             <div class="div-in">
@@ -12,7 +14,9 @@
                             <div>
                                 <h4>Question Details</h4>
                                 <span class="session-badge">
-                                    Session: <strong id="sessionName">2026/2027</strong>
+                                    Session: <strong id="sessionName">
+                                        <script>$("#sessionName").html(useEachCbtPageDetailsSession?.branchData?.session);</script>
+                                    </strong>
                                 </span>
                             </div>
                         </div>
@@ -24,7 +28,9 @@
                                 <i class="bi-calendar3"></i>
                                 <span>Term</span>
                             </div>
-                            <span class="list-value" id="termName">FIRST TERM</span>
+                            <span class="list-value" id="termName">
+                                <script>$("#termName").html(useEachCbtPageDetailsSession?.termData?.termName);</script>
+                            </span>
                         </div>
 
                         <div class="list-div">
@@ -32,7 +38,9 @@
                                 <i class="bi-building"></i>
                                 <span>Department</span>
                             </div>
-                            <span class="list-value" id="departmentName">JUNIOR</span>
+                            <span class="list-value" id="departmentName">
+                                <script>$("#departmentName").html(useEachCbtPageDetailsSession?.departmentData?.departmentName);</script>
+                            </span>
                         </div>
 
                         <div class="list-div">
@@ -40,15 +48,9 @@
                                 <i class="bi-people"></i>
                                 <span>Class</span>
                             </div>
-                            <span class="list-value" id="className">JS 1</span>
-                        </div>
-
-                        <div class="list-div">
-                            <div class="list-label">
-                                <i class="bi-shield-check"></i>
-                                <span>Arm</span>
-                            </div>
-                            <span class="list-value" id="armName">A</span>
+                            <span class="list-value" id="className">
+                                <script>$("#className").html(useEachCbtPageDetailsSession?.classData?.className);</script>
+                            </span>
                         </div>
 
                         <div class="list-div">
@@ -56,7 +58,9 @@
                                 <i class="bi-book"></i>
                                 <span>Subject</span>
                             </div>
-                            <span class="list-value" id="subjectName">MATHEMATICS</span>
+                            <span class="list-value" id="subjectName">
+                                <script>$("#subjectName").html(useEachCbtPageDetailsSession?.subjectData?.subjectName);</script>
+                            </span>
                         </div>
 
                         <div class="list-div">
@@ -64,7 +68,9 @@
                                 <i class="bi-file-earmark-text"></i>
                                 <span>CBT Title</span>
                             </div>
-                            <span class="list-value" id="cbtTitle">WELCOME TEST</span>
+                            <span class="list-value" id="cbtTitle">
+                                <script>$("#cbtTitle").html(useEachCbtPageDetailsSession?.cbtData?.cbtTitle);</script>
+                            </span>
                         </div>
                     </div>
                 
@@ -75,7 +81,9 @@
 
                         <div class="question-count-content">
                             <span>Total Question Bank</span>
-                            <strong id="totalQuestions">50</strong>
+                            <strong id="totalQuestionsBank">
+                                <script>$("#totalQuestionsBank").html(useEachCbtPageDetailsSession?.questionBankData?.totalQuestionBank);</script>
+                            </strong>
                         </div>
                     </div>
 
@@ -86,7 +94,9 @@
 
                         <div class="question-count-content">
                             <span>Total Quiz Questions</span>
-                            <strong id="totalQuestions">10</strong>
+                            <strong id="totalQuizQuestions">
+                                <script>$("#totalQuizQuestions").html(useEachCbtPageDetailsSession?.quizData?.totalQuizQuestions);</script>
+                            </strong>
                         </div>
                     </div>
                 </div>
@@ -98,7 +108,7 @@
                 <ul>
                     <li class="active-li" title="Question Bank" id="questionBank" onclick="_getActiveCbtPagesTab({divid: 'questionBank', page: 'questionBank', url: cbtAdminMiddleWareUrl});">Question Bank </li>
                     <li title="Quiz Questions" id="quizQuestion" onclick="_getActiveCbtPagesTab({divid: 'quizQuestion', page: 'quizQuestion', url: cbtAdminMiddleWareUrl});">Quiz Questions</li>
-                    <li title="Load Question Manually" id="loadQuestionManually" onclick="_getActiveCbtPagesTab({divid: 'loadQuestionManually', page: 'loadQuestionManually', url: cbtAdminMiddleWareUrl});">Load Questions Manually</li>
+                    <li title="Load Question Manually" id="loadQuestionManually" onclick="sessionStorage.removeItem('useEachCbtQuestionSession'); _getActiveCbtPagesTab({divid: 'loadQuestionManually', page: 'loadQuestionManually', url: cbtAdminMiddleWareUrl});">Load Questions Manually</li>
                     <li title="Load Question Automatically" id="loadQuestionAutomatically" onclick="_getActiveCbtPagesTab({divid: 'loadQuestionAutomatically', page: 'loadQuestionAutomatically', url: cbtAdminMiddleWareUrl});">Load Questions Automatically</li>
                 </ul>
 
@@ -134,419 +144,166 @@
             </label>
             
             <div class="btn-div">
-                <button class="btn" id="submitBtn" title="Set As Questions Quiz" onclick=""><i class="bi-check2-circle"></i> Set As Quiz Questions</button>
+                <div class="search-div">
+                    <input type="text"
+                        onkeyup="_filtersCbtQuestionBankData(this.value);"
+                        placeholder="Search Question Here...">
+                    <i class="bi bi-search"></i>
+                </div>
+
+                <button class="btn" id="submitBtn" title="Set As Questions Quiz" onclick="_proceedSetQuizQuestions();"><i class="bi-check2-circle"></i> Set As Quiz Questions</button>
                 <button class="btn del-btn" id="deleteBtn" title="Delete Quiz Questions" onclick=""><i class="bi-trash"></i> Delete Questions</button>
             </div>
         </div>
 
-        <div class="question-body-div">
-            <div class="question-div">
-                <div class="div-in">
-                    <div class="check-div">
-                        <label>
-                            <input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY">
-                            <span>Question 1</span>
-                        </label>
-                        <div class="btn-div">
-                            <button class="btn" title="Edit Question"><i class="bi-pencil-square"></i> Edit</button>
-                        </div>
-                    </div>
+        <div class="question-body-div" id="questionBankContent">
+            <script>
+                _fetchCbtQuestionBankData();
+            </script>
 
-                    <div class="each-question">
-                        <div class="pix-div">
-                            <img src="<?php echo $websiteUrl?>/uploaded_files/cbt/question-images/computer.jpg" alt="Computer"/>
-                        </div>
-
-                        <div class="text-div">
-                            <div>
-                                <p>The image above shows a __________.</p>
-                            </div>
-
-                            <div class="options-div">
-                                <div class="each-option">
-                                    <div class="letter">A</div>
-                                    <div>Television</div>
-                                </div>
-
-                                <div class="each-option correct-option">
-                                    <div class="letter correct-letter">B</div>
-                                    <div>Computer</div>
-                                </div>
-
-                                <div class="each-option">
-                                    <div class="letter">C</div>
-                                    <div>Radio</div>
-                                </div>
-
-                                <div class="each-option">
-                                    <div class="letter">D</div>
-                                    <div>Calculator</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-div">
-                <div class="div-in">
-                    <div class="check-div">
-                        <label>
-                            <input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY">
-                            <span>Question 2</span>
-                        </label>
-                        <div class="btn-div">
-                            <button class="btn" title="Edit Question"><i class="bi-pencil-square"></i> Edit</button>
-                        </div>
-                    </div>
-
-                    <div class="each-question">
-                        <div class="text-div">
-                            <div>
-                                <p>Which of the following is a computer mouse?</p>
-                            </div>
-
-                            <div class="options-div">
-                                <div class="each-option">
-                                    <div class="letter">A</div>
-                                    <div class="pix">
-                                        <img src="<?php echo $websiteUrl?>/uploaded_files/cbt/question-images/keyboard.jpg" alt="Keyboard"/>
-                                    </div>
-                                    <div>Keyboard</div>
-                                </div>
-
-                                <div class="each-option correct-option">
-                                    <div class="letter correct-letter">B</div>
-                                    <div class="pix">
-                                        <img src="<?php echo $websiteUrl?>/uploaded_files/cbt/question-images/mouse.jpg" alt="Computer Mouse"/>
-                                    </div>
-                                    <div>Computer Mouse</div>
-                                </div>
-
-                                <div class="each-option">
-                                    <div class="letter">C</div>
-                                    <div class="pix">
-                                        <img src="<?php echo $websiteUrl?>/uploaded_files/cbt/question-images/monitor.jpg" alt="Monitor"/>
-                                    </div>
-                                    <div>Monitor</div>
-                                </div>
-
-                                <div class="each-option">
-                                    <div class="letter">D</div>
-                                    <div class="pix">
-                                        <img src="<?php echo $websiteUrl?>/uploaded_files/cbt/question-images/printer.jpg" alt="Printer"/>
-                                    </div>
-                                    <div>Printer</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-div">
-                <div class="div-in">
-                    <div class="check-div">
-                        <label>
-                            <input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY">
-                            <span>Question 3</span>
-                        </label>
-                        <div class="btn-div">
-                            <button class="btn" title="Edit Question"><i class="bi-pencil-square"></i> Edit</button>
-                        </div>
-                    </div>
-
-                    <div class="each-question">
-                        <div class="text-div">
-                            <div>
-                                <p>______________ is an electronic machine that accept data, process data and provide output.</p>
-                            </div>
-                            <div class="options-div">
-
-                                <div class="each-option">
-                                    <div class="letter">A</div>
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option correct-option">
-                                    <div class="letter correct-letter">B</div>
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option">
-                                    <div class="letter">C</div>
-
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option">
-                                    <div class="letter">D</div>
-                                    <div>House</div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="question-div">
-                <div class="div-in">
-                    <div class="check-div">
-                        <label>
-                            <input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY">
-                            <span>Question 4</span>
-                        </label>
-                        <div class="btn-div">
-                            <button class="btn" title="Edit Question"><i class="bi-pencil-square"></i> Edit</button>
-                        </div>
-                    </div>
-
-                    <div class="each-question">
-                        <div class="text-div">
-                            <div>
-                                <p>______________ is an electronic machine that accept data, process data and provide output.</p>
-                            </div>
-                            <div class="options-div">
-
-                                <div class="each-option">
-                                    <div class="letter">A</div>
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option correct-option">
-                                    <div class="letter correct-letter">B</div>
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option">
-                                    <div class="letter">C</div>
-
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option">
-                                    <div class="letter">D</div>
-                                    <div>House</div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+            <div class="content-loading-div">
+                <img src="<?php echo $websiteUrl ?>/all-images/images/spinner.gif" alt="Loading" />
             </div>
         </div>
     </div>
 <?php } ?>
 
 <?php if ($page == 'quizQuestion') { ?>
+    <script>
+        useSetSelectedQuizQuestions = JSON.parse(
+            sessionStorage.getItem("useSetSelectedQuizQuestions") || "{}"
+        );
+    </script>
     <div class="question-back-div">
         <div class="top-div">
             <label>
                 <span>Quiz Questions</span> |
                 <div class="text"><i class="bi-clock"></i> Quiz Duration:</div>
-                <span id="quiz_duration">00:00:00</span>
+                <span id="quiz_duration">
+                    <script>$("#quiz_duration").html(useSetSelectedQuizQuestions?.timeAllowed || "00:00:00");</script>
+                </span>
             </label>
 
             <div class="btn-div">
-                <button class="btn del-btn" id="deleteBtn" title="Remove All Quiz Questions" onclick=""><i class="bi-trash"></i> Remove All</button>
+                <button class="btn" id="submitBtn" title="Approve Questions" onclick=""><i class="bi-check2-circle"></i> Approve Questions</button>
+                <button class="btn del-btn" id="deleteBtn" title="Disapprove Questions" onclick=""><i class="bi-trash"></i> Disapprove Questions</button>
             </div>
         </div>
 
-        <div class="question-body-div">
-            <div class="question-div">
-                <div class="div-in">
-                    <div class="check-div">
-                        <label>
-                            <input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY">
-                            <span>Question 1</span>
-                        </label>
-                    </div>
+        <div class="question-body-div" id="quizQuestionContent">
+            <script>
+                _fetchCbtQuizQuestionData();
+            </script>
 
-                    <div class="each-question">
-                        <div class="text-div">
-                            <div>
-                                <p>______________ is an electronic machine that accept data, process data and provide output.</p>
-                            </div>
-                            <div class="options-div">
-
-                                <div class="each-option">
-                                    <div class="letter">A</div>
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option correct-option">
-                                    <div class="letter correct-letter">B</div>
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option">
-                                    <div class="letter">C</div>
-
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option">
-                                    <div class="letter">D</div>
-                                    <div>House</div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="question-div">
-                <div class="div-in">
-                    <div class="check-div">
-                        <label>
-                            <input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY">
-                            <span>Question 1</span>
-                        </label>
-                    </div>
-
-                    <div class="each-question">
-                        <div class="text-div">
-                            <div>
-                                <p>______________ is an electronic machine that accept data, process data and provide output.</p>
-                            </div>
-                            <div class="options-div">
-
-                                <div class="each-option">
-                                    <div class="letter">A</div>
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option correct-option">
-                                    <div class="letter correct-letter">B</div>
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option">
-                                    <div class="letter">C</div>
-
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option">
-                                    <div class="letter">D</div>
-                                    <div>House</div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="question-div">
-                <div class="div-in">
-                    <div class="check-div">
-                        <label>
-                            <input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY">
-                            <span>Question 1</span>
-                        </label>
-                    </div>
-
-                    <div class="each-question">
-                        <div class="text-div">
-                            <div>
-                                <p>______________ is an electronic machine that accept data, process data and provide output.</p>
-                            </div>
-                            <div class="options-div">
-
-                                <div class="each-option">
-                                    <div class="letter">A</div>
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option correct-option">
-                                    <div class="letter correct-letter">B</div>
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option">
-                                    <div class="letter">C</div>
-
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option">
-                                    <div class="letter">D</div>
-                                    <div>House</div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="question-div">
-                <div class="div-in">
-                    <div class="check-div">
-                        <label>
-                            <input type="checkbox" class="child" name="class_id[]" data-value="GEOGRAPHY">
-                            <span>Question 1</span>
-                        </label>
-                    </div>
-
-                    <div class="each-question">
-                        <div class="text-div">
-                            <div>
-                                <p>______________ is an electronic machine that accept data, process data and provide output.</p>
-                            </div>
-                            <div class="options-div">
-
-                                <div class="each-option">
-                                    <div class="letter">A</div>
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option correct-option">
-                                    <div class="letter correct-letter">B</div>
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option">
-                                    <div class="letter">C</div>
-
-                                    <div>House</div>
-                                </div>
-
-                                <div class="each-option">
-                                    <div class="letter">D</div>
-                                    <div>House</div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+            <div class="content-loading-div">
+                <img src="<?php echo $websiteUrl ?>/all-images/images/spinner.gif" alt="Loading" />
             </div>
         </div>
     </div>
 <?php } ?>
 
 <?php if ($page == 'loadQuestionManually') { ?>
+    <script>
+        useEachCbtQuestionSession = JSON.parse(
+            sessionStorage.getItem("useEachCbtQuestionSession") || "{}"
+        );
+
+        // Question Image
+        var questionPix = useEachCbtQuestionSession?.questionPix
+            ? questionPixPath + "/" + useEachCbtQuestionSession.questionPix + '?t=' + new Date().getTime()
+            : "<?php echo $websiteUrl; ?>/all-images/images/default-question.png";
+
+        $("#quizQuestionPix")
+        .attr("src", questionPix)
+        .attr(
+            "alt",
+            (useEachCbtQuestionSession?.questionText || "Question") + " Image"
+        );
+
+        setTimeout(function() {
+            tinymce.get('questionText').setContent(useEachCbtQuestionSession?.questionText ?? "");
+        }, 2000);
+
+        var optionsData = useEachCbtQuestionSession?.optionsData ?? [];
+
+        optionsData.forEach(function(option) {
+            var optionText = option?.optionText ?? "";
+            var optionPix = option?.optionPix ?? "";
+
+            // Image to use for the option
+            var optionImage = optionPix
+            ? optionPixPath + "/" + optionPix + '?t=' + new Date().getTime()
+            : "<?php echo $websiteUrl; ?>/all-images/images/default-question.png";
+
+            if (option.optionId === 'A') {
+                $("#quizOptionAPix")
+                .attr("src", optionImage)
+                .attr("alt", optionText + " Image");
+
+                setTimeout(function() {
+                    tinymce.get('optionA').setContent(optionText);
+                }, 2000);
+            }
+
+            if (option.optionId === 'B') {
+                $("#quizOptionBPix")
+                .attr("src", optionImage)
+                .attr("alt", optionText + " Image");
+
+                setTimeout(function() {
+                    tinymce.get('optionB').setContent(optionText);
+                }, 2000);
+            }
+
+            if (option.optionId === 'C') {
+                $("#quizOptionCPix")
+                .attr("src", optionImage)
+                .attr("alt", optionText + " Image");
+
+                setTimeout(function() {
+                    tinymce.get('optionC').setContent(optionText);
+                }, 2000);
+            }
+
+            if (option.optionId === 'D') {
+                $("#quizOptionDPix")
+                .attr("src", optionImage)
+                .attr("alt", optionText + " Image");
+
+                setTimeout(function() {
+                    tinymce.get('optionD').setContent(optionText);
+                }, 2000);
+            }
+
+            if (option.optionId === 'E') {
+                $("#quizOptionEPix")
+                .attr("src", optionImage)
+                .attr("alt", optionText + " Image");
+
+                setTimeout(function() {
+                    tinymce.get('optionE').setContent(optionText);
+                }, 2000);
+            }
+        });
+
+        $('#pageTitle').html(
+            useEachCbtQuestionSession?.questionId
+                ? 'Update This Question'
+                : 'Load Questions Manually'
+        );
+
+        $('#btnContainer').html(
+            useEachCbtQuestionSession?.questionId
+                ? '<button class="submit-btn" id="submitBtn" title="Update Question" onclick="_uploadQuestionsManually();"><i class="bi-check2-circle"></i> Update Question</button>'
+                : '<button class="submit-btn" id="submitBtn" title="Upload Questions" onclick="_uploadQuestionsManually();"><i class="bi-cloud-upload"></i> Upload Questions</button>'
+        );
+    </script>
     <script src="js/TextEditor.js" referrerpolicy="origin"></script>
 
     <div class="question-back-div">
         <div class="top-div">
             <label>
-                <?php if (empty($question_id)) {
-                    $pageTitle = "Load Questions Manually";
-                } else {
-                    $pageTitle = "Update This Question";
-                } ?>
-                <span><?php echo $pageTitle; ?></span>
+                <span id="pageTitle">Load Questions Manually</span>
             </label>
         </div>
 
@@ -560,29 +317,28 @@
                     </div>
 
                     <div class="each-question">
+                        <div class="pix-div">
+                            <label>
+                                <img id="quizQuestionPix" src="<?php echo $websiteUrl; ?>/all-images/images/default-question.png" alt="Default Image">
+                                <input type="file" id="questionPix" style="display:none" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif" onchange="quizQuestionPixPreview.UpdatePreview(this);" />
+                            </label>
+                        </div>
+
                         <div class="text-div">
                             <script>
                                 tinymce.init({
-                                    selector: '#question_text',
+                                    selector: '#questionText',
                                     plugins: "link image table",
                                     skin: $('html').hasClass('dark-mode') ? 'oxide-dark' : 'oxide',
                                     content_css: $('html').hasClass('dark-mode') ? 'dark' : 'default',
-
-                                    setup: function (editor) {
-                                        editor.on('init', function () {
-                                            setTimeout(function () {
-                                                editor.setContent(question_text);
-                                            }, 300);
-                                        });
-                                    }
                                 });
                             </script>
-                            <textarea style="width: 100%;" rows="10" id="question_text" title="QUIZ QUESTION" placeholder="QUIZ QUESTION"></textarea>
+                            <textarea style="width: 100%;" rows="10" id="questionText" title="QUIZ QUESTION" placeholder="QUIZ QUESTION"></textarea>
+                            <div class="issueText" id="issue_questionText"></div>
                         </div>
                     </div>
                 </div>
             </div>
-
 
             <div class="question-div">
                 <div class="div-in">
@@ -593,29 +349,28 @@
                     </div>
 
                     <div class="each-question">
+                        <div class="pix-div">
+                            <label>
+                                <img id="quizOptionAPix" src="<?php echo $websiteUrl; ?>/all-images/images/default-option.png" alt="Default Image">
+                                <input type="file" id="optionAPix" style="display:none" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif" onchange="quizOptionAPixPreview.UpdatePreview(this);" />
+                            </label>
+                        </div>
+
                         <div class="text-div">
                             <script>
                                 tinymce.init({
-                                    selector: '#option_a',
+                                    selector: '#optionA',
                                     plugins: "link image table",
                                     skin: $('html').hasClass('dark-mode') ? 'oxide-dark' : 'oxide',
                                     content_css: $('html').hasClass('dark-mode') ? 'dark' : 'default',
-
-                                    setup: function (editor) {
-                                        editor.on('init', function () {
-                                            setTimeout(function () {
-                                                editor.setContent(option_a);
-                                            }, 300);
-                                        });
-                                    }
                                 });
                             </script>
-                            <textarea style="width: 100%;" rows="10" id="option_a" title="OPTION A" placeholder="OPTION A"></textarea>
+                            <textarea style="width: 100%;" rows="10" id="optionA" title="OPTION A" placeholder="OPTION A"></textarea>
+                            <div class="issueText" id="issue_optionA"></div>
                         </div>
                     </div>
                 </div>
             </div>
-
 
             <div class="question-div">
                 <div class="div-in">
@@ -626,24 +381,24 @@
                     </div>
 
                     <div class="each-question">
+                        <div class="pix-div">
+                            <label>
+                                <img id="quizOptionBPix" src="<?php echo $websiteUrl; ?>/all-images/images/default-option.png" alt="Default Image">
+                                <input type="file" id="optionBPix" style="display:none" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif" onchange="quizOptionBPixPreview.UpdatePreview(this);" />
+                            </label>
+                        </div>
+
                         <div class="text-div">
                             <script>
                                 tinymce.init({
-                                    selector: '#option_b',
+                                    selector: '#optionB',
                                     plugins: "link image table",
                                     skin: $('html').hasClass('dark-mode') ? 'oxide-dark' : 'oxide',
                                     content_css: $('html').hasClass('dark-mode') ? 'dark' : 'default',
-
-                                    setup: function (editor) {
-                                        editor.on('init', function () {
-                                            setTimeout(function () {
-                                                editor.setContent(option_b);
-                                            }, 300);
-                                        });
-                                    }
                                 });
                             </script>
-                            <textarea style="width: 100%;" rows="10" id="option_b" title="OPTION B" placeholder="OPTION BY"></textarea>
+                            <textarea style="width: 100%;" rows="10" id="optionB" title="OPTION B" placeholder="OPTION B"></textarea>
+                            <div class="issueText" id="issue_optionB"></div>
                         </div>
                     </div>
 
@@ -659,24 +414,24 @@
                     </div>
 
                     <div class="each-question">
+                        <div class="pix-div">
+                            <label>
+                                <img id="quizOptionCPix" src="<?php echo $websiteUrl; ?>/all-images/images/default-option.png" alt="Default Image">
+                                <input type="file" id="optionCPix" style="display:none" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif" onchange="quizOptionCPixPreview.UpdatePreview(this);" />
+                            </label>
+                        </div>
+
                         <div class="text-div">
                             <script>
                                 tinymce.init({
-                                    selector: '#option_c',
+                                    selector: '#optionC',
                                     plugins: "link image table",
                                     skin: $('html').hasClass('dark-mode') ? 'oxide-dark' : 'oxide',
                                     content_css: $('html').hasClass('dark-mode') ? 'dark' : 'default',
-
-                                    setup: function (editor) {
-                                        editor.on('init', function () {
-                                            setTimeout(function () {
-                                                editor.setContent(option_c);
-                                            }, 300);
-                                        });
-                                    }
                                 });
                             </script>
-                            <textarea style="width: 100%;" rows="10" id="option_c" title="OPTION C" placeholder="OPTION C"></textarea>
+                            <textarea style="width: 100%;" rows="10" id="optionC" title="OPTION C" placeholder="OPTION C"></textarea>
+                            <div class="issueText" id="issue_optionC"></div>
                         </div>
                     </div>
 
@@ -692,24 +447,24 @@
                     </div>
 
                     <div class="each-question">
+                        <div class="pix-div">
+                            <label>
+                                <img id="quizOptionDPix" src="<?php echo $websiteUrl; ?>/all-images/images/default-option.png" alt="Default Image">
+                                <input type="file" id="optionDPix" style="display:none" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif" onchange="quizOptionDPixPreview.UpdatePreview(this);" />
+                            </label>
+                        </div>
+
                         <div class="text-div">
                             <script>
                                 tinymce.init({
-                                    selector: '#option_d',
+                                    selector: '#optionD',
                                     plugins: "link image table",
                                     skin: $('html').hasClass('dark-mode') ? 'oxide-dark' : 'oxide',
                                     content_css: $('html').hasClass('dark-mode') ? 'dark' : 'default',
-
-                                    setup: function (editor) {
-                                        editor.on('init', function () {
-                                            setTimeout(function () {
-                                                editor.setContent(option_d);
-                                            }, 300);
-                                        });
-                                    }
                                 });
                             </script>
-                            <textarea style="width: 100%;" rows="10" id="option_d" title="OPTION D" placeholder="OPTION D"></textarea>
+                            <textarea style="width: 100%;" rows="10" id="optionD" title="OPTION D" placeholder="OPTION D"></textarea>
+                            <div class="issueText" id="issue_optionD"></div>
                         </div>
                     </div>
 
@@ -725,24 +480,24 @@
                     </div>
 
                     <div class="each-question">
+                        <div class="pix-div">
+                            <label>
+                                <img id="quizOptionEPix" src="<?php echo $websiteUrl; ?>/all-images/images/default-option.png" alt="Default Image">
+                                <input type="file" id="optionEPix" style="display:none" accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif" onchange="quizOptionEPixPreview.UpdatePreview(this);" />
+                            </label>
+                        </div>
+
                         <div class="text-div">
                             <script>
                                 tinymce.init({
-                                    selector: '#option_e',
+                                    selector: '#optionE',
                                     plugins: "link image table",
                                     skin: $('html').hasClass('dark-mode') ? 'oxide-dark' : 'oxide',
                                     content_css: $('html').hasClass('dark-mode') ? 'dark' : 'default',
-
-                                    setup: function (editor) {
-                                        editor.on('init', function () {
-                                            setTimeout(function () {
-                                                editor.setContent(option_e);
-                                            }, 300);
-                                        });
-                                    }
                                 });
                             </script>
-                            <textarea style="width: 100%;" rows="10" id="option_e" title="OPTION E" placeholder="OPTION E"></textarea>
+                            <textarea style="width: 100%;" rows="10" id="optionE" title="OPTION E" placeholder="OPTION E"></textarea>
+                            <div class="issueText" id="issue_optionE"></div>
                         </div>
                     </div>
 
@@ -757,18 +512,17 @@
                         </label>
                     </div>
 
-                    <div class="text_field_container" id="answer_container">
+                    <div class="text_field_container" id="questionAnswer_container">
                         <script>
                             textField({
-                                id: 'answer',
+                                id: 'questionAnswer',
                                 title: 'A, B, C, D, E',
+                                value: useEachCbtQuestionSession?.questionAnswer ?? "",
                             });
                         </script>
                     </div>
 
-                    <div class="btn-div">
-                        <button class="submit-btn" id="submit_btn" title="Upload Questions" onclick=""><i class="bi-cloud-upload"></i> Upload Questions</button>
-                    </div>
+                    <div class="btn-div" id="btnContainer"></div>
                 </div>
             </div>
         </div>
@@ -795,14 +549,181 @@
                         </div>
                     </div>
 
-                    <div class="input-container">
-                        <input id="quiz_question_template" name="quiz_question_template" type="file" class="cbt_text_field" placeholder="Choose File (.CSV)" title="Choose File (.CSV)" accept=".csv" />
+                    <div class="input-wrapper">
+                        <div class="input-container" id="issueBorder">
+                            <input id="questionTemplate" name="questionTemplate" type="file" class="cbt_text_field" placeholder="Choose File (.CSV)" title="Choose File (.CSV)" accept=".csv" />
+                        </div>
+                        <div id="issues_questionTemplate" class="issueText"></div>
                     </div>
 
                     <div class="btn-div">
-                        <button class="submit-btn" id="submit_btn" title="Upload Questions" onclick=""><i class="bi-cloud-upload"></i> Upload Questions</button>
+                        <button class="submit-btn" id="submitBtn" title="Upload Questions" onclick="_uploadQuestionAutomatically();"><i class="bi-cloud-upload"></i> Upload Questions</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'setQuizQuestionsForm') { ?>
+    <script>useEachCbtPageDetailsSession = JSON.parse(sessionStorage.getItem("useEachCbtPageDetailsSession"));</script>
+    <script>
+        useSetSelectedQuizQuestions = JSON.parse(
+            sessionStorage.getItem("useSetSelectedQuizQuestions") || "{}"
+        );
+    </script>
+
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="form-title-div">
+            <div class="title-div">
+                <div class="icon-div">
+                   <i class="bi bi-file-earmark-plus-fill"></i>
+                </div>
+
+                <h3>ACTIVATE QUIZ QUESTIONS</h3>
+            </div>
+
+            <div class="btn-div">
+                <button class="btn" title="Close"
+                    onclick="_alertClose(<?php echo $modalLayer ?>);">
+                    <i class="bi bi-x-lg"></i> Close
+                </button>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="form-notification">
+                <p>
+                    You are about to activate
+                    quiz questions.
+                    Please set the time allowed before activating the questions.
+                </p>
+            </div>
+
+            <div class="main-content-div form-main-content-div">
+                <div class="tables-content-div">
+                    <div class="content-title">
+                        <div class="title">
+                            <i class="bi bi-question-circle"></i>
+                            <p>Question Details</p>
+                        </div>
+                    </div>
+
+                    <div class="form-container">
+                        <div class="alert alert-success form-alert-div">
+                            <div class="alert-list-div">
+                                <div class="alert-list-back-div">
+                                    <div class="alert-list">
+                                        <div>Session:</div>
+                                        <div>
+                                            <strong id="activateSession">
+                                                <script>$("#activateSession").html(useEachCbtPageDetailsSession?.branchData?.session);</script>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="alert-list-back-div">
+                                    <div class="alert-list">
+                                        <div>Term:</div>
+                                        <div>
+                                            <strong id="activateTermName">
+                                                <script>$("#activateTermName").html(useEachCbtPageDetailsSession?.termData?.termName);</script>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="alert-list-back-div">
+                                    <div class="alert-list">
+                                        <div>Department:</div>
+                                        <div>
+                                            <strong id="activateDepartment">
+                                                <script>$("#activateDepartment").html(useEachCbtPageDetailsSession?.departmentData?.departmentName);</script>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="alert-list-back-div">
+                                    <div class="alert-list">
+                                        <div>Class:</div>
+                                        <div>
+                                            <strong id="activateClass">
+                                                <script>$("#activateClass").html(useEachCbtPageDetailsSession?.classData?.className);</script>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="alert-list-back-div">
+                                    <div class="alert-list">
+                                        <div>Subject:</div>
+                                        <div>
+                                            <strong id="activateSubject">
+                                                <script>$("#activateSubject").html(useEachCbtPageDetailsSession?.subjectData?.subjectName);</script>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="alert-list-back-div">
+                                    <div class="alert-list">
+                                        <div>CBT title:</div>
+                                        <div>
+                                            <strong id="activateCbtTitle">
+                                                <script>$("#activateCbtTitle").html(useEachCbtPageDetailsSession?.cbtData?.cbtTitle);</script>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="alert-list-back-div">
+                                    <div class="alert-list">
+                                        <div>Total Questions Selected:</div>
+                                        <div>
+                                            <strong id="totalQuestions">
+                                                <script>
+                                                    $("#totalQuestions").html(useSetSelectedQuizQuestions?.totalQuestions ?? 0);
+                                                </script>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content-div form-main-content-div">
+                <div class="tables-content-div form-table-content-div">
+                    <div class="content-title">
+                        <div class="title">
+                            <i class="bi bi-clock-fill"></i>
+                            <p>Time Allowed</p>
+                        </div>
+                    </div>
+
+                    <div class="form-container">
+                        <div class="text_field_container" id="timeAllowed_container">
+                            <script>
+                                textField({
+                                    id: 'timeAllowed',
+                                    title: 'HH:MM:SS',
+                                    onKeyPressFunction: "isNumberCheck(event);",
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-div">
+                <button class="btn" title="ACTIVATE" id="setBtn"
+                    onclick="_setQuizQuestions();">
+                    <i class="bi-check"></i> SET QUESTIONS
+                </button>
             </div>
         </div>
     </div>

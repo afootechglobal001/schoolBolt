@@ -59,4 +59,8 @@ $userDeviceId = getBrowserId();
     /// Admin Middleware Urls ///
     var cbtAdminMiddleWareUrl = websiteUrl + '/admin/config/code'; /// For CBT Admin Login Middleware Url //
     var cbtAdminUrl = websiteUrl + '/admin'; /// For Admin Url //
+
+    /// Images Path ///
+    var questionPixPath = websiteUrl + '/uploaded_files/cbt/question-pix/'; /// For Question Pix Path //
+    var optionPixPath = websiteUrl + '/uploaded_files/cbt/option-pix/'; /// For Option Pix Path //
 </script>

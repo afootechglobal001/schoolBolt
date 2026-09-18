@@ -32,7 +32,9 @@ function _closeProfileDiv(event) {
   }
 }
 $(document).on("click", _closeProfileDiv);
-
+$(document).on("click", ".toggle li", function () {
+  $(".toggle").hide("slow");
+});
 
 $(document).ready(function () {
     function updateThemeIcon() {
