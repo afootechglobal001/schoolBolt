@@ -66,8 +66,6 @@ function _initFetchAllAssignedSubjectData(data) {
 						<h4>
 							${departmentName} - ${className} (${subjectName})
 						</h4>
-
-						<div class="count">10</div>
 					</div>
 
 					<div class="btn-container">
