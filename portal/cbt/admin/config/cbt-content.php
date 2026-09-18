@@ -179,15 +179,10 @@
             <label>
                 <span>Quiz Questions</span> |
                 <div class="text"><i class="bi-clock"></i> Quiz Duration:</div>
-                <span id="quiz_duration">
-                    <script>$("#quiz_duration").html(useSetSelectedQuizQuestions?.timeAllowed || "00:00:00");</script>
-                </span>
+                <span id="quizDuration">Loading...</span>
             </label>
 
-            <div class="btn-div">
-                <button class="btn" id="submitBtn" title="Approve Questions" onclick=""><i class="bi-check2-circle"></i> Approve Questions</button>
-                <button class="btn del-btn" id="deleteBtn" title="Disapprove Questions" onclick=""><i class="bi-trash"></i> Disapprove Questions</button>
-            </div>
+            <div class="btn-div" id="quizQuestionBtnDiv"></div>
         </div>
 
         <div class="question-body-div" id="quizQuestionContent">

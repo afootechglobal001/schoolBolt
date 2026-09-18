@@ -200,7 +200,7 @@ function _fetchCbtQuizQuestionData() {
 			accessKey: true,
 		})
 		.then((response) => {
-			_initCbtQuizQuestionData(response?.data);
+			_initCbtQuizQuestionData(response);
 		})
 		.catch((error) => {
 			_staffValidationCheck(error.response);
@@ -227,8 +227,18 @@ function _fetchCbtQuizQuestionData() {
 }
 
 /// Initialize Fetch CBT Quiz Question Data ////
-function _initCbtQuizQuestionData(data) {
-	const content = data.map((item, index) => {
+function _initCbtQuizQuestionData(response) {
+	const isShowBtn = response?.quizData?.statusId === 8
+		? `<button class="btn" id="approveBtn" title="Approve Questions" onclick="_approveQuestions();">
+				<i class="bi-check2-circle"></i> Approve Questions
+			</button>`
+		: `<button class="btn del-btn" id="disapproveBtn" title="Disapprove Questions" onclick="_disapproveQuestions();">
+				<i class="bi-trash"></i> Disapprove Questions
+			</button>`;
+	$("#quizQuestionBtnDiv").html(isShowBtn);
+	$("#quizDuration").html(response?.quizData?.timeAllowed || "00:00:00");
+	
+	const content = response?.data.map((item) => {	
 		const questionPix = item?.questionPix
 			? `
 				<div class="pix-div">
@@ -1046,5 +1056,149 @@ function _setQuizQuestionsCallBack(formData) {
 	} catch (error) {
 		console.error("Error:", error);
 		_callCatchError(() => _setQuizQuestionsCallBack(formData));
+	}
+}
+
+//// Approve Quiz Questions ////
+function _approveQuestions() {
+	try {
+		////// confirm action //////
+		_showCustomConfirm({
+			callback: () => {
+				_approveQuestionsCallBack();
+			},
+			title: "Are you sure?",
+			message: "Are you sure you want to approve these questions?",
+			alertType: "warning",
+			falseActionBtn: true,
+			closeOnOverlayClick: true,
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _approveQuestions());
+	}
+}
+
+//// Approve Quiz Questions Callback////
+function _approveQuestionsCallBack() {
+	const { cbtId, departmentId, classId, subjectId } = _getCbtPageDetailsSeeion();
+	try {
+		///// get btn text/////
+		const btnText = $("#approveBtn").html();
+		_btnDisable("approveBtn", btnText, true);
+		
+		//// call endpoint //////
+		_callFetchEndPoints({
+			url: `cbt/admin/set-exam/approve-quiz-questions?cbtId=${cbtId}&departmentId=${departmentId}&classId=${classId}&subjectId=${subjectId}`,
+			accessKey: true,
+		})
+		.then((response) => {
+			_showCustomConfirm({
+				callback: () => {
+					_getActiveCbtPagesTab({
+						divid: 'quizQuestion',
+						page: 'quizQuestion', url: cbtAdminMiddleWareUrl
+					});
+				},
+				title: 'Success!',
+				message: response?.message,
+				alertType: 'success',
+				trueActionBtnText: 'Done',
+				closeOnOverlayClick: false,
+			});
+			_btnDisable("approveBtn", btnText, false);
+		})
+		.catch((error) => {
+			_staffValidationCheck(error.response);
+			console.error("Error:", error);
+			if (error.status==0) {
+				_callAjaxError(() => _approveQuestionsCallBack(error.message)); // retry if needed
+				_btnDisable("approveBtn", btnText, false);
+			} else {
+				_showCustomConfirm({
+					title: "Unable to Approve Questions!",
+					message: error.message,
+					alertType: "error",
+					trueActionBtnText: "OK",
+					closeOnOverlayClick: true,
+				});
+				_btnDisable("approveBtn", btnText, false);
+			}
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _approveQuestionsCallBack());
+	}
+}
+
+//// Disapprove Quiz Questions ////
+function _disapproveQuestions() {
+	try {
+		////// confirm action //////
+		_showCustomConfirm({
+			callback: () => {
+				_disapproveQuestionsCallBack();
+			},
+			title: "Are you sure?",
+			message: "Are you sure you want to disapprove these questions?",
+			alertType: "warning",
+			falseActionBtn: true,
+			closeOnOverlayClick: true,
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _disapproveQuestions());
+	}
+}
+
+//// Disapprove Quiz Questions Callback////
+function _disapproveQuestionsCallBack() {
+	const { cbtId, departmentId, classId, subjectId } = _getCbtPageDetailsSeeion();
+	try {
+		///// get btn text/////
+		const btnText = $("#disapproveBtn").html();
+		_btnDisable("disapproveBtn", btnText, true);
+		
+		//// call endpoint //////
+		_callFetchEndPoints({
+			url: `cbt/admin/set-exam/disapprove-quiz-questions?cbtId=${cbtId}&departmentId=${departmentId}&classId=${classId}&subjectId=${subjectId}`,
+			accessKey: true,
+		})
+		.then((response) => {
+			_showCustomConfirm({
+				callback: () => {
+					_getActiveCbtPagesTab({
+						divid: 'quizQuestion',
+						page: 'quizQuestion', url: cbtAdminMiddleWareUrl
+					});
+				},
+				title: 'Success!',
+				message: response?.message,
+				alertType: 'success',
+				trueActionBtnText: 'Done',
+				closeOnOverlayClick: false,
+			});
+			_btnDisable("disapproveBtn", btnText, false);
+		})
+		.catch((error) => {
+			_staffValidationCheck(error.response);
+			console.error("Error:", error);
+			if (error.status==0) {
+				_callAjaxError(() => _disapproveQuestionsCallBack(error.message)); // retry if needed
+				_btnDisable("disapproveBtn", btnText, false);
+			} else {
+				_showCustomConfirm({
+					title: "Unable to Disapprove Questions!",
+					message: error.message,
+					alertType: "error",
+					trueActionBtnText: "OK",
+					closeOnOverlayClick: true,
+				});
+				_btnDisable("disapproveBtn", btnText, false);
+			}
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _disapproveQuestionsCallBack());
 	}
 }
