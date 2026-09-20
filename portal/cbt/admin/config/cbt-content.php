@@ -151,8 +151,7 @@
                     <i class="bi bi-search"></i>
                 </div>
 
-                <button class="btn" id="submitBtn" title="Set As Questions Quiz" onclick="_proceedSetQuizQuestions();"><i class="bi-check2-circle"></i> Set As Quiz Questions</button>
-                <button class="btn del-btn" id="deleteBtn" title="Delete Quiz Questions" onclick=""><i class="bi-trash"></i> Delete Questions</button>
+                <div class="fetch-btn" id="fetchBtnDiv"></div>
             </div>
         </div>
 

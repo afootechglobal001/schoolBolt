@@ -6117,23 +6117,6 @@ white-space: nowrap;
     font-size: 18px;
 }
 
-@media (max-width: 768px) {
-    .cbt-creation-panel .cbt-side-bar .div-in
-    .side-container-wrapper {
-        width: 100%;
-        padding: 12px;
-    }
-    .cbt-creation-panel .cbt-side-bar .div-in
-    .side-container-wrapper .side-details-header {
-        flex-direction: column;
-    }
-    .cbt-creation-panel .cbt-side-bar .div-in
-    .side-container-wrapper .session-badge {
-        align-self: flex-start;
-    }
-}
-
-
 
 
 
@@ -6226,8 +6209,6 @@ white-space: nowrap;
 
 
 
-
-
 #getPagesDetails {
 	width: 100%;
 	height: 100%;
@@ -6273,6 +6254,12 @@ white-space: nowrap;
 }
 
 .cbt-creation-panel .question-back-div .top-div .btn-div{
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.cbt-creation-panel .question-back-div .top-div .btn-div .fetch-btn{
 	display: flex;
 	align-items: center;
 	gap: 8px;
