@@ -140,5 +140,25 @@ switch ($action){
 			);
 		}
 	break;
+
+	case 'unlinkQuestionsPix':
+		$questionIds = $_POST['questionIds'] ?? '';
+		$uploadQuestionPixDir = "../../uploaded_files/cbt/question-pix/";
+		$uploadOptionPixDir = "../../uploaded_files/cbt/option-pix/";
+
+		if (!empty($questionIds)) {
+			$myArray = explode(',', $questionIds);
+
+			foreach ($myArray as $questionId) {
+				foreach (glob($uploadQuestionPixDir . $questionId . '*') as $file) {
+					unlink($file);
+				}
+
+				foreach (glob($uploadOptionPixDir . $questionId . '*') as $file) {
+					unlink($file);
+				}
+			}
+		}
+	break;
 }
 ?>

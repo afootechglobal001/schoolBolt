@@ -248,7 +248,7 @@ function _initCbtQuizQuestionData(response) {
 	$("#quizQuestionBtnDiv").html(isShowBtn);
 	$("#quizDuration").html(response?.quizData?.timeAllowed || "00:00:00");
 	
-	const content = response?.data.map((item) => {	
+	const content = response?.data.map((item, index) => {	
 		const questionPix = item?.questionPix
 			? `
 				<div class="pix-div">
@@ -282,6 +282,12 @@ function _initCbtQuizQuestionData(response) {
 		return `
 			<div class="question-div">
 				<div class="div-in">
+					<div class="check-div">
+						<label>
+							<span>Question ${index + 1}</span>
+						</label>
+					</div>
+
 					<div class="each-question">
 						${questionPix}
 						<div class="text-div">
@@ -1271,7 +1277,6 @@ function _proceedDeleteQuestions() {
 //// Delete Questions Callback////
 function _deleteQuestionsCallBack() {
 	const { cbtId, departmentId, classId, subjectId } = _getCbtPageDetailsSeeion();
-	const { questionIds } = JSON.parse(sessionStorage.getItem("useSetSelectedQuizQuestionIds"));
 	try {
 		///// get btn text/////
 		const btnText = $("#deleteBtn").html();
@@ -1284,23 +1289,7 @@ function _deleteQuestionsCallBack() {
 			accessKey: true,
 		})
 		.then((response) => {
-			_showCustomConfirm({
-				callback: () => {
-					questionIds.forEach(({ questionId }) => {
-						$(`#question${questionId}`).fadeOut(300, function () {
-							$(this).remove();
-						});
-					});
-					sessionStorage.removeItem("useSetSelectedQuizQuestionIds");
-					_fetchEachCbtPageDetails(cbtId, departmentId, classId, subjectId);
-				},
-				title: 'Success!',
-				message: response?.message,
-				alertType: 'success',
-				trueActionBtnText: 'Done',
-				closeOnOverlayClick: false,
-			});
-			_btnDisable("deleteBtn", btnText, false);
+			_unlinkQuestionsImages(response?.questionIds, response?.message, btnText);
 		})
 		.catch((error) => {
 			_staffValidationCheck(error.response);
@@ -1323,4 +1312,48 @@ function _deleteQuestionsCallBack() {
 		console.error("Error:", error);
 		_callCatchError(() => _deleteQuestionsCallBack());
 	}
+}
+
+///// Unlink Questions Images ////
+function _unlinkQuestionsImages(questionIds, message, btnText) {
+	const { cbtId, departmentId, classId, subjectId } = _getCbtPageDetailsSeeion();
+	
+	const formData = new FormData();
+	formData.append("action", "unlinkQuestionsPix");
+	formData.append("questionIds", questionIds);
+
+	_callFileEndPoints({
+		url: cbtAdminMiddleWareUrl,
+		formData,
+		expectJson: false,
+	})
+	.then(() => {
+		_showCustomConfirm({
+			callback: () => {
+				_showLoader("Please wait while we update your question!");
+				_fetchEachCbtPageDetails(
+					cbtId,
+					departmentId,
+					classId,
+					subjectId
+				);
+				_hideLoader();
+				_btnDisable("deleteBtn", btnText, false);
+			},
+			title: "Success!",
+			message: message,
+			alertType: "success",
+			trueActionBtnText: "Done.",
+			closeOnOverlayClick: false,
+		});
+	})
+	.catch((error) => {
+		console.error("Error:", error);
+		_hideLoader();
+		_btnDisable("deleteBtn", btnText, false);
+		_callAjaxError(
+			() => _unlinkQuestionsImages(questionIds, message, btnText),
+			error.message
+		);
+	});
 }
