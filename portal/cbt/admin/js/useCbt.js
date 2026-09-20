@@ -93,7 +93,7 @@ function _fetchCbtQuestionBankData() {
 			accessKey: true,
 		})
 		.then((response) => {
-			_initCbtQuestionBankData(response?.data);
+			_initCbtQuestionBankData(response);
 		})
 		.catch((error) => {
 			_staffValidationCheck(error.response);
@@ -120,8 +120,18 @@ function _fetchCbtQuestionBankData() {
 }
 
 /// Initialize Fetch CBT Question Bank Data ////
-function _initCbtQuestionBankData(data) {
-	const content = data.map((item, index) => {
+function _initCbtQuestionBankData(response) {
+	const isShowBtn = response
+	? `<button class="btn" id="submitBtn" title="Set As Questions Quiz" onclick="_proceedSetQuizQuestions();">
+			<i class="bi-check2-circle"></i> Set As Quiz Questions
+		</button>
+		<button class="btn del-btn" id="deleteBtn" title="Delete Quiz Questions" onclick="_proceedDeleteQuestions();">
+			<i class="bi-trash"></i> Delete Questions
+		</button>`
+	: "";
+	$("#fetchBtnDiv").html(isShowBtn);
+	
+	const content = response?.data?.map((item, index) => {
 		const questionPix = item?.questionPix
 			? `
 				<div class="pix-div">
@@ -151,7 +161,7 @@ function _initCbtQuestionBankData(data) {
 		}).join("");
 
 		return `
-			<div class="question-div">
+			<div class="question-div" id="question${item?.questionId}">
 				<div class="div-in">
 					<div class="check-div">
 						<label>
@@ -1200,5 +1210,117 @@ function _disapproveQuestionsCallBack() {
 	} catch (error) {
 		console.error("Error:", error);
 		_callCatchError(() => _disapproveQuestionsCallBack());
+	}
+}
+
+
+//// Delete Questions ////
+function _proceedDeleteQuestions() {
+	try {
+		//////// get all needed values ////////////
+		let selectedQuestions = [];
+
+		$(".child:checked").each(function () {
+			selectedQuestions.push({
+				questionId: $(this).data("value")
+			});
+		});
+
+		const checked = selectedQuestions.length;
+
+		$("#questionId").removeClass("issue");
+
+		if (checked < 1) {
+			$("#questionId").addClass("issue");
+			_actionAlert("Select at least a question to delete", false);
+			return;
+		}
+
+		// Save QuestionIds to session
+		const useSetSelectedQuizQuestionIds = {
+			questionIds: selectedQuestions,
+		};
+
+		sessionStorage.setItem(
+			"useSetSelectedQuizQuestionIds",
+			JSON.stringify(useSetSelectedQuizQuestionIds)
+		);
+
+		// Save selected questions in session
+		formData = {
+			questionIds: selectedQuestions,
+		};
+
+		////// confirm action //////
+		_showCustomConfirm({
+			callback: () => {
+				_deleteQuestionsCallBack();
+			},
+			title: "Are you sure?",
+			message: "Are you sure you want to delete these questions?",
+			alertType: "warning",
+			falseActionBtn: true,
+			closeOnOverlayClick: true,
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _deleteQuestions());
+	}
+}
+
+//// Delete Questions Callback////
+function _deleteQuestionsCallBack() {
+	const { cbtId, departmentId, classId, subjectId } = _getCbtPageDetailsSeeion();
+	const { questionIds } = JSON.parse(sessionStorage.getItem("useSetSelectedQuizQuestionIds"));
+	try {
+		///// get btn text/////
+		const btnText = $("#deleteBtn").html();
+		_btnDisable("deleteBtn", btnText, true);
+		
+		//// call endpoint //////
+		_callRawEndPoints({
+			url: `cbt/admin/set-exam/delete-questions?cbtId=${cbtId}&departmentId=${departmentId}&classId=${classId}&subjectId=${subjectId}`,
+			formData,
+			accessKey: true,
+		})
+		.then((response) => {
+			_showCustomConfirm({
+				callback: () => {
+					questionIds.forEach(({ questionId }) => {
+						$(`#question${questionId}`).fadeOut(300, function () {
+							$(this).remove();
+						});
+					});
+					sessionStorage.removeItem("useSetSelectedQuizQuestionIds");
+					_fetchEachCbtPageDetails(cbtId, departmentId, classId, subjectId);
+				},
+				title: 'Success!',
+				message: response?.message,
+				alertType: 'success',
+				trueActionBtnText: 'Done',
+				closeOnOverlayClick: false,
+			});
+			_btnDisable("deleteBtn", btnText, false);
+		})
+		.catch((error) => {
+			_staffValidationCheck(error.response);
+			console.error("Error:", error);
+			if (error.status==0) {
+				_callAjaxError(() => _deleteQuestionsCallBack(error.message)); // retry if needed
+				_btnDisable("deleteBtn", btnText, false);
+			} else {
+				_showCustomConfirm({
+					title: "Unable to Delete Questions!",
+					message: error.message,
+					alertType: "error",
+					trueActionBtnText: "OK",
+					closeOnOverlayClick: true,
+				});
+				_btnDisable("deleteBtn", btnText, false);
+			}
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _deleteQuestionsCallBack());
 	}
 }
