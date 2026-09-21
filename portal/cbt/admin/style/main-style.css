@@ -2552,7 +2552,7 @@ white-space: nowrap;
 /*-----------table component---------------------------------------------------------------------------------------*/
 .tables-content-div {
 	background-color: var(--bg-white);
-	border-radius:10px;
+	border-radius:15px;
 	width: 100%;
 	min-height: 100px;
 	border: 1px solid var(--general-border-color);
@@ -2567,10 +2567,10 @@ white-space: nowrap;
 	padding: 0px 20px;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
 	border-bottom: 1px solid var(--general-border-color);
 	background: var(--table-content-bg);
-	border-radius: 10px 10px 0px 0px;
+	border-radius: 15px 15px 0px 0px;
+	gap: 40px;
 }
 
 .tables-content-div .content-title .title {
@@ -2637,6 +2637,18 @@ white-space: nowrap;
 	font-size: 13px;
 	font-family: sub-title-font;
 }
+
+
+@media all and (max-width:700px) {
+	.tables-content-div .content-title.mobile-content-title{
+		flex-direction: column;
+		align-items: flex-start;
+		height: auto;
+		padding: 10px 20px;
+		gap: 10px;
+	}
+}
+
 
 .table-div{
 	width:100%;
@@ -6637,4 +6649,113 @@ white-space: nowrap;
 .flex-text-field select {
     width: 100%;
     box-sizing: border-box;
+}
+
+
+
+
+
+
+
+
+
+
+.select-content-div {
+    position: relative;
+    z-index: 100;
+    padding-bottom: 0;
+}
+
+.select-wrapper {
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    border: 1px solid var(--general-border-color);
+    border-radius: 15px;
+    background: var(--bg-white);
+    overflow: visible;
+}
+
+.select-wrapper .select-inner-div {
+	width: calc(100% - 40px);
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.select-wrapper .select-inner-div .text-field-wrapper {
+	width: calc(100% - 200px);
+	display: flex;
+	gap: 10px;
+	justify-content: space-between;
+}
+
+.select-wrapper .select-inner-div .btn-div{
+	min-width: 200px;
+}
+
+.select-wrapper .select-inner-div .btn-div .btn {
+	border: none;
+	height: 50px;
+	font-size: 14px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+	cursor: pointer;
+	border-radius: 25px;
+	font-family: sub-title-font;
+	padding: 0px 25px;
+	color: var(--text-white);
+	background: linear-gradient(
+		90deg,
+		var(--primary-color),
+		var(--secondary-color)
+	);
+	background-size: 100%;
+	background-position: left;
+	transition: background-position 0.4s ease-in-out, transform 0.2s ease-in-out;
+	box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
+	white-space: nowrap;
+}
+
+.select-wrapper .select-inner-div .btn-div .btn:hover {
+  background-size: 200% 100%;
+  background-position: right;
+  transform: scale(1.05); /* subtle hover grow */
+}
+
+.select-wrapper .select-inner-div .btn-div .btn i {
+  font-size: 12px;
+}
+
+@media (max-width: 850px) {
+    .select-wrapper .select-inner-div {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 20px;
+	}
+	.select-wrapper .select-inner-div .text-field-wrapper {
+		width: 100%;
+	}
+}
+
+@media (max-width: 530px) {
+	.select-wrapper .select-inner-div .text-field-wrapper {
+		flex-direction: column;
+		gap: 20px;
+	}
+	.select-wrapper .select-inner-div .btn-div {
+		min-width: 100%;
+	}
+}
+
+
+.detail-alert{
+	width: fit-content !important;
+	margin: 0px;
+	border-radius: 25px;
+	padding:8px 20px;
 }

@@ -246,7 +246,7 @@ function _initCbtQuizQuestionData(response) {
 				<i class="bi-trash"></i> Disapprove Questions
 			</button>`;
 	$("#quizQuestionBtnDiv").html(isShowBtn);
-	$("#quizDuration").html(response?.quizData?.timeAllowed || "00:00:00");
+	$("#quizDuration").html(response?.quizData?.timeAllowed ? response?.quizData?.timeAllowed : "00:00:00");
 	
 	const content = response?.data.map((item, index) => {	
 		const questionPix = item?.questionPix
@@ -1356,4 +1356,281 @@ function _unlinkQuestionsImages(questionIds, message, btnText) {
 			error.message
 		);
 	});
+}
+
+//// Function Clear SelectField ////
+function _clearSelectField(fieldId) {
+    // clear actual select value
+    $("#" + fieldId).val("");
+
+    // reset displayed option
+    $("#" + fieldId).html(`
+        <option selected="selected" value="">
+            Select here
+        </option>
+    `);
+}
+
+//// Get Department Preset Data ////
+function _getSelectBranchDepartment(fieldId) {	
+	try {
+		//// call endpoint //////
+		_callFetchEndPoints({
+			url: `cbt/preset-data/fetch-branch-departments`,
+			accessKey: true,
+		})
+        .then((response) => {
+            $("#searchList_" + fieldId).html("");
+			for (let i = 0; i < response?.data?.length; i++) {
+				const id = response?.data[i].departmentId;
+                const value = response?.data[i].departmentName;
+                
+				$("#searchList_" + fieldId).append(`
+                <li onclick="
+                  _clickOption(
+                    'searchList_${fieldId}',
+                    '${id}',
+                    '${value}'
+                  );
+                  _proceedSelectBranchDepartmentClass();
+                ">
+                  ${value}
+                </li>
+              `);
+			}				
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+  	}
+}
+
+//// Proceed Department Class Data////
+function _proceedSelectBranchDepartmentClass() {
+	_clearSelectField("classId");
+    _getSelectBranchDepartmentClass("classId");
+}
+
+//// Get Department Class Preset Data ////
+function _getSelectBranchDepartmentClass(fieldId) {
+    const departmentId = $("#departmentId").val(); 
+    // always reset before loading
+    $("#"+fieldId).val("");
+    $("#searchList_" + fieldId).html("");
+
+	try {
+		//// call endpoint //////
+		_callFetchEndPoints({
+			url: `cbt/preset-data/fetch-branch-department-classes?departmentId=${departmentId}`,
+			accessKey: true,
+		})
+        .then((response) => {
+			$("#searchList_" + fieldId).html("");
+			const classData = response?.data?.[0]?.classData || [];
+			for (let i = 0; i < classData.length; i++) {
+				const id = classData[i].classId;
+				const value = classData[i].className;
+				$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+			}				
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+  	}
+}
+
+///// Proceed Fetch CBT Configuration ////
+function _proceedFetchCbtConfig(){
+	try {
+		////////get all needed values////////////
+		let issueCount = 0;
+		const departmentId = $('#departmentId').val();
+		const classId = $('#classId').val();
+		
+		///// empty field validation//////////
+		issueCount += _validateEmptyValue("departmentId", "DEPARTMENT");
+		issueCount += _validateEmptyValue("classId", "CLASS");
+		
+		if (issueCount > 0) return;
+
+		// Gather form data //
+		const formData = {
+			departmentId,
+			classId,
+		}
+
+		_fetchClassesSubjectForEachCbt(formData);
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _proceedFetchCbtConfig(formData));
+	}
+}
+
+//// Fetch Teacher Subject Data For Each CBT ////
+function _fetchClassesSubjectForEachCbt(formData) {
+	///// get btn text/////
+	const btnText = $("#proceedBtn").html();
+	_btnDisable("proceedBtn", btnText, true);
+
+	///// show loading only after Proceed /////
+	$("#fetchClassesSubjectForEachCbtContent").html(`
+		<div class="content-loading-div">
+			<img 
+				src="${websiteUrl}/all-images/images/spinner.gif" 
+				alt="Loading" />
+		</div>
+	`);
+
+	try {
+		_callFetchEndPoints({
+			url: `cbt/admin/set-exam/fetch-classes-subject-for-each-cbt?departmentId=${formData?.departmentId}&classId=${formData?.classId}`,
+			accessKey: true,
+		})
+		.then((response) => {
+			_initFetchClassesSubjectForEachCbtData(response);
+			_btnDisable("proceedBtn", btnText, false);
+
+			if (response?.departmentData && response?.classData) {
+				$("#selectedDepartmentName").html(response?.departmentData?.departmentName || "");
+				$("#selectedClassName").html(response?.classData?.className || "");
+				$("#fetchDepartmentClassCbtDetails").show();
+			}
+		})
+		.catch((error) => {
+			_staffValidationCheck(error.response);
+			console.error("Error:", error);
+
+			if (error.status == 0) {
+				_showEmptyState({
+					container: "fetchClassesSubjectForEachCbtContent",
+					message: "Check your internet connection and try again",
+				});
+
+				_callAjaxError(
+					() => _fetchClassesSubjectForEachCbt(formData),
+					error.message
+				);
+			} else {
+				_showEmptyState({
+					container: "fetchClassesSubjectForEachCbtContent",
+					message: error.message,
+				});
+			}
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _fetchClassesSubjectForEachCbt(formData));
+	}
+}
+
+/// Render Classes Subject For Each CBT Data ///
+function _initFetchClassesSubjectForEachCbtData(response) {
+	const data = response?.data || [];
+	const departmentId = response?.departmentData?.departmentId || "";
+	const classId = response?.classData?.classId || "";
+
+	const content = data?.length > 0 ? data.map((item, start) => {
+		const viewId = `view${item?.cbtId}`;
+		const cbtTitle = item?.cbtTitle;
+		const subjectAllocatedData = item?.subjectAllocatedData || [];
+
+		const subjectContent = subjectAllocatedData.length > 0 ? subjectAllocatedData.map((subjectItem) => {
+			const subjectName = subjectItem?.subjectData?.subjectName;
+			const subjectId = subjectItem?.subjectData?.subjectId;
+
+			return `
+				<div class="toggle-list">
+					<div class="title">
+						<h4>
+							${subjectName}
+						</h4>
+					</div>
+
+					<div class="btn-container">
+						<button
+							class="btn"
+							title="MANAGE CBT"
+							onclick="event.stopPropagation(); _fetchEachCbtPageDetails('${item?.cbtId}', '${departmentId}', '${classId}', '${subjectId}');">
+							<i class="bi bi-tv"></i> MANAGE CBT
+						</button>
+					</div>
+				</div>
+			`;
+		}).join("")
+		: `
+			<div class="empty-state-div">
+				<div class="icon">
+					<img
+						src="${websiteUrl}/all-images/images/no-record.png"
+						alt="Warning" />
+				</div>
+
+				<p>
+					No subject assigned to this CBT.
+					<br>
+					Kindly contact the administrator to assign subjects.
+				</p>
+			</div>
+		`;
+
+		return `
+			<div
+				class="toggle-card"
+				onclick="_chevronCollapse('${viewId}')">
+				<div class="title-content">
+					<div class="number">
+						${start + 1}
+					</div>
+
+					<div class="content-div">
+						<div class="left-content">
+							<div class="text-div">
+								<h2>
+									${cbtTitle}
+								</h2>
+							</div>
+						</div>
+
+						<div class="nav-wrapper">
+							<div
+								class="nav-cont toggle-nav"
+								id="${viewId}num">
+
+								<i class="bi bi-chevron-down"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div
+					class="open-toggle"
+					id="${viewId}answer"
+					style="display: none;">
+
+					<div class="toggle-list-wrapper">
+						${subjectContent}
+					</div>
+				</div>
+			</div>
+		`;
+
+	}).join("")
+	: `
+		<div class="empty-state-div">
+			<div class="icon">
+				<img
+					src="${websiteUrl}/all-images/images/no-record.png"
+					alt="Warning" />
+			</div>
+
+			<p>No CBT configuration found.</p>
+		</div>
+	`;
+	$("#fetchClassesSubjectForEachCbtContent").html(content);
 }
