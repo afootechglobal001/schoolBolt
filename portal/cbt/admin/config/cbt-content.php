@@ -178,7 +178,7 @@
             <label>
                 <span>Quiz Questions</span> |
                 <div class="text"><i class="bi-clock"></i> Quiz Duration:</div>
-                <span id="quizDuration">Loading...</span>
+                <span id="quizDuration">00:00:00</span>
             </label>
 
             <div class="btn-div" id="quizQuestionBtnDiv"></div>
