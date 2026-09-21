@@ -104,16 +104,16 @@ function _assignRole(response) {
         : false;
 
     /// CBT Permission
-    permissions.includes(39)
-        ? (userRoles.canConfigureCbt = true)
-        : false;
-
     permissions.includes(40)
-        ? (userRoles.canActivateOrDeActivateCbt = true)
+        ? (userRoles.canSetCbtExam = true)
         : false;
 
     permissions.includes(41)
-        ? (userRoles.canViewCbtResult = true)
+        ? (userRoles.canActivateCbtExam = true)
+        : false;
+
+    permissions.includes(42)
+        ? (userRoles.canViewCbtExam = true)
         : false;
 
     // Store in sessionStorage

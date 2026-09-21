@@ -42,8 +42,8 @@
                 </div>
 
                 <div class="btn-div">
-                    <div class="btn" onclick="_proceedFetchCbtConfig();" id="proceedBtn" title="Fetch">
-                        Fetch
+                    <div class="btn" onclick="_proceedFetchCbtConfig();" id="proceedBtn" title="Proceed">
+                        Proceed
                         <i class="bi bi-arrow-right-circle"></i>
                     </div>
                 </div>

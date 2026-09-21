@@ -17,11 +17,9 @@
 
 <script>
     let staffLoginData = JSON.parse(sessionStorage.getItem("staffLoginData"));
-    let userRoles = JSON.parse(sessionStorage.getItem("userRoles"));
     const loginStaffId = staffLoginData.staffId;
     const loginAccessKey = staffLoginData.accessKey;
     const loginRoleId = staffLoginData.roleId;
-    const rolePermissionIds = staffLoginData.rolePermissionIds;
 </script>
 
 <script src="<?php echo $websiteUrl?>/js/paramount.js?v=<?php echo $codeVersion?>"></script>
