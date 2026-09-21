@@ -75,58 +75,29 @@
                             </div>
                         </div>
 
-                        <script>
-                            function _writeCbtNavbarItems() {
-                                document.write(`
-                                    <li title="Dashboard" onclick="_getActivePage({page:'dashboard', divid:'dashboard'});">
-                                        <i class="bi bi-speedometer2"></i> Dashboard
-                                    </li>
-                                `);
-
-                                document.write(`
-                                    <li title="Set Exam"
-                                        onclick="_getActivePage({page:'setExamPage', divid:'setExamPage'});">
-                                        <i class="bi bi-file-earmark-plus-fill"></i> Set Exam
-                                    </li>
-                                `);
-
-                                if (userRoles?.canActivateOrDeActivateCbt) {
-                                    document.write(`
-                                        <li title="Activate Exam"
-                                            onclick="_getActivePage({page:'activateExamPage', divid:'activateExamPage'});">
-                                            <i class="bi bi-patch-check-fill"></i> Activate Exam
-                                        </li>
-                                    `);
-                                }
-
-                                // if (userRoles?.canViewCbtResult) {
-                                //     document.write(`
-                                //         <li title="View Results"
-                                //             onclick="_getActivePage({page:'viewResultPage', divid:'viewResultPage'});">
-                                //             <i class="bi bi-bar-chart-fill"></i> View Results
-                                //         </li>
-                                //     `);
-                                // }
-
-                                if (userRoles?.canConfigureCbt) {
-                                    document.write(`
-                                        <li title="CBT Configuration"
-                                            onclick="_getActivePage({page:'cbtConfigPage', divid:'cbtConfigPage'});">
-                                            <i class="bi bi-gear-wide-connected"></i> CBT Configuration
-                                        </li>
-                                    `);
-                                }
-
-                                document.write(`
-                                    <li class="logOut" title="Log-Out" onclick="_confirmLogOut();">
-                                        <i class="bi bi-power"></i> Log-Out
-                                    </li>
-                                `);
-                            }
-                        </script>
-
                         <ul>
-                            <script>_writeCbtNavbarItems();</script>
+                            <li title="Dashboard" onclick="_getActivePage({page:'dashboard', divid:'dashboard'});">
+                                <i class="bi bi-speedometer2"></i> Dashboard
+                            </li>
+                            <li title="Set Exam"
+                                onclick="_getActivePage({page:'setExamPage', divid:'setExamPage'});">
+                                <i class="bi bi-file-earmark-plus-fill"></i> Set Exam
+                            </li>
+                            <li title="Activate Exam"
+                                onclick="_getActivePage({page:'activateExamPage', divid:'activateExamPage'});">
+                                <i class="bi bi-patch-check-fill"></i> Activate Exam
+                            </li>
+                            <li title="View Results"
+                                onclick="_getActivePage({page:'viewResultPage', divid:'viewResultPage'});">
+                                <i class="bi bi-bar-chart-fill"></i> View Results
+                            </li>
+                            <li title="CBT Configuration"
+                                onclick="_getActivePage({page:'cbtConfigPage', divid:'cbtConfigPage'});">
+                                <i class="bi bi-gear-wide-connected"></i> CBT Configuration
+                            </li>
+                            <li class="logOut" title="Log-Out" onclick="_confirmLogOut();">
+                                <i class="bi bi-power"></i> Log-Out
+                            </li>
                         </ul>
                     </div>
                 </div>

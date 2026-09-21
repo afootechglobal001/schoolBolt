@@ -63,14 +63,12 @@
                                     <i class="bi bi-arrow-right"></i>
                                 </div>
                             </a>
-                            <a href="<?php echo $websiteUrl ?>/student/login" title="Login To Student Portal">
+                            <a href="<?php echo $websiteUrl ?>/cbt/student/login" title="Login To CBT Student">
                                 <div class="login-action-div">
-                                    <h3>Login To Student Portal</h3>
+                                    <h3>Computer Based Test (CBT)</h3>
                                     <i class="bi bi-arrow-right"></i>
                                 </div>
                             </a>
-
-
                         </div>
                     </div>
                     <p>Need Help? <a href="<?php echo $clientWebsiteContactUsUrl ?>" title="Contact Us"><span>Contact

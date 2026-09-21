@@ -238,18 +238,15 @@ function _fetchCbtQuizQuestionData() {
 
 /// Initialize Fetch CBT Quiz Question Data ////
 function _initCbtQuizQuestionData(response) {
-
-	if (userRoles?.canActivateOrDeActivateCbt) {
-		const isShowBtn = response?.quizData?.statusId === 8
-			? `<button class="btn" id="approveBtn" title="Approve Questions" onclick="_approveQuestions();">
+	const isShowBtn = response?.quizData?.statusId === 8
+		? `<button class="btn" id="approveBtn" title="Approve Questions" onclick="_approveQuestions();">
 				<i class="bi-check2-circle"></i> Approve Questions
 			</button>`
-			: `<button class="btn del-btn" id="disapproveBtn" title="Disapprove Questions" onclick="_disapproveQuestions();">
+		: `<button class="btn del-btn" id="disapproveBtn" title="Disapprove Questions" onclick="_disapproveQuestions();">
 				<i class="bi-trash"></i> Disapprove Questions
 			</button>`;
-		$("#quizQuestionBtnDiv").html(isShowBtn);
-		$("#quizDuration").html(response?.quizData?.timeAllowed ? response?.quizData?.timeAllowed : "00:00:00");
-	}
+	$("#quizQuestionBtnDiv").html(isShowBtn);
+	$("#quizDuration").html(response?.quizData?.timeAllowed ? response?.quizData?.timeAllowed : "00:00:00");
 	
 	const content = response?.data.map((item, index) => {	
 		const questionPix = item?.questionPix
@@ -1432,12 +1429,10 @@ function _getSelectBranchDepartmentClass(fieldId) {
 		})
         .then((response) => {
 			$("#searchList_" + fieldId).html("");
-			const checkedClasses = response?.data?.filter(
-				item => item.checked === true
-			);
-			for (let i = 0; i < checkedClasses.length; i++) {
-				const id = checkedClasses[i].classId;
-				const value = checkedClasses[i].className;
+			const classData = response?.data?.[0]?.classData || [];
+			for (let i = 0; i < classData.length; i++) {
+				const id = classData[i].classId;
+				const value = classData[i].className;
 				$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
 			}				
 		})
