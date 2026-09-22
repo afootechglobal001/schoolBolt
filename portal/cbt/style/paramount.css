@@ -142,6 +142,9 @@ html {
   --btn-bg-color: #444;
   --title-panel-bg: rgba(0,0,0,.05);
   --cbt-page-bg: #f1f1f1;
+  --cbt-exam-page-bg: #fafafa;
+  --cbt-exam-question-bg: #ecf0f1;
+  --cbt-exam-question-box-shadow: #d0d2d3;
 }
 
 html.dark-mode{
@@ -223,6 +226,9 @@ html.dark-mode{
   --btn-bg-color: #333333;
   --title-panel-bg: #070707;
   --cbt-page-bg: #121212;
+  --cbt-exam-page-bg: #121212;
+  --cbt-exam-question-bg: #0F0F0F;
+  --cbt-exam-question-box-shadow: rgba(0, 0, 0, 0.35);
 }
 
 h1,
