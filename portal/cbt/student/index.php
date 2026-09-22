@@ -6,9 +6,7 @@
 <title>Portal Management | <?php echo $appName;?></title>
 </head>
 <body>
-
     <?php include 'header.php'?>
-    <?php include 'side-bar.php'?>
 
     <main id="page-content">
         <script>

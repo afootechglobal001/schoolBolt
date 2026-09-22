@@ -598,3 +598,7 @@ function _collapse(div_id) {
   );
   $currentAnswer.slideToggle("slow");
 }
+
+function _goBack() {
+  window.history.go(-1);
+}

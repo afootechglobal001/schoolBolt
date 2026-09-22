@@ -1,21 +1,9 @@
 function _getActivePage(props) {
-  const { page = "", divid = "", nav = "" } = props;
-  _getActiveLink(divid);
+  const { page = "" } = props;
   if (page) {
     sessionStorage.setItem("currentDashboardPage", page);
-    _getPage({ page: page, url: cbtAdminMiddleWareUrl });
+    _getPage({ page: page, url: cbtStudentPortalMiddleWareUrl });
   }
-}
-
-function _getActiveLink(divid) {
-  _removeClass();
-  $("#" + divid).addClass("active-li");
-}
-
-function _removeClass() {
-  $(
-    "#dashboard, #topDashboard, #setExamPage, #activateExamPage, #viewResultPage, #cbtConfigPage",
-  ).removeClass("active-li");
 }
 
 function _open_li(ids) {
@@ -98,11 +86,11 @@ function _chevronCollapse(divId) {
   $("#" + divId + "answer").slideToggle("slow");
 }
 
-function _logOut() {
-  sessionStorage.clear();
-  localStorage.clear();
-  window.parent.location.href = cbtLoginUrl;
-}
+// function _logOut() {
+//   sessionStorage.clear();
+//   localStorage.clear();
+//   window.parent.location.href = cbtLoginUrl;
+// }
 
 function _confirmLogOut() {
   _showCustomConfirm({

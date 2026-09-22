@@ -705,7 +705,7 @@ a {
   line-height: 18px;
   color: #7f8c8d;
   margin: 20px auto;
-  border-radius: 5px;
+  border-radius: 8px;
   font-family: body-font;
   color: var(--text-color);
 }

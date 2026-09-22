@@ -1383,10 +1383,13 @@ function _getSelectBranchDepartment(fieldId) {
 			accessKey: true,
 		})
         .then((response) => {
-            $("#searchList_" + fieldId).html("");
-			for (let i = 0; i < response?.data?.length; i++) {
-				const id = response?.data[i].departmentId;
-                const value = response?.data[i].departmentName;
+			$("#searchList_" + fieldId).html("");
+			const checkedDepartments = response?.data?.filter(
+				item => item.checked === true
+			);
+			for (let i = 0; i < checkedDepartments.length; i++) {
+				const id = checkedDepartments[i].departmentId;
+                const value = checkedDepartments[i].departmentName;
                 
 				$("#searchList_" + fieldId).append(`
                 <li onclick="
@@ -1510,7 +1513,7 @@ function _fetchClassesSubjectForEachCbt(formData) {
 		.catch((error) => {
 			_staffValidationCheck(error.response);
 			console.error("Error:", error);
-
+			_btnDisable("proceedBtn", btnText, false);
 			if (error.status == 0) {
 				_showEmptyState({
 					container: "fetchClassesSubjectForEachCbtContent",
@@ -1521,16 +1524,19 @@ function _fetchClassesSubjectForEachCbt(formData) {
 					() => _fetchClassesSubjectForEachCbt(formData),
 					error.message
 				);
+				_btnDisable("proceedBtn", btnText, false);
 			} else {
 				_showEmptyState({
 					container: "fetchClassesSubjectForEachCbtContent",
 					message: error.message,
 				});
+				_btnDisable("proceedBtn", btnText, false);
 			}
 		});
 	} catch (error) {
 		console.error("Error:", error);
 		_callCatchError(() => _fetchClassesSubjectForEachCbt(formData));
+		_btnDisable("proceedBtn", btnText, false);
 	}
 }
 

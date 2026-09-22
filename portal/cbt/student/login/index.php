@@ -18,7 +18,7 @@
                 <div class="header-div-in">
                     <div class="logo-div">
                         <a href="<?php echo $clientWebsiteUrl ?>" title="<?php echo $clientName ?>">
-                            <img src="<?php echo $websiteUrl ?>/images/logo.png" alt="<?php echo $clientName ?> Logo"
+                            <img src="<?php echo $websiteUrl ?>/all-images/images/logo.png" alt="<?php echo $clientName ?> Logo"
                                 class="animated zoomIn" /></a>
                     </div>
 
@@ -33,7 +33,7 @@
             <div class="form-back-div">
                 <div class="form-div" data-aos="fade-right" data-aos-duration="1600">
                     <div class="top-div">
-                        <h1>👋 Hi Student<br><span>It’s really nice to see you</span></h1>
+                        <h1>👋 Hi Student<br><span>Welcome to CBT Exam</span></h1>
                     </div>
 
                     <div class="inner-form" id="viewLogin">
@@ -49,17 +49,17 @@
                                 });
                             </script>
                         </div>
-                        <div class="text_field_container" id="password_container">
+                        <div class="text_field_container" id="cbtId_container">
                             <script>
-                                textField({
-                                    id: 'password',
-                                    title: 'Password'
+                                selectField({
+                                    id: 'cbtId',
+                                    title: 'Select Exam Type'
                                 });
                             </script>
                         </div>
 
-                        <button class="btn" title="Proceed" id="proceedLoginBtn" onclick="_confirmLoginEmail();">Proceed
-                            <i class="bi-arrow-right"></i></button>
+                        <button class="btn" title="Login" id="proceedLoginBtn" onclick="window.parent.location.href = cbtStudentPortalUrl;">Login
+                            <i class="bi bi-arrow-right-circle"></i></button>
                     </div>
                    <p><span onclick="_goBack();"><i class="bi-arrow-left"></i> Go Back</span></p>
                 </div>
@@ -68,13 +68,12 @@
         <div class="graphics-div">
             <div class="content" data-aos="fade-left" data-aos-duration="800">
                 <div class="graphics" data-aos="fade-left" data-aos-duration="1200"><img
-                        src="<?php echo $websiteUrl ?>/images/check-result.webp" alt="ABCC Result checker" /></div>
-                <h2>Access your education<br> <span>at Your Fingertips!</span></h2>
+                        src="<?php echo $websiteUrl ?>/all-images/images/check-result.png" alt="ABCC Result checker" /></div>
+                <h2>Access your CBT exam<br> <span>at Your Fingertips!</span></h2>
             </div>
         </div>
     </section>
 
     <?php include '../bottom-scripts.php' ?>
 </body>
-
 </html>

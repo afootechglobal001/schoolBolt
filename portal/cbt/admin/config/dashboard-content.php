@@ -243,111 +243,102 @@
     </div>
 
     <div class="main-content-div" data-aos="fade-in" data-aos-duration="1500">
+        <script>
+            function _writeCbtDashboardItems() {
+                let html = `
+                    <div class="statistics-div pending-card" id="setExamPage" title="Set CBT Exam"
+                        onclick="_getActivePage({page:'setExamPage', divid:'setExamPage'});">
+
+                        <div class="statistics-inner-div">
+                            <div class="statistics-top-div">
+                                <div class="statistics-text">
+                                    <p>Set Exam</p>
+                                    <span>Create and manage CBT examinations</span>
+                                </div>
+
+                                <div class="statistics-icon pending">
+                                    <i class="bi bi-file-earmark-plus-fill"></i>
+                                </div>
+                            </div>
+
+                            <div class="statistics-action-div">
+                                <div class="action-left">
+                                    <i class="bi bi-file-earmark-plus-fill"></i>
+                                    <span>Set CBT Exam</span>
+                                </div>
+
+                                <i class="bi bi-arrow-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                if (userRoles?.canActivateOrDeActivateCbt) {
+                    html += `
+                        <div class="statistics-div upcoming-card" id="activateExamPage" title="Activate CBT Exam"
+                            onclick="_getActivePage({page:'activateExamPage', divid:'activateExamPage'});">
+
+                            <div class="statistics-inner-div">
+                                <div class="statistics-top-div">
+                                    <div class="statistics-text">
+                                        <p>Activate Exam</p>
+                                        <span>Make CBT exams available to students</span>
+                                    </div>
+
+                                    <div class="statistics-icon upcoming">
+                                        <i class="bi bi-patch-check-fill"></i>
+                                    </div>
+                                </div>
+
+                                <div class="statistics-action-div">
+                                    <div class="action-left">
+                                        <i class="bi bi-patch-check-fill"></i>
+                                        <span>Activate CBT Exam</span>
+                                    </div>
+
+                                    <i class="bi bi-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (userRoles?.canConfigureCbt) {
+                    html += `
+                        <div class="statistics-div purple-card" id="cbtConfigPage" title="CBT Configuration"
+                            onclick="_getActivePage({page:'cbtConfigPage', divid:'cbtConfigPage'});">
+
+                            <div class="statistics-inner-div">
+                                <div class="statistics-top-div">
+                                    <div class="statistics-text">
+                                        <p>Configuration</p>
+                                        <span>Configure CBT examination settings</span>
+                                    </div>
+
+                                    <div class="statistics-icon">
+                                        <i class="bi bi-gear-wide-connected"></i>
+                                    </div>
+                                </div>
+
+                                <div class="statistics-action-div">
+                                    <div class="action-left">
+                                        <i class="bi bi-gear-wide-connected"></i>
+                                        <span>CBT Configuration</span>
+                                    </div>
+
+                                    <i class="bi bi-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                $("#cbtDashboardItems").html(html);
+            }
+        </script>
+
         <div class="dashboard-wrapper">
-            <div class="statistics-back-div">
-                <div class="statistics-div pending-card" id="setExamPage" title="Set CBT Exam"
-                    onclick="_getActivePage({page:'setExamPage', divid:'setExamPage'});">
-
-                    <div class="statistics-inner-div">
-                        <div class="statistics-top-div">
-                            <div class="statistics-text">
-                                <p>Set Exam</p>
-                                <span>Create and manage CBT examinations</span>
-                            </div>
-
-                            <div class="statistics-icon pending">
-                                <i class="bi bi-file-earmark-plus-fill"></i>
-                            </div>
-                        </div>
-
-                        <div class="statistics-action-div">
-                            <div class="action-left">
-                                <i class="bi bi-file-earmark-plus-fill"></i>
-                                <span>Set CBT Exam</span>
-                            </div>
-
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="statistics-div upcoming-card" id="activateExamPage" title="Activate CBT Exam"
-                    onclick="_getActivePage({page:'activateExamPage', divid:'activateExamPage'});">
-
-                    <div class="statistics-inner-div">
-                        <div class="statistics-top-div">
-                            <div class="statistics-text">
-                                <p>Activate Exam</p>
-                                <span>Make CBT exams available to students</span>
-                            </div>
-
-                            <div class="statistics-icon upcoming">
-                                <i class="bi bi-patch-check-fill"></i>
-                            </div>
-                        </div>
-
-                        <div class="statistics-action-div">
-                            <div class="action-left">
-                                <i class="bi bi-patch-check-fill"></i>
-                                <span>Activate CBT Exam</span>
-                            </div>
-
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- <div class="statistics-div completed-card" id="viewResultPage" title="View CBT Exam Result"
-                    onclick="_getActivePage({page:'viewResultPage', divid:'viewResultPage'});">
-
-                    <div class="statistics-inner-div">
-                        <div class="statistics-top-div">
-                            <div class="statistics-text">
-                                <p>View Results</p>
-                                <span>View and manage CBT exam results</span>
-                            </div>
-
-                            <div class="statistics-icon completed">
-                                <i class="bi bi-bar-chart-fill"></i>
-                            </div>
-                        </div>
-
-                        <div class="statistics-action-div">
-                            <div class="action-left">
-                                <i class="bi bi-bar-chart-fill"></i>
-                                <span>View Exam Results</span>
-                            </div>
-
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-                    </div>
-                </div> -->
-
-                <div class="statistics-div purple-card" id="cbtConfigPage" title="CBT Configuration"
-                    onclick="_getActivePage({page:'cbtConfigPage', divid:'cbtConfigPage'});">
-
-                    <div class="statistics-inner-div">
-                        <div class="statistics-top-div">
-                            <div class="statistics-text">
-                                <p>Configuration</p>
-                                <span>Configure CBT examination settings</span>
-                            </div>
-
-                            <div class="statistics-icon">
-                                <i class="bi bi-gear-wide-connected"></i>
-                            </div>
-                        </div>
-
-                        <div class="statistics-action-div">
-                            <div class="action-left">
-                                <i class="bi bi-gear-wide-connected"></i>
-                                <span>CBT Configuration</span>
-                            </div>
-
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-                    </div>
-                </div>
+            <div class="statistics-back-div" id="cbtDashboardItems">
+                <script>_writeCbtDashboardItems();</script>
             </div>
         </div>
     </div>
@@ -495,126 +486,106 @@
     </div>
 
     <div class="main-content-div" data-aos="fade-in" data-aos-duration="1500">
+        <script>
+            function _writeCbtDashboardItems() {
+                let html = `
+                    <div class="statistics-div pending-card" id="setExamPage" title="Set CBT Exam"
+                        onclick="_getActivePage({page:'setExamPage', divid:'setExamPage'});">
+
+                        <div class="statistics-inner-div">
+                            <div class="statistics-top-div">
+                                <div class="statistics-text">
+                                    <p>Set Exam</p>
+                                    <span>Create and manage CBT examinations</span>
+                                </div>
+
+                                <div class="statistics-icon pending">
+                                    <i class="bi bi-file-earmark-plus-fill"></i>
+                                </div>
+                            </div>
+
+                            <div class="statistics-action-div">
+                                <div class="action-left">
+                                    <i class="bi bi-file-earmark-plus-fill"></i>
+                                    <span>Set CBT Exam</span>
+                                </div>
+
+                                <i class="bi bi-arrow-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                if (userRoles?.canActivateOrDeActivateCbt) {
+                    html += `
+                        <div class="statistics-div upcoming-card" id="activateExamPage" title="Activate CBT Exam"
+                            onclick="_getActivePage({page:'activateExamPage', divid:'activateExamPage'});">
+
+                            <div class="statistics-inner-div">
+                                <div class="statistics-top-div">
+                                    <div class="statistics-text">
+                                        <p>Activate Exam</p>
+                                        <span>Make CBT exams available to students</span>
+                                    </div>
+
+                                    <div class="statistics-icon upcoming">
+                                        <i class="bi bi-patch-check-fill"></i>
+                                    </div>
+                                </div>
+
+                                <div class="statistics-action-div">
+                                    <div class="action-left">
+                                        <i class="bi bi-patch-check-fill"></i>
+                                        <span>Activate CBT Exam</span>
+                                    </div>
+
+                                    <i class="bi bi-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (userRoles?.canConfigureCbt) {
+                    html += `
+                        <div class="statistics-div purple-card" id="cbtConfigPage" title="CBT Configuration"
+                            onclick="_getActivePage({page:'cbtConfigPage', divid:'cbtConfigPage'});">
+
+                            <div class="statistics-inner-div">
+                                <div class="statistics-top-div">
+                                    <div class="statistics-text">
+                                        <p>Configuration</p>
+                                        <span>Configure CBT examination settings</span>
+                                    </div>
+
+                                    <div class="statistics-icon">
+                                        <i class="bi bi-gear-wide-connected"></i>
+                                    </div>
+                                </div>
+
+                                <div class="statistics-action-div">
+                                    <div class="action-left">
+                                        <i class="bi bi-gear-wide-connected"></i>
+                                        <span>CBT Configuration</span>
+                                    </div>
+
+                                    <i class="bi bi-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                $("#cbtDashboardItems").html(html);
+            }
+        </script>
+
         <div class="dashboard-wrapper">
-            <div class="statistics-back-div">
-                <div class="statistics-div pending-card" id="setExamPage" title="Set CBT Exam"
-                    onclick="_getActivePage({page:'setExamPage', divid:'setExamPage'});">
-
-                    <div class="statistics-inner-div">
-                        <div class="statistics-top-div">
-                            <div class="statistics-text">
-                                <p>Set Exam</p>
-                                <span>Create and manage CBT examinations</span>
-                            </div>
-
-                            <div class="statistics-icon pending">
-                                <i class="bi bi-file-earmark-plus-fill"></i>
-                            </div>
-                        </div>
-
-                        <div class="statistics-action-div">
-                            <div class="action-left">
-                                <i class="bi bi-file-earmark-plus-fill"></i>
-                                <span>Set CBT Exam</span>
-                            </div>
-
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="statistics-div upcoming-card" id="activateExamPage" title="Activate CBT Exam"
-                    onclick="_getActivePage({page:'activateExamPage', divid:'activateExamPage'});">
-
-                    <div class="statistics-inner-div">
-                        <div class="statistics-top-div">
-                            <div class="statistics-text">
-                                <p>Activate Exam</p>
-                                <span>Make CBT exams available to students</span>
-                            </div>
-
-                            <div class="statistics-icon upcoming">
-                                <i class="bi bi-patch-check-fill"></i>
-                            </div>
-                        </div>
-
-                        <div class="statistics-action-div">
-                            <div class="action-left">
-                                <i class="bi bi-patch-check-fill"></i>
-                                <span>Activate CBT Exam</span>
-                            </div>
-
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- <div class="statistics-div completed-card" id="viewResultPage" title="View CBT Exam Result"
-                    onclick="_getActivePage({page:'viewResultPage', divid:'viewResultPage'});">
-
-                    <div class="statistics-inner-div">
-                        <div class="statistics-top-div">
-                            <div class="statistics-text">
-                                <p>View Results</p>
-                                <span>View and manage CBT exam results</span>
-                            </div>
-
-                            <div class="statistics-icon completed">
-                                <i class="bi bi-bar-chart-fill"></i>
-                            </div>
-                        </div>
-
-                        <div class="statistics-action-div">
-                            <div class="action-left">
-                                <i class="bi bi-bar-chart-fill"></i>
-                                <span>View Exam Results</span>
-                            </div>
-
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-                    </div>
-                </div> -->
-
-                <div class="statistics-div purple-card" id="cbtConfigPage" title="CBT Configuration"
-                    onclick="_getActivePage({page:'cbtConfigPage', divid:'cbtConfigPage'});">
-
-                    <div class="statistics-inner-div">
-                        <div class="statistics-top-div">
-                            <div class="statistics-text">
-                                <p>Configuration</p>
-                                <span>Configure CBT examination settings</span>
-                            </div>
-
-                            <div class="statistics-icon">
-                                <i class="bi bi-gear-wide-connected"></i>
-                            </div>
-                        </div>
-
-                        <div class="statistics-action-div">
-                            <div class="action-left">
-                                <i class="bi bi-gear-wide-connected"></i>
-                                <span>CBT Configuration</span>
-                            </div>
-
-                            <i class="bi bi-arrow-right"></i>
-                        </div>
-                    </div>
-                </div>
+            <div class="statistics-back-div" id="cbtDashboardItems">
+                <script>_writeCbtDashboardItems();</script>
             </div>
         </div>
     </div>
 <?php } ?>
-
-
-
-
-
-
-
-
-
-
-
 
 <?php if ($page == 'logoutConfirmForm') { ?>
     <div class="caption-success-div animated zoomIn">
