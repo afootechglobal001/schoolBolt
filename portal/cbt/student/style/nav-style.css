@@ -2,10 +2,10 @@
 /* CSS Document */
 
 header{
-	width: calc(100% - 200px);
+	width: 100%;
 	min-height:70px;
 	position:fixed;
-	left:200px;	
+	left:0px;	
     background-color: var(--bg-white);
 	z-index:200;
 	display: flex;
@@ -14,7 +14,7 @@ header{
 }
 
 header .header-div-in{
-	width:100%;
+	width:97%;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -27,49 +27,8 @@ header .header-div-in .header-nav-div{
 	width: 100%;
 }
 
-header .header-div-in .header-nav-div .left-nav	{
-	display: flex;
-	align-items: center;
-}
-
-header .header-div-in .header-nav-div .left-nav	ul{
-	display: flex;
-	align-items: center;
-	gap: 7px;
-	padding: 0px;
-	margin: 0px;
-}
-
-header .header-div-in .header-nav-div .left-nav	ul li{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 5px;
-	list-style: none;
-	font-family: body-font;
-	color: var(--sub-body-color);
-	padding: 10px 20px;
-	background-color: var(--nav-hover-bg-color);
-	font-size: 12px;
-	border-radius: 10px;
-	transition:all ease 0.2s;
-	cursor:pointer;
-}
-
-header .header-div-in .header-nav-div .left-nav	ul li:hover,
-header .header-div-in .header-nav-div .left-nav	ul .active-li
-{
-	background:var(--nav-hover-bg-color);
-}
-
-header .header-div-in .header-nav-div .left-nav	ul li i{
-	color: var(--secondary-color);
-	font-size: 12px;
-}
-
 header .header-div-in .header-nav-div .logo-div{
 	width: 150px;
-	display: none;
 }
 
 header .header-div-in .header-nav-div .logo-div img{
@@ -80,7 +39,6 @@ header .header-div-in .header-nav-div .logo-div img{
 header .header-div-in .header-nav-div .right-nav{
 	display: flex;
 	align-items: center;
-	padding-right: 10px;
 }
 
 header .header-div-in .header-nav-div .right-nav .right-icon-div{

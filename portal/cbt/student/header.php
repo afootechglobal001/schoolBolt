@@ -6,14 +6,6 @@
                 <img src="<?php echo $websiteUrl ?>/all-images/images/logo.png" alt="<?php echo $appName ?> logo" />
             </div>
             
-            <div class="left-nav">
-                <ul>
-                    <li class="active-li" title="Dashboard"
-                        onclick="_getActivePage({page:'dashboard', divid:'topDashboard'});" id="topDashboard"><i
-                            class="bi-speedometer2"></i> Dashboard</li>
-                </ul>
-            </div>
-
             <div class="right-nav">
                 <div class="right-icon-div left-icon-div">
                     <button class="mode-switch" title="Switch Mode" id="darkModeBtn">
@@ -32,9 +24,7 @@
 
                                 <div>
                                     <strong id="currentSession">
-                                        <script>
-                                            $("#currentSession").html(staffLoginData?.branchData?.session+" - "+staffLoginData?.termData?.termName);
-                                        </script>
+                                        2025/2026 - THIRD TERM
                                     </strong>
                                 </div>
                             </div>
@@ -52,49 +42,19 @@
                     <div class="toggle-in">
                         <div class="toggle-title">
                             <div class="dp" id="loginProfileName">
-                                <script>
-                                    $("#loginProfileName").html(getFirstLettersOfEachWord(staffLoginData?.firstName + " " + staffLoginData?.lastName));
-                                </script>
+                                IK
                             </div>
                             <div class="text">
                                 <h2 id="loginUserFullname">
-                                    <script>
-                                        $("#loginUserFullname").html(capitalizeFirstLetterOfEachWord(staffLoginData?.firstName + " " + staffLoginData?.lastName));
-                                    </script>
+                                    Ikong Emmanuel
                                 </h2>
                                 <p id="loginUserEmail">
-                                    <script>
-                                        $("#loginUserEmail").html(staffLoginData?.emailAddress);
-                                    </script>
-                                </p>
-                                <p id="loginUserPhone"></p>
-                                    <script>
-                                        $("#loginUserPhone").html(staffLoginData?.phoneNumber);
-                                    </script>
+                                    STUDENT00123435565435
                                 </p>
                             </div>
                         </div>
 
                         <ul>
-                            <li title="Dashboard" onclick="_getActivePage({page:'dashboard', divid:'dashboard'});">
-                                <i class="bi bi-speedometer2"></i> Dashboard
-                            </li>
-                            <li title="Set Exam"
-                                onclick="_getActivePage({page:'setExamPage', divid:'setExamPage'});">
-                                <i class="bi bi-file-earmark-plus-fill"></i> Set Exam
-                            </li>
-                            <li title="Activate Exam"
-                                onclick="_getActivePage({page:'activateExamPage', divid:'activateExamPage'});">
-                                <i class="bi bi-patch-check-fill"></i> Activate Exam
-                            </li>
-                            <li title="View Results"
-                                onclick="_getActivePage({page:'viewResultPage', divid:'viewResultPage'});">
-                                <i class="bi bi-bar-chart-fill"></i> View Results
-                            </li>
-                            <li title="CBT Configuration"
-                                onclick="_getActivePage({page:'cbtConfigPage', divid:'cbtConfigPage'});">
-                                <i class="bi bi-gear-wide-connected"></i> CBT Configuration
-                            </li>
                             <li class="logOut" title="Log-Out" onclick="_confirmLogOut();">
                                 <i class="bi bi-power"></i> Log-Out
                             </li>

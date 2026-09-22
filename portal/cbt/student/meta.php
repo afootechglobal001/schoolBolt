@@ -10,17 +10,17 @@
 <link href="<?php echo $websiteUrl?>/style/aos.css" type="text/css" rel="stylesheet" />
 <link href="<?php echo $websiteUrl?>/style/paramount.css?v=<?php echo $codeVersion?>" type="text/css"rel="stylesheet" />
 <link href="<?php echo $websiteUrl?>/style/tablePaginator.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
-<link href="<?php echo $websiteUrl?>/admin/style/main-style.css?v=<?php echo $codeVersion?>" type="text/css"rel="stylesheet" />
-<link href="<?php echo $websiteUrl?>/admin/style/nav-style.css?v=<?php echo $codeVersion?>" type="text/css"rel="stylesheet" />
+<link href="<?php echo $websiteUrl?>/student/style/main-style.css?v=<?php echo $codeVersion?>" type="text/css"rel="stylesheet" />
+<link href="<?php echo $websiteUrl?>/student/style/nav-style.css?v=<?php echo $codeVersion?>" type="text/css"rel="stylesheet" />
 
 <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
 
-<script>
+<!-- <script>
     let staffLoginData = JSON.parse(sessionStorage.getItem("staffLoginData"));
     const loginStaffId = staffLoginData.staffId;
     const loginAccessKey = staffLoginData.accessKey;
     const loginRoleId = staffLoginData.roleId;
-</script>
+</script> -->
 
 <script src="<?php echo $websiteUrl?>/js/paramount.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/textfield-selectfield.js?v=<?php echo $codeVersion?>"></script>
@@ -28,7 +28,5 @@
 <script src="<?php echo $websiteUrl?>/js/aos.js"></script>
 <script src="<?php echo $websiteUrl?>/js/tablePaginator.js?v=<?php echo $codeVersion?>"></script>
 
-<script src="<?php echo $websiteUrl?>/admin/js/useDashboard.js?v=<?php echo $codeVersion?>" type="text/javascript"></script>
-<script src="<?php echo $websiteUrl?>/admin/js/useCbtConfiguration.js?v=<?php echo $codeVersion?>" type="text/javascript"></script>
-<script src="<?php echo $websiteUrl?>/admin/js/useSetExam.js?v=<?php echo $codeVersion?>" type="text/javascript"></script>
-<script src="<?php echo $websiteUrl?>/admin/js/useCbt.js?v=<?php echo $codeVersion?>" type="text/javascript"></script>
+<script src="<?php echo $websiteUrl?>/student/js/useDashboard.js?v=<?php echo $codeVersion?>" type="text/javascript"></script>
+<script src="<?php echo $websiteUrl?>/student/js/useCbt.js?v=<?php echo $codeVersion?>" type="text/javascript"></script>

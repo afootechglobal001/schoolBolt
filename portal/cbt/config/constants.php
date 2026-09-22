@@ -60,6 +60,14 @@ $userDeviceId = getBrowserId();
     var cbtAdminMiddleWareUrl = websiteUrl + '/admin/config/code'; /// For CBT Admin Login Middleware Url //
     var cbtAdminUrl = websiteUrl + '/admin'; /// For Admin Url //
 
+    /// Student Login Middleware Urls ///
+    var cbtStudentLoginMiddleWareUrl = websiteUrl + '/student/login/config/code'; /// For CBT Student Login Middleware Url //
+    var cbtStudentLoginUrl = websiteUrl + '/student/login'; /// For Student Login Url //
+
+    /// Student Portal Middleware Urls ///
+    var cbtStudentPortalMiddleWareUrl = websiteUrl + '/student/config/code'; /// For CBT Student Portal Middleware Url //
+    var cbtStudentPortalUrl = websiteUrl + '/student'; /// For Student Portal Url //
+
     /// Images Path ///
     var questionPixPath = websiteUrl + '/uploaded_files/cbt/question-pix/'; /// For Question Pix Path //
     var optionPixPath = websiteUrl + '/uploaded_files/cbt/option-pix/'; /// For Option Pix Path //
