@@ -159,7 +159,7 @@
                 <div class="exam-ready-panel">
                     <div class="ready-content">
                         <div class="ready-icon">
-                            <i class="bi bi-file-earmark-check"></i>
+                            <img src="<?php echo $websiteUrl ?>/all-images/images/ready-icon.png" alt="Ready Icon">
                         </div>
 
                         <div class="ready-text">
@@ -251,7 +251,7 @@
 <?php } ?>
 
 <?php if ($page == 'studentCbtExamPage') { ?>
-    <div class="question-back-div" data-aos="fade-in" data-aos-duration="1500">
+    <div class="question-back-div exam-page-back-div" data-aos="fade-in" data-aos-duration="1500">
         <div class="exam-page-wrapper">
             <div class="exam-header">
                 <div class="exam-title-div">
@@ -291,8 +291,103 @@
             </div>
         </div>
 
-        <div class="new-question-body-div" id="questionBankContent">
-            Exam Content
+        <div class="exam-question-body-div" id="questionBankContent">
+            <div class="question-div">
+                <div class="div-in">
+                    <div class="check-div">
+                        <label>
+                            <span>Question 1</span>
+                        </label>
+                    </div>
+
+                    <div class="each-question">
+                        <!-- <div class="pix-div">
+                            <img src="<?php echo $websiteUrl ?>/uploaded_files/cbt/question-pix/QUES08920260922093326_pix.jpg" alt="Question Image"/>
+                        </div> -->
+
+                        <div class="text-div">
+                            <div>
+                                <p>Which of the following is an electronic machine that accept data, process data and provide output?</p>
+                            </div>
+
+                            <div class="options-div">
+                                <label class="each-option">
+                                    <div class="radio-wrapper">
+                                        <div class="radio-div">
+                                            <input type="radio" name="question_1" value="A">
+                                            <span class="radio-custom"></span>
+                                        </div>
+
+                                        <div class="letter">A</div>
+                                    </div>
+
+                                    <!-- <div class="pix">
+                                        <img src="<?php echo $websiteUrl ?>/uploaded_files/cbt/option-pix/QUES06520260918091747_option_A.jpg" alt="Option A"/>
+                                    </div> -->
+
+                                    <div>House</div>
+                                </label>
+
+                                <label class="each-option">
+                                    <div class="radio-wrapper">
+                                        <div class="radio-div">
+                                            <input type="radio" name="question_1" value="B">
+                                            <span class="radio-custom"></span>
+                                        </div>
+
+                                        <div class="letter">B</div>
+                                    </div>
+
+                                    <div>House</div>
+                                </label>
+
+                                <label class="each-option">
+                                    <div class="radio-wrapper">
+                                        <div class="radio-div">
+                                            <input type="radio" name="question_1" value="C">
+                                            <span class="radio-custom"></span>
+                                        </div>
+
+                                        <div class="letter">C</div>
+                                    </div>
+
+                                    <div>House</div>
+                                </label>
+
+                                <label class="each-option">
+                                    <div class="radio-wrapper">
+                                        <div class="radio-div">
+                                            <input type="radio" name="question_1" value="D">
+                                            <span class="radio-custom"></span>
+                                        </div>
+
+                                        <div class="letter">D</div>
+                                    </div>
+
+                                    <div>House</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-bottom-div">
+            <div class="div-in">
+                <button class="prev-btn" id="prevButton" title="Previous"><i class="bi bi-arrow-left-circle"></i> Previous</button>
+                <div class="question-num-div" id="numButtonContainerId">
+                    <button class="num-btn active" id="numBtnId">1</button>
+                    <button class="num-btn" id="numBtnId">2</button>
+                    <button class="num-btn" id="numBtnId">3</button>
+                    <button class="num-btn" id="numBtnId">4</button>
+                    <button class="num-btn" id="numBtnId">5</button>
+                    <button class="num-btn" id="numBtnId">6</button>
+                    <button class="num-btn" id="numBtnId">7</button>
+                </div>
+
+                <button class="prev-btn next-btn" id="nextBtn" title="Next">Next <i class="bi bi-arrow-right-circle"></i></button>
+            </div>
         </div>
     </div>
 <?php } ?>
