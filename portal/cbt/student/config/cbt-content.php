@@ -92,9 +92,9 @@
 
         <div class="cbt-content-div">
             <div class="title-div">
-            <label>
-                <strong>Computer Based Test</strong>
-            </label>
+                <label>
+                    <strong>Computer Based Test (CBT)</strong>
+                </label>
 
                 <div class="btn-div">
                     <button class="btn" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">
@@ -278,7 +278,7 @@
                     </div>
 
                     <div class="countdown-content">
-                        <p>Available Time</p>
+                        <p>Time Remaining</p>
                         <div class="countdown-time">
                             <span id="examHours">00</span>
                             <b>:</b>
@@ -289,8 +289,6 @@
                     </div>
                 </div>
             </div>
-            
-            Exam Content
         </div>
 
         <div class="new-question-body-div" id="questionBankContent">

@@ -8,7 +8,6 @@ function _getCbtExamPagesTab(props) {
 	}
 }
 
-
 //// Fetch Student CBT Exams ////
 function _fetchAvailableCbtExamsData() {
 	try {
