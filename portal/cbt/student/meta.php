@@ -15,12 +15,10 @@
 
 <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
 
-<!-- <script>
-    let staffLoginData = JSON.parse(sessionStorage.getItem("staffLoginData"));
-    const loginStaffId = staffLoginData.staffId;
-    const loginAccessKey = staffLoginData.accessKey;
-    const loginRoleId = staffLoginData.roleId;
-</script> -->
+<script>
+    let studentLoginData = JSON.parse(sessionStorage.getItem("studentLoginData"));
+    const loginStudentId = studentLoginData?.studentData?.studentId;
+</script>
 
 <script src="<?php echo $websiteUrl?>/js/paramount.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/textfield-selectfield.js?v=<?php echo $codeVersion?>"></script>

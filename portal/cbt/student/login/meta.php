@@ -12,6 +12,18 @@
 <link href="<?php echo $websiteUrl?>/student/login/style/main-style.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
 
 <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
+<script>
+    let verifyStudentLoginSessionData = JSON.parse(sessionStorage.getItem("verifyStudentLoginSessionData") || "{}");
+    let studentLoginData = JSON.parse(sessionStorage.getItem("studentLoginData") || "{}");
+    const loginAccessKey = verifyStudentLoginSessionData?.studentData?.accessKey;
+
+    if (studentLoginData && studentLoginData?.studentData?.hasOwnProperty("studentId")) {
+        window.parent.location.href = cbtStudentPortalUrl;
+    } else {
+        sessionStorage.setItem("studentLoginData", JSON.stringify(''));
+    }
+</script>
+
 <script src="<?php echo $websiteUrl?>/js/paramount.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/textfield-selectfield.js?v=<?php echo $codeVersion?>"></script>
 <script src="<?php echo $websiteUrl?>/js/aos.js"></script>

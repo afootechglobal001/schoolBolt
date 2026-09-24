@@ -24,7 +24,7 @@
 
                                 <div>
                                     <strong id="currentSession">
-                                        2025/2026 - THIRD TERM
+                                        <script>$("#currentSession").html(studentLoginData?.session + " - " + studentLoginData?.termData?.termName ?? "");</script>
                                     </strong>
                                 </div>
                             </div>
@@ -42,14 +42,16 @@
                     <div class="toggle-in">
                         <div class="toggle-title">
                             <div class="dp" id="loginProfileName">
-                                IK
+                                <script>
+                                    $("#loginProfileName").html(getFirstLettersOfEachWord(studentLoginData?.studentData.fullName || ""));
+                                </script>
                             </div>
                             <div class="text">
                                 <h2 id="loginUserFullname">
-                                    Ikong Emmanuel
+                                    <script>$("#loginUserFullname").html(capitalizeFirstLetterOfEachWord(studentLoginData?.studentData?.fullName || "User"));</script>
                                 </h2>
-                                <p id="loginUserEmail">
-                                    STUDENT00123435565435
+                                <p id="loginUserId">
+                                    <script>$("#loginUserId").html(studentLoginData?.studentData?.studentId ?? "");</script>
                                 </p>
                             </div>
                         </div>

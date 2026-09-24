@@ -6,15 +6,15 @@
             </div>
             <div class="text-div">
                 <h2>Welcome, <span id="dashFullname">
-                        Emmanuel
+                        <script>$("#dashFullname").html(capitalizeFirstLetterOfEachWord(studentLoginData?.studentData?.fullName || "User"));</script>
                     </span>!</h2>
                 <p>Access your exams, read the instructions carefully, and take your CBT.</p>
             
                 <div class="alert alert-success detail-alert">
                     <i class="bi bi-mortarboard-fill"></i>
-                    Department: <strong><span id="">KINDERGARTEN</span></strong> |
+                    Department: <strong><span id="dashDepartment"><script>$("#dashDepartment").html(studentLoginData?.departmentData?.departmentName ?? "");</script></span></strong> 
                     Class: <strong><span id="">KG</span></strong> |
-                    Arm: <strong><span id="">A</span></strong>
+                    Arm: <strong><span id="dashArm"><script>$("#dashArm").html(studentLoginData?.armData?.armName ?? "");</script></span></strong>
                 </div>
             </div>
         </div>

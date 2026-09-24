@@ -32,8 +32,9 @@
 
             <div class="form-back-div">
                 <div id="page-content">
-                        <?php include $websitePath . '/student/login/config/content-page.php'; ?>
-                    </div>
+                    <?php include $websitePath . '/student/login/config/content-page.php'; ?>
+                </div>
+                
                 <script>
                     $(document).ready(function () {
                         let savedPage = sessionStorage.getItem("currentAuthPage") ?? "loginPage";
