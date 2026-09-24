@@ -411,11 +411,12 @@ function _saveUploadQuestionAutomaticallyCallback(formData) {
     .then((response) => {
 		_showCustomConfirm({
 			callback: () => {
-				_getActiveCbtPagesTab({
-					divid: 'questionBank',
-					page: 'questionBank',
-					url: cbtAdminMiddleWareUrl
-				});
+				_fetchEachCbtPageDetails(
+					cbtId,
+					departmentId,
+					classId,
+					subjectId
+				)
 			},
 			title: 'Success!',
 			message: response?.message,

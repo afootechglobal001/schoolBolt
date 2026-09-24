@@ -31,38 +31,19 @@
             </header>
 
             <div class="form-back-div">
-                <div class="form-div" data-aos="fade-right" data-aos-duration="1600">
-                    <div class="top-div">
-                        <h1>👋 Hi Student<br><span>Welcome to CBT Exam</span></h1>
+                <div id="page-content">
+                        <?php include $websitePath . '/student/login/config/content-page.php'; ?>
                     </div>
+                <script>
+                    $(document).ready(function () {
+                        let savedPage = sessionStorage.getItem("currentAuthPage") ?? "loginPage";
 
-                    <div class="inner-form" id="viewLogin">
-                        <div class="alert alert-success login-form-alert">
-                            Kindly, provide your <span>Login Details</span> to Proceed
-                        </div>
-
-                        <div class="text_field_container" id="studentId_container">
-                            <script>
-                                textField({
-                                    id: 'studentId',
-                                    title: 'Student ID'
-                                });
-                            </script>
-                        </div>
-                        <div class="text_field_container" id="cbtId_container">
-                            <script>
-                                selectField({
-                                    id: 'cbtId',
-                                    title: 'Select Exam Type'
-                                });
-                            </script>
-                        </div>
-
-                        <button class="btn" title="Login" id="proceedLoginBtn" onclick="window.parent.location.href = cbtStudentPortalUrl;">Login
-                            <i class="bi bi-arrow-right-circle"></i></button>
-                    </div>
-                   <p><span onclick="_goBack();"><i class="bi-arrow-left"></i> Go Back</span></p>
-                </div>
+                        _getPage({
+                            page: savedPage,
+                            url: cbtStudentLoginMiddleWareUrl
+                        });
+                    });
+                </script>
             </div>
         </div>
         <div class="graphics-div">
