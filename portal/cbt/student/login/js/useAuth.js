@@ -10,6 +10,8 @@ $(document).ready(function () {
 
 });
 
+
+/// get student next page ///
 function _getStudentNextPage(props) {
     const { page = ""} = props;
     if (page) {
