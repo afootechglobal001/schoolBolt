@@ -86,16 +86,16 @@ function _chevronCollapse(divId) {
   $("#" + divId + "answer").slideToggle("slow");
 }
 
-function _logOut() {
-  // sessionStorage.clear();
-  // localStorage.clear();
+function _studentLogOut() {
+  sessionStorage.clear();
+  localStorage.clear();
   window.parent.location.href = cbtStudentLoginUrl;
 }
 
 function _confirmLogOut() {
   _showCustomConfirm({
     callback: () => {
-      _logOut();
+      _studentLogOut();
     },
     title: "Confirm Logout Action!",
     message:
@@ -108,7 +108,7 @@ function _confirmLogOut() {
 
 function _staffValidationCheck(code) {
   if (code === 401 || code === 403) {
-    _logOut();
+    _studentLogOut();
     return;
   }
 }

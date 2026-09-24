@@ -1,10 +1,12 @@
 <?php if ($page == 'loginPage') { ?>
-    <div class="form-div" data-aos="fade-in" data-aos-duration="1600">
+    <script>verifyStudentLoginSessionData = JSON.parse(sessionStorage.getItem("verifyStudentLoginSessionData") || "{}");</script>
+
+    <div class="form-div"  data-aos="fade-in" data-aos-duration="1600">
         <div class="top-div">
             <h1>👋 Hello Student<br><span>Welcome to Your CBT Exam</span></h1>
         </div>
 
-        <div class="inner-form" id="viewLogin">
+        <div class="inner-form" id="verifyForm">
             <div class="alert alert-success login-form-alert">
                 Kindly, provide your <span>Student ID</span> to Proceed
             </div>
@@ -13,12 +15,13 @@
                 <script>
                     textField({
                         id: 'studentId',
-                        title: 'Student ID'
+                        title: 'Student ID',
+                        value: verifyStudentLoginSessionData?.studentData?.studentId ?? ""
                     });
                 </script>
             </div>
 
-            <button class="btn" title="Proceed" id="proceedLoginBtn" onclick="_getStudentNextPage({page:'verifyStudentPage'});">Proceed
+            <button class="btn" title="Proceed" id="proceedBtn" onclick="_proceedVerifyStudentLogin();">Proceed
                 <i class="bi bi-arrow-right-circle"></i></button>
         </div>
         <p><span onclick="_goBack();"><i class="bi-arrow-left"></i> Go Back</span></p>
@@ -26,12 +29,21 @@
 <?php } ?>
 
 <?php if ($page == 'verifyStudentPage') { ?>
-    <div class="form-div" data-aos="fade-in" data-aos-duration="1600">
+    <script>
+        $(document).ready(function () {
+            verifyStudentLoginSessionData = JSON.parse(sessionStorage.getItem("verifyStudentLoginSessionData") || "{}");
+            if (!verifyStudentLoginSessionData) {
+                window.parent.location.href = cbtStudentLoginUrl;
+                return;
+            }
+        });
+    </script>
+    <div class="form-div"  data-aos="fade-in" data-aos-duration="1600">
         <div class="top-div">
             <h1>✅ Student Verification<br><span>Verify your details and select an exam type</span></h1>
         </div>
 
-        <div class="inner-form" id="viewLogin">
+        <div class="inner-form" id="loginForm">
             <div class="alert alert-success login-form-alert">
                 <div class="alert-list-div">
                     <div class="alert-list-back-div">
@@ -39,7 +51,7 @@
                             <div>Student Name:</div>
                             <div>
                                 <strong id="studentName">
-                                    Paul Emmanuel
+                                    <script>$("#studentName").html(verifyStudentLoginSessionData?.studentData?.fullName ?? "");</script>
                                 </strong>
                             </div>
                         </div>
@@ -50,40 +62,7 @@
                             <div>Branch:</div>
                             <div>
                                 <strong id="branchName">
-                                    AFOOTECH GLOBAL INTERNATIONAL BASIC SCHOOL
-                                </strong>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="alert-list-back-div">
-                        <div class="alert-list">
-                            <div>Department:</div>
-                            <div>
-                                <strong id="departmentName">
-                                    KINDERGARTEN
-                                </strong>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="alert-list-back-div">
-                        <div class="alert-list">
-                            <div>Class:</div>
-                            <div>
-                                <strong id="className">
-                                    KG
-                                </strong>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="alert-list-back-div">
-                        <div class="alert-list">
-                            <div>Arm:</div>
-                            <div>
-                                <strong id="armName">
-                                    A
+                                    <script>$("#branchName").html(verifyStudentLoginSessionData?.branchData?.branchName ?? "");</script>
                                 </strong>
                             </div>
                         </div>
@@ -97,10 +76,11 @@
                         id: 'cbtId',
                         title: 'Select Exam Type'
                     });
+                    _getSelectStudentExamType("cbtId");
                 </script>
             </div>
 
-            <button class="btn" title="Login" id="proceedLoginBtn" onclick="window.parent.location.href = cbtStudentPortalUrl;">Login
+            <button class="btn" title="Login" id="loginBtn" onclick="_proceedStudentLogin();">Login
                 <i class="bi bi-arrow-right-circle"></i></button>
         </div>
         <p><span onclick="_getStudentNextPage({page:'loginPage'});"><i class="bi-arrow-left"></i> Go Back</span></p>
