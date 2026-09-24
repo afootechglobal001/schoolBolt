@@ -785,6 +785,7 @@ a {
   display: flex;
   justify-content: space-between;
   padding: 5px 0px;
+  gap: 10px;
   border-bottom: #b6b6b6 1px dashed;
 }
 
@@ -808,11 +809,14 @@ a {
     flex-direction: column;
     align-items: flex-start;
   }
-  .alert .alert-list-div .alert-list span {
-    font-size: 12px;
+  .alert .alert-list-div .alert-list span,
+  .alert .alert-list-div .alert-list strong {
+    font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .alert .alert-list-div .alert-list {
-    font-size: 12px;
+    font-size: 11px;
   }
 }
 

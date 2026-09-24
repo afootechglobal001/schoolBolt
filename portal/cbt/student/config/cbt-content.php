@@ -163,7 +163,7 @@
                         </div>
 
                         <div class="countdown-content">
-                            <p>Available Remaining</p>
+                            <p>Available Time</p>
                             <div class="countdown-time">
                                 <span id="examHours">00</span>
                                 <b>:</b>
@@ -292,19 +292,6 @@
                                     |
                                     <span>NUMERACY</span>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="question-count-card">
-                            <div class="question-count-icon">
-                                <i class="bi-question-lg"></i>
-                            </div>
-
-                            <div class="question-count-content">
-                                <span>No of Questions</span>
-                                <strong id="totalQuizQuestions">
-                                    30
-                                </strong>
                             </div>
                         </div>
                     </div>

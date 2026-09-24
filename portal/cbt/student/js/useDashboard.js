@@ -86,11 +86,11 @@ function _chevronCollapse(divId) {
   $("#" + divId + "answer").slideToggle("slow");
 }
 
-// function _logOut() {
-//   sessionStorage.clear();
-//   localStorage.clear();
-//   window.parent.location.href = cbtLoginUrl;
-// }
+function _logOut() {
+  // sessionStorage.clear();
+  // localStorage.clear();
+  window.parent.location.href = cbtStudentLoginUrl;
+}
 
 function _confirmLogOut() {
   _showCustomConfirm({

@@ -7041,8 +7041,17 @@ white-space: nowrap;
 	}
 }
 
+@media all and (max-width:660px) {
+	.exam-question-body-div .question-div .div-in .each-question{
+		flex-direction: column;
+	}
 
-
+	.exam-question-body-div .question-div .div-in .each-question .pix-div{
+		width: 100px;
+		min-width: 100px;
+		height: 100px;
+	}
+}
 
 
 
