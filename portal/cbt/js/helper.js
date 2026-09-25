@@ -85,3 +85,30 @@ function _userRoleCheck(){
 		label.text($(this).prop('checked') ? 'Yes' : 'No');
 	});
 }
+
+
+///// Exam Countdown Helper /////
+function _startExamCountdown(timeAllowed) {
+	const timeParts = timeAllowed.split(":");
+	let hours = parseInt(timeParts[0]) || 0;
+	let minutes = parseInt(timeParts[1]) || 0;
+	let seconds = parseInt(timeParts[2]) || 0;
+
+	let totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+	const countdown = setInterval(function () {
+		const currentHours = Math.floor(totalSeconds / 3600);
+		const currentMinutes = Math.floor((totalSeconds % 3600) / 60);
+		const currentSeconds = totalSeconds % 60;
+		$("#examHours").html(String(currentHours).padStart(2, "0"));
+		$("#examMinutes").html(String(currentMinutes).padStart(2, "0"));
+		$("#examSeconds").html(String(currentSeconds).padStart(2, "0"));
+		if (totalSeconds <= 0) {
+			clearInterval(countdown);
+			$("#examHours").html("00");
+			$("#examMinutes").html("00");
+			$("#examSeconds").html("00");
+			return;
+		}
+		totalSeconds--;
+	}, 1000);
+}

@@ -16,6 +16,11 @@
                     Class: <strong><span id="">KG</span></strong> |
                     Arm: <strong><span id="dashArm"><script>$("#dashArm").html(studentLoginData?.armData?.armName ?? "");</script></span></strong>
                 </div>
+
+                <div class="alert alert-success detail-alert mobile-current-session-alert">
+                    <i class="bi bi-mortarboard-fill"></i>
+                    Current Session & Term: <strong> <span id="dashCurrentSession"><script>$("#dashCurrentSession").html(studentLoginData?.session + " - " + studentLoginData?.termData?.termName ?? "");</script></span></strong> 
+                </div>
             </div>
         </div>
 
@@ -38,14 +43,18 @@
                 <div class="info-item">
                     <i class="bi bi-calendar-event"></i>
                     <span id="lastLoginDate">
-                        Sep 22, 2026
+                        <script>
+                            $("#lastLoginDate").html(_formatShortDate(studentLoginData?.studentData?.lastLoginTime ?? ""));
+                        </script>
                     </span>
                 </div>
 
                 <div class="info-item">
                     <i class="bi bi-clock"></i>
                     <span id="lastLoginTime">
-                        5:17:51 AM
+                        <script>
+                            $("#lastLoginTime").html(_formatTime(studentLoginData?.studentData?.lastLoginTime ?? ""));
+                        </script>
                     </span>
                 </div>
             </div>

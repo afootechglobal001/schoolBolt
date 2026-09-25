@@ -18,6 +18,7 @@
 <script>
     let studentLoginData = JSON.parse(sessionStorage.getItem("studentLoginData"));
     const loginStudentId = studentLoginData?.studentData?.studentId;
+    const loginAccessKey = studentLoginData?.studentData?.accessKey;
 </script>
 
 <script src="<?php echo $websiteUrl?>/js/paramount.js?v=<?php echo $codeVersion?>"></script>
