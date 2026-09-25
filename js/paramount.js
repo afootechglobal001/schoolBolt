@@ -1,12 +1,14 @@
+let allowOverlayClose = false;
+
 function _getPage(options) {
 	const {
-        page = '',
+    page = '',
 		action='get_page',
 		url='',
 		pageContainer='page-content'
     } = options;
 
-		$("#"+pageContainer).html('<div class="ajax-loader"><img src="'+ websiteUrl +'/all-images/images/spinner.gif"/></div>').css({'display': 'flex','flex-direction': 'column','gap': '20px','align-items': 'center','align-items': 'center'}).fadeIn(500);
+		$("#"+pageContainer).html('<div class="ajax-loader"><img src="'+ websiteUrl +'/all-images/images/spinner.gif"/></div>').css({'display': 'flex','flex-direction': 'column','gap': '20px','align-items': 'center'}).fadeIn(500);
 		const dataString = "action=" + action + "&page=" + page;
 		$.ajax({
 			type: "POST",
@@ -21,24 +23,55 @@ function _getPage(options) {
 
 function _getForm(options) {
 	const {
-        page = '',
-        id = '',
+    page = '',
+    id = '',
 		layer=1,
 		action='get_form',
+    pageCategory = "", /// optional
 		url=''
     } = options;
-$(layer===1 ? '#get-form-more-div':'#get-more-div-secondary').css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
-const dataString = "action=" + action + "&page=" + page + "&id=" + id + "&modalLayer=" + layer;
-	$.ajax({
-		type: "POST",
-		url: url,
-		data: dataString,
-		cache: false,
-		success: function (html) {
-			$(layer===1 ? '#get-form-more-div':'#get-more-div-secondary').html(html);
-		},
-	});
+
+    // Allow overlay click only for Gallery Form
+    if (page === "galleryDetails") {
+      allowOverlayClose = true;
+      $('body').addClass('no-scroll');
+    } else {
+      allowOverlayClose = false;
+    }
+
+		if (layer===1 && page!=="revenueBreakdown") {
+      // Save the current form
+      sessionStorage.setItem(
+        "currentDashboardForm",
+        JSON.stringify({
+          page,
+          id,
+          layer,
+          action,
+          url,
+        })
+      );
+    }
+
+
+    const target = layer === 1 ? '#get-form-more-div' : layer === 2  ? '#get-more-div-secondary' : '#get-more-third-layer';
+    $(target).css({ 'display': 'flex', 'justify-content': 'center', 'align-items': 'center' }).fadeIn(500);
+    const dataString = "action=" + action + "&page=" + page + "&id=" + id + "&pageCategory=" + pageCategory + "&modalLayer=" + layer;
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: dataString,
+        cache: false,
+        success: function (html) {
+          $(target).html(html);
+          
+          if (page === "galleryDetails") {
+            _initializeGallery();
+          }
+        },
+  });
 }
+
 function _alertClose(layer=1){
 	let text = '';
 	  text +=
@@ -46,8 +79,19 @@ function _alertClose(layer=1){
 		'<div class="icon"><img src="'+ websiteUrl +'/all-images/images/loading.gif" width="20px" alt="Loading"/></div>' +
 		'<div class="text"><p>LOADING...</p></div>'+
 		'</div>';
-			$(layer===1 ? '#get-form-more-div':'#get-more-div-secondary').html(text).fadeOut(200);
+    $(layer === 1 ? '#get-form-more-div' : layer === 2  ? '#get-more-div-secondary' : '#get-more-third-layer').html(text).fadeOut(200);
+    $('body').removeClass('no-scroll');
+
+    if (layer ===1) {
+      sessionStorage.removeItem("currentDashboardForm");
+    }
 }
+
+$(document).on('click', '#get-form-more-div', function () {
+  if (allowOverlayClose) {
+    _alertClose(1);
+  }
+});
 
 function _actionAlert(message,status ){
 	let text = '';
@@ -78,4 +122,391 @@ function isNumberCheck(e) {
             e.returnValue = false;
         }
     }
+}
+
+function _showCustomConfirm(options) {
+  const {
+    callback = () => {},
+    alertType = "info",
+    title = "Are you sure?",
+    message = "This action can't be undone. Please confirm if you want to proceed.",
+    trueActionBtnText = "YES",
+    falseActionBtn = false,
+    falseActionBtnText = "NO",
+    trueActionCallback = () => {},
+    falseActionCallback = () => {},
+    closeOnOverlayClick = false,
+  } = options;
+
+  // Show modal
+  $("#customConfirmModal").html("").fadeIn(200);
+  let icon = "bi-info-circle-fill";
+  let iconBg = "bg-info";
+
+  if (alertType === "success") {
+    icon = "bi-check-circle-fill";
+    iconBg = "bg-success";
+  } else if (alertType === "error") {
+    icon = "bi-x-circle-fill";
+    iconBg = "bg-danger";
+  } else if (alertType === "warning") {
+    icon = "bi-exclamation-octagon-fill";
+    iconBg = "bg-warning";
+  }
+
+  const content = `
+		<div class="modal-box">
+			<div class="modal-icon ${iconBg}">
+				<i class="bi ${icon}"></i>
+			</div>
+			<h3>${title}</h3>
+			<p>${message}</p>
+			<div class="btn-div">
+				${
+          falseActionBtn
+            ? `<button id="confirmCancelBtn" class="btn false-btn" title="${falseActionBtnText}">${falseActionBtnText}</button>`
+            : ""
+        }
+				<button id="confirmOkBtn" class="btn" title="${trueActionBtnText}">${trueActionBtnText}</button>
+			</div>
+		</div>
+	`;
+  $("#customConfirmModal").html(content);
+  // Attach button events
+  $("#confirmOkBtn")
+    .off("click")
+    .on("click", function () {
+      callback();
+      _modalClose();
+      trueActionCallback();
+    });
+  if (falseActionBtn) {
+    $("#confirmCancelBtn")
+      .off("click")
+      .on("click", function () {
+        _modalClose();
+        falseActionCallback();
+      });
+  }
+
+  $("#customConfirmModal").off("click");
+
+  if (closeOnOverlayClick) {
+    $("#customConfirmModal").on("click", function (e) {
+      if (e.target === this) {
+        _modalClose();
+      }
+    });
+  }
+}
+function _modalClose() {
+  $("#customConfirmModal").html("").fadeOut(200);
+}
+
+function _validateEmptyValue(fieldId, fieldName) {
+  const fieldValue = $("#" + fieldId)
+    .val()
+    .trim();
+  $("#" + fieldId).removeClass("issue");
+  $("#issue_" + fieldId).html("");
+
+  if (!fieldValue) {
+    $("#" + fieldId).addClass("issue");
+    $("#issue_" + fieldId).html(fieldName + " IS REQUIRED");
+    return 1;
+  }
+  return 0;
+}
+
+function _validateEmail(fieldId, fieldName) {
+  const value = $("#" + fieldId)
+    .val()
+    .trim();
+  if (!value) {
+    $("#" + fieldId).addClass("issue");
+    $("#issue_" + fieldId).html("PROVIDE " + fieldName.toUpperCase());
+    return 1;
+  }
+
+  let isValid = true;
+  let message = "";
+
+  // Email fields (support email, SMTP username)
+  if (/email|username/i.test(fieldName)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      isValid = false;
+      message = "PROVIDE A VALID " + fieldName.toUpperCase();
+    }
+  }
+
+  // Host fields (smtp host)
+  else if (/host/i.test(fieldName)) {
+    if (!/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) {
+      isValid = false;
+      message = "PROVIDE A VALID " + fieldName.toUpperCase();
+    }
+  }
+
+  if (!isValid) {
+    $("#" + fieldId).addClass("issue");
+    $("#issue_" + fieldId).html(message);
+    return 1;
+  }
+
+  $("#" + fieldId).removeClass("issue");
+  $("#issue_" + fieldId).html("");
+  return 0;
+}
+
+function _validateNumber(fieldId, number) {
+  if (!number) return 0;
+  // Allow integer or decimal numbers (e.g. 123, 123.45, .5)
+  if (!/^\d+(\.\d+)?$/.test(number)) {
+    $("#" + fieldId).addClass("issue");
+    $("#issue_" + fieldId).html(
+      "NUMBER MUST CONTAIN ONLY DIGITS OR DECIMAL POINT"
+    );
+    return 1;
+  }
+  return 0;
+}
+
+function getAuthHeaders(includeAuth = false) {
+  return {
+    apiKey: apiKey,
+    userIpAddress: userIpAddress,
+    userDeviceId: userDeviceId,
+    Authorization: includeAuth ? "Bearer " + (loginAccessKey ?? "") : undefined,
+  };
+}
+function _callRawEndPoints(payLoadProps) {
+  const {
+    type = "POST",
+    url = "",
+    formData = null,
+    accessKey = false,
+  } = payLoadProps;
+  // Auto-flatten if formData has only one key called "formData"
+  const payload = formData && formData.formData ? formData.formData : formData;
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      type: type,
+      url: `${endPoint}/${url}`,
+      data: JSON.stringify(payload),
+      dataType: "json",
+      contentType: "application/json", // important for JSON
+      cache: false,
+      headers: getAuthHeaders(accessKey),
+      success: function (data) {
+        resolve(data); // ✅ resolve promise
+      },
+      error: function (jqXHR, errorThrown) {
+        // normalize the error object
+        const err = jqXHR.responseJSON || {
+          message: errorThrown || "Check your internet connection and try again.",
+          status: jqXHR.status,
+        };
+        reject(err);
+      },
+    });
+  });
+}
+
+function _callFileEndPoints(payLoadProps) {
+  const {
+    type = "POST",
+    url = "",
+    formData = null,
+    accessKey = false,
+    expectJson = true, // default true
+  } = payLoadProps;
+
+  // const payload = formData && formData.formData ? formData.formData : formData;
+  const finalUrl = url.startsWith("http") ? url : `${endPoint}/${url}`;
+
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      type: type,
+      url: finalUrl,
+      data: formData,
+      dataType: expectJson ? "json" : undefined, // only parse if JSON expected
+      contentType: false,
+      cache: false,
+      processData: false,
+      headers: getAuthHeaders(accessKey),
+      success: function (data) {
+        resolve(data);
+      },
+      error: function (jqXHR, errorThrown) {
+        // normalize the error object
+        const err = jqXHR.responseJSON || {
+          message: errorThrown || "Check your internet connection and try again.",
+          status: jqXHR.status,
+        };
+        reject(err);
+      },
+    });
+  });
+}
+
+function _callFetchEndPoints(payLoadProps) {
+  const { type = "GET", url = "", accessKey = false } = payLoadProps;
+  return new Promise((resolve, reject) => {
+    const finalUrl = url.startsWith("http") ? url : `${endPoint}/${url}`;
+
+    $.ajax({
+      type: type,
+      url: finalUrl,
+      dataType: url.startsWith("http") ? undefined : "json",
+      cache: false,
+      headers: getAuthHeaders(accessKey),
+      success: function (data) {
+        resolve(data);
+      },
+      error: function (jqXHR, errorThrown) {
+        // normalize the error object
+        const err = jqXHR.responseJSON || {
+          message: errorThrown || "Check your internet connection and try again.",
+          status: jqXHR.status,
+        };
+        reject(err);
+      },
+    });
+  });
+}
+
+function _callAjaxError(callback, message) {
+  _showCustomConfirm({
+    callback: () => {
+      callback();
+    },
+    title: "Connection Error!",
+    message: message==='error' ?  "Check your internet connection and try again." : message,
+    alertType: "error",
+    trueActionBtnText: "OK",
+    closeOnOverlayClick: true,
+  });
+}
+function _callCatchError(callback) {
+  _showCustomConfirm({
+    callback: () => {
+      callback();
+    },
+    title: "Unexpected Error",
+    message: "An unexpected error occurred! Please try again.",
+    alertType: "error",
+    trueActionBtnText: "OK, Retry",
+    closeOnOverlayClick: true,
+  });
+}
+
+function _btnDisable(btnId, btnText = "SUBMIT", action = true) {
+  //////////////// get btn text ////////////////
+  if (action) {
+    $("#" + btnId).html(
+      '<img src="' +
+        websiteUrl +
+        '/all-images/images/loading.gif" style="width:12px;" alt="Loading"/>'
+    );
+    $("#" + btnId).prop("disabled", action);
+  } else {
+    $("#" + btnId)
+      .html(btnText)
+      .prop("disabled", false);
+  }
+  ////////////////////////////////////////////////
+}
+
+ ////////////////////////////////////////////////
+function _showLoader(message = 'Processing, please wait...') {
+  $('#globalLoaderText').html(message);
+  $('#globalLoader').fadeIn(150);
+}
+
+function _hideLoader() {
+  $('#globalLoader').fadeOut(150);
+}
+
+////// Show False Notofication /////
+function _showEmptyState(props) {
+  const {
+    container = "",
+    message = "Something went wrong",
+    colspan = null,
+    button = "",
+    paginationContainer = ""
+  } = props;
+
+  let content = `
+    <div class="empty-state-div">
+      <div class="icon"><img src="${websiteUrl}/all-images/images/no-record.png" alt="Warning" /></div>
+      <p>${message}</p>
+      ${button ? `<div>${button}</div>` : ""}
+    </div>
+  `;
+
+  if (colspan) {
+    content = `
+      <tr>
+        <td colspan="${colspan}">
+          ${content}
+        </td>
+      </tr>
+    `;
+  }
+
+  $(`#${container}`).html(content);
+
+  if (`#${paginationContainer}`) {
+    $(`#${paginationContainer}`).empty().hide();
+  }
+}
+
+/// countdown function ///
+function _counDownOtp(timer) {
+    $("#resendOtpBtn").hide();
+    $("#resendCountdown").fadeIn(500);
+
+    const countdown = setInterval(() => {
+        if (timer > 0) {
+        timer--;
+
+        let minutes = Math.floor(timer / 60);
+        let seconds = timer % 60;
+
+        if (timer >= 60) {
+            // Show MM:SS when 1 min or more
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            $("#resendCountdown").html(
+            'Resend in <strong id="timer">' +
+                minutes +
+                ":" +
+                seconds +
+                "</strong> min",
+            );
+        } else {
+            // Show seconds only when below 1 minute
+            $("#resendCountdown").html(
+            'Resend in <strong id="timer">' + seconds + "</strong> sec",
+            );
+        }
+        } else {
+        clearInterval(countdown);
+        $("#resendCountdown").hide();
+        $("#resendOtpBtn").fadeIn(500);
+        }
+    }, 1000);
+
+    return () => clearInterval(countdown);
+}
+
+function thousandSeperator(val) {
+  let dp = 2;
+  const formatter = new Intl.NumberFormat("ng-NG", {
+    style: "decimal",
+    maximumFractionDigits: dp,
+    minimumFractionDigits: dp,
+  });
+  //   return formatter.format(val);
+  return isNaN(parseFloat(formatter.format(val))) ? "-" : formatter.format(val);
 }

@@ -2,6 +2,7 @@ function _getActivePage(props) {
   const { page = "", divid = "", nav = "" } = props;
   _getActiveLink(divid, nav);
   if (page) {
+    sessionStorage.setItem("currentDashboardPage", page);
     _getPage({ page: page, url: adminPortalLocalUrl });
   }
 }
@@ -16,10 +17,10 @@ function _getActiveLink(divid, nav) {
 }
 function _removeClass() {
   $(
-    "#side-dashboard, #side-staff, #side-fees, #side-customers, #side-products, #side-orders, #side-publish, #side-reports, #side-branches, #top-dashboard, #top-staff"
+    "#side-dashboard, #side-staff, #side-fees, #side-customers, #side-products, #side-orders, #side-publish, #side-reports, #side-branches, #top-dashboard, #top-staff",
   ).removeClass("active-li");
   $(
-    "#mobile-dashboard,#mobile-branches,#mobile-staff,#mobile-reports"
+    "#mobile-dashboard,#mobile-branches,#mobile-staff,#mobile-reports",
   ).removeClass("active-li");
 }
 
@@ -28,7 +29,7 @@ function _getNav(nav) {
     _closeNav();
   } else {
     $(
-      "#link-products, #link-orders, #link-publish, #link-publish, #link-reports"
+      "#link-products, #link-orders, #link-publish, #link-publish, #link-reports",
     ).css({ display: "none" });
     $("#link-" + nav).css({ display: "block" });
     $(".side-nav-bg-sub-div").animate({ left: "100px" }, 200);
@@ -57,14 +58,6 @@ function _openMenu() {
   }
 }
 
-function capitalizeFirstLetterOfEachWord(inputText) {
-  const words = inputText.toLowerCase().split(" ");
-  for (let i = 0; i < words.length; i++) {
-    words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
-  }
-  const result = words.join(" ");
-  return result;
-}
 function _toggleProfileDiv() {
   $(".toggle-profile-div").toggle("slow");
 }
@@ -107,7 +100,7 @@ function _prevPage(next_id) {
   $("#account_settings_id,#account_detail").hide();
   $("#" + next_id).fadeIn(1000);
   $("#panel-title").html(
-    '<i class="bi-gear"></i> </span id="app_text"> APP SETTINGS'
+    '<i class="bi-gear"></i> </span id="app_text"> APP SETTINGS',
   );
 }
 function filters(selectBoxId) {
@@ -115,7 +108,7 @@ function filters(selectBoxId) {
   $(
     "#page" +
       selectBoxId +
-      " > tbody .tb-row, .grid-div, .faq-back-div, .role-list-div"
+      " > tbody .tb-row, .grid-div, .faq-back-div, .role-list-div",
   ).each(function () {
     var text = $(this).text();
     text.toLowerCase().indexOf(valThis.toLowerCase()) > -1
@@ -175,7 +168,7 @@ function snapPicture() {
   });
   Webcam.reset();
   let takeSnapShotAction = JSON.parse(
-    sessionStorage.getItem("takeSnapShotAction")
+    sessionStorage.getItem("takeSnapShotAction"),
   );
   if (takeSnapShotAction == "updateStaffPix") {
     _updateStaffPix();
@@ -217,7 +210,7 @@ function _fetchDashboardStatistics() {
         $("#totalActiveStudentCount").html(data.total_active_student_count);
         $("#totalAlumniStudentCount").html(data.total_alumni_student_count);
         $("#totalActiveDepartmentCount").html(
-          data.total_active_department_count
+          data.total_active_department_count,
         );
         $("#totalActiveClassCount").html(data.total_active_class_count);
         $("#totalActiveSubjectCount").html(data.total_active_subject_count);
@@ -274,7 +267,7 @@ function _fetchRevenueFiltering(filterWith, text) {
   } else if (filterWith === "srch-week") {
     const currentDate = new Date();
     const firstDayOfWeek = new Date(
-      currentDate.setDate(currentDate.getDate() - currentDate.getDay())
+      currentDate.setDate(currentDate.getDate() - currentDate.getDay()),
     )
       .toISOString()
       .split("T")[0];
@@ -305,7 +298,7 @@ function _fetchRevenueFiltering(filterWith, text) {
     const firstDayOfMonth = new Date(
       currentDate.getFullYear(),
       currentDate.getMonth(),
-      2
+      2,
     )
       .toISOString()
       .split("T")[0];
@@ -320,7 +313,7 @@ function _fetchRevenueFiltering(filterWith, text) {
     /// for last 1 year
     const currentDate = new Date();
     const pastDate = new Date(
-      currentDate.setFullYear(currentDate.getFullYear() - 1)
+      currentDate.setFullYear(currentDate.getFullYear() - 1),
     )
       .toISOString()
       .split("T")[0];
@@ -379,13 +372,13 @@ function _revenueFiltering(dateFrom, dateTo) {
 
         // Update dashboard credit and bank transfer///
         $("#sumCreditCardPayments").html(
-          "<s>N</s>" + thousandSeperator(statistics.sumCreditCardPayments)
+          "<s>N</s>" + thousandSeperator(statistics.sumCreditCardPayments),
         );
         $("#sumBankTransferPayments").html(
-          "<s>N</s>" + thousandSeperator(statistics.sumBankTransferPayments)
+          "<s>N</s>" + thousandSeperator(statistics.sumBankTransferPayments),
         );
         $("#sumManualPayments").html(
-          "<s>N</s>" + thousandSeperator(statistics.sumManualPayments)
+          "<s>N</s>" + thousandSeperator(statistics.sumManualPayments),
         );
 
         // Update Pie Chart credit and bank transfer ///
@@ -499,4 +492,11 @@ function _revenueFiltering(dateFrom, dateTo) {
     },
   });
   $("#get-form-more-div").fadeOut(500);
+}
+
+function getTermNameById(termId) {
+  if (termId === "1") return "FIRST TERM";
+  if (termId === "2") return "SECOND TERM";
+  if (termId === "3") return "THIRD TERM";
+  return "UNDEFINED TERM";
 }

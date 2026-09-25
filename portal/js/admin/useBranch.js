@@ -2,6 +2,7 @@ function _getActiveBranchPage(props) {
   const { page = "", divid = "", pageContainer = "get_branch_details" } = props;
   _getBranchPagesActiveLink(divid);
   if (page) {
+    sessionStorage.setItem("currentBranchDashboardPage", page);
     _getPage({
       page: page,
       pageContainer: pageContainer,
@@ -11,7 +12,7 @@ function _getActiveBranchPage(props) {
 }
 function _getBranchPagesActiveLink(divid) {
   $(
-    "#branch_dashboard, #branch_settings, #branch_staff, #branch_department_class, #branch_subjects, #branch_profile, #branch_account, #branch_activities, #branch_subject_page"
+    "#branch_dashboard, #branch_settings, #branch_staff, #branch_department_class, #branch_subjects, #branch_profile, #branch_account, #branch_activities, #branch_subject_page, #branchResultPage"
   ).removeClass("active");
   $("#" + divid).addClass("active");
 }
@@ -281,6 +282,34 @@ $(function () {
         var reader = new FileReader();
         reader.onload = function (e) {
           $("#watermarkPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+
+  sessionCumulativeBroadSheetHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#sessionCumulativeBroadSheetHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+
+  sessionPromotionalBroadSheetHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#sessionPromotionalBroadSheetHeaderPreviewPix").prop("src", e.target.result);
         };
         reader.readAsDataURL(obj.files[0]);
       }
@@ -687,21 +716,22 @@ function _fetchBranches() {
 
         text = `
 				<thead>
-                    <tr class="tb-col">
-                        <th>sn</th>
-                        <th>Name</th>
+          <tr class="tb-col">
+            <th>sn</th>
+            <th>Name</th>
 						<th>Session</th>
 						<th>Term</th>
-                        <th>Phone Number</th>
-                        <th>Address</th>
-                        <th>Manager</th>
-                        <th>No. of Staff</th>
-                        <th>No. of Students</th>
-                        <th>Date of Reg.</th>
-                        <th>Status</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+            <th>Manager</th>
+            <th>No. of Staff</th>
+            <th>No. of Students</th>
+            <th>SchoolBolt Wallet Balance(<s>N</s>)</th>
+            <th>Date of Reg.</th>
+            <th>Status</th>
 						<th>View</th>
-                    </tr>
-                </thead>`;
+            </tr>
+        </thead>`;
 
         if (success === true) {
           for (let i = 0; i < fetch.length; i++) {
@@ -717,6 +747,7 @@ function _fetchBranches() {
             const staffId = fetch[i].managerId;
             const totalNumberOfStaff = fetch[i].totalNumberOfStaff;
             const totalNumberOfStudents = fetch[i].totalNumberOfStudents;
+            const walletBalance = fetch[i].walletBalance;
             const createdTime = fetch[i].createdTime;
             const statusName = fetch[i].statusName;
 
@@ -732,6 +763,7 @@ function _fetchBranches() {
 								<td class="clickable-td" onclick="_fetchEachStaff('${staffId}');">${managerName}</td>
 								<td>${totalNumberOfStaff}</td>
                 <td>${totalNumberOfStudents}</td>
+                <td><s>N</s>${thousandSeperator(walletBalance)}</td>
 								<td>${createdTime}</td>
 								<td><div class="status-div ${statusName}">${statusName}</div></td>
 								<td><button class="btn view-btn" title="Click to view branch profile" onclick="_fetchEachBranches('${branchId}');">VIEW</button></td>
@@ -1052,6 +1084,8 @@ function _updateBranchConfig() {
     const terminalResultSummaryHeader = $("#terminalResultSummaryHeader").prop("files")[0];
     const terminalResultHeader = $("#terminalResultHeader").prop("files")[0];
     const watermark = $("#watermark").prop("files")[0];
+    const sessionCumulativeBroadSheetHeader = $("#sessionCumulativeBroadSheetHeader").prop("files")[0];
+    const sessionPromotionalBroadSheetHeader = $("#sessionPromotionalBroadSheetHeader").prop("files")[0];
 
     $("#currentSession, #termId, #timeSchoolOpened, #schoolResumptionDate").removeClass("issue");
     $("#issue_currentSession, #issue_termId, #issue_timeSchoolOpened, #issue_schoolResumptionDate").html("");
@@ -1118,6 +1152,8 @@ function _updateBranchConfig() {
       if (terminalResultSummaryHeader) formData.append("terminalResultSummaryHeader", terminalResultSummaryHeader);
       if (terminalResultHeader) formData.append("terminalResultHeader", terminalResultHeader);
       if (watermark) formData.append("watermark", watermark);
+      if (sessionCumulativeBroadSheetHeader) formData.append("sessionCumulativeBroadSheetHeader", sessionCumulativeBroadSheetHeader);
+      if (sessionPromotionalBroadSheetHeader) formData.append("sessionPromotionalBroadSheetHeader", sessionPromotionalBroadSheetHeader);
 
       $.ajax({
         type: "POST",
@@ -1184,6 +1220,12 @@ function _updateBranchConfig() {
             const oldWatermark = data.oldWatermark;
             const newWatermark = data.watermark;
 
+            const oldSessionCumulativeBroadSheetHeader = data.oldSessionCumulativeBroadSheetHeader;
+            const newSessionCumulativeBroadSheetHeader = data.sessionCumulativeBroadSheetHeader;
+
+            const oldSessionPromotionalBroadSheetHeader = data.oldSessionPromotionalBroadSheetHeader;
+            const newSessionPromotionalBroadSheetHeader = data.sessionPromotionalBroadSheetHeader;
+
             if (newSchoolLogo !== "") _uploadSchoolLogo("schoolLogo", oldSchoolLogo, newSchoolLogo, message);
             if (newPrincipalSignature !== "") _uploadSchoolLogo("principalSignature", oldPrincipalSignature, newPrincipalSignature, message);
 
@@ -1202,6 +1244,8 @@ function _updateBranchConfig() {
             if (newTerminalResultSummaryHeader !== "") _uploadSchoolLogo("terminalResultSummaryHeader", oldTerminalResultSummaryHeader, newTerminalResultSummaryHeader, message);
             if (newTerminalResultHeader !== "") _uploadSchoolLogo("terminalResultHeader", oldTerminalResultHeader, newTerminalResultHeader, message);
             if (newWatermark !== "") _uploadSchoolLogo("watermark", oldWatermark, newWatermark, message);
+            if (newSessionCumulativeBroadSheetHeader !== "") _uploadSchoolLogo("sessionCumulativeBroadSheetHeader", oldSessionCumulativeBroadSheetHeader, newSessionCumulativeBroadSheetHeader, message);
+            if (newSessionPromotionalBroadSheetHeader !== "") _uploadSchoolLogo("sessionPromotionalBroadSheetHeader", oldSessionPromotionalBroadSheetHeader, newSessionPromotionalBroadSheetHeader, message);
 
             if (
               newSchoolLogo === "" &&
@@ -1219,7 +1263,9 @@ function _updateBranchConfig() {
               newSubjectListHeader === "" &&
               newTerminalResultSummaryHeader === "" &&
               newTerminalResultHeader === "" &&
-              newWatermark === ""
+              newWatermark === "" &&
+              newSessionCumulativeBroadSheetHeader === "" &&
+              newSessionPromotionalBroadSheetHeader === ""
             ) {
               _actionAlert(message, true);
               _fetchEachBranches(getEachBranchDetailsSession.branchId);
@@ -1547,88 +1593,4 @@ function _revenueBranchFiltering(dateFrom, dateTo) {
     },
   });
   $("#get-more-div-secondary").fadeOut(500);
-}
-
-function _publishResult(){
-	try {
-		////////get all needed values////////////
-		let issueCount = 0;
-		const newSession = $('#newSession').val().trim();
-    const newTermId = $('#newTermId').val().trim();
-		
-		///// empty field validation//////////
-    issueCount += _validateEmptyValue("newSession", "SESSION");
-    issueCount += _validateEmptyValue("newTermId", "TERM");
-
-		if (issueCount > 0) return;
-
-		/////Gather form data////
-		const formData = {
-      newSession,
-      newTermId,
-    };
-
-		////// confirm action////
-		_showCustomConfirm({
-		callback: () => {
-			_publishResultCallback(formData);
-		},
-			title: "Are you sure?",
-			message: 'Once you publish this result, the current student result data cannot be updated. Ensure all scores and details are 100% correct before proceeding.',
-			alertType: "warning",
-			falseActionBtn: true,
-      trueActionBtnText: "Yes, Publish",
-      falseActionBtnText: "Cancel",
-      closeOnOverlayClick: true,
-		});
-	} catch (error) {
-		console.error("Error:", error);
-		_callCatchError(() => _publishResult());
-	}
-}
-
-function _publishResultCallback(formData) {
-	let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
-
-	///// get btn text/////
-	const btnText = $("#publishResultBtn").html();
-	_btnDisable("publishResultBtn", btnText, true);
-	
-	//// call endpoint //////
-	 _callRawEndPoints({
-		url: `reports/publish-results?branchId=${getEachBranchDetailsSession.branchId}`,
-		formData,
-		accessKey: true,
-	})
-    .then((response) => {
-		_staffValidationCheck(response.response);
-		if (response.success) {
-      _showCustomConfirm({
-				callback: () => {
-				  _alertClose(2);
-          _fetchEachBranches(getEachBranchDetailsSession.branchId);
-          _getPage({ page: "branches", url: adminPortalLocalUrl });
-				},
-          title: "Success!",
-          message: response.message,
-          alertType: "success",
-          trueActionBtnText: "Okay, Thanks",
-          closeOnOverlayClick: false,
-      });
-			_btnDisable("publishResultBtn", btnText, false);
-		} else {
-			_btnDisable("publishResultBtn", btnText, false);
-			_showCustomConfirm({
-				title: "Unable to Publish Result!",
-				message: response.message,
-				alertType: "error",
-				trueActionBtnText: "OK",
-			});
-		}
-    })
-    .catch((error) => {
-		console.error("Error:", error);
-		_callAjaxError(() => _publishResultCallback(formData)); // retry if needed
-		_btnDisable("publishResultBtn", btnText, false);
-    });
 }

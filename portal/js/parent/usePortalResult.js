@@ -88,3 +88,41 @@ function _printAuthStudentTerminalResult(
     _btnDisable(`printStudentResultBtn_${classId}_${termId}`, btnText, false);
   }
 }
+
+//// Print Each Student Ca Result ////
+function _printAuthEachStudentCaResult(branchId, session, termId, departmentId, classId, armId, assessmentId, studentId) {
+  try {
+    //// call endpoint //////
+    _callFetchEndPoints({
+      url: `reports/print-each-student-ca-result?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}&assessmentId=${assessmentId}&studentId=${studentId}`,
+    })
+      .then((response) => {
+        if (response.success) {
+          sessionStorage.setItem(
+            "printSingleAssessementSession",
+            JSON.stringify(response),
+          );
+          window.open(`${websiteUrl}/reports/print-each-student-ca-result`, '_blank');
+        } else {
+          _showCustomConfirm({
+            title: "UNABLE TO VIEW CA RESULT",
+            message: response.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() =>
+          _printAuthEachStudentCaResult(branchId, session, termId, departmentId, classId, armId, assessmentId, studentId),
+        ); // retry if needed
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() =>
+      _printAuthEachStudentCaResult(branchId, session, termId, departmentId, classId, armId, assessmentId, studentId),
+    );
+  }
+}

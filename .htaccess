@@ -1,3 +1,5 @@
+Options -Indexes
+
 # Enable Rewrite Engine
 RewriteEngine On
 

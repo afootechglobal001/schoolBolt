@@ -70,9 +70,15 @@ function _confirmLogin() {
         if (data.success) {
           assignRole(data);
         } else {
-          _actionAlert(data.message, false);
+          _showCustomConfirm({
+            title: "Unable to Login",
+            message: data.message,
+            alertType: "error",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+          $("#submit_btn").html(btn_text).prop("disabled", false);
         }
-        $("#submit_btn").html(btn_text).prop("disabled", false);
       },
       error: function () {
         _actionAlert(
@@ -143,6 +149,9 @@ function assignRole(data) {
   permissions.includes(18) ? (userRoles.canViewBranchProfile = true) : false;
   permissions.includes(19) ? (userRoles.canViewBranchAccount = true) : false;
   permissions.includes(22) ? (userRoles.canViewBranchActivities = true) : false;
+  permissions.includes(35)
+    ? (userRoles.canUpdatePrincipalsComment = true)
+    : false;
 
   /////Account Permissions
   permissions.includes(23) ? (userRoles.canApproveFees = true) : false;
@@ -156,11 +165,29 @@ function assignRole(data) {
     ? (userRoles.canApplyStudentDiscountScholarship = true)
     : false;
   permissions.includes(29) ? (userRoles.canLoadStudentFund = true) : false;
+  permissions.includes(30) ? (userRoles.canAddBank = true) : false;
+  permissions.includes(31) ? (userRoles.canUpdateBank = true) : false;
+  permissions.includes(32)
+    ? (userRoles.canAddBankPaymentTransaction = true)
+    : false;
+  permissions.includes(33)
+    ? (userRoles.canUpdateBankPaymentTransaction = true)
+    : false;
+  permissions.includes(34)
+    ? (userRoles.canPerformPaymentReconciliation = true)
+    : false;
+  permissions.includes(36)
+    ? (userRoles.canCancelStudentFund = true)
+    : false;
 
   /// Developer Permissions
   permissions.includes(24) ? (userRoles.canDeleteStaff = true) : false;
   permissions.includes(25) ? (userRoles.canChangeStaffPassword = true) : false;
 
+  /// Result Permissions
+  permissions.includes(37) ? (userRoles.canPublishResult = true) : false;
+  permissions.includes(38) ? (userRoles.canActivateResult = true) : false;
+  
   // Store in sessionStorage
   sessionStorage.setItem("userRoles", JSON.stringify(userRoles));
   sessionStorage.setItem("staffLoginData", JSON.stringify(staffLoginData));
