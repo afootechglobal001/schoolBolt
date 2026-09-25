@@ -59,7 +59,7 @@
                                 <span>Subject</span>
                             </div>
                             <span class="list-value" id="subjectName">
-                                <script>$("#subjectName").html(useEachStudentCbtPageDetailsSession?.subjectData?.subjectName);</script>
+                                <script>$("#subjectName").html(useEachStudentCbtPageDetailsSession?.subjectData?.[0]?.subjectName);</script>
                             </span>
                         </div>
 
@@ -82,7 +82,7 @@
                         <div class="question-count-content">
                             <span>No of Questions</span>
                             <strong id="totalQuizQuestions">
-                                <script>$("#totalQuizQuestions").html(useEachStudentCbtPageDetailsSession?.quizData?.totalQuizQuestions);</script>
+                                <script>$("#totalQuizQuestions").html(useEachStudentCbtPageDetailsSession?.quizData?.totalQuestions);</script>
                             </strong>
                         </div>
                     </div>
@@ -95,8 +95,8 @@
                 <label>
                     <strong>Computer Based Test (CBT)</strong>
                     <div class="line">
-                        <span>2026/2027</span> |
-                        <span>THIRD TERM</span>
+                        <span id="mobileSessionName"><script>$("#mobileSessionName").html(useEachStudentCbtPageDetailsSession?.branchData?.session);</script></span> |
+                        <span id="mobileTermName"><script>$("#mobileTermName").html(useEachStudentCbtPageDetailsSession?.termData?.termName);</script></span>
                     </div>
                 </label>
 
@@ -131,14 +131,14 @@
                             </div>
 
                             <div class="exam-title-text">
-                                <h2>MOCK EXAMINATION</h2>
+                                <h2 id="headerCbtTitle"><script>$("#headerCbtTitle").html(useEachStudentCbtPageDetailsSession?.cbtData?.cbtTitle);</script></h2>
 
                                 <div class="exam-meta">
-                                    <span>KINDERGARTEN</span>   
+                                    <span id="headerDepartmentName"><script>$("#headerDepartmentName").html(useEachStudentCbtPageDetailsSession?.departmentData?.departmentName);</script></span>   
                                     <i class="bi bi-dot"></i>
-                                    <span>KG</span>
+                                    <span id="headerClassName"><script>$("#headerClassName").html(useEachStudentCbtPageDetailsSession?.classData?.className);</script></span>
                                     |
-                                    <span>NUMERACY</span>
+                                    <span id="headerSubjectName"><script>$("#headerSubjectName").html(useEachStudentCbtPageDetailsSession?.subjectData?.[0]?.subjectName);</script></span>
                                 </div>
                             </div>
                         </div>
@@ -150,8 +150,8 @@
 
                             <div class="question-count-content">
                                 <span>No of Questions</span>
-                                <strong id="totalQuizQuestions">
-                                    30
+                                <strong id="headerTotalQuizQuestions">
+                                    <script>$("#headerTotalQuizQuestions").html(useEachStudentCbtPageDetailsSession?.quizData?.totalQuestions);</script>
                                 </strong>
                             </div>
                         </div>
@@ -162,16 +162,27 @@
                             <i class="bi bi-clock-fill"></i>
                         </div>
 
-                        <div class="countdown-content">
-                            <p>Available Time</p>
-                            <div class="countdown-time">
-                                <span id="examHours">00</span>
-                                <b>:</b>
-                                <span id="examMinutes">30</span>
-                                <b>:</b>
-                                <span id="examSeconds">00</span>
-                            </div>
-                        </div>
+                        <script>
+                            $(document).ready(function () {
+                                const timeAllowed = useEachStudentCbtPageDetailsSession?.quizData?.timeAllowed ?? "00:00:00";
+                                const [hours, minutes, seconds] = timeAllowed.split(":");
+                                $("#timeAllowedContainer").html(`
+                                    <div class="countdown-content">
+                                        <p>Available Time</p>
+
+                                        <div class="countdown-time">
+                                            <span id="examHours">${hours}</span>
+                                            <b>:</b>
+                                            <span id="examMinutes">${minutes}</span>
+                                            <b>:</b>
+                                            <span id="examSeconds">${seconds}</span>
+                                        </div>
+                                    </div>
+                                `);
+                            });
+                        </script>
+
+                        <div id="timeAllowedContainer"></div>
                     </div>
                 </div>
 
@@ -252,8 +263,8 @@
 
                                 <p>
                                     You are about to start the
-                                    <strong id="cbtTitle">WELCOME TEST</strong> for
-                                    <strong id="cbtTitle">NUMERACY.</strong>
+                                    <strong id="readyCbtTitle"><script>$("#readyCbtTitle").html(useEachStudentCbtPageDetailsSession?.cbtData?.cbtTitle);</script></strong> for
+                                    <strong id="readySubjectName"><script>$("#readySubjectName").html(useEachStudentCbtPageDetailsSession?.subjectData?.[0]?.subjectName);</script></strong>
                                 </p>
 
                                 <div class="start-btn-div">
@@ -283,15 +294,28 @@
                             </div>
 
                             <div class="exam-title-text">
-                                <h2>MOCK EXAMINATION</h2>
+                                <h2 id="headerCbtTitle"><script>$("#headerCbtTitle").html(useEachStudentCbtPageDetailsSession?.cbtData?.cbtTitle);</script></h2>
 
                                 <div class="exam-meta">
-                                    <span>KINDERGARTEN</span>   
+                                    <span id="headerDepartmentName"><script>$("#headerDepartmentName").html(useEachStudentCbtPageDetailsSession?.departmentData?.departmentName);</script></span>   
                                     <i class="bi bi-dot"></i>
-                                    <span>KG</span>
+                                    <span id="headerClassName"><script>$("#headerClassName").html(useEachStudentCbtPageDetailsSession?.classData?.className);</script></span>
                                     |
-                                    <span>NUMERACY</span>
+                                    <span id="headerSubjectName"><script>$("#headerSubjectName").html(useEachStudentCbtPageDetailsSession?.subjectData?.[0]?.subjectName);</script></span>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="question-count-card">
+                            <div class="question-count-icon">
+                                <i class="bi-question-lg"></i>
+                            </div>
+
+                            <div class="question-count-content">
+                                <span>No of Questions</span>
+                                <strong id="headerTotalQuizQuestions">
+                                    <script>$("#headerTotalQuizQuestions").html(useEachStudentCbtPageDetailsSession?.quizData?.totalQuestions);</script>
+                                </strong>
                             </div>
                         </div>
                     </div>
