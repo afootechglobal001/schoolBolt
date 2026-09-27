@@ -414,7 +414,7 @@ function _updateCbtQuestion(currentQuestionIndex, btnCount, questionId, number) 
 
 	///// Next / Finish Button State /////
 	if (currentQuestionIndex >= btnCount - 1) {
-		$("#nextBtn").html(`Finish <i class="bi bi-check-circle"></i>`).attr("title", "Finish").off("click").click(_finishQuiz);
+		$("#nextBtn").html(`Finish <i class="bi bi-check-circle"></i>`).attr("title", "Finish").off("click").click(_proceedFinishQuiz);
 	} else {
 		$("#nextBtn").html(`Next <i class="bi bi-arrow-right-circle"></i>`).attr("title", "Next").off("click").click(_nextCbtQuestion);
 	}
@@ -671,6 +671,26 @@ function _previousCbtQuestion() {
 		previousQuestion?.questionId,
 		previousQuestion?.number
 	);
+}
+
+
+///// Proceed Finish CBT Quiz ////
+function _proceedFinishQuiz(){
+	try {
+		_showCustomConfirm({
+			callback: () => {
+				_finishQuiz();
+			},
+			title: "Are you sure?",
+			message: "Are you sure you want to finish the quiz now? You will not be able to continue after submitting.",
+			alertType: "warning",
+			falseActionBtn: true,
+			closeOnOverlayClick: true,
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _proceedFinishQuiz());
+	}
 }
 
 ///// Finish CBT Quiz /////
