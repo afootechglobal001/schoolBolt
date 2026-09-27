@@ -131,6 +131,34 @@ header .header-div-in .header-nav-div .right-nav .right-icon-div .profile-div .c
 }
 
 
+header .header-div-in .header-nav-div .right-nav .right-icon-div .log-out-div{
+	width: fit-content;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	color: var(--sub-body-color);
+	border: 1px solid var(--general-border-color);
+	border-radius: 15px;
+	padding:0px 18px;
+	background: var(--cbt-page-bg);
+	cursor: pointer;
+}
+
+header .header-div-in .header-nav-div .right-nav .right-icon-div .log-out-div span{
+	font-family: sub-title-font;
+	font-size: 14px;
+}
+
+header .header-div-in .header-nav-div .right-nav .right-icon-div .log-out-div i{ 
+	color: var(--sub-body-color);
+	font-size: 18px;
+}
+
+header .header-div-in .header-nav-div .right-nav .right-icon-div .log-out-div:hover{
+	background: var(--bg-color);
+}
+
 header .header-div-in .header-nav-div .right-nav .right-icon-div .profile-div .img-div{
 	height: 40px;
 	width: 40px;

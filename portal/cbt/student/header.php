@@ -30,37 +30,10 @@
                             </div>
                         </div>
 
-                        <div class="img-div" id="profilePix" title="Click To View Profile" onclick="_toggleCbtProfileDiv()">
-                            <script>
-                                $("#profilePix").html('<img src="<?php echo $websiteUrl ?>/all-images/images/avatar.jpg" alt="Profile Image">');
-                            </script>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="toggle">
-                    <div class="toggle-in">
-                        <div class="toggle-title">
-                            <div class="dp" id="loginProfileName">
-                                <script>
-                                    $("#loginProfileName").html(getFirstLettersOfEachWord(studentLoginData?.studentData.fullName || ""));
-                                </script>
-                            </div>
-                            <div class="text">
-                                <h2 id="loginUserFullname">
-                                    <script>$("#loginUserFullname").html(capitalizeFirstLetterOfEachWord(studentLoginData?.studentData?.fullName || "User"));</script>
-                                </h2>
-                                <p id="loginUserId">
-                                    <script>$("#loginUserId").html(studentLoginData?.studentData?.studentId ?? "");</script>
-                                </p>
-                            </div>
-                        </div>
-
-                        <ul>
-                            <li class="logOut" title="Log-Out" onclick="_confirmLogOut();">
-                                <i class="bi bi-power"></i> Log-Out
-                            </li>
-                        </ul>
+                        <div class="log-out-div" onclick="_confirmLogOut();" title="Log-Out">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Log-Out</span>
+                        </div>  
                     </div>
                 </div>
             </div>
