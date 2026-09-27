@@ -735,6 +735,28 @@
                 </div>
             </div>
 
+            <div class="main-content-div form-main-content-div">
+                <div class="tables-content-div form-table-content-div">
+                    <div class="content-title">
+                        <div class="title">
+                            <i class="bi bi-clock-fill"></i>
+                            <p>Total Score</p>
+                        </div>
+                    </div>
+
+                    <div class="form-container">
+                        <div class="text_field_container" id="totalScore_container">
+                            <script>
+                                textField({
+                                    id: 'totalScore',
+                                    title: 'Total Score',
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="btn-div">
                 <button class="btn" title="ACTIVATE" id="setBtn"
                     onclick="_setQuizQuestions();">

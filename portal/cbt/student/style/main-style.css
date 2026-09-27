@@ -7161,7 +7161,7 @@ white-space: nowrap;
 }
 
 
-.exam-page-back-div .question-bottom-div .div-in .question-num-div .num-btn.attempteNno {
+.exam-page-back-div .question-bottom-div .div-in .question-num-div .num-btn.attempteNo {
 	background-color: var(--bg-white);
 	color: var(--sub-body-color);
 }
@@ -7186,25 +7186,6 @@ white-space: nowrap;
 	color: var(--text-white);
 	background-color: var(--primary-color);
 }
-
-
-.cbt-alert-container .question-bottom-div .div-in .question-num-div .loader-btn {
-    height: 40px;
-    font-size: 14px;
-	width: 150px;
-	left: 47%;
-	bottom: 15px;
-	position: absolute;
-	margin: auto;
-    text-align: center;
-}
-
-.cbt-alert-container .question-bottom-div .div-in .question-num-div .loader-btn img{
-	width: 100%;
-	height: auto;
-}
-
-
 
 
 

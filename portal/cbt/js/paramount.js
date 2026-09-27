@@ -33,15 +33,7 @@ function _getForm(options) {
 		url=''
     } = options;
 
-    // Allow overlay click only for Gallery Form
-    if (page === "galleryDetails") {
-      allowOverlayClose = true;
-      $('body').addClass('no-scroll');
-    } else {
-      allowOverlayClose = false;
-    }
-
-		if (layer===1 && page!=="revenueBreakdown") {
+		if (layer===1 && page!=="cbtPageDetails") {
       // Save the current form
       sessionStorage.setItem(
         "currentDashboardForm",
@@ -56,7 +48,6 @@ function _getForm(options) {
       );
     }
 
-
     const target = layer === 1 ? '#get-form-more-div' : layer === 2  ? '#get-more-div-secondary' : '#get-more-third-layer';
     $(target).css({ 'display': 'flex', 'justify-content': 'center', 'align-items': 'center' }).fadeIn(500);
     const dataString = "action=" + action + "&page=" + page + "&id=" + id + "&pageCategory=" + pageCategory + "&modalLayer=" + layer;
@@ -67,12 +58,63 @@ function _getForm(options) {
         cache: false,
         success: function (html) {
           $(target).html(html);
-          
-          if (page === "galleryDetails") {
-            _initializeGallery();
-          }
         },
   });
+}
+
+
+let timerInterval; // Global timer reference
+let isTimerRunning = false; // Track timer state
+
+function _startCbtCountDown() {
+	const startOrReumeQuizSessionData = JSON.parse(sessionStorage.getItem("startOrReumeQuizSessionData")) || {
+		data: {
+			lastCountDownTime: "00:30:00"
+		}
+	};
+
+	const lastCountDownTime = startOrReumeQuizSessionData.data.lastCountDownTime;
+
+	function parseDuration(duration) {
+		const [hours, minutes, seconds] = duration.split(":").map(Number);
+		return (hours * 3600) + (minutes * 60) + seconds;
+	}
+
+	remainingTimeGlobal = parseDuration(lastCountDownTime);
+	const $timeDisplay = $("#countDownTime");
+
+	function formatTime(seconds) {
+		const hours = String(Math.floor(seconds / 3600)).padStart(2, "0");
+		const minutes = String(Math.floor((seconds % 3600) / 60)).padStart(2, "0");
+		const secs = String(seconds % 60).padStart(2, "0");
+		return `${hours}:${minutes}:${secs}`;
+	}
+
+	function updateTimer() {
+		if (remainingTimeGlobal > 0) {
+			remainingTimeGlobal--;
+			$timeDisplay.text(formatTime(remainingTimeGlobal));
+			sessionStorage.setItem("getCurrentTime", JSON.stringify(formatTime(remainingTimeGlobal)));
+    } else {
+      _finishQuiz();
+			stopTimer();
+		}
+	}
+
+	function stopTimer() {
+		clearInterval(timerInterval);
+		timerInterval = null; // Ensure it's reset
+		isTimerRunning = false; // Mark timer as stopped
+		$timeDisplay.text("00:00:00");
+		sessionStorage.removeItem("getCurrentTime");
+	}
+
+	// Store stopTimer globally to allow stopping externally
+	window.stopTimer = stopTimer;
+
+	$timeDisplay.text(formatTime(remainingTimeGlobal));
+	timerInterval = setInterval(updateTimer, 1000);
+	isTimerRunning = true; // Mark timer as running
 }
 
 function _alertClose(layer=1){
@@ -85,8 +127,19 @@ function _alertClose(layer=1){
     $(layer === 1 ? '#get-form-more-div' : layer === 2  ? '#get-more-div-secondary' : '#get-more-third-layer').html(text).fadeOut(200);
     $('body').removeClass('no-scroll');
 
+    ///// Close the modal layer ////
     if (layer ===1) {
       sessionStorage.removeItem("currentDashboardForm");
+    }
+    
+    //// stop timer ////
+    if (isTimerRunning){
+      stopTimer();
+      sessionStorage.removeItem("getCurrentTime");
+      $('#get-form-more-div').fadeOut(300);
+    } else{
+      sessionStorage.removeItem("getCurrentTime");
+      $('#get-form-more-div').fadeOut(300);
     }
 }
 

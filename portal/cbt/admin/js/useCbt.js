@@ -959,6 +959,7 @@ function _setQuizQuestions() {
 		const quizHour = $("#quizHour").val()?.trim();
 		const quizMinute = $("#quizMinute").val()?.trim();
 		const quizSecond = $("#quizSecond").val()?.trim();
+		const totalScore = $("#totalScore").val()?.trim();
 
 		const timeAllowed = `${quizHour}:${quizMinute}:${quizSecond}`;
 
@@ -966,6 +967,7 @@ function _setQuizQuestions() {
 		issueCount += _validateEmptyValue("quizHour", "HOUR");
 		issueCount += _validateEmptyValue("quizMinute", "MINUTE");
 		issueCount += _validateEmptyValue("quizSecond", "SECOND");
+		issueCount += _validateEmptyValue("totalScore", "TOTAL SCORE");
 
 		// Convert to numbers
 		const hours = Number(quizHour);
@@ -1004,7 +1006,8 @@ function _setQuizQuestions() {
 		// Form Data payload
 		const formData = {
 			timeAllowed: timeAllowed,
-			questionIds: selectedQuestions
+			questionIds: selectedQuestions,
+			totalScore: totalScore,
 		};
 
 		////// confirm action //////
