@@ -82,7 +82,7 @@
                         <div class="question-count-content">
                             <span>No of Questions</span>
                             <strong id="totalQuizQuestions">
-                                <script>$("#totalQuizQuestions").html(useEachStudentCbtPageDetailsSession?.quizData?.totalQuestions);</script>
+                                <script>$("#totalQuizQuestions").html(useEachStudentCbtPageDetailsSession?.quizSummaryData?.totalQuestions);</script>
                             </strong>
                         </div>
                     </div>
@@ -151,7 +151,7 @@
                             <div class="question-count-content">
                                 <span>No of Questions</span>
                                 <strong id="headerTotalQuizQuestions">
-                                    <script>$("#headerTotalQuizQuestions").html(useEachStudentCbtPageDetailsSession?.quizData?.totalQuestions);</script>
+                                    <script>$("#headerTotalQuizQuestions").html(useEachStudentCbtPageDetailsSession?.quizSummaryData?.totalQuestions);</script>
                                 </strong>
                             </div>
                         </div>
@@ -162,27 +162,9 @@
                             <i class="bi bi-clock-fill"></i>
                         </div>
 
-                        <script>
-                            $(document).ready(function () {
-                                const timeAllowed = useEachStudentCbtPageDetailsSession?.quizData?.timeAllowed ?? "00:00:00";
-                                const [hours, minutes, seconds] = timeAllowed.split(":");
-                                $("#timeAllowedContainer").html(`
-                                    <div class="countdown-content">
-                                        <p>Available Time</p>
-
-                                        <div class="countdown-time">
-                                            <span id="examHours">${hours}</span>
-                                            <b>:</b>
-                                            <span id="examMinutes">${minutes}</span>
-                                            <b>:</b>
-                                            <span id="examSeconds">${seconds}</span>
-                                        </div>
-                                    </div>
-                                `);
-                            });
-                        </script>
-
-                        <div id="timeAllowedContainer"></div>
+                        <div id="timeAllowedContainer">
+                            <script>_setExamAvailableTime();</script>
+                        </div>
                     </div>
                 </div>
 
@@ -267,11 +249,10 @@
                                     <strong id="readySubjectName"><script>$("#readySubjectName").html(useEachStudentCbtPageDetailsSession?.subjectData?.[0]?.subjectName);</script></strong>
                                 </p>
 
-                                <div class="start-btn-div">
-                                    <button class="start-btn" id="startExamBtn" title="Start Exam" onclick="_getCbtExamPagesTab({page: 'studentCbtExamPage', url: cbtStudentPortalMiddleWareUrl});">
-                                        <i class="bi bi-play-fill"></i>
-                                        <span>Start Exam</span>
-                                    </button>
+                                <div class="start-btn-div" id="showStartButton">
+                                    <script>
+                                        _setStartAndResumeBtn();
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -305,19 +286,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="question-count-card">
-                            <div class="question-count-icon">
-                                <i class="bi-question-lg"></i>
-                            </div>
-
-                            <div class="question-count-content">
-                                <span>No of Questions</span>
-                                <strong id="headerTotalQuizQuestions">
-                                    <script>$("#headerTotalQuizQuestions").html(useEachStudentCbtPageDetailsSession?.quizData?.totalQuestions);</script>
-                                </strong>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="exam-countdown">
@@ -328,114 +296,24 @@
                         <div class="countdown-content">
                             <p>Time Remaining</p>
                             <div class="countdown-time">
-                                <span id="examHours">00</span>
-                                <b>:</b>
-                                <span id="examMinutes">30</span>
-                                <b>:</b>
-                                <span id="examSeconds">00</span>
+                                <span id="countDownTime">00:00:00</span>
+                                <script>_startCbtCountDown();</script>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="exam-question-body-div" id="questionBankContent">
-                <div class="question-div">
-                    <div class="div-in">
-                        <div class="check-div">
-                            <label>
-                                <span>Question 1</span>
-                            </label>
-                        </div>
-
-                        <div class="each-question">
-                            <!-- <div class="pix-div">
-                                <img src="<?php echo $websiteUrl ?>/uploaded_files/cbt/question-pix/QUES08920260922093326_pix.jpg" alt="Question Image"/>
-                            </div> -->
-
-                            <div class="text-div">
-                                <div>
-                                    <p>Which of the following is an electronic machine that accept data, process data and provide output?</p>
-                                </div>
-
-                                <div class="options-div">
-                                    <label class="each-option">
-                                        <div class="radio-wrapper">
-                                            <div class="radio-div">
-                                                <input type="radio" name="question_1" value="A">
-                                                <span class="radio-custom"></span>
-                                            </div>
-
-                                            <div class="letter">A</div>
-                                        </div>
-
-                                        <!-- <div class="pix">
-                                            <img src="<?php echo $websiteUrl ?>/uploaded_files/cbt/option-pix/QUES06520260918091747_option_A.jpg" alt="Option A"/>
-                                        </div> -->
-
-                                        <div>House</div>
-                                    </label>
-
-                                    <label class="each-option">
-                                        <div class="radio-wrapper">
-                                            <div class="radio-div">
-                                                <input type="radio" name="question_1" value="B">
-                                                <span class="radio-custom"></span>
-                                            </div>
-
-                                            <div class="letter">B</div>
-                                        </div>
-
-                                        <div>House</div>
-                                    </label>
-
-                                    <label class="each-option">
-                                        <div class="radio-wrapper">
-                                            <div class="radio-div">
-                                                <input type="radio" name="question_1" value="C">
-                                                <span class="radio-custom"></span>
-                                            </div>
-
-                                            <div class="letter">C</div>
-                                        </div>
-
-                                        <div>House</div>
-                                    </label>
-
-                                    <label class="each-option">
-                                        <div class="radio-wrapper">
-                                            <div class="radio-div">
-                                                <input type="radio" name="question_1" value="D">
-                                                <span class="radio-custom"></span>
-                                            </div>
-
-                                            <div class="letter">D</div>
-                                        </div>
-
-                                        <div>House</div>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="exam-question-body-div" id="quizQuestionContent"></div>
         </div>
 
         <div class="question-bottom-div">
             <div class="div-in">
-                <button class="prev-btn" id="prevButton" title="Previous"><i class="bi bi-arrow-left-circle"></i> Previous</button>
+                <button class="prev-btn" id="prevButton" title="Previous" onclick="_previousCbtQuestion()"><i class="bi bi-arrow-left-circle"></i> Previous</button>
                 <div class="question-num-div" id="numButtonContainerId">
-                    <button class="num-btn active" id="numBtnId">1</button>
-                    <button class="num-btn" id="numBtnId">2</button>
-                    <!-- <button class="num-btn" id="numBtnId">3</button>
-                    <button class="num-btn" id="numBtnId">4</button>
-                    <button class="num-btn" id="numBtnId">5</button>
-                    <button class="num-btn" id="numBtnId">6</button>
-                    <button class="num-btn" id="numBtnId">7</button> -->
+                    <script>_renderCbtButtons()</script>
                 </div>
-
-                <button class="prev-btn next-btn" id="nextBtn" title="Next">Next <i class="bi bi-arrow-right-circle"></i></button>
+                <button class="prev-btn next-btn" id="nextBtn" title="Next" onclick="_nextCbtQuestion()">Next <i class="bi bi-arrow-right-circle"></i></button>
             </div>
         </div>
     </div>

@@ -106,7 +106,7 @@ function _confirmLogOut() {
   });
 }
 
-function _staffValidationCheck(code) {
+function _studentValidationCheck(code) {
   if (code === 401 || code === 403) {
     _studentLogOut();
     return;
