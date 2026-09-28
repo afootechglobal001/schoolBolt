@@ -16,7 +16,8 @@ function _fetchAssignedSubjectData() {
 			accessKey: true,
 		})
 		.then((response) => {
-			_initFetchAllAssignedSubjectData(response?.data);
+			_initFetchAllAssignedSubjectData(response);
+			sessionStorage.setItem("getClassesSubjectResultForEachCbtData", JSON.stringify(response));
 		})
 		.catch((error) => {
 			_staffValidationCheck(error.response);
@@ -46,7 +47,8 @@ function _fetchAssignedSubjectData() {
 }
 
 /// Render All Assigned Subject Data ///
-function _initFetchAllAssignedSubjectData(data) {
+function _initFetchAllAssignedSubjectData(response) {
+	const data = response?.data || [];
 	const content = data?.length > 0 ? data.map((item, start) => {
 		const viewId = `view${item?.cbtId}`;
 		const cbtTitle = item?.cbtTitle;
@@ -69,6 +71,13 @@ function _initFetchAllAssignedSubjectData(data) {
 					</div>
 
 					<div class="btn-container">
+						<button
+							class="btn"
+							title="VIEW RESULT"
+							onclick="event.stopPropagation(); _proceedFetchStaffCbtResult('${item?.cbtId}', '${subjectId}');">
+							<i class="bi bi-eye"></i> VIEW RESULT
+						</button>
+
 						<button
 							class="btn"
 							title="MANAGE CBT"
@@ -198,4 +207,55 @@ function _fetchEachCbtPageDetails(cbtId, departmentId, classId, subjectId) {
 		console.error("Error:", error);
 		_callCatchError(() => _fetchEachCbtPageDetails(cbtId, departmentId, classId, subjectId));
 	}
+}
+
+//// Proceed Fetch CBT Result ////
+function _proceedFetchStaffCbtResult(cbtId, subjectId) {
+	let storedData = JSON.parse(
+		sessionStorage.getItem("getClassesSubjectResultForEachCbtData")
+	);
+
+	let cbts = storedData?.data || [];
+
+	// Find CBT
+	let cbt = cbts.find((c) => c.cbtId === cbtId);
+
+	// Find subject inside CBT
+	let subject = cbt?.subjectAllocatedData?.find(
+		(s) => s.subjectData?.subjectId === subjectId
+	);
+
+	// Access department
+	const departmentId = subject?.departmentData?.departmentId;
+	const departmentName = subject?.departmentData?.departmentName;
+
+	// Access class
+	const classId = subject?.classData?.classId;
+	const className = subject?.classData?.className;
+
+	// Build selected subject data
+	let selectedSubject = {
+		cbtId: cbt?.cbtId,
+		cbtTitle: cbt?.cbtTitle,
+
+		subjectId: subject?.subjectData?.subjectId,
+		subjectName: subject?.subjectData?.subjectName,
+
+		departmentId: departmentId,
+		departmentName: departmentName,
+
+		classId: classId,
+		className: className,
+	};
+
+	// Save to session
+	sessionStorage.setItem(
+		"selectedCbtSubjectSession",
+		JSON.stringify(selectedSubject)
+	);
+
+	_getForm({
+		page: "proccedViewCbtResultForm",
+		url: cbtAdminMiddleWareUrl
+	});
 }

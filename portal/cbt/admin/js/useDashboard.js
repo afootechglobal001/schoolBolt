@@ -160,3 +160,95 @@ function _getSelectStatusId(fieldId, statusIds) {
 		_actionAlert('An unexpected error occurred. Please try again.', false);
   }
 }
+
+//// Function Clear SelectField ////
+function _clearSelectField(fieldId) {
+    // clear actual select value
+    $("#" + fieldId).val("");
+
+    // reset displayed option
+    $("#" + fieldId).html(`
+        <option selected="selected" value="">
+            Select here
+        </option>
+    `);
+}
+
+//// Get Department Preset Data ////
+function _getSelectBranchDepartment(fieldId) {	
+	try {
+		//// call endpoint //////
+		_callFetchEndPoints({
+			url: `cbt/preset-data/fetch-branch-departments`,
+			accessKey: true,
+		})
+      .then((response) => {
+			$("#searchList_" + fieldId).html("");
+			const checkedDepartments = response?.data?.filter(
+				item => item.checked === true
+			);
+			for (let i = 0; i < checkedDepartments.length; i++) {
+				const id = checkedDepartments[i].departmentId;
+        const value = checkedDepartments[i].departmentName;
+                
+				$("#searchList_" + fieldId).append(`
+          <li onclick="
+            _clickOption(
+              'searchList_${fieldId}',
+              '${id}',
+              '${value}'
+            );
+            _proceedSelectBranchDepartmentClass();
+          ">
+            ${value}
+          </li>
+        `);
+			}				
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+  	}
+}
+
+//// Proceed Department Class Data////
+function _proceedSelectBranchDepartmentClass() {
+	_clearSelectField("classId");
+  _getSelectBranchDepartmentClass("classId");
+}
+
+//// Get Department Class Preset Data ////
+function _getSelectBranchDepartmentClass(fieldId) {
+    const departmentId = $("#departmentId").val(); 
+    // always reset before loading
+    $("#"+fieldId).val("");
+    $("#searchList_" + fieldId).html("");
+
+	try {
+		//// call endpoint //////
+		_callFetchEndPoints({
+			url: `cbt/preset-data/fetch-branch-department-classes?departmentId=${departmentId}`,
+			accessKey: true,
+		})
+        .then((response) => {
+			$("#searchList_" + fieldId).html("");
+			const checkedClasses = response?.data?.filter(
+				item => item.checked === true
+			);
+			for (let i = 0; i < checkedClasses.length; i++) {
+				const id = checkedClasses[i].classId;
+				const value = checkedClasses[i].className;
+				$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
+			}				
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+  	}
+}

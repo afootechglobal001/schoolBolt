@@ -34,3 +34,4 @@
 <script src="<?php echo $websiteUrl?>/admin/js/useCbtConfiguration.js?v=<?php echo $codeVersion?>" type="text/javascript"></script>
 <script src="<?php echo $websiteUrl?>/admin/js/useSetExam.js?v=<?php echo $codeVersion?>" type="text/javascript"></script>
 <script src="<?php echo $websiteUrl?>/admin/js/useCbt.js?v=<?php echo $codeVersion?>" type="text/javascript"></script>
+<script src="<?php echo $websiteUrl?>/admin/js/viewExamResult.js?v=<?php echo $codeVersion?>" type="text/javascript"></script>
