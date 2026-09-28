@@ -5871,6 +5871,7 @@ white-space: nowrap;
 .toggle-list-wrapper .toggle-list .btn-container {
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 
 .toggle-list-wrapper .toggle-list .btn-container .btn {

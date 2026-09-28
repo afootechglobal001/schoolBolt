@@ -99,14 +99,14 @@
                                     `);
                                 }
 
-                                // if (userRoles?.canViewCbtResult) {
-                                //     document.write(`
-                                //         <li title="View Results"
-                                //             onclick="_getActivePage({page:'viewResultPage', divid:'viewResultPage'});">
-                                //             <i class="bi bi-bar-chart-fill"></i> View Results
-                                //         </li>
-                                //     `);
-                                // }
+                                if (userRoles?.canViewCbtResult) {
+                                    document.write(`
+                                        <li title="View Results"
+                                            onclick="_getActivePage({page:'viewResultPage', divid:'viewResultPage'});">
+                                            <i class="bi bi-bar-chart-fill"></i> View Results
+                                        </li>
+                                    `);
+                                }
 
                                 if (userRoles?.canConfigureCbt) {
                                     document.write(`

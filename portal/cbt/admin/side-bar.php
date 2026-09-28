@@ -26,15 +26,15 @@
             `);
         }
 
-        // if (userRoles?.canViewCbtResult) {
-        //     document.write(`
-        //         <div class="nav-div" title="View CBT Exam Results" id="viewResultPage"
-        //             onclick="_getActivePage({page:'viewResultPage', divid:'viewResultPage'});">
-        //             <i class="bi bi-bar-chart-fill"></i>
-        //             <span>View Results</span>
-        //         </div>
-        //     `);
-        // }
+        if (userRoles?.canViewCbtResult) {
+            document.write(`
+                <div class="nav-div" title="View CBT Exam Results" id="viewResultPage"
+                    onclick="_getActivePage({page:'viewResultPage', divid:'viewResultPage'});">
+                    <i class="bi bi-bar-chart-fill"></i>
+                    <span>View Results</span>
+                </div>
+            `);
+        }
     }
 
     function writeCbtBottomSidebarItems() {

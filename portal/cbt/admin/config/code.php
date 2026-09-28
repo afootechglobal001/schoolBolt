@@ -14,6 +14,7 @@ switch ($action){
 		require_once('set-exam-content.php');
 		require_once('cbt-content.php');
 		require_once('activate-exam-content.php');
+		require_once('view-exam-result.php');
 	break;
 
 	case 'get_form':
@@ -26,6 +27,7 @@ switch ($action){
 		require_once('set-exam-content.php');
 		require_once('cbt-content.php');
 		require_once('activate-exam-content.php');
+		require_once('view-exam-result.php');
 	break;
 
 	case 'uploadQuestionsPix':

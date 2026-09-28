@@ -396,53 +396,58 @@ function _uploadQuestionAutomatically(){
 
 /// Create And Update CBT Configuration Call Back ////
 function _saveUploadQuestionAutomaticallyCallback(formData) {
-	const { cbtId, departmentId, classId, subjectId } = _getCbtPageDetailsSeeion();
+	try {
+		const { cbtId, departmentId, classId, subjectId } = _getCbtPageDetailsSeeion();
 
-	///// get btn text/////
-	const btnText = $("#submitBtn").html();
-	_btnDisable("submitBtn", btnText, true);
-	
-	//// call endpoint //////
-	_callFileEndPoints({
-		url: `cbt/admin/set-exam/upload-questions-automatically?cbtId=${cbtId}&departmentId=${departmentId}&classId=${classId}&subjectId=${subjectId}`,
-		formData,
-		accessKey: true,
-	})
-    .then((response) => {
-		_showCustomConfirm({
-			callback: () => {
-				_fetchEachCbtPageDetails(
-					cbtId,
-					departmentId,
-					classId,
-					subjectId
-				)
-			},
-			title: 'Success!',
-			message: response?.message,
-			alertType: 'success',
-			trueActionBtnText: 'Done.',
-			closeOnOverlayClick: false,
-		});
-		_btnDisable("submitBtn", btnText, false);
-    })
-    .catch((error) => {
-		_staffValidationCheck(error.response);
-		console.error("Error:", error);
-		if (error.status==0) {
-			_callAjaxError(() => _saveUploadQuestionAutomaticallyCallback(formData, error.message)); // retry if needed
-			_btnDisable("submitBtn", btnText, false);
-		} else {
+		///// get btn text/////
+		const btnText = $("#submitBtn").html();
+		_btnDisable("submitBtn", btnText, true);
+		
+		//// call endpoint //////
+		_callFileEndPoints({
+			url: `cbt/admin/set-exam/upload-questions-automatically?cbtId=${cbtId}&departmentId=${departmentId}&classId=${classId}&subjectId=${subjectId}`,
+			formData,
+			accessKey: true,
+		})
+		.then((response) => {
 			_showCustomConfirm({
-                title: "Unable to Upload Question Automatically",
-                message: error.message,
-                alertType: "error",
-                trueActionBtnText: "OK",
-                closeOnOverlayClick: true,
-            });
+				callback: () => {
+					_fetchEachCbtPageDetails(
+						cbtId,
+						departmentId,
+						classId,
+						subjectId
+					)
+				},
+				title: 'Success!',
+				message: response?.message,
+				alertType: 'success',
+				trueActionBtnText: 'Done.',
+				closeOnOverlayClick: false,
+			});
 			_btnDisable("submitBtn", btnText, false);
-		}
-    });
+		})
+		.catch((error) => {
+			_staffValidationCheck(error.response);
+			console.error("Error:", error);
+			if (error.status==0) {
+				_callAjaxError(() => _saveUploadQuestionAutomaticallyCallback(formData, error.message)); // retry if needed
+				_btnDisable("submitBtn", btnText, false);
+			} else {
+				_showCustomConfirm({
+					title: "Unable to Upload Question Automatically",
+					message: error.message,
+					alertType: "error",
+					trueActionBtnText: "OK",
+					closeOnOverlayClick: true,
+				});
+				_btnDisable("submitBtn", btnText, false);
+			}
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _saveUploadQuestionAutomaticallyCallback(formData));
+	}
 }
 
 //// Question Pix Preview ////
@@ -1363,98 +1368,6 @@ function _unlinkQuestionsImages(questionIds, message, btnText) {
 			error.message
 		);
 	});
-}
-
-//// Function Clear SelectField ////
-function _clearSelectField(fieldId) {
-    // clear actual select value
-    $("#" + fieldId).val("");
-
-    // reset displayed option
-    $("#" + fieldId).html(`
-        <option selected="selected" value="">
-            Select here
-        </option>
-    `);
-}
-
-//// Get Department Preset Data ////
-function _getSelectBranchDepartment(fieldId) {	
-	try {
-		//// call endpoint //////
-		_callFetchEndPoints({
-			url: `cbt/preset-data/fetch-branch-departments`,
-			accessKey: true,
-		})
-        .then((response) => {
-			$("#searchList_" + fieldId).html("");
-			const checkedDepartments = response?.data?.filter(
-				item => item.checked === true
-			);
-			for (let i = 0; i < checkedDepartments.length; i++) {
-				const id = checkedDepartments[i].departmentId;
-                const value = checkedDepartments[i].departmentName;
-                
-				$("#searchList_" + fieldId).append(`
-                <li onclick="
-                  _clickOption(
-                    'searchList_${fieldId}',
-                    '${id}',
-                    '${value}'
-                  );
-                  _proceedSelectBranchDepartmentClass();
-                ">
-                  ${value}
-                </li>
-              `);
-			}				
-		})
-		.catch((error) => {
-			console.error("Error:", error);
-		});
-	} catch (error) {
-		console.error("Error:", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-  	}
-}
-
-//// Proceed Department Class Data////
-function _proceedSelectBranchDepartmentClass() {
-	_clearSelectField("classId");
-    _getSelectBranchDepartmentClass("classId");
-}
-
-//// Get Department Class Preset Data ////
-function _getSelectBranchDepartmentClass(fieldId) {
-    const departmentId = $("#departmentId").val(); 
-    // always reset before loading
-    $("#"+fieldId).val("");
-    $("#searchList_" + fieldId).html("");
-
-	try {
-		//// call endpoint //////
-		_callFetchEndPoints({
-			url: `cbt/preset-data/fetch-branch-department-classes?departmentId=${departmentId}`,
-			accessKey: true,
-		})
-        .then((response) => {
-			$("#searchList_" + fieldId).html("");
-			const checkedClasses = response?.data?.filter(
-				item => item.checked === true
-			);
-			for (let i = 0; i < checkedClasses.length; i++) {
-				const id = checkedClasses[i].classId;
-				const value = checkedClasses[i].className;
-				$('#searchList_'+ fieldId).append('<li onclick="_clickOption(\'searchList_' + fieldId + '\', \'' + id + '\', \'' + value + '\');">'+ value +'</li>');
-			}				
-		})
-		.catch((error) => {
-			console.error("Error:", error);
-		});
-	} catch (error) {
-		console.error("Error:", error);
-		_actionAlert('An unexpected error occurred. Please try again.', false);
-  	}
 }
 
 ///// Proceed Fetch CBT Configuration ////

@@ -132,7 +132,7 @@
                     </div>
                 </div>
 
-                <!-- <div class="statistics-div completed-card" id="viewResultPage" title="View CBT Exam Result"
+                <div class="statistics-div completed-card" id="viewResultPage" title="View CBT Exam Result"
                     onclick="_getActivePage({page:'viewResultPage', divid:'viewResultPage'});">
 
                     <div class="statistics-inner-div">
@@ -156,7 +156,7 @@
                             <i class="bi bi-arrow-right"></i>
                         </div>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="statistics-div purple-card" id="cbtConfigPage" title="CBT Configuration"
                     onclick="_getActivePage({page:'cbtConfigPage', divid:'cbtConfigPage'});">
@@ -324,6 +324,36 @@
                                     <div class="action-left">
                                         <i class="bi bi-gear-wide-connected"></i>
                                         <span>CBT Configuration</span>
+                                    </div>
+
+                                    <i class="bi bi-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (userRoles?.canViewCbtResult) {
+                    html += `
+                        <div class="statistics-div completed-card" id="viewResultPage" title="View CBT Exam Result"
+                            onclick="_getActivePage({page:'viewResultPage', divid:'viewResultPage'});">
+
+                            <div class="statistics-inner-div">
+                                <div class="statistics-top-div">
+                                    <div class="statistics-text">
+                                        <p>View Results</p>
+                                        <span>View and manage CBT exam results</span>
+                                    </div>
+
+                                    <div class="statistics-icon completed">
+                                        <i class="bi bi-bar-chart-fill"></i>
+                                    </div>
+                                </div>
+
+                                <div class="statistics-action-div">
+                                    <div class="action-left">
+                                        <i class="bi bi-bar-chart-fill"></i>
+                                        <span>View Exam Results</span>
                                     </div>
 
                                     <i class="bi bi-arrow-right"></i>
@@ -567,6 +597,36 @@
                                     <div class="action-left">
                                         <i class="bi bi-gear-wide-connected"></i>
                                         <span>CBT Configuration</span>
+                                    </div>
+
+                                    <i class="bi bi-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (userRoles?.canViewCbtResult) {
+                    html += `
+                        <div class="statistics-div completed-card" id="viewResultPage" title="View CBT Exam Result"
+                            onclick="_getActivePage({page:'viewResultPage', divid:'viewResultPage'});">
+
+                            <div class="statistics-inner-div">
+                                <div class="statistics-top-div">
+                                    <div class="statistics-text">
+                                        <p>View Results</p>
+                                        <span>View and manage CBT exam results</span>
+                                    </div>
+
+                                    <div class="statistics-icon completed">
+                                        <i class="bi bi-bar-chart-fill"></i>
+                                    </div>
+                                </div>
+
+                                <div class="statistics-action-div">
+                                    <div class="action-left">
+                                        <i class="bi bi-bar-chart-fill"></i>
+                                        <span>View Exam Results</span>
                                     </div>
 
                                     <i class="bi bi-arrow-right"></i>
