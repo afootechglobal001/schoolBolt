@@ -245,10 +245,24 @@ function _reportRevenueFiltering(dateFrom, dateTo) {
             const totalPendingFees = fetchedData.totalPendingFees;
             const totalCancelledFees = fetchedData.totalCancelledFees;
 
+            const paymentViewed = fetchedData.paymentViewed;
+            const viewedPayment = paymentViewed === false
+              ? `
+                <div class="text-div">
+                  <div class="new-payment animated fadeIn">New</div>
+                </div>
+              `
+              : '';
+
             text += `
               <tr class="tb-row">
                 <td>${no}</td>
-                <td class="clickable-td" title="Click to view payment breakdown" onclick="_getForm({ page: 'revenueBreakdown', id: '${newpayDate}', url: adminPortalLocalUrl});">${newpayDate}</td>
+                <td class="clickable-td" title="Click to view payment breakdown" onclick="_getForm({ page: 'revenueBreakdown', id: '${newpayDate}', url: adminPortalLocalUrl});">
+                  <div class="text-back-div">
+                    ${newpayDate}
+                    ${viewedPayment}
+                  </div>
+                </td>
                 <td class="SUCCESSFULSTATUS"><s>N</s>${thousandSeperator(totalSuccessfulFees)}</td>
                 <td class="PENDINGSTATUS"><s>N</s>${thousandSeperator(totalPendingFees)}</td>
                 <td class="CANCLLEDSTATUS"><s>N</s>${thousandSeperator(totalCancelledFees)}</td>
@@ -282,7 +296,7 @@ function _reportRevenueFiltering(dateFrom, dateTo) {
   $("#get-form-more-div").fadeOut(500);
 }
 
-function _fetchRevenueById(paymentId) {
+function _fetchRevenueById(paymentId, btn) {
 	$("#get-more-div-secondary").css({'display': 'flex','justify-content': 'center','align-items': 'center'}) .fadeIn(500);
 	try {
 		$.ajax({
@@ -295,6 +309,7 @@ function _fetchRevenueById(paymentId) {
 				if (info.success && info.data.length > 0) {
 					sessionStorage.setItem("getRevenueBreakdownSessionData", JSON.stringify(info.data[0]));
 					_getForm({ page: 'paymentBreakDownForm', layer: 2, url: adminPortalLocalUrl });
+          $(btn).closest('tr').find('.each-new-payment').fadeOut(300, function () {$(this).remove();});
 				} else {
 					const response = info.response;
 					if (response < 100) {
@@ -478,6 +493,7 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
                 const session = fetchedData[i].session;
                 const departmentId = fetchedData[i].departmentId;
                 const paymentId = fetchedData[i].paymentId;
+                const paymentViewed = fetchedData[i].paymentViewed;
 
                 //// Student Data ////
                 const studentId = fetchStudentData.studentId;
@@ -516,6 +532,10 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
                 const statusName = fetchedStatusData.statusName;
                 const statusId = fetchedStatusData.statusId;
 
+                const viewedPayment = paymentViewed === false
+                ? `<div class="each-new-payment animated fadeIn" id="new_${paymentId}">New</div>`
+                : '';
+
                 let buttonHtml = '';
 
                 $('#revenueAlert').removeClass('alert-success alert-failed');
@@ -525,13 +545,24 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
                   $('#revenueAlert').addClass('alert-failed');
                 }
 
+                let canPerformReconcileButton = '';
+                if (userRoles.canPerformPaymentReconciliation) {
+                    canPerformReconcileButton = `
+                    <button class="btn view-btn print-btn"
+                      id="reconcileBtn_${paymentId}"
+                      title="Click to reconcile payment"
+                      onclick="_paymentReconciliation('${paymentId}');">
+                      RECONCILE
+                    </button>`;
+                }
+
                 if (statusId === '3') {
                   buttonHtml = `
                     <td>
                       <div class="btn-div">
                         <button class="btn view-btn"
                           title="Click to view payment breakdown"
-                          onclick="_fetchRevenueById('${paymentId}');">
+                          onclick="_fetchRevenueById('${paymentId}',this);">
                           VIEW DETAILS
                         </button>
 
@@ -544,12 +575,26 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
                       </div>
                     </td>
                   `;
+                } else if (statusId === '4') {
+                  buttonHtml = `
+                    <td>
+                      <div class="btn-div">
+                        <button class="btn view-btn"
+                          title="Click to view payment breakdown"
+                          onclick="_fetchRevenueById('${paymentId}',this);">
+                          VIEW DETAILS
+                        </button>
+
+                        ${canPerformReconcileButton}
+                      </div>
+                    </td>
+                  `;
                 } else {
                   buttonHtml = `
                     <td>
                       <button class="btn view-btn"
                           title="Click to view payment breakdown"
-                          onclick="_fetchRevenueById('${paymentId}');">
+                          onclick="_fetchRevenueById('${paymentId}',this);">
                         VIEW DETAILS
                       </button>
                     </td>
@@ -565,6 +610,7 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
                           onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
 
                           <div class="text-back-div">
+                              ${viewedPayment}
                               <div class="image-div general-passport">
                                   <img src="${studentPixPath}/${passport}" alt="${fullname}" />
                               </div>
@@ -645,7 +691,6 @@ function _loadPaymentsByStatus(statusId, newpayDate) {
 	}
 }
 
-
 function _proceedVerifyPaystackTransaction(paymentId) {
 
   try {
@@ -667,8 +712,8 @@ function _proceedVerifyPaystackTransaction(paymentId) {
 
           _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText);
         } else {
-          _actionAlert(data.message, false);
-          $(`#refreshBtn_${paymentId}`).html(btn_text).prop("disabled", false);
+          _actionAlert(info.message, false);
+          $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
 
           const response = info.response;
           if (response < 100) {
@@ -690,7 +735,7 @@ function _proceedVerifyPaystackTransaction(paymentId) {
 }
 
 function _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText) {
-
+  let sessionPayDate = sessionStorage.getItem("sessionPayDate");
   $.ajax({
     url: `https://api.paystack.co/transaction/verify/${paymentId}`,
     type: "GET",
@@ -699,30 +744,81 @@ function _verifyPaystackTransaction(branchId, paymentId, secretKey, btnText) {
       "Content-Type": "application/json"
     },
     success: function (data) {
-      console.log(data);
       if (data.status === true && data.data.status === "success") {
-        _callVeifyPaymentSuccess(paymentId, branchId, btnText);
+        const paystackId = $.trim(data?.data?.id);
+        const paystackCharges = $.trim(data?.data?.fees);
+        _callVeifyPaymentSuccess(paymentId, branchId, paystackId, paystackCharges, btnText);
       } else {
-        _actionAlert('Transaction is still in pending status', false);
+        _callVerifyPaymentCancelled(paymentId);
+        _showCustomConfirm({
+          title: "Transaction Not Successful!",
+          message: "This transaction was not successful and has been automatically cancelled by the system.",
+          alertType: "error",
+          falseActionBtn: true,
+          trueActionBtnText: "View Cancelled Payments",
+          falseActionBtnText: "Stay Here",
+          closeOnOverlayClick: false,
+          trueActionCallback: () => {
+            _getPaymentStatusNav({
+              divid: 'cancelledPage',
+              page: 'cancelledPage',
+              id: sessionPayDate,
+              url: adminPortalLocalUrl
+            });
+          },
+          falseActionCallback: () => {
+            _getPaymentStatusNav({
+              divid: 'pendingPage',
+              page: 'pendingPage',
+              id: sessionPayDate,
+              url: adminPortalLocalUrl
+            });
+          },
+        });
         $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
       }
-
     },
     error: function (xhr, status, error) {
       console.error("Error:", error);
-      _actionAlert("An unexpected error occurred! Please try again.", false);
+        _callVerifyPaymentCancelled(paymentId);
+        _showCustomConfirm({
+            title: "Transaction Not Successful!",
+            message: "This transaction was not successful and has been automatically cancelled by the system.",
+            alertType: "error",
+            falseActionBtn: true,
+            trueActionBtnText: "View Cancelled Payments",
+            falseActionBtnText: "Stay Here",
+            closeOnOverlayClick: false,
+            trueActionCallback: () => {
+              _getPaymentStatusNav({
+                divid: 'cancelledPage',
+                page: 'cancelledPage',
+                id: sessionPayDate,
+                url: adminPortalLocalUrl
+              });
+            },
+            falseActionCallback: () => {
+              _getPaymentStatusNav({
+                divid: 'pendingPage',
+                page: 'pendingPage',
+                id: sessionPayDate,
+                url: adminPortalLocalUrl
+              });
+            },
+        });
       $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
     }
   });
-
 }
 
-function _callVeifyPaymentSuccess(paymentId, branchId, btnText) {
+function _callVeifyPaymentSuccess(paymentId, branchId, paystackId, paystackCharges, btnText) {
  let sessionPayDate = sessionStorage.getItem("sessionPayDate");
   try {
     const formData = {
       paymentId: paymentId,
       branchId: branchId,
+      paystackId: paystackId,
+      paystackCharges: paystackCharges,
     };
 
     $.ajax({
@@ -735,13 +831,31 @@ function _callVeifyPaymentSuccess(paymentId, branchId, btnText) {
       processData: false,
       success: function (data) {
         if (data.success) {
-         _actionAlert(data.message, true);
-          _getPaymentStatusNav({
-            divid: 'successfulPage',
-            page: 'successfulPage',
-            id: sessionPayDate,
-            url: adminPortalLocalUrl
-          });
+          _showCustomConfirm({
+            title: "Transaction Successful!",
+            message: data.message,
+            alertType: "success",
+            falseActionBtn: true,
+            trueActionBtnText: "View Successful Payments",
+            falseActionBtnText: "Stay Here",
+            closeOnOverlayClick: false,
+            trueActionCallback: () => {
+              _getPaymentStatusNav({
+                divid: 'successfulPage',
+                page: 'successfulPage',
+                id: sessionPayDate,
+                url: adminPortalLocalUrl
+              });
+            },
+            falseActionCallback: () => {
+              _getPaymentStatusNav({
+                divid: 'pendingPage',
+                page: 'pendingPage',
+                id: sessionPayDate,
+                url: adminPortalLocalUrl
+              });
+            },
+        });
         } else {
           _actionAlert(data.message, false);
           $(`#refreshBtn_${paymentId}`).html(btnText).prop("disabled", false);
@@ -753,5 +867,149 @@ function _callVeifyPaymentSuccess(paymentId, branchId, btnText) {
     });
   } catch (error) {
     console.log(error);
+  }
+}
+
+function _callVerifyPaymentCancelled(paymentId) {
+  try {
+    const formData = {
+      paymentId: paymentId,
+    };
+
+    $.ajax({
+      type: "POST",
+      url: `${endPoint}/parent/payment/payment-cancelled`,
+      data: JSON.stringify(formData),
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      processData: false,
+      success: function () {},
+      error: function (error) {
+        console.log(error);
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function _printPaymentBreakDownReciept() {
+  let getRevenueBreakdownSessionData = JSON.parse(sessionStorage.getItem("getRevenueBreakdownSessionData"));
+
+  if (getRevenueBreakdownSessionData) {
+		sessionStorage.setItem("printGeneralPaymentRecieptBreakdownSession", JSON.stringify(getRevenueBreakdownSessionData));
+		window.open(`${websiteUrl}/reports/print-payment-receipt`, '_blank');
+	}
+}
+
+//// Resend Payment Reciept /////
+function _resendPaymentReciept() {
+  let getRevenueBreakdownSessionData = JSON.parse(sessionStorage.getItem("getRevenueBreakdownSessionData"));
+  const paymentId = getRevenueBreakdownSessionData?.paymentId;
+  const studentId = getRevenueBreakdownSessionData?.studentId;
+
+	try {
+		//////get all needed values////
+		const parentFullname = $("#parentFullname").val().trim();
+		const parentEmail = $("#recieptParentEmail").val().trim();
+
+		///// empty field validation//////////
+		let issueCount = 0;
+		issueCount += _validateEmptyValue("parentFullname", "RECIEVER NAME");
+		issueCount += _validateEmptyValue("recieptParentEmail", "RECIEVER EMAIL");
+    issueCount += _validateEmail("recieptParentEmail", parentEmail);
+
+		if (issueCount > 0) return;
+
+		// Gather form data
+		const formData = {
+			parentFullname: parentFullname,
+			parentEmail: parentEmail,
+		};
+
+		const btnText = $("#proceedBtn").html();
+    _btnDisable("proceedBtn", btnText, true);
+
+		_callRawEndPoints({
+      url: `parent/payment/reprint-receipt?paymentId=${paymentId}&studentId=${studentId}`,
+      formData,
+      accessKey: true,
+		})
+		.then((response) => {
+			_staffValidationCheck(response.response);
+			if (response.success) {
+        _alertClose(3);
+        _showCustomConfirm({
+          title: 'Receipt Resent Successfully!',
+          message: response.message,
+          alertType: 'success',
+          trueActionBtnText: 'OK, Thanks.',
+          closeOnOverlayClick: true,
+        });
+			} else {
+				_showCustomConfirm({
+					title: "Unable to Resend Reciept",
+					message: response.message,
+					alertType: "warning",
+					trueActionBtnText: "OK",
+					closeOnOverlayClick: true,
+				});
+				_btnDisable("proceedBtn", btnText, false);
+			}
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			_callAjaxError(() => _resendPaymentReciept()); // retry if needed
+			_btnDisable("proceedBtn", btnText, false);
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _resendPaymentReciept());
+		_btnDisable("proceedBtn", btnText, false);
+	}
+}
+
+function _paymentReconciliation(paymentId) {
+ let sessionPayDate = sessionStorage.getItem("sessionPayDate");
+  try {
+    const btnText = $(`#reconcileBtn_${paymentId}`).html();
+    $(`#reconcileBtn_${paymentId}`).html('<img src="' + websiteUrl + '/images/loading.gif" width="10px" alt="Loading"/>');
+    $(`#reconcileBtn_${paymentId}`).prop("disabled", true);
+
+    const formData = {
+      paymentId: paymentId,
+    };
+
+    $.ajax({
+      type: "POST",
+      url: `${endPoint}/parent/payment/payment-reconciliation`,
+      data: JSON.stringify(formData),
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      processData: false,
+      success: function (data) {
+        if (data.success) {
+         _actionAlert(data.message, true);
+          _getPaymentStatusNav({
+            divid: 'pendingPage',
+            page: 'pendingPage',
+            id: sessionPayDate,
+            url: adminPortalLocalUrl
+          });
+        } else {
+          _actionAlert(data.message, false);
+          $(`#reconcileBtn_${paymentId}`).html(btnText).prop("disabled", false);
+        }
+      },
+      error: function (error) {
+        console.log(error);
+        $(`#reconcileBtn_${paymentId}`).html(btnText).prop("disabled", false);
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    $(`#reconcileBtn_${paymentId}`).html(btnText).prop("disabled", false);
   }
 }

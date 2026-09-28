@@ -59,7 +59,7 @@
 
                         <button class="btn" title="Proceed" id="proceedLoginBtn" onclick="_confirmLoginEmail();">Proceed <i class="bi-arrow-right"></i></button>                                                                                                                    
                     </div>
-                    <p><a href="<?php echo $websiteUrl ?>/parent/auth" title="Go Back" title="Go Back"><span><i class="bi-arrow-left"></i> Go Back</span></a></p>
+                    <p><span onclick="_goBack();"><i class="bi-arrow-left"></i> Go Back</span></p>
                 </div>
             </div>
         </div>

@@ -24,6 +24,7 @@ switch ($action){
 		require_once('account-report/account-report-content.php');
 		require_once('branch-operation/schooBolt-wallet-content.php');
 		require_once('branch-operation/branch-account-report-content.php');
+		require_once('branch-operation/branch-transaction-report-content.php');
 	break;
 
 	case 'get_form':
@@ -46,6 +47,7 @@ switch ($action){
 		require_once('account-report/account-report-content.php');
 		require_once('branch-operation/schooBolt-wallet-content.php');
 		require_once('branch-operation/branch-account-report-content.php');
+		require_once('branch-operation/branch-transaction-report-content.php');
 	break;
 
 	case 'upload_student_pix':
@@ -95,7 +97,9 @@ switch ($action){
 			'subjectListHeader' => "../../../uploaded_files/schoolResultHeaders/",
 			'terminalResultSummaryHeader' => "../../../uploaded_files/schoolResultHeaders/",
 			'terminalResultHeader' => "../../../uploaded_files/schoolResultHeaders/",
-			'watermark' => "../../../uploaded_files/schoolResultHeaders/"
+			'watermark' => "../../../uploaded_files/schoolResultHeaders/",
+			'sessionCumulativeBroadSheetHeader' => "../../../uploaded_files/schoolResultHeaders/",
+			'sessionPromotionalBroadSheetHeader' => "../../../uploaded_files/schoolResultHeaders/"
 		];
 
 		$uploadDir = $folders[$fileType];

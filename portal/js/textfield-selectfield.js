@@ -717,3 +717,42 @@ function _getSelectFundPurposeId(fieldId, fundPurposeIds) {
     _actionAlert("An unexpected error occurred. Please try again.", false);
   }
 }
+
+function _getSelectResultAssessments(fieldId) {
+  try {
+    $.ajax({
+      type: "GET",
+      url: `${endPoint}/preset-data/fetch-check-result-assessments`,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      success: function (info) {
+        const data = info.data;
+        const success = info.success;
+
+        if (success === true) {
+          for (let i = 0; i < data.length; i++) {
+            const id = data[i].checkResultAsessmentId;
+            const value = data[i].checkResultAsessmentName;
+            $("#searchList_" + fieldId).append(
+              "<li onclick=\"_clickOption('searchList_" +
+                fieldId +
+                "', '" +
+                id +
+                "', '" +
+                value +
+                "');\">" +
+                value +
+                "</li>",
+            );
+          }
+        } else {
+          _actionAlert(info.message, false);
+        }
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred. Please try again.", false);
+  }
+}

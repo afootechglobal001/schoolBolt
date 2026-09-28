@@ -1564,7 +1564,6 @@ header
 }
 
 .table-div .table .tb-row .text-back-div .text-div {
-  width: calc(100% - 33px);
   display: flex;
   flex-direction: column;
 }
@@ -1625,6 +1624,27 @@ header
   font-family: sub-title-font;
   font-size: 11px;
   color: var(--sub-body-color);
+}
+
+.table-div .table .tb-row .text-back-div .text-div .new-payment {
+  font-family: body-font;
+  font-size: 11px;
+  color: var(--white-color);
+  background-color: rgb(26, 115, 232);
+  border-radius: 25px;
+  padding: 1px 7px;
+}
+
+.table-div .table .tb-row .text-back-div .each-new-payment {
+  position: absolute;
+  top: -4px;
+  left: -2px;
+  font-size: 10px;
+  color: var(--white-color);
+  background-color: rgb(26, 115, 232);
+  border-radius: 25px;
+  padding: 1px 5px;
+  z-index: 100;
 }
 
 .table-div .table .tb-row .text-back-div .text-div .red-color {
@@ -1987,6 +2007,11 @@ header
   color: var(--subactive-color);
 }
 
+.slide-form-div .container-back-div .inner-container .btn-cont {
+  display: flex;
+  gap: 8px;
+}
+
 .slide-form-div .container-back-div .inner-container .btn {
   border: none;
   height: 45px;
@@ -1999,6 +2024,10 @@ header
   transition: all 0.2s ease-in 0.2s;
   border-radius: 5px;
   margin-top: 8px;
+}
+
+.slide-form-div .container-back-div .inner-container .blue-bg-btn {
+  background: var(--primary-color);
 }
 
 .slide-form-div .container-back-div .inner-container .btn:hover {
@@ -4841,6 +4870,18 @@ header
   .text-back-div
   .inner-text
   .text-div
+  .GRADUATED {
+  background: #4D7AFF;
+  color: var(--white-color);
+}
+
+.user-profile-div
+  .profile-content-div
+  .bg-img
+  .mini-profile
+  .text-back-div
+  .inner-text
+  .text-div
   .name {
   overflow: hidden;
   color: var(--sub-body-color);
@@ -6286,8 +6327,36 @@ header
 .new-statistics-back-div
   .new-statistics-div
   .statistics-inner-div
+  .report-statistics-text
+  .flex-cont{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.new-statistics-back-div
+  .new-statistics-div
+  .statistics-inner-div
+  .report-statistics-text
+  .flex-cont .transCount{
+    font-size: px;
+    color: var(--white-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 13px;
+    padding: 0px 2px;
+    font-style:normal;
+    font-family: body-font;
+    background: var(--secondary-color);
+    border-radius: 4px;
+}
+
+.new-statistics-back-div
+  .new-statistics-div
+  .statistics-inner-div
   .statistics-icon {
-  color: var(--secondary-color);
   font-size: 25px;
   width: 50px;
   height: 50px;

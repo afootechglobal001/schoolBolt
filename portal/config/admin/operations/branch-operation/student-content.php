@@ -42,7 +42,7 @@
                             <script>
                                 textField({
                                     id: 'surName',
-                                    title: 'SURNAME NAME',
+                                    title: 'SURNAME',
                                     onKeyUpFunction: 'copyTextbox()'
                                 });
                             </script>
@@ -90,7 +90,7 @@
                             <script>
                                 textField({
                                     id: 'dateOfBirth',
-                                    title: 'Dtae Of Birth',
+                                    title: 'Date Of Birth',
                                     type: 'date'
                                 });
                             </script>
@@ -519,18 +519,18 @@
                             onclick="_getActiveStudentPage({divid:'student_profile_details', page: 'student_profile_details', url: adminPortalLocalUrl});">
                             <i class="bi-person-bounding-box"></i> Student Profile
                         </li>
-                        <li class="hide-li" title="Transcript" id="tanscript"
-                            onclick="_getActiveStudentPage({divid:'tanscript', page: 'tanscript', url: adminPortalLocalUrl});">
+                        <li class="hide-li" title="Transcript" id="studentTranscriptPage"
+                            onclick="">
                             <i class="bi-mortarboard"></i> Transcript
                         </li>
                         <li class="hide-li" title="Student Report" id="student_report"
-                            onclick="_getActiveStudentPage({divid:'student_report', page: 'student_report', url: adminPortalLocalUrl});">
+                            onclick="">
                             <i class="bi-mortarboard"></i> Student Report
                         </li>
-                        <li class="hide-li" title="Student Activities" id="student_activities"
+                        <!-- <li class="hide-li" title="Student Activities" id="student_activities"
                             onclick="_getActiveStudentPage({divid:'student_activities', page: 'student_activities', url: adminPortalLocalUrl});">
                             <i class="bi-bell"></i> Student Activities
-                        </li>
+                        </li> -->
                         <li class="hide-li" id="dotted" title="Student Account"><i class="bi-credit-card"></i> Student
                             Account
                             <ul class="animated fadeIn">
@@ -558,18 +558,18 @@
                                     onclick="_getActiveStudentPage({divid:'student_profile_details', page: 'student_profile_details', url: adminPortalLocalUrl});">
                                     <i class="bi-speedometer2"></i> <span> Dashboard</span>
                                 </li>
-                                <li title="Transcript" id="tanscript"
-                                    onclick="_getActiveStudentPage({divid:'tanscript', page: 'tanscript', url: adminPortalLocalUrl});">
+                                <li title="Transcript" id="studentTranscriptPage"
+                                    onclick="">
                                     <i class="bi-mortarboard"></i> Transcript
                                 </li>
                                 <li title="Student Report" id="student_report"
                                     onclick="_getActiveStudentPage({divid:'student_report', page: 'student_report', url: adminPortalLocalUrl});">
                                     <i class="bi-mortarboard"></i> Student Report
                                 </li>
-                                <li title="Student Activities"
+                                <!-- <li title="Student Activities"
                                     onclick="_getActiveStudentPage({divid:'student_activities', page: 'student_activities', url: adminPortalLocalUrl});">
                                     <i class="bi-bell"></i> <span>Student Activities</span>
-                                </li>
+                                </li> -->
                                 <li title="Current Payable Fees" onclick="_fetchStudentCurrentPayableFees();"><i
                                         class="bi-credit-card"></i>Current Payable Fees</li>
 
@@ -1326,7 +1326,7 @@
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+        <table class="table" cellspacing="0" style="width:100%" id="branchStudentpageContent">
             <script>
                 _fetchBranchStudents();
             </script>
@@ -1368,9 +1368,9 @@
         <div><span><i class="bi-clock"></i></span> STUDENT TRANSACTION HISTORY</div>
 
         <div class="btn-container">
-            <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
-            <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i>
-                EXPORT</button>
+            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('transactionHistoryContentTable','Student_Transaction_History_List');">
+                <i class="bi-file-earmark-excel"></i> EXPORT
+            </button>  
         </div>
     </div>
 
@@ -1436,7 +1436,7 @@
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%">
+        <table class="table" cellspacing="0" style="width:100%" id="transactionHistoryContentTable">
             <thead>
                 <tr class="tb-col">
                     <th>sn</th>
@@ -1655,7 +1655,7 @@
             <div class="text_field_container search_field_container">
                 <input class="text_field student_text_field" type="text" id="searchContent" onkeyup="filters('Content');"
                     placeholder="" title="Type here to search students" />
-                <div class="placeholder dash_placeholder"><i class="bi-search"></i> Type here to archived student</div>
+                <div class="placeholder dash_placeholder"><i class="bi-search"></i> Type here to search archived student</div>
             </div>
         </div>
     </div>
@@ -1669,6 +1669,60 @@
     </div>
 <?php } ?>
 
+<!-- /////////////// Branch Alumni Students Session Select Form ///////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'branchAlumniStudentsSessionSelect') { ?>
+    <div class="caption-div animated zoomIn">
+        <div class="title-div">
+            <div class="title"><i class="bi-eye"></i> VIEW ALUMNI STUDENTS</div>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i
+                    class="bi-x-lg"></i></button>
+        </div>
+
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, you're about to view alumni students.
+                Please select preferred <span>Session</span> below to continue.</div>
+                
+            <div class="text_field_container" id="alumniSession_container">
+                <script>
+                    selectField({
+                        id: 'alumniSession',
+                        title: 'Select Session'
+                    });
+                    _getSelectAlumniSession('alumniSession');
+                </script>
+            </div>
+
+            <button class="btn" title="PROCEED TO VIEW ALUMNI STUDENTS" onclick="_proceedviewAlumniStudents();"> <i
+                    class="bi-check"></i> PROCEED </button>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- For Alumni Students Page -->
+<?php if ($page == 'branchAlumniStudentsPage') { ?>
+    <script>
+        fetchAlumniStudentsParams = JSON.parse(sessionStorage.getItem("fetchAlumniStudentsParams"));
+    </script>
+
+    <div class="alert alert-success form-alert animated fadeIn">
+        <div>
+            <span><i class="bi-mortarboard"></i></span>
+                ALUMNI STUDENTS CLASS LIST --
+            <span>SESSION</span>
+            </span> -- <span id="alumniSessionName">
+                <script>
+                    $("#alumniSessionName").html(fetchAlumniStudentsParams.sessionName);
+                </script>
+            </span>
+        </div>
+    </div>
+
+    <div class="pages-toggle-back-div" id="alumniPageContent">
+        <script>
+            _fetchBranchAlumniDepartmentClasses();
+        </script>
+    </div>
+<?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 <?php if ($page == 'branchLoadStudentFundForm') { ?>
@@ -1892,16 +1946,16 @@
                 id="dateTo">Loading...</span></div>
 
         <div class="btn-container">
-            <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
-            <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i>
-                EXPORT</button>
+            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('fetchStudentFundsTable','Student_Fund_History_List');">
+                <i class="bi-file-earmark-excel"></i> EXPORT
+            </button>  
         </div>
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%" id="">
+        <table class="table" cellspacing="0" style="width:100%" id="fetchStudentFundsTable">
             <thead>
-                <tr class="tb-col">
+                <tr class="tb-col fund-tb-col">
                     <th>sn</th>
                     <th>Date</th>
                     <th>Payment ID</th>
@@ -1910,11 +1964,12 @@
                     <th>Balance After(<s>N</s>)</th>
                     <th>Fund Loaded By</th>
                     <th>Status</th>
+                    <th>Action</th>                 
                 </tr>
             </thead>
             <tbody id="fetchStudentFunds">
                 <script>
-                    _fetchStudentFundFiltering('srch-30', 'Last 30 Days');
+                    _fetchStudentFundFiltering('srch-90', 'Last 90 Days');
                 </script>
 
                 <tr>
@@ -1931,6 +1986,272 @@
     </div>
 <?php } ?>
 
+<!-- For Student Cancel Form -->
+<?php if ($page == 'studentFundCancelForm') { ?>
+    <script>
+        useEachFetchStudentFundSession = JSON.parse(sessionStorage.getItem("useEachFetchStudentFundSession"));
+    </script>
+
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <div class="icon-title-div">
+                    <span id="panel-title"><span><i class="bi-plus-square"></i></span> STUDENT FUND DETAILS</span>
+                </div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Student Information;</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Student Name:</div>
+                                    <div><span id="cancelFormFullName">
+                                            <script>
+                                                $("#cancelFormFullName").html(useEachFetchStudentFundSession?.studentData
+                                                    ?.surName + ' ' + useEachFetchStudentFundSession?.studentData
+                                                    ?.firstName + ' ' +useEachFetchStudentFundSession?.studentData?.otherNames);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Student ID:</div>
+                                    <div><span id="cancelFormStudentId">
+                                            <script>
+                                                $("#cancelFormStudentId").html(useEachFetchStudentFundSession?.studentData
+                                                    ?.studentId);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Student Wallet Balance:</div>
+                                    <div><span id="cancelAdvancedBalance">
+                                            <script>
+                                                $("#cancelAdvancedBalance").html('<s>N</s>' + thousandSeperator(
+                                                    useEachFetchStudentFundSession?.studentData?.advancedBalance));
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Payment Details;</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Payment ID:</div>
+                                    <div><span id="cancelPaymentId">
+                                            <script>
+                                                $("#cancelPaymentId").html(useEachFetchStudentFundSession?.data[0]?.paymentId);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Advanced Balance Before:</div>
+                                    <div><span id="cancelAdvancedBalanceBefore">
+                                            <script>
+                                                $("#cancelAdvancedBalanceBefore").html('<s>N</s>' + thousandSeperator(
+                                                    useEachFetchStudentFundSession?.data[0]?.advancedBalanceBefore));
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Amount Funded:</div>
+                                    <div><span id="cancelAdvancedAmount">
+                                            <script>
+                                                $("#cancelAdvancedAmount").html('<s>N</s>' + thousandSeperator(
+                                                    useEachFetchStudentFundSession?.data[0]?.amount));
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Advanced Balance After:</div>
+                                    <div><span id="cancelAdvancedBalanceAfter">
+                                            <script>
+                                                $("#cancelAdvancedBalanceAfter").html('<s>N</s>' + thousandSeperator(
+                                                    useEachFetchStudentFundSession?.data[0]?.advancedBalanceAfter));
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Reason For Funding:</div>
+                                    <div><span id="cancelDescription">
+                                            <script>
+                                                $("#cancelDescription").html(useEachFetchStudentFundSession?.data[0]?.description);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Status:</div>
+                                    <div><span id="fundFormStatusName">
+                                            <script>
+                                                $("#fundFormStatusName").html(useEachFetchStudentFundSession?.data[0]?.statusData?.statusName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Date:</div>
+                                    <div><span id="fundUpdatedTime">
+                                            <script>
+                                                $("#fundUpdatedTime").html(useEachFetchStudentFundSession?.data[0]?.updatedTime);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Funded By;</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Staff ID:</div>
+                                    <div><span id="fundedById">
+                                            <script>
+                                                $("#fundedById").html(useEachFetchStudentFundSession?.data[0]?.createdByData?.staffId);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Staff FullName:</div>
+                                    <div><span id="fundedByName">
+                                            <script>
+                                                $("#fundedByName").html(useEachFetchStudentFundSession?.data[0]?.createdByData?.fullName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert" id="viewCanelledByInfo">
+                        <span>Cancelled By;</span>
+                        <div class="alert-list-div">                 
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Staff ID:</div>
+                                    <div><span id="cancelledById">
+                                            <script>
+                                                $("#cancelledById").html(useEachFetchStudentFundSession?.data[0]?.updatedByData?.staffId);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Staff FullName:</div>
+                                    <div><span id="cancelledByName">
+                                            <script>
+                                                $("#cancelledByName").html(useEachFetchStudentFundSession?.data[0]?.updatedByData?.fullName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Reason For Cancellation:</div>
+                                    <div><span id="formReasonForCancellation">
+                                            <script>
+                                                $("#formReasonForCancellation").html(useEachFetchStudentFundSession?.data[0]?.reasonForCancellation);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="viewProceedButton">
+                    <div class="permission-form-back-div account-permission-form-back-div">
+                        <div class="title-div">
+                            <h4>Reason for the student fund cancellation</h4>
+                            <div class="text_area_container" id="reasonForCancellation_container">
+                                <script>
+                                    textField({
+                                        id: 'reasonForCancellation',
+                                        title: 'Reason For Cancellation',
+                                        type: 'textarea',
+                                        rows: 1,
+                                        maxlength: '50',
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn" title="Proceed" id="submitBtn" onclick="_studentFundCancellation();"> <i
+                                class="bi-check"></i> Proceed </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>  
+        $(document).ready(function() {
+            ///// SHOW / HIDE CANCELLED BY ////
+            if (useEachFetchStudentFundSession?.data[0]?.statusData?.statusId==="4") {
+                $('#viewCanelledByInfo').show();
+            } else {
+                $('#viewCanelledByInfo').hide();
+            }
+            
+            ///// SHOW / HIDE PROCEED FUND CANCEL BUTTON ////
+            if (
+                userRoles?.canCancelStudentFund && 
+                useEachFetchStudentFundSession?.data?.[0]?.statusData?.statusId === "5"
+            ) {
+                $('#viewProceedButton').show();
+            } else {
+                $('#viewProceedButton').hide();
+            }
+        });
+    </script>
+<?php } ?>
 
 <!-- For Student discount or scholarship Page -->
 <?php if ($page == 'studentDiscountScholarship') { ?>
@@ -1938,16 +2259,14 @@
         <div><i class="bi-mortarboard"></i> STUDENT DISCOUNT OR SCHOLARSHIP APPLICATION</div>
 
         <div class="btn-container" id="canApplyStudentDiscountScholarship">
-            <button class="btn" title="PRINT RECORDS" onclick=""><i class="bi-printer"></i>
-                PRINT</button>
-
-            <button class="btn" title="EXPORT RECORDS" onclick=""><i class="bi-file-earmark-excel"></i>
-                EXPORT</button>
+            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('fetchStudentDiscountScholarshipFundsTable','Student_Discount_Scholarship_History_List');">
+                <i class="bi-file-earmark-excel"></i> EXPORT
+            </button>  
         </div>
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%">
+        <table class="table" cellspacing="0" style="width:100%" id="fetchStudentDiscountScholarshipFundsTable">
             <thead>
                 <tr class="tb-col">
                     <th>sn</th>
@@ -1982,4 +2301,223 @@
     </div>
 <?php } ?>
 
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'alumniStudentByClassModal') { ?>
+    <script> 
+        useAlumniStudentByClassSession = JSON.parse(sessionStorage.getItem("useAlumniStudentByClassSession"));
+        var alumniSession = useAlumniStudentByClassSession?.alumniSession;
+        var departmentId = useAlumniStudentByClassSession?.departmentData?.departmentId;
+        var classId = useAlumniStudentByClassSession?.classData?.classId;
+        var armId = useAlumniStudentByClassSession?.armData?.armId;
+        
+        $(document).ready(function () {
+            const btnHtml = `
+                <button class="btn" id="printAlumniBtn" title="PRINT ALUMNI STUDENTS RECORDS" onclick="_printAlumniStudentByClass('${alumniSession}', '${departmentId}', '${classId}', '${armId}');">
+                    <i class="bi-printer"></i> PRINT
+                </button>
 
+                <button class="btn" title="EXPORT ALUMNI STUDENTS RECORDS TO EXCEL"
+                    onclick="exportAccountTableToExcel('fetchAlumiStudentPageContent','Alumni_Student_List');">
+                    <i class="bi bi-file-earmark-excel"></i> EXPORT
+                </button>
+            `;
+            $("#printAlumniAndExportButton").html(btnHtml);
+        });
+    </script>
+
+    <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="top-panel-div">
+            <div class="inner-top">
+                <span><i class="bi-people-fill"></i> ALUMNI STUDENT BY CLASS</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="profile-content-div">
+            <div class="field-back-div">
+                <div class="field-inner-div student-result-field-inner-div">
+                    <div class="content-wrapper animated fadeIn">
+                        <div class="header-div">
+                            <div class="title-nav-back-div">
+                                <div class="nav-ul-div">
+                                    <span>Alumni Students</span>
+                                </div>
+                            </div>
+
+                            <div class="search-btn-div">
+                                <div class="search-div">
+                                    <input type="text" onkeyup="_filtersAlumniStudents(this.value);"
+                                        placeholder="Search Student Here...">
+                                    <i class="bi bi-search"></i>
+                                </div>
+
+                                <div class="btn-div" id="printAlumniAndExportButton"></div>
+                            </div>
+                        </div>
+
+                        <div class="content-container" id="getPaymentNav">
+                            <div class="alert alert-success top-alert-div animated fadeIn">
+                                <div>
+                                    <span><i class="bi-people-fill"></i> ALUMNI STUDENT FOR</span>
+                                    / SESSION --
+                                    <span id="alumniSession">
+                                        <script>
+                                        $("#alumniSession").html(useAlumniStudentByClassSession?.alumniSession);
+                                        </script>
+                                    </span>
+                                    / DEPARTMENT -- <span id="alumniDepartment">
+                                        <script>
+                                        $("#alumniDepartment").html(useAlumniStudentByClassSession?.departmentData
+                                            ?.departmentName);
+                                        </script>
+                                    </span>
+                                    / CLASS -- <span id="alumniClass">
+                                        <script>
+                                        $("#alumniClass").html(useAlumniStudentByClassSession?.classData?.className +
+                                            ' ' +
+                                            useAlumniStudentByClassSession?.armData?.armName);
+                                        </script>
+                                    </span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="table-div animated fadeIn">
+                                <table class="table" cellspacing="0" style="width:100%" id="fetchAlumiStudentPageContent">
+                                    <script>
+                                    $(document).ready(function() {
+                                        const response = JSON.parse(sessionStorage.getItem(
+                                            "useAlumniStudentByClassSession"));
+
+                                        if (response && response.success === true) {
+                                            const data = response.data;
+
+                                            let html = `
+                                                <thead>
+                                                    <tr class="tb-col">
+                                                        <th>sn</th>
+                                                        <th>Student Info</th>
+                                                        <th>Gender</th>
+                                                        <th>Age</th>
+                                                        <th>Session</th>
+                                                        <th>Department</th>
+                                                        <th>Class</th>
+                                                        <th>Arm</th>
+                                                        <th>Accommodation</th>
+                                                        <th>View</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>`;
+
+                                            let sn = 0;
+                                            if (data.length > 0) {
+                                                for (let i = 0; i < data.length; i++) {
+                                                    sn++;
+                                                    const branchId = data[i]?.branchId;
+                                                    const departmentId = data[i]?.departmentId;
+                                                    const classId = data[i]?.classId;
+                                                    const armId = data[i]?.armId;
+                                                    const statusId = data[i]?.statusId;
+                                                    const alumniSession = data[i]?.alumniSession;
+
+                                                    const fetchStudentData = data[i]?.studentData;
+                                                    const fetchDepartmentData = data[i]?.departmentData;
+                                                    const fetchClassData = data[i]?.classData;
+                                                    const fetchArmData = data[i]?.armData;
+                                                    const fetchAccommodationData = data[i]?.accommodationData;
+
+                                                    const studentId = fetchStudentData?.studentId;
+                                                    const passport = fetchStudentData?.passport || "default.jpg";
+                                                    const surName = fetchStudentData?.surName;
+                                                    const firstName = fetchStudentData?.firstName;
+                                                    const otherNames = fetchStudentData?.otherNames;
+                                                    const fullname = surName + " " + firstName + " " + otherNames;
+                                                    const genderName = fetchStudentData?.genderName;
+                                                    const departmentName = fetchDepartmentData?.departmentName;
+                                                    const className = fetchClassData?.className;
+                                                    const armName = fetchArmData?.armName;
+                                                    const statusName = fetchStudentData?.statusName;
+                                                    const accommodationName = fetchAccommodationData?.accommodationName;
+                                                    const age = _calculateAge(fetchStudentData?.dateOfBirth);
+
+                                                    html += `
+                                                    <tr class="tb-row">
+                                                        <td>${sn}</td>
+                                                    <td class="clickable-td" title="Click to view student details" onclick="_fetchEachBranchAlumniStudents('${branchId}', '${alumniSession}', '${departmentId}', '${classId}', '${armId}', '${studentId}');">
+                                                            <div class="text-back-div">
+                                                                <div class="image-div general-passport">
+                                                                    <img src="${studentPixPath}/${passport}" alt="${fullname}"/>
+                                                                </div>
+
+                                                                <div class="text-div">
+                                                                    <div class="first-class">${fullname}</div>
+                                                                    <div class="second-class">${studentId}</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>${genderName}</td>
+                                                        <td>${age}</td>
+                                                        <td>${alumniSession}</td>
+                                                        <td>${departmentName}</td>
+                                                        <td>${className}</td>
+                                                        <td>${armName}</td>
+                                                        <td>${accommodationName}</td>
+                                                        <td><button class="btn view-btn" title="Click to view student profile" onclick="_fetchEachBranchAlumniStudents('${branchId}', '${alumniSession}', '${departmentId}', '${classId}','${armId}','${studentId}');">VIEW</button></td>
+                                                    </tr>`;
+                                                }
+                                            } else {
+                                                html += `
+                                                <tr>
+                                                    <td colspan="7">
+                                                        <div class="false-notification-div">
+                                                            <p>No Record Found!!!</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>`;
+                                            }
+                                            html += `</tbody>`;
+                                            $('#fetchAlumiStudentPageContent').html(html);
+                                        }
+                                    });
+                                    </script>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- For Student Transcript Page-->
+<?php if ($page == 'studentTranscriptPage') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div><span><i class="bi-person-bounding-box"></i></span> STUDENT TRANSCRIPT CLASS LIST 
+        </div>
+    </div>
+
+    <div class="pages-toggle-back-div" id="transcriptClassPageContent">
+        <div class="pages-toggle-div">
+            <div class="pages-toggle-title">
+                <h3>JUNIOR</h3>
+                <div class="btn-back-div">
+                    <button class="btn" title="PRINT TRANSCRIPT" id="" onclick="window.open(`${websiteUrl}/reports/print-student-academic-transcript`, '_blank');">
+                        <i class="bi-printer"></i> PRINT
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pages-toggle-div">
+            <div class="pages-toggle-title">
+                <h3>SENIOR</h3>
+                <div class="btn-back-div">
+                    <button class="btn" title="PRINT TRANSCRIPT" id="" onclick="window.open(`${websiteUrl}/reports/print-student-academic-transcript`, '_blank');">
+                        <i class="bi-printer"></i> PRINT
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>

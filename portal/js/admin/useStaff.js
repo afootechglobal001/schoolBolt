@@ -369,13 +369,13 @@ function _createStaff(view) {
 						}else{
 							_uploadStaffPicture(oldPassportName,newPassportName, message);
 						}
-				} else {
-					_actionAlert(message, false);
-				}
-				$("#submitBtn").html(btn_text).prop("disabled", false);
-			},
+					} else {
+						_actionAlert(message, false);
+						$("#submitBtn").html(btn_text).prop("disabled", false);
+					}
+				},
 				error: function (error) {
-					_actionAlert('An error occurred while processing your request! Please Try Again', false);
+					_actionAlert('Unable to reach the server. Please check your connection.', false);
 					$("#submitBtn").html(btn_text).prop("disabled", false);
 				}
 			});

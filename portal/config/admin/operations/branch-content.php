@@ -410,7 +410,7 @@
                                         </li>
 
                                         <li id="my_students" title="Student Alumni"
-                                            onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});">
+                                            onclick="_getForm({page: 'branchAlumniStudentsSessionSelect', layer:2, url: adminPortalLocalUrl});">
                                             <i class="bi-mortarboard"></i>Student Alumni
                                         </li>
                                     </ul>
@@ -428,17 +428,40 @@
                             }
                             if (userRoles.canViewBranchSubjects) {
                                 $('#branchNavUl').append(`
-                                <li class="hide-li" title="Branch Subject" id="branch_subjects"
-                                    onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});"><i class="bi-journals"></i> Subject</li>
+                                <li class="hide-li" title="Branch Subject" id="branch_subjects">
+                                    <i class="bi-journals"></i> Subject
+                                    <ul class="animated fadeIn">
+                                        <li title="Allocate Subject"
+                                            onclick="_getForm({page: 'allocateSubjectForm', layer:2, url: adminPortalLocalUrl});">
+                                            <i class="bi bi-check2-all"></i> Allocate Subject
+                                        </li>
+
+                                        <li title="View Subject Allocation"
+                                            onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});">
+                                            <i class="bi bi-eye-fill"></i> View Subject Allocation
+                                        </li>
+                                    </ul>
+                                </li>
                             `);
                             }
                             if (userRoles.canViewBranchResults) {
                                 const assessmentLockStatus = getEachBranchDetailsSession?.assessmentLock === true;
+                                let canPublishResultLi = "";
+
+                                if (userRoles.canPublishResult) {
+                                    canPublishResultLi += `
+                                    <li title="Publish Result"
+                                        onclick="_getForm({page: 'publishResultSelectForm', layer:2, url: adminPortalLocalUrl});">
+                                        <i class="bi-file-earmark-ppt-fill"></i> Publish Result
+                                    </li>
+                                    `;
+                                }
+                                $("#resultNavUl").append(canPublishResultLi);
 
                                 $('#branchNavUl').append(`
                                     <li class="hide-li" title="Branch Record">
                                         <i class="bi-person-lines-fill"></i> Result
-                                        <ul class="animated fadeIn">
+                                        <ul class="animated fadeIn" id="resultNavUl">
 
                                             <li class="switch-li" title="Lock Assessment Update">
                                                 <div class="gap">
@@ -464,19 +487,22 @@
                                                 <i class="bi-table"></i> Broad/Report Sheet
                                             </li>
 
-                                            <li title="Cumulative Broadsheet">
-                                                <i class="bi-table"></i> Cumulative Broadsheet
+                                            <li title="Session Cumulative MarkBook"
+                                                onclick="_getForm({page: 'cumulativeAndPromotionalBroadsheetSelectForm', layer:2, id: 'cumulative', url: adminPortalLocalUrl});">
+                                                <i class="bi-table"></i> Session Cumulative MarkBook
                                             </li>
 
-                                            <li title="Promotional Panel">
-                                                <i class="bi-file-spreadsheet-fill"></i> Promotion Panel
+                                            <li title="Promotional Broadsheet"
+                                                onclick="_getForm({page: 'cumulativeAndPromotionalBroadsheetSelectForm', layer:2, id: 'promotional', url: adminPortalLocalUrl});">
+                                                <i class="bi-table"></i> Promotional Broadsheet
                                             </li>
 
-                                            <li title="Publish Result"
-                                                onclick="_getForm({page: 'publishResultSelectForm', layer:2, url: adminPortalLocalUrl});">
-                                                <i class="bi-file-earmark-ppt-fill"></i> Publish Result
-                                            </li>
+                                            ${canPublishResultLi}
 
+                                            <li title="Promotional Panel" id="branchResultPage"
+                                                onclick="_getActiveBranchPage({divid:'branchResultPage', page: 'promotionPanelBranchDepartmentClass', url: adminPortalLocalUrl});">
+                                                <i class="bi-clipboard-check"></i> Promotion Panel
+                                            </li>
                                         </ul>
                                     </li>
                                 `);
@@ -558,7 +584,7 @@
                                     </li>
 
                                     <li id="my_students" title="Student Alumni"
-                                        onclick="_getActiveBranchPage({divid:'view_students', page: 'view_students', url: adminPortalLocalUrl});">
+                                        onclick="_getForm({page: 'branchAlumniStudentsSessionSelect', layer:2, url: adminPortalLocalUrl});">
                                         <i class="bi-mortarboard"></i>Student Alumni
                                     </li>
                                 </ul>
@@ -577,17 +603,40 @@
                                     }
                                     if (userRoles.canViewBranchSubjects) {
                                         $('#branchNavUlMobile').append(`
-                                <li title="Branch Subject"
-                                     onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});">
-                                    <i class="bi-journals"></i> <span>Subject</span>
-                                </li>
-                            `);
+                                    <li title="Branch Subject" id="branch_subjects">
+                                        <i class="bi-journals"></i> Subject
+                                        <ul class="ul-expand animated fadeIn">
+                                            <li title="Allocate Subject"
+                                                onclick="_getForm({page: 'allocateSubjectForm', layer:2, url: adminPortalLocalUrl});">
+                                                <i class="bi bi-check2-all"></i> Allocate Subject
+                                            </li>
+
+                                            <li title="View Subject Allocation"
+                                                onclick="_getForm({page: 'subject_select_form', layer:2, url: adminPortalLocalUrl});">
+                                                <i class="bi bi-eye-fill"></i> View Subject Allocation
+                                            </li>
+                                        </ul>
+                                    </li>
+                                `);
                                     }
                                     if (userRoles.canViewBranchResults) {
                                         const assessmentLockStatus = getEachBranchDetailsSession?.assessmentLock === true;
+
+                                         let canPublishMobileResultLi = "";
+
+                                        if (userRoles.canPublishResult) {
+                                            canPublishMobileResultLi += `
+                                            <li title="Publish Result"
+                                                onclick="_getForm({page: 'publishResultSelectForm', layer:2, url: adminPortalLocalUrl});">
+                                                <i class="bi-file-earmark-ppt-fill"></i> Publish Result
+                                            </li>
+                                            `;
+                                        }
+                                        $("#resultMobileNavUl").append(canPublishMobileResultLi);
+
                                         $('#branchNavUlMobile').append(`
                                 <li title="Branch Record"><i class="bi-person-lines-fill"></i> Result
-                                    <ul class="ul-expand animated fadeIn">
+                                    <ul class="ul-expand animated fadeIn" id="resultMobileNavUl">
                                         <li class="switch-li" title="Lock Assessment Update">
                                             <div class="gap">
                                                 <i class="bi-shield-lock-fill"></i> Lock Assessment Update
@@ -611,11 +660,22 @@
                                             onclick="_getForm({page: 'broadsheet_select_form', layer:2, url: adminPortalLocalUrl});">
                                             <i class="bi-person-lines-fill"></i>Broad/Report Sheet
                                         </li>
-                                        <li title="Cumulative Broadsheet"><i class="bi-person-lines-fill"></i>Cumulative
-                                            Broadsheet
+                                        <li title="Session Cumulative MarkBook"
+                                            onclick="_getForm({page: 'cumulativeAndPromotionalBroadsheetSelectForm', layer:2, id: 'cumulative', url: adminPortalLocalUrl});">
+                                            <i class="bi-table"></i> Session Cumulative MarkBook
                                         </li>
-                                        <li title="Promotional Panel"><i class="bi-person-lines-fill"></i>Promotion Panel</li>
-                                        <li title="Publish Result" onclick="_getForm({page: 'publishResultSelectForm', layer:2, url: adminPortalLocalUrl});"><i class="bi-file-earmark-ppt-fill"></i>Publish Result</li>
+
+                                        <li title="Promotional Broadsheet"
+                                            onclick="_getForm({page: 'cumulativeAndPromotionalBroadsheetSelectForm', layer:2, id: 'promotional', url: adminPortalLocalUrl});">
+                                            <i class="bi-table"></i> Promotional Broadsheet
+                                        </li>
+
+                                       ${canPublishMobileResultLi}
+                                        
+                                        <li title="Promotional Panel"
+                                            onclick="_getActiveBranchPage({divid:'branchResultPage', page: 'promotionPanelBranchDepartmentClass', url: adminPortalLocalUrl});">
+                                            <i class="bi-clipboard-check"></i>Promotion Panel
+                                        </li>
                                     </ul>
 
                                 </li>
@@ -654,10 +714,9 @@
             <div class="field-back-div background-color">
                 <div class="field-inner-div branch-field-inner-div" id="get_branch_details">
                     <script>
-                        _getActiveBranchPage({
-                            divid: 'branch_dashboard',
-                            page: 'branch_dashboard',
-                            url: adminPortalLocalUrl
+                        $(document).ready(function () {
+                            let savedBranchPage = sessionStorage.getItem("currentBranchDashboardPage") ?? "branch_dashboard";
+                            _getActiveBranchPage({divid: savedBranchPage, page: savedBranchPage,  url: adminPortalLocalUrl});
                         });
                     </script>
                 </div>
@@ -978,8 +1037,8 @@
 
                             <div class="btn-div" id="canLoadDashboardWallet">
                                 <script>
-                                if (userRoles.canLoadBranchSchoolBoltWallet) {
-                                    $('#canLoadDashboardWallet').append(`
+                                    if (userRoles.canLoadBranchSchoolBoltWallet) {
+                                        $('#canLoadDashboardWallet').append(`
                                     <button class="btn" title="Load Wallet"
                                     onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i
                                         class="bi bi-wallet-fill"></i> Load Wallet</button>
@@ -1233,67 +1292,6 @@
                                         name: "Revenue",
                                         xValueFormatString: "DD MMM, YYYY",
                                         color: "#328ab3",
-                                        dataPoints: [ //{
-                                            //         x: new Date(2025, 0, 1),
-                                            //         y: 250000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 2),
-                                            //         y: 180000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 3),
-                                            //         y: 100000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 4),
-                                            //         y: 300000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 5),
-                                            //         y: 120000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 6),
-                                            //         y: 150000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 7),
-                                            //         y: 275000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 8),
-                                            //         y: 160000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 9),
-                                            //         y: 350000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 10),
-                                            //         y: 380000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 11),
-                                            //         y: 0
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 12),
-                                            //         y: 100000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 13),
-                                            //         y: 0
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 14),
-                                            //         y: 180000
-                                            //     },
-                                            //     {
-                                            //         x: new Date(2025, 0, 15),
-                                            //         y: 270000
-                                            //     },
-                                        ]
                                     },]
 
                                 });
@@ -1339,8 +1337,8 @@
 
                             <div class="btn-div" id="canLoadDashboardWallet">
                                 <script>
-                                if (userRoles.canLoadBranchSchoolBoltWallet) {
-                                    $('#canLoadDashboardWallet').append(`
+                                    if (userRoles.canLoadBranchSchoolBoltWallet) {
+                                        $('#canLoadDashboardWallet').append(`
                                     <button class="btn" title="Load Wallet"
                                     onclick="_getForm({page: 'branchLoadWalletForm', layer:2,  url: adminPortalLocalUrl});"><i
                                         class="bi bi-wallet-fill"></i> Load Wallet</button>
@@ -1470,8 +1468,7 @@
         <span><i class="bi-person-bounding-box"></i> BRANCH STAFF LIST</span>
 
         <div class="btn-container">
-            <button class="btn" title="PRINT RECORDS" id="" onclick=""><i class="bi-printer"></i> PRINT</button>
-            <button class="btn" title="EXPORT RECORDS" id="" onclick=""><i class="bi-file-earmark-excel"></i>
+            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('pageContent','Branch_Staff_List');"><i class="bi-file-earmark-excel"></i>
                 EXPORT</button>
         </div>
     </div>
@@ -2529,6 +2526,71 @@
 <?php } ?>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'cumulativeAndPromotionalBroadsheetSelectForm') { ?>
+    <div class="caption-div animated zoomIn">
+        <div class="title-div">
+            <?php 
+                if ($id == "cumulative") {
+                    $pageTitle = "SESSION CUMULATIVE MARKBOOK";
+                    $subTitle = "cumulative";
+                } else if ($id == "promotional") {
+                    $pageTitle = "PROMOTIONAL BROADSHEET";
+                    $subTitle = "promotional";
+                }
+            ?>
+            <div class="title"><i class="bi-table"></i> <?php echo $pageTitle; ?></div>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i class="bi-x-lg"></i></button>
+        </div>
+
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, you're about to print <?php echo $subTitle; ?> broad sheet
+                for each class. Please select the <span>Session</span> to proceed.
+            </div>
+
+            <div class="text_field_container" id="sessionId_container">
+                <script>
+                    selectField({
+                        id: 'sessionId',
+                        title: 'Select Session'
+                    });
+                    _getSelectSession('sessionId');
+                </script>
+            </div>
+
+            <button class="btn" id="proceedBtn" title="Proceed Request" onclick="proceedPromotionalAndCumulativeBroadsheet('<?php echo $id ?>');">PROCEED <i class="bi-arrow-right"></i> </button>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'cumulativeAndPromotionalBranchDepartmentClass') { ?>
+    <script>
+        cumulativeAndPromotionalDepartmentClassParams = JSON.parse(sessionStorage.getItem("cumulativeAndPromotionalDepartmentClassParams"));
+    </script>
+
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div>
+            <span><i class="bi-grid-3x3"></i></span> <span id="viewBroadsheetType">
+                <script>
+                    $("#viewBroadsheetType").html(cumulativeAndPromotionalDepartmentClassParams?.viewBroadsheetType === 'cumulative' ? 'SESSION CUMULATIVE MARKBOOK' : 'PROMOTIONAL BROADSHEET');
+                </script>
+            </span> --
+            <span>SESSION</span>
+            </span> -- <span id="cumulativePromotionalBroadSession">
+                <script>
+                    $("#cumulativePromotionalBroadSession").html(cumulativeAndPromotionalDepartmentClassParams?.session);
+                </script>
+            </span></div>
+    </div>
+
+    <div class="pages-toggle-back-div" id="cumulativePromotionalPageContent">
+        <script>
+            _fetchCumulativeAndPromotionalBroadsheetClass();
+        </script>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 <?php if ($page == 'view_ca_result_summary_form') { ?>
     <script>
         getViewResultSummarySession = JSON.parse(sessionStorage.getItem("getViewResultSummarySession"));
@@ -2909,17 +2971,35 @@
                                 </script>
                             </span></div>
 
-                        <div class="btn-container">
+                        <div class="btn-container" id="canUpdatePrincipalsComment">
                             <script>
                                 $(document).ready(function () {
-                                    const schoolCategoryId = getViewTerminalResultSummarySession?.branchData
-                                        ?.schoolCategoryId;
-                                    // Hide by default
-                                    $("#progressReportBtn").hide();
+                                    const schoolCategoryId = getViewTerminalResultSummarySession?.branchData?.schoolCategoryId?.toUpperCase();
 
-                                    // Show only if schoolCategory is COLLEGE
-                                    if (schoolCategoryId && schoolCategoryId.toUpperCase() === "COLLEGE") {
+                                    // Hide buttons by default
+                                    $("#progressReportBtn").hide();
+                                    $("#commentBtn").hide();
+
+                                    // Check allowed school categories
+                                    const isCollege = schoolCategoryId === "COLLEGE";
+                                    const isBasicSchool = schoolCategoryId === "BASIC";
+
+                                    // Show Progress Report only for College
+                                    if (isCollege) {
                                         $("#progressReportBtn").show();
+                                    }
+                                   
+                                    //// Show Comment button only for Term 3 and for College or Basic School categories
+                                    if (isCollege || isBasicSchool) {
+                                        $("#commentBtn").show();
+
+                                        const commentTitle = isCollege
+                                            ? "UPDATE PRINCIPAL'S COMMENT"
+                                            : "UPDATE HEAD TEACHER'S COMMENT";
+
+                                        $("#commentBtn")
+                                            .attr("title", commentTitle)
+                                            .html(`<i class="bi-pencil"></i> ${commentTitle}`);
                                     }
                                 });
                             </script>
@@ -2933,6 +3013,15 @@
                             <button class="btn" title="PROGRESS REPORT" id="progressReportBtn"
                                 onclick="_printAllStudentProgressReport();"><i class="bi-printer"></i> PROGRESS
                                 REPORT</button>
+
+                            <script>
+                                if (userRoles.canUpdatePrincipalsComment) {
+                                      $('#canUpdatePrincipalsComment').append(`
+                                        <button class="btn" id="commentBtn"
+                                        onclick="_proceedUpdatePrincipalsComment();"></button>
+                                    `);
+                                }
+                            </script>
                         </div>
                     </div>
 
@@ -3024,22 +3113,16 @@
                                         }
                                     });
 
-
                                     // Build the table
                                     const thead = $('<thead></thead>');
                                     const headerRow = $('<tr class="tb-col small-font-tb-col"></tr>');
-
-
                                     tableTitles.forEach(title => {
                                         headerRow.append($('<th></th>').text(title));
                                     });
-
                                     headerRow.append($('<th></th>').text('ACTION'));
-
                                     thead.append(headerRow);
 
                                     const tbody = $('<tbody></tbody>');
-
                                     studentList.forEach((student, index) => {
                                         const row = $('<tr class="tb-row report-tb-row"></tr>');
                                         const fullName = `${student.surName} ${student.otherNames || ''}`
@@ -3084,10 +3167,8 @@
 
                                         actionTd.append(printButton);
                                         row.append(actionTd);
-
                                         tbody.append(row);
                                     });
-
                                     $('#terminalResultSumamryPageContent').empty().append(thead).append(tbody);
                                 });
                             </script>
@@ -3557,6 +3638,76 @@
                     </script>
                 </label>
 
+                <!-- WATERMARK -->
+                <div class="title">UPLOAD WATERMARK: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="watermarkPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="watermark" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="watermarkPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            const watermark = getEachBranchDetailsSession?.watermark;
+                            const watermarkUrl = watermark ?
+                                `${watermarkPixPath}/${watermark}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#watermarkPreviewPix")
+                                .attr("src", watermarkUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " Watermark");
+                        });
+                    </script>
+                </label>
+
+                <!-- SESSION CUMULATIVE MARKBOOK HEADER -->
+                <div class="title">UPLOAD SESSION CUMULATIVE MARKBOOK HEADER: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="sessionCumulativeBroadSheetHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="sessionCumulativeBroadSheetHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="sessionCumulativeBroadSheetHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            const sessionCumulativeBroadSheetHeader = getEachBranchDetailsSession?.sessionCumulativeBroadSheetHeader;
+
+                            const sessionCumulativeBroadSheetHeaderUrl = sessionCumulativeBroadSheetHeader ?
+                                `${sessionCumulativeBroadSheetHeaderPixPath}/${sessionCumulativeBroadSheetHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#sessionCumulativeBroadSheetHeaderPreviewPix")
+                                .attr("src", sessionCumulativeBroadSheetHeaderUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " Session Cumulative BroadSheet Header");
+                        });
+                    </script>
+                </label>
+
+                <!-- SESSION PROMOTIONAL BROADSHEET HEADER -->
+                <div class="title">UPLOAD SESSION PROMOTIONAL BROADSHEET HEADER: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="sessionPromotionalBroadSheetHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="sessionPromotionalBroadSheetHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="sessionPromotionalBroadSheetHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            const sessionPromotionalBroadSheetHeader = getEachBranchDetailsSession?.sessionPromotionalBroadSheetHeader;
+
+                            const sessionPromotionalBroadSheetHeaderUrl = sessionPromotionalBroadSheetHeader ?
+                                `${sessionPromotionalBroadSheetHeaderPixPath}/${sessionPromotionalBroadSheetHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#sessionPromotionalBroadSheetHeaderPreviewPix")
+                                .attr("src", sessionPromotionalBroadSheetHeaderUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " Session Promotional BroadSheet Header");
+                        });
+                    </script>
+                </label>
 
                 <div>
                     <button class="btn" title="SUBMIT" id="submitBtn" onclick="_updateBranchConfig();"> <i
@@ -3578,13 +3729,27 @@
 
             <div class="div-in">
                 <div class="user-managment-back-div">
+                    <div class="user-managment-list staff-managment-list" title="Bank Setup"
+                        onclick="_getActiveBranchPage({divid:'branch_account', page: 'branchAccountSetupPage', url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div"><img src="<?php echo $websiteUrl ?>/images/bank.png"
+                                    alt="Bank Setup" /></div>
+                            <div class="text-div">
+                                <h3>Bank Setup</h3>
+                                <p>Configure bank account details for receiving manual payments from parents, ensuring accurate tracking and proper record management.</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="user-managment-list staff-managment-list" title="Fees Settings"
                         onclick="_getActiveBranchPage({divid:'branch_account', page: 'branch_fees_page', url: adminPortalLocalUrl});">
                         <div class="inner-div">
-                            <div class="icon-div"><img src="<?php echo $websiteUrl ?>/images/fees.png" alt="Fees Settings" /></div>
+                            <div class="icon-div"><img src="<?php echo $websiteUrl ?>/images/fees.png"
+                                    alt="Fees Settings" /></div>
                             <div class="text-div">
                                 <h3>Fees Settings</h3>
-                                <p>Set tuition fees and manage billing items.</p>
+                                <p>Set tuition fees for this current session and term and manage billing items for the
+                                    mandatory and non-mandatory fees.</p>
                             </div>
                         </div>
                     </div>
@@ -3597,7 +3762,7 @@
                             </div>
                             <div class="text-div">
                                 <h3>Compute Fees</h3>
-                                <p>Compute payable fees for each branch.</p>
+                                <p>Compute fees prices and manage payable fees for this current session and term.</p>
                             </div>
                         </div>
                     </div>
@@ -3621,7 +3786,8 @@
                             </div>
                             <div class="text-div">
                                 <h3>Student Profile</h3>
-                                <p>Access and manage detailed student information, including personal, academic, and contact records.
+                                <p>Access and manage student information, including personal, academic, and contact
+                                    records.
                                 </p>
                             </div>
                         </div>
@@ -3635,7 +3801,7 @@
                             </div>
                             <div class="text-div">
                                 <h3>Parent List</h3>
-                                <p>View and manage parents associated with your branch.</p>
+                                <p>View and manage parents associated with each student in a class.</p>
                             </div>
                         </div>
                     </div>
@@ -3651,7 +3817,22 @@
 
             <div class="div-in">
                 <div class="user-managment-back-div">
-                    <div class="user-managment-list staff-managment-list" title="Discount/Scholarship Application" onclick="_proceedFetchDiscountDepartmentClass();">
+                    <div class="user-managment-list staff-managment-list" title="Bank Transaction Record"
+                        onclick="_getActiveBranchPage({divid:'branch_account', page: 'branchBankTransactionRecordPage', url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/transaction.png"
+                                    alt="Bank Transaction Record" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Bank Transaction Record</h3>
+                                <p>Record and manage bank transactions from parents’ manual payments for accurate tracking and reconciliation.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user-managment-list staff-managment-list" title="Discount/Scholarship Application"
+                        onclick="_proceedFetchDiscountScholarshipDepartmentClass();">
                         <div class="inner-div">
                             <div class="icon-div">
                                 <img src="<?php echo $websiteUrl ?>/images/discount-scholarship.png"
@@ -3659,7 +3840,7 @@
                             </div>
                             <div class="text-div">
                                 <h3>Discount/Scholarship Application</h3>
-                                <p>Apply and view discount or scholarship applications for students.</p>
+                                <p>Apply discount or scholarship for students in this current session and term.</p>
                             </div>
                         </div>
                     </div>
@@ -3672,7 +3853,9 @@
                             </div>
                             <div class="text-div">
                                 <h3>Student Payment</h3>
-                                <p>View and manage student payments associated with your branch.</p>
+                                <p>View and manage student payments, load student funds manually, compute installment
+                                    payment and send payment receipts
+                                    to parents.</p>
                             </div>
                         </div>
                     </div>
@@ -3685,7 +3868,8 @@
                             </div>
                             <div class="text-div">
                                 <h3>View Debtors</h3>
-                                <p>View the list of students by class and identify those with outstanding payment (DEBTORS).</p>
+                                <p>View the list of students by class and identify those with outstanding payment (DEBTORS).
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -3750,26 +3934,44 @@
 
             <div class="div-in">
                 <div class="user-managment-back-div">
-                    <div class="user-managment-list staff-managment-list" title="Discount Report" onclick="">
+                    <div class="user-managment-list staff-managment-list" title="Bank Transaction Report"
+                        onclick="_getActiveBranchPage({divid:'branch_account', page: 'branchTransactionReportPage', url: adminPortalLocalUrl});">
                         <div class="inner-div">
                             <div class="icon-div">
-                                <img src="<?php echo $websiteUrl ?>/images/scholarship-report.png" alt="Discount Reporte" />
+                                <img src="<?php echo $websiteUrl ?>/images/mobile-banking.png" alt="Bank Transaction Report" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Bank Transaction Report</h3>
+                                <p>View and analyze all bank transactions from parents’ manual payments for accurate tracking and financial reporting.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="user-managment-list staff-managment-list" title="Discount Report"
+                        onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'discountReport', url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/scholarship-report.png" alt="Discount Report" />
                             </div>
                             <div class="text-div">
                                 <h3>Discount Report</h3>
-                                <p>Monitor all discounts applied across fees, track reductions, and analyze their impact on overall revenue.</p>
+                                <p>Monitor all discounts applied across fees, track reductions, and analyze their impact on
+                                    overall revenue.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="user-managment-list staff-managment-list" title="Scholarship Report" onclick="">
+                    <div class="user-managment-list staff-managment-list" title="Scholarship Report"
+                        onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'scholarshipReport', url: adminPortalLocalUrl});">
                         <div class="inner-div">
                             <div class="icon-div">
-                                <img src="<?php echo $websiteUrl ?>/images/scholarship-report.png" alt="Scholarship Report" />
+                                <img src="<?php echo $websiteUrl ?>/images/scholarship-report.png"
+                                    alt="Scholarship Report" />
                             </div>
                             <div class="text-div">
                                 <h3>Scholarship Report</h3>
-                                <p>View and manage scholarships awarded to students, including eligibility, amounts granted, and financial impact.</p>
+                                <p>View and manage scholarships awarded to students, including eligibility, amounts granted,
+                                    and financial impact.</p>
                             </div>
                         </div>
                     </div>
@@ -3794,7 +3996,7 @@
                             </div>
                             <div class="text-div">
                                 <h3>All Revenue Report</h3>
-                                <p>View and analyze revenue reports for your branch operations.</p>
+                                <p>View and analyze all revenue reports by date range or by session and term.</p>
                             </div>
                         </div>
                     </div>
@@ -3821,19 +4023,29 @@
             </div>
 
             <div class="div-in">
-                <div class="user-managment-back-div">
-                    <div class="user-managment-list staff-managment-list" title="Activate Academic Result"
-                        onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'activateResult', url: adminPortalLocalUrl});">
-                        <div class="inner-div">
-                            <div class="icon-div">
-                                <img src="<?php echo $websiteUrl ?>/images/double-check.png" alt="Activate Academic Result" />
+                <div class="user-managment-back-div" id="userManagement">
+                    <script>
+                        $(document).ready(function () {
+                        if (userRoles.canActivateResult) {
+                            $('#userManagement').append(`
+                            <div class="user-managment-list staff-managment-list" title="Activate Academic Result"
+                                onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'activateResult', url: adminPortalLocalUrl});">
+                                <div class="inner-div">
+                                    <div class="icon-div">
+                                        <img src="<?php echo $websiteUrl ?>/images/double-check.png"
+                                            alt="Activate Academic Result" />
+                                    </div>
+                                    <div class="text-div">
+                                        <h3>Activate Academic Result</h3>
+                                        <p>Activate the result for your branch to make it available for viewing and further
+                                            processing.</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-div">
-                                <h3>Activate Academic Result</h3>
-                                <p>Activate the result for your branch to make it available for viewing and further processing.</p>
-                            </div>
-                        </div>
-                    </div>
+                        `);
+                        }
+                        });
+                    </script>
 
                     <div class="user-managment-list staff-managment-list" title="SchoolBolt Wallet"
                         onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});">
@@ -3843,7 +4055,8 @@
                             </div>
                             <div class="text-div">
                                 <h3>SchoolBolt Wallet</h3>
-                                <p>View your wallet transaction history and keep track of all deposits, payments, and wallet activity.
+                                <p>View your wallet transaction history and keep track of all deposits, payments, and wallet
+                                    activity.
                                 </p>
                             </div>
                         </div>
@@ -3870,11 +4083,11 @@
 
         <div id="getNavPage">
             <script>
-                _getActiveCommentNav({
-                    divid: 'malePage',
-                    page: 'malePage',
-                    url: adminPortalLocalUrl
-                });
+            _getActiveCommentNav({
+                divid: 'malePage',
+                page: 'malePage',
+                url: adminPortalLocalUrl
+            });
             </script>
 
         </div>
@@ -3885,7 +4098,7 @@
 <!-- ///// Male Student Comment Page //// -->
 <?php if ($page == 'malePage') { ?>
     <script>
-        getEachTeachersCommentSession = JSON.parse(sessionStorage.getItem("getEachTeachersCommentSession"));
+    getEachTeachersCommentSession = JSON.parse(sessionStorage.getItem("getEachTeachersCommentSession"));
     </script>
 
     <div class="fetch-report-back-div">
@@ -3917,7 +4130,7 @@
                 <tbody id="pageContent">
                     <!-- CONTENT GOES HERE -->
                     <script>
-                        _fetchTeachersComment('M');
+                    _fetchTeachersComment('M');
                     </script>
                     <tr>
                         <td colspan="20">
@@ -3935,7 +4148,7 @@
 <!-- ///// Female Student Comment Page //// -->
 <?php if ($page == 'femalePage') { ?>
     <script>
-        getEachTeachersCommentSession = JSON.parse(sessionStorage.getItem("getEachTeachersCommentSession"));
+    getEachTeachersCommentSession = JSON.parse(sessionStorage.getItem("getEachTeachersCommentSession"));
     </script>
 
     <div class="fetch-report-back-div">
@@ -3967,7 +4180,7 @@
                 <tbody id="pageContent">
                     <!-- CONTENT GOES HERE -->
                     <script>
-                        _fetchTeachersComment('F');
+                    _fetchTeachersComment('F');
                     </script>
                     <tr>
                         <td colspan="20">
@@ -3985,7 +4198,7 @@
 <!-- ///// Male Teacher's Comment Form //// -->
 <?php if ($page == 'commentRegForm') { ?>
     <script>
-        getEachTeachersCommentSession = JSON.parse(sessionStorage.getItem("getEachTeachersCommentSession"));
+    getEachTeachersCommentSession = JSON.parse(sessionStorage.getItem("getEachTeachersCommentSession"));
     </script>
 
     <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
@@ -4018,25 +4231,25 @@
 
                 <div class="text_area_container" id="comment_container">
                     <script>
-                        textField({
-                            id: 'comment',
-                            title: 'Class Teacher\'s Comment',
-                            type: 'textarea',
-                            rows: 2,
-                            value: getEachTeachersCommentSession?.comment,
-                        });
+                    textField({
+                        id: 'comment',
+                        title: 'Class Teacher\'s Comment',
+                        type: 'textarea',
+                        rows: 2,
+                        value: getEachTeachersCommentSession?.comment,
+                    });
                     </script>
                 </div>
 
                 <div class="text_field_container" id="statusId_container">
                     <script>
-                        selectField({
-                            id: 'statusId',
-                            title: 'Select Status',
-                            fieldValue: getEachTeachersCommentSession?.statusData?.statusId ?? '',
-                            fieldLabel: getEachTeachersCommentSession?.statusData?.statusName ?? ''
-                        });
-                        _getSelectStatusId('statusId', '1,2');
+                    selectField({
+                        id: 'statusId',
+                        title: 'Select Status',
+                        fieldValue: getEachTeachersCommentSession?.statusData?.statusId ?? '',
+                        fieldLabel: getEachTeachersCommentSession?.statusData?.statusName ?? ''
+                    });
+                    _getSelectStatusId('statusId', '1,2');
                     </script>
                 </div>
 
@@ -4049,12 +4262,12 @@
         </div>
     </div>
     <script>
-        $(document).ready(function () {
-            const gender = sessionStorage.getItem("activeGender");
-            $("#genderDisplay").text(gender === "M" ? "MALE" : "FEMALE");
+    $(document).ready(function() {
+        const gender = sessionStorage.getItem("activeGender");
+        $("#genderDisplay").text(gender === "M" ? "MALE" : "FEMALE");
 
-            $("#submitBtn").attr("onclick", `_createClassTeachersComment('${gender}')`);
-        });
+        $("#submitBtn").attr("onclick", `_createClassTeachersComment('${gender}')`);
+    });
     </script>
 <?php } ?>
 
@@ -4072,25 +4285,502 @@
                 Please confirm your action below.</div>
             <div class="text_field_container" id="newSession_container">
                 <script>
-                    textField({
-                        id: 'newSession',
-                        title: 'Provide New Session'
-                    });
+                textField({
+                    id: 'newSession',
+                    title: 'Provide New Session'
+                });
                 </script>
             </div>
 
             <div class="text_field_container" id="newTermId_container">
                 <script>
-                    selectField({
-                        id: 'newTermId',
-                        title: 'Select Term'
-                    });
-                    _getSelectTermId('newTermId');
+                selectField({
+                    id: 'newTermId',
+                    title: 'Select Term'
+                });
+                _getSelectTermId('newTermId');
                 </script>
             </div>
 
             <button class="btn" title="PUBLISH RESULT" id="publishResultBtn" onclick="_publishResult();"> <i
                     class="bi-check"></i> PUBLISH RESULT </button>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'updateHeadAndPrincipalComment') { ?>
+    <script>
+        getViewTerminalResultSummarySession = JSON.parse(sessionStorage.getItem("getViewTerminalResultSummarySession"));
+        var commentSchoolCategoryId = getViewTerminalResultSummarySession?.branchData?.schoolCategoryId;
+
+        $(document).ready(function () {
+            if (commentSchoolCategoryId === "BASIC") {
+                $("#panel-title").html( '<i class="bi-plus-square"></i> UPDATE HEAD TEACHER\'S COMMENT');
+                $("#formAlertTitle").html("Head Teacher's Comment");
+            } else {
+                $("#panel-title").html('<i class="bi-plus-square"></i> UPDATE PRINCIPAL\'S COMMENT');
+                $("#formAlertTitle").html("Principal's Comment");
+            }
+        });
+    </script>
+
+    <div class="slide-form-div save-compute-teachers-comment-slide-form" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="panel-title"><i class="bi-plus-square"></i> UPDATE PRINCIPAL'S COMMENT</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert compute-form-alert">
+                        <span>Kindly input new comment for each student or update existing comments to complete <span id="formAlertTitle"></span> </span>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Branch:</div>
+                                    <div><span id="formBranch">
+                                            <script>
+                                            $("#formBranch").html(getViewTerminalResultSummarySession?.branchData?.branchName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Session:</div>
+                                    <div><span id="formSession">
+                                            <script>
+                                            $("#formSession").html(getViewTerminalResultSummarySession?.session);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Term:</div>
+                                    <div><span id="formTermName">
+                                            <script>
+                                            $("#formTermName").html(getViewTerminalResultSummarySession?.termData?.termName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Department:</div>
+                                    <div><span id="departmentName">
+                                            <script>
+                                            $("#departmentName").html(getViewTerminalResultSummarySession?.departmentData
+                                                ?.departmentName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Class:</div>
+                                    <div><span id="className">
+                                            <script>
+                                            $("#className").html(getViewTerminalResultSummarySession?.classData?.className);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Arm:</div>
+                                    <div><span id="armName">
+                                            <script>
+                                            $("#armName").html(getViewTerminalResultSummarySession?.armData?.armName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="compute-comment-back-div" id="fetchStudents">
+                    <script>
+                    $(document).ready(function() {
+                        let text = '';
+
+                        if (getViewTerminalResultSummarySession) {
+                            const fetchStudentData = getViewTerminalResultSummarySession?.studentData;
+                            const fetchBranchData = getViewTerminalResultSummarySession?.branchData;
+                            const deparmtentData = getViewTerminalResultSummarySession?.departmentData;
+                            const classData = getViewTerminalResultSummarySession?.classData;
+                            const armData = getViewTerminalResultSummarySession?.armData;
+                            const success = getViewTerminalResultSummarySession?.success;
+
+                            if (success === true && fetchStudentData.length > 0) {
+                                for (let i = 0; i < fetchStudentData.length; i++) {
+                                    const student = fetchStudentData[i];
+                                    const principalComment = fetchStudentData[i].principalComment;
+
+                                    const fullName = `${student.surName} ${student.firstName}`;
+                                    const passport = student.passport || 'default.jpg';
+                                    const studentId = student.studentId;
+                                    const fieldId = `principalComment_${studentId}`;
+
+                                    $("#fetchStudents").append(`
+                                        <div class="new-each-compute-score-div">
+                                            <div class="new-inner-score-div">
+                                                <div class="top-cont-div">
+                                                    <div class="image-div">
+                                                        <img src="${studentPixPath}/${passport}" alt="${fullName}"/>
+                                                    </div>
+
+                                                    <div class="text-container">
+                                                        <div class="text-div">
+                                                            <div class="name">${fullName}</div>
+                                                            <div>${deparmtentData?.departmentName} -- (${classData?.className} ${armData?.armName})</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <div class="text_area_container" id="${fieldId}_container"></div>
+                                                    <div class="issueText" id="issue_principalComment"></div>
+                                                    <input type="hidden" class="student-id-holder" value="${studentId}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `);
+
+                                    textField({
+                                        id: fieldId,
+                                        title: 'Principal\'s Comment',
+                                        type: 'textarea',
+                                        rows: 2,
+                                        value: principalComment
+                                    });
+                                }
+                            }
+                        }
+                    });
+                    </script>
+                </div>
+
+                <div>
+                    <button class="btn" title="UPDATE COMMENTS" id="submitBtn"
+                        onclick="_savePrincipalsComment();">
+                        <i class="bi-save"></i> UPDATE COMMENTS
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'promotionPanelBranchDepartmentClass') { ?>
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div>
+            <span>
+                <i class="bi-clipboard-check"></i>
+                PROMOTION PANEL
+            </span>
+        </div>
+    </div>
+
+    <div class="pages-toggle-back-div" id="promotionPanelPageContent">
+        <script>
+            _fetchPromotionDepartmentClasses();
+        </script>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'studentPromotionPanelModal') { ?>
+    <script> usePromotionPanelStudentByClassSession = JSON.parse(sessionStorage.getItem("usePromotionPanelStudentByClassSession"));</script>
+
+    <script>
+    _checkAll()
+    </script>
+    <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="top-panel-div">
+            <div class="inner-top">
+                <span><i class="bi-people-fill"></i> STUDENT PROMOTION PANEL</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="profile-content-div">
+            <div class="field-back-div">
+                <div class="field-inner-div student-result-field-inner-div">
+                    <div class="content-wrapper animated fadeIn">
+                        <div class="header-div">
+                            <div class="title-nav-back-div">
+                                <div class="nav-ul-div">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="parent">
+                                        <span>Check All Students</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="search-btn-div">
+                                <div class="search-div">
+                                    <input type="text" onkeyup="_filtersPromotionPanelStudents(this.value);"
+                                        placeholder="Search Student Here...">
+                                    <i class="bi bi-search"></i>
+                                </div>
+
+                                <div class="btn-div">
+                                    <button class="btn" title="ACTIVATE RESULT" id="activateAllBtn"
+                                        onclick="_openProceedPromotionForm();">
+                                        <i class="bi-check"></i> PROCEED TO PROMOTE
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-container" id="getPaymentNav">
+                            <div class="alert alert-success top-alert-div animated fadeIn">
+                                <div>
+                                    <span><i class="bi-people-fill"></i> STUDENT PROMOTION PANEL LIST /</span> SESSION --
+                                    <span id="promotionSession">
+                                        <script>
+                                        $("#promotionSession").html(usePromotionPanelStudentByClassSession?.session);
+                                        </script>
+                                    </span>
+                                    / TERM -- <span id="promotionTermName">
+                                        <script>
+                                        $("#promotionTermName").html(usePromotionPanelStudentByClassSession?.termData?.termName);
+                                        </script>
+                                    </span>
+                                    / DEPARTMENT -- <span id="promotionDepartment">
+                                        <script>
+                                        $("#promotionDepartment").html(usePromotionPanelStudentByClassSession?.departmentData
+                                            ?.departmentName);
+                                        </script>
+                                    </span>
+                                    / CLASS -- <span id="promotionClass">
+                                        <script>
+                                        $("#promotionClass").html(usePromotionPanelStudentByClassSession?.classData?.className +
+                                            ' ' +
+                                            usePromotionPanelStudentByClassSession?.armData?.armName);
+                                        </script>
+                                    </span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="table-div animated fadeIn">
+                                <table class="table" cellspacing="0" style="width:100%" id="promotionPanelStudentByClassPageContent">
+                                    <script>
+                                    $(document).ready(function() {
+                                        const response = JSON.parse(sessionStorage.getItem(
+                                            "usePromotionPanelStudentByClassSession"));
+
+                                        if (response && response.success === true) {
+                                            const data = response.data;
+
+                                            const session = response.session;
+                                            const termName = response?.termData?.termName;
+                                            const departmentId = response?.departmentData?.departmentId;
+                                            const departmentName = response?.departmentData?.departmentName;
+                                            const classId = response?.classData?.classId;
+                                            const className = response?.classData?.className;
+                                            const armId = response?.armData?.armId;
+                                            const armName = response?.armData?.armName;
+
+                                            let html = `
+                                                <thead>
+                                                    <tr class="tb-col">
+                                                        <th></th>
+                                                        <th>sn</th>
+                                                        <th>Student Info</th>
+                                                        <th>Session</th>
+                                                        <th>Term</th>
+                                                        <th>Current Department</th>
+                                                        <th>Current Class</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>`;
+
+                                            let sn = 0;
+
+                                            if (data.length > 0) {
+                                                data.forEach(item => {
+                                                    sn++;
+                                                    const student = item.studentData;
+                                                    const fullname =
+                                                        `${student.surName} ${student.firstName} ${student.otherNames || ''}`;
+                                                    const studentId = item.studentId;
+                                                    const branchId = item.branchId;
+                                                    const passport = student.passport || "default.jpg";
+
+                                                    html += `
+                                                    <tr class="tb-row">
+                                                        <td>
+                                                            <label class="custom-checkbox">
+                                                                <input type="checkbox"
+                                                                    class="child"
+                                                                    id="student_${studentId}"
+                                                                    name="studentId[]"
+                                                                    value="${studentId}"
+                                                                    data-value="${studentId}">
+                                                                    <span></span>
+                                                            </label>
+                                                        </td>
+                                                        <td>${sn}</td>
+
+                                                        <td class="clickable-td">
+                                                            <div class="text-back-div" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
+                                                                <div class="image-div general-passport">
+                                                                    <img src="${studentPixPath}/${passport}" alt="${fullname}" />
+                                                                </div>
+
+                                                                <div class="text-div">
+                                                                    <div class="first-class">${fullname}</div>
+                                                                    <div class="second-class">${studentId}</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>${session}</td>
+                                                        <td>${termName}</td>
+                                                        <td>${departmentName}</td>
+                                                        <td>${className} ${armName}</td>
+                                                    </tr>`;
+                                                });
+                                            } else {
+                                                html += `
+                                                <tr>
+                                                    <td colspan="7">
+                                                        <div class="false-notification-div">
+                                                            <p>No Record Found!!!</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>`;
+                                            }
+                                            html += `</tbody>`;
+                                            $('#promotionPanelStudentByClassPageContent').html(html);
+                                        }
+                                    });
+                                    </script>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- For Promotion Panel Department and class select -->
+<?php if ($page == 'promotionPanelStudentSelectForm') { ?>
+    <script>
+        usePromotionPanelStudentByClassSession = JSON.parse(sessionStorage.getItem("usePromotionPanelStudentByClassSession"));
+    </script>
+
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <div class="icon-title-div">
+                    <span id="panel-title"><span><i class="bi-plus-square"></i></span> PROMOTION PANEL</span>
+                </div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div class="alert alert-success form-alert">
+                    <i class="bi bi-person"></i>
+                    Hello, you are about to carry out student promotion.
+                    Please select the appropriate <span>New Department</span>, <span>New Class</span> and <span>New Arm</span> to continue.
+                </div>
+                
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Confirm Promotion Information</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Current Department:</div>
+                                    <div><span id="promotionDepartmentName">
+                                            <script>
+                                            $("#promotionDepartmentName").html(usePromotionPanelStudentByClassSession?.departmentData
+                                                ?.departmentName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Current Class:</div>
+                                    <div><span id="promotionClassName">
+                                            <script>
+                                            $("#promotionClassName").html(usePromotionPanelStudentByClassSession?.classData
+                                                ?.className);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Current Arm:</div>
+                                    <div><span id="promotionArmName">
+                                            <script>
+                                            $("#promotionArmName").html(usePromotionPanelStudentByClassSession?.armData?.armName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text_field_container" id="departmentId_container">
+                    <script>
+                        selectField({
+                            id: 'departmentId',
+                            title: 'Select New Department'
+                        });
+                        _getSelectDepartment("departmentId", true);
+                    </script>
+                </div>
+
+                <div class="text_field_container" id="classId_container">
+                    <script>
+                        selectField({
+                            id: 'classId',
+                            title: 'Select New Class'
+                        });
+                    </script>
+                </div>
+
+                <div class="text_field_container" id="armId_container">
+                    <script>
+                        selectField({
+                            id: 'armId',
+                            title: 'Select New Arm'
+                        });
+                    </script>
+                </div>
+
+                <button class="btn" id="submitBtn" title="Proceed Request" onclick="_proceedStudentPromotion();">PROMOTE STUDENTS <i
+                        class="bi-arrow-right"></i> </button>
+                </div>
+            </div>
         </div>
     </div>
 <?php } ?>

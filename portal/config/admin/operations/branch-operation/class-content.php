@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <div class="pages-toggle-back-div" id="pageContent">
+    <div class="pages-toggle-back-div" id="branchClassPageContent">
         <script>_fetchBranchDepartmentClass();</script>
     </div>
 <?php } ?>

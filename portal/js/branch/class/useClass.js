@@ -31,7 +31,7 @@ function _getSelectClassTeachers(fieldId){
 
 function _fetchBranchDepartmentClass() {
     let getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
-    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");
+    $('#branchClassPageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");
 
     try {
         $.ajax({
@@ -159,10 +159,10 @@ function _fetchBranchDepartmentClass() {
                                 </div>
                             </div>`;
                     }
-                    $('#pageContent').html(text);
+                    $('#branchClassPageContent').html(text);
                 } else {
                     _actionAlert(info.message, false);
-                    $('#pageContent').html(`
+                    $('#branchClassPageContent').html(`
                         <tbody>
                             <tr>
                                 <td colspan="15">
