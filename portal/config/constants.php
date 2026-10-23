@@ -87,4 +87,5 @@ var sessionCumulativeBroadSheetHeaderPixPath = websiteUrl + '/uploaded_files/sch
 var sessionPromotionalBroadSheetHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Promotional BroadSheet Header path //
 
 var parentViewResultUrl = websiteUrl + '/parent/view-student-result'; /// For Parent OTP Verification Url //
+var cbtResultHeaderPixPath = websiteUrl + '/uploaded_files/schoolResultHeaders'; /// For Promotional BroadSheet Header path //
 </script>

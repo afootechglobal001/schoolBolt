@@ -315,8 +315,21 @@ $(function () {
       }
     },
   };
-});
 
+  cbtResultHeaderPreviewPix = {
+    UpdatePreview: function (obj) {
+      if (!window.FileReader) {
+        console.error("FileReader is not supported.");
+      } else {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#cbtResultHeaderPreviewPix").prop("src", e.target.result);
+        };
+        reader.readAsDataURL(obj.files[0]);
+      }
+    },
+  };
+});
 
 function _getSelectBranchManagerId(fieldId) {
   let $searchList = $("#searchList_" + fieldId);
@@ -1086,6 +1099,7 @@ function _updateBranchConfig() {
     const watermark = $("#watermark").prop("files")[0];
     const sessionCumulativeBroadSheetHeader = $("#sessionCumulativeBroadSheetHeader").prop("files")[0];
     const sessionPromotionalBroadSheetHeader = $("#sessionPromotionalBroadSheetHeader").prop("files")[0];
+    const cbtResultHeader = $("#cbtResultHeader").prop("files")[0];
 
     $("#currentSession, #termId, #timeSchoolOpened, #schoolResumptionDate").removeClass("issue");
     $("#issue_currentSession, #issue_termId, #issue_timeSchoolOpened, #issue_schoolResumptionDate").html("");
@@ -1154,6 +1168,7 @@ function _updateBranchConfig() {
       if (watermark) formData.append("watermark", watermark);
       if (sessionCumulativeBroadSheetHeader) formData.append("sessionCumulativeBroadSheetHeader", sessionCumulativeBroadSheetHeader);
       if (sessionPromotionalBroadSheetHeader) formData.append("sessionPromotionalBroadSheetHeader", sessionPromotionalBroadSheetHeader);
+      if (cbtResultHeader) formData.append("cbtResultHeader", cbtResultHeader);
 
       $.ajax({
         type: "POST",
@@ -1225,6 +1240,9 @@ function _updateBranchConfig() {
 
             const oldSessionPromotionalBroadSheetHeader = data.oldSessionPromotionalBroadSheetHeader;
             const newSessionPromotionalBroadSheetHeader = data.sessionPromotionalBroadSheetHeader;
+            
+            const oldCbtResultHeader = data.oldCbtResultHeader;
+            const newCbtResultHeader = data.newCbtResultHeader;
 
             if (newSchoolLogo !== "") _uploadSchoolLogo("schoolLogo", oldSchoolLogo, newSchoolLogo, message);
             if (newPrincipalSignature !== "") _uploadSchoolLogo("principalSignature", oldPrincipalSignature, newPrincipalSignature, message);
@@ -1246,6 +1264,7 @@ function _updateBranchConfig() {
             if (newWatermark !== "") _uploadSchoolLogo("watermark", oldWatermark, newWatermark, message);
             if (newSessionCumulativeBroadSheetHeader !== "") _uploadSchoolLogo("sessionCumulativeBroadSheetHeader", oldSessionCumulativeBroadSheetHeader, newSessionCumulativeBroadSheetHeader, message);
             if (newSessionPromotionalBroadSheetHeader !== "") _uploadSchoolLogo("sessionPromotionalBroadSheetHeader", oldSessionPromotionalBroadSheetHeader, newSessionPromotionalBroadSheetHeader, message);
+            if (newCbtResultHeader !== "") _uploadSchoolLogo("cbtResultHeader", oldCbtResultHeader, newCbtResultHeader, message);
 
             if (
               newSchoolLogo === "" &&
@@ -1265,7 +1284,8 @@ function _updateBranchConfig() {
               newTerminalResultHeader === "" &&
               newWatermark === "" &&
               newSessionCumulativeBroadSheetHeader === "" &&
-              newSessionPromotionalBroadSheetHeader === ""
+              newSessionPromotionalBroadSheetHeader === "" &&
+              newCbtResultHeader === ""
             ) {
               _actionAlert(message, true);
               _fetchEachBranches(getEachBranchDetailsSession.branchId);

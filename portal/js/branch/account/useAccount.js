@@ -570,78 +570,84 @@ function _fetchAccountBranchDepartmentClass() {
                     </div>
 
                     <div class="toggle-expand-div" id="view${no}answer" style="display: none;">  
-                        <div class="alert alert-success top-alert-div class-top-alert-div animated fadeIn">
-                            <span><i class="bi-people-fill"></i> <span>${departmentName}</span> DEPARTMENT</span>       
-                        </div>
+                      <div class="alert alert-success top-alert-div class-top-alert-div animated fadeIn">
+                          <span><i class="bi-people-fill"></i> <span>${departmentName}</span> DEPARTMENT</span>       
+                      </div>
 
-                        <div class="table-div animated fadeIn">
-                            <table class="table" cellspacing="0" style="width:100%">
-                                <thead>
-                                    <tr class="tb-col">
-                                        <th>sn</th>
-                                        <th>Department</th>
-                                        <th>Class</th>
-                                        <th>Session</th>
-                                        <th>Term</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>`;
+                      <div class="table-div animated fadeIn">
+                          <table class="table" cellspacing="0" style="width:100%">
+                            <thead>
+                                <tr class="tb-col">
+                                  <th>sn</th>
+                                  <th>Department</th>
+                                  <th>Class</th>
+                                  <th>Session</th>
+                                  <th>Term</th>
+                                  <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
 
-            let sn = 0;
-            if (classData.length > 0) {
-              for (let j = 0; j < classData.length; j++) {
-                const classInfo = classData[j];
-                const className = classInfo.className;
-                const classId = classInfo.classId;
-                const armData = classInfo.armData;
+                        let sn = 0;
+                        if (classData.length > 0) {
+                          for (let j = 0; j < classData.length; j++) {
+                            const classInfo = classData[j];
+                            const className = classInfo.className;
+                            const classId = classInfo.classId;
+                            const armData = classInfo.armData;
 
-                if (armData.length > 0) {
-                  for (let k = 0; k < armData.length; k++) {
-                    sn++;
-                    const armInfo = armData[k];
-                    const arm = armInfo.armName;
-                    const armId = armInfo.armId;
+                            if (armData.length > 0) {
+                              for (let k = 0; k < armData.length; k++) {
+                                sn++;
+                                const armInfo = armData[k];
+                                const arm = armInfo.armName;
+                                const armId = armInfo.armId;
 
-                    if (accountViewMethod === "activateResult") {
-                      showBtn = `
-                                            <div class="btn-div">
-                                              <button class="btn view-btn" title="CLICK TO ACTIVATE STUDENT RESULT" onclick="_fetchApprovedStudentBySchoolBolt('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT RESULT</button>
-                                            </div>
-                                          `;
-                    } else if (accountViewMethod === "debtors") {
-                      showBtn = `
-                                            <div class="btn-div">
-                                              <button class="btn view-btn" title="CLICK TO VIEW STUDENT DEBTORS" onclick="_fetchAccountStudentsByClass('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT DEBTORS</button>
-                                            </div>
-                                          `;
-                    } else {
-                      showBtn = `
-                                            <div class="btn-div">
-                                              <button class="btn view-btn" title="CLICK TO VIEW STUDENT PAYMENT" onclick="_fetchAccountStudentsByClass('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT PAYMENT</button>
-                                            </div>
-                                          `;
-                    }
+                                if (accountViewMethod === "activateResult") {
+                                  showBtn = `
+                                    <div class="btn-div">
+                                      <button class="btn view-btn" title="CLICK TO ACTIVATE STUDENT RESULT" onclick="_fetchApprovedStudentBySchoolBolt('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT RESULT</button>
+                                    </div>
+                                  `;
+                                } else if (accountViewMethod === "debtors") {
+                                  showBtn = `
+                                    <div class="btn-div">
+                                      <button class="btn view-btn" title="CLICK TO VIEW STUDENT DEBTORS" onclick="_fetchAccountStudentsByClass('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT DEBTORS</button>
+                                    </div>
+                                  `;
+                                } else if (accountViewMethod === "releaseResult") {
+                                  showBtn = `
+                                    <div class="btn-div">
+                                      <button class="btn view-btn" title="CLICK TO RELEASE STUDENT RESULT" onclick="_fetchAccountStudentsByClass('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> RELEASE STUDENT RESULT</button>
+                                    </div>
+                                  `;
+                                } else {
+                                  showBtn = `
+                                    <div class="btn-div">
+                                      <button class="btn view-btn" title="CLICK TO VIEW STUDENT PAYMENT" onclick="_fetchAccountStudentsByClass('${departmentId}','${classId}','${armId}');"><i class="bi-bookmark-check"></i> VIEW STUDENT PAYMENT</button>
+                                    </div>
+                                  `;
+                                }
 
-                    text += `
-                                        <tr class="tb-row">
-                                        <td>${sn}</td>
-                                        <td>${departmentName}</td>
-                                        <td>${className} ${arm}</td>
-                                        <td>${sessionName}</td>
-                                        <td>${termName}</td>
-                                        <td>
-                                          ${showBtn}
-                                        </td>`;
-                  }
-                }
-              }
-            }
-            text += `</tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>`;
+                                text += `
+                                  <tr class="tb-row">
+                                  <td>${sn}</td>
+                                  <td>${departmentName}</td>
+                                  <td>${className} ${arm}</td>
+                                  <td>${sessionName}</td>
+                                  <td>${termName}</td>
+                                  <td>
+                                    ${showBtn}
+                                  </td>`;
+                              }
+                            }
+                          }
+                        }
+                        text += `</tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>`;
           }
           $("#pageContent").html(text);
         } else {
@@ -723,6 +729,12 @@ function _fetchAccountStudentsByClass(departmentId, classId, armId) {
           } else if (accountViewMethod === "activateResult") {
             _getForm({
               page: "activateStudentResultModal",
+              layer: 2,
+              url: adminPortalLocalUrl,
+            });
+          } else if (accountViewMethod === "releaseResult") {
+            _getForm({
+              page: "releaseStudentResultModal",
               layer: 2,
               url: adminPortalLocalUrl,
             });
@@ -1361,6 +1373,16 @@ function _filtersActivateStudents(value) {
   });
 }
 
+/// filter Combo Product Data ///
+function _filtersReleaseStudents(value) {
+  $("#releaseStudentPageContent .tb-row").each(function () {
+    var text = $(this).text();
+    text.toLowerCase().indexOf(value.toLowerCase()) > -1
+      ? $(this).show()
+      : $(this).hide();
+  });
+}
+
 function _checkAll() {
   $(document).ready(function () {
     $("#parent").on("change", function () {
@@ -1611,9 +1633,6 @@ function _proceedFetchDiscountDepartmentClass() {
 
   if (issueCount > 0) return;
 
-  let getEachBranchDetailsSession = JSON.parse(
-    sessionStorage.getItem("getEachBranchDetailsSession"),
-  );
   const fetchDiscountDepartmentClassParams = {
     session: session,
     termId: termId,
@@ -1640,9 +1659,6 @@ function _proceedFetchScholarshipDepartmentClass() {
 
   if (issueCount > 0) return;
 
-  let getEachBranchDetailsSession = JSON.parse(
-    sessionStorage.getItem("getEachBranchDetailsSession"),
-  );
   const fetchDiscountDepartmentClassParams = {
     session: session,
     termId: termId,
@@ -2644,4 +2660,113 @@ function exportAccountTableToExcel(tableID, filename) {
 
     // Clean up
     $downloadLink.remove();
+}
+
+/// Release All Student Result ////
+function _releaseAllStudentResult() {
+  try {
+    ////////get all needed values////////////
+    let selectedStudents = [];
+    $(".child:checked").each(function () {
+      selectedStudents.push({ studentId: $(this).data("value") });
+    });
+
+    const checked = $('input[name="studentId[]"]:checked').length;
+    $("#studentId").removeClass("issue");
+
+    if (checked < 1) {
+      $("#studentId").addClass("issue");
+      _actionAlert("Select at least a student to continue", false);
+      return;
+    }
+
+    // Gather form data
+    const formData = {
+      studentIds: selectedStudents,
+    };
+
+    ////// confirm action////
+    _showCustomConfirm({
+      callback: () => {
+        _releaseAllStudentResultCallback(formData);
+      },
+      title: "Are you sure?",
+      message: "Are you sure you want to proceed? This action is irreversible.",
+      alertType: "warning",
+      falseActionBtn: true,
+      closeOnOverlayClick: true,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _releaseAllStudentResult());
+  }
+}
+
+//// Proceed To Release of student result CallBack /////
+function _releaseAllStudentResultCallback(formData) {
+  let getEachBranchDetailsSession = JSON.parse(
+    sessionStorage.getItem("getEachBranchDetailsSession"),
+  );
+  let fetchAccountDepartmentClassParams = JSON.parse(
+    sessionStorage.getItem("fetchAccountDepartmentClassParams"),
+  );
+  let useAccountStudentByClassSession = JSON.parse(
+    sessionStorage.getItem("useAccountStudentByClassSession"),
+  );
+
+  const branchId = getEachBranchDetailsSession?.branchId;
+  const session = fetchAccountDepartmentClassParams?.session;
+  const termId = fetchAccountDepartmentClassParams?.termId;
+
+  const departmentId = useAccountStudentByClassSession?.departmentData?.departmentId;
+  const classId = useAccountStudentByClassSession?.classData?.classId;
+  const armId = useAccountStudentByClassSession?.armData?.armId;
+
+  try {
+    const btnText = $("#releaseAllBtn").html();
+    _btnDisable("releaseAllBtn", btnText, true);
+
+    _callRawEndPoints({
+      url: `admin/branch/account/student-result/release-all-result?branchId=${branchId}&session=${session}&termId=${termId}&departmentId=${departmentId}&classId=${classId}&armId=${armId}`,
+      formData,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response.success) {
+          _showCustomConfirm({
+            callback: () => {
+              _fetchAccountStudentsByClass(
+                departmentId,
+                classId,
+                armId,
+              );
+            },
+            title: "Success!",
+            message: response.message,
+            alertType: "success",
+            trueActionBtnText: "OK, Thanks.",
+            closeOnOverlayClick: false,
+          });
+        } else {
+          _showCustomConfirm({
+            title: "Unable To Release Result",
+            message: response.message,
+            alertType: "warning",
+            trueActionBtnText: "OK",
+            closeOnOverlayClick: true,
+          });
+          _btnDisable("releaseAllBtn", btnText, false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() => _releaseAllStudentResultCallback(formData)); // retry if needed
+        _btnDisable("releaseAllBtn", btnText, false);
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _callCatchError(() => _releaseAllStudentResultCallback(formData));
+    _btnDisable("releaseAllBtn", btnText, false);
+  }
 }

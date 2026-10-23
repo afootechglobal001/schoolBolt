@@ -430,6 +430,19 @@ function _getSelectNationality(fieldId) {
   }
 }
 
+//// Function Clear SelectField ////
+function _clearSelectField(fieldId) {
+    // clear actual select value
+    $("#" + fieldId).val("");
+
+    // reset displayed option
+    $("#" + fieldId).html(`
+        <option selected="selected" value="">
+            Select here
+        </option>
+    `);
+}
+
 function _getSelectGeneralState(fieldId) {
   try {
     $.ajax({
@@ -470,6 +483,7 @@ function _getSelectGeneralState(fieldId) {
 }
 
 function _fetchGeneralStateLga() {
+  _clearSelectField("lgaId");
   _getSelectGeneralLga("lgaId");
 }
 function _getSelectGeneralLga(fieldId) {
