@@ -3709,6 +3709,30 @@
                     </script>
                 </label>
 
+                <!-- CBT RESULT HEADER -->
+                <div class="title">UPLOAD CBT RESULT HEADER: <i>(PNG FORMAT ONLY)</i></div>
+                <label>
+                    <div class="pix-div">
+                        <img id="cbtResultHeaderPreviewPix" src="<?php echo $websiteUrl ?>/images/sample.jpg" alt="Default Image">
+                        <input type="file" id="cbtResultHeader" style="display:none"
+                            accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp, .svg, .avif"
+                            onchange="cbtResultHeaderPreviewPix.UpdatePreview(this);" />
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            const cbtResultHeader = getEachBranchDetailsSession?.cbtResultHeader;
+
+                            const cbtResultHeaderUrl = cbtResultHeader ?
+                                `${cbtResultHeaderPixPath}/${cbtResultHeader}` :
+                                "<?php echo $websiteUrl ?>/images/sample.jpg";
+
+                            $("#cbtResultHeaderPreviewPix")
+                                .attr("src", cbtResultHeaderUrl)
+                                .attr("alt", getEachBranchDetailsSession.name + " CBT Result Header");
+                        });
+                    </script>
+                </label>
+
                 <div>
                     <button class="btn" title="SUBMIT" id="submitBtn" onclick="_updateBranchConfig();"> <i
                             class="bi-check"></i> SUBMIT </button>
@@ -4024,6 +4048,21 @@
 
             <div class="div-in">
                 <div class="user-managment-back-div" id="userManagement">
+                    <div class="user-managment-list staff-managment-list" title="SchoolBolt Wallet"
+                        onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/wallet.png" alt="SchoolBolt Wallet" />
+                            </div>
+                            <div class="text-div">
+                                <h3>SchoolBolt Wallet</h3>
+                                <p>View your wallet transaction history and keep track of all deposits, payments, and wallet
+                                    activity.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <script>
                         $(document).ready(function () {
                         if (userRoles.canActivateResult) {
@@ -4047,17 +4086,17 @@
                         });
                     </script>
 
-                    <div class="user-managment-list staff-managment-list" title="SchoolBolt Wallet"
-                        onclick="_getForm({page: 'branchWalletHistory', layer:2,  url: adminPortalLocalUrl});">
+                    <div class="user-managment-list staff-managment-list" title="Release Academic Result"
+                        onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'releaseResult', url: adminPortalLocalUrl});">
                         <div class="inner-div">
                             <div class="icon-div">
-                                <img src="<?php echo $websiteUrl ?>/images/wallet.png" alt="SchoolBolt Wallet" />
+                                <img src="<?php echo $websiteUrl ?>/images/double-check.png"
+                                    alt="Release Academic Result" />
                             </div>
                             <div class="text-div">
-                                <h3>SchoolBolt Wallet</h3>
-                                <p>View your wallet transaction history and keep track of all deposits, payments, and wallet
-                                    activity.
-                                </p>
+                                <h3>Release Academic Result</h3>
+                                <p>Release the result for your branch to make it available for viewing and further
+                                    processing.</p>
                             </div>
                         </div>
                     </div>
@@ -4587,10 +4626,10 @@
                                         const response = JSON.parse(sessionStorage.getItem(
                                             "usePromotionPanelStudentByClassSession"));
 
-                                        if (response && response.success === true) {
-                                            const data = response.data;
+                                        if (response && response?.success === true) {
+                                            const data = response?.data;
 
-                                            const session = response.session;
+                                            const session = response?.session;
                                             const termName = response?.termData?.termName;
                                             const departmentId = response?.departmentData?.departmentId;
                                             const departmentName = response?.departmentData?.departmentName;
@@ -4615,16 +4654,15 @@
 
                                             let sn = 0;
 
-                                            if (data.length > 0) {
+                                            if (data?.length > 0) {
                                                 data.forEach(item => {
                                                     sn++;
-                                                    const student = item.studentData;
-                                                    const fullname =
-                                                        `${student.surName} ${student.firstName} ${student.otherNames || ''}`;
-                                                    const studentId = item.studentId;
-                                                    const branchId = item.branchId;
-                                                    const passport = student.passport || "default.jpg";
-
+                                                    const student = item?.studentData || {};
+                                                    const fullname = `${student?.surName || ''} ${student?.firstName || ''} ${student?.otherNames || ''}`;
+                                                    const studentId = item?.studentId || '';
+                                                    const branchId = item?.branchId || '';
+                                                    const passport = student?.passport || "default.jpg";
+                        
                                                     html += `
                                                     <tr class="tb-row">
                                                         <td>

@@ -99,7 +99,8 @@ switch ($action){
 			'terminalResultHeader' => "../../../uploaded_files/schoolResultHeaders/",
 			'watermark' => "../../../uploaded_files/schoolResultHeaders/",
 			'sessionCumulativeBroadSheetHeader' => "../../../uploaded_files/schoolResultHeaders/",
-			'sessionPromotionalBroadSheetHeader' => "../../../uploaded_files/schoolResultHeaders/"
+			'sessionPromotionalBroadSheetHeader' => "../../../uploaded_files/schoolResultHeaders/",
+			'cbtResultHeader' => "../../../uploaded_files/schoolResultHeaders/"
 		];
 
 		$uploadDir = $folders[$fileType];

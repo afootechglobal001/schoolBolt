@@ -252,6 +252,8 @@ studentParentSessionData = JSON.parse(sessionStorage.getItem("studentParentSessi
                 $pageTitle = "VIEW DEBTORS";
             } else if ($id == "activateResult") {
                 $pageTitle = "ACTIVATE ACADEMIC RESULT";
+            } else if ($id == "releaseResult") {
+                $pageTitle = "RELEASE ACADEMIC RESULT";
             } else if ($id == "discountReport") {
                 $pageTitle = "DISCOUNT REPORT";
             } else if ($id == "scholarshipReport") {
@@ -297,6 +299,9 @@ studentParentSessionData = JSON.parse(sessionStorage.getItem("studentParentSessi
         <?php } else if ($id == "activateResult") { ?>
         <button class="btn" id="proceedActivateResultBtn" title="Proceed Request"
             onclick="_proceedActivateResult('<?php echo $id ?>');">PROCEED <i class="bi-arrow-right"></i> </button>
+        <?php } else if ($id == "releaseResult") { ?>
+        <button class="btn" id="proceedReleaseResultBtn" title="Proceed Request"
+            onclick="_proceedFetchAcountDepartmentClass('<?php echo $id ?>');">PROCEED <i class="bi-arrow-right"></i> </button>
         <?php } else if ($id == "discountReport") { ?>
         <button class="btn" id="proceedBtn" title="Proceed Request"
             onclick="_proceedFetchDiscountDepartmentClass();">PROCEED <i class="bi-arrow-right"></i> </button>
@@ -304,8 +309,6 @@ studentParentSessionData = JSON.parse(sessionStorage.getItem("studentParentSessi
         <button class="btn" id="proceedBtn" title="Proceed Request"
             onclick="_proceedFetchScholarshipDepartmentClass();">PROCEED <i class="bi-arrow-right"></i> </button>
         <?php } ?>
-
-
     </div>
 </div>
 <?php } ?>
@@ -1239,228 +1242,406 @@ useAccountFessToPaySession = JSON.parse(sessionStorage.getItem("useAccountFessTo
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 <?php if ($page == 'activateStudentResultModal') { ?>
-<script>
-useAccountStudentByClassSession = JSON.parse(sessionStorage.getItem("useAccountStudentByClassSession"));
-</script>
+    <script>
+        useAccountStudentByClassSession = JSON.parse(sessionStorage.getItem("useAccountStudentByClassSession"));
+    </script>
 
-<script>
-_checkAll()
-</script>
+    <script>
+        _checkAll()
+    </script>
 
-<div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
-    <div class="top-panel-div">
-        <div class="inner-top">
-            <span><i class="bi-people-fill"></i> ACTIVATE STUDENTS RESULT</span>
-            <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+    <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="top-panel-div">
+            <div class="inner-top">
+                <span><i class="bi-people-fill"></i> ACTIVATE STUDENTS RESULT</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
         </div>
-    </div>
 
-    <div class="profile-content-div">
-        <div class="field-back-div">
-            <div class="field-inner-div student-result-field-inner-div">
-                <div class="content-wrapper animated fadeIn">
-                    <div class="header-div">
-                        <div class="title-nav-back-div">
-                            <div class="nav-ul-div">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" id="parent">
-                                    <span>Check All Students</span>
-                                </label>
+        <div class="profile-content-div">
+            <div class="field-back-div">
+                <div class="field-inner-div student-result-field-inner-div">
+                    <div class="content-wrapper animated fadeIn">
+                        <div class="header-div">
+                            <div class="title-nav-back-div">
+                                <div class="nav-ul-div">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="parent">
+                                        <span>Check All Students</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="search-btn-div">
+                                <div class="search-div">
+                                    <input type="text" onkeyup="_filtersActivateStudents(this.value);"
+                                        placeholder="Search Student Here...">
+                                    <i class="bi bi-search"></i>
+                                </div>
+
+                                <div class="btn-div">
+                                    <button class="btn" title="ACTIVATE RESULT" id="activateAllBtn"
+                                        onclick="_activateAllStudentResult();">
+                                        <i class="bi-check"></i> ACTIVATE RESULT
+                                    </button>
+                                    <button class="btn deactivate-btn" title="DEACTIVATE ALL RESULT" id="deActivateAllBtn"
+                                        onclick="_deActivateAllStudentResult();">
+                                        <i class="bi-x"></i> DEACTIVATE ALL RESULT
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="search-btn-div">
-                            <div class="search-div">
-                                <input type="text" onkeyup="_filtersActivateStudents(this.value);"
-                                    placeholder="Search Student Here...">
-                                <i class="bi bi-search"></i>
+                        <div class="content-container" id="getPaymentNav">
+                            <div class="alert alert-success top-alert-div animated fadeIn">
+                                <div>
+                                    <span><i class="bi-people-fill"></i> STUDENT RESULT ACTIVATION LIST /</span> SESSION --
+                                    <span id="accountSession">
+                                        <script>
+                                        $("#accountSession").html(useAccountStudentByClassSession?.session);
+                                        </script>
+                                    </span>
+                                    / TERM -- <span id="accountTermName">
+                                        <script>
+                                        $("#accountTermName").html(useAccountStudentByClassSession?.termData?.termName);
+                                        </script>
+                                    </span>
+                                    / DEPARTMENT -- <span id="accountDepartment">
+                                        <script>
+                                        $("#accountDepartment").html(useAccountStudentByClassSession?.departmentData
+                                            ?.departmentName);
+                                        </script>
+                                    </span>
+                                    / CLASS -- <span id="AccountClass">
+                                        <script>
+                                        $("#AccountClass").html(useAccountStudentByClassSession?.classData?.className +
+                                            ' ' +
+                                            useAccountStudentByClassSession?.armData?.armName);
+                                        </script>
+                                    </span>
+                                    </span>
+                                </div>
                             </div>
 
-                            <div class="btn-div">
-                                <button class="btn" title="ACTIVATE RESULT" id="activateAllBtn"
-                                    onclick="_activateAllStudentResult();">
-                                    <i class="bi-check"></i> ACTIVATE RESULT
-                                </button>
-                                <button class="btn deactivate-btn" title="DEACTIVATE ALL RESULT" id="deActivateAllBtn"
-                                    onclick="_deActivateAllStudentResult();">
-                                    <i class="bi-x"></i> DEACTIVATE ALL RESULT
-                                </button>
+                            <div class="table-div animated fadeIn">
+                                <table class="table" cellspacing="0" style="width:100%" id="accountPageContent">
+                                    <script>
+                                    $(document).ready(function() {
+                                        const response = JSON.parse(sessionStorage.getItem(
+                                            "useAccountStudentByClassSession"));
+
+                                        if (response && response.success === true) {
+                                            const data = response.data;
+
+                                            const session = response.session;
+                                            const term = response?.termData?.termName;
+                                            const departmentId = response?.departmentData?.departmentId;
+                                            const department = response?.departmentData?.departmentName;
+                                            const classId = response?.classData?.classId;
+                                            const className = response?.classData?.className;
+                                            const armId = response?.armData?.armId;
+                                            const arm = response?.armData?.armName;
+
+                                            let html = `
+                                                <thead>
+                                                    <tr class="tb-col">
+                                                        <th></th>
+                                                        <th>sn</th>
+                                                        <th>Student Info</th>
+                                                        <th>Session/Term</th>
+                                                        <th>Class</th>
+                                                        <th>Total Mandatory Fees</th>
+                                                        <th>Total Non-Mandatory Fees</th>
+                                                        <th>Mandatory Fees Paid</th>
+                                                        <th>Non-Mandatory Fees Paid</th>
+                                                        <th>Total Fees Paid</th>
+                                                        <th>Outstanding Balance</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>`;
+
+                                            let sn = 0;
+
+                                            data.forEach(item => {
+                                                sn++;
+                                                const student = item.studentData;
+                                                const fullname =
+                                                    `${student.surName} ${student.firstName} ${student.otherNames || ''}`;
+                                                const studentId = item.studentId;
+                                                const branchId = item.branchId;
+                                                const passport = student.passport || "default.jpg";
+                                                const advancedBalance = student.advancedBalance;
+                                                const isDebtor = item.isDebtor;
+                                                const isResultActivated = item.isResultActivated;
+                                                const outstandingBalance = item.outstandingBalance;
+                                                const debtorStatusColor = (isDebtor === "TRUE") ?
+                                                    "red-color" : "green-color";
+                                                const debtorImgStatusColor = (isDebtor === "TRUE") ?
+                                                    '<div class="status-icon debtor"><i class="bi-x"></i></div>' :
+                                                    '<div class="status-icon"><i class="bi-check"></i></div>';
+
+                                                viewStatus = (isResultActivated === "TRUE") ?
+                                                    `
+                                                    <div class="status-div ACTIVATE">
+                                                        ACTIVATED
+                                                    </div>
+                                                    ` :
+                                                    `
+                                                    <div class="status-div DEACTIVATE">
+                                                        DEACTIVATED
+                                                    </div>
+                                                    `;
+
+                                                html += `
+                                                    <tr class="tb-row">
+                                                        <td>
+                                                            <label class="custom-checkbox">
+                                                                <input type="checkbox"
+                                                                    class="child"
+                                                                    id="student_${studentId}"
+                                                                    name="studentId[]"
+                                                                    value="${studentId}"
+                                                                    data-value="${studentId}"
+                                                                    ${isResultActivated === "TRUE" ? "checked" : ""}>
+                                                                    <span></span>
+                                                            </label>
+                                                        </td>
+                                                        <td>${sn}</td>
+
+                                                        <td class="clickable-td">
+                                                            <div class="text-back-div" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
+                                                                ${debtorImgStatusColor}
+                                                                <div class="image-div general-passport">
+                                                                    <img src="${studentPixPath}/${passport}" alt="${fullname}" />
+                                                                </div>
+
+                                                                <div class="text-div">
+                                                                    <div class="first-class">${fullname}</div>
+                                                                    <div class="second-class">${studentId}</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                        <td>${session} - ${term}</td>
+                                                        <td>${className} ${arm}</td>
+
+                                                        <td><s>N</s>${thousandSeperator(item.totalMandatoryAmount)}</td>
+                                                        <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmount)}</td>
+                                                        <td>
+                                                            <div class="text-back-div">
+                                                                <div class="text-div">
+                                                                    <div class="first-class ${debtorStatusColor}"><s>N</s>${thousandSeperator(item.totalMandatoryAmountPaid)}</div>
+                                                                    <div class="second-class">(${item.totalPercentageForMandatoryFees}%)</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmountPaid)}</td>
+                                                        <td><s>N</s>${thousandSeperator(item.totalFeesPaid)}</td>
+                                                        <td>
+                                                            <div class="text-back-div">
+                                                                <div class="text-div">
+                                                                    <div class="first-class ${debtorStatusColor}"><s>N</s>${thousandSeperator(item.outstandingBalance)}</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            ${viewStatus}
+                                                        </td>
+                                                    </tr>`;
+                                            });
+
+                                            html += `</tbody>`;
+                                            $('#accountPageContent').html(html);
+                                        }
+                                    });
+                                    </script>
+                                </table>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="content-container" id="getPaymentNav">
-                        <div class="alert alert-success top-alert-div animated fadeIn">
-                            <div>
-                                <span><i class="bi-people-fill"></i> STUDENT RESULT ACTIVATION LIST /</span> SESSION --
-                                <span id="accountSession">
-                                    <script>
-                                    $("#accountSession").html(useAccountStudentByClassSession?.session);
-                                    </script>
-                                </span>
-                                / TERM -- <span id="accountTermName">
-                                    <script>
-                                    $("#accountTermName").html(useAccountStudentByClassSession?.termData?.termName);
-                                    </script>
-                                </span>
-                                / DEPARTMENT -- <span id="accountDepartment">
-                                    <script>
-                                    $("#accountDepartment").html(useAccountStudentByClassSession?.departmentData
-                                        ?.departmentName);
-                                    </script>
-                                </span>
-                                / CLASS -- <span id="AccountClass">
-                                    <script>
-                                    $("#AccountClass").html(useAccountStudentByClassSession?.classData?.className +
-                                        ' ' +
-                                        useAccountStudentByClassSession?.armData?.armName);
-                                    </script>
-                                </span>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="table-div animated fadeIn">
-                            <table class="table" cellspacing="0" style="width:100%" id="accountPageContent">
-                                <script>
-                                $(document).ready(function() {
-                                    const response = JSON.parse(sessionStorage.getItem(
-                                        "useAccountStudentByClassSession"));
-
-                                    if (response && response.success === true) {
-                                        const data = response.data;
-
-                                        const session = response.session;
-                                        const term = response?.termData?.termName;
-                                        const departmentId = response?.departmentData?.departmentId;
-                                        const department = response?.departmentData?.departmentName;
-                                        const classId = response?.classData?.classId;
-                                        const className = response?.classData?.className;
-                                        const armId = response?.armData?.armId;
-                                        const arm = response?.armData?.armName;
-
-                                        let html = `
-                                            <thead>
-                                                <tr class="tb-col">
-                                                    <th></th>
-                                                    <th>sn</th>
-                                                    <th>Student Info</th>
-                                                    <th>Session/Term</th>
-                                                    <th>Class</th>
-                                                    <th>Total Mandatory Fees</th>
-                                                    <th>Total Non-Mandatory Fees</th>
-                                                    <th>Mandatory Fees Paid</th>
-                                                    <th>Non-Mandatory Fees Paid</th>
-                                                    <th>Total Fees Paid</th>
-                                                    <th>Outstanding Balance</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>`;
-
-                                        let sn = 0;
-
-                                        data.forEach(item => {
-                                            sn++;
-                                            const student = item.studentData;
-                                            const fullname =
-                                                `${student.surName} ${student.firstName} ${student.otherNames || ''}`;
-                                            const studentId = item.studentId;
-                                            const branchId = item.branchId;
-                                            const passport = student.passport || "default.jpg";
-                                            const advancedBalance = student.advancedBalance;
-                                            const isDebtor = item.isDebtor;
-                                            const isResultActivated = item.isResultActivated;
-                                            const outstandingBalance = item.outstandingBalance;
-                                            const debtorStatusColor = (isDebtor === "TRUE") ?
-                                                "red-color" : "green-color";
-                                            const debtorImgStatusColor = (isDebtor === "TRUE") ?
-                                                '<div class="status-icon debtor"><i class="bi-x"></i></div>' :
-                                                '<div class="status-icon"><i class="bi-check"></i></div>';
-
-                                            viewStatus = (isResultActivated === "TRUE") ?
-                                                `
-                                                <div class="status-div ACTIVATE">
-                                                    ACTIVATED
-                                                </div>
-                                                ` :
-                                                `
-                                                <div class="status-div DEACTIVATE">
-                                                    DEACTIVATED
-                                                </div>
-                                                `;
-
-                                            html += `
-                                                <tr class="tb-row">
-                                                    <td>
-                                                        <label class="custom-checkbox">
-                                                            <input type="checkbox"
-                                                                class="child"
-                                                                id="student_${studentId}"
-                                                                name="studentId[]"
-                                                                value="${studentId}"
-                                                                data-value="${studentId}"
-                                                                ${isResultActivated === "TRUE" ? "checked" : ""}>
-                                                                <span></span>
-                                                        </label>
-                                                    </td>
-                                                    <td>${sn}</td>
-
-                                                    <td class="clickable-td">
-                                                        <div class="text-back-div" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
-                                                            ${debtorImgStatusColor}
-                                                            <div class="image-div general-passport">
-                                                                <img src="${studentPixPath}/${passport}" alt="${fullname}" />
-                                                            </div>
-
-                                                            <div class="text-div">
-                                                                <div class="first-class">${fullname}</div>
-                                                                <div class="second-class">${studentId}</div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-
-                                                    <td>${session} - ${term}</td>
-                                                    <td>${className} ${arm}</td>
-
-                                                    <td><s>N</s>${thousandSeperator(item.totalMandatoryAmount)}</td>
-                                                    <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmount)}</td>
-                                                    <td>
-                                                        <div class="text-back-div">
-                                                            <div class="text-div">
-                                                                <div class="first-class ${debtorStatusColor}"><s>N</s>${thousandSeperator(item.totalMandatoryAmountPaid)}</div>
-                                                                <div class="second-class">(${item.totalPercentageForMandatoryFees}%)</div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmountPaid)}</td>
-                                                    <td><s>N</s>${thousandSeperator(item.totalFeesPaid)}</td>
-                                                    <td>
-                                                        <div class="text-back-div">
-                                                            <div class="text-div">
-                                                                <div class="first-class ${debtorStatusColor}"><s>N</s>${thousandSeperator(item.outstandingBalance)}</div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        ${viewStatus}
-                                                    </td>
-                                                </tr>`;
-                                        });
-
-                                        html += `</tbody>`;
-                                        $('#accountPageContent').html(html);
-                                    }
-                                });
-                                </script>
-                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'releaseStudentResultModal') { ?>
+    <script>
+        useAccountStudentByClassSession = JSON.parse(sessionStorage.getItem("useAccountStudentByClassSession"));
+    </script>
+
+    <script>
+        _checkAll()
+    </script>
+
+    <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="top-panel-div">
+            <div class="inner-top">
+                <span><i class="bi-people-fill"></i> RELEASE STUDENTS RESULT</span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="profile-content-div">
+            <div class="field-back-div">
+                <div class="field-inner-div student-result-field-inner-div">
+                    <div class="content-wrapper animated fadeIn">
+                        <div class="header-div">
+                            <div class="title-nav-back-div">
+                                <div class="nav-ul-div">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="parent">
+                                        <span>Check All Students</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="search-btn-div">
+                                <div class="search-div">
+                                    <input type="text" onkeyup="_filtersReleaseStudents(this.value);"
+                                        placeholder="Search Student Here...">
+                                    <i class="bi bi-search"></i>
+                                </div>
+
+                                <div class="btn-div">
+                                    <button class="btn" title="RELEASE RESULT" id="releaseAllBtn"
+                                        onclick="_releaseAllStudentResult();">
+                                        <i class="bi-check"></i> RELEASE RESULT
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-container" id="getPaymentNav">
+                            <div class="alert alert-success top-alert-div animated fadeIn">
+                                <div>
+                                    <span><i class="bi-people-fill"></i> STUDENT RELEASE RESULT LIST /</span> SESSION --
+                                    <span id="releaseSession">
+                                        <script>
+                                        $("#releaseSession").html(useAccountStudentByClassSession?.session);
+                                        </script>
+                                    </span>
+                                    / TERM -- <span id="releaseTermName">
+                                        <script>
+                                        $("#releaseTermName").html(useAccountStudentByClassSession?.termData?.termName);
+                                        </script>
+                                    </span>
+                                    / DEPARTMENT -- <span id="releaseDepartment">
+                                        <script>
+                                        $("#releaseDepartment").html(useAccountStudentByClassSession?.departmentData
+                                            ?.departmentName);
+                                        </script>
+                                    </span>
+                                    / CLASS -- <span id="releaseClass">
+                                        <script>
+                                        $("#releaseClass").html(useAccountStudentByClassSession?.classData?.className +
+                                            ' ' +
+                                            useAccountStudentByClassSession?.armData?.armName);
+                                        </script>
+                                    </span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="table-div animated fadeIn">
+                                <table class="table" cellspacing="0" style="width:100%" id="releaseStudentPageContent">
+                                    <script>
+                                    $(document).ready(function() {
+                                        const response = JSON.parse(sessionStorage.getItem(
+                                            "useAccountStudentByClassSession"));
+
+                                        if (response && response.success === true) {
+                                            const data = response.data;
+
+                                            const session = response.session;
+                                            const term = response?.termData?.termName;
+                                            const departmentId = response?.departmentData?.departmentId;
+                                            const department = response?.departmentData?.departmentName;
+                                            const classId = response?.classData?.classId;
+                                            const className = response?.classData?.className;
+                                            const armId = response?.armData?.armId;
+                                            const arm = response?.armData?.armName;
+
+                                            let html = `
+                                                <thead>
+                                                    <tr class="tb-col">
+                                                        <th></th>
+                                                        <th>sn</th>
+                                                        <th>Student Info</th>
+                                                        <th>Session</th>
+                                                        <th>Term</th>
+                                                        <th>Class</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>`;
+
+                                            let sn = 0;
+
+                                            data.forEach(item => {
+                                                sn++;
+                                                const student = item.studentData;
+                                                const fullname =
+                                                    `${student.surName} ${student.firstName} ${student.otherNames || ''}`;
+                                                const studentId = item.studentId;
+                                                const branchId = item.branchId;
+                                                const passport = student.passport || "default.jpg";
+
+                                                html += `
+                                                    <tr class="tb-row">
+                                                        <td>
+                                                            <label class="custom-checkbox">
+                                                                <input type="checkbox"
+                                                                    class="child"
+                                                                    id="student_${studentId}"
+                                                                    name="studentId[]"
+                                                                    value="${studentId}"
+                                                                    data-value="${studentId}">
+                                                                    <span></span>
+                                                            </label>
+                                                        </td>
+                                                        <td>${sn}</td>
+
+                                                        <td class="clickable-td">
+                                                            <div class="text-back-div" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
+                                                                <div class="image-div general-passport">
+                                                                    <img src="${studentPixPath}/${passport}" alt="${fullname}" />
+                                                                </div>
+
+                                                                <div class="text-div">
+                                                                    <div class="first-class">${fullname}</div>
+                                                                    <div class="second-class">${studentId}</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                        <td>${session}</td>
+                                                        <td>${term}</td>
+                                                        <td>${className} ${arm}</td>
+
+                                                        <td>
+                                                            <div class="status-div UNRELEASED">
+                                                                UNRELEASED
+                                                            </div>
+                                                        </td>
+                                                    </tr>`;
+                                            });
+
+                                            html += `</tbody>`;
+                                            $('#releaseStudentPageContent').html(html);
+                                        }
+                                    });
+                                    </script>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <?php } ?>
 
 <!-- ///////////////// Branch Department Class/////////////////////////////////////////////////////////////////////////////////////// -->

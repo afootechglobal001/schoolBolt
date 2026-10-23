@@ -1725,7 +1725,9 @@ header
 
 .table-div .table .SUCCESSFUL,
 .table-div .table .ACTIVE,
-.table-div .table .ACTIVATE {
+.table-div .table .ACTIVATE,
+.table-div .table .RELEASED
+ {
   background: rgba(46, 204, 113, 0.1);
   color: rgba(9, 172, 77, 0.9);
 }
@@ -1737,7 +1739,9 @@ header
 }
 
 .table-div .table .CANCELLED,
-.table-div .table .DEACTIVATE {
+.table-div .table .DEACTIVATE,
+.table-div .table .UNRELEASED
+ {
   background: rgba(255, 0, 0, 0.1);
   color: rgba(255, 0, 0);
 }

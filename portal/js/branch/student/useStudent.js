@@ -635,7 +635,7 @@ function _fetchBranchStudents() {
 					<button class="btn" title="PRINT RECORDS" id="printStudentsByClassBtn" onclick="_printStudentByClass('${info.departmentData.departmentId}','${info.classData.classId}','${info.armData.armId}')">
 						<i class="bi-printer"></i> PRINT
 					</button>
-					<button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('pageContent','Student_List');">
+					<button class="btn" title="EXPORT RECORDS" onclick="exportStudentTableToExcel('branchStudentpageContent','${className}_${armName}_Student_List');">
 						<i class="bi-file-earmark-excel"></i> EXPORT
 					</button>
 				`;
@@ -648,10 +648,10 @@ function _fetchBranchStudents() {
 						<tr class="tb-col">
 							<th>sn</th>
 							<th>Student Info</th>
+              <th>Contact</th>
 							<th>Gender</th>
 							<th>Age</th>
-							<th>Session</th>
-							<th>Term</th>
+							<th>Session/Term</th>
 							<th>Department</th>
 							<th>Class</th>
 							<th>Arm</th>
@@ -689,6 +689,8 @@ function _fetchBranchStudents() {
             const statusName = fetchStudentData?.statusName;
             const accommodationName = fetchAccommodationData?.accommodationName;
             const age = _calculateAge(fetchStudentData?.dateOfBirth);
+            const email = fetchStudentData?.email;
+            const mobileNumber = fetchStudentData?.mobileNumber;
 
             text += `
 						 	<tbody>
@@ -706,10 +708,24 @@ function _fetchBranchStudents() {
 											</div>
 										</div>
 									</td>
+                  <td>
+										<div class="text-back-div">
+											<div class="text-div">
+												<div class="first-class">${email ? email : '---'}</div>
+												<div class="second-class">${mobileNumber ? mobileNumber : '---'}</div>
+											</div>
+										</div>
+									</td>
 									<td>${genderName}</td>
 									<td>${age}</td>
-									<td>${session}</td>
-									<td>${termName}</td>
+                  <td>
+										<div class="text-back-div">
+											<div class="text-div">
+												<div class="first-class">${session}</div>
+												<div class="second-class">${termName}</div>
+											</div>
+										</div>
+									</td>
 									<td>${departmentName}</td>
 									<td>${className}</td>
 									<td>${armName}</td>
@@ -751,6 +767,48 @@ function _fetchBranchStudents() {
     _actionAlert("An unexpected error occurred! Please try again.", false);
   }
 }
+
+///// Export /////
+function exportStudentTableToExcel(tableID, filename) {
+    var dataType = 'application/vnd.ms-excel';
+    var $table = $('#' + tableID).clone();
+
+    // Remove Status and View columns (last 2 columns)
+    $table.find('tr').each(function () {
+        $(this).find('th:last, td:last').remove();
+        $(this).find('th:last, td:last').remove();
+    });
+
+    // Remove all images
+    $table.find('img').remove();
+
+    // Convert table to HTML
+    var tableHTML = $table.prop('outerHTML')
+        .replace(/ /g, '%20')
+        .replace(/#/g, '%23');
+
+    // Specify file name
+    filename = filename ? filename + '.xls' : 'excel_data.xls';
+
+    // Create download link
+    var $downloadLink = $('<a></a>');
+    $('body').append($downloadLink);
+
+    if (window.navigator.msSaveOrOpenBlob) {
+        var blob = new Blob(['\ufeff', tableHTML], {
+            type: dataType
+        });
+        window.navigator.msSaveOrOpenBlob(blob, filename);
+    } else {
+        $downloadLink.attr('href', 'data:' + dataType + ',' + tableHTML);
+        $downloadLink.attr('download', filename);
+        $downloadLink[0].click();
+    }
+
+    // Clean up
+    $downloadLink.remove();
+}
+
 
 function _fetchEachBranchStudents(
   branchId,
