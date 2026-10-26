@@ -2275,3 +2275,260 @@ $('#bankTransSubTitle').html(useEachBankTransactionRecordSession?.transactionId 
     </div>
 </div>
 <?php } ?>
+
+
+<!-- ///////////////// Branch Extra Charges Department Class/////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'branchExtraChargesDepartmentClass') { ?>
+    <script>
+        fetchExtraChargesDepartmentClassParams = JSON.parse(sessionStorage.getItem("fetchExtraChargesDepartmentClassParams"));
+    </script>
+
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div>
+            <span>
+               <i class="bi-people-fill"></i> EXTRA CHARGES DEPARTMENT CLASS LIST /
+            </span> SESSION -- <span id="discountSession">
+                <script>
+                $("#discountSession").html(fetchExtraChargesDepartmentClassParams?.session);
+                </script>
+            </span> / TERM -- <span id="discountTermName">
+                <script>
+                $("#discountTermName").html(getTermNameById(fetchExtraChargesDepartmentClassParams?.termId));
+                </script>
+            </span></span></div>
+    </div>
+
+    <div class="pages-toggle-back-div" id="pageExtraChargesContent">
+        <script>
+            _fetchExtraChargesDepartmentClass();
+        </script>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'viewExtraChargesStudentClassModal') { ?>
+    <script>
+        useExtraChargesStudentSession = JSON.parse(sessionStorage.getItem("useExtraChargesStudentSession"));
+    </script>
+
+    <div class="user-profile-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="top-panel-div">
+            <div class="inner-top">
+                <span>
+                    <i class="bi-people-fill"></i> STUDENT'S EXTRA CHARGES LIST
+                </span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="profile-content-div">
+            <div class="field-back-div">
+                <div class="field-inner-div student-result-field-inner-div">
+                    <div class="alert alert-success top-alert-div animated fadeIn">
+                        <div>
+                            <span><i class="bi-people-fill"></i> STUDENT LIST /</span> SESSION -- <span id="extraChargesSession">
+                                <script>
+                                $("#extraChargesSession").html(useExtraChargesStudentSession?.session);
+                                </script>
+                            </span>
+                            / TERM -- <span id="extraChargesTermName">  
+                                <script>
+                                $("#extraChargesTermName").html(useExtraChargesStudentSession?.termData?.termName);
+                                </script>
+                            </span>
+                            / DEPARTMENT -- <span id="extraChargesDepartment">
+                                <script>
+                                $("#extraChargesDepartment").html(useExtraChargesStudentSession?.departmentData
+                                    ?.departmentName);
+                                </script>
+                            </span>
+                            / CLASS -- <span id="extraChargesClass">
+                                <script>
+                                $("#extraChargesClass").html(useExtraChargesStudentSession?.classData?.className + ' ' +
+                                    useExtraChargesStudentSession?.armData?.armName);
+                                </script>
+                            </span>
+                            </span>
+                        </div>
+
+                        <div class="btn-container">
+                            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('extraChargesPageContent','Student_Extra_Charges_List');">
+                                <i class="bi-file-earmark-excel"></i> EXPORT
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-div animated fadeIn">
+                        <table class="table" cellspacing="0" style="width:100%" id="extraChargesPageContent">
+                            <script>
+                            $(document).ready(function() {
+                                const response = JSON.parse(sessionStorage.getItem("useExtraChargesStudentSession"));
+                                const getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDetailsSession"));
+
+                                const branchId = getEachBranchDetailsSession?.branchId;
+
+                                if (response && response.success === true) {
+                                    const data = response.data;
+
+                                    const session = response.session;
+                                    const termName = response?.termData?.termName;
+                                    const termId = response?.termData?.termId;
+                                    const departmentId = response?.departmentData?.departmentId;
+                                    const departmentName = response?.departmentData?.departmentName;
+                                    const classId = response?.classData?.classId;
+                                    const className = response?.classData?.className;
+                                    const armId = response?.armData?.armId;
+                                    const armName = response?.armData?.armName;
+                                    
+                                    let html = `
+                                        <thead>
+                                            <tr class="tb-col">
+                                                <th>sn</th>
+                                                <th>Student Info</th>
+                                                <th>Session/Term</th>
+                                                <th>Department</th>
+                                                <th>Class</th>
+                                                <th>Extra Charges Amount</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>`;
+
+                                    let sn = 0;
+
+                                    data.forEach(item => {
+                                        sn++;
+                                        const fullname = `${item.surName} ${item.firstName}`;
+                                        const studentId = item.studentId;
+                                        const passport = item.passport || "default.jpg";
+                                        const totalExtraCharges = item.totalExtraCharges;
+
+                                        html += `
+                                                <tr class="tb-row">
+                                                    <td>${sn}</td>
+
+                                                    <td class="clickable-td">
+                                                        <div class="text-back-div" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
+                                                            <div class="image-div general-passport">
+                                                                <img src="${studentPixPath}/${passport}" alt="${fullname}" />
+                                                            </div>
+
+                                                            <div class="text-div">
+                                                                <div class="first-class">${fullname}</div>
+                                                                <div class="second-class">${studentId}</div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>${session} - ${termName}</td>
+                                                    <td>${departmentName}</td>
+                                                    <td>${className} ${armName}</td>
+                                                    <td><s>N</s>${thousandSeperator(totalExtraCharges)}</td>
+                                                    <td>
+                                                        <button class="btn view-btn"
+                                                            title="Click to load extra charges"
+                                                            onclick="_getFetchEachExtraChargesStudent('${studentId}');">
+                                                            LOAD EXTRA CHARGES
+                                                        </button>
+                                                    </td>
+                                                </tr > `;
+                                    });
+
+                                    html += `</tbody >`;
+                                    $('#extraChargesPageContent').html(html);
+                                }
+                            });
+                            </script>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<?php if ($page == 'studentExtraChargesForm') { ?>
+    <script>
+        getEachExtraChargesStudentSession = JSON.parse(sessionStorage.getItem("getEachExtraChargesStudentSession"));
+    </script>
+    <div class="caption-div animated zoomIn">
+        <div class="title-div">
+            <div class="title"><i class="bi bi-wallet-fill"></i> STUDENT EXTRA CHARGES</div>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i
+                    class="bi-x-lg"></i></button>
+        </div>
+
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert">
+                <i class="bi-wallet-fill"></i> You’re about to load extra charges for
+                <span id="studentExtraChargesFullName">
+                    <script>
+                    $("#studentExtraChargesFullName").html(getEachExtraChargesStudentSession?.data?. [0].surName + ' ' +
+                        getEachExtraChargesStudentSession?.data?. [0].firstName);
+                    </script>
+                </span>
+
+                | SESSION:
+                <span id="studentExtraChargesSession">
+                    <script>
+                    $("#studentExtraChargesSession").html(getEachExtraChargesStudentSession?.session);
+                    </script>
+                </span>
+
+                | TERM:
+                <span id="studentExtraChargesTerm">
+                    <script>
+                    $("#studentExtraChargesTerm").html(getEachExtraChargesStudentSession?.termData?.termName);
+                    </script>
+                </span>
+                | CLASS:
+                <span id="studentExtraChargesClass">
+                    <script>
+                    $("#studentExtraChargesClass").html(getEachExtraChargesStudentSession?.departmentData
+                        ?.departmentName + ' ' + getEachExtraChargesStudentSession?.classData?.className + ' ' +
+                        getEachExtraChargesStudentSession?.armData?.armName);
+                    </script>
+                </span>
+            </div>
+
+            <div class="text_field_container" id="title_container">
+                <script>
+                textField({
+                    id: 'title',
+                    title: 'Enter Charges Title',
+                    type: 'text',
+                });
+                </script>
+            </div>
+
+            <div class="text_field_container" id="amount_container">
+                <script>
+                textField({
+                    id: 'amount',
+                    title: 'Enter Amount',
+                    type: 'number',
+                    onKeyPressFunction: 'isNumberCheck(event);',
+                    autocomplete: "off"
+                });
+                </script>
+            </div>
+
+            <div class="text_area_container" id="description_container">
+                <script>
+                textField({
+                    id: 'description',
+                    title: 'Enter Description',
+                    type: 'textarea',
+                    rows: 1,
+                    maxlength: '50',
+                });
+                </script>
+            </div>
+
+            <button class="btn" id="extraChargesBtn" title="Proceed To Load Extra Charges"
+                onclick="_loadStudentExtraCharges();">
+                PROCEED <i class="bi bi-arrow-right"></i></button>
+        </div>
+    </div>
+<?php } ?>

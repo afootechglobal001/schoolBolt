@@ -3977,6 +3977,20 @@
                         </div>
                     </div>
 
+                    <div class="user-managment-list staff-managment-list" title="Extra Charges Application"
+                        onclick="_proceedFetchExtraChargesDepartmentClass()">
+                        <div class="inner-div">
+                            <div class="icon-div">
+                                <img src="<?php echo $websiteUrl ?>/images/extra-charges.png"
+                                    alt="Extra Charges Application" />
+                            </div>
+                            <div class="text-div">
+                                <h3>Extra Charges Application</h3>
+                                <p>Manage additional charges added to students' payment records, including outstanding balances and other applicable fees.</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- <div class="user-managment-list staff-managment-list" title="Each Fees Revenue" onclick="">
                         <div class="inner-div">
                             <div class="icon-div">

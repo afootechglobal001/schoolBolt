@@ -550,6 +550,10 @@
                                     onclick="_getActiveStudentPage({divid:'studentDiscountScholarship', page: 'studentDiscountScholarship', url: adminPortalLocalUrl});">
                                     <i class="bi-mortarboard"></i>Discount/Scholarship Application
                                 </li>
+                                <li title="Extra Charges History" id="studentExtraChargesHistory"
+                                    onclick="_getActiveStudentPage({divid:'studentExtraChargesHistory', page: 'studentExtraChargesHistory', url: adminPortalLocalUrl});">
+                                    <i class="bi-clock"></i>Extra Charges History
+                                </li>
                             </ul>
                         </li>
                         <li class="li" title="Other Links"><i class="bi-three-dots-vertical"></i>
@@ -585,6 +589,10 @@
                                 <li title="Discount/Scholarship Application" id="studentDiscountScholarship"
                                     onclick="_getActiveStudentPage({divid:'studentDiscountScholarship', page: 'studentDiscountScholarship', url: adminPortalLocalUrl});">
                                     <i class="bi-mortarboard"></i>Discount/Scholarship Application
+                                </li>
+                                <li title="Extra Charges History" id="studentExtraChargesHistory"
+                                    onclick="_getActiveStudentPage({divid:'studentExtraChargesHistory', page: 'studentExtraChargesHistory', url: adminPortalLocalUrl});">
+                                    <i class="bi-clock"></i>Extra Charges History
                                 </li>
                             </ul>
                         </li>
@@ -2519,5 +2527,119 @@
                 </div>
             </div>
         </div>
+    </div>
+<?php } ?>
+
+<!-- For Student Extra Charges History Page -->
+<?php if ($page == 'studentExtraChargesHistory') { ?>
+    <div class="chart-div-notifications user-details-notf">
+        <div class="text-back-div">
+            <div class="text"><i class="bi-graph-up-arrow"></i> Showing Extra Charges History for </div>
+
+            <div class="text text-right" onclick="studentExtraChargesSelectSearch()">
+                <span id="srch-student-extra-charges-text">Last 30 Days</span>
+                <div class="icon-div"><i class="bi-caret-down"></i></div>
+
+                <div class="srch-select student-extra-charges-srch-select">
+                    <div id="srch-today" onclick="_fetchStudentExtraChargesFiltering('srch-today', 'Today');">Today</div>
+                    <div id="srch-week" onclick="_fetchStudentExtraChargesFiltering('srch-week', 'This Week');">This Week</div>
+                    <div id="srch-7" onclick="_fetchStudentExtraChargesFiltering('srch-7', 'Last 7 Days');">Last 7 Days</div>
+                    <div id="srch-month" onclick="_fetchStudentExtraChargesFiltering('srch-month', 'This Month');">This Month</div>
+                    <div id="srch-30" onclick="_fetchStudentExtraChargesFiltering('srch-30', 'Last 30 Days');">Last 30 Days</div>
+                    <div id="srch-90" onclick="_fetchStudentExtraChargesFiltering('srch-90', 'Last 90 Days');">Last 90 Days</div>
+                    <div id="srch-year" onclick="_fetchStudentExtraChargesFiltering('srch-year', 'This Year');">This Year</div>
+                    <div id="srch-1year" onclick="_fetchStudentExtraChargesFiltering('srch-1year', 'Last 1 Year');">Last 1 Year
+                    </div>
+                    <div onclick="studentExtraChargesSrchCustom('Custom Search')">Custom Search</div>
+                </div>
+            </div>
+
+            <div class="text">
+                <div class="custom-srch-div student-fund-custom-srch-div">
+                    <div class="custom-srch-div-in">
+                        <div class="text_field_container dash_field_container">
+                            <input class="text_field bar_cust_text_field" type="text" id="student-extra-charges-datepickers-from"
+                                placeholder="" />
+                            <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> From
+                            </div>
+                            <div class="issueText" id="issue_student-extra-charges-datepickers-from"></div>
+                        </div>
+
+                        <div class="text_field_container dash_field_container">
+                            <input class="text_field bar_cust_text_field" type="text" id="student-extra-charges-datepickers-to"
+                                placeholder="" />
+                            <div class="placeholder bar_cust_placeholder"><i class="bi-calendar3"></i> To </div>
+                            <div class="issueText" id="issue_student-extra-charges-datepickers-to"></div>
+                        </div>
+                        <button type="button" class="btn" id="applystudentExtraChargesCustomSearchBtn"
+                            onclick="_fetchCustomStudentExtraChargesFiltering();">Apply</button>
+                    </div>
+                </div>
+            </div>
+
+            <script language="javascript">
+                $('#student-extra-charges-datepickers-from').datetimepicker({
+                    lang: 'en',
+                    timepicker: false,
+                    format: 'Y-m-d',
+                    formatDate: 'Y-M-d',
+                });
+
+                $('#student-extra-charges-datepickers-to').datetimepicker({
+                    lang: 'en',
+                    timepicker: false,
+                    format: 'Y-m-d',
+                    formatDate: 'Y-M-d',
+                });
+            </script>
+        </div>
+
+        <div class="wallet-balance">
+            Advanced Balance: <span class="balance" id="advancedBalance"><s>N</s>0.00</span>
+        </div>
+    </div>
+
+    <div class="alert alert-success top-alert-div animated fadeIn">
+        <div><i class="bi-info-circle"></i> Extra Charges history between <span id="dateFrom">Loading...</span> and <span
+                id="dateTo">Loading...</span></div>
+
+        <div class="btn-container">
+            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('fetchStudentExtraChargesTable','Student_Extra_Charges_History_List');">
+                <i class="bi-file-earmark-excel"></i> EXPORT
+            </button>  
+        </div>
+    </div>
+
+    <div class="table-div animated fadeIn">
+        <table class="table" cellspacing="0" style="width:100%" id="fetchStudentExtraChargesTable">
+            <thead>
+                <tr class="tb-col fund-tb-col">
+                    <th>sn</th>
+                    <th>Date</th>
+                    <th>Payment ID</th>
+                    <th>Balance Before(<s>N</s>)</th>
+                    <th>Amount(<s>N</s>)</th>
+                    <th>Balance After(<s>N</s>)</th>
+                    <th>Fund Loaded By</th>
+                    <th>Status</th>
+                    <th>Action</th>                 
+                </tr>
+            </thead>
+            <tbody id="fetchStudentFunds">
+                <script>
+                    _fetchStudentExtraChargesFiltering('srch-90', 'Last 90 Days');
+                </script>
+
+                <tr>
+                    <td colspan="20">
+                        <div class="content-loading-div">
+                            <img src="<?php echo $websiteUrl ?>/images/spinner.gif" alt="Loading" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Pagination -->
+        <div id="fetchStudentExtraChargesPaginationControls" class="pagination-div"></div>
     </div>
 <?php } ?>
