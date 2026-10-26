@@ -912,7 +912,7 @@ $(document).ready(function() {
     _calculatePaymentSummary();
 
     ///// SHOW / HIDE SCHOOL BOLT CHARGES ////
-    if (useAccountFessToPaySession?.schoolBoltCharges > 0) {
+    if (useAccountFessToPaySession?.schoolBoltCharges > 0 && useAccountFessToPaySession?.clientData?.schoolBoltChargesMethodId !== "METHOD_3") {
         $('#showSchoolBoltCharges').show();
     } else {
         $('#showSchoolBoltCharges').hide();
@@ -1548,91 +1548,135 @@ useAccountFessToPaySession = JSON.parse(sessionStorage.getItem("useAccountFessTo
                             <div class="table-div animated fadeIn">
                                 <table class="table" cellspacing="0" style="width:100%" id="releaseStudentPageContent">
                                     <script>
-                                    $(document).ready(function() {
-                                        const response = JSON.parse(sessionStorage.getItem(
-                                            "useAccountStudentByClassSession"));
+                                        $(document).ready(function() {
+                                            const response = JSON.parse(sessionStorage.getItem(
+                                                "useAccountStudentByClassSession"));
 
-                                        if (response && response.success === true) {
-                                            const data = response.data;
+                                            if (response && response.success === true) {
+                                                const data = response.data;
 
-                                            const session = response.session;
-                                            const term = response?.termData?.termName;
-                                            const departmentId = response?.departmentData?.departmentId;
-                                            const department = response?.departmentData?.departmentName;
-                                            const classId = response?.classData?.classId;
-                                            const className = response?.classData?.className;
-                                            const armId = response?.armData?.armId;
-                                            const arm = response?.armData?.armName;
+                                                const session = response.session;
+                                                const term = response?.termData?.termName;
+                                                const departmentId = response?.departmentData?.departmentId;
+                                                const department = response?.departmentData?.departmentName;
+                                                const classId = response?.classData?.classId;
+                                                const className = response?.classData?.className;
+                                                const armId = response?.armData?.armId;
+                                                const arm = response?.armData?.armName;
 
-                                            let html = `
-                                                <thead>
-                                                    <tr class="tb-col">
-                                                        <th></th>
-                                                        <th>sn</th>
-                                                        <th>Student Info</th>
-                                                        <th>Session</th>
-                                                        <th>Term</th>
-                                                        <th>Class</th>
-                                                        <th>Status</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>`;
+                                                let html = `
+                                                    <thead>
+                                                        <tr class="tb-col">
+                                                            <th></th>
+                                                            <th>sn</th>
+                                                            <th>Student Info</th>
+                                                            <th>Session/Term</th>
+                                                            <th>Class</th>
+                                                            <th>Total Mandatory Fees</th>
+                                                            <th>Total Non-Mandatory Fees</th>
+                                                            <th>Mandatory Fees Paid</th>
+                                                            <th>Non-Mandatory Fees Paid</th>
+                                                            <th>Total Fees Paid</th>
+                                                            <th>Outstanding Balance</th>
+                                                            <th>Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>`;
 
-                                            let sn = 0;
+                                                let sn = 0;
 
-                                            data.forEach(item => {
-                                                sn++;
-                                                const student = item.studentData;
-                                                const fullname =
-                                                    `${student.surName} ${student.firstName} ${student.otherNames || ''}`;
-                                                const studentId = item.studentId;
-                                                const branchId = item.branchId;
-                                                const passport = student.passport || "default.jpg";
+                                                data.forEach(item => {
+                                                    sn++;
+                                                    const student = item?.studentData;
+                                                    const fullname =
+                                                        `${student?.surName} ${student?.firstName} ${student?.otherNames || ''}`;
+                                                    const studentId = item?.studentId;
+                                                    const branchId = item?.branchId;
+                                                    const passport = student?.passport || "default.jpg";
+                                                    const advancedBalance = student?.advancedBalance;
+                                                    const isDebtor = item?.isDebtor;
+                                                    const isResultReleased = item?.isResultReleased;
+                                                    const outstandingBalance = item?.outstandingBalance;
+                                                    const debtorStatusColor = (isDebtor === "TRUE") ?
+                                                        "red-color" : "green-color";
+                                                    const debtorImgStatusColor = (isDebtor === "TRUE") ?
+                                                        '<div class="status-icon debtor"><i class="bi-x"></i></div>' :
+                                                        '<div class="status-icon"><i class="bi-check"></i></div>';
 
-                                                html += `
-                                                    <tr class="tb-row">
-                                                        <td>
-                                                            <label class="custom-checkbox">
-                                                                <input type="checkbox"
-                                                                    class="child"
-                                                                    id="student_${studentId}"
-                                                                    name="studentId[]"
-                                                                    value="${studentId}"
-                                                                    data-value="${studentId}">
-                                                                    <span></span>
-                                                            </label>
-                                                        </td>
-                                                        <td>${sn}</td>
+                                                    viewStatus = (isResultReleased === "TRUE") ?
+                                                        `
+                                                        <div class="status-div RELEASED">
+                                                            RELEASED
+                                                        </div>
+                                                        ` :
+                                                        `
+                                                        <div class="status-div UNRELEASED">
+                                                            UNRELEASED
+                                                        </div>
+                                                        `;
 
-                                                        <td class="clickable-td">
-                                                            <div class="text-back-div" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
-                                                                <div class="image-div general-passport">
-                                                                    <img src="${studentPixPath}/${passport}" alt="${fullname}" />
+                                                    html += `
+                                                        <tr class="tb-row">
+                                                            <td>
+                                                                <label class="custom-checkbox">
+                                                                    <input type="checkbox"
+                                                                        class="child"
+                                                                        id="student_${studentId}"
+                                                                        name="studentId[]"
+                                                                        value="${studentId}"
+                                                                        data-value="${studentId}"
+                                                                        ${isResultReleased === "TRUE" ? "checked" : ""}>
+                                                                        <span></span>
+                                                                </label>
+                                                            </td>
+                                                            <td>${sn}</td>
+
+                                                            <td class="clickable-td">
+                                                                <div class="text-back-div" onclick="_fetchEachBranchStudents('${branchId}','${departmentId}','${classId}','${armId}','${studentId}','');">
+                                                                    ${debtorImgStatusColor}
+                                                                    <div class="image-div general-passport">
+                                                                        <img src="${studentPixPath}/${passport}" alt="${fullname}" />
+                                                                    </div>
+
+                                                                    <div class="text-div">
+                                                                        <div class="first-class">${fullname}</div>
+                                                                        <div class="second-class">${studentId}</div>
+                                                                    </div>
                                                                 </div>
+                                                            </td>
 
-                                                                <div class="text-div">
-                                                                    <div class="first-class">${fullname}</div>
-                                                                    <div class="second-class">${studentId}</div>
+                                                            <td>${session} - ${term}</td>
+                                                            <td>${className} ${arm}</td>
+
+                                                            <td><s>N</s>${thousandSeperator(item.totalMandatoryAmount)}</td>
+                                                            <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmount)}</td>
+                                                            <td>
+                                                                <div class="text-back-div">
+                                                                    <div class="text-div">
+                                                                        <div class="first-class ${debtorStatusColor}"><s>N</s>${thousandSeperator(item.totalMandatoryAmountPaid)}</div>
+                                                                        <div class="second-class">(${item.totalPercentageForMandatoryFees}%)</div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </td>
+                                                            </td>
+                                                            <td><s>N</s>${thousandSeperator(item.totalNotMandatoryAmountPaid)}</td>
+                                                            <td><s>N</s>${thousandSeperator(item.totalFeesPaid)}</td>
+                                                            <td>
+                                                                <div class="text-back-div">
+                                                                    <div class="text-div">
+                                                                        <div class="first-class ${debtorStatusColor}"><s>N</s>${thousandSeperator(item.outstandingBalance)}</div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                ${viewStatus}
+                                                            </td>
+                                                        </tr>`;
+                                                });
 
-                                                        <td>${session}</td>
-                                                        <td>${term}</td>
-                                                        <td>${className} ${arm}</td>
-
-                                                        <td>
-                                                            <div class="status-div UNRELEASED">
-                                                                UNRELEASED
-                                                            </div>
-                                                        </td>
-                                                    </tr>`;
-                                            });
-
-                                            html += `</tbody>`;
-                                            $('#releaseStudentPageContent').html(html);
-                                        }
-                                    });
+                                                html += `</tbody>`;
+                                                $('#releaseStudentPageContent').html(html);
+                                            }
+                                        });
                                     </script>
                                 </table>
                             </div>
