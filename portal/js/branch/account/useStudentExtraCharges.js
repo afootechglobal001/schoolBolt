@@ -546,7 +546,7 @@ function _renderFetchStudentExtraCharges(data, start) {
         <td>
           <div class="text-back-div">
             <div class="text-div">
-              <div class="first-class">${item?.title}</div>
+              <div class="first-class">${capitalizeFirstLetterOfEachWord(item?.title)}</div>
               <div class="second-class">${item?.description}</div>
             </div>
           </div>
@@ -663,7 +663,7 @@ function _studentExtraChargesCancellation() {
         _studentExtraChargesCancellationCallback(formData);
       },
       title: "Are you sure?",
-      message: "Are you sure you want to proceed? This action is irreversible.",
+      message: "Are you sure you want to cancel this extra charges? This action is irreversible.",
       alertType: "warning",
       falseActionBtn: true,
       closeOnOverlayClick: true,
@@ -676,28 +676,17 @@ function _studentExtraChargesCancellation() {
 
 //// Student Extra Charges Cancellation CallBack /////
 function _studentExtraChargesCancellationCallback(formData) {
-  let getEachBranchDetailsSession = JSON.parse(
-    sessionStorage.getItem("getEachBranchDetailsSession"),
-  );
-
-  let useEachFetchStudentExtraChargesSession = JSON.parse(
-    sessionStorage.getItem("useEachFetchStudentExtraChargesSession"),
-  );
-
-  const branchId = getEachBranchDetailsSession?.branchId;
-  const studentId = useEachFetchStudentExtraChargesSession?.data[0]?.studentId;
-
   try {
     const btnText = $("#submitBtn").html();
     _btnDisable("submitBtn", btnText, true);
 
     _callRawEndPoints({
-      url: `admin/branch/account/student-extra-charges/cancel-student-extra-charges?branchId=${branchId}&studentId=${studentId}`,
+      url: `admin/branch/account/student-extra-charges/cancel-extra-charges`,
       formData,
       accessKey: true,
     })
       .then((response) => {
-        _staffValidationCheck(response.response);
+        _staffValidationCheck(response?.response);
         if (response.success) {
           _showCustomConfirm({
             callback: () => {
