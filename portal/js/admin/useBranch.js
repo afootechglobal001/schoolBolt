@@ -1242,7 +1242,7 @@ function _updateBranchConfig() {
             const newSessionPromotionalBroadSheetHeader = data.sessionPromotionalBroadSheetHeader;
             
             const oldCbtResultHeader = data.oldCbtResultHeader;
-            const newCbtResultHeader = data.newCbtResultHeader;
+            const newCbtResultHeader = data.cbtResultHeader;
 
             if (newSchoolLogo !== "") _uploadSchoolLogo("schoolLogo", oldSchoolLogo, newSchoolLogo, message);
             if (newPrincipalSignature !== "") _uploadSchoolLogo("principalSignature", oldPrincipalSignature, newPrincipalSignature, message);

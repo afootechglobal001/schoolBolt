@@ -2733,7 +2733,7 @@ function _releaseAllStudentResultCallback(formData) {
     })
       .then((response) => {
         _staffValidationCheck(response.response);
-        if (response.success) {
+        if (response?.success) {
           _showCustomConfirm({
             callback: () => {
               _fetchAccountStudentsByClass(
@@ -2743,7 +2743,7 @@ function _releaseAllStudentResultCallback(formData) {
               );
             },
             title: "Success!",
-            message: response.message,
+            message: response?.message,
             alertType: "success",
             trueActionBtnText: "OK, Thanks.",
             closeOnOverlayClick: false,
@@ -2751,10 +2751,17 @@ function _releaseAllStudentResultCallback(formData) {
         } else {
           _showCustomConfirm({
             title: "Unable To Release Result",
-            message: response.message,
-            alertType: "warning",
+            message: response?.message,
+            alertType: "error",
             trueActionBtnText: "OK",
             closeOnOverlayClick: true,
+            trueActionCallback: () => {
+              _fetchAccountStudentsByClass(
+                departmentId,
+                classId,
+                armId,
+              );
+            },
           });
           _btnDisable("releaseAllBtn", btnText, false);
         }

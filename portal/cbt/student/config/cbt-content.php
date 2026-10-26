@@ -197,7 +197,7 @@
                             <div class="instruction-item">
                                 <div class="instruction-number">3</div>
                                 <p>
-                                    You go back to previous questions once
+                                    You can go back to previous questions once
                                     you move to the next question.
                                 </p>
                             </div>
