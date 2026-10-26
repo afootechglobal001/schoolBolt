@@ -15,7 +15,7 @@ function _getActiveStudentPage(props) {
 }
 function _getStudentPagesActiveLink(divid) {
   $(
-    "#student_profile_details, #studentTranscriptPage, #student_activities, #student_report, #studentPaymentHistory, #studentFundHistory, #studentDiscountScholarship",
+    "#student_profile_details, #studentTranscriptPage, #student_activities, #student_report, #studentPaymentHistory, #studentFundHistory, #studentDiscountScholarship, #studentExtraChargesHistory",
   ).removeClass("active");
   $("#" + divid).addClass("active");
 }

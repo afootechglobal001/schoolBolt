@@ -2540,7 +2540,7 @@
                 <span id="srch-student-extra-charges-text">Last 30 Days</span>
                 <div class="icon-div"><i class="bi-caret-down"></i></div>
 
-                <div class="srch-select student-extra-charges-srch-select">
+                <div class="srch-select student-fund-srch-select">
                     <div id="srch-today" onclick="_fetchStudentExtraChargesFiltering('srch-today', 'Today');">Today</div>
                     <div id="srch-week" onclick="_fetchStudentExtraChargesFiltering('srch-week', 'This Week');">This Week</div>
                     <div id="srch-7" onclick="_fetchStudentExtraChargesFiltering('srch-7', 'Last 7 Days');">Last 7 Days</div>
@@ -2616,16 +2616,15 @@
                 <tr class="tb-col fund-tb-col">
                     <th>sn</th>
                     <th>Date</th>
-                    <th>Payment ID</th>
-                    <th>Balance Before(<s>N</s>)</th>
+                    <th>Charges ID</th>
+                    <th>Charges Title</th>
                     <th>Amount(<s>N</s>)</th>
-                    <th>Balance After(<s>N</s>)</th>
-                    <th>Fund Loaded By</th>
+                    <th>Charges Loaded By</th>
                     <th>Status</th>
                     <th>Action</th>                 
                 </tr>
             </thead>
-            <tbody id="fetchStudentFunds">
+            <tbody id="fetchStudentExtraCharges">
                 <script>
                     _fetchStudentExtraChargesFiltering('srch-90', 'Last 90 Days');
                 </script>
@@ -2642,4 +2641,246 @@
         <!-- Pagination -->
         <div id="fetchStudentExtraChargesPaginationControls" class="pagination-div"></div>
     </div>
+<?php } ?>
+
+<!-- For Student Extra Charges Details Form -->
+<?php if ($page == 'studentExtraChargesDetailsForm') { ?>
+    <script>
+        useEachFetchStudentExtraChargesSession = JSON.parse(sessionStorage.getItem("useEachFetchStudentExtraChargesSession"));
+    </script>
+
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <div class="icon-title-div">
+                    <span id="panel-title"><span><i class="bi-plus-square"></i></span> STUDENT EXTRA CHARGES DETAILS</span>
+                </div>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Student Information;</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Student Name:</div>
+                                    <div>
+                                        <span id="extraChargesFullName">
+                                            <script>
+                                                $("#extraChargesFullName").html(useEachFetchStudentExtraChargesSession?.studentData
+                                                    ?.surName + ' ' + useEachFetchStudentExtraChargesSession?.studentData
+                                                    ?.firstName + ' ' +useEachFetchStudentExtraChargesSession?.studentData?.otherNames);
+                                            </script>
+                                    </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Student ID:</div>
+                                    <div><span id="extraChargesStudentId">
+                                            <script>
+                                                $("#extraChargesStudentId").html(useEachFetchStudentExtraChargesSession?.studentData
+                                                    ?.studentId);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Student Wallet Balance:</div>
+                                    <div><span id="extraChargesAdvancedBalance">
+                                            <script>
+                                                $("#extraChargesAdvancedBalance").html('<s>N</s>' + thousandSeperator(
+                                                    useEachFetchStudentExtraChargesSession?.studentData?.advancedBalance));
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Charges Details;</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Charges ID:</div>
+                                    <div><span id="extraChargesChargesId">
+                                            <script>
+                                                $("#extraChargesChargesId").html(useEachFetchStudentExtraChargesSession?.data[0]?.chargesId);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Amount:</div>
+                                    <div><span id="extraChargesAdvancedAmount">
+                                            <script>
+                                                $("#extraChargesAdvancedAmount").html('<s>N</s>' + thousandSeperator(
+                                                    useEachFetchStudentExtraChargesSession?.data[0]?.amount));
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Reason For Charges:</div>
+                                    <div><span id="extraChargesDescription">
+                                            <script>
+                                                $("#extraChargesDescription").html(useEachFetchStudentExtraChargesSession?.data[0]?.description);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Status:</div>
+                                    <div><span id="extraChargesFormStatusStatusName">   
+                                            <script>
+                                                $("#extraChargesFormStatusStatusName").html(useEachFetchStudentExtraChargesSession?.data[0]?.statusData?.statusName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Date:</div>
+                                    <div><span id="extraChargesUpdatedTime">
+                                            <script>
+                                                $("#extraChargesUpdatedTime").html(useEachFetchStudentExtraChargesSession?.data[0]?.updatedTime);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Charges Funded By;</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Staff ID:</div>
+                                    <div><span id="extraChargesFundedById">
+                                            <script>
+                                                $("#extraChargesFundedById").html(useEachFetchStudentExtraChargesSession?.data[0]?.createdByData?.staffId);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Staff FullName:</div>
+                                    <div><span id="extraChargesFundedByName">
+                                            <script>
+                                                $("#extraChargesFundedByName").html(useEachFetchStudentExtraChargesSession?.data[0]?.createdByData?.fullName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert" id="viewExtraChargesCanelledByInfo">
+                        <span>Cancelled By;</span>
+                        <div class="alert-list-div">                 
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Staff ID:</div>
+                                    <div><span id="extraChargesCancelledById">
+                                            <script>
+                                                $("#extraChargesCancelledById").html(useEachFetchStudentExtraChargesSession?.data[0]?.updatedByData?.staffId);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Staff FullName:</div>
+                                    <div><span id="extraChargesCancelledByName">
+                                            <script>
+                                                $("#extraChargesCancelledByName").html(useEachFetchStudentExtraChargesSession?.data[0]?.updatedByData?.fullName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Reason For Cancellation:</div>
+                                    <div><span id="extraChargesReasonForCancellation">
+                                            <script>
+                                                $("#extraChargesReasonForCancellation").html(useEachFetchStudentExtraChargesSession?.data[0]?.reasonForCancellation);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="viewExtraChargesButton">
+                    <div class="permission-form-back-div account-permission-form-back-div">
+                        <div class="title-div">
+                            <h4>Reason for student extra charges cancellation</h4>
+                            <div class="text_area_container" id="reasonForCancellation_container">
+                                <script>
+                                    textField({
+                                        id: 'reasonForCancellation',
+                                        title: 'Reason For Cancellation',
+                                        type: 'textarea',
+                                        rows: 1,
+                                        maxlength: '50',
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn" title="Proceed" id="submitBtn" onclick="_studentExtraChargesCancellation();"> <i class="bi-check"></i> Proceed </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>  
+        $(document).ready(function() {
+            ///// SHOW / HIDE CANCELLED BY ////
+            if (useEachFetchStudentExtraChargesSession?.data[0]?.statusData?.statusId==="4") {
+                $('#viewExtraChargesCanelledByInfo').show();
+            } else {
+                $('#viewExtraChargesCanelledByInfo').hide();
+            }
+            
+            ///// SHOW / HIDE PROCEED FUND CANCEL BUTTON ////
+            if (
+                useEachFetchStudentExtraChargesSession?.data?.[0]?.statusData?.statusId === "3"
+            ) {
+                $('#viewExtraChargesButton').show();
+            } else {
+                $('#viewExtraChargesButton').hide();
+            }
+        });
+    </script>
 <?php } ?>
