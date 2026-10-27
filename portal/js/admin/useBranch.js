@@ -1614,3 +1614,22 @@ function _revenueBranchFiltering(dateFrom, dateTo) {
   });
   $("#get-more-div-secondary").fadeOut(500);
 }
+
+function _toggleMobileNav(event, element) {
+    event.stopPropagation();
+
+    let submenu = "";
+
+    if (element === "mobileStudent") {
+        submenu = "#branchStudentMobileNavUl";
+    } else if (element === "mobileSubject") {
+        submenu = "#branchSubjectMobileNavUl";
+    } else if (element === "mobileResult") {
+        submenu = "#branchResultMobileNavUl";
+    }
+
+    if (submenu) {
+        $(".ul-expand").not(submenu).stop(true, true).slideUp("slow");
+        $(submenu).stop(true, true).slideToggle("slow");
+    }
+}

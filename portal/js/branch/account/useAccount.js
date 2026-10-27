@@ -1008,8 +1008,9 @@ function _proceedToPayment() {
   const classId = useAccountFessToPaySession?.classData?.classId;
   const armId = useAccountFessToPaySession?.armData?.armId;
 
-  const advancedBalance =
-    getEachAccountStudentSession?.studentData?.advancedBalance;
+  const advancedBalance = getEachAccountStudentSession?.studentData?.advancedBalance;
+  let totalExtraCharges = useAccountFessToPaySession?.extraCharges?.totalExtraCharges;
+
   try {
     const paymentMethodId = $("#paymentMethodId").val().trim();
     let inputFees = [];
@@ -1025,7 +1026,7 @@ function _proceedToPayment() {
 
       if (parsedAmount > 0) {
         hasFeeInput = true;
-
+  
         inputFees.push({
           feesId: feesId,
           amount: parsedAmount,
@@ -1035,16 +1036,21 @@ function _proceedToPayment() {
       }
     });
 
-    if (!hasFeeInput) {
+    if (!hasFeeInput && totalExtraCharges === 0) {
       _showCustomConfirm({
         title: "Nothing to Pay Yet!",
         message:
           "You haven’t added any fees. Please enter a fee amount to continue.",
-        alertType: "warning",
+        alertType: "error",
         trueActionBtnText: "Got it",
         closeOnOverlayClick: true,
       });
       return false;
+    }
+
+    // Include extra charges when no fee amount was entered
+    if (!hasFeeInput && totalExtraCharges > 0) {
+      totalFees = totalExtraCharges;
     }
 
     let previousBalance = parseFloat(advancedBalance) || 0;
@@ -1054,7 +1060,7 @@ function _proceedToPayment() {
       _showCustomConfirm({
         title: "Insufficient Balance!",
         message: `You have Insufficient balance of <strong style="color:red;"> ${"-<s>N</s>" + thousandSeperator(Math.abs(newBalance))}</strong>. Kindly load fund for this student before proceeding.`,
-        alertType: "warning",
+        alertType: "error",
         trueActionBtnText: "OK",
         closeOnOverlayClick: true,
       });
