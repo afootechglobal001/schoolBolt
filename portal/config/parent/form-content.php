@@ -495,9 +495,42 @@
                                             $("#paidFees").html('No record found!');
                                         }
                                     }
+
+                                    if (getPayFeesToPaySession) {
+                                        const extraChargesData = getPayFeesToPaySession?.extraCharges?.data;
+
+                                        if (!extraChargesData || extraChargesData.length === 0) {
+                                            $("#extraChargesFees").html('No record found!');
+                                        } else {
+                                            for (let i = 0; i < extraChargesData.length; i++) {
+                                                const fetchExtraCharge = extraChargesData?.[i];
+                                                const title = fetchExtraCharge?.title;
+                                                const amount = thousandSeperator(fetchExtraCharge?.amount);
+
+                                                $("#extraChargesFees").append(`
+                                                    <div class="alert-list-back-div paid-fees-back-div">
+                                                        <div class="alert-list paid-fees-list">
+                                                            <div>${title}:</div>
+                                                            <div class="alert-value">
+                                                                <span class="alert-percentage"></span>
+                                                                <span><s>N</s>${amount}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                `);
+                                            }
+                                        }
+                                    }
                                 });
                             </script>
                         </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>List of extra charges<span style="color: #ff0000;">(Compulsory)*</span></span>
+                        <div class="alert-list-div" id="extraChargesFees"></div>
                     </div>
                 </div>
 
@@ -556,7 +589,7 @@
     <script>
         $(document).ready(function () {
             function updateTotal() {
-
+                let totalExtraCharges = getPayFeesToPaySession?.extraCharges?.totalExtraCharges;
                 let totalFee = 0;
                 let totalAmount = 0;
 
@@ -564,6 +597,10 @@
                     totalFee += parseFloat($(this).val()) || 0;
                 });
                 totalAmount = totalFee + parseFloat(getPayFeesToPaySession.schoolBoltCharges);
+
+                if (totalExtraCharges > 0) {
+                    totalAmount += parseFloat(totalExtraCharges);
+                }
 
                 $('#totalFee').html('<s>N</s>' + thousandSeperator(totalFee));
                 $('#totalAmount').html('<s>N</s>' + thousandSeperator(totalAmount));

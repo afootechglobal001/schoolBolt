@@ -203,6 +203,8 @@ function _proceedToPayment() {
   );
   let parentSessionData = JSON.parse(localStorage.getItem("parentSessionData"));
 
+  let totalExtraCharges = getPayFeesToPaySession?.extraCharges?.totalExtraCharges;
+
   try {
     let issueCount = 0;
     const paymentMethodId = $("#paymentMethodId").val().trim();
@@ -217,7 +219,7 @@ function _proceedToPayment() {
       selectedFees.push({ feesId: feesId });
     });
 
-    if (selectedFees.length === 0) {
+    if (selectedFees.length === 0 && totalExtraCharges === 0) {
       _actionAlert("Please select at least one fee to continue.", false);
       return;
     }

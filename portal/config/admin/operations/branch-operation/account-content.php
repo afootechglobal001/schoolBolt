@@ -652,106 +652,139 @@ useAccountFessToPaySession = JSON.parse(sessionStorage.getItem("useAccountFessTo
                     <div class="fetch-toggle pay-fetch-toggle" id="fetchedFeeTextbox">
 
                         <script>
-                        $(document).ready(function() {
-                            let notPaidFees = '';
-                            let paidFees = '';
-                            let upPaidFees = false;
-                            let completeFees = false;
+                            $(document).ready(function() {
+                                let notPaidFees = '';
+                                let paidFees = '';
+                                let upPaidFees = false;
 
-                            if (useAccountFessToPaySession && useAccountFessToPaySession
-                                ?.listOfFeesNotPaidData) {
-                                const fetch = useAccountFessToPaySession?.listOfFeesNotPaidData;
+                                if (useAccountFessToPaySession && useAccountFessToPaySession?.listOfFeesNotPaidData) {
+                                    const fetch = useAccountFessToPaySession?.listOfFeesNotPaidData;
 
-                                for (let i = 0; i < fetch.length; i++) {
-                                    const fetchedFess = fetch[i];
-                                    const feesId = fetchedFess.feesId;
-                                    const percentage = feesId + "_percent";
+                                    for (let i = 0; i < fetch.length; i++) {
+                                        const fetchedFess = fetch[i];
+                                        const feesId = fetchedFess.feesId;
+                                        const percentage = feesId + "_percent";
 
-                                    const feesName = fetchedFess.feesName;
-                                    const feesOption = fetchedFess.feesOption;
-                                    const newFeesOption = (feesOption === "TRUE") ? "MANDATORY" :
-                                        "NOT MANDATORY";
-                                    const feesOptionColor = (feesOption === "TRUE") ? "green-color" :
-                                        "orange-color";
-                                    const amount = thousandSeperator(fetchedFess.amount);
+                                        const feesName = fetchedFess.feesName;
+                                        const feesOption = fetchedFess.feesOption;
+                                        const newFeesOption = (feesOption === "TRUE") ? "MANDATORY" :
+                                            "NOT MANDATORY";
+                                        const feesOptionColor = (feesOption === "TRUE") ? "green-color" :
+                                            "orange-color";
+                                        const amount = thousandSeperator(fetchedFess.amount);
 
-                                    const fieldId = `fees_${feesId}`;
+                                        const fieldId = `fees_${feesId}`;
 
-                                    notPaidFees +=
-                                        upPaidFees = true;
-                                    $("#fetchedFeeTextbox").append(`
-                                            <div class="each-toggle-div payment-each-toggle-div new-pay-toggle-div">
-                                                <div class="title-back-div">
-                                                    <div class="toggle-title-div new-toggle-title">
-                                                        <h5>${feesName}</h5> 
-                                                        <span class="${feesOptionColor}">(<s>N</s>${amount})</span>
+                                        notPaidFees +=
+                                            upPaidFees = true;
+                                        $("#fetchedFeeTextbox").append(`
+                                                <div class="each-toggle-div payment-each-toggle-div new-pay-toggle-div">
+                                                    <div class="title-back-div">
+                                                        <div class="toggle-title-div new-toggle-title">
+                                                            <h5>${feesName}</h5> 
+                                                            <span class="${feesOptionColor}">(<s>N</s>${amount})</span>
+                                                        </div>
+                                                        <div class="sub-title ${feesOptionColor}">${newFeesOption}</div>
                                                     </div>
-                                                    <div class="sub-title ${feesOptionColor}">${newFeesOption}</div>
-                                                </div>
 
-                                                <div class="text-box-wrapper">
-                                                    <div class="text_field_container" id="${fieldId}_container"></div>
-                                                    <input type="hidden" class="fees-id-holder" value="${feesId}">
-                                                    <div class="text_field_container" id="${percentage}_container"></div>
-                                                </div>
-                                            </div>`);
+                                                    <div class="text-box-wrapper">
+                                                        <div class="text_field_container" id="${fieldId}_container"></div>
+                                                        <input type="hidden" class="fees-id-holder" value="${feesId}">
+                                                        <div class="text_field_container" id="${percentage}_container"></div>
+                                                    </div>
+                                                </div>`);
 
-                                    textField({
-                                        id: fieldId,
-                                        title: 'AMOUNT(<s>N</s>)',
-                                        type: 'number',
-                                        onKeyUpFunction: `_convertAmountToPercentage('${feesId}')`,
-                                        autocomplete: "off"
-                                    });
+                                        textField({
+                                            id: fieldId,
+                                            title: 'AMOUNT(<s>N</s>)',
+                                            type: 'number',
+                                            onKeyUpFunction: `_convertAmountToPercentage('${feesId}')`,
+                                            autocomplete: "off"
+                                        });
 
-                                    textField({
-                                        id: percentage,
-                                        title: 'Percentage(%)',
-                                        type: 'number',
-                                        onKeyUpFunction: `_convertPercentageToAmount('${feesId}')`,
-                                        autocomplete: "off"
-                                    });
+                                        textField({
+                                            id: percentage,
+                                            title: 'Percentage(%)',
+                                            type: 'number',
+                                            onKeyUpFunction: `_convertPercentageToAmount('${feesId}')`,
+                                            autocomplete: "off"
+                                        });
 
+                                    }
+                                    if (!upPaidFees) {
+                                        $("#fetchedFeeTextbox").html(
+                                            '<div class="success-msg">Fees Payment Completed for this session and term!</div>'
+                                        );
+                                    }
                                 }
-                                if (!upPaidFees) {
-                                    $("#fetchedFeeTextbox").html(
-                                        '<div class="success-msg">Fees Payment Completed for this session and term!</div>'
-                                    );
-                                }
-                            }
 
-                            if (useAccountFessToPaySession && useAccountFessToPaySession?.listOfFeesPaidData) {
-                                const feesPaidData = useAccountFessToPaySession?.listOfFeesPaidData;
+                                if (useAccountFessToPaySession) {
+                                    const feesPaidData = useAccountFessToPaySession?.listOfFeesPaidData;
 
-                                for (let i = 0; i < feesPaidData.length; i++) {
-                                    const fetchFeesPaid = feesPaidData[i];
-                                    const totalAmountPaid = thousandSeperator(fetchFeesPaid.totalAmountPaid);
-                                    const totalFeesPercentage = fetchFeesPaid.totalFeesPercentage;
-                                    const feesName = fetchFeesPaid.feesName;
-                                    const percentageColor = totalFeesPercentage >= 100 ? "green-color" :
-                                        "orange-color";
+                                    if (!feesPaidData || feesPaidData.length === 0) {
+                                        $("#paidFees").html('No record found!');
+                                    } else {
+                                        for (let i = 0; i < feesPaidData.length; i++) {
+                                            const fetchFeesPaid = feesPaidData[i];
+                                            const totalAmountPaid = thousandSeperator(fetchFeesPaid.totalAmountPaid);
+                                            const totalFeesPercentage = fetchFeesPaid.totalFeesPercentage;
+                                            const feesName = fetchFeesPaid.feesName;
 
-                                    paidFees +=
-                                        completeFees = true;
-                                    $("#paidFees").append(`
-                                            <div class="alert-list-back-div paid-fees-back-div">
-                                                <div class="alert-list paid-fees-list">
-                                                    <div>${feesName}:</div>
-                                                    <div class="alert-value">
-                                                        <span class="alert-percentage ${percentageColor}">${totalFeesPercentage}%</span>
-                                                        <span><s>N</s>${totalAmountPaid}</span>
+                                            const percentageColor = totalFeesPercentage >= 100
+                                                ? "green-color"
+                                                : "orange-color";
+
+                                            $("#paidFees").append(`
+                                                <div class="alert-list-back-div paid-fees-back-div">
+                                                    <div class="alert-list paid-fees-list">
+                                                        <div>${feesName}:</div>
+                                                        <div class="alert-value">
+                                                            <span class="alert-percentage ${percentageColor}">${totalFeesPercentage}%</span>
+                                                            <span><s>N</s>${totalAmountPaid}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>`);
+                                            `);
+                                        }
+                                    }
+                                }
 
+                                if (useAccountFessToPaySession) {
+                                    const extraChargesData = useAccountFessToPaySession?.extraCharges?.data;
+
+                                    if (!extraChargesData || extraChargesData.length === 0) {
+                                        $("#extraChargesFees").html('No record found!');
+                                    } else {
+                                        for (let i = 0; i < extraChargesData.length; i++) {
+                                            const fetchExtraCharge = extraChargesData?.[i];
+                                            const title = fetchExtraCharge?.title;
+                                            const amount = thousandSeperator(fetchExtraCharge?.amount);
+
+                                            $("#extraChargesFees").append(`
+                                                <div class="alert-list-back-div paid-fees-back-div">
+                                                    <div class="alert-list paid-fees-list">
+                                                        <div>${title}:</div>
+                                                        <div class="alert-value">
+                                                            <span class="alert-percentage"></span>
+                                                            <span><s>N</s>${amount}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `);
+                                        }
+                                    }
                                 }
-                                if (!completeFees) {
-                                    $("#paidFees").html('No record found!');
-                                }
-                            }
-                        });
+                            });
                         </script>
                     </div>
+                </div>
+            </div>
+
+            <div class="paid-fee-conatiner">
+                <div class="alert alert-success form-alert">
+                    <span>List of extra charges<span style="color: #ff0000;">(Compulsory)*</span></span>
+
+                    <div class="alert-list-div" id="extraChargesFees"></div>
                 </div>
             </div>
 
@@ -762,7 +795,7 @@ useAccountFessToPaySession = JSON.parse(sessionStorage.getItem("useAccountFessTo
                         <div class="alert-list-back-div">
                             <div class="alert-list">
                                 <div>PREVIOUS ADVANCED BALANCE:</div>
-                                <div><span id="formAdvancedBalance"></div>
+                                <div><span id="formAdvancedBalance"></span></div>
                             </div>
                         </div>
 
@@ -880,6 +913,7 @@ function _convertPercentageToAmount(feesId) {
 
 function _calculatePaymentSummary() {
     let previousBalance = parseFloat(useAccountFessToPaySession?.studentData?.advancedBalance) || 0;
+    let totalExtraCharges = parseFloat(useAccountFessToPaySession?.extraCharges?.totalExtraCharges) || 0;
 
     let totalFees = 0;
 
@@ -891,6 +925,11 @@ function _calculatePaymentSummary() {
             totalFees += parseFloat($(this).val()) || 0;
         }
     });
+
+    // Add extra charges to the total if available
+    if (totalExtraCharges > 0) {
+        totalFees += totalExtraCharges;
+    }
 
     $("#formAdvancedBalance").html('<s>N</s>' + thousandSeperator(previousBalance));
     $("#totalAmount").html('<s>N</s>' + thousandSeperator(totalFees));
