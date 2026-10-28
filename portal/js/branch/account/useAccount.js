@@ -532,7 +532,7 @@ function _fetchAccountBranchDepartmentClass() {
   const accountViewMethod =
     fetchAccountDepartmentClassParams?.accountViewMethod;
 
-  $("#pageContent")
+  $("#branchDepartmentClassContent")
     .html(
       '<div class="ajax-loader pages-ajax-loader"><img src="' +
         websiteUrl +
@@ -649,10 +649,10 @@ function _fetchAccountBranchDepartmentClass() {
               </div>
           </div>`;
           }
-          $("#pageContent").html(text);
+          $("#branchDepartmentClassContent").html(text);
         } else {
           _actionAlert(info.message, false);
-          $("#pageContent").html(`
+          $("#branchDepartmentClassContent").html(`
             <tbody>
                 <tr>
                     <td colspan="15">
@@ -1131,14 +1131,17 @@ function _proceedToPaymentCallback(formData) {
             _alertClose(3);
             _showCustomConfirm({
               callback: () => {
+                _showLoader("Please wait for the student's payment to be updated...");
                 _fetchAccountStudentsByClass(
                   formData.departmentId,
                   formData.classId,
-                  formData.armId,
-                  formData.branchId,
-                  formData.session,
-                  formData.termId,
+                  formData.armId
                 );
+
+                /// hide loader after 3 seconds to allow time for the fetch to complete
+                setTimeout(() => {
+                  _hideLoader();
+                }, 3000);
               },
               title: "Success!",
               message: response.message,
@@ -1252,15 +1255,19 @@ function _schoolBoltChargesPaymentAction(action, branchId, paymentId, btnText) {
           if (action === "success") {
             _alertClose(3);
             _showCustomConfirm({
-              callback: () =>
+              callback: () => {
+                _showLoader("Please wait for the student's payment to be updated...");
                 _fetchAccountStudentsByClass(
                   departmentId,
                   classId,
-                  armId,
-                  branchId,
-                  session,
-                  termId,
-                ),
+                  armId
+                );
+
+                /// hide loader after 3 seconds to allow time for the fetch to complete
+                setTimeout(() => {
+                  _hideLoader();
+                }, 3000);
+              },
               title: "PAYMENT SUCCESSFUL",
               message: "Student fees has been logged successfully",
               alertType: "success",

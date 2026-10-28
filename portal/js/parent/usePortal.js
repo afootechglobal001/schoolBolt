@@ -566,24 +566,24 @@ function _fetchPaymentHistory() {
           for (let i = 0; i < fetch.length; i++) {
             no++;
             const fetchedPayment = fetch[i];
-            const paymentId = fetchedPayment.paymentId;
-            const studentId = fetchedPayment.studentId;
-            const branchId = fetchedPayment.branchId;
-            const departmentId = fetchedPayment.departmentData.departmentId;
-            const currentTerm = fetchedPayment.termData.currentTerm;
-            const termId = fetchedPayment.termData.termId;
-            const session = fetchedPayment.session;
-            const className = fetchedPayment.classData.className;
-            const classId = fetchedPayment.classData.classId;
-            const armName = fetchedPayment.armData.armName;
-            const armId = fetchedPayment.armData.armId;
-            const totalAmount = thousandSeperator(fetchedPayment.totalAmount);
+            const paymentId = fetchedPayment?.paymentId;
+            const studentId = fetchedPayment?.studentId;
+            const branchId = fetchedPayment?.branchId;
+            const departmentId = fetchedPayment?.departmentData?.departmentId;
+            const currentTerm = fetchedPayment?.termData?.currentTerm;
+            const termId = fetchedPayment?.termData?.termId;
+            const session = fetchedPayment?.session;
+            const className = fetchedPayment?.classData?.className;
+            const classId = fetchedPayment?.classData?.classId;
+            const armName = fetchedPayment?.armData?.armName;
+            const armId = fetchedPayment?.armData?.armId;
+            const totalAmount = thousandSeperator(fetchedPayment?.totalAmount);
             const paymentMethodName =
-              fetchedPayment.paymentMethodData.paymentMethodName;
-            const statusName = fetchedPayment.statusData.statusName;
-            const createdTime = fetchedPayment.createdTime;
-            const paydate = fetchedPayment.paydate
-              ? fetchedPayment.paydate
+              fetchedPayment?.paymentMethodData?.paymentMethodName;
+            const statusName = fetchedPayment?.statusData?.statusName;
+            const createdTime = fetchedPayment?.createdTime;
+            const paydate = fetchedPayment?.paydate
+              ? fetchedPayment?.paydate
               : createdTime;
 
             text += `

@@ -46,9 +46,6 @@ function _loadStudentFundCallback(formData) {
   let getEachBranchDetailsSession = JSON.parse(
     sessionStorage.getItem("getEachBranchDetailsSession"),
   );
-  let fetchAccountDepartmentClassParams = JSON.parse(
-    sessionStorage.getItem("fetchAccountDepartmentClassParams"),
-  );
   let getEachAccountStudentSession = JSON.parse(
     sessionStorage.getItem("getEachAccountStudentSession"),
   );
@@ -57,8 +54,6 @@ function _loadStudentFundCallback(formData) {
   );
 
   const branchId = getEachBranchDetailsSession?.branchId;
-  const session = fetchAccountDepartmentClassParams?.session;
-  const termId = fetchAccountDepartmentClassParams?.termId;
 
   const departmentId =
     useAccountStudentByClassSession?.departmentData?.departmentId;
@@ -80,14 +75,17 @@ function _loadStudentFundCallback(formData) {
           _showCustomConfirm({
             callback: () => {
               _alertClose(3);
+              _showLoader("Please wait for the student's fund balance to be updated...");
               _fetchAccountStudentsByClass(
                 departmentId,
                 classId,
-                armId,
-                branchId,
-                session,
-                termId,
+                armId
               );
+
+              /// hide loader after 3 seconds to allow time for the fetch to complete
+              setTimeout(() => {
+                _hideLoader();
+              }, 3000);
             },
             title: "Success!",
             message: response.message,
