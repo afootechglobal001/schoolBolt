@@ -500,7 +500,7 @@
                                         const extraChargesData = getPayFeesToPaySession?.extraCharges?.data;
 
                                         if (!extraChargesData || extraChargesData.length === 0) {
-                                            $("#extraChargesFees").html('No record found!');
+                                            $("#extraChargesContainer").hide();
                                         } else {
                                             for (let i = 0; i < extraChargesData.length; i++) {
                                                 const fetchExtraCharge = extraChargesData?.[i];
@@ -527,11 +527,9 @@
                     </div>
                 </div>
 
-                <div>
-                    <div class="alert alert-success form-alert">
-                        <span>List of extra charges<span style="color: #ff0000;">(Compulsory)*</span></span>
-                        <div class="alert-list-div" id="extraChargesFees"></div>
-                    </div>
+                <div class="alert alert-success form-alert" id="extraChargesContainer">
+                    <span>List of extra charges<span style="color: #ff0000;">(Compulsory)*</span></span>
+                    <div class="alert-list-div" id="extraChargesFees"></div>
                 </div>
 
                 <div>

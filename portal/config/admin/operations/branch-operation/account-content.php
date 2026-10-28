@@ -753,7 +753,7 @@ useAccountFessToPaySession = JSON.parse(sessionStorage.getItem("useAccountFessTo
                                     const extraChargesData = useAccountFessToPaySession?.extraCharges?.data;
 
                                     if (!extraChargesData || extraChargesData.length === 0) {
-                                        $("#extraChargesFees").html('No record found!');
+                                        $("#extraChargesContainer").hide();
                                     } else {
                                         for (let i = 0; i < extraChargesData.length; i++) {
                                             const fetchExtraCharge = extraChargesData?.[i];
@@ -780,7 +780,7 @@ useAccountFessToPaySession = JSON.parse(sessionStorage.getItem("useAccountFessTo
                 </div>
             </div>
 
-            <div class="paid-fee-conatiner">
+            <div class="paid-fee-conatiner" id="extraChargesContainer">
                 <div class="alert alert-success form-alert">
                     <span>List of extra charges<span style="color: #ff0000;">(Compulsory)*</span></span>
 
@@ -2418,6 +2418,12 @@ $('#bankTransSubTitle').html(useEachBankTransactionRecordSession?.transactionId 
                                     const className = response?.classData?.className;
                                     const armId = response?.armData?.armId;
                                     const armName = response?.armData?.armName;
+
+                                    let extraChargesColumnTittle = '';
+                                    if (userRoles.canLoadOrCancelStudentsExtraCharges) {
+                                        extraChargesColumnTittle = `
+                                            <th>Action</th>`;
+                                    }
                                     
                                     let html = `
                                         <thead>
@@ -2428,7 +2434,7 @@ $('#bankTransSubTitle').html(useEachBankTransactionRecordSession?.transactionId 
                                                 <th>Department</th>
                                                 <th>Class</th>
                                                 <th>Extra Charges Amount</th>
-                                                <th>Action</th>
+                                                ${extraChargesColumnTittle}
                                             </tr>
                                         </thead>
                                         <tbody>`;
@@ -2441,6 +2447,18 @@ $('#bankTransSubTitle').html(useEachBankTransactionRecordSession?.transactionId 
                                         const studentId = item.studentId;
                                         const passport = item.passport || "default.jpg";
                                         const totalExtraCharges = item.totalExtraCharges;
+
+                                        let loadExtraChargesColumn = '';
+                                        if (userRoles.canLoadOrCancelStudentsExtraCharges) {
+                                            loadExtraChargesColumn = `
+                                            <td>
+                                                <button class="btn view-btn"
+                                                    title="Click to load extra charges"
+                                                    onclick="_getFetchEachExtraChargesStudent('${studentId}');">
+                                                    LOAD EXTRA CHARGES
+                                                </button>
+                                            </td>`;
+                                        }
 
                                         html += `
                                                 <tr class="tb-row">
@@ -2463,13 +2481,8 @@ $('#bankTransSubTitle').html(useEachBankTransactionRecordSession?.transactionId 
                                                     <td>${departmentName}</td>
                                                     <td>${className} ${armName}</td>
                                                     <td><s>N</s>${thousandSeperator(totalExtraCharges)}</td>
-                                                    <td>
-                                                        <button class="btn view-btn"
-                                                            title="Click to load extra charges"
-                                                            onclick="_getFetchEachExtraChargesStudent('${studentId}');">
-                                                            LOAD EXTRA CHARGES
-                                                        </button>
-                                                    </td>
+
+                                                    ${loadExtraChargesColumn}
                                                 </tr > `;
                                     });
 
