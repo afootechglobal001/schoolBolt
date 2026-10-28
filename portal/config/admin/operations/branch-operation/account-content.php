@@ -332,7 +332,7 @@ fetchAccountDepartmentClassParams = JSON.parse(sessionStorage.getItem("fetchAcco
         </span></span></div>
 </div>
 
-<div class="pages-toggle-back-div" id="pageContent">
+<div class="pages-toggle-back-div" id="branchDepartmentClassContent">
     <script>
     _fetchAccountBranchDepartmentClass();
     </script>

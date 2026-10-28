@@ -2838,7 +2838,8 @@
                     </div>
                 </div>
 
-                <div id="viewExtraChargesButton">
+                <div class="alert alert-success form-alert" id="viewExtraChargesButton">
+                    <span>Extra Charges Cancellation</span>
                     <div class="permission-form-back-div account-permission-form-back-div">
                         <div class="title-div">
                             <h4>Reason for student extra charges cancellation</h4>
@@ -2857,7 +2858,7 @@
                     </div>
 
                     <div>
-                        <button class="btn" title="Proceed" id="submitBtn" onclick="_studentExtraChargesCancellation();"> <i class="bi-check"></i> Proceed </button>
+                        <button class="btn" title="Proceed" id="submitBtn" onclick="_studentExtraChargesCancellation();"> <i class="bi bi-x-circle"></i> Cancel </button>
                     </div>
                 </div>
             </div>
