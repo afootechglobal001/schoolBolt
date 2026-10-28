@@ -2876,6 +2876,7 @@
             
             ///// SHOW / HIDE PROCEED FUND CANCEL BUTTON ////
             if (
+                userRoles?.canLoadOrCancelStudentsExtraCharges &&
                 useEachFetchStudentExtraChargesSession?.data?.[0]?.statusData?.statusId === "3"
             ) {
                 $('#viewExtraChargesButton').show();
