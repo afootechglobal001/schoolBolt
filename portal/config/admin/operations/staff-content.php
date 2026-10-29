@@ -1317,9 +1317,7 @@ getClassTeacherCommentDataSession = JSON.parse(sessionStorage.getItem("getClassT
                                 const department = fetchData[i].departmentData;
                                 const classInfo = fetchData[i].classData;
                                 const arm = fetchData[i].armData;
-                                const classTeachersComment = fetchData[i].classTeachersCommentData ? fetchData[
-                                        i]
-                                    .classTeachersCommentData?.classTeachersComment : '';
+                                const classTeachersComment = fetchData[i].classTeachersCommentData ? fetchData[i].classTeachersCommentData?.classTeachersComment ?? '' : '';
                                 const suggestedComments = student.suggestedComments || [];
 
                                 const fullName = `${student.surName} ${student.firstName}`;

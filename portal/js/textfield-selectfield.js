@@ -430,6 +430,19 @@ function _getSelectNationality(fieldId) {
   }
 }
 
+//// Function Clear SelectField ////
+function _clearSelectField(fieldId) {
+    // clear actual select value
+    $("#" + fieldId).val("");
+
+    // reset displayed option
+    $("#" + fieldId).html(`
+        <option selected="selected" value="">
+            Select here
+        </option>
+    `);
+}
+
 function _getSelectGeneralState(fieldId) {
   try {
     $.ajax({
@@ -470,6 +483,7 @@ function _getSelectGeneralState(fieldId) {
 }
 
 function _fetchGeneralStateLga() {
+  _clearSelectField("lgaId");
   _getSelectGeneralLga("lgaId");
 }
 function _getSelectGeneralLga(fieldId) {
@@ -695,6 +709,45 @@ function _getSelectFundPurposeId(fieldId, fundPurposeIds) {
           for (let i = 0; i < data.length; i++) {
             const id = data[i].fundPurposeId;
             const value = data[i].fundPurposeName;
+            $("#searchList_" + fieldId).append(
+              "<li onclick=\"_clickOption('searchList_" +
+                fieldId +
+                "', '" +
+                id +
+                "', '" +
+                value +
+                "');\">" +
+                value +
+                "</li>",
+            );
+          }
+        } else {
+          _actionAlert(info.message, false);
+        }
+      },
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    _actionAlert("An unexpected error occurred. Please try again.", false);
+  }
+}
+
+function _getSelectResultAssessments(fieldId) {
+  try {
+    $.ajax({
+      type: "GET",
+      url: `${endPoint}/preset-data/fetch-check-result-assessments`,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(),
+      success: function (info) {
+        const data = info.data;
+        const success = info.success;
+
+        if (success === true) {
+          for (let i = 0; i < data.length; i++) {
+            const id = data[i].checkResultAsessmentId;
+            const value = data[i].checkResultAsessmentName;
             $("#searchList_" + fieldId).append(
               "<li onclick=\"_clickOption('searchList_" +
                 fieldId +

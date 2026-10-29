@@ -85,7 +85,7 @@
                         <!-- <li title="Attendance" id="attendance" onclick=""><i class="bi-person-bounding-box"></i> Attendance</li>
                         <li title="Time Table" id="timeTable" onclick=""><i class="bi-bell"></i> Time Table</li> -->
                         <li title="View Result" class="hide-li" id="studentResult"
-                            onclick="_getActiveStudentPortalPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});">
+                            onclick="_getForm({ page: 'studentResultVerificationForm', layer:2, url: parentPortalLocalUrl });">
                             <i class="bi-printer"></i> View Result
                         </li>
                         <!-- <li title="Assignment" id="assignment" onclick=""><i class="bi-bell"></i> Assignment</li> -->
@@ -107,7 +107,7 @@
                                     <i class="bi-clock-history"></i> <span>Payment History</span>
                                 </li>
                                 <li title="View Result" id="studentResult"
-                                    onclick="_getActiveStudentPortalPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});">
+                                    onclick="_getForm({ page: 'studentResultVerificationForm', layer:2, url: parentPortalLocalUrl });">
                                     <i class="bi-printer"></i> <span>View Result</span>
                                 </li>
                             </ul>
@@ -156,7 +156,7 @@
         </div> -->
 
         <div class="card-div" title="View Result" id="studentResult"
-            onclick="_getActiveStudentPortalPage({divid: 'studentResult', page: 'studentResult', url: parentPortalLocalUrl});">
+            onclick="_getForm({ page: 'studentResultVerificationForm', layer:2, url: parentPortalLocalUrl });">
             <div class="pix"><img src="<?php echo $websiteUrl ?>/images/print-result.jpg" alt="View Result"></div>
             <div class="text">View Result</div>
         </div>
@@ -495,10 +495,41 @@
                                             $("#paidFees").html('No record found!');
                                         }
                                     }
+
+                                    if (getPayFeesToPaySession) {
+                                        const extraChargesData = getPayFeesToPaySession?.extraCharges?.data;
+
+                                        if (!extraChargesData || extraChargesData.length === 0) {
+                                            $("#extraChargesContainer").hide();
+                                        } else {
+                                            for (let i = 0; i < extraChargesData.length; i++) {
+                                                const fetchExtraCharge = extraChargesData?.[i];
+                                                const title = fetchExtraCharge?.title;
+                                                const amount = thousandSeperator(fetchExtraCharge?.amount);
+
+                                                $("#extraChargesFees").append(`
+                                                    <div class="alert-list-back-div paid-fees-back-div">
+                                                        <div class="alert-list paid-fees-list">
+                                                            <div>${title}:</div>
+                                                            <div class="alert-value">
+                                                                <span class="alert-percentage"></span>
+                                                                <span><s>N</s>${amount}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                `);
+                                            }
+                                        }
+                                    }
                                 });
                             </script>
                         </div>
                     </div>
+                </div>
+
+                <div class="alert alert-success form-alert" id="extraChargesContainer">
+                    <span>List of extra charges<span style="color: #ff0000;">(Compulsory)*</span></span>
+                    <div class="alert-list-div" id="extraChargesFees"></div>
                 </div>
 
                 <div>
@@ -556,7 +587,7 @@
     <script>
         $(document).ready(function () {
             function updateTotal() {
-
+                let totalExtraCharges = getPayFeesToPaySession?.extraCharges?.totalExtraCharges;
                 let totalFee = 0;
                 let totalAmount = 0;
 
@@ -564,6 +595,10 @@
                     totalFee += parseFloat($(this).val()) || 0;
                 });
                 totalAmount = totalFee + parseFloat(getPayFeesToPaySession.schoolBoltCharges);
+
+                if (totalExtraCharges > 0) {
+                    totalAmount += parseFloat(totalExtraCharges);
+                }
 
                 $('#totalFee').html('<s>N</s>' + thousandSeperator(totalFee));
                 $('#totalAmount').html('<s>N</s>' + thousandSeperator(totalAmount));
@@ -722,19 +757,6 @@
     </div>
 <?php } ?>
 
-<?php if ($page == 'payemntSuccessForm') { ?>
-    <div class="caption-success-div animated zoomIn">
-        <div class="div-in">
-            <div class="img"><img src="<?php echo $websiteUrl ?>/images/success.gif" /></div>
-            <h2>PAYMENT SUCCESSFUL</h2>
-            <div class="btn-div">
-                <button class="btn done-btn"
-                    onclick="_getActiveStudentPortalPage({divid: 'paymentHistory', page: 'paymentHistory', url: parentPortalLocalUrl}); _alertClose(2)">DONE</button>
-            </div>
-        </div>
-    </div>
-<?php } ?>
-
 <?php if ($page == 'studentResult') { ?>
     <div class="alert alert-success top-alert-div animated fadeIn">
         <span><i class="bi-person-bounding-box"></i> STUDENT RESULT</span>
@@ -744,5 +766,32 @@
         <script>
             _fetchStudentClasses()
         </script>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'studentResultVerificationForm') { ?>
+    <div class="caption-div animated zoomIn">
+        <div class="title-div">
+            <div class="title"><i class="bi-file-earmark-ppt-fill"></i> STUDENT RESULT CHECKER</div>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i
+                    class="bi-x-lg"></i></button>
+        </div>
+
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello Parent, you are about to view your <span>child's result.</span>
+            Kindly select the result type and click the <span>PROCEED</span> button to continue</div>
+            <div class="text_field_container" id="checkResultAsessmentId_container">
+                <script>
+                    selectField({
+                        id: 'checkResultAsessmentId',
+                        title: 'Select Result Type'
+                    });
+                    _getSelectResultAssessments('checkResultAsessmentId');
+                </script>
+            </div>
+
+            <button class="btn" title="PROCEED" id="proceedResult" onclick="_proceedViewPortalStudentResultController();"> <i
+                    class="bi-check"></i> PROCEED </button>
+        </div>
     </div>
 <?php } ?>

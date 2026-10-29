@@ -1,0 +1,181 @@
+/* Payment Receipt Css */
+.receipt-body {
+	background-color: #f0f2f5;
+}
+
+
+.download-area-wrapper {
+    max-width: 600px;
+	display: flex;
+	margin: 40px auto;
+}
+
+.download-area-wrapper .download-area {
+	width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+	align-self: center;
+	justify-self: center;
+}
+
+.download-area-wrapper .download-area .btn-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.download-area-wrapper .download-area .btn-container .btn {
+    background:var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    height: 45px;
+    padding: 0px 25px;
+    border-radius: 25px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    font-family: sub-title-font;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 6px 16px rgba(11, 30, 58, 0.2);
+	white-space: nowrap;
+}
+
+.download-area-wrapper .download-area .btn-container .btn i {
+    font-size: 14px;
+}
+
+.download-area-wrapper .download-area .btn-container .btn:hover {
+    background: #1a355f;
+    transform: scale(1.01);
+    box-shadow: 0 10px 24px rgba(11, 30, 58, 0.3);
+}
+
+.download-area-wrapper .download-area .btn-container .print-btn {
+    background:#198754;
+}
+
+.download-area-wrapper .download-area .download-note {
+    font-size: 13px;
+    color: #6a7c94;
+    text-align: center;
+}
+
+.receipt-container {
+	max-width: 600px;
+	padding: 20px;
+	border: 1px solid #ddd;
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
+	background: var(--white-color);
+	border-radius: 10px;
+	margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+	gap: 10px;
+}
+
+.receipt-container h1 {
+	text-align: center;
+	font-family: title-font;
+}
+
+.receipt-container .section {
+	display: flex;
+    flex-direction: column;
+}
+
+.receipt-container .section h2 {
+	font-size: 16px;
+	font-family: sub-title-font;
+	border-bottom: 1px solid #ccc;
+	padding: 5px 0px 5px 0px;
+}
+
+.receipt-container .section .details-cont {
+	display: flex;
+    flex-direction: column;
+	gap: 5px;
+	margin-top: 5px;
+}
+
+.receipt-container .section .details-cont .details {
+	display: flex;
+	justify-content: space-between;
+	color: var(--body-color);
+	font-family: body-font;
+}
+
+.receipt-container .section .details-cont .details div {
+	font-family:sub-title-font;
+}
+
+.receipt-container .section .details-cont .details span {
+	font-family:body-font;
+	font-size: 14px;
+}
+
+.reciept-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 10px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	padding: 3px;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border-radius: 5px;
+	border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 2px;
+}
+
+table th, td {
+	padding: 10px;
+	border: 1px solid #ddd;
+	text-align: left;
+	border-radius: 5px;
+	font-family: body-font;
+	font-size: 14px;
+}
+
+table th {
+	background: #ececec;
+	font-family: body-font;
+}
+
+table tr .total-td{
+	font-size: 18px;
+	font-family: title-font;
+}
+
+table .total {
+	background-color: #ececec;
+}
+
+.disclaimer {
+	margin-top: 10px;
+	font-size: 12px;
+	text-align: center;
+	color: #555;
+}
+
+@media print {
+    body {
+        background: none;
+        padding: 0;
+    }
+	body .receipt-body {
+        box-shadow: none;
+        max-width: 100%;
+        padding: 20px;
+    }
+    body .download-area-wrapper .download-area {
+        display: none !important;
+    }
+}
