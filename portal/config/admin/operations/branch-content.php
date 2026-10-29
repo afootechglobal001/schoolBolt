@@ -4085,42 +4085,48 @@ getEachBranchDetailsSession = JSON.parse(sessionStorage.getItem("getEachBranchDe
                 </div>
 
                 <script>
-                $(document).ready(function() {
-                    if (userRoles.canActivateResult) {
-                        $('#userManagement').append(`
-                            <div class="user-managment-list staff-managment-list" title="Activate Academic Result"
-                                onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'activateResult', url: adminPortalLocalUrl});">
-                                <div class="inner-div">
-                                    <div class="icon-div">
-                                        <img src="<?php echo $websiteUrl ?>/images/double-check.png"
-                                            alt="Activate Academic Result" />
-                                    </div>
-                                    <div class="text-div">
-                                        <h3>Activate Academic Result</h3>
-                                        <p>Activate the result for your branch to make it available for viewing and further
-                                            processing.</p>
+                    $(document).ready(function() {
+                        branchResponseSessionData = JSON.parse(sessionStorage.getItem("branchResponseSessionData"));
+
+                        if (branchResponseSessionData?.clientData?.schoolBoltChargesMethodId ==="METHOD_3") {
+                            $('#userManagement').append(`
+                                <div class="user-managment-list staff-managment-list" title="Release Academic Result"
+                                    onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'releaseResult', url: adminPortalLocalUrl});">
+                                    <div class="inner-div">
+                                        <div class="icon-div">
+                                            <img src="<?php echo $websiteUrl ?>/images/double-check.png"
+                                                alt="Release Academic Result" />
+                                        </div>
+                                        <div class="text-div">
+                                            <h3>Release Academic Result</h3>
+                                            <p>Release the result for your branch to make it available for viewing and further
+                                                processing.</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        `);
-                    }
-                });
-                </script>
+                            `);
+                        }
 
-                <div class="user-managment-list staff-managment-list" title="Release Academic Result"
-                    onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'releaseResult', url: adminPortalLocalUrl});">
-                    <div class="inner-div">
-                        <div class="icon-div">
-                            <img src="<?php echo $websiteUrl ?>/images/double-check.png"
-                                alt="Release Academic Result" />
-                        </div>
-                        <div class="text-div">
-                            <h3>Release Academic Result</h3>
-                            <p>Release the result for your branch to make it available for viewing and further
-                                processing.</p>
-                        </div>
-                    </div>
-                </div>
+                       if (userRoles.canActivateResult) {
+                            $('#userManagement').append(`
+                                <div class="user-managment-list staff-managment-list" title="Activate Academic Result"
+                                    onclick="_getForm({page: 'accountSessionSelectForm', layer:2, id:'activateResult', url: adminPortalLocalUrl});">
+                                    <div class="inner-div">
+                                        <div class="icon-div">
+                                            <img src="<?php echo $websiteUrl ?>/images/double-check.png"
+                                                alt="Activate Academic Result" />
+                                        </div>
+                                        <div class="text-div">
+                                            <h3>Activate Academic Result</h3>
+                                            <p>Activate the result for your branch to make it available for viewing and further
+                                                processing.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `);
+                        }
+                    });
+                </script>
             </div>
         </div>
     </div>

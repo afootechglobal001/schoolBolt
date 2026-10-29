@@ -842,6 +842,10 @@ function _fetchEachBranches(branchId) {
             "getEachBranchDetailsSession",
             JSON.stringify(info.data[0])
           );
+          sessionStorage.setItem(
+            "branchResponseSessionData",
+            JSON.stringify(info)
+          );
           _getForm({ page: "branch_pages", url: adminPortalLocalUrl });
         } else {
           const response = info.response;
