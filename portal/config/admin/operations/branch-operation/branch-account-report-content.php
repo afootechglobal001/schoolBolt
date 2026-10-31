@@ -390,7 +390,7 @@
                                     id: '<?php echo $id; ?>',
                                     url: adminPortalLocalUrl
                                 });
-                                 sessionStorage.setItem("sessionPayDate", '<?php echo $id; ?>');
+                                sessionStorage.setItem("branchSessionPayDate", '<?php echo $id; ?>');
                             </script>
                         </div>
                     </div>
@@ -413,13 +413,14 @@
         </div>
 
         <div class="btn-container">
-            <button class="btn"><i class="bi-printer"></i> PRINT</button>
-            <button class="btn"><i class="bi-file-earmark-excel"></i> EXPORT</button>
+            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('branchPageContentTable','Revenue_Breakdown_By_Date_List');">
+                <i class="bi-file-earmark-excel"></i> EXPORT
+            </button>
         </div>
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%">
+        <table class="table" cellspacing="0" style="width:100%" id="branchPageContentTable">
             <thead>
                 <tr class="tb-col">
                     <th>sn</th>
@@ -467,13 +468,14 @@
         </div>
 
         <div class="btn-container">
-            <button class="btn"><i class="bi-printer"></i> PRINT</button>
-            <button class="btn"><i class="bi-file-earmark-excel"></i> EXPORT</button>
+            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('branchPendingPageContentTable','Revenue_Breakdown_By_Date_List');">
+                <i class="bi-file-earmark-excel"></i> EXPORT
+            </button>
         </div>
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%">
+        <table class="table" cellspacing="0" style="width:100%" id="branchPendingPageContentTable">
             <thead>
                 <tr class="tb-col">
                     <th>sn</th>
@@ -521,13 +523,14 @@
         </div>
 
         <div class="btn-container">
-            <button class="btn"><i class="bi-printer"></i> PRINT</button>
-            <button class="btn"><i class="bi-file-earmark-excel"></i> EXPORT</button>
+            <button class="btn" title="EXPORT RECORDS" onclick="exportAccountTableToExcel('branchCancelledPageContentTable','Revenue_Breakdown_By_Date_List');">
+                <i class="bi-file-earmark-excel"></i> EXPORT
+            </button>
         </div>
     </div>
 
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%">
+        <table class="table" cellspacing="0" style="width:100%" id="branchCancelledPageContentTable">
             <thead>
                 <tr class="tb-col">
                     <th>sn</th>
@@ -757,6 +760,28 @@
                                         </span></div>
                                 </div>
                             </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Date Initiated:</div>
+                                    <div><span id="createdTime">
+                                            <script>
+                                                $("#createdTime").html(getBranchRevenueBreakdownSessionData?.createdTime);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Date Confirmed:</div>
+                                    <div><span id="payDate">
+                                            <script>
+                                                $("#payDate").html(getBranchRevenueBreakdownSessionData?.payDate);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -769,7 +794,7 @@
                         if (paymentComputedBy) {
                             content += `
                                 <div class="alert alert-success form-alert">
-                                <span>Manual Payment Processed By:</span>
+                                <span>Payment Confirmed By:</span>
                                 <div class="alert-list-div">
                                     <div class="alert-list-back-div">
                                         <div class="alert-list">
@@ -847,10 +872,98 @@
                     });
                 </script>
 
-                <div>
-                    <button class="btn" title="PRINT RECEIPT" id="submitBtn" onclick=""> <i class="bi-check"></i> PRINT RECEIPT </button>
+                <script>
+                    $(document).ready(function () {
+                        const paystackCharges = getBranchRevenueBreakdownSessionData?.paystackCharges;
+
+                        let content = "";
+                        if (paystackCharges > 0) {
+                            content += `
+                                <div class="alert alert-success form-alert">
+                                <span>Paystack Details:</span>
+                                <div class="alert-list-div">
+                                    <div class="alert-list-back-div">
+                                        <div class="alert-list">
+                                            <div>Paystack ID:</div>
+                                            <div><span>${getBranchRevenueBreakdownSessionData?.paystackId}</span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert-list-back-div">
+                                        <div class="alert-list">
+                                            <div>Paystack Charges:</div>
+                                            <div><span><s>N</s>${getBranchRevenueBreakdownSessionData?.paystackCharges}</span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert-list-back-div">
+                                        <div class="alert-list">
+                                            <div>Paystack Remittance:</div>
+                                            <div><span class="total-amount"><s>N</s>${getBranchRevenueBreakdownSessionData?.paystackRemittance}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+                        }
+                        $('#showPaystackDetails').html(content);
+                    });
+                </script>
+                <div id="showPaystackDetails"></div>
+
+                <div class="btn-div">
+                    <script>
+                        $(document).ready(function () {
+                            let showButton = '';
+                            if (getBranchRevenueBreakdownSessionData?.statusData?.statusId === "5") {
+                                showButton +=
+                                `<button class="btn" title="PRINT RECEIPT" id="printBtn" onclick="_printBranchPaymentBreakDownReciept();"> <i class="bi-printer"></i> PRINT RECEIPT </button>
+                                <button class="btn blue-bg-btn" title="RESEND RECEIPT" id="resendReciept" onclick="_getForm({page: 'resendBranchRecieptSelectForm', layer:4, url: adminPortalLocalUrl});"> <i class="bi-envelope-check-fill"></i> RESEND RECEIPT </button>`; 
+                            }
+                            $(".btn-div").html(showButton);
+                        });
+                    </script>
                 </div>
             </div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if ($page == 'resendBranchRecieptSelectForm') { ?>
+    <div class="caption-div animated zoomIn">
+        <div class="title-div">
+            <div class="title"><i class="bi-folder-symlink-fill"></i> RESEND PAYMENT RECIEPT</div>
+            <button class="close-btn" onclick="_alertClose(<?php echo $modalLayer ?>);" title="Close"><i
+                    class="bi-x-lg"></i></button>
+        </div>
+
+        <div class="div-in animated fadeIn">
+            <div class="alert alert-success form-alert"> <i class="bi-person"></i> Hello, You’re about to continue with this
+                operation.
+                Please provide the required <span>Name</span>, and <span>Email</span>, to proceed.
+            </div>
+
+            <div class="text_field_container" id="parentFullname_container">
+                <script>
+                textField({
+                    id: 'parentFullname',
+                    title: 'Reciever Name'
+                });
+                </script>
+            </div>
+
+            <div class="text_field_container" id="recieptParentEmail_container">
+                <script>
+                textField({
+                    id: 'recieptParentEmail',
+                    title: 'Reciever Email'
+                });
+                </script>
+            </div>
+
+            <button class="btn" id="proceedBtn" title="Resend Reciept"
+                onclick="_resendBranchPaymentReciept();">RESEND <i class="bi-reply-all"></i>
+            </button>
         </div>
     </div>
 <?php } ?>

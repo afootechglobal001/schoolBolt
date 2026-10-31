@@ -16,10 +16,13 @@
         <div class="inner-content">
             <div id="page-content">
                 <script>
-                _getActivePage({
-                    page: 'dashboard',
-                    divid: 'dashboard'
-                });
+                    $(document).ready(function () {
+                        let savedPage = sessionStorage.getItem("currentDashboardPage") ?? "dashboard";
+                        _getActivePage({page: savedPage, divid: savedPage});
+
+                        let savedForm = sessionStorage.getItem("currentDashboardForm") ?? '';
+                        _getForm(JSON.parse(savedForm));
+                    });
                 </script>
             </div>
         </div>

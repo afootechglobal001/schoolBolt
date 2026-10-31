@@ -7,7 +7,6 @@
     <link href="<?php echo $websiteUrl?>/style/report-style.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
     <link href="<?php echo $websiteUrl?>/style/paramount.css?v=<?php echo $codeVersion?>" type="text/css" rel="stylesheet" />
     <script src="<?php echo $websiteUrl?>/js/jquery-v3.6.1.min.js"></script>
-    <script src="<?php echo $websiteUrl?>/js/admin/chart.min.js"></script>
     <title>Contemporary Mark Book Per Subject | <?php echo $clientName ?></title>
 </head>
 
@@ -238,8 +237,13 @@
                             if (grouped.cumulative.length) groupTR.append(`<th colspan="${grouped.cumulative.length}">CUMULATIVE OBTAINABLE MARKS</th>`);
                             thead.append(groupTR);
 
-                            const titleTR = $('<tr class="tb-col table-col"></tr>');
-                            tableTitles.forEach(t => titleTR.append(`<th>${t}</th>`));
+                            const titleTR = $('<tr class="tb-col table-col cumulative-col"></tr>');
+                            tableTitles.forEach(t => {
+                                let thClass = "th-medium";
+                                if (t === "SN") thClass = "th-small";
+                                if (t === "FULLNAME") thClass = "th-name";
+                                titleTR.append(`<th class="${thClass}">${t}</th>`);
+                            });
                             thead.append(titleTR);
 
                             const tbody = $('<tbody></tbody>');

@@ -717,14 +717,14 @@ function _fetchStaffAssignedClasses() {
 
 				if (info.success) {
 					for (let i = 0; i < fetch.length; i++) {
-						const fetchClassData = fetch[i].classData;
-						const fetchArmData = fetch[i].armData;
-						const fetchDepartmentData = fetch[i].departmentData;
-						const classId = fetchClassData.classId;
-						const className = fetchClassData.className;
-						const armName = fetchArmData.armName;
-						const armId = fetchArmData.armId;
-						const departmentId = fetchDepartmentData.departmentId
+						const fetchClassData = fetch?.[i]?.classData || {};
+						const fetchArmData = fetch?.[i]?.armData || {};
+						const fetchDepartmentData = fetch?.[i]?.departmentData || {};
+						const classId = fetchClassData?.classId || '';
+						const className = fetchClassData?.className || '';
+						const armName = fetchArmData?.armName || '';
+						const armId = fetchArmData?.armId || '';
+						const departmentId = fetchDepartmentData?.departmentId || '';
 
 						text +=`
 							<div class="pages-toggle-div">

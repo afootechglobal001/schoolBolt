@@ -1,4 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http: //www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http: //www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php include '../config/constants.php'; ?>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
@@ -7,6 +8,7 @@
     <title>Parent Portal | <?php echo $appName; ?></title>
 </head>
 <script src="https://js.paystack.co/v1/inline.js"></script>
+
 <body>
     <?php include 'header.php' ?>
 
@@ -16,11 +18,13 @@
                 <span><i class="bi-speedometer2"></i> Parent Dashboard</span>
                 <div class="main-profile">
                     <div class="inner-profile">
-                        <div class="img-div"><img src="<?php echo $websiteUrl ?>/images/avatar.jpg" alt="Parent Profile" /></div>
+                        <div class="img-div"><img src="<?php echo $websiteUrl ?>/images/avatar.jpg"
+                                alt="Parent Profile" /></div>
                         <div class="pro-text-div">
                             <h2 id="fullName">👋 Hi, <span id="fullNameText"></span></h2>
                             <script>
-                                $("#fullNameText").html(capitalizeFirstLetterOfEachWord(parentData.titleId + ' ' + parentData.surName + ' ' + parentData.otherNames));
+                                $("#fullNameText").html(capitalizeFirstLetterOfEachWord(parentData.titleId + ' ' +
+                                    parentData.surName + ' ' + parentData.otherNames));
                             </script>
                             <div class="info">
                                 <div class="info-details">
@@ -47,7 +51,7 @@
                 <div class="list" id="pageContent">
 
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             let parentStudents = parentSessionData.students;
                             let content = '';
                             if (parentStudents.length > 0) {
@@ -57,13 +61,14 @@
                                     const surName = studentInfo.studentData.surName;
                                     const firstName = studentInfo.studentData.firstName;
                                     const otherNames = studentInfo.studentData.otherNames;
-                                    const fullname = capitalizeFirstLetterOfEachWord(surName + ' ' + firstName + ' ' + otherNames);
+                                    const fullname = capitalizeFirstLetterOfEachWord(surName + ' ' + firstName +
+                                        ' ' + otherNames);
                                     const passport = studentInfo.studentData.passport || 'default.jpg';
                                     const className = studentInfo.classData.className;
                                     const armName = studentInfo.armData.armName;
                                     const statusName = studentInfo.studentData.statusName;
 
-                                   content += `
+                                    content += `
                                         <div class="student-profile">
                                             <div class="details">
                                                 <div class="pix">
@@ -80,9 +85,9 @@
                                             <button class="btn" onClick="_getFetchEachStudent('${studentId}')">VIEW DETAILS</button>
                                         </div>`;
                                 }
-			                    $('#pageContent').html(content);
-                            }else{
-                                content +=`
+                                $('#pageContent').html(content);
+                            } else {
+                                content += `
                                 <div class="false-notification-div">
                                     <p>No Record Found!!!</p>
                                 </div>`;
@@ -96,7 +101,6 @@
         </div>
     </div>
     <?php include '../bottom-scripts.php' ?>
-    <script src="https://newwebpay.qa.interswitchng.com/inline-checkout.js"></script>
 </body>
 
 </html>

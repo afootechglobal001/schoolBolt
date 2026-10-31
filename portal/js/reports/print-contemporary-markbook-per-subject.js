@@ -35,7 +35,13 @@ function _printContemporaryMarkBookPerSubject(departmentId, classId, armId, subj
 					window.open(`${websiteUrl}/reports/print-contemporary-mark-book-per-subject`, '_blank')
 					_alertClose(2);
 				} else {
-					_actionAlert(info.message, false);
+					_showCustomConfirm({
+						title: "Unable to Proceed",
+						message: info.message,
+						alertType: "error",
+						trueActionBtnText: "OK",
+						closeOnOverlayClick: true,
+					});
 					_alertClose(2);
 					const response = info.response;
 					if (response < 100) {
