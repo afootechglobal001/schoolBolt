@@ -9,7 +9,7 @@
     <div class="other-pages-filter-div">
         <div class="text-field-wrapper">
             <div class="text_field_container search_field_container">
-                <input class="text_field dash_text_field" type="text" id="searchContent" onkeyup="filters('Content')"
+                <input class="text_field dash_text_field" type="text" id="searchContent" onkeyup="_filtersStaffs(this.value)"
                     placeholder="" title="Type here to serach staff..." />
                 <div class="placeholder dash_placeholder"><i class="bi-search"></i> Type here to search staff...</div>
             </div>

@@ -14,6 +14,17 @@ function _getStaffPagesActiveLink(divid){
 	$("#"+divid).addClass('active');
 }
 
+//// Filter Staffs ////
+function _filtersStaffs(value) {
+    $("#staffPageContent .tb-row").each(function () {
+        var text = $(this).text();
+        text.toLowerCase().indexOf(value.toLowerCase()) > -1
+        ? $(this).show()
+        : $(this).hide();
+    });
+}
+
+
 $(function () {
   staffPixPreview = {
     UpdatePreview: function (obj, action = 'register') {
