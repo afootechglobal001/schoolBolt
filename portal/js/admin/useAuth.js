@@ -131,6 +131,7 @@ function assignRole(data) {
   permissions.includes(21)
     ? (userRoles.canViewAllSchoolBranchesAccounts = true)
     : false;
+  permissions.includes(44) ? (userRoles.canConfigureStaffBranch = true) : false;
   /////Class teacher Permissions
   permissions.includes(10)
     ? (userRoles.canManageStudentsAttendance = true)

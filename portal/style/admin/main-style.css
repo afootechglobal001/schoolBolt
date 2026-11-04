@@ -3636,6 +3636,7 @@ header
   justify-content: space-between;
   border-bottom: 1px solid rgba(215, 215, 215, 0.6);
   background: #fff;
+  gap: 10px;
 }
 
 .permission-form-back-div
@@ -7036,4 +7037,15 @@ header
 
 .branch-account-category .div-in {
  display: flex;
+}
+
+.permission-form-back-div .issue-text{
+	color: #f00;
+	font-family: body-font;
+	font-size: 10px;
+  padding: 8px 20px;
+	font-style: italic;
+  display: none;
+  align-self: self-start;
+  justify-self: self-start;
 }

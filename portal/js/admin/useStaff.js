@@ -94,8 +94,8 @@ function _getSelectRole(fieldId){
 	}
 }
 
-function _fetchStaffs() {
-    $('#pageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
+function _fetchAllStaffs() {
+    $('#staffPageContent').html('<div class="ajax-loader pages-ajax-loader"><img src="' + websiteUrl + '/images/spinner.gif" alt="Loading"/></div>').fadeIn("fast");        
 	try {
 		$.ajax({
 			type: "GET",
@@ -121,7 +121,13 @@ function _fetchStaffs() {
 				$("#statusContent").html(statusContent);
 
 				let text = '';
-				let no=0;
+				let no = 0;
+				
+				let staffBranchConfigColumnTittle = '';
+				if (userRoles?.canConfigureStaffBranch) {
+					staffBranchConfigColumnTittle = `
+					<th>Action</th>`;
+				}
 
 				text =`
 				<thead>
@@ -133,6 +139,7 @@ function _fetchStaffs() {
                         <th>Role</th>
                         <th>Last Login</th>
                         <th>Status</th>
+						${staffBranchConfigColumnTittle}
 						<th>View</th>
                     </tr>
                 </thead>`;
@@ -152,6 +159,17 @@ function _fetchStaffs() {
 						const profilePix = fetch[i].profilePix;
 						const lastLoginTime = fetch[i].lastLoginTime;
 						const statusName = fetch[i].statusName;
+
+						let staffBranchConfigColumn = '';
+						if (userRoles?.canConfigureStaffBranch) {
+							staffBranchConfigColumn = `
+							<td>
+								<button class="btn view-btn"
+									title="Click to view branch staff config"
+									onclick="_proceedFetchStaffBranchAccess('${staffId}');">
+									BRANCH CONFIG</button>
+							</td>`;
+						}
 
 						text +=`
 						<tbody>
@@ -179,11 +197,12 @@ function _fetchStaffs() {
 								<td>${roleName}</td>
 								<td>${lastLoginTime ? lastLoginTime : "00-00-00 00:00:00"}</td>
 								<td><div class="status-div ${statusName}">${statusName}</div></td>
+								${staffBranchConfigColumn}
 								<td><button class="btn view-btn" title="Click to view staff profile" onclick="_fetchEachStaff('${staffId}');">VIEW</button></td>
 							</tr>
 						</tbody>`;
 					}
-					$('#pageContent').html(text);
+					$('#staffPageContent').html(text);
 				} else {
 					_actionAlert(info.message, false);
 
@@ -195,7 +214,7 @@ function _fetchStaffs() {
 							</div>
 						</div>`;
 
-						$('#pageContent').html(text);
+						$('#staffPageContent').html(text);
 					const response = info.response;
 					if (response < 100) {
 						_logOut();
@@ -767,4 +786,154 @@ function _changeStaffPassword() {
 		_actionAlert('An unexpected error occurred! Please Try Again', false);
 		$("#changeStaffPasswordBtn").prop("disabled", false);
 	}	
+}
+
+
+
+/////// Fetch Each Bank Transaction Record /////
+function _proceedFetchStaffBranchAccess(staffId) {
+  $("#get-form-more-div")
+    .css({
+      display: "flex",
+      "justify-content": "center",
+      "align-items": "center",
+    })
+    .fadeIn(500);
+  try {
+    //// call endpoint //////
+    _callFetchEndPoints({
+      url: `admin/staff/fetch-staff-branch-access?staffId=${staffId}`,
+      accessKey: true,
+    })
+      .then((response) => {
+        _staffValidationCheck(response?.response);
+        if (response?.success) {
+          	sessionStorage.setItem(
+				"proceedFetchStaffBranchConfigSession",
+				JSON.stringify(response),
+			);
+			
+			_getForm({
+				page: "staffBranchConfigForm",
+				url: adminPortalLocalUrl,
+			});
+        } else {
+			_showCustomConfirm({
+				title: "Unable to proceed",
+				message: response?.message,
+				alertType: "error",
+				trueActionBtnText: "OK",
+				closeOnOverlayClick: true,
+			});
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        _alertClose();
+        _callAjaxError(() => _proceedFetchStaffBranchAccess(staffId)); // retry if needed
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    _alertClose();
+    _callCatchError(() => _proceedFetchStaffBranchAccess(staffId));
+  }
+}
+
+
+/// Update Staff Branch Access ////
+function _updateStaffBranchAccess() {
+	let issueCount = 0;
+	try {
+		////////get all needed values////////////
+		let selectedBranches = [];
+		$(".child:checked").each(function () {
+			selectedBranches.push({ branchId: $(this).data("value") });
+		});
+
+		//// Check Branches ////
+		const checkedBranches = $('input[name="branchId[]"]:checked').length;
+		if (checkedBranches < 1) {
+			$("#issues_branchToggle").html("SELECT A BRANCH TO CONTINUE").fadeIn();
+			issueCount++;
+		} else {
+			$("#issues_branchToggle").html("");
+		}
+		
+		if (issueCount > 0){
+			return;
+		}
+		
+		// Gather form data
+		const formData = {
+			branchIds: selectedBranches,
+		};
+
+		////// confirm action////
+		_showCustomConfirm({
+		callback: () => {
+			_updateStaffBranchAccessCallback(formData);
+		},
+		title: "Are you sure?",
+		message: "Are you sure you want to proceed? This action is irreversible.",
+		alertType: "warning",
+		falseActionBtn: true,
+		closeOnOverlayClick: true,
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _updateStaffBranchAccess());
+	}
+}
+
+//// Proceed To Update Staff Branch Access CallBack /////
+function _updateStaffBranchAccessCallback(formData) {
+  let proceedFetchStaffBranchConfigSession = JSON.parse(
+    sessionStorage.getItem("proceedFetchStaffBranchConfigSession"),
+  );
+
+  const staffId = proceedFetchStaffBranchConfigSession?.staffData?.staffId;
+
+  try {
+    const btnText = $("#submitBtn").html();
+    _btnDisable("submitBtn", btnText, true);
+
+    _callRawEndPoints({
+      url: `admin/staff/update-staff-branch-access?staffId=${staffId}`,
+      formData,
+      accessKey: true,
+    })
+    .then((response) => {
+        _staffValidationCheck(response.response);
+        if (response?.success) {
+			_showCustomConfirm({
+				callback: () => {
+					_proceedFetchStaffBranchAccess(staffId);
+				},
+				title: "Success!",
+				message: response?.message,
+				alertType: "success",
+				trueActionBtnText: "OK, Thanks.",
+				closeOnOverlayClick: false,
+			});
+        } else {
+			_showCustomConfirm({
+				title: "Unable To Update Staff Branch Access",
+				message: response?.message,
+				alertType: "error",
+				trueActionBtnText: "OK",
+				closeOnOverlayClick: true,
+			});
+			_btnDisable("submitBtn", btnText, false);
+		}
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+        _callAjaxError(() => _updateStaffBranchAccessCallback(formData)); // retry if needed
+        _btnDisable("submitBtn", btnText, false);
+    });
+	} catch (error) {
+		console.error("Error:", error);
+		_callCatchError(() => _updateStaffBranchAccessCallback(formData));
+		_btnDisable("submitBtn", btnText, false);
+  	}
 }
