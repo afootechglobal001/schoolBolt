@@ -9,7 +9,7 @@
     <div class="other-pages-filter-div">
         <div class="text-field-wrapper">
             <div class="text_field_container search_field_container">
-                <input class="text_field dash_text_field" type="text" id="searchContent" onkeyup="filters('Content')"
+                <input class="text_field dash_text_field" type="text" id="searchContent" onkeyup="_filtersStaffs(this.value)"
                     placeholder="" title="Type here to serach staff..." />
                 <div class="placeholder dash_placeholder"><i class="bi-search"></i> Type here to search staff...</div>
             </div>
@@ -26,9 +26,9 @@
 
 <div class="pages-back-div other-pg-back-div" data-aos="fade-in" data-aos-duration="1500">
     <div class="table-div animated fadeIn">
-        <table class="table" cellspacing="0" style="width:100%" id="pageContent">
+        <table class="table" cellspacing="0" style="width:100%" id="staffPageContent">
             <script>
-            _fetchStaffs();
+            _fetchAllStaffs();
             </script>
         </table>
     </div>
@@ -1452,4 +1452,149 @@ getClassTeacherCommentDataSession = JSON.parse(sessionStorage.getItem("getClassT
             <i class="bi-check"></i> CHANGE PASSWORD </button>
     </div>
 </div>
+<?php } ?>
+
+<?php if ($page == 'staffBranchConfigForm') { ?>
+    <script>
+        proceedFetchStaffBranchConfigSession = JSON.parse(sessionStorage.getItem("proceedFetchStaffBranchConfigSession"));
+    </script>
+
+    <div class="slide-form-div" data-aos="fade-left" data-aos-duration="900">
+        <div class="title-panel-div">
+            <div class="inner-top">
+                <span id="panel-title"><i class="bi-plus-square"></i> <span>CONFIGURE STAFF BRANCH ACCESS</span></span>
+                <div class="close" title="Close" onclick="_alertClose(<?php echo $modalLayer ?>);">X</div>
+            </div>
+        </div>
+
+        <div class="container-back-div">
+            <div class="inner-container">
+                <div>
+                    <div class="alert alert-success form-alert">
+                        Kindly select the branch this staff is allowed to access and configure their branch permissions.
+                    </div>
+                </div>
+
+                <div>
+                    <div class="alert alert-success form-alert">
+                        <span>Staff Details;</span>
+                        <div class="alert-list-div">
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Staff Full Name:</div>
+                                    <div><span id="branchConfigStaffFullName">
+                                            <script>
+                                            $("#branchConfigStaffFullName").html(proceedFetchStaffBranchConfigSession?.staffData
+                                                ?.titleId + ' ' + proceedFetchStaffBranchConfigSession?.staffData?.firstName + ' ' + proceedFetchStaffBranchConfigSession?.staffData?.middleName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Email Address:</div>
+                                    <div><span id="branchConfigStaffEmail">
+                                            <script>
+                                            $("#branchConfigStaffEmail").html(proceedFetchStaffBranchConfigSession?.staffData
+                                                ?.emailAddress);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Mobile Number:</div>
+                                    <div><span id="branchConfigStaffMobileNumber">
+                                            <script>
+                                            $("#branchConfigStaffMobileNumber").html(proceedFetchStaffBranchConfigSession?.staffData
+                                                ?.mobileNumber);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Role:</div>
+                                    <div><span id="branchConfigStaffRole">
+                                            <script>
+                                            $("#branchConfigStaffRole").html(proceedFetchStaffBranchConfigSession?.staffData?.roleName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Branch:</div>
+                                    <div><span id="branchConfigName">
+                                            <script>
+                                            $("#branchConfigName").html(proceedFetchStaffBranchConfigSession?.staffData?.branchName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+
+                            <div class="alert-list-back-div">
+                                <div class="alert-list">
+                                    <div>Status:</div>
+                                    <div><span id="branchConfigStatus">
+                                            <script>
+                                            $("#branchConfigStatus").html(proceedFetchStaffBranchConfigSession?.staffData?.statusName);
+                                            </script>
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="permission-form-back-div">
+                    <div class="title-div">
+                        <h4>Branches</h4>
+                        <p>Manage the branches this staff is permitted to access. Switch to <strong>"Yes"</strong> to grant access to a branch or <strong>"No"</strong> to revoke access.</p>
+                    </div>
+
+                    <div class="permission-toggle-div">
+                        <div class="toggle-title">Registered Branches</div>
+                        <div class="fetch-toggle" id="staffBranchConfigToggle"></div>
+                        <div class="issue-text" id="issues_branchToggle"></div>
+                    </div>
+
+                    <script>
+                        $(document).ready(function () {
+                            const sessionData = JSON.parse(sessionStorage.getItem("proceedFetchStaffBranchConfigSession"));
+                            const branchesData = sessionData?.branchesData || [];
+                           
+                            let content = '';
+                            if (sessionData) {
+                                for (let i = 0; i < branchesData.length; i++) {
+                                    const { branchId, branchName, canAccess } = branchesData[i];
+                                    const isChecked = canAccess ? 'checked' : '';
+                                    
+                                    content += `
+                                        <div class="each-toggle-div">
+                                            <span>${branchName}</span>
+                                            <label for="${branchId}" class="switch">
+                                            <input type="checkbox" class="child" id="${branchId}" name="branchId[]" data-value="${branchId}" ${isChecked}>
+                                            <span class="slider"></span>
+                                            <span class="toggle-label">${isChecked ? 'Yes' : 'No'}</span>
+                                            </label>
+                                        </div>`;
+                                    $('#staffBranchConfigToggle').html(content);
+                                }
+                            }
+                            _toggleCheck();
+                        });
+                    </script>
+                </div>
+
+                <div>
+                    <button class="btn" title="SUBMIT" id="submitBtn" onclick="_updateStaffBranchAccess();"> <i class="bi-check"></i> SUBMIT </button>
+                </div>
+            </div>
+        </div>
+    </div>
 <?php } ?>
