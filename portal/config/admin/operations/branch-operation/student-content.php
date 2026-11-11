@@ -1053,12 +1053,11 @@
             </div>
         </div>
     </div>
-    </div>
 
     <div class="user-in">
         <div class="title">ACADEMICS INFORMATIONS</div>
         <div class="profile-segment-div">
-            <div class="text_field_container col-1" id="officialStudentId_container">
+            <div class="text_field_container col-3" id="officialStudentId_container">
                 <script>
                     textField({
                         id: 'officialStudentId',
@@ -1068,7 +1067,7 @@
                 </script>
             </div>
 
-            <div class="text_field_container col-1" id="accommodationId_container">
+            <div class="text_field_container col-3" id="accommodationId_container">
                 <script>
                     selectField({
                         id: 'accommodationId',
@@ -1080,6 +1079,18 @@
                 </script>
             </div>
 
+            <div class="text_field_container col-3" id="branchId_container">
+                <script>
+                    selectField({
+                        id: 'branchId',
+                        title: 'Select Branch',
+                        fieldValue: getEachBranchStudentsSession?.studentData?.branchId ?? '',
+                        fieldLabel: getEachBranchStudentsSession?.studentData?.name ?? ''
+                    });
+                    _getSelectStudentProfileBranch('branchId');
+                </script>
+            </div>
+
             <div class="text_field_container col-3" id="departmentId_container">
                 <script>
                     selectField({
@@ -1088,7 +1099,6 @@
                         fieldValue: getEachBranchStudentsSession.departmentData?.departmentId ?? '',
                         fieldLabel: getEachBranchStudentsSession.departmentData?.departmentName ?? ''
                     });
-                    _getSelectDepartment('departmentId');
                 </script>
             </div>
 
@@ -1114,7 +1124,6 @@
                 </script>
             </div>
         </div>
-    </div>
     </div>
 
     <div class="user-in">
