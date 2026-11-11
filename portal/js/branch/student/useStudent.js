@@ -110,18 +110,84 @@ function _getSelectAccomodation(fieldId) {
   }
 }
 
-function _getSelectDepartment(fieldId, isAlumni = false) {
+
+
+
+
+///// Get Student Profile Branch
+function _getSelectStudentProfileBranch(fieldId, isAlumni = false){
+  let $searchList = $("#searchList_" + fieldId);
+  $searchList.html("<li>Loading data...</li>");
+
+	try {
+		$.ajax({
+			type: "GET",
+			url: endPoint +'/admin/branch/fetch-branch?statusId=1',
+			dataType: "json",
+			cache: false,
+			headers: getAuthHeaders(true),
+			success: function(info) {
+				const data = info.data;
+				const success = info.success;
+
+        $searchList.empty();
+				
+				if (success === true) {
+					for (let i = 0; i < data.length; i++) {
+						const id = data[i].branchId;
+						const value = data[i].name;
+						
+            $("#searchList_" + fieldId).append(`
+              <li onclick="
+                _clickOption(
+                  'searchList_${fieldId}',
+                  '${id}',
+                  '${value}'
+                );
+                _proceedSelectStudentProfileDepartment(
+                  'departmentId',
+                  ${isAlumni}
+                );
+              ">
+                ${value}
+              </li>
+            `);
+					}	
+				} else {
+					_actionAlert(info.message, false); 
+				}
+			}
+		});
+	} catch (error) {
+		console.error("Error: ", error);
+		_actionAlert('An unexpected error occurred. Please try again.', false);
+	}
+}
+
+function _proceedSelectStudentProfileDepartment(fieldId, isAlumni = false) {
+  _clearSelectField(fieldId);
+  _getSelectStudentProfileDepartment(fieldId, isAlumni);
+}
+
+///// Get Student Profile Department
+function _getSelectStudentProfileDepartment(fieldId, isAlumni = false) {
+  let $searchList = $("#searchList_" + fieldId);
+  $searchList.html("<li>Loading data...</li>");
+
+  const branchId = $("#branchId").val();
+
   try {
     $.ajax({
       type: "GET",
-      url: `${endPoint}/admin/branch/department/fetch-branch-departments?branchId=${getEachBranchDetailsSession.branchId}`,
+      url: `${endPoint}/admin/branch/department/fetch-branch-departments?branchId=${branchId}`,
       dataType: "json",
       cache: false,
       headers: getAuthHeaders(true),
       success: function (info) {
         const data = info.data;
+        $searchList.empty();
+
         if (info.success === true) {
-          $("#searchList_" + fieldId).html("");
           for (let i = 0; i < data.length; i++) {
             if (data[i].checked) {
               const id = data[i].departmentId;
@@ -134,10 +200,7 @@ function _getSelectDepartment(fieldId, isAlumni = false) {
                     '${id}',
                     '${value}'
                   );
-                  _getSelectDepartmentClass(
-                    'classId',
-                    ${isAlumni}
-                  );
+                  _proceedSelectDepartmentClassArm(${isAlumni});
                 ">
                   ${value}
                 </li>
@@ -154,11 +217,62 @@ function _getSelectDepartment(fieldId, isAlumni = false) {
   }
 }
 
-function _fetchSelectDepartmentClass() {
-  _getSelectDepartmentClass('classId', isAlumni);
+
+function _getSelectDepartment(fieldId, isAlumni = false) {
+  let $searchList = $("#searchList_" + fieldId);
+  $searchList.html("<li>Loading data...</li>");
+  
+  try {
+    $.ajax({
+      type: "GET",
+      url: `${endPoint}/admin/branch/department/fetch-branch-departments?branchId=${getEachBranchDetailsSession.branchId}`,
+      dataType: "json",
+      cache: false,
+      headers: getAuthHeaders(true),
+      success: function (info) {
+        const data = info.data;
+        if (info.success === true) {
+          $searchList.empty();
+
+          for (let i = 0; i < data.length; i++) {
+            if (data[i].checked) {
+              const id = data[i].departmentId;
+              const value = data[i].departmentName;
+
+              $("#searchList_" + fieldId).append(`
+              <li onclick="
+                _clickOption(
+                  'searchList_${fieldId}',
+                  '${id}',
+                  '${value}'
+                );
+
+                _proceedSelectDepartmentClassArm(${isAlumni});
+              ">
+                ${value}
+              </li>
+            `);
+            }
+          }
+        } else {
+          _actionAlert(info.message, false);
+        }
+      },
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function _proceedSelectDepartmentClassArm(isAlumni = false) {
+  _clearSelectField("classId");
+  _getSelectDepartmentClass("classId", isAlumni);
 }
 
 function _getSelectDepartmentClass(fieldId, isAlumni = false) {
+  let $searchList = $("#searchList_" + fieldId);
+  $searchList.html("<li>Loading data...</li>");
+
   const departmentId = $("#departmentId").val();
   try {
     $.ajax({
@@ -170,7 +284,8 @@ function _getSelectDepartmentClass(fieldId, isAlumni = false) {
       success: function (info) {
         const data = info.data;
         if (info.success === true) {
-          $("#searchList_" + fieldId).html("");
+          $searchList.empty();
+
           const checkedClasses = data.filter(
             item => item.checked === true
           );
@@ -203,10 +318,14 @@ function _getSelectDepartmentClass(fieldId, isAlumni = false) {
 }
 
 function _fetchSelectDepartmentClassArm() {
+  _clearSelectField("armId");
   _getSelectDepartmentArm("armId");
 }
 
 function _getSelectDepartmentArm(fieldId) {
+  let $searchList = $("#searchList_" + fieldId);
+  $searchList.html("<li>Loading data...</li>");
+
   const departmentId = $("#departmentId").val();
   const classId = $("#classId").val();
   try {
@@ -220,8 +339,9 @@ function _getSelectDepartmentArm(fieldId) {
         const data = info.armData;
         const success = info.success;
 
+        $searchList.empty();
+        
         if (success === true) {
-          $("#searchList_" + fieldId).html("");
           for (let i = 0; i < data.length; i++) {
             const id = data[i].armId;
             const value = data[i].armName;
@@ -867,6 +987,7 @@ function _updateBranchStudents() {
   let getEachBranchStudentsSession = JSON.parse(
     sessionStorage.getItem("getEachBranchStudentsSession"),
   );
+
   try {
     const surName = $("#surName").val();
     const firstName = $("#firstName").val();
@@ -904,6 +1025,7 @@ function _updateBranchStudents() {
     const armId = $("#armId").val();
     const accommodationId = $("#accommodationId").val();
     const statusId = $("#statusId").val();
+    const branchId = $("#branchId").val();
 
     $(
       "#surName, #firstName, #genderId, #maritalStatusId, #dateOfBirth, #countryId, #stateId, #lgaId, #address, #email, #mobileNumber, #fatherEmail, #motherEmail, #departmentId, #classId, #armId, #accommodationId, #statusId",
@@ -1020,6 +1142,12 @@ function _updateBranchStudents() {
       return;
     }
 
+    if (!branchId) {
+      $("#branchId").addClass("issue");
+      _actionAlert("Select branch to continue", false);
+      return;
+    }
+
     if (confirm("Confirm!!\n\n Are you sure to PERFORM THIS ACTION?")) {
       const btn_text = $("#updateBtn").html();
       $("#updateBtn").html(
@@ -1030,6 +1158,7 @@ function _updateBranchStudents() {
       $("#updateBtn").prop("disabled", true);
 
       const formData = new FormData();
+      formData.append("branchId", branchId);
       formData.append("surName", surName);
       formData.append("firstName", firstName);
       formData.append("otherNames", otherNames);
@@ -1069,7 +1198,7 @@ function _updateBranchStudents() {
 
       $.ajax({
         type: "POST",
-        url: `${endPoint}/admin/branch/students/update-student?branchId=${getEachBranchStudentsSession.branchId}&studentId=${getEachBranchStudentsSession.studentId}`,
+        url: `${endPoint}/admin/branch/students/update-student?studentId=${getEachBranchStudentsSession?.studentId}`,
         data: formData,
         dataType: "json",
         contentType: false,
@@ -1079,10 +1208,16 @@ function _updateBranchStudents() {
         success: function (info) {
           const success = info.success;
           const message = info.message;
+          const alumniSession = info?.data[0]?.alumniSession;
 
           if (success === true) {
             _actionAlert(message, true);
-            _proceedFetchBranchStudents(departmentId, classId, armId);
+            if (alumniSession === null || alumniSession === undefined || alumniSession === "") {
+              _proceedFetchBranchStudents(departmentId, classId, armId);
+            } else {
+              _alertClose(3);
+              _fetchAlumniStudentsByClass(alumniSession, departmentId, classId, armId)
+            }
             _alertClose(2);
           } else {
             _actionAlert(message, false);
@@ -1851,7 +1986,7 @@ function _fetchBranchAlumniDepartmentClasses() {
                                       <div class="btn-div">
                                           <button 
                                               class="btn view-btn"
-                                              id="proceedBtn_${classId}_${armId}"
+                                              id="proceedBtn_${departmentId}_${classId}_${armId}"
                                               title="Click to view alumni students"
                                               onclick="_fetchAlumniStudentsByClass('${alumniSession}','${departmentId}','${classId}','${armId}');"
                                           >
@@ -1949,8 +2084,8 @@ function _fetchAlumniStudentsByClass(alumniSession, departmentId, classId, armId
 
   const branchId = getEachBranchDetailsSession?.branchId;
   try {
-	const btnText = $(`#proceedBtn_${classId}_${armId}`).html();
-    _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, true);
+	const btnText = $(`#proceedBtn_${departmentId}_${classId}_${armId}`).html();
+    _btnDisable(`proceedBtn_${departmentId}_${classId}_${armId}`, btnText, true);
 	
     //// call endpoint //////
     _callFetchEndPoints({
@@ -1968,9 +2103,9 @@ function _fetchAlumniStudentsByClass(alumniSession, departmentId, classId, armId
         } else {
           _alertClose(2);
           _actionAlert(response.message, false);
-		      _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, false);
+		      _btnDisable(`proceedBtn_${departmentId}_${classId}_${armId}`, btnText, false);
         }
-		    _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, false);
+		    _btnDisable(`proceedBtn_${departmentId}_${classId}_${armId}`, btnText, false);
       })
       .catch((error) => {
         _alertClose(2);
@@ -1978,7 +2113,7 @@ function _fetchAlumniStudentsByClass(alumniSession, departmentId, classId, armId
         _callAjaxError(() =>
           _fetchAlumniStudentsByClass(alumniSession, departmentId, classId, armId),
         ); // retry if needed
-		    _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, false);
+		    _btnDisable(`proceedBtn_${departmentId}_${classId}_${armId}`, btnText, false);
       });
   } catch (error) {
     _alertClose(2);
@@ -1986,7 +2121,7 @@ function _fetchAlumniStudentsByClass(alumniSession, departmentId, classId, armId
     _callAjaxError(() =>
       _fetchAlumniStudentsByClass(alumniSession, departmentId, classId, armId),
     ); // retry if needed
-	  _btnDisable(`proceedBtn_${classId}_${armId}`, btnText, false);
+	  _btnDisable(`proceedBtn_${departmentId}_${classId}_${armId}`, btnText, false);
   }
 }
 
